@@ -885,13 +885,14 @@ def get_node_text(tree: Dict[str, Any], node_id: str) -> str:
     """
     Get the text content of a specific node by its ID.
     Now searches ALL node types: texts, tables, pictures, groups, key_value_items, form_items.
+    Handles different node types appropriately (tables, images, etc.).
     
     Args:
         tree: Tree structure containing the nodes
         node_id: The ID of the node (e.g., "#/texts/0", "#/tables/0", etc.)
         
     Returns:
-        The text content of the node, or empty string if node not found
+        The text content of the node, or appropriate placeholder for non-text nodes
     """
     # Define all node array types to search
     node_arrays = ['texts', 'tables', 'pictures', 'groups', 'key_value_items', 'form_items']
@@ -901,12 +902,78 @@ def get_node_text(tree: Dict[str, Any], node_id: str) -> str:
         if array_name in tree and tree[array_name]:
             for node in tree[array_name]:
                 if node.get('self_ref') == node_id:
-                    # Return the text content of the node
-                    return node.get('text', '')
+                    # Handle different node types appropriately
+                    if array_name == 'texts':
+                        return node.get('text', '')
+                    elif array_name == 'tables':
+                        # For tables, use the new plain text table function
+                        return get_plain_text_table(tree, node_id)
+                    elif array_name == 'pictures':
+                        # For images, return a placeholder
+                        return '[IMAGE]'
+                    elif array_name == 'groups':
+                        # For groups, try to get text or return placeholder
+                        if 'text' in node:
+                            return node.get('text', '')
+                        else:
+                            return '[GROUP]'
+                    elif array_name in ['key_value_items', 'form_items']:
+                        # For key-value pairs and form items, try to extract meaningful text
+                        if 'text' in node:
+                            return node.get('text', '')
+                        elif 'key' in node and 'value' in node:
+                            return f"{node.get('key', '')}: {node.get('value', '')}"
+                        else:
+                            return '[FORM_ITEM]'
+                    else:
+                        # Fallback for any other node type
+                        return node.get('text', '')
     
     # Node not found
     print(f"Warning: Node with ID '{node_id}' not found in any node arrays")
     return ""
+
+def get_node_text_only(tree: Dict[str, Any], node_id: str) -> str:
+    """
+    Very simple helper to get only the node's own text (no children aggregation).
+    Returns an empty string if the node or its text field is not found.
+    """
+    node_arrays = ['texts', 'tables', 'pictures', 'groups', 'key_value_items', 'form_items']
+    for array_name in node_arrays:
+        if array_name in tree and tree[array_name]:
+            for node in tree[array_name]:
+                if node.get('self_ref') == node_id:
+                    return node.get('text', '') or ''
+    return ''
+
+def get_node_page_info(tree: Dict[str, Any], node_id: str) -> Tuple[int, int]:
+    """
+    Return (current_node_page_no, total_pages) where total_pages is the max page_no across all nodes.
+    If node not found or page_no missing, current_node_page_no is -1. If no pages found at all, total_pages is 0.
+    """
+    node_arrays = ['texts', 'tables', 'pictures', 'groups', 'key_value_items', 'form_items']
+    current_page = -1
+    max_page = 0
+
+    for array_name in node_arrays:
+        if array_name in tree and tree[array_name]:
+            for node in tree[array_name]:
+                # Track max page across all nodes
+                if 'prov' in node and node['prov']:
+                    prov = node['prov'][0]
+                    page_no = prov.get('page_no')
+                    if isinstance(page_no, int):
+                        if page_no > max_page:
+                            max_page = page_no
+
+                # Check if this is the target node
+                if current_page == -1 and node.get('self_ref') == node_id:
+                    if 'prov' in node and node['prov']:
+                        page_no = node['prov'][0].get('page_no')
+                        if isinstance(page_no, int):
+                            current_page = page_no
+
+    return current_page, max_page
 
 def get_node_info(tree: Dict[str, Any], node_id: str) -> Dict[str, Any]:
     """
@@ -1127,50 +1194,743 @@ def print_tree_structure(tree: Dict[str, Any], max_depth: int = 3) -> None:
         if len(orphan_nodes) > 10:
             print(f"  ... and {len(orphan_nodes) - 10} more orphan nodes")
 
-def enrich_one_doc(input_file: str, input_doc: str) -> None:
+def get_section_headers_by_id_order(tree: Dict[str, Any]) -> List[Dict[str, Any]]:
+    """
+    Get all nodes with label 'section_header' and return them in order of their IDs.
     
-    if Path(input_file).exists():
-        print(f"Processing {input_file}...")
+    Args:
+        tree: Tree structure containing the nodes
         
-        # Process the file
-        processed_tree = process_json_file(input_file)
+    Returns:
+        List of section header nodes sorted by their ID order
+    """
+    # Define all node array types to search
+    node_arrays = ['texts', 'tables', 'pictures', 'groups', 'key_value_items', 'form_items']
+    
+    section_headers = []
+    
+    # Search for section headers in all node arrays
+    for array_name in node_arrays:
+        if array_name in tree and tree[array_name]:
+            for node in tree[array_name]:
+                if node.get('label') == 'section_header':
+                    section_headers.append(node)
+    
+    # Sort by ID (self_ref) in ascending order
+    # Extract numeric part from ID for proper sorting (e.g., "#/texts/0" -> 0, "#/texts/10" -> 10)
+    def extract_id_number(node):
+        self_ref = node.get('self_ref', '')
+        # Extract the last number from the self_ref (e.g., "#/texts/5" -> 5)
+        import re
+        numbers = re.findall(r'\d+', self_ref)
+        if numbers:
+            return int(numbers[-1])  # Use the last number in the ID
+        return 0  # Default for nodes without numbers
+    
+    # Sort section headers by their ID number
+    section_headers.sort(key=extract_id_number)
+    
+    return section_headers
+
+
+def get_section_headers_by_page_order(tree: Dict[str, Any]) -> List[Dict[str, Any]]:
+    """
+    Get all nodes with label 'section_header' and return them in order of page and position.
+    
+    Args:
+        tree: Tree structure containing the nodes
         
-        if processed_tree:
-            # Print structure overview
-            print_tree_structure(processed_tree)
+    Returns:
+        List of section header nodes sorted by page number and position
+    """
+    # Define all node array types to search
+    node_arrays = ['texts', 'tables', 'pictures', 'groups', 'key_value_items', 'form_items']
+    
+    section_headers = []
+    
+    # Search for section headers in all node arrays
+    for array_name in node_arrays:
+        if array_name in tree and tree[array_name]:
+            for node in tree[array_name]:
+                if node.get('label') == 'section_header':
+                    section_headers.append(node)
+    
+    # Sort by page and position using the existing sorting function
+    section_headers = sort_nodes_by_page_and_bbox(section_headers)
+    
+    return section_headers
+
+
+def get_node_text_with_children(tree: Dict[str, Any], node_id: str) -> str:
+    """
+    Get the complete text for a node including its own text and all its children's text.
+    Children are sorted by their ID order. Handles tables, images, and other non-text nodes appropriately.
+    
+    Args:
+        tree: Tree structure containing the nodes
+        node_id: The ID of the node (e.g., "#/texts/0", "#/tables/0", etc.)
+        
+    Returns:
+        Complete text string including node's own text and all children's text
+    """
+    # Get the node information
+    node_info = get_node_info(tree, node_id)
+    if not node_info:
+        return ""
+    
+    # Start with the node's own text
+    complete_text = node_info.get('text', '')
+    
+    # Get children if they exist
+    children = node_info.get('children', [])
+    if not children:
+        return complete_text
+    
+    # Sort children texts by their ID (extract numeric part for sorting)
+    def extract_id_number(child_ref):
+        child_id = child_ref.get('$ref', '')
+        import re
+        numbers = re.findall(r'\d+', child_id)
+        if numbers:
+            return int(numbers[-1])  # Use the last number in the ID
+        return 0
+    
+    # Create a list of (child_ref, text) tuples for sorting
+    child_ref_text_pairs = []
+    for child_ref in children:
+        child_id = child_ref.get('$ref', '')
+        
+        child_text = get_node_text(tree, child_id)
+        
+        # Include all children, even if they don't have text (like images, tables)
+        # This ensures we don't lose information about the document structure
+        if child_text:  # Include non-empty text and placeholders like [IMAGE], [TABLE]
+            child_ref_text_pairs.append((child_ref, child_text))
+    
+    
+    # Concatenate the sorted children texts
+    if child_ref_text_pairs:
+        children_text = ' '.join([text for _, text in child_ref_text_pairs])
+        if complete_text.strip() and children_text.strip():
+            complete_text = complete_text + ' ' + children_text
+        elif children_text.strip():
+            complete_text = children_text
+    
+    return complete_text
+
+
+def get_section_header_texts(tree: Dict[str, Any]) -> List[Dict[str, Any]]:
+    """
+    Get the complete text for each section header node including its own text and all children's text.
+    
+    Args:
+        tree: Tree structure containing the nodes
+        
+    Returns:
+        List of dictionaries containing section header information with complete text
+    """
+    section_headers = get_section_headers_by_id_order(tree)
+    section_header_texts = []
+    
+    for section in section_headers:
+        section_id = section.get('self_ref', '')
+        section_text = section.get('text', '')
+        
+        # Get complete text including children
+        complete_text = get_node_text_with_children(tree, section_id)
+        
+        # Get page number
+        page_no = "?"
+        if 'prov' in section and section['prov']:
+            prov = section['prov'][0]
+            page_no = str(prov.get('page_no', '?'))
+        
+        # Get children count
+        children_count = len(section.get('children', []))
+        
+        section_info = {
+            'id': section_id,
+            'text': section_text,
+            'complete_text': complete_text,
+            'page': page_no,
+            'children_count': children_count
+        }
+        
+        section_header_texts.append(section_info)
+    
+    return section_header_texts
+
+
+def get_table_details(tree: Dict[str, Any], table_id: str) -> Dict[str, Any]:
+    """
+    Get detailed information about a table node, including its structure and content.
+    
+    Args:
+        tree: Tree structure containing the nodes
+        table_id: The ID of the table node (e.g., "#/tables/0")
+        
+    Returns:
+        Dictionary containing detailed table information
+    """
+    # Find the table node
+    if 'tables' in tree and tree['tables']:
+        for table in tree['tables']:
+            if table.get('self_ref') == table_id:
+                table_info = {
+                    'id': table_id,
+                    'has_text': 'text' in table,
+                    'text_content': table.get('text', ''),
+                    'has_cells': 'cells' in table,
+                    'cells_count': len(table.get('cells', [])),
+                    'cells_content': [],
+                    'raw_structure': table
+                }
+                
+                # Extract cell information
+                if 'cells' in table:
+                    for i, cell in enumerate(table['cells']):
+                        cell_info = {
+                            'index': i,
+                            'has_text': 'text' in cell if isinstance(cell, dict) else False,
+                            'text': cell.get('text', '') if isinstance(cell, dict) else str(cell),
+                            'type': type(cell).__name__,
+                            'raw': cell
+                        }
+                        table_info['cells_content'].append(cell_info)
+                
+                return table_info
+    
+    return {'id': table_id, 'error': 'Table not found'}
+
+
+def get_children_info(tree: Dict[str, Any], node_id: str) -> List[Dict[str, Any]]:
+    """
+    Get information about all children of a node, including their types and IDs.
+    
+    Args:
+        tree: Tree structure containing the nodes
+        node_id: The ID of the node to get children for
+        
+    Returns:
+        List of dictionaries containing child information
+    """
+    node_info = get_node_info(tree, node_id)
+    if not node_info:
+        return []
+    
+    children = node_info.get('children', [])
+    children_info = []
+    
+    for child_ref in children:
+        child_id = child_ref.get('$ref', '')
+        print(f"node_id, child_id: {node_id}, {child_id}")
+        if child_id:
+            # Determine the node type from the ID
+            node_type = "unknown"
+            if child_id.startswith("#/texts/"):
+                node_type = "text"
+            elif child_id.startswith("#/tables/"):
+                node_type = "table"
+            elif child_id.startswith("#/pictures/"):
+                node_type = "picture"
+            elif child_id.startswith("#/groups/"):
+                node_type = "group"
+            elif child_id.startswith("#/key_value_items/"):
+                node_type = "key_value_item"
+            elif child_id.startswith("#/form_items/"):
+                node_type = "form_item"
             
-            # Save processed result
-            output_file = Path(input_file).with_name(Path(input_file).stem + '_processed.json')
+            # Get the child's text content
+            child_text = get_node_text(tree, child_id)
+            
+            child_info = {
+                'id': child_id,
+                'type': node_type,
+                'text': child_text[:100] + "..." if len(child_text) > 100 else child_text
+            }
+            children_info.append(child_info)
+    
+    return children_info
 
-            # Extract visual patterns from the original PDF
-            if Path(input_doc).exists():
-                print(f"Extracting visual patterns from {input_doc}...")
-                phrases = phrase_visual_pattern_extraction(input_doc)
-                merged_phrases = phrase_merge(phrases)
-                output_visual_file = Path(input_file).with_name(Path(input_file).stem + '_visual_pattern.json')
-                # Save original phrases to JSON file
-                save_phrases_to_json(merged_phrases, output_visual_file)
-                
-                # Enrich the tree with visual cues
-                print("Enriching tree with visual patterns...")
-                enriched_tree = enrich_visual_cues(processed_tree, merged_phrases)
-                
-                # Save enriched tree
-                enriched_output_file = Path(input_file).with_name(Path(input_file).stem + '_enriched.json')
-                if save_processed_tree(enriched_tree, enriched_output_file):
-                    print(f"Enriched tree saved to {enriched_output_file}")
-            else:
-                print(f"PDF file {input_doc} not found, skipping visual pattern extraction")
 
-            if save_processed_tree(processed_tree, output_file):
-                print(f"Processed tree saved to {output_file}")
-            else:
-                print("Failed to save processed tree")
+def get_table_text_by_bbox(tree: Dict[str, Any], table_id: str) -> str:
+    """
+    Get all text from a table by extracting text cell by cell, ordered by bounding box.
+    Sorts by y-coordinate (top to bottom), then by x-coordinate (left to right).
+    Also checks the 'data' field for table content.
+    
+    Args:
+        tree: Tree structure containing the nodes
+        table_id: The ID of the table node (e.g., "#/tables/0")
+        
+    Returns:
+        String containing all table text ordered by position
+    """
+    # Find the table node
+    if 'tables' in tree and tree['tables']:
+        for table in tree['tables']:
+            if table.get('self_ref') == table_id:
+                # First, check if there's a 'data' field with table content
+                if 'data' in table and table['data']:
+                    data_content = table['data']
+                    if isinstance(data_content, dict) and 'table_cells' in data_content:
+                        # Extract text from table_cells, ordered by bounding box
+                        table_cells = data_content['table_cells']
+                        if table_cells:
+                            # Sort cells by y-coordinate (top to bottom), then by x-coordinate (left to right)
+                            # Note: coordinates are in BOTTOMLEFT format, so higher y values are higher on page
+                            sorted_cells = sorted(table_cells, key=lambda cell: (
+                                -cell['bbox']['t'],  # Negative because higher t values are higher on page
+                                cell['bbox']['l']    # Left to right
+                            ))
+                            
+                            # Extract text from sorted cells
+                            text_parts = []
+                            for cell in sorted_cells:
+                                if 'text' in cell and cell['text'].strip():
+                                    text_parts.append(cell['text'].strip())
+                            
+                            if text_parts:
+                                return ' '.join(text_parts)
+                    
+                    # Fallback for other data formats
+                    if isinstance(data_content, str):
+                        return data_content
+                    elif isinstance(data_content, list):
+                        # If data is a list, try to extract text from it
+                        text_parts = []
+                        for item in data_content:
+                            if isinstance(item, dict):
+                                if 'text' in item:
+                                    text_parts.append(item['text'])
+                                elif 'content' in item:
+                                    text_parts.append(str(item['content']))
+                            elif isinstance(item, str):
+                                text_parts.append(item)
+                        if text_parts:
+                            return ' '.join(text_parts)
+                    elif isinstance(data_content, dict):
+                        # If data is a dict, try to extract text from it
+                        if 'text' in data_content:
+                            return data_content['text']
+                        elif 'content' in data_content:
+                            return str(data_content['content'])
+                        else:
+                            return str(data_content)
+                
+                # Get all children of the table
+                children = table.get('children', [])
+                if not children:
+                    return "[EMPTY TABLE - NO CHILDREN]"
+                
+                # Collect all text nodes with their bounding box information
+                text_cells = []
+                
+                for child_ref in children:
+                    child_id = child_ref.get('$ref', '')
+                    if child_id and child_id.startswith('#/texts/'):
+                        # Get the text node
+                        text_node = None
+                        if 'texts' in tree and tree['texts']:
+                            for text in tree['texts']:
+                                if text.get('self_ref') == child_id:
+                                    text_node = text
+                                    break
+                        
+                        if text_node:
+                            # Get text content
+                            text_content = text_node.get('text', '').strip()
+                            if text_content:
+                                # Get bounding box from provenance
+                                bbox = None
+                                if 'prov' in text_node and text_node['prov']:
+                                    prov = text_node['prov'][0]
+                                    if 'bbox' in prov:
+                                        bbox = prov['bbox']
+                                
+                                if bbox and len(bbox) >= 4:
+                                    # bbox format: [x1, y1, x2, y2]
+                                    x1, y1, x2, y2 = bbox[:4]
+                                    text_cells.append({
+                                        'text': text_content,
+                                        'x1': x1,
+                                        'y1': y1,
+                                        'x2': x2,
+                                        'y2': y2,
+                                        'center_x': (x1 + x2) / 2,
+                                        'center_y': (y1 + y2) / 2
+                                    })
+                                else:
+                                    # If no bbox, add at the end
+                                    text_cells.append({
+                                        'text': text_content,
+                                        'x1': 0,
+                                        'y1': 0,
+                                        'x2': 0,
+                                        'y2': 0,
+                                        'center_x': 0,
+                                        'center_y': 0
+                                    })
+                
+                if not text_cells:
+                    return "[NO TEXT CELLS FOUND IN CHILDREN]"
+                
+                # Sort by y-coordinate (top to bottom), then by x-coordinate (left to right)
+                # Use center coordinates for more accurate sorting
+                text_cells.sort(key=lambda cell: (cell['center_y'], cell['center_x']))
+                
+                # Join all text with spaces
+                return ' '.join([cell['text'] for cell in text_cells])
+    
+    return "[TABLE NOT FOUND]"
+
+
+def get_structured_table_content(tree: Dict[str, Any], table_id: str) -> List[Dict[str, Any]]:
+    """
+    Get structured table content with labels for column headers and table cells.
+    Returns a list of dictionaries, each containing text, label, and position info.
+    
+    Args:
+        tree: Tree structure containing the nodes
+        table_id: The ID of the table node (e.g., "#/tables/0")
+        
+    Returns:
+        List of dictionaries with keys: 'text', 'label', 'bbox', 'row_idx', 'col_idx'
+        where label is either 'column_header' or 'table_cell'
+    """
+    # Find the table node
+    if 'tables' in tree and tree['tables']:
+        for table in tree['tables']:
+            if table.get('self_ref') == table_id:
+                # Check if there's a 'data' field with table content
+                if 'data' in table and table['data']:
+                    data_content = table['data']
+                    if isinstance(data_content, dict) and 'table_cells' in data_content:
+                        # Extract structured content from table_cells
+                        table_cells = data_content['table_cells']
+                        if table_cells:
+                            # Sort cells by y-coordinate (top to bottom), then by x-coordinate (left to right)
+                            sorted_cells = sorted(table_cells, key=lambda cell: (
+                                -cell['bbox']['t'],  # Negative because higher t values are higher on page
+                                cell['bbox']['l']    # Left to right
+                            ))
+                            
+                            # Create structured content list
+                            structured_content = []
+                            for cell in sorted_cells:
+                                if 'text' in cell and cell['text'].strip():
+                                    # Determine label based on cell properties
+                                    if cell.get('column_header', False):
+                                        label = 'column_header'
+                                    elif cell.get('row_header', False):
+                                        label = 'row_header'
+                                    elif cell.get('row_section', False):
+                                        label = 'row_section'
+                                    else:
+                                        label = 'table_cell'
+                                    
+                                    structured_content.append({
+                                        'text': cell['text'].strip(),
+                                        'label': label,
+                                        'bbox': cell['bbox'],
+                                        'row_idx': cell.get('start_row_offset_idx', -1),
+                                        'col_idx': cell.get('start_col_offset_idx', -1),
+                                        'row_span': cell.get('row_span', 1),
+                                        'col_span': cell.get('col_span', 1)
+                                    })
+                            
+                            return structured_content
+    
+    return []
+
+
+def get_plain_text_table(tree: Dict[str, Any], table_id: str) -> str:
+    """
+    Get plain text version of table content, sorted by row then column.
+    Concatenates output line by line into a string.
+    
+    Args:
+        tree: Tree structure containing the nodes
+        table_id: The ID of the table node (e.g., "#/tables/0")
+        
+    Returns:
+        String containing plain text table content, line by line
+    """
+    structured_content = get_structured_table_content(tree, table_id)
+    
+    if not structured_content:
+        return "[NO TABLE CONTENT FOUND]"
+    
+    # Sort by row first, then by column
+    sorted_content = sorted(structured_content, key=lambda item: (item['row_idx'], item['col_idx']))
+    
+    # Group by rows
+    rows = {}
+    for item in sorted_content:
+        row_idx = item['row_idx']
+        if row_idx not in rows:
+            rows[row_idx] = []
+        rows[row_idx].append(item)
+    
+    # Build plain text output line by line
+    text_lines = []
+    for row_idx in sorted(rows.keys()):
+        row_items = rows[row_idx]
+        # Sort items within the row by column
+        row_items.sort(key=lambda item: item['col_idx'])
+        
+        # Create line for this row
+        line_parts = []
+        for item in row_items:
+            line_parts.append(item['text'])
+        
+        text_lines.append(' | '.join(line_parts))
+    
+    # Add prefix and suffix
+    table_content = '\n'.join(text_lines)
+    return f"The below is a table, table starts:\n{table_content}\nThis is the end of the table."
+
+
+
+def print_plain_text_table(tree: Dict[str, Any], table_id: str) -> None:
+    """
+    Print plain text version of table content for easy inspection.
+    
+    Args:
+        tree: Tree structure containing the nodes
+        table_id: The ID of the table node to examine
+    """
+    print(f"\n=== Plain Text Table: {table_id} ===")
+    
+    plain_text = get_plain_text_table(tree, table_id)
+    print(plain_text)
+
+
+def print_structured_table_content(tree: Dict[str, Any], table_id: str) -> None:
+    """
+    Print structured table content with labels for easy inspection.
+    
+    Args:
+        tree: Tree structure containing the nodes
+        table_id: The ID of the table node to examine
+    """
+    print(f"\n=== Structured Table Content: {table_id} ===")
+    
+    structured_content = get_structured_table_content(tree, table_id)
+    
+    if not structured_content:
+        print("No structured content found")
+        return
+    
+    print(f"Found {len(structured_content)} table elements:")
+    print("-" * 80)
+    
+    for i, item in enumerate(structured_content):
+        print(f"{i+1:2d}. [{item['label']:15s}] Row:{item['row_idx']:2d} Col:{item['col_idx']:2d} | {item['text']}")
+    
+    # Group by label for summary
+    label_counts = {}
+    for item in structured_content:
+        label = item['label']
+        label_counts[label] = label_counts.get(label, 0) + 1
+    
+    print("\nSummary by label:")
+    for label, count in label_counts.items():
+        print(f"  {label}: {count} items")
+
+
+def print_table_raw_content(tree: Dict[str, Any], table_id: str) -> None:
+    """
+    Print the raw content of a table node for inspection.
+    
+    Args:
+        tree: Tree structure containing the nodes
+        table_id: The ID of the table node to examine
+    """
+    print(f"\n=== Raw Table Content: {table_id} ===")
+    
+    # Find the table node
+    if 'tables' in tree and tree['tables']:
+        for table in tree['tables']:
+            if table.get('self_ref') == table_id:
+                print("Complete table structure:")
+                print(json.dumps(table, indent=2, default=str))
+                return
+    
+    print(f"Table {table_id} not found")
+
+
+def print_table_text_details(tree: Dict[str, Any], table_id: str) -> None:
+    """
+    Print detailed text information from a table, showing cell-by-cell extraction.
+    
+    Args:
+        tree: Tree structure containing the nodes
+        table_id: The ID of the table node to examine
+    """
+    print(f"\n=== Table Text Details: {table_id} ===")
+    
+    # Find the table node
+    if 'tables' in tree and tree['tables']:
+        for table in tree['tables']:
+            if table.get('self_ref') == table_id:
+                # Get all children of the table
+                children = table.get('children', [])
+                print(f"Table has {len(children)} children")
+                
+                if not children:
+                    print("No children found in table")
+                    return
+                
+                # Collect all text nodes with their bounding box information
+                text_cells = []
+                
+                for child_ref in children:
+                    child_id = child_ref.get('$ref', '')
+                    if child_id and child_id.startswith('#/texts/'):
+                        # Get the text node
+                        text_node = None
+                        if 'texts' in tree and tree['texts']:
+                            for text in tree['texts']:
+                                if text.get('self_ref') == child_id:
+                                    text_node = text
+                                    break
+                        
+                        if text_node:
+                            # Get text content
+                            text_content = text_node.get('text', '').strip()
+                            if text_content:
+                                # Get bounding box from provenance
+                                bbox = None
+                                if 'prov' in text_node and text_node['prov']:
+                                    prov = text_node['prov'][0]
+                                    if 'bbox' in prov:
+                                        bbox = prov['bbox']
+                                
+                                if bbox and len(bbox) >= 4:
+                                    # bbox format: [x1, y1, x2, y2]
+                                    x1, y1, x2, y2 = bbox[:4]
+                                    text_cells.append({
+                                        'id': child_id,
+                                        'text': text_content,
+                                        'x1': x1,
+                                        'y1': y1,
+                                        'x2': x2,
+                                        'y2': y2,
+                                        'center_x': (x1 + x2) / 2,
+                                        'center_y': (y1 + y2) / 2
+                                    })
+                                else:
+                                    # If no bbox, add at the end
+                                    text_cells.append({
+                                        'id': child_id,
+                                        'text': text_content,
+                                        'x1': 0,
+                                        'y1': 0,
+                                        'x2': 0,
+                                        'y2': 0,
+                                        'center_x': 0,
+                                        'center_y': 0
+                                    })
+                
+                if not text_cells:
+                    print("No text cells found in table")
+                    return
+                
+                # Sort by y-coordinate (top to bottom), then by x-coordinate (left to right)
+                text_cells.sort(key=lambda cell: (cell['center_y'], cell['center_x']))
+                
+                print(f"Found {len(text_cells)} text cells:")
+                for i, cell in enumerate(text_cells):
+                    print(f"  {i+1}. {cell['id']}: '{cell['text']}' at ({cell['center_x']:.1f}, {cell['center_y']:.1f})")
+                
+                # Show the complete ordered text
+                complete_text = ' '.join([cell['text'] for cell in text_cells])
+                print(f"\nComplete table text (ordered by position):")
+                print(f"'{complete_text}'")
+                
+                return
+    
+    print(f"Table {table_id} not found")
+
+
+def print_table_details(tree: Dict[str, Any], table_id: str) -> None:
+    """
+    Print detailed information about a table node.
+    
+    Args:
+        tree: Tree structure containing the nodes
+        table_id: The ID of the table node to examine
+    """
+    table_info = get_table_details(tree, table_id)
+    
+    print(f"\n=== Table Details: {table_id} ===")
+    
+    if 'error' in table_info:
+        print(f"Error: {table_info['error']}")
+        return
+    
+    print(f"Table ID: {table_info['id']}")
+    print(f"Has text field: {table_info['has_text']}")
+    if table_info['has_text']:
+        print(f"Text content: '{table_info['text_content']}'")
+    
+    print(f"Has cells: {table_info['has_cells']}")
+    print(f"Number of cells: {table_info['cells_count']}")
+    
+    # Check for data field
+    if 'data' in table_info['raw_structure'] and table_info['raw_structure']['data']:
+        data_content = table_info['raw_structure']['data']
+        print(f"Has data field: True")
+        print(f"Data type: {type(data_content).__name__}")
+        if isinstance(data_content, str):
+            print(f"Data content: '{data_content[:200]}{'...' if len(data_content) > 200 else ''}'")
+        elif isinstance(data_content, (list, dict)):
+            print(f"Data content: {str(data_content)[:200]}{'...' if len(str(data_content)) > 200 else ''}")
         else:
-            print("Failed to process the file")
+            print(f"Data content: {data_content}")
     else:
-        print(f"File {input_file} not found")
-        print("Please update the input_file path in the script")
+        print("Has data field: False")
+    
+    if table_info['cells_content']:
+        print("\nCell details:")
+        for cell in table_info['cells_content']:
+            print(f"  Cell {cell['index']}:")
+            print(f"    Type: {cell['type']}")
+            print(f"    Has text: {cell['has_text']}")
+            if cell['has_text']:
+                print(f"    Text: '{cell['text']}'")
+            else:
+                print(f"    Content: '{cell['text']}'")
+    
+    # Show the raw structure (first few keys)
+    print(f"\nRaw structure keys: {list(table_info['raw_structure'].keys())}")
+    
+    # Show transformed text as it would appear in the complete text
+    transformed_text = get_node_text(tree, table_id)
+    print(f"\nTransformed text (as used in complete text): '{transformed_text}'")
+
+def get_node_order(tree, node_id):
+    """
+    Given a tree and a section header `node_id`, return a tuple:
+        (number_of_section_headers_before_it, total_number_of_section_headers)
+
+    If the `node_id` is not found among section headers, returns (-1, total).
+    """
+    try:
+        section_headers = get_section_headers_by_id_order(tree) or []
+        total = len(section_headers)
+
+        for idx, header in enumerate(section_headers):
+            if header.get('self_ref') == node_id:
+                return idx, total
+
+        return -1, total
+    except Exception:
+        # In case the tree structure is unexpected
+        return -1, 0
+
+
 
 # Example usage
 if __name__ == "__main__":
@@ -1187,26 +1947,24 @@ if __name__ == "__main__":
         input_path = Path(doc_file)
         doc_filename = input_path.stem  # Get filename without extension
     
-        # Convert data path to out path by replacing 'data' with 'out'
         input_str = str(input_path)
         output_str = input_str.replace('/data/', '/out/')
         output_path = Path(output_str)
-        
-        # Create output directory by removing the filename and adding the doc_filename as a folder
         output_dir = output_path.parent / doc_filename
         
         json_file = output_dir / f"{doc_filename}.json"
-        #print(json_file)
-
-        # Load the tree from the JSON file first
         tree = process_json_file(str(json_file))
-        #print_all_node_ids_simple(tree)
 
-        if i == 5:
-            print(doc_file)
-            print_tree_structure(tree)
-        
-        #enrich_one_doc(json_file, doc_file)
-        #break 
+        print_tree_structure(tree) 
+
+        idx, total = get_node_order(tree, "#/texts/230")
+        text = get_node_text_only(tree, "#/texts/230")
+        page_no, total_pages = get_node_page_info(tree, "#/texts/230")
+        print(idx, total)
+        print(text)
+        print(page_no, total_pages)
+        break 
+
+
 
     
