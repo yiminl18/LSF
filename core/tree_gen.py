@@ -1762,7 +1762,7 @@ def get_node_order(tree, node_id):
 
 # Example usage
 if __name__ == "__main__":
-    data_folder = Path('/Users/yiminglin/Documents/Codebase/LSF/out/financebench/pdfs/')
+    data_folder = Path('/Users/yiminglin/Documents/Codebase/LSF/out/financebench/pdfs_trees/')
     
     # Scan and collect all PDFs from the data folder
     input_doc_paths = []
@@ -1770,17 +1770,6 @@ if __name__ == "__main__":
         print(json_file)
         input_doc_paths.append(json_file)
 
-# for doc_file in input_doc_paths:
-#         i += 1
-#         input_path = Path(doc_file)
-#         doc_filename = input_path.stem  # Get filename without extension
-    
-#         input_str = str(input_path)
-#         output_str = input_str.replace('/data/', '/out/')
-#         output_path = Path(output_str)
-#         output_dir = output_path.parent / doc_filename
-        
-#         json_file = output_dir / f"{doc_filename}.json"
 
     i = 0
     for json_file in input_doc_paths:
@@ -1791,12 +1780,12 @@ if __name__ == "__main__":
         if os.path.exists(output_file):
             continue
         tree = process_json_file(str(json_file))
-        save_processed_tree(tree, output_file)
+        #save_processed_tree(tree, output_file)
 
         print(str(json_file))
-        #print_tree_structure(tree) 
+        print_tree_structure(tree) 
 
-        #break 
+        break 
 
 
 
