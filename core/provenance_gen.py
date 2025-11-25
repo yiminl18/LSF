@@ -88,7 +88,7 @@ def extract_raw_texts():
     """
     Extract raw text from all PDFs and save to corresponding text files.
     """
-    pdf_folder = '/Users/yiminglin/Documents/Codebase/LSF/data/CUAD_v1/full_contract_pdf/'
+    pdf_folder = '/Users/yiminglin/Documents/Codebase/LSF/data/financebench/pdfs/'
     pdf_files = read_pdfs_from_folder(pdf_folder)
     
     print(f"Found {len(pdf_files)} PDF files to process")
@@ -98,7 +98,7 @@ def extract_raw_texts():
         doc_name = pdf_info['filename']
         
         # Create output path by replacing /full_contract_pdf/ with /full_contract_raw_txt/
-        output_path = pdf_path.replace('/full_contract_pdf/', '/full_contract_raw_txt/').replace('.pdf', '.txt')
+        output_path = pdf_path.replace('/data/financebench/pdfs', '/out/financebench_raw_txt').replace('.pdf', '.txt')
         
         # Extract and save text
         text = extract_pdf_text_simple(pdf_path, output_path)
@@ -456,4 +456,5 @@ def test_provenance():
 if __name__ == "__main__":
     
     print("=== Running Provenance Generation ===")
-    test_provenance()
+    #test_provenance()
+    extract_raw_texts()

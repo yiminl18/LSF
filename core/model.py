@@ -4,11 +4,14 @@ import os, sys
 sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 
 from models.gpt_41_mini_azure import gpt_41_mini_azure
+from models.gpt_4o_azure import gpt_4o_azure
 
 #this is the models API. You pass the model (name of the model) and prompt, the API will return the response out 
-def model(prompt, model_name = 'gpt_41_mini_azure'):
+def model(prompt, model_name = 'gpt_4o_azure'):
     if(model_name == 'gpt_41_mini_azure'):
         return gpt_41_mini_azure(prompt)
+    if(model_name == 'gpt_4o_azure'):
+        return gpt_4o_azure(prompt)
     return 'input model does not exist'
 
 
