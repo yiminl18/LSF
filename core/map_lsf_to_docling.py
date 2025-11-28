@@ -3,9 +3,9 @@ import re
 from pathlib import Path
 from typing import List, Dict, Any, Optional, Tuple
 
-from docling_tool import to_json as docling_to_json
-from lsf_tool import to_json as lsf_to_json
-from text_summary import summarize_text
+from core.docling_tool import to_json as docling_to_json
+from core.lsf_tool import to_json as lsf_to_json
+from core.text_summary import summarize_text
 
 
 def normalize_text(text: str) -> str:
@@ -320,7 +320,7 @@ def process_pdf_with_both_tools(
     
     # Set output directory
     if output_dir is None:
-        output_dir = "result"
+        output_dir = "output/paper"
     result_dir = Path(output_dir)
     
     # Check if processed files already exist

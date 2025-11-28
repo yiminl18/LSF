@@ -1,6 +1,6 @@
 import os, json, glob
 from typing import Dict, List, Tuple
-from gpt_4o_azure import gpt_4o_azure
+from core.gpt_4o_azure import gpt_4o_azure
 import tiktoken
 
 

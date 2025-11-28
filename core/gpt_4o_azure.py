@@ -24,7 +24,7 @@ def estimate_tokens(text: str, model: str = "gpt-4o") -> int:
 
 
 def gpt_4o_azure(prompt: str, 
-                 key_path: str = '/Users/evier/Documents/gpt-4o.txt',
+                 key_path: str,
                  max_tokens: int = 800,
                  temperature: float = 0,
                  estimate_cost: bool = True) -> str:

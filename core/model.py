@@ -3,7 +3,7 @@ import os, sys
 # Add the current directory to the path so we can import from models
 sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 
-from gpt_4o_azure import gpt_4o_azure
+from core.gpt_4o_azure import gpt_4o_azure
 
 #this is the models API. You pass the model (name of the model) and prompt, the API will return the response out 
 def model(prompt, model_name = 'gpt_4o_azure'):

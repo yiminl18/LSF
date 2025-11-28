@@ -1,9 +1,11 @@
-import os
-import hashlib
 from pathlib import Path
 from sklearn.metrics.pairwise import cosine_similarity
 from openai import AzureOpenAI
 from typing import Optional
+
+# Paths and configuration
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+DEFAULT_KEY_PATH = PROJECT_ROOT.parent / "api_keys" / "azure_cloudbank" / "embedding.txt"
 
 # Default Azure OpenAI configuration
 DEFAULT_API_VERSION = "2025-01-01-preview"
@@ -11,34 +13,22 @@ DEFAULT_AZURE_ENDPOINT = "https://east-docetl.openai.azure.com/"
 DEFAULT_EMBEDDING_MODEL = "text-embedding-3-small-3"
 
 
-def get_text_hash(text: str) -> str:
-    """Generate MD5 hash of text for use as filename.
-    
-    Args:
-        text: Text to hash
-        
-    Returns:
-        MD5 hash string
-    """
-    return hashlib.md5(text.encode('utf-8')).hexdigest()
-
-
 def get_embedding(text: str,
-                  key_path: str = '/Users/evier/Documents/embedding_key.txt',
+                  key_path: str = str(DEFAULT_KEY_PATH),
                   model: str = DEFAULT_EMBEDDING_MODEL,
                   cache: bool = True,
                   cache_dir: Optional[str] = None,
                   azure_endpoint: str = DEFAULT_AZURE_ENDPOINT,
                   api_version: str = DEFAULT_API_VERSION) -> list:
     """
-    Get embedding vector for the given text.
+    Get embedding vector for the given text (no per-text caching).
     
     Args:
         text: Text to get embedding for
         key_path: Path to the API key file (default: '/Users/evier/Documents/embedding_key.txt')
         model: Embedding model name
-        cache: Whether to use cache, default True
-        cache_dir: Directory for caching embeddings (default: 'embedding')
+        cache: Deprecated; kept for backwards compatibility. Ignored.
+        cache_dir: Deprecated; kept for backwards compatibility. Ignored.
         azure_endpoint: Azure OpenAI endpoint URL
         api_version: API version to use
     
@@ -51,36 +41,6 @@ def get_embedding(text: str,
     if not text:
         # Return a zero vector (embedding dimension is typically 1536 for text-embedding-3-small)
         return [0.0] * 1536
-    
-    # Initialize cache directory
-    if cache_dir is None:
-        cache_dir = "embedding"
-    embedding_dir = Path(cache_dir)
-    embedding_dir.mkdir(exist_ok=True)
-    
-    # If caching is enabled, check if embedding already exists
-    if cache:
-        text_hash = get_text_hash(text)
-        embedding_file = embedding_dir / f"{text_hash}.npy"
-        
-        if embedding_file.exists():
-            import numpy as np
-            try:
-                embedding = np.load(embedding_file, allow_pickle=True)
-                # Check if it's a valid array
-                if isinstance(embedding, np.ndarray) and embedding.size > 0:
-                    return embedding.tolist()
-                else:
-                    # If file is corrupted, delete it and re-fetch
-                    print(f"Warning: Corrupted cache file detected, removing: {embedding_file}")
-                    embedding_file.unlink()
-            except (EOFError, ValueError, OSError) as e:
-                # If file is corrupted, delete it and re-fetch
-                print(f"Warning: Failed to load cache file {embedding_file}: {e}, removing it")
-                try:
-                    embedding_file.unlink()
-                except:
-                    pass
     
     # Call API to get embedding
     try:
@@ -99,10 +59,11 @@ def get_embedding(text: str,
         # Return zero vector as fallback
         return [0.0] * 1536
     
-    # If caching is enabled, save embedding
-    if cache:
-        import numpy as np
-        np.save(embedding_file, embedding)
+    # API returns a list-like; ensure plain list for downstream serialization
+    if hasattr(embedding, "tolist"):
+        embedding = embedding.tolist()
+    elif not isinstance(embedding, list):
+        embedding = list(embedding)
     
     return embedding
 
@@ -160,7 +121,7 @@ def cosine_sim(vec1: list, vec2: list) -> float:
 
 def calculate_similarity(text1: str,
                         text2: str,
-                        key_path: str = '/Users/evier/Documents/embedding_key.txt',
+                        key_path: str = str(DEFAULT_KEY_PATH),
                         cache: bool = True,
                         cache_dir: Optional[str] = None,
                         model: str = DEFAULT_EMBEDDING_MODEL,
@@ -173,8 +134,8 @@ def calculate_similarity(text1: str,
         text1: First text
         text2: Second text
         key_path: Path to the API key file (default: '/Users/evier/Documents/embedding_key.txt')
-        cache: Whether to use cache, default True
-        cache_dir: Directory for caching embeddings (default: 'embedding')
+        cache: Deprecated; kept for backwards compatibility. Ignored.
+        cache_dir: Deprecated; kept for backwards compatibility. Ignored.
         model: Embedding model name
         azure_endpoint: Azure OpenAI endpoint URL
         api_version: API version to use

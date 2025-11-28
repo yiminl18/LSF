@@ -1,7 +1,7 @@
-from gpt_4o_azure import gpt_4o_azure
+from core.gpt_4o_azure import gpt_4o_azure
 
 
-def ask(text: str, question: str, key_path: str = '/Users/evier/Documents/gpt-4o.txt') -> str:
+def ask(text: str, question: str, key_path: str) -> str:
     """
     Ask a question based on the given context text using GPT-4o.
     

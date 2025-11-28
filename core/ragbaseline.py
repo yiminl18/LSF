@@ -5,7 +5,7 @@ from openai import AzureOpenAI
 import numpy as np
 import json
 import time
-from gpt_4o_azure import gpt_4o_azure
+from core.gpt_4o_azure import gpt_4o_azure
 
 # Azure OpenAI configuration
 api_version = "2025-01-01-preview"

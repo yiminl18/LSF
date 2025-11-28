@@ -1,11 +1,11 @@
 import json
 from pathlib import Path
 from typing import Optional, Dict, Any, List, Tuple
-from map_lsf_to_docling import process_pdf_with_both_tools
-from calculate_similarity import calculate_similarity
-from ask import ask
-from evaluate_baseline import equal_llm, normalize_exact
-from gpt_4o_azure import gpt_4o_azure
+from core.map_lsf_to_docling import process_pdf_with_both_tools
+from core.calculate_similarity import get_embedding, cosine_sim
+from core.ask import ask
+from core.evaluate_baseline import equal_llm, normalize_exact
+from core.gpt_4o_azure import gpt_4o_azure
 
 PROMPT_TEMPLATE = (
     "You are an expert in document structure.\n"
@@ -93,12 +93,123 @@ def ask_if_parent(header_x: Dict[str, Any],
         return False
 
 
-def get_leaf(pdf_path: str,
-            question: str,
-            answer: str,
-            output_dir: Optional[str] = None,
-            embedding_key_path: str = '/Users/evier/Documents/embedding_key.txt',
-            gpt_key_path: str = '/Users/evier/Documents/gpt-4o.txt') -> Optional[Dict[str, Any]]:
+def build_embedding(merged_json_path: str,
+                    embedding_key_path: str,
+                    cache_dir: Optional[str] = None) -> int:
+    """
+    Build and cache embeddings for each header's combined text (header text + text_span).
+    If the merged embedding file already exists, loads and returns it without recomputing.
+
+    Args:
+        merged_json_path: Path to merged JSON file produced by map_lsf_to_docling
+        embedding_key_path: Path to the embedding API key file
+        cache_dir: Optional cache directory (defaults to 'embedding')
+
+    Returns:
+        Number of headers processed for embeddings.
+    """
+    merged_json_file = Path(merged_json_path)
+    cache_directory = Path(cache_dir) if cache_dir else Path("embedding")
+    cache_directory.mkdir(parents=True, exist_ok=True)
+    merged_embedding_path = cache_directory / f"{merged_json_file.stem}_embeddings.json"
+
+    # Check if merged embedding file already exists
+    if merged_embedding_path.exists():
+        print(f"Found existing embeddings file: {merged_embedding_path}")
+        with open(merged_embedding_path, 'r', encoding='utf-8') as f:
+            document_embeddings = json.load(f)
+        print(f"Loaded {len(document_embeddings)} embeddings from cache\n")
+        return len(document_embeddings)
+
+    # File doesn't exist, need to compute embeddings
+    with open(merged_json_path, 'r', encoding='utf-8') as f:
+        merged_data = json.load(f)
+
+    headers = merged_data.get('texts', [])
+    if not headers:
+        print("No headers found for embedding generation")
+        return 0
+
+    total_headers = len(headers)
+    processed_headers = 0
+
+    # Prepare storage for merged embeddings
+    document_embeddings: Dict[str, List[float]] = {}
+
+    print(f"\nStarting embedding build for {total_headers} headers...")
+    for idx, header in enumerate(headers, 1):
+        header_text = header.get('text', '')
+        text_span = header.get('text_span', '')
+
+        combined_text = f"{header_text} {text_span}".strip()
+        if not combined_text:
+            continue
+
+        processed_headers += 1
+        print(f"[Embedding] {processed_headers}/{total_headers} ({idx}/{total_headers}) - {header_text[:50]}...")
+
+        embedding_vector = get_embedding(
+            combined_text,
+            key_path=embedding_key_path,
+            cache=False,
+            cache_dir=str(cache_directory)
+        )
+
+        if hasattr(embedding_vector, "tolist"):
+            embedding_vector = embedding_vector.tolist()
+        elif not isinstance(embedding_vector, list):
+            embedding_vector = list(embedding_vector)
+
+        document_embeddings[combined_text] = embedding_vector
+
+    # Persist merged embeddings for the document
+    with open(merged_embedding_path, 'w', encoding='utf-8') as f:
+        json.dump(document_embeddings, f)
+
+    print(f"Embedding build complete! Generated embeddings for {processed_headers} headers")
+    print(f"Merged embeddings saved to: {merged_embedding_path}\n")
+    return processed_headers
+
+
+def load_document_embeddings(merged_json_path: str,
+                             embedding_key_path: str,
+                             cache_dir: Optional[str] = None) -> Tuple[Dict[str, List[float]], Path]:
+    """
+    Load merged embeddings for a document, building them if necessary.
+
+    Args:
+        merged_json_path: Path to merged JSON file
+        embedding_key_path: Path to the embedding API key file
+        cache_dir: Optional cache directory (defaults to 'embedding')
+
+    Returns:
+        Tuple of (embeddings_dict, embeddings_file_path)
+    """
+    cache_directory = Path(cache_dir) if cache_dir else Path("embedding")
+    cache_directory.mkdir(parents=True, exist_ok=True)
+
+    merged_json_file = Path(merged_json_path)
+    embeddings_path = cache_directory / f"{merged_json_file.stem}_embeddings.json"
+
+    if not embeddings_path.exists():
+        print(f"Embeddings file not found for {merged_json_file.stem}, building now...")
+        build_embedding(merged_json_path, embedding_key_path, str(cache_directory))
+    else:
+        print(f"Using existing embeddings for {merged_json_file.stem}")
+
+    with open(embeddings_path, 'r', encoding='utf-8') as f:
+        embeddings_dict = json.load(f)
+
+    return embeddings_dict, embeddings_path
+
+
+def find_provenance_node(pdf_path: str,
+                         merged_json_path: str,
+                         question: str,
+                         answer: str,
+                         embedding_key_path: str,
+                         gpt_key_path: str,
+                         cache_dir: Optional[str] = None) -> Optional[Dict[str, Any]]:
     """
     Find the first header that can answer the question (sorted by similarity).
     
@@ -106,16 +217,15 @@ def get_leaf(pdf_path: str,
         pdf_path: Path to the PDF file
         question: Question string
         answer: Expected answer string (for validation)
-        output_dir: Directory for output files (default: 'result')
-        embedding_key_path: Path to the embedding API key file
-        gpt_key_path: Path to the GPT API key file
+        embedding_key_path: Path to the embedding API key file (required)
+        gpt_key_path: Path to the GPT API key file (required)
+        cache_dir: Optional directory for embedding cache (forces calculate_similarity to use it)
     
     Returns:
         Matching header dictionary, or None if not found
     """
     # 1. Call map_lsf_to_docling to get merged_json
     print(f"Processing PDF: {pdf_path}")
-    merged_json_path = process_pdf_with_both_tools(pdf_path, output_dir=output_dir)
     
     # 2. Load merged_json
     with open(merged_json_path, 'r', encoding='utf-8') as f:
@@ -128,7 +238,29 @@ def get_leaf(pdf_path: str,
     
     print(f"Found {len(headers)} headers")
     
-    # 3. Calculate similarity between each header and question
+    # 3. Load document embeddings (build if needed)
+    document_embeddings, embeddings_path = load_document_embeddings(
+        merged_json_path,
+        embedding_key_path,
+        cache_dir
+    )
+    cache_directory = Path(cache_dir) if cache_dir else Path("embedding")
+    cache_directory.mkdir(parents=True, exist_ok=True)
+
+    # Pre-compute question embedding
+    question = question + " " + answer
+    question_embedding = get_embedding(
+        question,
+        key_path=embedding_key_path,
+        cache=False,
+        cache_dir=str(cache_directory)
+    )
+    if hasattr(question_embedding, "tolist"):
+        question_embedding = question_embedding.tolist()
+    elif not isinstance(question_embedding, list):
+        question_embedding = list(question_embedding)
+
+    # 4. Calculate similarity between each header and question
     header_similarities = []
     total_headers = len(headers)
     valid_headers = 0
@@ -149,12 +281,15 @@ def get_leaf(pdf_path: str,
         # Show progress
         print(f"[Progress] {valid_headers}/{total_headers} ({idx}/{total_headers}) - {header_text[:50]}...")
         
-        # Calculate similarity
-        similarity = calculate_similarity(combined_text, question, key_path=embedding_key_path)
+        # Retrieve or compute embedding for this header
+        header_embedding = document_embeddings.get(combined_text)
+        similarity = cosine_sim(header_embedding, question_embedding)
         header_similarities.append((similarity, header, combined_text))
         print(f"      Similarity: {similarity:.4f}")
     
     print(f"\nComplete! Calculated similarity for {valid_headers} headers")
+
+    # No need to update embeddings file here since rebuild happened upfront
     
     # 4. Sort by similarity (descending)
     header_similarities.sort(key=lambda x: x[0], reverse=True)
@@ -508,12 +643,12 @@ if __name__ == "__main__":
     #         print(f"  [{i}] {h.get('text', '')[:80]}")
     # """
     
-    # 原有的 get_leaf 示例代码（注释掉）
+    # 原有的 find_provenance_node 示例代码（注释掉）
     # """
     # question = "Did management report any material weaknesses in internal control over financial reporting (Yes/No)?"
     # answer = "No"
     # 
-    # result = get_leaf(pdf_path, question, answer)
+    # result = find_provenance_node(pdf_path, question, answer)
     # if result:
     #     print(f"\n找到匹配的 header: {result.get('text', '')}")
     #     
