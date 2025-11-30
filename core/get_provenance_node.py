@@ -248,7 +248,6 @@ def find_provenance_node(pdf_path: str,
     cache_directory.mkdir(parents=True, exist_ok=True)
 
     # Pre-compute question embedding
-    question = question + " " + answer
     question_embedding = get_embedding(
         question,
         key_path=embedding_key_path,
