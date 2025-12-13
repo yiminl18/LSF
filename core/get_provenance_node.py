@@ -3,8 +3,7 @@ from pathlib import Path
 from typing import Optional, Dict, Any, List, Tuple
 from core.map_lsf_to_docling import process_pdf_with_both_tools
 from core.calculate_similarity import get_embedding, cosine_sim
-from core.ask import ask
-from core.evaluate_baseline import equal_llm, normalize_exact
+from core.judge_header import judge_header, normalize_exact
 from core.gpt_4o_azure import gpt_4o_azure
 
 PROMPT_TEMPLATE = (
@@ -299,26 +298,18 @@ def find_provenance_node(pdf_path: str,
     for similarity, header, combined_text in header_similarities:
         print(f"\nTrying header: {header.get('text', '')[:50]}... (similarity: {similarity:.4f})")
         
-        # Use ask function to get answer
-        predicted_answer = ask(combined_text, question, key_path=gpt_key_path)
-        
-        # Check if answer is correct
-        # First text comparison
-        is_exact_match = normalize_exact(predicted_answer) == normalize_exact(answer)
-        
-        if is_exact_match:
-            print(f"✓ Text match successful!")
+        is_match, predicted_answer = judge_header(
+            combined_text,
+            question,
+            answer,
+            key_path=gpt_key_path,
+        )
+
+        if is_match:
+            print(f"✓ Matched! (response: {predicted_answer})")
             return header
-        
-        # If text doesn't match, use LLM to judge
-        print(f"Text doesn't match, using LLM to judge...")
-        is_equivalent, judge_tokens = equal_llm(predicted_answer, answer, question)
-        
-        if is_equivalent:
-            print(f"✓ LLM judged as equivalent!")
-            return header
-        
-        print(f"✗ Answer doesn't match")
+
+        print(f"✗ Answer doesn't match (response: {predicted_answer})")
     
     print("\nNo matching header found")
     return None
