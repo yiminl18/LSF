@@ -1,115 +1,264 @@
-# OCR Text Extraction Project
+# LSF: Light-weight Structure Fusion
 
-This project provides tools for extracting text from PDFs and images using OCR (Optical Character Recognition).
+1. **Problem 1: Document Structure-Aware Retrieval**
+2. **Problem 2: Unsupervised Document Clustering**
 
-## Setup
+## Installation
 
-### 1. Create Virtual Environment
 ```bash
-python -m venv ocr_env
-source ocr_env/bin/activate  # On macOS/Linux
-# or
-ocr_env\Scripts\activate  # On Windows
+pip install -e .
 ```
 
-### 2. Install Dependencies
+### Provider Configuration
+
+The artifact code supports multiple provider backends. The required environment
+variables depend on the provider you choose.
+
+#### Embedding Providers for Problem 1
+
+`train_model.py` and `evaluate_model.py` support these `--embed-provider` values:
+`openai`, `azure`, `openrouter`.
+
+API-backed embedding providers require:
+
+| Provider | Required environment variables |
+|----------|--------------------------------|
+| `azure` | `AZURE_EMBEDDING_API_KEY`, `AZURE_EMBEDDING_API_BASE`, `AZURE_API_VERSION` |
+| `openai` | `OPENAI_API_KEY` |
+| `openrouter` | `OPENROUTER_API_KEY` |
+
+#### Providers for Problem 2
+
+The canonical P2 input builder supports `--embed-provider` and reads provider-
+specific document embedding caches from:
+
+- `datasets/pdfs/latest/embedding/<provider>/document_embedding`
+- `datasets/paper/latest/embedding/<provider>/document_embedding`
+
+The retained canonical P2 workflow is validated with `--embed-provider openrouter`.
+
+The canonical P2 pipeline supports `--llm-provider azure|openai|openrouter`.
+
+| Provider | Required environment variables |
+|----------|--------------------------------|
+| `azure` | `AZURE_API_KEY`, `AZURE_API_BASE`, `AZURE_API_VERSION` |
+| `openai` | `OPENAI_API_KEY` |
+| `openrouter` | `OPENROUTER_API_KEY` |
+
+## Problem 1: Document Structure-Aware Retrieval
+
+### Retained Model Surface
+
+This artifact keeps only the two validated ranking model families:
+
+- `xgb-sem-struc-v5`
+- `hnn-sem-struc-v5`
+
+The retained feature surface is `mode=25`, a 52-dimensional fusion of semantic,
+lexical, structural, content-aware, and visual signals.
+
+### Workflow
+
+> Steps 2-7 require `--parser docling|mineru`.
+
+1. **Preprocess PDFs**
+
 ```bash
-pip install pytesseract PyMuPDF Pillow requests jupyter
+python -m core.pipeline.preprocess \
+    --dataset pdfs \
+    --type docling
 ```
 
-### 3. Install Tesseract OCR (if not already installed)
-- **macOS**: `brew install tesseract`
-- **Ubuntu/Debian**: `sudo apt-get install tesseract-ocr`
-- **Windows**: Download from https://github.com/UB-Mannheim/tesseract/wiki
+Input: `datasets/<dataset>/latest/raw/*.pdf`  
+Output: `datasets/<dataset>/latest/processing/*_docling.json`
 
-## Usage
+2. **Build Processing JSON**
 
-### Python Script
-```python
-from ocr_notebook import extract_text_from_pdf, extract_text_from_image
-
-# Extract text from PDF
-text = extract_text_from_pdf("path/to/document.pdf")
-# or from URL
-text = extract_text_from_pdf("https://arxiv.org/pdf/2408.09869")
-
-# Extract text from image
-text = extract_text_from_image("path/to/image.png")
-# or from URL
-text = extract_text_from_image("https://example.com/image.jpg")
+```bash
+python -m core.pipeline.build_processing_json \
+    --dataset pdfs \
+    --parser docling
 ```
 
-### Jupyter Notebook
-1. Start Jupyter: `jupyter notebook`
-2. Open `ocr.ipynb` or create a new notebook
-3. Import the module:
-```python
-from ocr_notebook import *
+Input: `processing/*_docling.json`  
+Output: `processing/*_reconstructed.json`
+
+3. **Generate Embeddings**
+
+```bash
+python -m core.pipeline.generate_embeddings \
+    --dataset pdfs \
+    --parser docling \
+    --embed-provider openrouter
 ```
 
-## Files
+Input: `processing/*_reconstructed.json`  
+Output: `embedding/<provider>/document_embedding/*_reconstructed_embeddings.npz`
 
-- `ocr.py` - Standalone OCR script
-- `ocr_notebook.py` - Module for use in notebooks
-- `ocr.ipynb` - Jupyter notebook (to be created)
-- `ocr_env/` - Virtual environment directory
+4. **Generate Labels**
 
-## Features
-
-- Extract text from PDF files (local or URL)
-- Extract text from images using OCR (local or URL)
-- Text analysis and statistics
-- Support for multiple file formats
-- Error handling and logging
-
-## Example Output
-
-```
-OCR Text Extraction Tool
-==================================================
-Extracting text from: https://arxiv.org/pdf/2408.09869
-Text Preview (first 1000 characters):
---------------------------------------------------
-Docling Technical Report
-Version 1.0
-Christoph Auer
-Maksym Lysak
-...
-
-Total characters: 44250
-
-Text Statistics:
---------------------
-Total Characters: 44250
-Total Words: 6561
-Total Lines: 1305
-Non Empty Lines: 1279
-Average Words Per Line: 5.03
-Average Chars Per Word: 5.63
+```bash
+python -m core.pipeline.generate_labels \
+    --dataset pdfs \
+    --parser docling
 ```
 
-## Troubleshooting
+Input: processing JSON + embeddings  
+Output: `label/*_reconstructed_labels.json`
 
-### Common Issues
+5. **Split Dataset**
 
-1. **Tesseract not found**: Make sure Tesseract is installed and in your PATH
-2. **Import errors**: Ensure you're using the virtual environment
-3. **PDF processing errors**: Check if the PDF is accessible and not corrupted
+```bash
+python -m core.pipeline.split_dataset \
+    --dataset pdfs \
+    --parser docling \
+    --experiment default
+```
 
-### Original Issue
-The original `docling` library had compatibility issues with newer versions of Pydantic. This solution uses more stable libraries:
-- `pytesseract` for OCR
-- `PyMuPDF` for PDF processing
-- `Pillow` for image handling
+Output: `experiments/<exp>/<dataset>/splits/`
 
-JSON note 
+6. **Train Models**
 
-- self_ref: id of phrase with type, e.g., text, body, picture, group
-- parent: id of its parent node 
-- children: list of ids of children of current node 
-- label: type of phrase, e.g., text, body, picture, group
-- prov: provenance 
-  - page_no
-  - bbox 
-  - charspan (size of current phrase)
-- text: phrase content 
+```bash
+python -m core.pipeline.train_model \
+    --dataset pdfs \
+    --parser docling \
+    --model_config xgb-sem-struc-v5 hnn-sem-struc-v5 \
+    --embed-provider openrouter \
+    --seeds 41,42,43 \
+    --curriculum \
+    --experiment default \
+    --workers 4
+```
+
+Retained training behavior:
+
+- `--curriculum` remains available
+- `--seeds 41,42,43` is the standard multi-seed configuration
+
+7. **Evaluate Models**
+
+```bash
+python -m core.pipeline.evaluate_model \
+    --dataset pdfs \
+    --parser docling \
+    --model_config xgb-sem-struc-v5 hnn-sem-struc-v5 \
+    --embed-provider openrouter \
+    --seeds 41,42,43 \
+    --score-agg softmax \
+    --softmax-alpha 5.0 \
+    --experiment default \
+    --workers 4
+```
+
+Retained evaluation behavior:
+
+- `softmax` is the default score aggregation method
+- `alpha=5.0` is the retained default temperature
+- `top2_mean` remains available as the simpler alternative
+
+## Problem 2: Unsupervised Document Clustering
+
+### Canonical Workflow
+
+This artifact keeps exactly one P2 workflow:
+
+1. start from the full reconstructed document corpus
+2. generate canonical runtime inputs from that corpus
+3. build `S_tfidf` from heading text
+4. build `S_tree` from tree-shape fingerprints
+5. fuse `S_sem`, `S_tfidf`, and `S_tree` with fixed weights `0.5 / 0.3 / 0.2`
+6. run recursive spectral bisection with silhouette pruning
+7. run one corpus-level LLM merge over the resulting clusters
+8. report NMI, ARI, 10-Q recall, and PERIODIC precision/recall
+
+### Source Corpus
+
+The canonical P2 flow starts from reconstructed processing JSON files:
+
+- `datasets/pdfs/latest/processing-newer` for the full 365-document pdf corpus
+- `datasets/paper/latest/processing` for the 238-document paper corpus
+
+There is no separate `processing-full` directory in this repo.
+
+### Generate Canonical Inputs
+
+The retained pipeline does not read processing JSONs directly. It first consumes
+four generated runtime inputs:
+
+- `output/phase0/sec_filing_types.csv`
+- `output/phase2/representations/full_representations.pkl`
+- `output/phase2/similarity_matrices/S_sem_full.npy`
+- `output/phase2/clustering/full_corpus_labels.npz`
+
+If the full local datasets are available, build those inputs before running P2:
+
+```bash
+python -m core.cluster.bisection.prepare_inputs \
+    --force \
+    --embed-provider openrouter
+```
+
+The canonical builder reads the local processing JSON corpus and the existing
+provider-specific document embedding caches already on disk.
+
+If those datasets are not present in this checkout, prepare the four runtime
+inputs in `LSF-dev` and copy them into the artifact workspace.
+
+Generated `output/` files are runtime-only and should not be kept in the artifact repo.
+
+### Run the Pipeline
+
+```bash
+python -m core.cluster.bisection.pipeline --llm-provider azure
+```
+
+The command runs the retained fused clustering pipeline and writes results to
+`output/phase2_clustering/`.
+
+### Generated Files
+
+Primary outputs:
+
+- `canonical_pipeline_summary.json`: primary machine-readable summary of the retained methods
+- `canonical_pipeline_summary.csv`: tabular convenience view of the same summary
+
+Supporting diagnostics:
+
+- `fused_pruned_confusion.csv`: full-class confusion matrix before LLM merge
+- `fused_pruned_periodic_confusion.csv`: periodic-vs-nonperiodic confusion before LLM merge
+- `fused_pruned_assignments.csv`: document-to-cluster assignments before LLM merge
+- `llm_merged_confusion.csv`: full-class confusion matrix after LLM merge
+- `llm_merged_periodic_confusion.csv`: periodic-vs-nonperiodic confusion after LLM merge
+- `llm_merged_assignments.csv`: document-to-cluster assignments after LLM merge
+
+### Package Boundaries
+
+- `core.cluster` is the retained Problem 2 runtime and canonical input-builder surface.
+
+
+## Project Structure
+
+```text
+LSF/
+├── README.md
+├── pyproject.toml
+├── datasets/
+│   └── .gitkeep
+├── experiments/
+│   └── .gitkeep
+├── src/core/
+│   ├── doc/
+│   ├── embed/
+│   ├── retrieval/
+│   ├── llm/
+│   ├── ml/
+│   ├── pipeline/
+│   ├── cluster/                # Retained Problem 2 pipeline and input builder
+│   └── utils/
+└── test/
+    ├── test_p1_workflow.py
+    ├── test_p2_workflow.py
+```
+
+`datasets/` and `experiments/` are intentionally empty in git. They are placeholders for runtime data and generated artifacts.

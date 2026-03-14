@@ -1,0 +1,37 @@
+[project]
+name = "lsf"
+version = "0.1.0"
+description = "Light-weight Structure Fusion: Document intelligence pipeline for PDF corpora"
+requires-python = ">=3.10"
+dependencies = [
+    "openai>=1.0",
+    "scikit-learn",
+    "tiktoken",
+    "PyMuPDF",
+    "pdfplumber",
+    "numpy",
+    "docling",
+    "xgboost",
+    "rich",
+    "psutil",
+    "pytesseract",
+    "pillow",
+    "pyyaml",
+    "rapidfuzz",
+    "torch",
+    "matplotlib",
+    "scipy",
+    "orjson",
+    "huggingface_hub",
+]
+
+[project.optional-dependencies]
+dev = [
+    "optuna",
+]
+mineru = [
+    "mineru[all]",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]

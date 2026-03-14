@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.eggs/
+*.egg
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# System
+__MACOSX/
+.DS_Store
+*.log
+
+# MLflow local storage
+mlruns/
+
+# Environment files (contain secrets)
+.env
+*.env.local
+
+# Runtime artifacts
+output/
+outputs/
+models/
+.cache/
+.temp/
+wandb/
+mlflow.db
+target/
+.pytest_cache/
+
+# Runtime-generated datasets and experiment outputs
+datasets/*
+!datasets/.gitkeep
+experiments/*
+!experiments/.gitkeep
+.serena/
