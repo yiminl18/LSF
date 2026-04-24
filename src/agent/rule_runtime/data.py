@@ -292,9 +292,10 @@ def extract_ground_truth(
     for label_entry in data.get("labels", []):
         if label_entry.get("doc_name") == doc_id:
             actual_idx = label_entry.get("question_idx")
-            assert actual_idx == query_idx, (
-                f"question_idx mismatch: expected {query_idx}, got {actual_idx}, doc={doc_id}"
-            )
+            if actual_idx != query_idx:
+                raise ValueError(
+                    f"question_idx mismatch: expected {query_idx}, got {actual_idx}, doc={doc_id}"
+                )
             gt = label_entry.get("ground_truth", "")
             if not gt:
                 raise ValueError(

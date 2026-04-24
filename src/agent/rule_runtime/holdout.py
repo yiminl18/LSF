@@ -41,7 +41,7 @@ from core.pipeline.e2e_utils.cache import CachedLLMCaller, DEFAULT_CACHE_DB_PATH
 
 _INFO_NOT_FOUND = "information not found."
 _DEFAULT_RETRIEVAL_TOO_LARGE_TOKEN_THRESHOLD = 5000
-_DEFAULT_OUTPUT_ROOT = Path("output/agent/hypothesis1_gate")
+_DEFAULT_OUTPUT_ROOT = Path("output/agent/holdout")
 
 # Hint gate threshold: when rule.phase_a_hint_reliability >= this value and the
 # hint regex does not match, the pair is treated as judge=False (skipping LLM
@@ -170,8 +170,14 @@ def select_holdout_docs(
 
 
 def _random_sample(doc_ids: list[str], max_docs: int, seed: int) -> list[str]:
-    """Reproducible unbiased sample using random.Random(seed); returns all candidates if fewer than max_docs."""
-    if max_docs <= 0 or max_docs >= len(doc_ids):
+    """Reproducible unbiased sample using random.Random(seed); returns all candidates if fewer than max_docs.
+
+    max_docs == 0 means "unlimited"; negatives are rejected to catch CLI typos
+    that would otherwise silently return the full list.
+    """
+    if max_docs < 0:
+        raise ValueError(f"max_docs must be >= 0 (0 = unlimited), got {max_docs}")
+    if max_docs == 0 or max_docs >= len(doc_ids):
         return list(doc_ids)
     rng = random.Random(seed)
     return rng.sample(doc_ids, max_docs)

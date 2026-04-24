@@ -277,10 +277,15 @@ def run_phase_a_hybrid(
         "deduped_unique_rules": deduped_count,
     }
 
+    # processed_doc_ids is the union of all path subsets (docs actually handled by
+    # a per-path agent). excluded_doc_ids is the full loaded set used for cross_doc
+    # eval and Phase B exclusion; the two differ when a path happens to drop a doc.
+    processed_doc_ids = sorted({d for subset in subsets_ids for d in subset})
+
     # Persist using _save_phase_a_results, then append hybrid_meta
     _save_phase_a_results(
         output_dir, query_idx, best_rules, cross_doc_eval, total_cost,
-        excluded_doc_ids, total_exploration_cost, cross_doc_eval_cost,
+        processed_doc_ids, total_exploration_cost, cross_doc_eval_cost,
         excluded_doc_ids,
     )
 

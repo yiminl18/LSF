@@ -257,8 +257,16 @@ def _sampled_doc_ids_from_payload(
     config: dict[str, Any],
     query_idx: int,
     sampled_summary: dict[str, Any] | None = None,
+    phase_a_docs: dict[str, Any] | None = None,
 ) -> set[str]:
     sampled_doc_ids = collect_sampled_doc_ids_from_best_rules(payload, sampled_summary)
+
+    # Tool-agent writes exclusion IDs to a sibling phase_a_docs.json (not best_rules.json);
+    # merging from there ensures cascade deploy excludes every doc the agent saw.
+    if phase_a_docs is not None:
+        for key in ("excluded_doc_ids", "processed_doc_ids"):
+            sampled_doc_ids.update(str(d) for d in phase_a_docs.get(key) or [])
+
     if sampled_doc_ids:
         return sampled_doc_ids
 
@@ -317,8 +325,13 @@ def main() -> None:
     if sampled_summary_path.exists():
         with sampled_summary_path.open("r", encoding="utf-8") as f:
             sampled_summary = json.load(f)
+    phase_a_docs_path = args.in_best_rules.with_name("phase_a_docs.json")
+    phase_a_docs = None
+    if phase_a_docs_path.exists():
+        with phase_a_docs_path.open("r", encoding="utf-8") as f:
+            phase_a_docs = json.load(f)
     sampled_doc_ids = _sampled_doc_ids_from_payload(
-        payload, config, args.query_idx, sampled_summary
+        payload, config, args.query_idx, sampled_summary, phase_a_docs
     )
     rules = load_rules_from_best_rules(args.in_best_rules)
     sampled_eval = load_sampled_eval_from_best_rules(args.in_best_rules, rules)
