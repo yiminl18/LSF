@@ -1,0 +1,129 @@
+# Agent Pattern Discovery - Phase 1 main sampled set config
+# pdfs dataset (10-K), docling parser, truncated before Item 2.
+# 10 docs per query, selected across q1/q3/q4/q8/q9 for provenance coverage
+# and deduplicated by issuer to improve company diversity.
+# Recommended with grouped_433 packaging: generation sees small bundles while
+# evaluation covers all 10 docs.
+
+dataset: pdfs
+parser: docling
+dataset_root: datasets/pdfs/latest
+
+llm_provider: azure
+llm_model: gpt-5.4-mini
+max_tokens_output: 4096
+temperature: 0.3
+
+# Rule mode: "json_spec" | "json_spec_reflect" | "python_code"
+rule_mode: json_spec_reflect
+rule_text_format: normalized
+reflection_rounds: 2
+reflection_top_failure_examples: 2
+retrieval_too_large_token_threshold: 5000
+# 10-doc grouped_433 generation stays comfortably under the fast-dev cost guardrail.
+projected_generation_cost_threshold_usd: 12.0
+
+# Truncate: stop before Item 2 (retain cover page + Item 1 only)
+truncate_before: "item\\s*2\\b"
+
+# Anonymize: hide real filenames in prompts, substitute Document A/B/C/...
+anonymize_doc_ids: true
+
+queries:
+  - query_idx: 0
+    # "What is the registrant's exact name?"
+    documents:
+      - "AMAZON_2015_10K"
+      - "AMAZON_2016_10K"
+      - "AMAZON_2017_10K"
+      - "GENERALMILLS_2015_10K"
+      - "GENERALMILLS_2016_10K"
+      - "ADOBE_2015_10K"
+      - "AMCOR_2019_10K"
+      - "BESTBUY_2015_10K"
+      - "COSTCO_2021_10K"
+      - "EBAY_2022_10K"
+
+  - query_idx: 1
+    # "What is the state of incorporation and IRS EIN?"
+    documents:
+      - "AMAZON_2015_10K"
+      - "AMAZON_2016_10K"
+      - "AMAZON_2017_10K"
+      - "GENERALMILLS_2015_10K"
+      - "GENERALMILLS_2016_10K"
+      - "ADOBE_2015_10K"
+      - "AMCOR_2019_10K"
+      - "BESTBUY_2015_10K"
+      - "COSTCO_2021_10K"
+      - "EBAY_2022_10K"
+
+  - query_idx: 3
+    # "What is the registrant's telephone number?"
+    documents:
+      - "AMAZON_2015_10K"
+      - "AMAZON_2016_10K"
+      - "AMAZON_2017_10K"
+      - "GENERALMILLS_2015_10K"
+      - "GENERALMILLS_2016_10K"
+      - "ADOBE_2015_10K"
+      - "AMCOR_2019_10K"
+      - "BESTBUY_2015_10K"
+      - "COSTCO_2021_10K"
+      - "EBAY_2022_10K"
+
+  - query_idx: 4
+    # "What is the fiscal year-end date?"
+    documents:
+      - "AMAZON_2015_10K"
+      - "AMAZON_2016_10K"
+      - "AMAZON_2017_10K"
+      - "GENERALMILLS_2015_10K"
+      - "GENERALMILLS_2016_10K"
+      - "ADOBE_2015_10K"
+      - "AMCOR_2019_10K"
+      - "BESTBUY_2015_10K"
+      - "COSTCO_2021_10K"
+      - "EBAY_2022_10K"
+
+  - query_idx: 5
+    # "What is/are the trading symbol(s) and listing exchange(s)?"
+    documents:
+      - "AMAZON_2015_10K"
+      - "AMAZON_2016_10K"
+      - "AMAZON_2017_10K"
+      - "GENERALMILLS_2015_10K"
+      - "GENERALMILLS_2016_10K"
+      - "ADOBE_2015_10K"
+      - "AMCOR_2019_10K"
+      - "BESTBUY_2015_10K"
+      - "COSTCO_2021_10K"
+      - "EBAY_2022_10K"
+
+  - query_idx: 8
+    # "What principal products/services are named in Item 1?"
+    documents:
+      - "AMAZON_2015_10K"
+      - "AMAZON_2016_10K"
+      - "AMAZON_2017_10K"
+      - "GENERALMILLS_2015_10K"
+      - "GENERALMILLS_2016_10K"
+      - "ADOBE_2015_10K"
+      - "AMCOR_2019_10K"
+      - "BESTBUY_2015_10K"
+      - "COSTCO_2021_10K"
+      - "EBAY_2022_10K"
+
+  - query_idx: 9
+    # "What principal markets/geographies are named in Item 1?"
+    documents:
+      - "AMAZON_2015_10K"
+      - "AMAZON_2016_10K"
+      - "AMAZON_2017_10K"
+      - "GENERALMILLS_2015_10K"
+      - "GENERALMILLS_2016_10K"
+      - "ADOBE_2015_10K"
+      - "AMCOR_2019_10K"
+      - "BESTBUY_2015_10K"
+      - "COSTCO_2021_10K"
+      - "EBAY_2022_10K"

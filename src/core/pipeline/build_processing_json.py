@@ -16,6 +16,7 @@ import sys
 import gc
 import random
 from pathlib import Path
+from typing import Optional
 import torch
 from core.utils.paths import PathManager, PROJECT_ROOT
 from core.utils.suffix import strip_required_suffix
@@ -190,6 +191,8 @@ def _process_single_doc_reconstruct(
     kb: PatternKnowledgeBase,
     dataset: str,
     llm_provider: str = "azure",
+    *,
+    llm_model: str,
     parser: str = "docling",
 ) -> bool:
     """Worker function to process a single document."""
@@ -232,6 +235,7 @@ def _process_single_doc_reconstruct(
             kb,
             dataset,
             llm_provider,
+            llm_model=llm_model,
             parser=parser,
         )
         pairs = collect_parent_verification_tasks(root, body_style)
@@ -302,12 +306,16 @@ def reconstruct_documents(
     workers: int = 1,
     seed: int = 42,
     llm_provider: str = "azure",
+    llm_model: Optional[str] = None,
     include_no_gt: bool = False,
     parser: str = "docling",
 ):
     """
     Serial Reconstruction with memory safety and orjson speedups.
     """
+    if not llm_model:
+        raise ValueError("llm_model must be specified explicitly")
+
     variant = parser if parser != "docling" else None
     paths = PathManager(experiment=experiment, processing_variant=variant)
     random.seed(seed)
@@ -340,13 +348,20 @@ def reconstruct_documents(
     print(f"Workers:    {workers} (Serial + Periodic Cache Clear)")
     print(f"Seed:       {seed}")
     print(f"LLM:        {llm_provider}")
+    print(f"Model:      {llm_model}")
     print()
 
     success_count = 0
     failed_docs = []
     for doc_name in tqdm(selected_docs, desc="Building processing JSON"):
         if _process_single_doc_reconstruct(
-            paths, doc_name, kb, dataset, llm_provider, parser=parser
+            paths,
+            doc_name,
+            kb,
+            dataset,
+            llm_provider,
+            llm_model=llm_model,
+            parser=parser,
         ):
             success_count += 1
         else:
@@ -379,8 +394,14 @@ def main():
         "--llm-provider",
         type=str,
         default="azure",
-        choices=sorted(["azure", "openai", "openrouter"]),
+        choices=sorted(["azure", "openrouter"]),
         help="LLM provider for header validation",
+    )
+    parser.add_argument(
+        "--model",
+        type=str,
+        required=True,
+        help="LLM model for header validation",
     )
     parser.add_argument(
         "--include-no-gt",
@@ -404,6 +425,7 @@ def main():
         workers=args.workers,
         seed=args.seed,
         llm_provider=args.llm_provider,
+        llm_model=args.model,
         include_no_gt=args.include_no_gt,
         parser=args.parser,
     )

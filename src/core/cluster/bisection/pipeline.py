@@ -127,6 +127,8 @@ def _save_outputs(results: dict[str, dict[str, Any]], data: dict[str, Any]) -> N
 def run_recursive_fused(
     data: dict[str, Any],
     llm_provider: str = "azure",
+    *,
+    llm_model: str,
 ) -> dict[str, Any]:
     """Run the retained P2 workflow with fixed fusion weights and one LLM merge.
     
@@ -173,11 +175,16 @@ def run_recursive_fused(
         pruned_result["10Q_recall"] * 100.0,
     )
 
-    logger.info("  Running single corpus-level LLM merge with provider=%s...", llm_provider)
+    logger.info(
+        "  Running single corpus-level LLM merge with provider=%s model=%s...",
+        llm_provider,
+        llm_model,
+    )
     merged_assignments = llm_merge_clusters(
         pruned_assignments,
         representations,
         llm_provider=llm_provider,
+        llm_model=llm_model,
     )
     merged_result = _evaluate_assignments("llm_merged", merged_assignments, data)
 
@@ -211,11 +218,17 @@ def main() -> None:
         default="azure",
         help="LLM provider for the single corpus-level merge step",
     )
+    parser.add_argument(
+        "--model",
+        type=str,
+        required=True,
+        help="LLM model for the single corpus-level merge step",
+    )
     args = parser.parse_args()
 
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s")
     data = load_all_data()
-    run_recursive_fused(data, llm_provider=args.llm_provider)
+    run_recursive_fused(data, llm_provider=args.llm_provider, llm_model=args.model)
     logger.info("Canonical P2 outputs saved to %s", BISECTION_OUT_DIR)
 
 

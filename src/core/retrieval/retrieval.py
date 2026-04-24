@@ -60,6 +60,7 @@ def find_provenance_node(
     top_k_check: int = 50,
     judge_mode: str = "answer_compare",
     llm_provider: str = "azure",
+    llm_model: Optional[str] = None,
     match_limit: int = 3,
     header_page: Optional[int] = None,
 ) -> Tuple[List[Dict[str, Any]], int]:
@@ -76,6 +77,9 @@ def find_provenance_node(
     Returns:
         (matches, total_checked_count)
     """
+    if not llm_model:
+        raise ValueError("llm_model must be specified explicitly")
+
     print(f"Processing PDF (Unified Provenance): {pdf_path}")
 
     with open(merged_json_path, "r", encoding="utf-8") as f:
@@ -175,6 +179,7 @@ def find_provenance_node(
                     answer,
                     mode=judge_mode,
                     llm_provider=llm_provider,
+                    llm_model=llm_model,
                     path_text=path_text,
                 )
                 results = [(i, similarity, header, idx, is_match, predicted_answer)]
@@ -199,6 +204,7 @@ def find_provenance_node(
                             answer,
                             mode=judge_mode,
                             llm_provider=llm_provider,
+                            llm_model=llm_model,
                             path_text=path_text,
                         )
                         future_to_item[future] = (i, similarity, header, idx)

@@ -1,0 +1,119 @@
+You are a document rule generator.
+
+Your task is NOT to extract the answer directly.
+Your task is to generate executable atomic **region rules** that narrow a document down to a text region likely containing the answer.
+
+You must output **JSON only**. Do not output markdown. Do not output prose before or after the JSON.
+
+## Query
+{query_text}
+
+## Documents
+The documents below use the literal surface shown in the examples.
+In normalized text, section headers appear as `[Section] ...` and page boundaries appear as `[Page N]`.
+If a document instead shows markdown headings or page comments, write anchors against those literal strings.
+
+{for each doc in documents:}
+---
+### Document: {doc_id}
+
+{markdown_text}
+---
+{end for documents}
+
+## Ground-truth answers for the sample documents
+These are provided only so you can infer stable retrieval patterns across documents.
+Do NOT copy answer values into the rules.
+
+{for each doc in answers:}
+- **{doc_id}**: {ground_truth_answer}
+{end for answers}
+
+## Allowed modes
+- `"after"`: take text starting FROM the anchor, forward up to `max_chars`. Use when the answer appears AFTER a known landmark.
+- `"before"`: take text ending AT the anchor, backward up to `max_chars`. Use when the answer appears BEFORE a known landmark.
+- `"around"`: take a window centered ON the anchor, total `max_chars`. Use when the answer is near a landmark but direction is uncertain.
+- `"between"`: take text from `anchor` to `anchor_b` (both inclusive). Use when the answer sits between two known landmarks.
+- `"page"`: take all text on the given page. Use only when page position is stable across documents.
+
+Any mode except `"page"` may optionally set `page_idx` to restrict anchor matching to a single page.
+
+## Optional boundary context
+- `boundary_context_chars` is a non-negative integer.
+- Use it only when a small amount of extra context just OUTSIDE the main boundary is helpful.
+- Semantics:
+  - `after`: include up to `boundary_context_chars` characters BEFORE the anchor in addition to the main forward window.
+  - `before`: include up to `boundary_context_chars` characters AFTER the anchor in addition to the main backward window.
+  - `between`: expand BOTH sides of the main span by up to `boundary_context_chars`.
+  - `around` and `page`: set `boundary_context_chars` to `0`.
+
+## Rule families to consider
+- Prefer covering different retrieval families when the answer pattern is uncertain.
+- Common families include:
+  - `page` / physical-location rules
+  - single-anchor direction rules (`after` / `before`)
+  - two-anchor boundary rules (`between`)
+  - heading or section-neighborhood rules
+  - keyword-neighborhood or label-neighborhood rules
+  - relative-position patterns such as "value appears immediately before/after a label"
+
+## Anchor-side reasoning
+- Before choosing `after` or `before`, reason about WHICH SIDE of the anchor is more likely to contain the answer.
+- Do NOT assume the answer is after a label just because the label mentions the target field.
+- If the anchor looks like a caption, label, or parenthetical field description, the answer may appear immediately BEFORE it, immediately AFTER it, or straddle the boundary.
+- Use a small `boundary_context_chars` only when the answer seems adjacent to the boundary; do not use it as a substitute for the wrong direction.
+- Prefer anchors that behave like stable landmarks: headings, labels, captions, recurring field names, page markers, or repeated section boundaries.
+- Avoid answer-like content snippets, one-off entity lists, or semantically plausible phrases as anchors unless they recur as reliable landmarks across the sample documents.
+
+## Coverage vs scope
+- For list-style or category-style questions, avoid relying only on broad introductory boilerplate if the sample docs suggest more local subsections, enumerations, or concentrated noun-phrase neighborhoods.
+- If one long section is likely relevant but too diffuse, prefer a tighter subsection/keyword family plus at most one broader fallback.
+
+## Rule-writing constraints
+1. Do NOT return the answer itself.
+2. Do NOT hardcode answer values.
+3. Do NOT branch on document identity, company name, or year.
+4. Use only signals visible in the provided document surface.
+5. One rule must contain exactly one retrieval strategy. Do NOT hide fallbacks, if/else logic, or mixed policies inside a single rule.
+6. If you need alternatives, emit multiple independent rules rather than combining them.
+7. Page markers may be used only when clearly stable across the sample docs.
+8. Prefer the smallest region that still plausibly contains the answer, but do NOT make every rule equally narrow when the document structure looks unstable.
+9. If you emit multiple rules, make them differ by scope or boundary choice, not just anchor wording.
+10. If one stable rule clearly covers the sample documents, output that single rule instead of inventing extra variants.
+11. When uncertainty exists, prefer a bundle with range diversity such as: one tight high-precision rule, optionally one medium rule, and at most one broader fallback rule.
+12. A fallback rule must still be bounded and plausible; do NOT use whole-document retrieval.
+13. Do NOT output multiple near-duplicate rules that retrieve essentially the same region family with only tiny wording differences.
+14. If two rules share the same family, they must differ materially in direction, boundary choice, or scope.
+15. If all candidate rules point to the same top-level region and that region looks diffuse, replace at least one rule with a different family.
+16. Do NOT use a phrase as an anchor merely because it resembles part of the answer; the anchor should be a stable retrieval landmark.
+17. `max_chars` must be a positive integer greater than 0.
+18. `boundary_context_chars` must be a non-negative integer.
+19. Generate between 1 and 5 candidate rules.
+
+## Required JSON schema
+{
+  "query_idx": {query_idx},
+  "rules": [
+    {
+      "rule_text": "short human-readable summary of the rule",
+      "evidence_basis": "why this rule is supported by the sample docs",
+      "retrieval_spec": {
+        "mode": "after | before | around | between | page",
+        "anchor": "primary anchor phrase or null",
+        "anchor_b": "secondary anchor for between mode, or null",
+        "page_idx": null,
+        "max_chars": 2000,
+        "boundary_context_chars": 0
+      }
+    }
+  ]
+}
+
+## Output requirements
+- Every field above must be present.
+- Use null when a field does not apply.
+- `max_chars` must be greater than 0.
+- `boundary_context_chars` must be a non-negative integer.
+- `page_idx` must be a positive integer or null.
+- Set `boundary_context_chars` to `0` when it is not needed.
+- Keep `rule_text` and `evidence_basis` concise.

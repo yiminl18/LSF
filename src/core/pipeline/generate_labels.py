@@ -29,13 +29,8 @@ sys.path.insert(0, str(PROJECT_ROOT / "src"))
 from core.utils.progress import create_pipeline_progress_with_cost
 from core.retrieval.retrieval import find_provenance_node
 from core.retrieval.judge_header import JUDGE_MODES, ContentFilterError
+from core.llm.cost import get_prices
 from core.llm.model import LLM_PROVIDERS
-from core.config import (
-    GPT_PRICE_PER_MILLION_INPUT,
-    GPT_PRICE_PER_MILLION_OUTPUT,
-    OPENROUTER_GPT4O_PRICE_PER_MILLION_INPUT,
-    OPENROUTER_GPT4O_PRICE_PER_MILLION_OUTPUT,
-)
 
 EMBED_PROVIDERS = [
     "openai",
@@ -166,6 +161,7 @@ def _estimate_cost(
     doc_limit: Optional[int],
     top_k: int,
     llm_provider: str,
+    llm_model: str,
     label_tag: Optional[str],
     experiment: str,
     judge_mode: str = "answer_compare",
@@ -185,13 +181,7 @@ def _estimate_cost(
     labels_dir = paths.get_labels_dir(dataset)
     questions = load_questions(paths.get_questions_path(dataset))
 
-    # Select provider pricing
-    if llm_provider == "openrouter":
-        price_in = OPENROUTER_GPT4O_PRICE_PER_MILLION_INPUT
-        price_out = OPENROUTER_GPT4O_PRICE_PER_MILLION_OUTPUT
-    else:
-        price_in = GPT_PRICE_PER_MILLION_INPUT
-        price_out = GPT_PRICE_PER_MILLION_OUTPUT
+    price_in, price_out = get_prices(llm_provider, model=llm_model)
 
     matched_docs = match_pdf_to_ground_truth(pdf_dir, gt_dir)
     if doc_limit is not None:
@@ -267,6 +257,7 @@ def _generate_labels_worker(args):
         label_tag,
         judge_mode,
         llm_provider,
+        llm_model,
         match_limit,
         embed_provider,
         page,
@@ -298,7 +289,7 @@ def _generate_labels_worker(args):
         reset_llm_cost(llm_provider)
 
         logger.info(
-            f"Question {q_idx} started - top_k={top_k}, match_limit={match_limit}, embed={embed_provider}, doc_limit={doc_limit}, llm={llm_provider}"
+            f"Question {q_idx} started - top_k={top_k}, match_limit={match_limit}, embed={embed_provider}, doc_limit={doc_limit}, llm={llm_provider}, model={llm_model}"
         )
 
         # Read from SHARED
@@ -386,6 +377,7 @@ def _generate_labels_worker(args):
                     top_k_check=top_k,
                     judge_mode=judge_mode,
                     llm_provider=llm_provider,
+                    llm_model=llm_model,
                     match_limit=match_limit,
                     provider=embed_provider,
                     header_page=page,
@@ -518,6 +510,7 @@ def generate_labels(
     label_tag: Optional[str] = None,
     judge_mode: str = "answer_compare",
     llm_provider: str = "azure",  # CLI layer requires this; Python API keeps a default for run_pipeline.py compatibility
+    llm_model: Optional[str] = None,
     match_limit: int = 3,
     embed_provider: str = "openrouter",
     page: Optional[int] = None,
@@ -526,6 +519,9 @@ def generate_labels(
     force_without_absence: bool = False,
 ) -> dict:
     """Generate labels for questions."""
+    if not llm_model:
+        raise ValueError("llm_model must be specified explicitly")
+
     variant = parser if parser != "docling" else None
     paths = PathManager(experiment=experiment, processing_variant=variant)
     questions_path = paths.get_questions_path(dataset)
@@ -547,6 +543,7 @@ def generate_labels(
     print("=== Generate Labels [Problem 1 Step 4] ===")
     print(f"Dataset:    {dataset}")
     print(f"LLM:        {llm_provider}")
+    print(f"Model:      {llm_model}")
     print(f"Match Lim:  {match_limit}")
     print(f"Page:       {page if page is not None else 'All'}")
     print(f"Embed:      {embed_provider}")
@@ -564,6 +561,7 @@ def generate_labels(
         doc_limit,
         top_k,
         llm_provider,
+        llm_model,
         label_tag,
         experiment,
         judge_mode,
@@ -600,6 +598,7 @@ def generate_labels(
                     label_tag,
                     judge_mode,
                     llm_provider,
+                    llm_model,
                     match_limit,
                     embed_provider,
                     page,
@@ -706,6 +705,7 @@ def main():
         choices=sorted(LLM_PROVIDERS),
         help="LLM provider for judge",
     )
+    parser.add_argument("--model", type=str, required=True, help="LLM model for judge")
     parser.add_argument("--limit", type=int, default=30, help="Num questions")
     parser.add_argument("--doc-limit", type=int, help="Num docs per question")
     parser.add_argument("--query-idx", type=str, help="Query indices, e.g. 8 or 8,9")
@@ -769,6 +769,7 @@ def main():
         label_tag=args.label_tag,
         judge_mode=args.judge_mode,
         llm_provider=args.llm_provider,
+        llm_model=args.model,
         match_limit=args.match_limit,
         embed_provider=args.embed_provider,
         page=args.page,

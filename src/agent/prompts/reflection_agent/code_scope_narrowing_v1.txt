@@ -1,0 +1,77 @@
+You are an expert document analyst. I will provide you with a set of documents and a question. For each document, I also provide the correct answer to that question as extracted from that document.
+
+**Question**: {query_text}
+
+**Documents**:
+
+{for each doc in documents:}
+---
+### Document: {doc_id}
+
+{markdown_text}
+---
+{end for documents}
+
+**Answer Key** (provided for reference — these are NOT part of the document text above):
+
+{for each doc in answers:}
+- **{doc_id}**: {ground_truth_answer}
+{end for answers}
+
+**Your Task**:
+
+Your goal is **NOT to extract the exact answer**. Instead, your goal is to discover a pattern for **narrowing the document down to a small text region that is guaranteed to contain the answer**.
+
+Write a single Python function with the following signature:
+
+```python
+import re
+
+def locate_region(document_text: str) -> str:
+    """
+    Given the full text of a document, return a SHORT substring of the
+    document that is guaranteed to contain the answer.
+    """
+```
+
+**Document format notes (important)**:
+
+The documents use a normalized plain-text format with these conventions:
+- Section headings appear as `[Section] heading text` on their own line. There are NO markdown heading markers (`#`, `##`, `###`).
+- Page boundaries appear as `[Page N]` on their own line.
+- Text within a section is presented as a continuous paragraph (child nodes joined by spaces).
+- To find a section heading, use patterns like:
+  - `re.search(r"\[Section\]\s*Item\s*1", text, re.IGNORECASE)` for Item 1
+  - `text.find("[Section]")` for any section boundary
+
+**Design Philosophy (read carefully)**:
+
+Instead of writing regex that tries to match the answer value itself, write code that identifies **boundary anchors** — stable landmarks that appear *near* the answer in every document. Then return the text *between*, *before*, *after*, or *around* those anchors. Typical patterns:
+
+- `idx = text.find(anchor); return text[idx-100 : idx+300]` — asymmetric window around an anchor
+- `idx = text.find(anchor); return text[max(0,idx-500) : idx]` — take text BEFORE an anchor
+- `start = text.find(A); end = text.find(B, start); return text[start:end]` — between two anchors
+- `match = re.search(pattern, text); return text[match.start()-100 : match.end()+100]` — regex anchor with window
+- Use `if/else` fallback chains when different documents use different anchor phrases
+
+A good anchor is something that appears in EVERY document (or in a clearly identifiable subset), in roughly the same role, regardless of the actual answer value. Look for what is **shared across documents** structurally, not what is unique to any single one.
+
+**Key constraints (read every line)**:
+
+1. The function must return a **substring** of `document_text` — the returned string must exist verbatim inside the input.
+2. The returned region should be between 50 and 2000 characters. Prefer the smallest region that reliably contains the answer.
+3. It is fine (and preferred) for the returned region to contain extra text around the answer. Downstream extraction handles precision.
+4. Do NOT hardcode any answer value, any entity name, or any string that only appears in one of the provided documents. Such code will fail on unseen documents.
+5. Do NOT echo any phrasing from the **Question** into your code. The question text is NOT part of the document — searching for question wording inside `document_text` will never match.
+6. Do NOT branch on document-identifying substrings (e.g., `if "SomeCompanyName" in text:`). Branch only on **structural features** that could plausibly recur in unseen documents (e.g., presence of a particular `[Section]` heading).
+7. Only `import re` is allowed. No other imports. No `open()`, `exec()`, `eval()`, or network calls.
+
+**Fallback rules**:
+
+- If no anchor is found: return `document_text[:2000]` as a last-resort window (never return an empty string).
+- If an anchor is found but the surrounding slice is shorter than 50 characters: widen the window.
+- The function must **always** return a non-empty string.
+
+**Output format**:
+
+Output ONLY a single Python code block (```python ... ```). Do NOT output any analysis, explanation, or prose before or after the code block. The code block must define exactly one function named `locate_region`.

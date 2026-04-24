@@ -15,17 +15,18 @@ Dependencies:
 """
 
 import argparse
-from typing import Tuple, Any
+from typing import Optional, Tuple, Any
 import hashlib
 from pathlib import Path
 import sqlite3
 import threading
 
-import tiktoken
 import json
 
 from core.llm.ask import ask
+from core.llm.errors import ContentFilterError
 from core.llm.model import llm_call, LLM_PROVIDERS
+from core.llm.tokens import estimate_tokens
 from core.config import JUDGE_CACHE_DIR
 
 # Cache configuration
@@ -57,12 +58,6 @@ PROMPT_HASHES: dict[str, str] = {
 }
 
 
-class ContentFilterError(Exception):
-    """Content filter error: raised when Azure OpenAI detects jailbreak or other content policy violations"""
-
-    pass
-
-
 def _get_db_connection():
     """Get a thread-local DB connection."""
     if not hasattr(_thread_local, "connection"):
@@ -86,22 +81,17 @@ def _get_cache_key(
     ground_truth: str,
     mode: str,
     llm_provider: str = "azure",
+    llm_model: str = "",
     path_text: str = "",
 ) -> str:
     """Generate a unique key for the inputs.
 
     Includes prompt_hash so cache auto-invalidates when prompt template changes,
-    and llm_provider to prevent cross-provider cache contamination.
+    and llm_provider/llm_model to prevent cross-provider or cross-model cache contamination.
     """
     prompt_hash = PROMPT_HASHES.get(mode, "unknown")
-    content = f"{prompt_hash}|{llm_provider}|{mode}|{text}|{question}|{ground_truth}|{path_text}"
+    content = f"{prompt_hash}|{llm_provider}|{llm_model}|{mode}|{text}|{question}|{ground_truth}|{path_text}"
     return hashlib.md5(content.encode("utf-8")).hexdigest()
-
-
-# Provider groups sharing the same underlying model; can share judge cache within group
-_SHARED_MODEL_PROVIDERS: list[set[str]] = [
-    {"azure", "openai", "openrouter"},  # all use gpt-4o
-]
 
 
 _INVALID_RESPONSE_MARKERS = [
@@ -166,10 +156,10 @@ def to_text(value) -> str:
         return str(value)
 
 
-def estimate_tokens(text: str, model: str = "gpt-4o") -> int:
-    """Estimate the number of tokens in a text."""
-    enc = tiktoken.encoding_for_model(model)
-    return len(enc.encode(text))
+def _require_llm_model(llm_model: Optional[str]) -> str:
+    if not isinstance(llm_model, str) or not llm_model.strip():
+        raise ValueError("llm_model must be specified explicitly")
+    return llm_model.strip()
 
 
 def _judge_support(
@@ -177,6 +167,8 @@ def _judge_support(
     question: str,
     ground_truth: str,
     llm_provider: str = "azure",
+    *,
+    llm_model: str,
     path_text: str = "",
 ) -> Tuple[bool, str]:
     """Directly ask LLM whether context contains the given answer (single call, lower cost)."""
@@ -195,7 +187,12 @@ def _judge_support(
         "Does the context explicitly contain this answer? (True/False):"
     )
     try:
-        resp = llm_call(instruction, llm_provider=llm_provider, max_tokens=10)
+        resp = llm_call(
+            instruction,
+            llm_provider=llm_provider,
+            model=llm_model,
+            max_tokens=10,
+        )
         resp_str = resp if isinstance(resp, str) else str(resp)
         resp_lower = resp_str.lower().strip()
         # Strict check: must explicitly be "true", not just contain the word "true"
@@ -205,12 +202,19 @@ def _judge_support(
             len(words) == 0 or words[0] == "true"
         )
         return (is_true, resp_str)
+    except ContentFilterError:
+        raise
     except Exception as e:
         return (False, str(e))
 
 
 def equal_llm(
-    res1: str, res2: str, question: str, llm_provider: str = "azure"
+    res1: str,
+    res2: str,
+    question: str,
+    llm_provider: str = "azure",
+    *,
+    llm_model: str,
 ) -> Tuple[bool, int]:
     """
     Use LLM to check semantic equivalence of two answers.
@@ -233,9 +237,14 @@ def equal_llm(
         + " Question: "
         + str(question)
     )
-    tokens = estimate_tokens(instruction)
+    tokens = estimate_tokens(instruction, model=llm_model)
     try:
-        resp = llm_call(instruction, llm_provider=llm_provider, max_tokens=8)
+        resp = llm_call(
+            instruction,
+            llm_provider=llm_provider,
+            model=llm_model,
+            max_tokens=8,
+        )
         resp_str = resp if isinstance(resp, str) else str(resp)
         if "true" in resp_str.lower():
             return True, tokens
@@ -250,6 +259,7 @@ def judge_header(
     ground_truth: str,
     mode: str = "answer_compare",
     llm_provider: str = "azure",
+    llm_model: Optional[str] = None,
     path_text: str = "",
 ) -> Tuple[bool, str]:
     """
@@ -265,7 +275,8 @@ def judge_header(
         question: Question text
         ground_truth: Expected correct answer
         mode: Judge mode ("answer_compare" or "support_judge")
-        llm_provider: LLM provider ("azure", "openai", or "openrouter")
+        llm_provider: LLM provider ("azure" or "openrouter")
+        llm_model: LLM model name
         path_text: Document path info (optional, provides extra context for support_judge mode)
 
     Returns:
@@ -275,10 +286,17 @@ def judge_header(
         raise ValueError(
             f"Unsupported judge mode={mode}. Expected one of {sorted(JUDGE_MODES)}"
         )
+    resolved_model = _require_llm_model(llm_model)
 
-    # 0. Check Cache (SQLite): check own provider first, on miss try other providers in same model group
+    # 0. Check Cache (SQLite), scoped by provider and model.
     cache_key = _get_cache_key(
-        text, question, ground_truth, mode, llm_provider, path_text
+        text,
+        question,
+        ground_truth,
+        mode,
+        llm_provider,
+        resolved_model,
+        path_text,
     )
     cached_val = _check_cache(cache_key)
     if cached_val:
@@ -286,39 +304,34 @@ def judge_header(
             f"[JUDGE_CACHE_HIT] mode={mode} match={cached_val[0]} resp={cached_val[1]!r}"
         )
         return cached_val
-    # Try cache from other providers in the same model group
-    for group in _SHARED_MODEL_PROVIDERS:
-        if llm_provider not in group:
-            continue
-        for peer in group:
-            if peer == llm_provider:
-                continue
-            peer_key = _get_cache_key(
-                text, question, ground_truth, mode, peer, path_text
-            )
-            cached_val = _check_cache(peer_key)
-            if cached_val:
-                _save_to_cache(cache_key, cached_val)  # Copy to own key for direct hit next time
-                print(
-                    f"[JUDGE_CACHE_HIT] mode={mode} match={cached_val[0]} resp={cached_val[1]!r} (via {peer})"
-                )
-                return cached_val
 
     # support_judge: single LLM call, directly judge whether context supports the answer
     if mode == "support_judge":
         result = _judge_support(
-            text, question, ground_truth, llm_provider=llm_provider, path_text=path_text
+            text,
+            question,
+            ground_truth,
+            llm_provider=llm_provider,
+            llm_model=resolved_model,
+            path_text=path_text,
         )
         _save_to_cache(cache_key, result)
         return result
 
     # answer_compare: ask() + normalized matching + equal_llm()
     try:
-        predicted_raw = ask(text, question, llm_provider=llm_provider)
+        predicted_raw = ask(
+            text,
+            question,
+            llm_provider=llm_provider,
+            model=resolved_model,
+        )
         predicted = to_text(predicted_raw)
         # Ensure predicted is a string (to_text should always return str, but just in case)
         if not isinstance(predicted, str):
             predicted = str(predicted) if predicted is not None else ""
+    except ContentFilterError:
+        raise
     except Exception as e:
         # Check if this is a content filter error (jailbreak detection)
         error_msg = str(e)
@@ -357,7 +370,11 @@ def judge_header(
     else:
         # predicted is already ensured to be a string, but use or "" as fallback for safety
         is_eq, _ = equal_llm(
-            predicted or "", ground_truth, question, llm_provider=llm_provider
+            predicted or "",
+            ground_truth,
+            question,
+            llm_provider=llm_provider,
+            llm_model=resolved_model,
         )
         result = (is_eq, predicted)
 
@@ -388,6 +405,7 @@ def main() -> None:
         choices=sorted(LLM_PROVIDERS),
         help="LLM provider",
     )
+    parser.add_argument("--model", required=True, help="LLM model")
     args = parser.parse_args()
 
     matched, resp = judge_header(
@@ -396,6 +414,7 @@ def main() -> None:
         args.answer,
         mode=args.mode,
         llm_provider=args.llm_provider,
+        llm_model=args.model,
     )
     print(f"matched={matched}")
     print(f"llm_response={resp}")

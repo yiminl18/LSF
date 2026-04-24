@@ -19,6 +19,7 @@ import math
 import sys
 import os
 import gc
+import time
 import warnings
 from datetime import datetime
 
@@ -329,6 +330,7 @@ def _collect_needed_keys(
     splits_dir: Path,
     processing_dir: Path,
     max_target_docs: Optional[int] = None,
+    q_indices: Optional[List[int]] = None,
 ) -> Dict[str, set]:
     """
     Collect embedding keys needed for this evaluation run.
@@ -353,7 +355,7 @@ def _collect_needed_keys(
         _header_cache[doc_id] = header_list if header_list else None
         return _header_cache[doc_id]
 
-    for q_idx in range(limit):
+    for q_idx in (q_indices if q_indices is not None else list(range(limit))):
         train_labels = load_labels(splits_dir / f"q{q_idx}_train_labels.json")
         test_labels = load_labels(splits_dir / f"q{q_idx}_test_labels.json")
         if max_target_docs is not None and max_target_docs > 0:
@@ -1032,6 +1034,7 @@ def _evaluate_worker(args):
         parser,
     ) = args
     try:
+        t0 = time.perf_counter()
         res = evaluate_question(
             dataset,
             q_idx,
@@ -1047,6 +1050,8 @@ def _evaluate_worker(args):
             nn_device=nn_device,
             parser=parser,
         )
+        elapsed_ms = (time.perf_counter() - t0) * 1000.0
+        res["_eval_elapsed_ms"] = elapsed_ms
         gc.collect()
         return res
     except Exception as e:
@@ -1124,8 +1129,10 @@ def evaluate_models(
     softmax_alpha: float = 5.0,
     nn_device: str = "auto",
     parser: str = "docling",
+    questions: Optional[List[int]] = None,
 ):
-    model_configs = model_configs if model_configs else DEFAULT_MODEL_TYPES
+    # None -> default ML models; [] -> no ML models, used by rag-v1 baseline.
+    model_configs = model_configs if model_configs is not None else DEFAULT_MODEL_TYPES
     seeds_list = seeds if seeds else DEFAULT_SEEDS
     xgb_device = _resolve_xgb_device(xgb_device)
     mp_start_method = _resolve_mp_start_method(xgb_device, nn_device)
@@ -1135,7 +1142,7 @@ def evaluate_models(
     results_dir = paths.get_results_dir(dataset)
 
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    model_str = "+".join(model_configs)
+    model_str = "+".join(model_configs) if model_configs else "default"
 
     # Create run directory
     run_name = f"results_{dataset}_{provider}_{paths.reconstructed_tag}_{model_str}_{timestamp}"
@@ -1144,8 +1151,12 @@ def evaluate_models(
 
     agg_path = run_dir / "results.json"
 
+    q_indices = questions if questions is not None else list(range(limit))
+    if not q_indices:
+        raise ValueError("No questions selected for evaluation")
+
     if workers is None:
-        workers = min(os.cpu_count() or 1, limit)
+        workers = min(os.cpu_count() or 1, len(q_indices))
 
     print("=== Evaluate Models [Problem 1 Step 7] ===")
     print(f"Dataset:    {dataset}")
@@ -1181,7 +1192,7 @@ def evaluate_models(
 
     print("Collecting needed embedding keys...")
     needed_keys = _collect_needed_keys(
-        limit, splits_dir, processing_dir, max_target_docs
+        limit, splits_dir, processing_dir, max_target_docs, q_indices=q_indices
     )
     total_keys = sum(len(keys) for keys in needed_keys.values())
     print(f"Found {len(needed_keys)} docs, {total_keys} embedding keys needed.")
@@ -1200,7 +1211,7 @@ def evaluate_models(
 
     # Pre-compute Query Embeddings
     print("Pre-computing query embeddings...")
-    for q_idx in range(limit):
+    for q_idx in q_indices:
         path = splits_dir / f"q{q_idx}_test_labels.json"
         labels = load_labels(path)
         if labels:
@@ -1228,7 +1239,7 @@ def evaluate_models(
                 nn_device,
                 parser,
             )
-            for q_idx in range(limit)
+            for q_idx in q_indices
         ]
 
     def _collect_result(_tid, res):
@@ -1345,6 +1356,12 @@ def main():
     parser.add_argument("--dataset", type=str, required=True, help="Dataset name")
     parser.add_argument("--limit", type=int, default=10, help="Num questions")
     parser.add_argument(
+        "--questions",
+        type=str,
+        default=None,
+        help="Comma-separated question indices (0-based), e.g. 0,1,2",
+    )
+    parser.add_argument(
         "--max-target-docs",
         type=int,
         default=None,
@@ -1413,6 +1430,9 @@ def main():
     seeds_list = None
     if args.seeds:
         seeds_list = [int(s.strip()) for s in args.seeds.split(",")]
+    questions_list = None
+    if args.questions:
+        questions_list = [int(q.strip()) for q in args.questions.split(",")]
 
     evaluate_models(
         dataset=args.dataset,
@@ -1428,6 +1448,7 @@ def main():
         softmax_alpha=args.softmax_alpha,
         nn_device=args.nn_device,
         parser=args.struct_parser,
+        questions=questions_list,
     )
 
 

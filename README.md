@@ -27,6 +27,17 @@ API-backed embedding providers require:
 | `openai` | `OPENAI_API_KEY` |
 | `openrouter` | `OPENROUTER_API_KEY` |
 
+#### LLM Providers
+
+LLM-backed steps support only `--llm-provider azure|openrouter`, and all of
+them require an explicit `--model`.
+
+| Provider | Required environment variables |
+|----------|--------------------------------|
+| `azure` with `gpt-5.4*` | `AZURE_54_API_KEY`, `AZURE_54_API_BASE`, `AZURE_54_API_VERSION`, `AZURE_54_DEPLOYMENT` |
+| `azure` with `gpt-5.4-mini*` | `AZURE_54MINI_API_KEY`, `AZURE_54MINI_API_BASE`, `AZURE_54MINI_API_VERSION`, `AZURE_54MINI_DEPLOYMENT` |
+| `openrouter` | `OPENROUTER_API_KEY` |
+
 #### Providers for Problem 2
 
 The canonical P2 input builder supports `--embed-provider` and reads provider-
@@ -36,14 +47,6 @@ specific document embedding caches from:
 - `datasets/paper/latest/embedding/<provider>/document_embedding`
 
 The retained canonical P2 workflow is validated with `--embed-provider openrouter`.
-
-The canonical P2 pipeline supports `--llm-provider azure|openai|openrouter`.
-
-| Provider | Required environment variables |
-|----------|--------------------------------|
-| `azure` | `AZURE_API_KEY`, `AZURE_API_BASE`, `AZURE_API_VERSION` |
-| `openai` | `OPENAI_API_KEY` |
-| `openrouter` | `OPENROUTER_API_KEY` |
 
 ## Problem 1: Document Structure-Aware Retrieval
 
@@ -77,7 +80,9 @@ Output: `datasets/<dataset>/latest/processing/*_docling.json`
 ```bash
 python -m core.pipeline.build_processing_json \
     --dataset pdfs \
-    --parser docling
+    --parser docling \
+    --llm-provider azure \
+    --model gpt-5.4-mini
 ```
 
 Input: `processing/*_docling.json`  
@@ -100,7 +105,10 @@ Output: `embedding/<provider>/document_embedding/*_reconstructed_embeddings.npz`
 ```bash
 python -m core.pipeline.generate_labels \
     --dataset pdfs \
-    --parser docling
+    --parser docling \
+    --judge-mode answer_compare \
+    --llm-provider azure \
+    --model gpt-5.4-mini
 ```
 
 Input: processing JSON + embeddings  
@@ -157,6 +165,38 @@ Retained evaluation behavior:
 - `alpha=5.0` is the retained default temperature
 - `top2_mean` remains available as the simpler alternative
 
+8. **End-to-End Evaluation**
+
+```bash
+python -m core.pipeline.e2e \
+    --dataset pdfs \
+    --parser docling \
+    --model-config xgb-sem-struc-v5 \
+    --embed-provider openrouter \
+    --llm-provider azure \
+    --model gpt-5.4-mini \
+    --seeds 41,42,43 \
+    --experiment default
+```
+
+`rag-v1` uses the existing evaluation pipeline without ML models. Chunk-based
+baselines are selected with `--model-config rag-vanilla`, `rag-raptor`,
+`rag-graph`, or `rag-hippo`, and require `--ref-results-dir` pointing at a
+reference xgb-v5 e2e run. `rag-graph` requires `networkx`; `rag-hippo` requires
+`spacy` and `en_core_web_sm`.
+
+## Agent Rule Runtime
+
+Agent code is split into three layers:
+
+- `agent.rules`: RangeRule schemas, parsers, execution, and scoring primitives
+- `agent.rule_runtime`: shared data packaging, best-rules artifacts, holdout evaluation, and cascade deploy policy
+- `agent.reflection_agent` / `agent.tool_agent`: rule-generation strategies that both use the shared runtime and built-in answer scoring
+
+Prompt files follow the same boundary: reflection/baseline rule-generation
+prompts are under `prompts/reflection_agent`, and interactive tool-agent prompts
+remain under `prompts/tool_agent`.
+
 ## Problem 2: Unsupervised Document Clustering
 
 ### Canonical Workflow
@@ -210,7 +250,9 @@ Generated `output/` files are runtime-only and should not be kept in the artifac
 ### Run the Pipeline
 
 ```bash
-python -m core.cluster.bisection.pipeline --llm-provider azure
+python -m core.cluster.bisection.pipeline \
+    --llm-provider azure \
+    --model gpt-5.4-mini
 ```
 
 The command runs the retained fused clustering pipeline and writes results to
@@ -247,6 +289,12 @@ LSF/
 │   └── .gitkeep
 ├── experiments/
 │   └── .gitkeep
+├── src/agent/
+│   ├── rules/                  # Rule schemas, execution, and scoring
+│   ├── rule_runtime/           # Shared data, prompt, artifact, holdout, deploy runtime
+│   ├── reflection_agent/       # Baseline/reflection rule generation
+│   ├── tool_agent/             # Interactive tool-based rule generation
+│   └── prompts/
 ├── src/core/
 │   ├── doc/
 │   ├── embed/

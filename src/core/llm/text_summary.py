@@ -1,10 +1,10 @@
 """
-Text Summary Utility
+文本摘要工具
 
-Provides simple truncation-based text summarization for generating short header summaries.
+提供简单的文本截断摘要功能，用于生成标题的简短摘要。
 
-Main functions:
-- summarize_text(): Truncate long text to a specified length
+主要功能：
+- summarize_text(): 将长文本截断为指定长度的摘要
 """
 
 from typing import Optional
@@ -12,16 +12,16 @@ from typing import Optional
 
 def summarize_text(text: str, max_length: int = 100) -> Optional[str]:
     """
-    Generate a text summary by truncation.
+    通过截断生成文本摘要。
 
-    Truncates the input text to the specified max length, preferring word boundaries.
+    将输入文本截断到指定的最大长度，尽量在单词边界处截断。
 
-    Args:
-        text: The text to summarize
-        max_length: Maximum summary length (default: 100 characters)
+    参数:
+        text: 要摘要的文本
+        max_length: 摘要的最大长度（默认100字符）
 
-    Returns:
-        The truncated summary text, or None if input is empty
+    返回:
+        截断后的摘要文本，如果输入为空则返回 None
     """
     if not text or not text.strip():
         return None

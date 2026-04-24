@@ -841,6 +841,8 @@ def validate_header_patterns(
     kb: PatternKnowledgeBase,
     source_type: str,
     llm_provider: str = "azure",
+    *,
+    llm_model: str,
 ) -> Set[Tuple[float, bool, str]]:
     suspicious_counts = collections.Counter()
     style_examples = collections.defaultdict(list)
@@ -856,7 +858,7 @@ def validate_header_patterns(
                 style_examples[s_tuple].append((n.text, context))
 
     validated_styles = set()
-    validation_model = "gpt-4o"
+    validation_model = f"{llm_provider}:{llm_model}"
 
     for style, count in suspicious_counts.items():
         if count < 2:
@@ -889,7 +891,12 @@ def validate_header_patterns(
                     res = cached_response.strip().upper()
                 else:
                     res = (
-                        llm_call(prompt, llm_provider=llm_provider, max_tokens=5)
+                        llm_call(
+                            prompt,
+                            llm_provider=llm_provider,
+                            model=llm_model,
+                            max_tokens=5,
+                        )
                         .strip()
                         .upper()
                     )
@@ -920,6 +927,8 @@ def prepare_initial_tree(
     kb: PatternKnowledgeBase,
     source_type: str,
     llm_provider: str = "azure",
+    *,
+    llm_model: str,
     parser: str = "docling",
 ) -> Tuple[Node, Dict[str, Any]]:
     """Build the initial tree without Cross-Encoder semantic correction."""
@@ -1188,7 +1197,12 @@ def prepare_initial_tree(
     body_style = {"size": dom[0], "bold": dom[1], "font": dom[2]}
 
     validated_header_styles = validate_header_patterns(
-        flat_nodes, body_style, kb, source_type, llm_provider
+        flat_nodes,
+        body_style,
+        kb,
+        source_type,
+        llm_provider,
+        llm_model=llm_model,
     )
 
     def get_hierarchical_rank(node: Node) -> float:
@@ -1315,6 +1329,8 @@ def reconstruct_tree(
     kb: PatternKnowledgeBase,
     source_type: str,
     llm_provider: str = "azure",
+    *,
+    llm_model: str,
     parser: str = "docling",
 ) -> Node:
     """Backward-compatible single-document full reconstruction function."""
@@ -1326,6 +1342,7 @@ def reconstruct_tree(
         kb,
         source_type,
         llm_provider,
+        llm_model=llm_model,
         parser=parser,
     )
     verify_and_fix_parents(root, body_style)
@@ -1350,6 +1367,8 @@ def main():
     parser.add_argument(
         "--dataset", type=str, default="pdfs", help="Dataset name (pdfs/paper)"
     )
+    parser.add_argument("--llm-provider", type=str, default="azure")
+    parser.add_argument("--model", type=str, required=True, help="LLM model")
     args = parser.parse_args()
 
     paths = PathManager()
@@ -1373,7 +1392,14 @@ def main():
         docling_data = json.load(f)
 
     print(f"Building Tree for {args.pdf_name}...")
-    tree_root = reconstruct_tree(lsf_words, docling_data, kb, args.dataset)
+    tree_root = reconstruct_tree(
+        lsf_words,
+        docling_data,
+        kb,
+        args.dataset,
+        llm_provider=args.llm_provider,
+        llm_model=args.model,
+    )
 
     print("\n--- Semantic Tree Preview ---")
     print_node_tree(tree_root)

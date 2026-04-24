@@ -52,6 +52,8 @@ def llm_merge_clusters(
     assignments: dict[str, str],
     rep: dict,
     llm_provider: str = "azure",
+    *,
+    llm_model: str,
 ) -> dict[str, str]:
     """Run one corpus-level LLM pass to merge over-split clusters.
     
@@ -85,7 +87,12 @@ def llm_merge_clusters(
     )
 
     logger.info(f"    LLM merge: {len(sorted_labels)} clusters → LLM...")
-    response = llm_call(prompt, llm_provider=llm_provider, max_tokens=200)
+    response = llm_call(
+        prompt,
+        llm_provider=llm_provider,
+        model=llm_model,
+        max_tokens=200,
+    )
     logger.info(f"    LLM response: {response.strip()}")
 
     # Parse JSON

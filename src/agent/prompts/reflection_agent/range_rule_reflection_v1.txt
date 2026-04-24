@@ -1,0 +1,135 @@
+You are revising executable document retrieval rules.
+
+Your task is NOT to extract the answer directly.
+Your task is to revise a bundle of executable atomic rules so that each rule retrieves a more reliable region likely to contain the answer, while preserving useful range diversity inside the bundle.
+
+You must output JSON only. Do not output markdown. Do not output prose before or after the JSON.
+
+## Query
+{query_text}
+
+## Documents
+The documents below use the literal surface shown in the examples.
+In normalized text, section headers appear as `[Section] ...` and page boundaries appear as `[Page N]`.
+If a document instead shows markdown headings or page comments, write anchors against those literal strings.
+
+{for each doc in documents:}
+---
+### Document: {doc_id}
+
+{markdown_text}
+---
+{end for documents}
+
+## Ground-truth answers for the sample documents
+These are provided only so you can infer stable retrieval patterns across documents.
+Do NOT copy answer values into the rules.
+
+{for each doc in answers:}
+- **{doc_id}**: {ground_truth_answer}
+{end for answers}
+
+## Current rules
+{current_rules_json}
+
+## Per-rule summary
+{rule_summary_json}
+
+## Representative failure examples
+{failure_examples_json}
+
+## Optional success examples
+{success_examples_json}
+
+## Reflection goals
+1. Keep the final representation atomic: one rule = one retrieval_spec.
+2. Fix rules that miss anchors, use the wrong direction, or choose the wrong section/page boundary.
+3. Reduce retrieval cost when regions are too large.
+4. Preserve rules that already work well.
+
+## Failure-to-fix heuristics
+- `anchor_not_found` / `anchor_pair_not_found`: prefer a more literal, more stable, cross-document-consistent anchor or section boundary.
+- `page_not_found`: remove or relax brittle page restrictions unless the page is clearly stable.
+- `retrieval_too_large`: reduce `max_chars` or replace a broad rule with a tighter anchor/boundary.
+- `gen_not_found`: the rule matches, but the answer span is still missing or obscured; change direction, move the boundary, or add a small `boundary_context_chars` when the answer looks adjacent to the boundary.
+- `judge_false`: the retrieved region likely contains too much noise or the wrong slice; tighten the boundary, use a better anchor pair, or keep the broad rule only as a fallback while adding a stricter companion rule.
+
+## Rule family coverage
+- Prefer a bundle whose rules cover meaningfully different retrieval families when the current family is failing.
+- Useful families include:
+  - `page` / physical-location rules
+  - single-anchor direction rules (`after` / `before`)
+  - two-anchor boundary rules (`between`)
+  - heading or section-neighborhood rules
+  - keyword-neighborhood or label-neighborhood rules
+  - relative-position patterns such as "value appears immediately before/after a label"
+- If several failing rules are merely near-paraphrases of the same family, replace at least one with a different family instead of making more tiny wording edits.
+
+## Direction and boundary reasoning
+- Explicitly ask: is the answer more likely BEFORE the anchor, AFTER the anchor, or straddling the anchor boundary?
+- If a field label or caption appears after the value in the sample docs, prefer `before` or a small `boundary_context_chars` rather than repeating `after` variants.
+- If a rule keeps matching a broad section but generation returns `Information not found.`, try a more local subsection, boundary pair, keyword neighborhood, or page restriction instead of only shrinking `max_chars` on the same broad span.
+- For list-style or category-style questions, prefer rules that target local enumeration or concentrated noun-phrase neighborhoods rather than only long introductory prose.
+- Prefer anchors that are stable landmarks: headings, labels, captions, recurring field names, page markers, or repeated section boundaries.
+- If a failing rule uses an answer-like content phrase or one-off entity list as the anchor, replace it with a more structural landmark rather than paraphrasing the same phrase.
+
+## Bundle design goals
+- Do NOT make all rules nearly identical.
+- If one stable rule already covers the sample documents cleanly, prefer keeping that single rule instead of forcing a ladder.
+- If you emit multiple rules, try to maintain a useful range ladder:
+  - a tight high-precision rule,
+  - optionally a medium rule,
+  - at most one broader fallback rule.
+- If tight rules often fail with anchor misses, keep or add a broader fallback.
+- If broad rules often fail with `gen_not_found` or `judge_false`, add or keep a tighter boundary-aware rule.
+- A fallback rule must differ by family or boundary logic, not just by being a slightly larger copy of the same rule.
+- If the current bundle has collapsed into one family and keeps failing, diversify before making it even tighter.
+- If a candidate rule is anchored on content that appears to be part of the answer itself, treat it as suspicious unless the sample docs show it is a stable landmark across documents.
+
+## Optional boundary context
+- `boundary_context_chars` is a non-negative integer.
+- Use it only when a small amount of context just outside the main boundary is helpful.
+- Semantics:
+  - `after`: include up to `boundary_context_chars` characters BEFORE the anchor in addition to the main forward window.
+  - `before`: include up to `boundary_context_chars` characters AFTER the anchor in addition to the main backward window.
+  - `between`: expand BOTH sides of the main span by up to `boundary_context_chars`.
+  - `around` and `page`: set `boundary_context_chars` to `0`.
+
+## Hard constraints
+1. Do NOT output code.
+2. Do NOT branch on document identity, company name, or year.
+3. Do NOT put multiple fallbacks or mixed strategies inside one rule.
+4. If you need alternatives, output multiple independent rules.
+5. Use only the allowed 5-mode schema: `after`, `before`, `around`, `between`, `page`.
+6. Every rule must be independently executable and independently evaluable.
+7. Generate between 1 and 5 rules.
+8. `max_chars` must be a positive integer greater than 0.
+9. `boundary_context_chars` must be a non-negative integer.
+
+## Required JSON schema
+{
+  "query_idx": {query_idx},
+  "rules": [
+    {
+      "rule_text": "short human-readable summary of the rule",
+      "evidence_basis": "why this rule is supported by the sample docs and reflection diagnostics",
+      "retrieval_spec": {
+        "mode": "after | before | around | between | page",
+        "anchor": "primary anchor phrase or null",
+        "anchor_b": "secondary anchor for between mode, or null",
+        "page_idx": null,
+        "max_chars": 2000,
+        "boundary_context_chars": 0
+      }
+    }
+  ]
+}
+
+## Output requirements
+- Every field above must be present.
+- Use null when a field does not apply.
+- `max_chars` must be greater than 0.
+- `boundary_context_chars` must be a non-negative integer.
+- `page_idx` must be a positive integer or null.
+- Set `boundary_context_chars` to `0` when it is not needed.
+- Keep `rule_text` and `evidence_basis` concise.

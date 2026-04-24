@@ -17,6 +17,7 @@ import json
 import sys
 import os
 import gc
+import time
 from pathlib import Path
 from typing import Dict, List, Optional, Any
 
@@ -215,7 +216,8 @@ def _train_worker(args):
     ) = args
 
     try:
-        return train_models_for_question(
+        t0 = time.perf_counter()
+        result = train_models_for_question(
             dataset=dataset,
             q_idx=q_idx,
             model_configs=model_configs,
@@ -235,6 +237,10 @@ def _train_worker(args):
             train_fraction=train_fraction,
             parser=parser,
         )
+        elapsed_ms = (time.perf_counter() - t0) * 1000.0
+        if isinstance(result, dict):
+            result["_train_elapsed_ms"] = elapsed_ms
+        return result
     except Exception as e:
         if progress_queue:
             progress_queue.put(("log", q_idx, f"[red]Error: {e}[/red]"))
@@ -572,6 +578,7 @@ def train_models(
     skip_existing: bool = False,
     train_fraction: float = 1.0,
     parser: str = "docling",
+    questions: Optional[List[int]] = None,
 ):
     """
     Batch train models.
@@ -585,13 +592,17 @@ def train_models(
         seeds_list = DEFAULT_SEEDS
     seeds = seeds_list
 
-    default_workers = min(os.cpu_count() or 1, limit)
+    q_indices = questions if questions is not None else list(range(limit))
+    if not q_indices:
+        raise ValueError("No questions selected for training")
+
+    default_workers = min(os.cpu_count() or 1, len(q_indices))
     train_workers = workers if workers is not None else default_workers
 
     print("=== Train Models [Problem 1 Step 6] ===")
     print(f"Dataset:    {dataset}")
     print(f"Experiment: {experiment}")
-    print(f"Questions:  {limit}")
+    print(f"Questions:  {q_indices}")
     print(f"Models:     {model_configs}")
     print(f"Seeds:      {seeds}")
     print(f"Provider:   {provider}")
@@ -632,7 +643,7 @@ def train_models(
                 train_fraction,
                 parser,
             )
-            for q_idx in range(limit)
+            for q_idx in q_indices
         ]
 
     all_results = run_pool_with_progress(
@@ -646,12 +657,23 @@ def train_models(
     success_count = sum(1 for r in all_results.values() if r)
     print("\n=== Training Complete ===")
     print(f"Questions:  {len(all_results)} (Success: {success_count})")
+    timing: Dict[int, float] = {}
+    for q_idx, result in all_results.items():
+        if isinstance(result, dict) and "_train_elapsed_ms" in result:
+            timing[q_idx] = result["_train_elapsed_ms"]
+    return timing
 
 
 def main():
     parser = argparse.ArgumentParser(description="Train Models")
     parser.add_argument("--dataset", type=str, required=True, help="Dataset name")
     parser.add_argument("--limit", type=int, default=10, help="Num questions")
+    parser.add_argument(
+        "--questions",
+        type=str,
+        default=None,
+        help="Comma-separated question indices (0-based), e.g. 0,1,2",
+    )
     parser.add_argument(
         "--model_config",
         type=str,
@@ -746,6 +768,9 @@ def main():
     seeds_list = None
     if args.seeds:
         seeds_list = [int(s.strip()) for s in args.seeds.split(",")]
+    questions_list = None
+    if args.questions:
+        questions_list = [int(q.strip()) for q in args.questions.split(",")]
 
     train_models(
         dataset=args.dataset,
@@ -767,6 +792,7 @@ def main():
         skip_existing=args.skip_existing,
         train_fraction=args.train_fraction,
         parser=args.struct_parser,
+        questions=questions_list,
     )
 
 
