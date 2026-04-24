@@ -532,7 +532,7 @@ def run_phase_b(
     output_dir: Path,
     max_holdout_docs: int = 25,
     retrieval_too_large_token_threshold: int = 5000,
-    holdout_strategy: str = "stratified",
+    holdout_seed: int = 42,
 ) -> dict[str, Any]:
     """Phase B: evaluate Phase A rules on holdout docs (per-rule + union + cascade)."""
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -546,7 +546,7 @@ def run_phase_b(
     label_path = label_dir / f"10k_q{query_idx}_reconstructed_labels.json"
     holdout_ids = select_holdout_docs(
         label_path, query_idx, processing_dir, sampled_doc_ids, max_holdout_docs,
-        strategy=holdout_strategy,
+        seed=holdout_seed,
     )
     print(f"  Holdout docs: {len(holdout_ids)}")
 

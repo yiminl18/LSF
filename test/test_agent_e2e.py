@@ -112,7 +112,7 @@ def test_tool_agent_phase_a_phase_b_cascade_e2e(monkeypatch, tmp_path: Path) -> 
             phase="both",
             max_docs=1,
             max_holdout_docs=1,
-            holdout_strategy="alphabetical",
+            holdout_seed=42,
             agent_provider="azure",
             agent_model="gpt-5.4-mini",
             eval_provider=None,
@@ -194,6 +194,24 @@ def test_tool_agent_phase_a_phase_b_cascade_e2e(monkeypatch, tmp_path: Path) -> 
     assert report["cascade_summary"]["policy"] == "cascade"
     assert report["cascade_summary"]["total_docs"] == 1
 
+    per_rule_rows = [
+        json.loads(line)
+        for line in (phase_b_dir / "holdout_eval_rows.jsonl")
+        .read_text(encoding="utf-8")
+        .splitlines()
+    ]
+    assert len(per_rule_rows) == 1
+    assert per_rule_rows[0]["retrieved_subset_text"] == PHONE
+
+    union_rows = [
+        json.loads(line)
+        for line in (phase_b_dir / "holdout_union_rows.jsonl")
+        .read_text(encoding="utf-8")
+        .splitlines()
+    ]
+    assert len(union_rows) == 1
+    assert union_rows[0]["retrieved_subset_text"] == PHONE
+
     cascade_rows = [
         json.loads(line)
         for line in (phase_b_dir / "holdout_cascade_rows.jsonl")
@@ -202,3 +220,4 @@ def test_tool_agent_phase_a_phase_b_cascade_e2e(monkeypatch, tmp_path: Path) -> 
     ]
     assert len(cascade_rows) == 1
     assert cascade_rows[0]["judge_result"] is True
+    assert cascade_rows[0]["retrieved_subset_text"] == PHONE

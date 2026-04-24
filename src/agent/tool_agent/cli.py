@@ -39,12 +39,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--phase", choices=["a", "b", "both"], default="a", help="Which phase to run")
     parser.add_argument("--max-docs", type=int, default=10, help="Phase A max docs (0=unlimited)")
     parser.add_argument("--max-holdout-docs", type=int, default=25, help="Phase B max holdout docs")
-    parser.add_argument(
-        "--holdout-strategy",
-        choices=["random", "alphabetical"],
-        default="random",
-        help="Phase B holdout selection: random=seeded sample (seed=42), alphabetical=sort order",
-    )
+    parser.add_argument("--holdout-seed", type=int, default=42, help="Seeded random Phase B holdout selection seed")
     parser.add_argument("--agent-provider", default="azure", help="Agent LLM provider")
     parser.add_argument("--agent-model", required=True, help="Agent LLM model")
     parser.add_argument("--eval-provider", default=None, help="Eval LLM provider (defaults to agent provider)")
@@ -116,6 +111,7 @@ def main() -> None:
     print(f"Eval: {eval_provider}/{eval_model}")
     print(f"Max docs (Phase A): {args.max_docs}")
     print(f"Max holdout docs (Phase B): {args.max_holdout_docs}")
+    print(f"Holdout seed: {args.holdout_seed}")
     print(f"Max turns/query: {args.max_turns}")
     print(f"Budget/query/phase: ${args.budget}")
     print(f"Experiment: {args.experiment_name}")
@@ -139,7 +135,7 @@ def main() -> None:
                 sampled_set = set(query_config.get("documents", []))
                 holdout = select_holdout_docs(
                     label_path, qi, processing_dir, sampled_set, args.max_holdout_docs,
-                    strategy=args.holdout_strategy,
+                    seed=args.holdout_seed,
                 )
                 print(f"q{qi} Phase B: {len(holdout)} holdout docs")
                 est_calls = len(docs) * args.max_turns + len(holdout) * 2
@@ -250,7 +246,7 @@ def main() -> None:
                 llm_model=eval_model,
                 output_dir=phase_b_dir,
                 max_holdout_docs=args.max_holdout_docs,
-                holdout_strategy=args.holdout_strategy,
+                holdout_seed=args.holdout_seed,
             )
             elapsed_b = time.time() - t0
             print(f"\n  Phase B done in {elapsed_b:.1f}s")

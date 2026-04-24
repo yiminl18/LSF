@@ -70,6 +70,7 @@ class HoldoutEvalRow(TypedDict):
     rule_text: str
     retrieval_spec: dict[str, Any]
     matched: bool
+    retrieved_subset_text: str
     retrieved_subset_chars: int
     retrieved_subset_tokens: int
     ground_truth: str
@@ -131,20 +132,17 @@ def select_holdout_docs(
     processing_dir: Path,
     sampled_doc_ids: set[str],
     max_docs: int = 15,
-    strategy: str = "random",
     seed: int = 42,
 ) -> list[str]:
-    """Select holdout documents.
+    """Select holdout documents using seeded random sampling.
 
     Filters:
     1. Not in sampled_doc_ids
     2. possible_provenance_nodes is non-empty
     3. Corresponding _reconstructed.json exists
 
-    Selection strategies:
-    - "random" (default): random.Random(seed).sample for reproducibility; results are
-      sorted alphabetically afterwards to stabilize downstream order
-    - "alphabetical": take the first max_docs docs in alphabetical order (legacy behavior)
+    Candidates are sorted before sampling for stable input order. The sampled
+    result is sorted afterwards for stable downstream evaluation order.
     """
     with label_path.open("r", encoding="utf-8") as f:
         data = json.load(f)
@@ -163,14 +161,7 @@ def select_holdout_docs(
         candidates.append(doc_id)
 
     candidates.sort()
-
-    if strategy == "alphabetical":
-        chosen = candidates if max_docs <= 0 else candidates[:max_docs]
-    elif strategy == "random":
-        chosen = _random_sample(candidates, max_docs, seed)
-    else:
-        raise ValueError(f"Unknown holdout strategy: {strategy!r}")
-
+    chosen = _random_sample(candidates, max_docs, seed)
     return sorted(chosen)
 
 
@@ -260,6 +251,7 @@ def evaluate_rule_on_doc(
         "rule_text": rule.rule_text,
         "retrieval_spec": rule.retrieval_spec.to_dict(),
         "matched": subset.matched,
+        "retrieved_subset_text": subset_text,
         "retrieved_subset_chars": subset_chars,
         "retrieved_subset_tokens": subset_tokens,
         "ground_truth": doc.ground_truth_answer,
@@ -448,6 +440,7 @@ def evaluate_union_on_doc(
         "rule_text": f"union({len(matched_rules)}/{len(rules)} matched)",
         "retrieval_spec": {"mode": "union", "matched_rules": matched_rules},
         "matched": bool(matched_rules),
+        "retrieved_subset_text": "",
         "retrieved_subset_chars": 0,
         "retrieved_subset_tokens": 0,
         "ground_truth": doc.ground_truth_answer,
@@ -470,6 +463,7 @@ def evaluate_union_on_doc(
 
     row["retrieved_subset_chars"] = union_chars
     row["retrieved_subset_tokens"] = union_tokens
+    row["retrieved_subset_text"] = union_text
 
     if union_tokens >= retrieval_too_large_token_threshold:
         row["blocker"] = "retrieval_too_large"
@@ -759,6 +753,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--packaging-mode", default="full_bundle_reference")
     parser.add_argument("--queries", default="1,3,4,8,9", help="Comma-separated query indices")
     parser.add_argument("--max-docs", type=int, default=15, help="Max holdout docs per query (0=unlimited)")
+    parser.add_argument("--holdout-seed", type=int, default=42, help="Seeded random holdout selection seed")
     parser.add_argument("--dry-run", action="store_true", help="Print doc list only, no LLM calls")
     parser.add_argument("--query-only", type=int, default=None, help="Run a single query only")
     parser.add_argument("--llm-provider", default=None, help="Override llm_provider from config")
@@ -801,6 +796,7 @@ def main() -> None:
     print(f"Mode: {args.packaging_mode}")
     print(f"Queries: {query_indices}")
     print(f"Max docs/query: {args.max_docs}")
+    print(f"Holdout seed: {args.holdout_seed}")
     print(f"LLM: {llm_provider}/{llm_model}")
     print(f"Truncate before: {truncate_before}")
     print()
@@ -822,6 +818,7 @@ def main() -> None:
         label_path = label_dir / f"10k_q{qi}_reconstructed_labels.json"
         holdout_ids = select_holdout_docs(
             label_path, qi, processing_dir, sampled_doc_ids, args.max_docs,
+            seed=args.holdout_seed,
         )
         print(f"  Rules: {len(rules)}, Sampled docs: {len(sampled_doc_ids)}, "
               f"Holdout docs: {len(holdout_ids)}")

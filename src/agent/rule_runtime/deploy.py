@@ -36,6 +36,7 @@ class DeployedRow(TypedDict):
     doc_id: str
     policy: str
     rules_used: list[int]
+    retrieved_subset_text: str
     generated_answer: str | None
     judge_result: bool | str
     blocker: str | None
@@ -56,6 +57,7 @@ def _empty_row(
         doc_id=doc_id,
         policy=policy,
         rules_used=list(rules_used or []),
+        retrieved_subset_text="",
         generated_answer=None,
         judge_result=False,
         blocker=blocker,
@@ -165,6 +167,7 @@ def evaluate_cascade(
         gen_calls = 0
         cum_cost = 0.0
         final_answer: str | None = None
+        final_retrieved_text = ""
         for rule_idx, rule in ranked:
             rules_tried.append(rule_idx)
             ok, span_text, tokens, _ = _retrieve(rule, doc)
@@ -182,6 +185,7 @@ def evaluate_cascade(
             if _is_information_not_found(gen.answer):
                 continue
             final_answer = gen.answer
+            final_retrieved_text = span_text
             break
 
         if final_answer is None:
@@ -190,6 +194,7 @@ def evaluate_cascade(
                 doc_id=doc.doc_id,
                 policy=_POLICY_NAME,
                 rules_used=rules_tried,
+                retrieved_subset_text="",
                 generated_answer=None,
                 judge_result=False,
                 blocker="all_rules_not_found",
@@ -212,6 +217,7 @@ def evaluate_cascade(
             doc_id=doc.doc_id,
             policy=_POLICY_NAME,
             rules_used=rules_tried,
+            retrieved_subset_text=final_retrieved_text,
             generated_answer=final_answer,
             judge_result=judge_pass,
             blocker=None if judge_pass else "judge_false",
@@ -264,7 +270,6 @@ def _build_holdout_docs_for_query(
     truncate_before: str | None,
     max_holdout_docs: int,
     sampled_doc_ids: set[str],
-    strategy: str = "random",
     seed: int = 42,
 ) -> tuple[list[DocumentSample], list[str]]:
     label_path = label_dir / f"10k_q{query_idx}_reconstructed_labels.json"
@@ -274,7 +279,6 @@ def _build_holdout_docs_for_query(
         processing_dir,
         sampled_doc_ids,
         max_holdout_docs,
-        strategy=strategy,
         seed=seed,
     )
     docs = build_holdout_docs(holdout_ids, query_idx, processing_dir, label_path, truncate_before)
@@ -293,8 +297,7 @@ def main() -> None:
     p.add_argument("--llm-provider", default="azure")
     p.add_argument("--llm-model", required=True)
     p.add_argument("--retrieval-too-large-token-threshold", type=int, default=5000)
-    p.add_argument("--holdout-strategy", default="random")
-    p.add_argument("--seed", type=int, default=42)
+    p.add_argument("--holdout-seed", type=int, default=42)
     args = p.parse_args()
 
     with args.config.open("r", encoding="utf-8") as f:
@@ -315,8 +318,7 @@ def main() -> None:
         truncate_before,
         args.max_holdout_docs,
         sampled_doc_ids,
-        args.holdout_strategy,
-        args.seed,
+        seed=args.holdout_seed,
     )
     print(f"[q{args.query_idx}] {len(rules)} rules, {len(holdout_docs)} holdout docs")
 
