@@ -8,7 +8,11 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
-from agent.rule_runtime.data import estimate_tokens, reconstruct_to_normalized_text
+from agent.rule_runtime.data import (
+    estimate_tokens,
+    get_label_filename,
+    reconstruct_to_normalized_text,
+)
 
 
 @dataclass(slots=True)
@@ -83,6 +87,7 @@ def load_document_context(
     processing_dir: Path,
     label_dir: Path,
     truncate_before: str | None = None,
+    dataset_name: str = "pdfs",
 ) -> DocumentContext:
     """Load minimal context and raw structured entries for a single document."""
     recon_path = processing_dir / f"{doc_id}_reconstructed.json"
@@ -94,7 +99,7 @@ def load_document_context(
     entries = _truncate_entries(entries_full, truncate_before)
     section_index = {i: entry for i, entry in enumerate(entries)}
 
-    label_path = label_dir / f"10k_q{query_idx}_reconstructed_labels.json"
+    label_path = label_dir / get_label_filename({"dataset": dataset_name}, query_idx)
     ground_truth = _load_ground_truth(label_path, doc_id, query_idx)
 
     return DocumentContext(

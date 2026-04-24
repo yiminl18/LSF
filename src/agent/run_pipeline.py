@@ -18,6 +18,7 @@ import yaml
 from agent.reflection_agent.runner import run_baseline_sweep
 from agent.rule_runtime import deploy as deploy_module
 from agent.rule_runtime import holdout as holdout_module
+from agent.rule_runtime.data import get_label_filename
 from agent.rule_runtime.holdout import select_holdout_docs
 from agent.tool_agent import cli as tool_agent_cli
 
@@ -172,7 +173,9 @@ def _run_bundle_phase_b(args: argparse.Namespace, packaging_mode: str) -> None:
         print(f"Eval: {eval_provider}/{eval_model}")
         for query_idx in _parse_query_indices(args.queries):
             sampled_docs = set(_query_docs(config, query_idx))
-            label_path = label_dir / f"10k_q{query_idx}_reconstructed_labels.json"
+            label_path = label_dir / get_label_filename(
+                {"dataset": config.get("dataset", "pdfs")}, query_idx
+            )
             holdout = select_holdout_docs(
                 label_path=label_path,
                 query_idx=query_idx,

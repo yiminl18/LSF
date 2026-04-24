@@ -9,12 +9,18 @@ from typing import Any, TypedDict
 import yaml
 
 from agent.rule_runtime.artifacts import (
+    collect_sampled_doc_ids_from_best_rules,
     load_best_rules_payload,
     load_rules_from_best_rules,
     load_sampled_eval_from_best_rules,
     rank_rules_by_sampled_acc,
 )
-from agent.rule_runtime.data import DocumentSample, estimate_tokens, get_query_text
+from agent.rule_runtime.data import (
+    DocumentSample,
+    estimate_tokens,
+    get_label_filename,
+    get_query_text,
+)
 from agent.rule_runtime.holdout import build_holdout_docs, select_holdout_docs
 from agent.rules.range_rule_exec import execute_range_rule
 from agent.rules.range_rule_json import RangeRule
@@ -250,10 +256,9 @@ def _sampled_doc_ids_from_payload(
     payload: dict[str, Any],
     config: dict[str, Any],
     query_idx: int,
+    sampled_summary: dict[str, Any] | None = None,
 ) -> set[str]:
-    sampled_doc_ids: set[str] = set()
-    for rule in payload.get("merged_rules", []):
-        sampled_doc_ids.update(rule.get("primary_doc_ids", []))
+    sampled_doc_ids = collect_sampled_doc_ids_from_best_rules(payload, sampled_summary)
     if sampled_doc_ids:
         return sampled_doc_ids
 
@@ -265,6 +270,7 @@ def _sampled_doc_ids_from_payload(
 
 def _build_holdout_docs_for_query(
     query_idx: int,
+    config: dict[str, Any],
     processing_dir: Path,
     label_dir: Path,
     truncate_before: str | None,
@@ -272,7 +278,9 @@ def _build_holdout_docs_for_query(
     sampled_doc_ids: set[str],
     seed: int = 42,
 ) -> tuple[list[DocumentSample], list[str]]:
-    label_path = label_dir / f"10k_q{query_idx}_reconstructed_labels.json"
+    label_path = label_dir / get_label_filename(
+        {"dataset": config.get("dataset", "pdfs")}, query_idx
+    )
     holdout_ids = select_holdout_docs(
         label_path,
         query_idx,
@@ -304,7 +312,14 @@ def main() -> None:
         config = yaml.safe_load(f)
 
     payload = load_best_rules_payload(args.in_best_rules)
-    sampled_doc_ids = _sampled_doc_ids_from_payload(payload, config, args.query_idx)
+    sampled_summary_path = args.in_best_rules.with_name("summary.json")
+    sampled_summary = None
+    if sampled_summary_path.exists():
+        with sampled_summary_path.open("r", encoding="utf-8") as f:
+            sampled_summary = json.load(f)
+    sampled_doc_ids = _sampled_doc_ids_from_payload(
+        payload, config, args.query_idx, sampled_summary
+    )
     rules = load_rules_from_best_rules(args.in_best_rules)
     sampled_eval = load_sampled_eval_from_best_rules(args.in_best_rules, rules)
     if not rules:
@@ -313,6 +328,7 @@ def main() -> None:
     processing_dir, label_dir, truncate_before = _resolve_paths(config)
     holdout_docs, _ = _build_holdout_docs_for_query(
         args.query_idx,
+        config,
         processing_dir,
         label_dir,
         truncate_before,

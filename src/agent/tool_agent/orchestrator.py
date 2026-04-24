@@ -8,7 +8,7 @@ from dataclasses import dataclass, replace as dc_replace
 from pathlib import Path
 from typing import Any, Literal
 
-from agent.rule_runtime.data import get_query_text
+from agent.rule_runtime.data import get_label_filename, get_query_text
 from agent.rule_runtime.deploy import evaluate_cascade
 from agent.rule_runtime.holdout import (
     build_holdout_docs,
@@ -201,9 +201,9 @@ def _cross_doc_evaluate(
             cum_eval_cost += gen_cost + judge_cost
 
         doc_count = len(doc_contexts)
-        # Use evaluated_doc_count as denominator so budget-truncated rules are
-        # scored against what was actually seen, not systematically under-counted.
-        denom = evaluated_doc_count if evaluated_doc_count else doc_count
+        # Score against the full sampled corpus so budget-truncated rules cannot
+        # look perfect after only a few easy documents.
+        denom = doc_count
         coverage = matched_count / denom if denom else 0.0
         accuracy = success_count / denom if denom else 0.0
 
@@ -261,6 +261,7 @@ def run_phase_a(
     agent_config: AgentConfig,
     output_dir: Path,
     mode: PhaseAMode = "single_shot",
+    dataset_name: str = "pdfs",
 ) -> PhaseAResult:
     """Phase A: explore rules on sampled docs using the selected agent mode."""
     if mode not in _AGENT_FNS:
@@ -279,6 +280,7 @@ def run_phase_a(
             ctx = load_document_context(
                 doc_id, query_idx, processing_dir, label_dir,
                 truncate_before=truncate_before,
+                dataset_name=dataset_name,
             )
             doc_contexts.append(ctx)
         except (ValueError, FileNotFoundError) as e:
@@ -533,6 +535,7 @@ def run_phase_b(
     max_holdout_docs: int = 25,
     retrieval_too_large_token_threshold: int = 5000,
     holdout_seed: int = 42,
+    dataset_name: str = "pdfs",
 ) -> dict[str, Any]:
     """Phase B: evaluate Phase A rules on holdout docs (per-rule + union + cascade)."""
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -543,7 +546,7 @@ def run_phase_b(
 
     query_text = get_query_text(dataset_root, query_idx)
 
-    label_path = label_dir / f"10k_q{query_idx}_reconstructed_labels.json"
+    label_path = label_dir / get_label_filename({"dataset": dataset_name}, query_idx)
     holdout_ids = select_holdout_docs(
         label_path, query_idx, processing_dir, sampled_doc_ids, max_holdout_docs,
         seed=holdout_seed,

@@ -21,18 +21,23 @@ from typing import Any, TypedDict
 
 import yaml
 
-from agent.rule_runtime.artifacts import load_best_rules_payload, rule_from_best_rules_entry
+from agent.rule_runtime.artifacts import (
+    collect_sampled_doc_ids_from_best_rules,
+    load_best_rules_payload,
+    rule_from_best_rules_entry,
+)
 from agent.rule_runtime.data import (
     DocumentSample,
     estimate_tokens,
     extract_ground_truth,
+    get_label_filename,
     get_query_text,
     reconstruct_to_normalized_text,
 )
 from agent.rules.range_rule_exec import RetrievedSpan, execute_range_rule
 from agent.rules.range_rule_json import RangeRule
 from agent.rules.range_rule_scorer import score_retrieved_subset
-from core.pipeline.e2e_utils.cache import CachedLLMCaller
+from core.pipeline.e2e_utils.cache import CachedLLMCaller, DEFAULT_CACHE_DB_PATH
 
 _INFO_NOT_FOUND = "information not found."
 _DEFAULT_RETRIEVAL_TOO_LARGE_TOKEN_THRESHOLD = 5000
@@ -100,15 +105,14 @@ def load_frozen_rules(
     """
     path = output_root / f"q{query_idx}" / packaging_mode / "best_rules.json"
     data = load_best_rules_payload(path)
+    sampled_summary = load_sampled_summary(query_idx, packaging_mode, output_root)
 
     rules: list[RangeRule] = []
-    sampled_doc_ids: set[str] = set()
 
     for mr_dict in data["merged_rules"]:
         rules.append(rule_from_best_rules_entry(mr_dict))
-        # Extract sampled doc IDs from primary_doc_ids
-        for doc_id in mr_dict.get("primary_doc_ids", []):
-            sampled_doc_ids.add(doc_id)
+
+    sampled_doc_ids = collect_sampled_doc_ids_from_best_rules(data, sampled_summary)
 
     return rules, sampled_doc_ids
 
@@ -815,7 +819,9 @@ def main() -> None:
         sampled_summary = load_sampled_summary(qi, args.packaging_mode, args.output_root)
 
         # Select holdout docs
-        label_path = label_dir / f"10k_q{qi}_reconstructed_labels.json"
+        label_path = label_dir / get_label_filename(
+            {"dataset": config.get("dataset", "pdfs")}, qi
+        )
         holdout_ids = select_holdout_docs(
             label_path, qi, processing_dir, sampled_doc_ids, args.max_docs,
             seed=args.holdout_seed,

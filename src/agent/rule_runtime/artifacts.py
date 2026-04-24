@@ -35,6 +35,26 @@ def rule_from_best_rules_entry(entry: dict[str, Any]) -> RangeRule:
     )
 
 
+def collect_sampled_doc_ids_from_best_rules(
+    payload: dict[str, Any],
+    sampled_summary: dict[str, Any] | None = None,
+) -> set[str]:
+    """Collect every document that may have influenced Phase A rule generation."""
+    sampled_doc_ids: set[str] = set()
+
+    for entry in payload.get("merged_rules", []):
+        sampled_doc_ids.update(str(doc_id) for doc_id in entry.get("primary_doc_ids", []))
+        for doc_ids in entry.get("source_bundle_doc_ids_list", []):
+            sampled_doc_ids.update(str(doc_id) for doc_id in doc_ids)
+
+    if sampled_summary is not None:
+        sampled_doc_ids.update(
+            str(doc_id) for doc_id in sampled_summary.get("selected_doc_ids", [])
+        )
+
+    return sampled_doc_ids
+
+
 def load_rules_from_best_rules(best_rules_path: Path) -> list[RangeRule]:
     """Construct RangeRule list from a baseline or tool-agent best_rules.json."""
     data = load_best_rules_payload(best_rules_path)

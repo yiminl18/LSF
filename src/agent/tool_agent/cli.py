@@ -21,6 +21,7 @@ from pathlib import Path
 
 import yaml
 
+from agent.rule_runtime.data import get_label_filename
 from agent.rule_runtime.holdout import (
     select_holdout_docs,
 )
@@ -80,6 +81,7 @@ def main() -> None:
         config = yaml.safe_load(f)
 
     dataset_root = config.get("dataset_root", "datasets/pdfs/latest")
+    dataset_name = str(config.get("dataset", "pdfs"))
     # Parser field determines directory suffix (docling=default, mineru=_mineru isolated variant)
     parser = config.get("parser", "docling")
     if parser == "mineru":
@@ -131,7 +133,7 @@ def main() -> None:
                 print(f"q{qi} Phase A: {len(docs)} sampled docs")
                 print(f"  {docs}")
 
-                label_path = label_dir / f"10k_q{qi}_reconstructed_labels.json"
+                label_path = label_dir / get_label_filename({"dataset": dataset_name}, qi)
                 sampled_set = set(query_config.get("documents", []))
                 holdout = select_holdout_docs(
                     label_path, qi, processing_dir, sampled_set, args.max_holdout_docs,
@@ -176,6 +178,7 @@ def main() -> None:
                     processing_dir=processing_dir,
                     label_dir=label_dir,
                     dataset_root=dataset_root,
+                    dataset_name=dataset_name,
                     truncate_before=truncate_before,
                     cached_caller=cached_caller,
                     agent_config=agent_config,
@@ -191,6 +194,7 @@ def main() -> None:
                     processing_dir=processing_dir,
                     label_dir=label_dir,
                     dataset_root=dataset_root,
+                    dataset_name=dataset_name,
                     truncate_before=truncate_before,
                     cached_caller=cached_caller,
                     agent_config=agent_config,
@@ -240,6 +244,7 @@ def main() -> None:
                 processing_dir=processing_dir,
                 label_dir=label_dir,
                 dataset_root=dataset_root,
+                dataset_name=dataset_name,
                 truncate_before=truncate_before,
                 cached_caller=cached_caller,
                 llm_provider=eval_provider,

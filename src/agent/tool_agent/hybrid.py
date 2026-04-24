@@ -121,6 +121,7 @@ def run_phase_a_hybrid(
     output_dir: Path,
     n_paths: int = 2,
     partition_seed: int = 42,
+    dataset_name: str = "pdfs",
 ) -> PhaseAResult:
     """Phase A (hybrid): N-path diverse agent exploration + union dedup + set-cover.
 
@@ -154,6 +155,7 @@ def run_phase_a_hybrid(
             ctx = load_document_context(
                 doc_id, query_idx, processing_dir, label_dir,
                 truncate_before=truncate_before,
+                dataset_name=dataset_name,
             )
             doc_contexts.append(ctx)
         except (ValueError, FileNotFoundError) as e:

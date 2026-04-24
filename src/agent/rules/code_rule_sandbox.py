@@ -176,9 +176,6 @@ class CodeExecResult:
         }
 
 
-_DEFAULT_FALLBACK_CHARS = 2000
-
-
 def _run_locate_region_in_subprocess(
     code: str,
     document_text: str,
@@ -228,9 +225,8 @@ def execute_locate_region(
       2. ``exec()`` with restricted globals.
       3. Call ``locate_region(document_text)``.
       4. Validate the return is a non-empty substring.
-      5. On any failure → fallback region = first 2000 chars.
+      5. On any failure → no returned region.
     """
-    fallback = document_text[:_DEFAULT_FALLBACK_CHARS]
     t0 = time.perf_counter()
 
     # 1. AST check
@@ -239,7 +235,7 @@ def execute_locate_region(
         dt = (time.perf_counter() - t0) * 1000
         return CodeExecResult(
             success=False,
-            returned_region=fallback,
+            returned_region="",
             error=f"AST violations: {violations}",
             exec_time_ms=dt,
         )
@@ -272,7 +268,7 @@ def execute_locate_region(
             dt = (time.perf_counter() - t0) * 1000
             return CodeExecResult(
                 success=False,
-                returned_region=fallback,
+                returned_region="",
                 error=f"TimeoutError: execution exceeded {timeout_s}s",
                 exec_time_ms=dt,
             )
@@ -291,7 +287,7 @@ def execute_locate_region(
         dt = (time.perf_counter() - t0) * 1000
         return CodeExecResult(
             success=False,
-            returned_region=fallback,
+            returned_region="",
             error=f"{type(exc).__name__}: {exc}",
             exec_time_ms=dt,
         )
@@ -304,7 +300,7 @@ def execute_locate_region(
         dt = (time.perf_counter() - t0) * 1000
         return CodeExecResult(
             success=False,
-            returned_region=fallback,
+            returned_region="",
             error=result_payload["error"],
             exec_time_ms=dt,
         )
@@ -316,7 +312,7 @@ def execute_locate_region(
     if not isinstance(result, str) or not result:
         return CodeExecResult(
             success=False,
-            returned_region=fallback,
+            returned_region="",
             error=f"locate_region returned {type(result).__name__}, expected non-empty str",
             exec_time_ms=dt,
         )
@@ -330,7 +326,7 @@ def execute_locate_region(
         else:
             return CodeExecResult(
                 success=False,
-                returned_region=fallback,
+                returned_region="",
                 error="returned string is not a substring of document_text",
                 exec_time_ms=dt,
             )

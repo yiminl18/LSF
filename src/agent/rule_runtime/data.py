@@ -74,6 +74,11 @@ def _get_label_filename(config: dict[str, Any], query_idx: int) -> str:
     return f"10k_q{query_idx}_reconstructed_labels.json"
 
 
+def get_label_filename(config: dict[str, Any], query_idx: int) -> str:
+    """Return the dataset-specific label filename for one query."""
+    return _get_label_filename(config, query_idx)
+
+
 def reconstruct_to_markdown(
     reconstruct_path: str | Path,
     truncate_before: str | None = None,
