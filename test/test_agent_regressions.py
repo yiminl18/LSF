@@ -5,7 +5,8 @@ from pathlib import Path
 from types import SimpleNamespace
 
 from agent.rule_runtime import deploy, holdout
-from agent.rule_runtime.data import get_label_filename
+from agent.rule_runtime.data import DocumentSample, get_label_filename
+from agent.rules.code_rule_json import CodeRule
 from agent.rules.code_rule_sandbox import execute_locate_region
 from agent.rules.range_rule_json import RangeRule, RetrievalSpec
 from agent.tool_agent import orchestrator
@@ -86,6 +87,68 @@ def test_deploy_sampled_doc_ids_include_bundle_and_summary_docs() -> None:
 
     assert sampled_doc_ids == {"primary_doc", "bundle_doc", "summary_doc"}
     assert deploy._sampled_doc_ids_from_payload({}, config, 3) == {"fallback_doc"}
+
+
+def test_deploy_cascade_dispatches_code_rule_to_sandbox(monkeypatch) -> None:
+    phone = "(555) 123-4567"
+    expected_region = f"Registrant telephone number is {phone}."
+    rule = CodeRule(
+        rule_text="find phone with code",
+        evidence_basis="test",
+        code=(
+            "def locate_region(document_text):\n"
+            "    marker = 'Registrant telephone number is '\n"
+            "    start = document_text.find(marker)\n"
+            "    if start == -1:\n"
+            "        return ''\n"
+            "    end = document_text.find('\\n', start)\n"
+            "    if end == -1:\n"
+            "        end = len(document_text)\n"
+            "    return document_text[start:end]\n"
+        ),
+    )
+    doc = DocumentSample(
+        doc_id="HOLDCO",
+        markdown_text=f"Header\nRegistrant telephone number is {phone}.\n",
+        ground_truth_answer=phone,
+        token_count=20,
+    )
+
+    def fake_generate_answer_from_text(**kwargs):
+        assert kwargs["retrieved_text"] == expected_region
+        return SimpleNamespace(answer=phone, cost_usd=0.0)
+
+    monkeypatch.setattr(
+        deploy,
+        "generate_answer_from_text",
+        fake_generate_answer_from_text,
+    )
+    monkeypatch.setattr(
+        deploy,
+        "score_generated_answer",
+        lambda **kwargs: SimpleNamespace(
+            judge_result=True,
+            metadata={"judge": {"cost_usd": 0.0}},
+        ),
+    )
+
+    rows = deploy.evaluate_cascade(
+        rules=[rule],
+        sampled_eval={0: {"accuracy": 1.0, "score": 1.0}},
+        holdout_docs=[doc],
+        query_idx=3,
+        query_text="What is the phone number?",
+        cached_caller=object(),
+        llm_provider="azure",
+        llm_model="gpt-5.4-mini",
+        retrieval_too_large_token_threshold=5000,
+    )
+
+    assert len(rows) == 1
+    assert rows[0]["rules_used"] == [0]
+    assert rows[0]["judge_result"] is True
+    assert rows[0]["blocker"] is None
+    assert rows[0]["retrieved_subset_text"] == expected_region
 
 
 def test_holdout_cli_cache_default_is_imported() -> None:
