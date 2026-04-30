@@ -15,6 +15,7 @@ from agent.rule_runtime.artifacts import (
     load_sampled_eval_from_best_rules,
     rank_rules_by_sampled_acc,
 )
+from agent.rule_runtime import rule_dispatch
 from agent.rule_runtime.data import (
     DocumentSample,
     estimate_tokens,
@@ -22,8 +23,6 @@ from agent.rule_runtime.data import (
     get_query_text,
 )
 from agent.rule_runtime.holdout import build_holdout_docs, select_holdout_docs
-from agent.rules.range_rule_exec import execute_range_rule
-from agent.rules.range_rule_json import RangeRule
 from agent.rules.range_rule_scorer import (
     generate_answer_from_text,
     score_generated_answer,
@@ -118,9 +117,12 @@ def _is_information_not_found(answer: str | None) -> bool:
     return answer.strip().casefold() == _INFO_NOT_FOUND_NORMALIZED
 
 
-def _retrieve(rule: RangeRule, doc: DocumentSample) -> tuple[bool, str, int, str | None]:
+def _retrieve(
+    rule: rule_dispatch.Rule,
+    doc: DocumentSample,
+) -> tuple[bool, str, int, str | None]:
     """Retrieve span. Returns (usable, span_text, tokens, blocker_or_None)."""
-    subset = execute_range_rule(rule, doc.markdown_text)
+    subset = rule_dispatch.apply_rule(rule, doc.markdown_text)
     if not subset.matched:
         return False, "", 0, str(subset.metadata.get("reason", "retrieval_unmatched"))
     span_text = "\n\n".join(s.text for s in subset.spans) if subset.spans else ""
@@ -150,7 +152,7 @@ def _judge_only(
 
 
 def evaluate_cascade(
-    rules: list[RangeRule],
+    rules: list[rule_dispatch.Rule],
     sampled_eval: dict[int, dict[str, Any]],
     holdout_docs: list[DocumentSample],
     query_idx: int,

@@ -6,7 +6,10 @@ import json
 from pathlib import Path
 from typing import Any
 
+from agent.rules.code_rule_json import CodeRule
 from agent.rules.range_rule_json import RangeRule, RetrievalSpec
+
+Rule = RangeRule | CodeRule
 
 
 def load_best_rules_payload(best_rules_path: Path) -> dict[str, Any]:
@@ -23,7 +26,14 @@ def write_best_rules_payload(best_rules_path: Path, payload: dict[str, Any]) -> 
         json.dump(payload, f, indent=2, ensure_ascii=False)
 
 
-def rule_from_best_rules_entry(entry: dict[str, Any]) -> RangeRule:
+def rule_from_best_rules_entry(entry: dict[str, Any]) -> Rule:
+    if entry.get("rule_kind") == "code":
+        return CodeRule(
+            rule_text=entry["rule_text"],
+            evidence_basis=entry["evidence_basis"],
+            code=entry["code"],
+        )
+
     spec = RetrievalSpec(**entry["retrieval_spec"])
     return RangeRule(
         rule_text=entry.get("rule_text", "rule"),
@@ -55,10 +65,15 @@ def collect_sampled_doc_ids_from_best_rules(
     return sampled_doc_ids
 
 
-def load_rules_from_best_rules(best_rules_path: Path) -> list[RangeRule]:
-    """Construct RangeRule list from a baseline or tool-agent best_rules.json."""
+def load_rules_from_best_rules_typed(best_rules_path: Path) -> list[Rule]:
+    """Construct RangeRule | CodeRule list from a best_rules.json artifact."""
     data = load_best_rules_payload(best_rules_path)
     return [rule_from_best_rules_entry(entry) for entry in data.get("merged_rules", [])]
+
+
+def load_rules_from_best_rules(best_rules_path: Path) -> list[Rule]:
+    """Construct rule list from a baseline or tool-agent best_rules.json."""
+    return load_rules_from_best_rules_typed(best_rules_path)
 
 
 def _cross_doc_eval_entries(data: dict[str, Any]) -> list[dict[str, Any]]:
@@ -79,9 +94,32 @@ def _eval_stats(entry: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def _rule_eval_key(rule: Rule) -> str:
+    if isinstance(rule, CodeRule):
+        return json.dumps(
+            {"rule_kind": "code", "code": rule.code},
+            sort_keys=True,
+            ensure_ascii=False,
+        )
+    return json.dumps(rule.retrieval_spec.to_dict(), sort_keys=True)
+
+
+def _cross_doc_eval_key(entry: dict[str, Any]) -> str | None:
+    if entry.get("rule_kind") == "code":
+        return json.dumps(
+            {"rule_kind": "code", "code": entry.get("code", "")},
+            sort_keys=True,
+            ensure_ascii=False,
+        )
+    spec = entry.get("retrieval_spec")
+    if spec is None:
+        return None
+    return json.dumps(spec, sort_keys=True)
+
+
 def load_sampled_eval_from_best_rules(
     best_rules_path: Path,
-    rules: list[RangeRule] | None = None,
+    rules: list[Rule] | None = None,
 ) -> dict[int, dict[str, Any]]:
     """Read sampled cross-doc metrics from a best_rules.json artifact.
 
@@ -95,15 +133,14 @@ def load_sampled_eval_from_best_rules(
     if rules is not None:
         spec_to_eval: dict[str, dict[str, Any]] = {}
         for entry in cross_doc_eval:
-            spec = entry.get("retrieval_spec")
-            if spec is None:
+            eval_key = _cross_doc_eval_key(entry)
+            if eval_key is None:
                 continue
-            spec_to_eval[json.dumps(spec, sort_keys=True)] = _eval_stats(entry)
+            spec_to_eval[eval_key] = _eval_stats(entry)
         sampled_eval: dict[int, dict[str, Any]] = {}
         for idx, rule in enumerate(rules):
-            spec_key = json.dumps(rule.retrieval_spec.to_dict(), sort_keys=True)
             sampled_eval[idx] = spec_to_eval.get(
-                spec_key,
+                _rule_eval_key(rule),
                 {"accuracy": 0.0, "score": 0.0, "coverage": 0.0, "success_doc_ids": []},
             )
         return sampled_eval
@@ -118,14 +155,14 @@ def load_sampled_eval_from_best_rules(
 
 
 def rank_rules_by_sampled_acc(
-    rules: list[RangeRule],
+    rules: list[Rule],
     sampled_eval: dict[int, dict[str, Any]],
     key: str = "accuracy",
-) -> list[tuple[int, RangeRule]]:
+) -> list[tuple[int, Rule]]:
     """Sort rules by sampled signal desc, then rule index asc."""
     indexed = list(enumerate(rules))
 
-    def sort_key(item: tuple[int, RangeRule]) -> tuple[float, float, int]:
+    def sort_key(item: tuple[int, Rule]) -> tuple[float, float, int]:
         ri, _ = item
         stats = sampled_eval.get(ri, {})
         return (

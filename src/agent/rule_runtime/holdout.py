@@ -26,6 +26,7 @@ from agent.rule_runtime.artifacts import (
     load_best_rules_payload,
     rule_from_best_rules_entry,
 )
+from agent.rule_runtime import rule_dispatch
 from agent.rule_runtime.data import (
     DocumentSample,
     estimate_tokens,
@@ -34,8 +35,8 @@ from agent.rule_runtime.data import (
     get_query_text,
     reconstruct_to_normalized_text,
 )
-from agent.rules.range_rule_exec import RetrievedSpan, execute_range_rule
-from agent.rules.range_rule_json import RangeRule
+from agent.rules.code_rule_json import CodeRule
+from agent.rules.range_rule_exec import RetrievedSpan
 from agent.rules.range_rule_scorer import score_retrieved_subset
 from core.pipeline.e2e_utils.cache import CachedLLMCaller, DEFAULT_CACHE_DB_PATH
 
@@ -97,7 +98,7 @@ def load_frozen_rules(
     query_idx: int,
     packaging_mode: str,
     output_root: Path = _DEFAULT_OUTPUT_ROOT,
-) -> tuple[list[RangeRule], set[str]]:
+) -> tuple[list[rule_dispatch.Rule], set[str]]:
     """Load frozen rules from best_rules.json and extract sampled doc IDs.
 
     Returns:
@@ -107,7 +108,7 @@ def load_frozen_rules(
     data = load_best_rules_payload(path)
     sampled_summary = load_sampled_summary(query_idx, packaging_mode, output_root)
 
-    rules: list[RangeRule] = []
+    rules: list[rule_dispatch.Rule] = []
 
     for mr_dict in data["merged_rules"]:
         rules.append(rule_from_best_rules_entry(mr_dict))
@@ -236,8 +237,14 @@ def classify_blocker(
     return "judge_false"
 
 
+def _rule_payload_for_row(rule: rule_dispatch.Rule) -> dict[str, Any]:
+    if isinstance(rule, CodeRule):
+        return {"rule_kind": "code", "code": rule.code}
+    return rule.retrieval_spec.to_dict()
+
+
 def evaluate_rule_on_doc(
-    rule: RangeRule,
+    rule: rule_dispatch.Rule,
     rule_index: int,
     doc: DocumentSample,
     query_idx: int,
@@ -248,7 +255,7 @@ def evaluate_rule_on_doc(
     retrieval_too_large_token_threshold: int,
 ) -> HoldoutEvalRow:
     """Run the extract -> gen -> judge pipeline for a single (rule, doc) pair."""
-    subset = execute_range_rule(rule, doc.markdown_text)
+    subset = rule_dispatch.apply_rule(rule, doc.markdown_text)
     subset_text = "\n\n".join(span.text for span in subset.spans) if subset.spans else ""
     subset_chars = len(subset_text)
     subset_tokens = estimate_tokens(subset_text) if subset_text else 0
@@ -259,7 +266,7 @@ def evaluate_rule_on_doc(
         "doc_id": doc.doc_id,
         "rule_index": rule_index,
         "rule_text": rule.rule_text,
-        "retrieval_spec": rule.retrieval_spec.to_dict(),
+        "retrieval_spec": _rule_payload_for_row(rule),
         "matched": subset.matched,
         "retrieved_subset_text": subset_text,
         "retrieved_subset_chars": subset_chars,
@@ -291,8 +298,8 @@ def evaluate_rule_on_doc(
     # is high enough, a regex miss directly yields judge=False (skipping LLM gen+judge).
     # Conservative design: only enabled at reliability >= threshold; lower-reliability
     # hints bypass the gate and keep the original gen+judge path (zero regression).
-    hint_pattern = rule.answer_hint_pattern
-    hint_reliability = rule.phase_a_hint_reliability
+    hint_pattern = getattr(rule, "answer_hint_pattern", None)
+    hint_reliability = getattr(rule, "phase_a_hint_reliability", None)
     hint_match: re.Match[str] | None = None
     if (
         hint_pattern
@@ -315,7 +322,7 @@ def evaluate_rule_on_doc(
     # skipping it is safe for short, high-precision spans (<= 800 chars).
     # Extraction precision is the critical guard: a pattern with reliability=1.0 can
     # still have extraction precision=0 if the first match is not the answer.
-    extraction_precision = rule.phase_a_hint_extraction_precision
+    extraction_precision = getattr(rule, "phase_a_hint_extraction_precision", None)
     if (
         hint_match is not None
         and hint_reliability is not None
@@ -370,7 +377,7 @@ def evaluate_rule_on_doc(
 def run_per_rule_eval(
     query_idx: int,
     query_text: str,
-    rules: list[RangeRule],
+    rules: list[rule_dispatch.Rule],
     docs: list[DocumentSample],
     cached_caller: CachedLLMCaller,
     llm_provider: str,
@@ -422,7 +429,7 @@ def merge_overlapping_spans(
 
 
 def evaluate_union_on_doc(
-    rules: list[RangeRule],
+    rules: list[rule_dispatch.Rule],
     doc: DocumentSample,
     query_idx: int,
     query_text: str,
@@ -436,7 +443,7 @@ def evaluate_union_on_doc(
     matched_rules: list[int] = []
 
     for ri, rule in enumerate(rules):
-        subset = execute_range_rule(rule, doc.markdown_text)
+        subset = rule_dispatch.apply_rule(rule, doc.markdown_text)
         if subset.matched and subset.spans:
             matched_rules.append(ri)
             for span in subset.spans:
@@ -506,7 +513,7 @@ def evaluate_union_on_doc(
 def run_union_eval(
     query_idx: int,
     query_text: str,
-    rules: list[RangeRule],
+    rules: list[rule_dispatch.Rule],
     docs: list[DocumentSample],
     cached_caller: CachedLLMCaller,
     llm_provider: str,
@@ -530,7 +537,7 @@ def run_union_eval(
 
 
 def build_per_rule_summary(
-    rules: list[RangeRule],
+    rules: list[rule_dispatch.Rule],
     rows: list[HoldoutEvalRow],
 ) -> list[dict[str, Any]]:
     """Compute per-rule aggregate statistics."""
@@ -554,7 +561,7 @@ def build_per_rule_summary(
         summaries.append({
             "rule_index": ri,
             "rule_text": rule.rule_text[:80],
-            "retrieval_spec": rule.retrieval_spec.to_dict(),
+            "retrieval_spec": _rule_payload_for_row(rule),
             "holdout_accuracy": successes / total if total else 0.0,
             "holdout_coverage": matched / total if total else 0.0,
             "total_docs": total,
@@ -572,7 +579,7 @@ def build_holdout_report(
     query_text: str,
     per_rule_rows: list[HoldoutEvalRow],
     union_rows: list[HoldoutEvalRow],
-    rules: list[RangeRule],
+    rules: list[rule_dispatch.Rule],
     sampled_summary: dict[str, Any] | None,
 ) -> dict[str, Any]:
     """Build the complete holdout evaluation report."""

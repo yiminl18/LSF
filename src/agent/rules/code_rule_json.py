@@ -58,6 +58,29 @@ def _extract_code_blocks(raw_text: str) -> list[str]:
     return [m.group(1).strip() for m in _CODE_FENCE_RE.finditer(raw_text)]
 
 
+def inspect_code_rule_candidates(raw_text: str) -> list[dict[str, Any]]:
+    """Return validation diagnostics for fenced locate_region candidates."""
+    candidates: list[dict[str, Any]] = []
+    for block_index, block in enumerate(_extract_code_blocks(raw_text)):
+        has_locate_region = bool(_LOCATE_REGION_DEF_RE.search(block))
+        violations = validate_code_ast(block) if has_locate_region else []
+        if not has_locate_region:
+            status = "skipped_no_locate_region"
+        elif violations:
+            status = "rejected_ast"
+        else:
+            status = "valid"
+        candidates.append(
+            {
+                "block_index": block_index,
+                "sandbox_validation_status": status,
+                "violations": violations,
+                "code": block,
+            }
+        )
+    return candidates
+
+
 def parse_code_rule_bundle(
     raw_text: str,
     query_idx: int,
@@ -105,5 +128,6 @@ def parse_code_rule_bundle(
 __all__ = [
     "CodeRule",
     "CodeRuleBundle",
+    "inspect_code_rule_candidates",
     "parse_code_rule_bundle",
 ]

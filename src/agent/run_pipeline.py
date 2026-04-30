@@ -28,8 +28,10 @@ _DEFAULT_BUNDLE_OUTPUT_ROOT = Path("output/agent/financial_baseline_runner")
 _DEFAULT_TOOL_OUTPUT_ROOT = Path("output/agent/tool_agent")
 
 _BUNDLE_EXPERIMENTS = {
-    "bundle-full": "full_bundle_reference",
-    "bundle-grouped": "grouped_433",
+    "bundle-full": ("full_bundle_reference", "json_spec"),
+    "bundle-grouped": ("grouped_433", "json_spec"),
+    "bundle-full-code": ("full_bundle_reference", "python_code"),
+    "bundle-grouped-code": ("grouped_433", "python_code"),
 }
 
 _TOOL_AGENT_EXPERIMENTS = {
@@ -134,12 +136,17 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     return args
 
 
-def _run_bundle_phase_a(args: argparse.Namespace, packaging_mode: str) -> None:
+def _run_bundle_phase_a(
+    args: argparse.Namespace,
+    packaging_mode: str,
+    rule_mode: str,
+) -> None:
     query_indices = _parse_query_indices(args.queries)
     if args.dry_run:
         config = _load_config(args.config)
         print("=== Bundle Phase A dry-run ===")
         print(f"Packaging mode: {packaging_mode}")
+        print(f"Rule mode: {rule_mode}")
         print(f"Config: {args.config}")
         print(f"Queries: {query_indices}")
         print(f"Output root: {args.bundle_output_root}")
@@ -158,6 +165,7 @@ def _run_bundle_phase_a(args: argparse.Namespace, packaging_mode: str) -> None:
         output_root=args.bundle_output_root,
         llm_provider=args.agent_provider,
         llm_model=args.agent_model,
+        rule_mode=rule_mode,
     )
 
 
@@ -312,9 +320,9 @@ def main(argv: Sequence[str] | None = None) -> None:
     args = parse_args(argv)
 
     if args.experiment in _BUNDLE_EXPERIMENTS:
-        packaging_mode = _BUNDLE_EXPERIMENTS[args.experiment]
+        packaging_mode, rule_mode = _BUNDLE_EXPERIMENTS[args.experiment]
         if args.phase in ("a", "both"):
-            _run_bundle_phase_a(args, packaging_mode)
+            _run_bundle_phase_a(args, packaging_mode, rule_mode)
         if args.phase in ("b", "both"):
             _run_bundle_phase_b(args, packaging_mode)
             if args.bundle_deploy:

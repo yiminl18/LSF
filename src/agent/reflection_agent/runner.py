@@ -19,11 +19,15 @@ from agent.rule_runtime.data import (
 )
 from agent.rule_runtime.context import (
     _estimate_tokens_for_model_context,
-    _resolve_effective_model_identity,
     _resolve_model_context_limit,
 )
 from agent.rule_runtime.prompts import fill_prompt, load_prompt_template
-from agent.rules.code_rule_json import CodeRuleBundle, parse_code_rule_bundle
+from agent.rules.code_rule_json import (
+    CodeRule,
+    CodeRuleBundle,
+    inspect_code_rule_candidates,
+    parse_code_rule_bundle,
+)
 from agent.rules.code_rule_sandbox import execute_locate_region
 from agent.rules.range_rule_exec import execute_range_rule
 from agent.rules.range_rule_json import (
@@ -122,6 +126,20 @@ class BundleRunResult:
 
 
 @dataclass(slots=True, frozen=True)
+class CodeBundleRunResult:
+    bundle_index: int
+    doc_ids: tuple[str, ...]
+    prompt_path: str
+    prompt_tokens: int
+    projected_generation_cost_usd: float
+    actual_generation_cost_usd: float
+    cache_hit: bool
+    raw_response: str
+    parsed_rules: tuple[CodeRule, ...]
+    validation_records: tuple[dict[str, Any], ...]
+
+
+@dataclass(slots=True, frozen=True)
 class MergedRule:
     rule: RangeRule
     primary_doc_ids: tuple[str, ...]
@@ -144,6 +162,34 @@ class MergedRule:
             "source_bundle_projected_costs_usd": list(
                 self.source_bundle_projected_costs_usd
             ),
+        }
+
+
+@dataclass(slots=True, frozen=True)
+class CodeMergedRule:
+    rule: CodeRule
+    primary_doc_ids: tuple[str, ...]
+    source_bundle_doc_ids_list: tuple[tuple[str, ...], ...]
+    source_bundle_prompt_tokens_list: tuple[int, ...]
+    source_bundle_projected_costs_usd: tuple[float, ...]
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "rule_kind": "code",
+            "rule_text": self.rule.rule_text,
+            "evidence_basis": self.rule.evidence_basis,
+            "code": self.rule.code,
+            "primary_doc_ids": list(self.primary_doc_ids),
+            "source_bundle_doc_ids_list": [
+                list(doc_ids) for doc_ids in self.source_bundle_doc_ids_list
+            ],
+            "source_bundle_prompt_tokens_list": list(
+                self.source_bundle_prompt_tokens_list
+            ),
+            "source_bundle_projected_costs_usd": list(
+                self.source_bundle_projected_costs_usd
+            ),
+            "sandbox_validation_status": "valid",
         }
 
 
@@ -380,12 +426,13 @@ def _build_bundle_specs(
     packaging_mode: str,
     llm_provider: str,
     llm_model: str,
+    rule_mode: str | None = None,
 ) -> tuple[QueryPackage, list[BundleSpec]]:
     selected_doc_ids = _get_query_doc_ids(config, query_idx)
     _validate_doc_eligibility(config, query_idx, selected_doc_ids)
 
-    rule_mode = _resolve_rule_mode(config)
-    text_format = _resolve_rule_text_format(config, rule_mode)
+    resolved_rule_mode = rule_mode if rule_mode is not None else _resolve_rule_mode(config)
+    text_format = _resolve_rule_text_format(config, resolved_rule_mode)
     full_query_package = build_query_package(
         config, query_idx, selected_doc_ids, text_format=text_format
     )
@@ -562,6 +609,137 @@ def _run_bundle_generations(
     return results
 
 
+def _build_code_bundle_specs(
+    config: dict[str, Any],
+    query_package: QueryPackage,
+    source_specs: Sequence[BundleSpec],
+    llm_provider: str,
+    llm_model: str,
+) -> list[BundleSpec]:
+    template = load_prompt_template("code_scope_v1")
+    max_output_tokens = int(config.get("max_tokens_output", 4096))
+
+    code_specs: list[BundleSpec] = []
+    for source_spec in source_specs:
+        bundle_query_package = _slice_query_package(query_package, source_spec.doc_ids)
+        prompt = fill_prompt(
+            template,
+            bundle_query_package,
+            anonymize=config.get("anonymize_doc_ids", False),
+        )
+        prompt_tokens = estimate_tokens(prompt)
+        code_specs.append(
+            BundleSpec(
+                bundle_index=source_spec.bundle_index,
+                doc_ids=source_spec.doc_ids,
+                prompt=prompt,
+                prompt_tokens=prompt_tokens,
+                projected_generation_cost_usd=_projected_generation_cost(
+                    prompt_tokens,
+                    max_output_tokens,
+                    llm_provider,
+                    llm_model,
+                ),
+            )
+        )
+    return code_specs
+
+
+def _parse_code_rules_safely(raw_response: str, query_idx: int) -> tuple[CodeRule, ...]:
+    try:
+        return parse_code_rule_bundle(raw_response, query_idx).rules
+    except ValueError:
+        return ()
+
+
+def _run_code_bundle_generations(
+    query_idx: int,
+    bundle_specs: Sequence[BundleSpec],
+    prompt_paths: dict[int, str],
+    caller: CachedLLMCaller,
+    llm_provider: str,
+    llm_model: str,
+    max_output_tokens: int,
+) -> list[CodeBundleRunResult]:
+    results: list[CodeBundleRunResult] = []
+    for spec in bundle_specs:
+        call_kwargs: dict[str, Any] = {
+            "prompt": spec.prompt,
+            "llm_provider": llm_provider,
+            "max_tokens": max_output_tokens,
+            "model": llm_model,
+        }
+        generation = caller.call(**call_kwargs)
+        validation_records = tuple(inspect_code_rule_candidates(generation.response))
+        parsed_rules = _parse_code_rules_safely(generation.response, query_idx)
+        results.append(
+            CodeBundleRunResult(
+                bundle_index=spec.bundle_index,
+                doc_ids=spec.doc_ids,
+                prompt_path=prompt_paths[spec.bundle_index],
+                prompt_tokens=spec.prompt_tokens,
+                projected_generation_cost_usd=spec.projected_generation_cost_usd,
+                actual_generation_cost_usd=compute_cost(
+                    generation.input_tokens,
+                    generation.output_tokens,
+                    llm_provider,
+                    model=llm_model,
+                ),
+                cache_hit=generation.cache_hit,
+                raw_response=generation.response,
+                parsed_rules=parsed_rules,
+                validation_records=validation_records,
+            )
+        )
+    return results
+
+
+def _canonical_code_rule(rule: CodeRule) -> str:
+    return json.dumps(
+        {"rule_kind": "code", "code": rule.code},
+        sort_keys=True,
+        ensure_ascii=False,
+    )
+
+
+def _merge_code_rules(
+    code_results: Sequence[CodeBundleRunResult],
+) -> list[CodeMergedRule]:
+    merged: dict[str, CodeMergedRule] = {}
+    for bundle in code_results:
+        for rule in bundle.parsed_rules:
+            key = _canonical_code_rule(rule)
+            existing = merged.get(key)
+            if existing is None:
+                merged[key] = CodeMergedRule(
+                    rule=rule,
+                    primary_doc_ids=bundle.doc_ids,
+                    source_bundle_doc_ids_list=(bundle.doc_ids,),
+                    source_bundle_prompt_tokens_list=(bundle.prompt_tokens,),
+                    source_bundle_projected_costs_usd=(
+                        bundle.projected_generation_cost_usd,
+                    ),
+                )
+                continue
+
+            if bundle.doc_ids in existing.source_bundle_doc_ids_list:
+                continue
+
+            merged[key] = CodeMergedRule(
+                rule=existing.rule,
+                primary_doc_ids=existing.primary_doc_ids,
+                source_bundle_doc_ids_list=existing.source_bundle_doc_ids_list
+                + (bundle.doc_ids,),
+                source_bundle_prompt_tokens_list=existing.source_bundle_prompt_tokens_list
+                + (bundle.prompt_tokens,),
+                source_bundle_projected_costs_usd=(
+                    existing.source_bundle_projected_costs_usd
+                    + (bundle.projected_generation_cost_usd,)
+                ),
+            )
+    return list(merged.values())
+
+
 def _validate_bundle_query_indices(
     bundle_results: Sequence[BundleRunResult], query_idx: int
 ) -> None:
@@ -615,6 +793,61 @@ def _parsed_payload(
                 "parsed_bundle": bundle.parsed_bundle.to_dict(),
             }
             for bundle in bundle_results
+        ],
+        "merged_rules": [rule.to_dict() for rule in merged_rules],
+    }
+
+
+def _code_generation_payload(
+    query_package: QueryPackage,
+    packaging_mode: str,
+    code_results: Sequence[CodeBundleRunResult],
+) -> dict[str, Any]:
+    return {
+        "query_idx": query_package.query_idx,
+        "query_text": query_package.query_text,
+        "packaging_mode": packaging_mode,
+        "rule_mode": "python_code",
+        "bundle_generations": [
+            {
+                "bundle_index": bundle.bundle_index,
+                "doc_ids": list(bundle.doc_ids),
+                "prompt_path": bundle.prompt_path,
+                "prompt_tokens": bundle.prompt_tokens,
+                "projected_generation_cost_usd": bundle.projected_generation_cost_usd,
+                "actual_generation_cost_usd": bundle.actual_generation_cost_usd,
+                "cache_hit": bundle.cache_hit,
+                "raw_response": bundle.raw_response,
+            }
+            for bundle in code_results
+        ],
+    }
+
+
+def _code_parsed_payload(
+    query_idx: int,
+    packaging_mode: str,
+    code_results: Sequence[CodeBundleRunResult],
+    merged_rules: Sequence[CodeMergedRule],
+) -> dict[str, Any]:
+    return {
+        "query_idx": query_idx,
+        "packaging_mode": packaging_mode,
+        "rule_mode": "python_code",
+        "bundle_rules": [
+            {
+                "bundle_index": bundle.bundle_index,
+                "doc_ids": list(bundle.doc_ids),
+                "parsed_bundle": {
+                    "query_idx": query_idx,
+                    "rules": [
+                        {**rule.to_dict(), "sandbox_validation_status": "valid"}
+                        for rule in bundle.parsed_rules
+                    ],
+                },
+                "validation_records": list(bundle.validation_records),
+            }
+            for bundle in code_results
         ],
         "merged_rules": [rule.to_dict() for rule in merged_rules],
     }
@@ -772,6 +1005,181 @@ def _summarize_rules(
         summary["diagnostics"] = _derive_rule_diagnostics(summary)
         summaries.append(summary)
     return summaries
+
+
+def _summarize_code_rules(
+    merged_rules: Sequence[CodeMergedRule],
+    rows: Sequence[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    rows_by_index: dict[int, list[dict[str, Any]]] = {}
+    for row in rows:
+        rows_by_index.setdefault(int(row["rule_index"]), []).append(row)
+
+    summaries: list[dict[str, Any]] = []
+    for rule_index, merged_rule in enumerate(merged_rules):
+        rule_rows = rows_by_index.get(rule_index, [])
+        matched_rows = [row for row in rule_rows if row["retrieved_subset"]["matched"]]
+        judged_rows = [
+            row for row in rule_rows if isinstance(row["judge_result"], bool)
+        ]
+        accuracy_sum = sum(
+            1.0 if row["judge_result"] is True else 0.0 for row in rule_rows
+        )
+        matched_accuracy_sum = sum(
+            1.0 if row["judge_result"] is True else 0.0 for row in judged_rows
+        )
+        subset_tokens = [row["retrieved_subset_tokens"] for row in matched_rows]
+        subset_chars = [row["retrieved_subset_chars"] for row in matched_rows]
+        retrieval_spec = {"rule_kind": "code", "code": merged_rule.rule.code}
+
+        summary = {
+            "rule_index": rule_index,
+            "rule_kind": "code",
+            "rule_key": _canonical_code_rule(merged_rule.rule),
+            "rule_text": merged_rule.rule.rule_text,
+            "evidence_basis": merged_rule.rule.evidence_basis,
+            "code": merged_rule.rule.code,
+            "retrieval_spec": retrieval_spec,
+            "retrieval_mode": "python_code",
+            "anchor_type": "code",
+            "sandbox_validation_status": "valid",
+            "doc_coverage": (len(matched_rows) / len(rule_rows) if rule_rows else 0.0),
+            "on_sample_accuracy": (accuracy_sum / len(rule_rows) if rule_rows else 0.0),
+            "judge_accuracy_on_matched": (
+                matched_accuracy_sum / len(judged_rows) if judged_rows else None
+            ),
+            "avg_subset_tokens": (
+                sum(subset_tokens) / len(subset_tokens) if subset_tokens else None
+            ),
+            "max_subset_tokens": max(subset_tokens) if subset_tokens else None,
+            "avg_subset_chars": (
+                sum(subset_chars) / len(subset_chars) if subset_chars else None
+            ),
+            "max_subset_chars": max(subset_chars) if subset_chars else None,
+            "failure_breakdown": _rule_failure_breakdown(rule_rows),
+            "matched_doc_ids": [row["doc_id"] for row in matched_rows],
+            "successful_doc_ids": [
+                row["doc_id"] for row in rule_rows if row["judge_result"] is True
+            ],
+        }
+        summary["diagnostics"] = _derive_rule_diagnostics(summary)
+        summaries.append(summary)
+    return summaries
+
+
+def _build_code_cross_doc_eval(
+    merged_rules: Sequence[CodeMergedRule],
+    rule_summary: Sequence[dict[str, Any]],
+    rows: Sequence[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    rows_by_index: dict[int, list[dict[str, Any]]] = {}
+    for row in rows:
+        rows_by_index.setdefault(int(row["rule_index"]), []).append(row)
+
+    cross_doc_eval: list[dict[str, Any]] = []
+    for summary in rule_summary:
+        rule_index = int(summary["rule_index"])
+        rule_rows = rows_by_index.get(rule_index, [])
+        accuracy = float(summary["on_sample_accuracy"])
+        coverage = float(summary["doc_coverage"])
+        eval_cost = sum(float(row.get("actual_cost_usd") or 0.0) for row in rule_rows)
+        matched_doc_ids = list(summary["matched_doc_ids"])
+        success_doc_ids = list(summary["successful_doc_ids"])
+        cross_doc_eval.append(
+            {
+                "rule_index": rule_index,
+                "rule_kind": "code",
+                "rule_text": summary["rule_text"],
+                "code": merged_rules[rule_index].rule.code,
+                "coverage": coverage,
+                "accuracy": accuracy,
+                "score": round(coverage * accuracy, 6),
+                "matched_count": len(matched_doc_ids),
+                "success_count": len(success_doc_ids),
+                "evaluated_docs": len(rule_rows),
+                "total_docs": len(rule_rows),
+                "budget_truncated": False,
+                "skipped_due_to_budget": False,
+                "eval_cost_usd": round(eval_cost, 6),
+                "success_doc_ids": success_doc_ids,
+                "matched_doc_ids": matched_doc_ids,
+                "sandbox_validation_status": "valid",
+            }
+        )
+    return cross_doc_eval
+
+
+def _rejected_code_validation_records(
+    code_results: Sequence[CodeBundleRunResult],
+) -> list[dict[str, Any]]:
+    rejected: list[dict[str, Any]] = []
+    for bundle in code_results:
+        for record in bundle.validation_records:
+            if record.get("sandbox_validation_status") != "rejected_ast":
+                continue
+            rejected.append(
+                {
+                    "bundle_index": bundle.bundle_index,
+                    "doc_ids": list(bundle.doc_ids),
+                    **record,
+                }
+            )
+    return rejected
+
+
+def _summarize_code_run(
+    query_package: QueryPackage,
+    packaging_mode: str,
+    bundle_specs: Sequence[BundleSpec],
+    code_results: Sequence[CodeBundleRunResult],
+    merged_rules: Sequence[CodeMergedRule],
+    rows: Sequence[dict[str, Any]],
+) -> BaselineRunSummary:
+    avg_accuracy = (
+        sum(1.0 if row["judge_result"] is True else 0.0 for row in rows) / len(rows)
+        if rows
+        else None
+    )
+    return BaselineRunSummary(
+        status="ok",
+        query_idx=query_package.query_idx,
+        query_text=query_package.query_text,
+        packaging_mode=packaging_mode,
+        selected_doc_ids=tuple(document.doc_id for document in query_package.documents),
+        doc_count=len(query_package.documents),
+        bundle_count=len(bundle_specs),
+        total_prompt_tokens=sum(spec.prompt_tokens for spec in bundle_specs),
+        projected_generation_cost_usd=sum(
+            spec.projected_generation_cost_usd for spec in bundle_specs
+        ),
+        actual_generation_cost_usd=sum(
+            result.actual_generation_cost_usd for result in code_results
+        ),
+        rule_count=len(merged_rules),
+        row_count=len(rows),
+        avg_accuracy=avg_accuracy,
+    )
+
+
+def _code_best_rules_payload(
+    query_package: QueryPackage,
+    packaging_mode: str,
+    merged_rules: Sequence[CodeMergedRule],
+    rule_summary: Sequence[dict[str, Any]],
+    cross_doc_eval: Sequence[dict[str, Any]],
+    bundle_diagnostics: dict[str, Any],
+    rejected_rules: Sequence[dict[str, Any]],
+) -> dict[str, Any]:
+    return {
+        "query_idx": query_package.query_idx,
+        "packaging_mode": packaging_mode,
+        "rule_mode": "python_code",
+        "merged_rules": [rule.to_dict() for rule in merged_rules],
+        "rule_summary": list(rule_summary),
+        "cross_doc_eval": list(cross_doc_eval),
+        "bundle_diagnostics": bundle_diagnostics,
+        "rejected_rules": list(rejected_rules),
+    }
 
 
 def _build_rule_examples(
@@ -1127,23 +1535,99 @@ def _evaluate_rules(
     return rows
 
 
+def _classify_code_unmatched_reason(
+    *,
+    success: bool,
+    error: str | None,
+    region_text: str,
+) -> str:
+    err = error or ""
+    if err.startswith("AST violations:"):
+        return "sandbox_rejected_ast"
+    if err.startswith("TimeoutError:"):
+        return "sandbox_timeout"
+    if success and not region_text:
+        return "sandbox_empty_region"
+    if "expected non-empty str" in err:
+        return "sandbox_empty_region"
+    if err:
+        return "sandbox_runtime_error"
+    return "sandbox_runtime_error"
+
+
+def _code_subset_payload(
+    code_rule: CodeRule,
+    document_text: str,
+) -> tuple[dict[str, Any], int]:
+    exec_result = execute_locate_region(code_rule.code, document_text)
+    region_text = exec_result.returned_region or ""
+    matched = bool(exec_result.success) and bool(region_text)
+    start = document_text.find(region_text) if matched else -1
+    if start < 0:
+        start = 0
+    metadata: dict[str, Any] = {
+        "rule_kind": "code",
+        "exec_time_ms": float(exec_result.exec_time_ms),
+        "error": exec_result.error,
+    }
+    if not matched:
+        metadata["reason"] = _classify_code_unmatched_reason(
+            success=exec_result.success,
+            error=exec_result.error,
+            region_text=region_text,
+        )
+    subset = {
+        "matched": matched,
+        "spans": (
+            [
+                {
+                    "start": start,
+                    "end": start + len(region_text),
+                    "text": region_text,
+                }
+            ]
+            if matched
+            else []
+        ),
+        "metadata": metadata,
+    }
+    return subset, int(exec_result.success)
+
+
 def _evaluate_code_rules(
     query_package: QueryPackage,
     packaging_mode: str,
-    code_bundle: CodeRuleBundle,
+    merged_rules: Sequence[CodeMergedRule],
     cached_caller: CachedLLMCaller,
     llm_provider: str,
     retrieval_too_large_token_threshold: int,
     llm_model: str,
 ) -> list[dict[str, Any]]:
-    """Evaluate code-based locate_region rules via gen→judge."""
+    """Evaluate code-based locate_region rules via gen->judge."""
     rows: list[dict[str, Any]] = []
 
-    for code_rule in code_bundle.rules:
+    for rule_index, merged_rule in enumerate(merged_rules):
+        code_rule = merged_rule.rule
+        primary_doc_ids = list(merged_rule.primary_doc_ids)
+        source_bundle_doc_ids_list = [
+            list(doc_ids) for doc_ids in merged_rule.source_bundle_doc_ids_list
+        ]
+        source_bundle_prompt_tokens_list = list(
+            merged_rule.source_bundle_prompt_tokens_list
+        )
+        source_bundle_projected_costs_usd = list(
+            merged_rule.source_bundle_projected_costs_usd
+        )
+        retrieval_spec = {"rule_kind": "code", "code": code_rule.code}
+        rule_key = _canonical_code_rule(code_rule)
         for document in query_package.documents:
-            exec_result = execute_locate_region(code_rule.code, document.markdown_text)
-            region_text = exec_result.returned_region
+            subset, code_exec_success = _code_subset_payload(
+                code_rule,
+                document.markdown_text,
+            )
+            region_text = _subset_text_from_payload(subset)
             region_tokens = estimate_tokens(region_text) if region_text else 0
+            metadata = subset["metadata"]
 
             row: dict[str, Any] = {
                 "dataset": "pdfs",
@@ -1151,20 +1635,37 @@ def _evaluate_code_rules(
                 "query_id": f"q{query_package.query_idx}",
                 "query_text": query_package.query_text,
                 "packaging_mode": packaging_mode,
+                "doc_ids": primary_doc_ids,
+                "source_bundle_doc_ids_list": source_bundle_doc_ids_list,
+                "source_bundle_prompt_tokens_list": source_bundle_prompt_tokens_list,
+                "source_bundle_projected_costs_usd": source_bundle_projected_costs_usd,
+                "rule_index": rule_index,
+                "rule_kind": "code",
                 "retrieval_method": "python_code",
                 "evaluated_doc_id": document.doc_id,
                 "doc_id": document.doc_id,
+                "matched": subset["matched"],
                 "rule_text": code_rule.rule_text,
                 "evidence_basis": code_rule.evidence_basis,
-                "code_exec_success": exec_result.success,
-                "code_exec_error": exec_result.error,
-                "code_exec_time_ms": exec_result.exec_time_ms,
+                "code": code_rule.code,
+                "code_exec_success": bool(code_exec_success),
+                "code_exec_error": metadata["error"],
+                "code_exec_time_ms": metadata["exec_time_ms"],
+                "sandbox_validation_status": "valid",
+                "retrieval_spec": retrieval_spec,
+                "rule_key": rule_key,
+                "retrieved_subset": subset,
                 "retrieved_region_size": len(region_text),
                 "retrieved_subset_chars": len(region_text),
                 "retrieved_subset_tokens": region_tokens,
                 "token_count_retrieved_subset": region_tokens,
                 "ground_truth": document.ground_truth_answer,
                 "judge_method": JUDGE_METHOD_NAME,
+                "token_count_input": source_bundle_prompt_tokens_list[0],
+                "projected_cost_usd": source_bundle_projected_costs_usd[0],
+                "anchor_source": None,
+                "anchor_type": "code",
+                "retrieval_mode": "python_code",
             }
 
             if not region_text.strip():
@@ -1173,7 +1674,15 @@ def _evaluate_code_rules(
                         "generated_answer": None,
                         "judge_result": "NOT_RUN",
                         "actual_cost_usd": None,
-                        "blocker": "empty_region",
+                        "blocker": _classify_rule_blocker(
+                            subset,
+                            generated_answer=None,
+                            judge_result="NOT_RUN",
+                            subset_tokens=0,
+                            retrieval_too_large_token_threshold=(
+                                retrieval_too_large_token_threshold
+                            ),
+                        ),
                     }
                 )
                 rows.append(row)
@@ -1208,7 +1717,15 @@ def _evaluate_code_rules(
                         score.metadata["generation"]["cost_usd"]
                         + score.metadata["judge"]["cost_usd"]
                     ),
-                    "blocker": None,
+                    "blocker": _classify_rule_blocker(
+                        subset,
+                        generated_answer=score.generated_answer,
+                        judge_result=score.judge_result,
+                        subset_tokens=region_tokens,
+                        retrieval_too_large_token_threshold=(
+                            retrieval_too_large_token_threshold
+                        ),
+                    ),
                 }
             )
             rows.append(row)
@@ -1719,6 +2236,7 @@ def _run_baseline_with_config(
     llm_provider: str | None,
     llm_model: str | None,
     cache_db_path: str,
+    rule_mode: str | None = None,
 ) -> BaselineRunSummary:
     if packaging_mode not in SUPPORTED_PACKAGING_MODES:
         raise NotImplementedError(
@@ -1738,13 +2256,19 @@ def _run_baseline_with_config(
     resolved_llm_model = _resolve_llm_model(config, llm_model)
     query_package: QueryPackage | None = None
     try:
-        rule_mode = _resolve_rule_mode(config)
+        resolved_rule_mode = rule_mode if rule_mode is not None else _resolve_rule_mode(config)
+        if resolved_rule_mode not in SUPPORTED_RULE_MODES:
+            raise ValueError(
+                f"unsupported rule_mode={resolved_rule_mode!r}; "
+                f"supported={list(SUPPORTED_RULE_MODES)}"
+            )
         query_package, bundle_specs = _build_bundle_specs(
             config,
             query_idx,
             packaging_mode,
             resolved_llm_provider,
             resolved_llm_model,
+            rule_mode=resolved_rule_mode,
         )
         max_output_tokens = int(config.get("max_tokens_output", 4096))
         _ensure_bundle_specs_within_model_context(
@@ -1754,12 +2278,12 @@ def _run_baseline_with_config(
             llm_model=resolved_llm_model,
             stage_label="initial_generation",
         )
-        if rule_mode in {"json_spec", "json_spec_reflect"}:
+        if resolved_rule_mode in {"json_spec", "json_spec_reflect"}:
             _ensure_projected_cost_within_threshold(config, bundle_specs)
 
         caller = CachedLLMCaller(db_path=cache_db_path)
 
-        text_format = _resolve_rule_text_format(config, rule_mode)
+        text_format = _resolve_rule_text_format(config, resolved_rule_mode)
         retrieval_too_large_token_threshold = int(
             config.get(
                 "retrieval_too_large_token_threshold",
@@ -1767,44 +2291,74 @@ def _run_baseline_with_config(
             )
         )
 
-        if rule_mode == "python_code":
-            # Python code scope-narrowing path
-            code_prompt_template = load_prompt_template("code_scope_v1")
-            code_prompt = fill_prompt(
-                code_prompt_template,
+        if resolved_rule_mode == "python_code":
+            code_bundle_specs = _build_code_bundle_specs(
+                config,
                 query_package,
-                anonymize=config.get("anonymize_doc_ids", False),
+                bundle_specs,
+                resolved_llm_provider,
+                resolved_llm_model,
             )
-            _ensure_request_within_model_context(
-                prompt_text=code_prompt,
+            _ensure_bundle_specs_within_model_context(
+                code_bundle_specs,
                 max_output_tokens=max_output_tokens,
                 llm_provider=resolved_llm_provider,
                 llm_model=resolved_llm_model,
                 stage_label="python_code_generation",
             )
-            code_prompt_path = paths["prompt_dir"] / "code_scope_prompt.txt"
-            paths["prompt_dir"].mkdir(parents=True, exist_ok=True)
-            code_prompt_path.write_text(code_prompt, encoding="utf-8")
-
-            call_kwargs_code: dict[str, Any] = {
-                "prompt": code_prompt,
-                "llm_provider": resolved_llm_provider,
-                "max_tokens": max_output_tokens,
-                "model": resolved_llm_model,
-            }
-            code_generation = caller.call(**call_kwargs_code)
+            _ensure_projected_cost_within_threshold(config, code_bundle_specs)
+            code_prompt_paths = _write_bundle_prompts(
+                paths["prompt_dir"],
+                code_bundle_specs,
+                filename_prefix="code_bundle",
+            )
+            code_results = _run_code_bundle_generations(
+                query_idx,
+                code_bundle_specs,
+                code_prompt_paths,
+                caller,
+                resolved_llm_provider,
+                resolved_llm_model,
+                max_output_tokens,
+            )
+            merged_code_rules = _merge_code_rules(code_results)
+            rejected_rules = _rejected_code_validation_records(code_results)
 
             paths["generation"].write_text(
                 json.dumps(
-                    {
-                        "query_idx": query_idx,
-                        "rule_mode": "python_code",
-                        "raw_response": code_generation.response,
-                        "input_tokens": code_generation.input_tokens,
-                        "output_tokens": code_generation.output_tokens,
-                        "latency_ms": code_generation.latency_ms,
-                        "cache_hit": code_generation.cache_hit,
-                    },
+                    _code_generation_payload(
+                        query_package,
+                        packaging_mode,
+                        code_results,
+                    ),
+                    ensure_ascii=False,
+                    indent=2,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            paths["parsed"].write_text(
+                json.dumps(
+                    _code_parsed_payload(
+                        query_idx,
+                        packaging_mode,
+                        code_results,
+                        merged_code_rules,
+                    ),
+                    ensure_ascii=False,
+                    indent=2,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            paths["code_rules"].write_text(
+                json.dumps(
+                    _code_parsed_payload(
+                        query_idx,
+                        packaging_mode,
+                        code_results,
+                        merged_code_rules,
+                    ),
                     ensure_ascii=False,
                     indent=2,
                 )
@@ -1812,16 +2366,10 @@ def _run_baseline_with_config(
                 encoding="utf-8",
             )
 
-            code_bundle = parse_code_rule_bundle(code_generation.response, query_idx)
-            paths["code_rules"].write_text(
-                json.dumps(code_bundle.to_dict(), ensure_ascii=False, indent=2) + "\n",
-                encoding="utf-8",
-            )
-
             rows = _evaluate_code_rules(
                 query_package,
                 packaging_mode,
-                code_bundle,
+                merged_code_rules,
                 caller,
                 resolved_llm_provider,
                 retrieval_too_large_token_threshold,
@@ -1829,65 +2377,44 @@ def _run_baseline_with_config(
             )
             _write_rows(paths["rows"], rows)
 
-            # Build a compatible summary structure for the python_code path
-            code_gen_cost = compute_cost(
-                code_generation.input_tokens,
-                code_generation.output_tokens,
-                resolved_llm_provider,
-                model=resolved_llm_model,
+            rule_summary = _summarize_code_rules(merged_code_rules, rows)
+            cross_doc_eval = _build_code_cross_doc_eval(
+                merged_code_rules,
+                rule_summary,
+                rows,
             )
-            dummy_bundle_spec = BundleSpec(
-                bundle_index=0,
-                doc_ids=tuple(d.doc_id for d in query_package.documents),
-                prompt=code_prompt,
-                prompt_tokens=estimate_tokens(code_prompt),
-                projected_generation_cost_usd=code_gen_cost,
-            )
-            dummy_bundle_result = BundleRunResult(
-                bundle_index=0,
-                doc_ids=dummy_bundle_spec.doc_ids,
-                prompt_path=str(code_prompt_path),
-                prompt_tokens=dummy_bundle_spec.prompt_tokens,
-                projected_generation_cost_usd=code_gen_cost,
-                actual_generation_cost_usd=code_gen_cost,
-                cache_hit=code_generation.cache_hit,
-                raw_response=code_generation.response,
-                parsed_bundle=RangeRuleBundle(
-                    query_idx=query_idx,
-                    rules=(
-                        RangeRule(
-                            rule_text="python_code placeholder",
-                            evidence_basis="python_code placeholder",
-                            retrieval_spec=RetrievalSpec(
-                                mode="page",
-                                anchor=None,
-                                anchor_b=None,
-                                page_idx=1,
-                                max_chars=9999,
-                            ),
-                        ),
+            bundle_diagnostics = _build_bundle_diagnostics(rule_summary)
+            paths["best_rules"].write_text(
+                json.dumps(
+                    _code_best_rules_payload(
+                        query_package,
+                        packaging_mode,
+                        merged_code_rules,
+                        rule_summary,
+                        cross_doc_eval,
+                        bundle_diagnostics,
+                        rejected_rules,
                     ),
-                ),
+                    ensure_ascii=False,
+                    indent=2,
+                )
+                + "\n",
+                encoding="utf-8",
             )
-            dummy_merged = _placeholder_merged_rules_for_code_bundle(
-                code_bundle,
-                query_package,
-                dummy_bundle_spec,
-            )
-            summary = _summarize_run(
+            summary = _summarize_code_run(
                 query_package,
                 packaging_mode,
-                [dummy_bundle_spec],
-                [dummy_bundle_result],
-                dummy_merged,
+                code_bundle_specs,
+                code_results,
+                merged_code_rules,
                 rows,
             )
             summary = _with_summary_context(
-                summary,
+                _with_bundle_diagnostics(summary, bundle_diagnostics),
                 rule_mode="python_code",
                 text_format=text_format,
             )
-        elif rule_mode == "json_spec_reflect":
+        elif resolved_rule_mode == "json_spec_reflect":
             summary = _run_json_spec_reflect(
                 config,
                 query_package,
@@ -1899,7 +2426,7 @@ def _run_baseline_with_config(
                 resolved_llm_model,
                 text_format,
             )
-        elif rule_mode == "json_spec":
+        elif resolved_rule_mode == "json_spec":
             # JSON spec path (original)
             prompt_paths = _write_bundle_prompts(paths["prompt_dir"], bundle_specs)
             bundle_results = _run_bundle_generations(
@@ -1961,10 +2488,12 @@ def _run_baseline_with_config(
                 text_format=text_format,
             )
         else:
-            raise AssertionError(f"unexpected validated rule_mode={rule_mode!r}")
-        if rule_mode != "json_spec_reflect":
+            raise AssertionError(
+                f"unexpected validated rule_mode={resolved_rule_mode!r}"
+            )
+        if resolved_rule_mode != "json_spec_reflect":
             summary_payload = summary.to_dict()
-            if rule_mode == "json_spec":
+            if resolved_rule_mode == "json_spec":
                 summary_payload = _build_structured_summary_payload(
                     summary,
                     rule_summary,
@@ -2005,6 +2534,7 @@ def run_baseline(
     llm_provider: str | None = None,
     llm_model: str | None = None,
     cache_db_path: str = _DEFAULT_CACHE_DB_PATH,
+    rule_mode: str | None = None,
 ) -> BaselineRunSummary:
     config = _load_config(config_path)
     return _run_baseline_with_config(
@@ -2015,6 +2545,7 @@ def run_baseline(
         llm_provider=llm_provider,
         llm_model=llm_model,
         cache_db_path=cache_db_path,
+        rule_mode=rule_mode,
     )
 
 
@@ -2026,6 +2557,7 @@ def run_baseline_sweep(
     llm_provider: str | None = None,
     llm_model: str | None = None,
     cache_db_path: str = _DEFAULT_CACHE_DB_PATH,
+    rule_mode: str | None = None,
 ) -> BaselineSweepSummary:
     config = _load_config(config_path)
     resolved_query_indices = (
@@ -2048,6 +2580,7 @@ def run_baseline_sweep(
                     llm_provider=llm_provider,
                     llm_model=llm_model,
                     cache_db_path=cache_db_path,
+                    rule_mode=rule_mode,
                 )
             )
 
