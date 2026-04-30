@@ -16,13 +16,7 @@ def _sha256(path: Path) -> str:
     return h.hexdigest()
 
 
-def test_phase_a_byte_stability_existing_experiments() -> None:
-    """Gate the Wave 0 artifacts from the six existing Phase A commands.
-
-    The gate covers best_rules.json and phase_a_docs.json only. It deliberately
-    excludes phase_a_report.md and phase_a_report.json because their manifest
-    timestamps are nondeterministic.
-    """
+def _assert_phase_a_hashes_match_baseline() -> None:
     expected = json.loads(FIXTURE_PATH.read_text(encoding="utf-8"))
     missing = [path for path in expected if not Path(path).exists()]
     assert not missing, (
@@ -33,3 +27,17 @@ def test_phase_a_byte_stability_existing_experiments() -> None:
     actual = {path: _sha256(Path(path)) for path in expected}
 
     assert actual == expected
+
+
+def test_phase_a_byte_stability_existing_experiments() -> None:
+    """Gate the Wave 0 artifacts from the six existing Phase A commands.
+
+    The gate covers best_rules.json and phase_a_docs.json only. It deliberately
+    excludes phase_a_report.md and phase_a_report.json because their manifest
+    timestamps are nondeterministic.
+    """
+    _assert_phase_a_hashes_match_baseline()
+
+
+def test_existing_tool_agent_phase_a_byte_stable_after_pr4() -> None:
+    _assert_phase_a_hashes_match_baseline()

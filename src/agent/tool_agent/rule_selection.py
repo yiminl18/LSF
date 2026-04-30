@@ -114,9 +114,10 @@ def select_best_rules(
         return [unique_rules[i] for i in selected_indices]
 
     # Fallback: top-K with score > 0, or first 3 if none qualify
+    is_code_eval = any(e.get("rule_kind") == "code" for e in cross_doc_eval)
     fallback = [
         unique_rules[e["rule_index"]] for e in cross_doc_eval if e.get("score", 0) > 0
     ][:max_rules]
-    if not fallback and unique_rules:
+    if not fallback and unique_rules and not is_code_eval:
         fallback = unique_rules[:3]
     return fallback

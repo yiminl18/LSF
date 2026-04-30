@@ -30,6 +30,15 @@ from agent.tool_agent.core import (
     AgentResult,
     run_agent_on_query,
 )
+from agent.tool_agent.code_core import (
+    _cross_doc_evaluate_code,
+    _dedupe_code_rules,
+    _merge_rejection_counts,
+    _rejection_counts_from_agent_result,
+    _rejection_counts_from_eval,
+    run_code_agent_on_query,
+    save_code_phase_a_results,
+)
 from agent.tool_agent.curriculum_core import run_curriculum_agent_on_query
 from agent.tool_agent.diverse_core import run_diverse_agent_on_query
 from agent.tool_agent.document import DocumentContext, load_document_context
@@ -45,7 +54,14 @@ from core.pipeline.e2e_utils.cache import CachedLLMCaller
 # docs before computing reliability; otherwise keep it as None (gate disabled).
 _MIN_SUPPORT_FOR_HINT_RELIABILITY = 5
 
-PhaseAMode = Literal["single_shot", "diverse", "curriculum", "reflexion", "seq_cover"]
+PhaseAMode = Literal[
+    "single_shot",
+    "diverse",
+    "curriculum",
+    "reflexion",
+    "seq_cover",
+    "code",
+]
 
 _AGENT_FNS = {
     "single_shot": run_agent_on_query,
@@ -53,6 +69,7 @@ _AGENT_FNS = {
     "curriculum": run_curriculum_agent_on_query,
     "reflexion": run_reflexion_agent_on_query,
     "seq_cover": run_seq_cover_agent_on_query,
+    "code": run_code_agent_on_query,
 }
 
 _AGENT_LABELS = {
@@ -61,6 +78,7 @@ _AGENT_LABELS = {
     "curriculum": ("Curriculum Per-Query Agent", "Curriculum Agent"),
     "reflexion": ("Reflexion Per-Query Agent", "Reflexion Agent"),
     "seq_cover": ("Seq-Cover Per-Query Agent", "Seq-Cover Agent"),
+    "code": ("Code Per-Query Agent", "Code Agent"),
 }
 
 
@@ -316,6 +334,85 @@ def run_phase_a(
         f"reason={agent_result.termination_reason}, "
         f"turns={agent_result.turns_used}"
     )
+
+    if mode == "code":
+        all_code_rules = list(agent_result.rules)
+        processed_doc_ids = list(excluded_doc_ids)
+        per_doc_results: dict[str, AgentResult] = {"__corpus__": agent_result}
+        total_cost = agent_result.total_cost_usd
+        unique_rules = _dedupe_code_rules(all_code_rules)
+
+        processed_set = set(processed_doc_ids)
+        selection_contexts = [c for c in doc_contexts if c.doc_id in processed_set]
+        cross_doc_budget = max(0.0, agent_config.budget_usd - total_cost)
+        print(
+            f"\n  === Code Cross-Doc Evaluation ({len(unique_rules)} unique rules x "
+            f"{len(selection_contexts)} selection docs, budget ${cross_doc_budget:.4f}) ==="
+        )
+        cross_doc_eval = _cross_doc_evaluate_code(
+            unique_rules,
+            selection_contexts,
+            query_text,
+            cached_caller,
+            agent_config.agent_llm_provider,
+            agent_config.agent_llm_model,
+            remaining_budget=cross_doc_budget,
+        )
+        exploration_cost = total_cost
+        cross_doc_eval_cost = sum(e.get("eval_cost_usd", 0.0) for e in cross_doc_eval)
+        total_cost = exploration_cost + cross_doc_eval_cost
+        print(
+            f"  Costs: exploration ${exploration_cost:.4f} + "
+            f"cross_doc_eval ${cross_doc_eval_cost:.4f} = total ${total_cost:.4f}"
+        )
+
+        best_rules = select_best_rules(cross_doc_eval, unique_rules, max_rules=_MAX_BEST_RULES)
+        code_rule_rejections = _merge_rejection_counts(
+            _rejection_counts_from_agent_result(agent_result),
+            _rejection_counts_from_eval(cross_doc_eval),
+        )
+        save_code_phase_a_results(
+            output_dir,
+            query_idx,
+            best_rules,
+            cross_doc_eval,
+            total_cost,
+            processed_doc_ids,
+            exploration_cost,
+            cross_doc_eval_cost,
+            excluded_doc_ids,
+            code_rule_rejections,
+        )
+        summary_entry = {
+            "query_idx": query_idx,
+            "variant": mode,
+            "num_paths": 1,
+            "termination_reason": agent_result.termination_reason,
+            "turns_used": agent_result.turns_used,
+            "total_rules_discovered": len(all_code_rules),
+            "unique_rules": len(unique_rules),
+            "best_rules": len(best_rules),
+            "code_rule_rejections": code_rule_rejections,
+            "exploration_cost_usd": round(exploration_cost, 4),
+            "cross_doc_eval_cost_usd": round(cross_doc_eval_cost, 4),
+            "total_cost_usd": round(total_cost, 4),
+        }
+        logger.log_summary(summary_entry)
+        logger.close()
+
+        manifest_entry = {k: summary_entry[k] for k in (
+            "query_idx", "variant", "num_paths", "termination_reason", "turns_used",
+            "total_rules_discovered", "unique_rules", "best_rules", "total_cost_usd",
+        )}
+        _append_manifest(output_dir, manifest_entry)
+
+        return PhaseAResult(
+            query_idx=query_idx,
+            best_rules=best_rules,
+            per_doc_agent_results=per_doc_results,
+            cross_doc_eval=cross_doc_eval,
+            total_cost_usd=total_cost,
+        )
 
     all_rules: list[RangeRule] = list(agent_result.rules)
     processed_doc_ids: list[str] = list(excluded_doc_ids)

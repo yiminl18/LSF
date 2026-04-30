@@ -7,6 +7,7 @@ import time
 from dataclasses import dataclass
 from typing import Any
 
+from agent.rules.code_rule_sandbox import execute_locate_region
 from agent.rules.range_rule_exec import execute_range_rule
 from agent.rules.range_rule_json import RangeRule, RetrievalSpec
 from agent.tool_agent.document import DocumentContext
@@ -53,6 +54,7 @@ class ToolRegistry:
         "find_section",
         "get_section",
         "get_page",
+        "try_code_rule",
     )
 
     def __init__(
@@ -68,6 +70,7 @@ class ToolRegistry:
             "find_section": self._tool_find_section,
             "get_section": self._tool_get_section,
             "get_page": self._tool_get_page,
+            "try_code_rule": self._tool_try_code_rule,
         }
 
     def dispatch(self, tool_name: str, args: dict[str, Any]) -> ToolResult:
@@ -81,14 +84,19 @@ class ToolRegistry:
             )
         t0 = time.time()
         try:
-            data, cost = self._dispatch_map[tool_name](args)
+            result = self._dispatch_map[tool_name](args)
+            if len(result) == 3:
+                data, cost, explicit_latency_ms = result
+            else:
+                data, cost = result
+                explicit_latency_ms = None
             elapsed = (time.time() - t0) * 1000
             return ToolResult(
                 name=tool_name,
                 success=True,
                 data=data,
                 cost_usd=cost,
-                latency_ms=elapsed,
+                latency_ms=explicit_latency_ms if explicit_latency_ms is not None else elapsed,
             )
         except Exception as exc:
             elapsed = (time.time() - t0) * 1000
@@ -312,6 +320,58 @@ class ToolRegistry:
             "metadata": subset.metadata,
             "preview": span_text[:500],
         }, 0.0
+
+    def _tool_try_code_rule(self, args: dict[str, Any]) -> tuple[Any, float, float]:
+        """Execute candidate locate_region code through the sandbox across docs."""
+        code = args.get("code")
+        if not isinstance(code, str) or not code.strip():
+            return {"error": "Missing or empty required argument: 'code'"}, 0.0, 0.0
+
+        raw_doc_ids = args.get("doc_ids")
+        docs = [self._doc, *self._peer_docs]
+        if raw_doc_ids is not None:
+            if not isinstance(raw_doc_ids, list) or not all(
+                isinstance(doc_id, str) for doc_id in raw_doc_ids
+            ):
+                return {"error": "'doc_ids' must be a list of strings"}, 0.0, 0.0
+            doc_map = {doc.doc_id: doc for doc in docs}
+            unknown = [doc_id for doc_id in raw_doc_ids if doc_id not in doc_map]
+            if unknown:
+                return {
+                    "error": (
+                        f"Unknown doc_id(s): {unknown}. "
+                        f"Available: {list(doc_map)}"
+                    )
+                }, 0.0, 0.0
+            docs = [doc_map[doc_id] for doc_id in raw_doc_ids]
+
+        per_doc: list[dict[str, Any]] = []
+        matched_count = 0
+        total_exec_ms = 0.0
+        for doc in docs:
+            result = execute_locate_region(code, doc.normalized_text)
+            total_exec_ms += result.exec_time_ms
+            output = result.returned_region or ""
+            if result.success:
+                matched_count += 1
+            per_doc.append(
+                {
+                    "doc_id": doc.doc_id,
+                    "matched": bool(result.success),
+                    "output_substring": output[:_BATCH_SPAN_PREVIEW_CHARS],
+                    "char_count": len(output),
+                    "exec_ms": round(result.exec_time_ms, 3),
+                    "error_or_none": result.error,
+                }
+            )
+
+        total_docs = len(docs)
+        return {
+            "per_doc": per_doc,
+            "matched_count": matched_count,
+            "total_docs": total_docs,
+            "coverage": round(matched_count / total_docs, 4) if total_docs else 0.0,
+        }, 0.0, total_exec_ms
 
     # ---- Structured-access tools (read directly from the reconstructed.json tree) ----
 

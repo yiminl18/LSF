@@ -71,9 +71,10 @@ def parse_args() -> argparse.Namespace:
             "curriculum",
             "reflexion",
             "seq_cover",
+            "code",
         ],
         default="single_shot",
-        help="Phase A mode: single_shot|diverse|hybrid|curriculum|reflexion|seq_cover",
+        help="Phase A mode: single_shot|diverse|hybrid|curriculum|reflexion|seq_cover|code",
     )
     args = parser.parse_args()
     if args.mode == "hybrid" and args.multipath_n < 2:
