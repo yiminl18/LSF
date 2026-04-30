@@ -63,11 +63,11 @@ def test_apply_rule_code_branch_matched(monkeypatch: pytest.MonkeyPatch) -> None
     ("exec_result", "reason"),
     [
         (
-            CodeExecResult(False, "", "AST violations: ['forbidden import: os']", 0.1),
+            CodeExecResult(False, "", "blocked by sandbox", 0.1, "ast"),
             "sandbox_rejected_ast",
         ),
         (
-            CodeExecResult(False, "", "TimeoutError: execution exceeded 5s", 5000.0),
+            CodeExecResult(False, "", "too slow", 5000.0, "timeout"),
             "sandbox_timeout",
         ),
         (

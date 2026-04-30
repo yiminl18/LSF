@@ -1421,6 +1421,11 @@ def _evaluate_rules(
         source_bundle_projected_costs_usd = list(
             merged_rule.source_bundle_projected_costs_usd
         )
+        token_count_input = _first_source_metric(source_bundle_prompt_tokens_list, 0)
+        projected_cost_usd = _first_source_metric(
+            source_bundle_projected_costs_usd,
+            0.0,
+        )
 
         for document in query_package.documents:
             subset = execute_range_rule(
@@ -1455,8 +1460,8 @@ def _evaluate_rules(
                 "token_count_retrieved_subset": subset_tokens,
                 "ground_truth": document.ground_truth_answer,
                 "judge_method": JUDGE_METHOD_NAME,
-                "token_count_input": source_bundle_prompt_tokens_list[0],
-                "projected_cost_usd": source_bundle_projected_costs_usd[0],
+                "token_count_input": token_count_input,
+                "projected_cost_usd": projected_cost_usd,
                 "anchor_source": anchor_source,
                 "anchor_type": anchor_type,
                 "retrieval_mode": retrieval_mode,
@@ -1542,6 +1547,10 @@ def _code_subset_payload(
     return rule_dispatch.apply_rule(code_rule, document_text).to_dict()
 
 
+def _first_source_metric(values: Sequence[int] | Sequence[float], default: Any) -> Any:
+    return values[0] if values else default
+
+
 def _evaluate_code_rules(
     query_package: QueryPackage,
     packaging_mode: str,
@@ -1566,6 +1575,11 @@ def _evaluate_code_rules(
         source_bundle_projected_costs_usd = list(
             merged_rule.source_bundle_projected_costs_usd
         )
+        token_count_input = _first_source_metric(source_bundle_prompt_tokens_list, 0)
+        projected_cost_usd = _first_source_metric(
+            source_bundle_projected_costs_usd,
+            0.0,
+        )
         retrieval_spec = {"rule_kind": "code", "code": code_rule.code}
         rule_key = _canonical_code_rule(code_rule)
         for document in query_package.documents:
@@ -1576,16 +1590,6 @@ def _evaluate_code_rules(
             region_text = _subset_text_from_payload(subset)
             region_tokens = estimate_tokens(region_text) if region_text else 0
             metadata = subset["metadata"]
-            token_count_input = (
-                source_bundle_prompt_tokens_list[0]
-                if source_bundle_prompt_tokens_list
-                else 0
-            )
-            projected_cost_usd = (
-                source_bundle_projected_costs_usd[0]
-                if source_bundle_projected_costs_usd
-                else 0.0
-            )
 
             row: dict[str, Any] = {
                 "dataset": "pdfs",
@@ -1608,6 +1612,7 @@ def _evaluate_code_rules(
                 "code": code_rule.code,
                 "code_exec_success": bool(subset["matched"]),
                 "code_exec_error": metadata["error"],
+                "code_exec_error_kind": metadata.get("error_kind"),
                 "code_exec_time_ms": metadata["exec_time_ms"],
                 "sandbox_validation_status": "valid",
                 "retrieval_spec": retrieval_spec,
@@ -2295,14 +2300,15 @@ def _run_baseline_with_config(
                 + "\n",
                 encoding="utf-8",
             )
+            parsed_payload = _code_parsed_payload(
+                query_idx,
+                packaging_mode,
+                code_results,
+                merged_code_rules,
+            )
             paths["parsed"].write_text(
                 json.dumps(
-                    _code_parsed_payload(
-                        query_idx,
-                        packaging_mode,
-                        code_results,
-                        merged_code_rules,
-                    ),
+                    parsed_payload,
                     ensure_ascii=False,
                     indent=2,
                 )
@@ -2311,12 +2317,12 @@ def _run_baseline_with_config(
             )
             paths["code_rules"].write_text(
                 json.dumps(
-                    _code_parsed_payload(
-                        query_idx,
-                        packaging_mode,
-                        code_results,
-                        merged_code_rules,
-                    ),
+                    {
+                        "alias_of": paths["parsed"].name,
+                        "query_idx": query_idx,
+                        "packaging_mode": packaging_mode,
+                        "rule_mode": "python_code",
+                    },
                     ensure_ascii=False,
                     indent=2,
                 )

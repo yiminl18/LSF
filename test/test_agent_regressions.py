@@ -104,6 +104,7 @@ def test_failed_code_rule_returns_no_fallback_region() -> None:
     assert result.success is False
     assert result.returned_region == ""
     assert result.error is not None
+    assert result.error_kind == "ast"
     assert "forbidden import" in result.error
 
 

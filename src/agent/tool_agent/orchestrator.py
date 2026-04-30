@@ -154,7 +154,9 @@ def _cross_doc_evaluate(
                 "score": 0.0,
                 "matched_count": 0,
                 "success_count": 0,
+                "evaluated_docs": 0,
                 "total_docs": len(doc_contexts),
+                "budget_truncated": True,
                 "eval_cost_usd": 0.0,
                 "skipped_due_to_budget": True,
                 "success_doc_ids": [],
@@ -366,7 +368,12 @@ def run_phase_a(
             f"cross_doc_eval ${cross_doc_eval_cost:.4f} = total ${total_cost:.4f}"
         )
 
-        best_rules = select_best_rules(cross_doc_eval, unique_rules, max_rules=_MAX_BEST_RULES)
+        best_rules = select_best_rules(
+            cross_doc_eval,
+            unique_rules,
+            max_rules=_MAX_BEST_RULES,
+            allow_no_score_first_three_fallback=False,
+        )
         code_rule_rejections = _merge_rejection_counts(
             _rejection_counts_from_agent_result(agent_result),
             _rejection_counts_from_eval(cross_doc_eval),

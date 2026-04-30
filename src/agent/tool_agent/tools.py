@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import re
 import time
+from collections.abc import Callable
 from dataclasses import dataclass
 from typing import Any
 
@@ -45,6 +46,13 @@ class ToolResult:
     latency_ms: float = 0.0
 
 
+@dataclass(slots=True, frozen=True)
+class _ToolPayload:
+    data: Any
+    cost_usd: float = 0.0
+    latency_ms_override: float | None = None
+
+
 class ToolRegistry:
     """Rule-validation tools for the tool-agent."""
 
@@ -64,7 +72,7 @@ class ToolRegistry:
     ) -> None:
         self._doc = doc_context
         self._peer_docs: list[DocumentContext] = list(peer_docs) if peer_docs else []
-        self._dispatch_map: dict[str, Any] = {
+        self._dispatch_map: dict[str, Callable[[dict[str, Any]], _ToolPayload]] = {
             "batch_apply_rule": self._tool_batch_apply_rule,
             "apply_rule": self._tool_apply_rule,
             "find_section": self._tool_find_section,
@@ -84,19 +92,18 @@ class ToolRegistry:
             )
         t0 = time.time()
         try:
-            result = self._dispatch_map[tool_name](args)
-            if len(result) == 3:
-                data, cost, explicit_latency_ms = result
-            else:
-                data, cost = result
-                explicit_latency_ms = None
+            payload = self._dispatch_map[tool_name](args)
             elapsed = (time.time() - t0) * 1000
             return ToolResult(
                 name=tool_name,
                 success=True,
-                data=data,
-                cost_usd=cost,
-                latency_ms=explicit_latency_ms if explicit_latency_ms is not None else elapsed,
+                data=payload.data,
+                cost_usd=payload.cost_usd,
+                latency_ms=(
+                    payload.latency_ms_override
+                    if payload.latency_ms_override is not None
+                    else elapsed
+                ),
             )
         except Exception as exc:
             elapsed = (time.time() - t0) * 1000
@@ -126,33 +133,35 @@ class ToolRegistry:
             retrieval_spec=spec,
         )
 
-    def _tool_batch_apply_rule(self, args: dict[str, Any]) -> tuple[Any, float]:
+    def _tool_batch_apply_rule(self, args: dict[str, Any]) -> _ToolPayload:
         """Apply a rule across all docs (current + peers) and return per-doc previews."""
         rule_spec = args.get("rule_spec")
         if rule_spec is None:
-            return {"error": "Missing required argument: 'rule_spec'"}, 0.0
+            return _ToolPayload({"error": "Missing required argument: 'rule_spec'"})
         try:
             rule = self._build_rule(rule_spec, rule_text="batch_probe")
         except (TypeError, ValueError) as exc:
-            return {"error": f"Invalid rule_spec: {exc}"}, 0.0
+            return _ToolPayload({"error": f"Invalid rule_spec: {exc}"})
 
         answer_hint_pattern = args.get("answer_hint_pattern")
         if answer_hint_pattern is not None and not isinstance(answer_hint_pattern, str):
-            return {"error": "answer_hint_pattern must be a string or null"}, 0.0
+            return _ToolPayload({"error": "answer_hint_pattern must be a string or null"})
         if answer_hint_pattern is not None and len(answer_hint_pattern) > _ANSWER_HINT_MAX_LEN:
-            return {
-                "error": (
-                    f"answer_hint_pattern too long "
-                    f"({len(answer_hint_pattern)} > {_ANSWER_HINT_MAX_LEN} chars)"
-                )
-            }, 0.0
+            return _ToolPayload(
+                {
+                    "error": (
+                        f"answer_hint_pattern too long "
+                        f"({len(answer_hint_pattern)} > {_ANSWER_HINT_MAX_LEN} chars)"
+                    )
+                }
+            )
 
         hint_regex: re.Pattern[str] | None = None
         if answer_hint_pattern:
             try:
                 hint_regex = re.compile(answer_hint_pattern)
             except re.error as exc:
-                return {"error": f"Invalid answer_hint_pattern regex: {exc}"}, 0.0
+                return _ToolPayload({"error": f"Invalid answer_hint_pattern regex: {exc}"})
 
         docs = [self._doc, *self._peer_docs]
         per_doc: list[dict[str, Any]] = []
@@ -238,9 +247,9 @@ class ToolRegistry:
                         f"across {len(extracted_tokens)} matched docs — pattern likely "
                         "too generic, will fail Phase B extraction precision gate"
                     )
-        return result, 0.0
+        return _ToolPayload(result)
 
-    def _tool_find_section(self, args: dict[str, Any]) -> tuple[Any, float]:
+    def _tool_find_section(self, args: dict[str, Any]) -> _ToolPayload:
         """Search a single doc for section headings or first-500-char body matching keyword; return top-3.
 
         args:
@@ -253,7 +262,7 @@ class ToolRegistry:
         """
         keyword = args.get("keyword")
         if not isinstance(keyword, str) or not keyword:
-            return {"error": "Missing or empty 'keyword'"}, 0.0
+            return _ToolPayload({"error": "Missing or empty 'keyword'"})
 
         raw_mc = args.get("max_chars")
         if isinstance(raw_mc, int) and raw_mc > 0:
@@ -263,7 +272,7 @@ class ToolRegistry:
 
         doc = self._resolve_doc(args.get("doc_id"))
         if isinstance(doc, dict):
-            return doc, 0.0
+            return _ToolPayload(doc)
 
         sections = _parse_sections(doc.normalized_text)
         keyword_lower = keyword.casefold()
@@ -295,37 +304,44 @@ class ToolRegistry:
 
         total_matches = len(matches)
         top = matches[:_FIND_SECTION_TOP_K]
-        return {
-            "sections": top,
-            "truncated": total_matches > _FIND_SECTION_TOP_K,
-            "total_matches": total_matches,
-            "max_chars_used": max_chars,
-        }, 0.0
+        return _ToolPayload(
+            {
+                "sections": top,
+                "truncated": total_matches > _FIND_SECTION_TOP_K,
+                "total_matches": total_matches,
+                "max_chars_used": max_chars,
+            }
+        )
 
-    def _tool_apply_rule(self, args: dict[str, Any]) -> tuple[Any, float]:
+    def _tool_apply_rule(self, args: dict[str, Any]) -> _ToolPayload:
         """Apply a candidate RangeRule to a single doc."""
         rule_spec = args.get("rule_spec")
         if rule_spec is None:
-            return {"error": "Missing required argument: 'rule_spec'"}, 0.0
+            return _ToolPayload({"error": "Missing required argument: 'rule_spec'"})
         doc = self._resolve_doc(args.get("doc_id"))
         if isinstance(doc, dict):
-            return doc, 0.0
+            return _ToolPayload(doc)
         rule = self._build_rule(rule_spec, rule_text="agent_candidate")
         subset = execute_range_rule(rule, doc.normalized_text)
         span_text = "\n\n".join(s.text for s in subset.spans) if subset.spans else ""
-        return {
-            "matched": bool(subset.matched),
-            "text": span_text[:3000],
-            "char_count": len(span_text),
-            "metadata": subset.metadata,
-            "preview": span_text[:500],
-        }, 0.0
+        return _ToolPayload(
+            {
+                "matched": bool(subset.matched),
+                "text": span_text[:3000],
+                "char_count": len(span_text),
+                "metadata": subset.metadata,
+                "preview": span_text[:500],
+            }
+        )
 
-    def _tool_try_code_rule(self, args: dict[str, Any]) -> tuple[Any, float, float]:
+    def _tool_try_code_rule(self, args: dict[str, Any]) -> _ToolPayload:
         """Execute candidate locate_region code through the sandbox across docs."""
         code = args.get("code")
         if not isinstance(code, str) or not code.strip():
-            return {"error": "Missing or empty required argument: 'code'"}, 0.0, 0.0
+            return _ToolPayload(
+                {"error": "Missing or empty required argument: 'code'"},
+                latency_ms_override=0.0,
+            )
 
         raw_doc_ids = args.get("doc_ids")
         docs = [self._doc, *self._peer_docs]
@@ -333,16 +349,22 @@ class ToolRegistry:
             if not isinstance(raw_doc_ids, list) or not all(
                 isinstance(doc_id, str) for doc_id in raw_doc_ids
             ):
-                return {"error": "'doc_ids' must be a list of strings"}, 0.0, 0.0
+                return _ToolPayload(
+                    {"error": "'doc_ids' must be a list of strings"},
+                    latency_ms_override=0.0,
+                )
             doc_map = {doc.doc_id: doc for doc in docs}
             unknown = [doc_id for doc_id in raw_doc_ids if doc_id not in doc_map]
             if unknown:
-                return {
-                    "error": (
-                        f"Unknown doc_id(s): {unknown}. "
-                        f"Available: {list(doc_map)}"
-                    )
-                }, 0.0, 0.0
+                return _ToolPayload(
+                    {
+                        "error": (
+                            f"Unknown doc_id(s): {unknown}. "
+                            f"Available: {list(doc_map)}"
+                        )
+                    },
+                    latency_ms_override=0.0,
+                )
             docs = [doc_map[doc_id] for doc_id in raw_doc_ids]
 
         per_doc: list[dict[str, Any]] = []
@@ -362,20 +384,24 @@ class ToolRegistry:
                     "char_count": len(output),
                     "exec_ms": round(result.exec_time_ms, 3),
                     "error_or_none": result.error,
+                    "error_kind": result.error_kind,
                 }
             )
 
         total_docs = len(docs)
-        return {
-            "per_doc": per_doc,
-            "matched_count": matched_count,
-            "total_docs": total_docs,
-            "coverage": round(matched_count / total_docs, 4) if total_docs else 0.0,
-        }, 0.0, total_exec_ms
+        return _ToolPayload(
+            {
+                "per_doc": per_doc,
+                "matched_count": matched_count,
+                "total_docs": total_docs,
+                "coverage": round(matched_count / total_docs, 4) if total_docs else 0.0,
+            },
+            latency_ms_override=total_exec_ms,
+        )
 
     # ---- Structured-access tools (read directly from the reconstructed.json tree) ----
 
-    def _tool_get_section(self, args: dict[str, Any]) -> tuple[Any, float]:
+    def _tool_get_section(self, args: dict[str, Any]) -> _ToolPayload:
         """Return the complete body of a section and its subtree by section_id.
 
         args:
@@ -386,14 +412,16 @@ class ToolRegistry:
         """
         section_id = args.get("section_id")
         if not isinstance(section_id, int):
-            return {"error": "Missing or non-int 'section_id'"}, 0.0
+            return _ToolPayload({"error": "Missing or non-int 'section_id'"})
 
         doc = self._resolve_doc(args.get("doc_id"))
         if isinstance(doc, dict):
-            return doc, 0.0
+            return _ToolPayload(doc)
 
         if section_id not in doc.section_index:
-            return {"error": f"section_id={section_id} not found in doc={doc.doc_id}"}, 0.0
+            return _ToolPayload(
+                {"error": f"section_id={section_id} not found in doc={doc.doc_id}"}
+            )
         root_entry = doc.section_index[section_id]
 
         raw_mc = args.get("max_chars")
@@ -447,21 +475,23 @@ class ToolRegistry:
 
         heading = (root_entry.get("text") or "").strip()
         level = root_entry.get("structure", {}).get("level") or "H?"
-        return {
-            "section_id": section_id,
-            "doc_id": doc.doc_id,
-            "heading": heading,
-            "level": level,
-            "pages": pages,
-            "body": body,
-            "body_chars": body_chars_full,
-            "body_truncated": body_truncated,
-            "child_section_ids": child_section_ids,
-            "table_ids_in_body": table_ids,
-            "max_chars_used": max_chars,
-        }, 0.0
+        return _ToolPayload(
+            {
+                "section_id": section_id,
+                "doc_id": doc.doc_id,
+                "heading": heading,
+                "level": level,
+                "pages": pages,
+                "body": body,
+                "body_chars": body_chars_full,
+                "body_truncated": body_truncated,
+                "child_section_ids": child_section_ids,
+                "table_ids_in_body": table_ids,
+                "max_chars_used": max_chars,
+            }
+        )
 
-    def _tool_get_page(self, args: dict[str, Any]) -> tuple[Any, float]:
+    def _tool_get_page(self, args: dict[str, Any]) -> _ToolPayload:
         """Return all entries on a given page (optional label filter).
 
         args:
@@ -472,15 +502,15 @@ class ToolRegistry:
         """
         page_idx = args.get("page_idx")
         if not isinstance(page_idx, int):
-            return {"error": "Missing or non-int 'page_idx'"}, 0.0
+            return _ToolPayload({"error": "Missing or non-int 'page_idx'"})
 
         doc = self._resolve_doc(args.get("doc_id"))
         if isinstance(doc, dict):
-            return doc, 0.0
+            return _ToolPayload(doc)
 
         labels_filter = args.get("labels")
         if labels_filter is not None and not isinstance(labels_filter, list):
-            return {"error": "'labels' must be a list of label strings"}, 0.0
+            return _ToolPayload({"error": "'labels' must be a list of label strings"})
         allowed: set[str] | None = set(labels_filter) if labels_filter else None
 
         raw_mc = args.get("max_chars")
@@ -523,18 +553,22 @@ class ToolRegistry:
             body_truncated = True
 
         if entries_count == 0:
-            return {"error": f"no entries on page_idx={page_idx} in doc={doc.doc_id}"}, 0.0
+            return _ToolPayload(
+                {"error": f"no entries on page_idx={page_idx} in doc={doc.doc_id}"}
+            )
 
-        return {
-            "doc_id": doc.doc_id,
-            "page_no": page_idx,
-            "entries_count": entries_count,
-            "body": body,
-            "body_chars": body_chars_full,
-            "body_truncated": body_truncated,
-            "label_histogram": label_hist,
-            "max_chars_used": max_chars,
-        }, 0.0
+        return _ToolPayload(
+            {
+                "doc_id": doc.doc_id,
+                "page_no": page_idx,
+                "entries_count": entries_count,
+                "body": body,
+                "body_chars": body_chars_full,
+                "body_truncated": body_truncated,
+                "label_histogram": label_hist,
+                "max_chars_used": max_chars,
+            }
+        )
 
 
 def _collect_descendants(root_id: int, entries: list[dict[str, Any]]) -> set[int]:

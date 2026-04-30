@@ -42,6 +42,8 @@ def _apply_code_rule(rule: CodeRule, doc_text: str) -> RetrievedSubset:
         "exec_time_ms": float(exec_result.exec_time_ms),
         "error": exec_result.error,
     }
+    if exec_result.error_kind is not None:
+        metadata["error_kind"] = exec_result.error_kind
 
     if matched:
         start = doc_text.find(region)
@@ -55,6 +57,10 @@ def _apply_code_rule(rule: CodeRule, doc_text: str) -> RetrievedSubset:
 
 
 def _classify_unmatched_reason(exec_result: CodeExecResult, region: str) -> str:
+    if exec_result.error_kind == "ast":
+        return "sandbox_rejected_ast"
+    if exec_result.error_kind == "timeout":
+        return "sandbox_timeout"
     err = exec_result.error or ""
     if err.startswith(_AST_PREFIX):
         return "sandbox_rejected_ast"

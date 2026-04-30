@@ -163,7 +163,12 @@ def _merge_rejection_counts(
     }
 
 
-def _classify_sandbox_error(error: str | None) -> str | None:
+def _classify_sandbox_error(
+    error: str | None,
+    error_kind: str | None = None,
+) -> str | None:
+    if error_kind in {"ast", "timeout", "runtime_error"}:
+        return error_kind
     if not error:
         return None
     if error.startswith("AST violations:"):
@@ -209,6 +214,7 @@ def _cross_doc_evaluate_code(
                     "success_doc_ids": [],
                     "matched_doc_ids": [],
                     "sandbox_validation_status": "valid",
+                    "budget_truncated": True,
                 }
             )
             continue
@@ -227,7 +233,10 @@ def _cross_doc_evaluate_code(
             evaluated_doc_count += 1
             exec_result = execute_locate_region(rule.code, doc.normalized_text)
             if not exec_result.success:
-                reason = _classify_sandbox_error(exec_result.error)
+                reason = _classify_sandbox_error(
+                    exec_result.error,
+                    exec_result.error_kind,
+                )
                 if reason is not None:
                     sandbox_counts[reason] += 1
                 continue
@@ -256,6 +265,8 @@ def _cross_doc_evaluate_code(
                 success_doc_ids.append(doc.doc_id)
 
         doc_count = len(doc_contexts)
+        # Score against the full sampled corpus so budget-truncated rules cannot
+        # look perfect after only a few evaluated documents.
         coverage = matched_count / doc_count if doc_count else 0.0
         accuracy = success_count / doc_count if doc_count else 0.0
         rows.append(
@@ -521,7 +532,21 @@ def run_code_agent_on_query(
         total_cost += tool_result.cost_usd
         if tool_name == "find_section":
             nav_turn_counter += 1
-        elif tool_name in {"batch_apply_rule", "try_code_rule"}:
+        elif tool_name == "try_code_rule":
+            nav_turn_counter = 0
+            if tool_result.success and isinstance(tool_result.data, dict):
+                per_doc = tool_result.data.get("per_doc", [])
+                if isinstance(per_doc, list):
+                    for entry in per_doc:
+                        if not isinstance(entry, dict):
+                            continue
+                        reason = _classify_sandbox_error(
+                            entry.get("error_or_none"),
+                            entry.get("error_kind"),
+                        )
+                        if reason in rejection_counts:
+                            rejection_counts[reason] += 1
+        elif tool_name == "batch_apply_rule":
             nav_turn_counter = 0
 
         if tool_result.success:

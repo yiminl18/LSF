@@ -166,6 +166,7 @@ class CodeExecResult:
     returned_region: str
     error: str | None
     exec_time_ms: float
+    error_kind: str | None = None
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -173,6 +174,7 @@ class CodeExecResult:
             "returned_region_size": len(self.returned_region),
             "error": self.error,
             "exec_time_ms": self.exec_time_ms,
+            "error_kind": self.error_kind,
         }
 
 
@@ -238,6 +240,7 @@ def execute_locate_region(
             returned_region="",
             error=f"AST violations: {violations}",
             exec_time_ms=dt,
+            error_kind="ast",
         )
 
     # 2-3. Run exec + call in a separate process for cross-platform, thread-safe timeout control.
@@ -271,6 +274,7 @@ def execute_locate_region(
                 returned_region="",
                 error=f"TimeoutError: execution exceeded {timeout_s}s",
                 exec_time_ms=dt,
+                error_kind="timeout",
             )
 
         process.join()
@@ -290,6 +294,7 @@ def execute_locate_region(
             returned_region="",
             error=f"{type(exc).__name__}: {exc}",
             exec_time_ms=dt,
+            error_kind="runtime_error",
         )
     finally:
         if child_conn_open:
@@ -303,6 +308,7 @@ def execute_locate_region(
             returned_region="",
             error=result_payload["error"],
             exec_time_ms=dt,
+            error_kind="runtime_error",
         )
 
     result = result_payload["returned_region"]
@@ -315,6 +321,7 @@ def execute_locate_region(
             returned_region="",
             error=f"locate_region returned {type(result).__name__}, expected non-empty str",
             exec_time_ms=dt,
+            error_kind="runtime_error",
         )
 
     # Verify the result is a substring of the document (allow minor whitespace differences).
@@ -329,6 +336,7 @@ def execute_locate_region(
                 returned_region="",
                 error="returned string is not a substring of document_text",
                 exec_time_ms=dt,
+                error_kind="runtime_error",
             )
 
     return CodeExecResult(

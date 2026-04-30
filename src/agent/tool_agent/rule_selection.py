@@ -102,11 +102,13 @@ def select_best_rules(
     cross_doc_eval: list[dict[str, Any]],
     unique_rules: list[Any],  # list[RangeRule]; Any here to avoid circular import
     max_rules: int = 5,
+    *,
+    allow_no_score_first_three_fallback: bool = True,
 ) -> list[Any]:
     """Public interface: cross_doc_eval + unique_rules → selected RangeRule list.
 
     Prefers set-cover; falls back to top-K by score when set-cover returns nothing
-    (preserving historical orchestrator behaviour).
+    (preserving historical orchestrator behaviour when caller allows it).
     """
     selected_indices = greedy_set_cover(cross_doc_eval, max_rules=max_rules)
 
@@ -114,10 +116,11 @@ def select_best_rules(
         return [unique_rules[i] for i in selected_indices]
 
     # Fallback: top-K with score > 0, or first 3 if none qualify
-    is_code_eval = any(e.get("rule_kind") == "code" for e in cross_doc_eval)
     fallback = [
         unique_rules[e["rule_index"]] for e in cross_doc_eval if e.get("score", 0) > 0
     ][:max_rules]
-    if not fallback and unique_rules and not is_code_eval:
+    # Historical RangeRule callers keep the first-three rescue; stricter callers
+    # can disable it without rule-kind coupling in this selector.
+    if not fallback and unique_rules and allow_no_score_first_three_fallback:
         fallback = unique_rules[:3]
     return fallback

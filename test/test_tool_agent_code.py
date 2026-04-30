@@ -256,6 +256,32 @@ def test_try_code_rule_returns_sandbox_output(tmp_path: Path) -> None:
     assert "alpha" in caller.prompts[1]
 
 
+def test_try_code_rule_rejection_counted_in_agent_metrics(tmp_path: Path) -> None:
+    docs = [_doc("doc_a", "alpha")]
+    caller = _FakeCaller([
+        _tool_action("try_code_rule", {"code": _invalid_code(), "doc_ids": ["doc_a"]}),
+        _generate_action(_valid_code(), "alpha"),
+    ])
+    logger = TrajectoryLogger(tmp_path / "trajectory.jsonl")
+
+    result = run_code_agent_on_query(
+        query_text="find alpha",
+        query_idx=3,
+        doc_contexts=docs,
+        cached_caller=caller,
+        agent_config=_config(max_turns_per_query=2),
+        logger=logger,
+    )
+    logger.close()
+
+    assert len(result.rules) == 1
+    assert result.trajectory[0]["code_rule_rejections"] == {
+        "ast": 1,
+        "timeout": 0,
+        "runtime_error": 0,
+    }
+
+
 def test_determinism_under_cache(tmp_path: Path, monkeypatch) -> None:
     outputs: list[tuple[str, str]] = []
     for run_idx in range(2):
@@ -357,6 +383,7 @@ def test_try_code_rule_rejects_forbidden_builtin_via_validate_code_ast() -> None
         assert error is not None
         assert "AST violations:" in error
         assert name in error
+        assert result.data["per_doc"][0]["error_kind"] == "ast"
 
 
 def test_low_accuracy_code_rule_filtered() -> None:
@@ -374,6 +401,7 @@ def test_low_accuracy_code_rule_filtered() -> None:
         ],
         [rule],
         max_rules=1,
+        allow_no_score_first_three_fallback=False,
     )
 
     assert selected == []
