@@ -5,6 +5,7 @@ from pathlib import Path
 from types import SimpleNamespace
 
 from agent.reflection_agent import runner
+from agent.rule_runtime import rule_dispatch
 from agent.rule_runtime import holdout
 from agent.rule_runtime.data import DocumentSample, get_label_filename
 from agent.rules.code_rule_json import CodeRule
@@ -162,7 +163,7 @@ def _install_pipeline_fakes(monkeypatch, response_factory=None) -> None:
         )
 
     monkeypatch.setattr(runner.CachedLLMCaller, "call", fake_call)
-    monkeypatch.setattr(runner, "execute_locate_region", fake_execute)
+    monkeypatch.setattr(rule_dispatch, "execute_locate_region", fake_execute)
     monkeypatch.setattr(runner, "score_retrieved_subset", fake_score_retrieved_subset)
 
 

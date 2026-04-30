@@ -3,8 +3,10 @@
 from __future__ import annotations
 
 import json
+import logging
 import time
 from dataclasses import replace as dc_replace
+from functools import lru_cache
 from pathlib import Path
 from typing import Any
 
@@ -39,8 +41,10 @@ _SEQ_COVER_PROMPT_PATH = (
     / "tool_agent"
     / "tool_agent_system_seq_cover.txt"
 )
+_LOG = logging.getLogger(__name__)
 
 
+@lru_cache(maxsize=1)
 def _load_seq_cover_template() -> str:
     return _SEQ_COVER_PROMPT_PATH.read_text(encoding="utf-8")
 
@@ -132,7 +136,13 @@ def _run_single_rule_episode(
                 stage_label=f"seq_cover_agent q{query_idx} iter={iteration_idx} turn={turn_index}",
             )
         except RuntimeError as exc:
-            print(f"    [iter {iteration_idx} turn {turn_index}] seq-cover prompt over context limit: {exc}")
+            _LOG.warning(
+                "seq-cover prompt over context limit: q%s iter=%s turn=%s error=%s",
+                query_idx,
+                iteration_idx,
+                turn_index,
+                exc,
+            )
             return AgentResult(
                 rules=[],
                 trajectory=[],
@@ -151,7 +161,13 @@ def _run_single_rule_episode(
                 response_schema=action_schema,
             )
         except Exception as exc:
-            print(f"    [iter {iteration_idx} turn {turn_index}] seq-cover LLM call failed: {exc}")
+            _LOG.warning(
+                "seq-cover LLM call failed: q%s iter=%s turn=%s error=%s",
+                query_idx,
+                iteration_idx,
+                turn_index,
+                exc,
+            )
             break
 
         agent_latency = (time.time() - t0) * 1000
@@ -348,7 +364,7 @@ def _evaluate_rule_on_remaining(
 
 
 def _write_seq_cover_trajectory(logger: TrajectoryLogger, payload: dict[str, Any]) -> None:
-    output_dir = getattr(logger, "_path").parent
+    output_dir = logger.output_dir
     (output_dir / "seq_cover_trajectory.json").write_text(
         json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
@@ -366,6 +382,7 @@ def run_seq_cover_agent_on_query(
     path_idx: int | None = None,
 ) -> AgentResult:
     """Generate-cover-remove over sampled documents."""
+    _ = path_idx  # Reserved for API compatibility with sibling agent modes.
     if not doc_contexts:
         return AgentResult(
             rules=[],

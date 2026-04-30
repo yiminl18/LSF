@@ -44,6 +44,14 @@ class TrajectoryLogger:
     def cumulative_cost(self) -> float:
         return self._cumulative_cost
 
+    @property
+    def output_path(self) -> Path:
+        return self._path
+
+    @property
+    def output_dir(self) -> Path:
+        return self._path.parent
+
     def _write_prompt_hashed(self, prompt_text: str) -> str:
         """Write prompt to disk keyed by sha256; identical prompts are written only once."""
         assert self._prompts_dir is not None

@@ -4,8 +4,6 @@ import hashlib
 import json
 from pathlib import Path
 
-import pytest
-
 
 FIXTURE_PATH = Path("test/fixtures/phase_a_byte_stability_baseline.json")
 
@@ -27,11 +25,10 @@ def test_phase_a_byte_stability_existing_experiments() -> None:
     """
     expected = json.loads(FIXTURE_PATH.read_text(encoding="utf-8"))
     missing = [path for path in expected if not Path(path).exists()]
-    if missing:
-        pytest.skip(
-            "Wave 0 baseline artifacts are not present; run the six pinned "
-            "Phase A commands before using this local hash gate."
-        )
+    assert not missing, (
+        "Wave 0 baseline artifacts are missing; run the six pinned Phase A "
+        f"commands before the hash gate. Missing: {missing}"
+    )
 
     actual = {path: _sha256(Path(path)) for path in expected}
 

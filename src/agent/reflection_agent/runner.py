@@ -10,6 +10,7 @@ from typing import Any, Iterable, Sequence
 
 import yaml
 
+from agent.rule_runtime import rule_dispatch
 from agent.rule_runtime.data import (
     QueryPackage,
     _get_label_dir,
@@ -28,7 +29,6 @@ from agent.rules.code_rule_json import (
     inspect_code_rule_candidates,
     parse_code_rule_bundle,
 )
-from agent.rules.code_rule_sandbox import execute_locate_region
 from agent.rules.range_rule_exec import execute_range_rule
 from agent.rules.range_rule_json import (
     RangeRule,
@@ -1535,63 +1535,11 @@ def _evaluate_rules(
     return rows
 
 
-def _classify_code_unmatched_reason(
-    *,
-    success: bool,
-    error: str | None,
-    region_text: str,
-) -> str:
-    err = error or ""
-    if err.startswith("AST violations:"):
-        return "sandbox_rejected_ast"
-    if err.startswith("TimeoutError:"):
-        return "sandbox_timeout"
-    if success and not region_text:
-        return "sandbox_empty_region"
-    if "expected non-empty str" in err:
-        return "sandbox_empty_region"
-    if err:
-        return "sandbox_runtime_error"
-    return "sandbox_runtime_error"
-
-
 def _code_subset_payload(
     code_rule: CodeRule,
     document_text: str,
-) -> tuple[dict[str, Any], int]:
-    exec_result = execute_locate_region(code_rule.code, document_text)
-    region_text = exec_result.returned_region or ""
-    matched = bool(exec_result.success) and bool(region_text)
-    start = document_text.find(region_text) if matched else -1
-    if start < 0:
-        start = 0
-    metadata: dict[str, Any] = {
-        "rule_kind": "code",
-        "exec_time_ms": float(exec_result.exec_time_ms),
-        "error": exec_result.error,
-    }
-    if not matched:
-        metadata["reason"] = _classify_code_unmatched_reason(
-            success=exec_result.success,
-            error=exec_result.error,
-            region_text=region_text,
-        )
-    subset = {
-        "matched": matched,
-        "spans": (
-            [
-                {
-                    "start": start,
-                    "end": start + len(region_text),
-                    "text": region_text,
-                }
-            ]
-            if matched
-            else []
-        ),
-        "metadata": metadata,
-    }
-    return subset, int(exec_result.success)
+) -> dict[str, Any]:
+    return rule_dispatch.apply_rule(code_rule, document_text).to_dict()
 
 
 def _evaluate_code_rules(
@@ -1621,13 +1569,23 @@ def _evaluate_code_rules(
         retrieval_spec = {"rule_kind": "code", "code": code_rule.code}
         rule_key = _canonical_code_rule(code_rule)
         for document in query_package.documents:
-            subset, code_exec_success = _code_subset_payload(
+            subset = _code_subset_payload(
                 code_rule,
                 document.markdown_text,
             )
             region_text = _subset_text_from_payload(subset)
             region_tokens = estimate_tokens(region_text) if region_text else 0
             metadata = subset["metadata"]
+            token_count_input = (
+                source_bundle_prompt_tokens_list[0]
+                if source_bundle_prompt_tokens_list
+                else 0
+            )
+            projected_cost_usd = (
+                source_bundle_projected_costs_usd[0]
+                if source_bundle_projected_costs_usd
+                else 0.0
+            )
 
             row: dict[str, Any] = {
                 "dataset": "pdfs",
@@ -1648,7 +1606,7 @@ def _evaluate_code_rules(
                 "rule_text": code_rule.rule_text,
                 "evidence_basis": code_rule.evidence_basis,
                 "code": code_rule.code,
-                "code_exec_success": bool(code_exec_success),
+                "code_exec_success": bool(subset["matched"]),
                 "code_exec_error": metadata["error"],
                 "code_exec_time_ms": metadata["exec_time_ms"],
                 "sandbox_validation_status": "valid",
@@ -1661,8 +1619,8 @@ def _evaluate_code_rules(
                 "token_count_retrieved_subset": region_tokens,
                 "ground_truth": document.ground_truth_answer,
                 "judge_method": JUDGE_METHOD_NAME,
-                "token_count_input": source_bundle_prompt_tokens_list[0],
-                "projected_cost_usd": source_bundle_projected_costs_usd[0],
+                "token_count_input": token_count_input,
+                "projected_cost_usd": projected_cost_usd,
                 "anchor_source": None,
                 "anchor_type": "code",
                 "retrieval_mode": "python_code",

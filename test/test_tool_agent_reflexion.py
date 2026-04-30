@@ -82,7 +82,8 @@ class _FakeCaller:
     ) -> CacheResult:
         self.prompts.append(prompt)
         if response_schema is not None:
-            anchor = self._anchors.pop(0) if self._anchors else "alpha|beta|gamma"
+            assert self._anchors, "unexpected structured-response call"
+            anchor = self._anchors.pop(0)
             response = _generate_action(anchor)
         elif 'Return ONLY "True" or "False"' in prompt:
             reference = re.search(r"Reference answer: (.*)", prompt)
