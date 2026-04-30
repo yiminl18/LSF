@@ -37,6 +37,8 @@ _TOOL_AGENT_EXPERIMENTS = {
     "tool-agent-diverse": "diverse",
     "tool-agent-hybrid": "hybrid",
     "tool-agent-curriculum": "curriculum",
+    "tool-agent-reflexion": "reflexion",
+    "tool-agent-seq-cover": "seq_cover",
 }
 
 _EXPERIMENT_CHOICES = tuple(_BUNDLE_EXPERIMENTS) + tuple(_TOOL_AGENT_EXPERIMENTS)

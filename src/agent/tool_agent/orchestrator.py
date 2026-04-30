@@ -34,7 +34,9 @@ from agent.tool_agent.curriculum_core import run_curriculum_agent_on_query
 from agent.tool_agent.diverse_core import run_diverse_agent_on_query
 from agent.tool_agent.document import DocumentContext, load_document_context
 from agent.tool_agent.logger import TrajectoryLogger
+from agent.tool_agent.reflexion_core import run_reflexion_agent_on_query
 from agent.tool_agent.rule_selection import select_best_rules
+from agent.tool_agent.seq_cover_core import run_seq_cover_agent_on_query
 from core.pipeline.e2e_utils.cache import CachedLLMCaller
 
 
@@ -43,18 +45,22 @@ from core.pipeline.e2e_utils.cache import CachedLLMCaller
 # docs before computing reliability; otherwise keep it as None (gate disabled).
 _MIN_SUPPORT_FOR_HINT_RELIABILITY = 5
 
-PhaseAMode = Literal["single_shot", "diverse", "curriculum"]
+PhaseAMode = Literal["single_shot", "diverse", "curriculum", "reflexion", "seq_cover"]
 
 _AGENT_FNS = {
     "single_shot": run_agent_on_query,
     "diverse": run_diverse_agent_on_query,
     "curriculum": run_curriculum_agent_on_query,
+    "reflexion": run_reflexion_agent_on_query,
+    "seq_cover": run_seq_cover_agent_on_query,
 }
 
 _AGENT_LABELS = {
     "single_shot": ("Per-Query Agent", "Agent"),
     "diverse": ("Diverse Per-Query Agent", "Diverse Agent"),
     "curriculum": ("Curriculum Per-Query Agent", "Curriculum Agent"),
+    "reflexion": ("Reflexion Per-Query Agent", "Reflexion Agent"),
+    "seq_cover": ("Seq-Cover Per-Query Agent", "Seq-Cover Agent"),
 }
 
 

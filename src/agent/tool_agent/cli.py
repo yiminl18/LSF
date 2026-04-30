@@ -64,9 +64,16 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--mode",
-        choices=["single_shot", "diverse", "hybrid", "curriculum"],
+        choices=[
+            "single_shot",
+            "diverse",
+            "hybrid",
+            "curriculum",
+            "reflexion",
+            "seq_cover",
+        ],
         default="single_shot",
-        help="Phase A mode: single_shot|diverse|hybrid|curriculum",
+        help="Phase A mode: single_shot|diverse|hybrid|curriculum|reflexion|seq_cover",
     )
     args = parser.parse_args()
     if args.mode == "hybrid" and args.multipath_n < 2:

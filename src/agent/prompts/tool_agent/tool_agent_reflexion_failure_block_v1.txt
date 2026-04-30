@@ -1,0 +1,20 @@
+## Representative Failure Examples
+
+The JSON below contains the current best rule and sampled documents it failed.
+Use these failures to generate a genuinely different rule or boundary.
+
+{failure_memory_json}
+
+## Failure-to-fix Heuristics
+
+- `anchor_not_found` / `anchor_pair_not_found`: prefer a more literal, stable,
+  cross-document-consistent anchor or section boundary.
+- `page_not_found`: remove or relax brittle page restrictions unless the page is
+  clearly stable.
+- `retrieval_too_large`: reduce `max_chars` or replace a broad rule with a tighter
+  anchor or boundary.
+- `gen_not_found`: the rule matches, but the answer span is still missing or
+  obscured; change direction, move the boundary, or add small boundary context.
+- `judge_false`: the retrieved region likely contains too much noise or the wrong
+  slice; tighten the boundary, use a better anchor pair, or add a stricter companion.
+- Preserve useful rule-family diversity: page, after, before, around, between, regex.
