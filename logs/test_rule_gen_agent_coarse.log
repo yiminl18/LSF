@@ -1,0 +1,17 @@
+/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/langchain_community/utilities/__init__.py:8: LangChainDeprecationWarning: As of langchain-core 0.3.0, LangChain uses pydantic v2 internally. The langchain_core.pydantic_v1 module was a compatibility shim for pydantic v1, and should no longer be used. Please update the code to import from Pydantic directly.
+
+For example, replace imports like: `from langchain_core.pydantic_v1 import BaseModel`
+with: `from pydantic import BaseModel`
+or the v1 compatibility namespace if you are working in a code base that has not been fully upgraded to pydantic 2 yet. 	from pydantic.v1 import BaseModel
+
+  from langchain_community.utilities.requests import (
+/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/pydantic/_internal/_generate_schema.py:918: UserWarning: Mixing V1 models and V2 models (or constructs, like `TypeAdapter`) is not supported. Please upgrade `TextRequestsWrapper` to V2.
+  warn(
+Question: What is long-term debt at year-end (0 if none)?
+
+Documents loaded: 10
+Ground truth entries: 10
+
+
+
+[1m> Entering new None chain...[0m

@@ -1,0 +1,595 @@
+/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/langchain_community/utilities/__init__.py:8: LangChainDeprecationWarning: As of langchain-core 0.3.0, LangChain uses pydantic v2 internally. The langchain_core.pydantic_v1 module was a compatibility shim for pydantic v1, and should no longer be used. Please update the code to import from Pydantic directly.
+
+For example, replace imports like: `from langchain_core.pydantic_v1 import BaseModel`
+with: `from pydantic import BaseModel`
+or the v1 compatibility namespace if you are working in a code base that has not been fully upgraded to pydantic 2 yet. 	from pydantic.v1 import BaseModel
+
+  from langchain_community.utilities.requests import (
+/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/pydantic/_internal/_generate_schema.py:918: UserWarning: Mixing V1 models and V2 models (or constructs, like `TypeAdapter`) is not supported. Please upgrade `TextRequestsWrapper` to V2.
+  warn(
+Task exception was never retrieved
+future: <Task finished name='Task-2573' coro=<AsyncClient.aclose() done, defined at /opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpx/_client.py:1978> exception=RuntimeError('Event loop is closed')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpx/_client.py", line 1985, in aclose
+    await self._transport.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpx/_transports/default.py", line 406, in aclose
+    await self._pool.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 353, in aclose
+    await self._close_connections(closing_connections)
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 345, in _close_connections
+    await connection.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/connection.py", line 173, in aclose
+    await self._connection.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/http11.py", line 258, in aclose
+    await self._network_stream.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_backends/anyio.py", line 53, in aclose
+    await self._stream.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/anyio/streams/tls.py", line 201, in aclose
+    await self.transport_stream.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/anyio/_backends/_asyncio.py", line 1306, in aclose
+    self._transport.close()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/asyncio/selector_events.py", line 700, in close
+    self._loop.call_soon(self._call_connection_lost, None)
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/asyncio/base_events.py", line 746, in call_soon
+    self._check_closed()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/asyncio/base_events.py", line 510, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+Task exception was never retrieved
+future: <Task finished name='Task-2574' coro=<AsyncClient.aclose() done, defined at /opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpx/_client.py:1978> exception=RuntimeError('Event loop is closed')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpx/_client.py", line 1985, in aclose
+    await self._transport.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpx/_transports/default.py", line 406, in aclose
+    await self._pool.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 353, in aclose
+    await self._close_connections(closing_connections)
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 345, in _close_connections
+    await connection.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/connection.py", line 173, in aclose
+    await self._connection.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/http11.py", line 258, in aclose
+    await self._network_stream.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_backends/anyio.py", line 53, in aclose
+    await self._stream.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/anyio/streams/tls.py", line 201, in aclose
+    await self.transport_stream.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/anyio/_backends/_asyncio.py", line 1306, in aclose
+    self._transport.close()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/asyncio/selector_events.py", line 700, in close
+    self._loop.call_soon(self._call_connection_lost, None)
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/asyncio/base_events.py", line 746, in call_soon
+    self._check_closed()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/asyncio/base_events.py", line 510, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+Task exception was never retrieved
+future: <Task finished name='Task-2575' coro=<AsyncClient.aclose() done, defined at /opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpx/_client.py:1978> exception=RuntimeError('Event loop is closed')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpx/_client.py", line 1985, in aclose
+    await self._transport.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpx/_transports/default.py", line 406, in aclose
+    await self._pool.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 353, in aclose
+    await self._close_connections(closing_connections)
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 345, in _close_connections
+    await connection.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/connection.py", line 173, in aclose
+    await self._connection.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/http11.py", line 258, in aclose
+    await self._network_stream.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_backends/anyio.py", line 53, in aclose
+    await self._stream.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/anyio/streams/tls.py", line 201, in aclose
+    await self.transport_stream.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/anyio/_backends/_asyncio.py", line 1306, in aclose
+    self._transport.close()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/asyncio/selector_events.py", line 700, in close
+    self._loop.call_soon(self._call_connection_lost, None)
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/asyncio/base_events.py", line 746, in call_soon
+    self._check_closed()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/asyncio/base_events.py", line 510, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+Task exception was never retrieved
+future: <Task finished name='Task-4503' coro=<AsyncClient.aclose() done, defined at /opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpx/_client.py:1978> exception=RuntimeError('Event loop is closed')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpx/_client.py", line 1985, in aclose
+    await self._transport.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpx/_transports/default.py", line 406, in aclose
+    await self._pool.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 353, in aclose
+    await self._close_connections(closing_connections)
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 345, in _close_connections
+    await connection.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/connection.py", line 173, in aclose
+    await self._connection.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/http11.py", line 258, in aclose
+    await self._network_stream.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_backends/anyio.py", line 53, in aclose
+    await self._stream.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/anyio/streams/tls.py", line 201, in aclose
+    await self.transport_stream.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/anyio/_backends/_asyncio.py", line 1306, in aclose
+    self._transport.close()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/asyncio/selector_events.py", line 700, in close
+    self._loop.call_soon(self._call_connection_lost, None)
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/asyncio/base_events.py", line 746, in call_soon
+    self._check_closed()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/asyncio/base_events.py", line 510, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+Task exception was never retrieved
+future: <Task finished name='Task-4504' coro=<AsyncClient.aclose() done, defined at /opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpx/_client.py:1978> exception=RuntimeError('Event loop is closed')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpx/_client.py", line 1985, in aclose
+    await self._transport.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpx/_transports/default.py", line 406, in aclose
+    await self._pool.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 353, in aclose
+    await self._close_connections(closing_connections)
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 345, in _close_connections
+    await connection.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/connection.py", line 173, in aclose
+    await self._connection.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/http11.py", line 258, in aclose
+    await self._network_stream.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_backends/anyio.py", line 53, in aclose
+    await self._stream.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/anyio/streams/tls.py", line 201, in aclose
+    await self.transport_stream.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/anyio/_backends/_asyncio.py", line 1306, in aclose
+    self._transport.close()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/asyncio/selector_events.py", line 700, in close
+    self._loop.call_soon(self._call_connection_lost, None)
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/asyncio/base_events.py", line 746, in call_soon
+    self._check_closed()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/asyncio/base_events.py", line 510, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+Task exception was never retrieved
+future: <Task finished name='Task-6021' coro=<AsyncClient.aclose() done, defined at /opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpx/_client.py:1978> exception=RuntimeError('Event loop is closed')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpx/_client.py", line 1985, in aclose
+    await self._transport.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpx/_transports/default.py", line 406, in aclose
+    await self._pool.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 353, in aclose
+    await self._close_connections(closing_connections)
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 345, in _close_connections
+    await connection.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/connection.py", line 173, in aclose
+    await self._connection.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/http11.py", line 258, in aclose
+    await self._network_stream.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_backends/anyio.py", line 53, in aclose
+    await self._stream.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/anyio/streams/tls.py", line 201, in aclose
+    await self.transport_stream.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/anyio/_backends/_asyncio.py", line 1306, in aclose
+    self._transport.close()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/asyncio/selector_events.py", line 700, in close
+    self._loop.call_soon(self._call_connection_lost, None)
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/asyncio/base_events.py", line 746, in call_soon
+    self._check_closed()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/asyncio/base_events.py", line 510, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+Task exception was never retrieved
+future: <Task finished name='Task-6022' coro=<AsyncClient.aclose() done, defined at /opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpx/_client.py:1978> exception=RuntimeError('Event loop is closed')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpx/_client.py", line 1985, in aclose
+    await self._transport.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpx/_transports/default.py", line 406, in aclose
+    await self._pool.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 353, in aclose
+    await self._close_connections(closing_connections)
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 345, in _close_connections
+    await connection.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/connection.py", line 173, in aclose
+    await self._connection.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/http11.py", line 258, in aclose
+    await self._network_stream.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_backends/anyio.py", line 53, in aclose
+    await self._stream.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/anyio/streams/tls.py", line 201, in aclose
+    await self.transport_stream.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/anyio/_backends/_asyncio.py", line 1306, in aclose
+    self._transport.close()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/asyncio/selector_events.py", line 700, in close
+    self._loop.call_soon(self._call_connection_lost, None)
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/asyncio/base_events.py", line 746, in call_soon
+    self._check_closed()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/asyncio/base_events.py", line 510, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+Task exception was never retrieved
+future: <Task finished name='Task-7470' coro=<AsyncClient.aclose() done, defined at /opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpx/_client.py:1978> exception=RuntimeError('Event loop is closed')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpx/_client.py", line 1985, in aclose
+    await self._transport.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpx/_transports/default.py", line 406, in aclose
+    await self._pool.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 353, in aclose
+    await self._close_connections(closing_connections)
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 345, in _close_connections
+    await connection.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/connection.py", line 173, in aclose
+    await self._connection.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/http11.py", line 258, in aclose
+    await self._network_stream.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_backends/anyio.py", line 53, in aclose
+    await self._stream.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/anyio/streams/tls.py", line 201, in aclose
+    await self.transport_stream.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/anyio/_backends/_asyncio.py", line 1306, in aclose
+    self._transport.close()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/asyncio/selector_events.py", line 700, in close
+    self._loop.call_soon(self._call_connection_lost, None)
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/asyncio/base_events.py", line 746, in call_soon
+    self._check_closed()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/asyncio/base_events.py", line 510, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+Task exception was never retrieved
+future: <Task finished name='Task-7471' coro=<AsyncClient.aclose() done, defined at /opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpx/_client.py:1978> exception=RuntimeError('Event loop is closed')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpx/_client.py", line 1985, in aclose
+    await self._transport.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpx/_transports/default.py", line 406, in aclose
+    await self._pool.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 353, in aclose
+    await self._close_connections(closing_connections)
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 345, in _close_connections
+    await connection.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/connection.py", line 173, in aclose
+    await self._connection.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/http11.py", line 258, in aclose
+    await self._network_stream.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_backends/anyio.py", line 53, in aclose
+    await self._stream.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/anyio/streams/tls.py", line 201, in aclose
+    await self.transport_stream.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/anyio/_backends/_asyncio.py", line 1306, in aclose
+    self._transport.close()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/asyncio/selector_events.py", line 700, in close
+    self._loop.call_soon(self._call_connection_lost, None)
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/asyncio/base_events.py", line 746, in call_soon
+    self._check_closed()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/asyncio/base_events.py", line 510, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+Task exception was never retrieved
+future: <Task finished name='Task-7472' coro=<AsyncClient.aclose() done, defined at /opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpx/_client.py:1978> exception=RuntimeError('Event loop is closed')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpx/_client.py", line 1985, in aclose
+    await self._transport.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpx/_transports/default.py", line 406, in aclose
+    await self._pool.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 353, in aclose
+    await self._close_connections(closing_connections)
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 345, in _close_connections
+    await connection.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/connection.py", line 173, in aclose
+    await self._connection.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/http11.py", line 258, in aclose
+    await self._network_stream.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_backends/anyio.py", line 53, in aclose
+    await self._stream.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/anyio/streams/tls.py", line 201, in aclose
+    await self.transport_stream.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/anyio/_backends/_asyncio.py", line 1306, in aclose
+    self._transport.close()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/asyncio/selector_events.py", line 700, in close
+    self._loop.call_soon(self._call_connection_lost, None)
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/asyncio/base_events.py", line 746, in call_soon
+    self._check_closed()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/asyncio/base_events.py", line 510, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+Task exception was never retrieved
+future: <Task finished name='Task-9047' coro=<AsyncClient.aclose() done, defined at /opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpx/_client.py:1978> exception=RuntimeError('Event loop is closed')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpx/_client.py", line 1985, in aclose
+    await self._transport.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpx/_transports/default.py", line 406, in aclose
+    await self._pool.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 353, in aclose
+    await self._close_connections(closing_connections)
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 345, in _close_connections
+    await connection.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/connection.py", line 173, in aclose
+    await self._connection.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/http11.py", line 258, in aclose
+    await self._network_stream.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_backends/anyio.py", line 53, in aclose
+    await self._stream.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/anyio/streams/tls.py", line 201, in aclose
+    await self.transport_stream.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/anyio/_backends/_asyncio.py", line 1306, in aclose
+    self._transport.close()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/asyncio/selector_events.py", line 700, in close
+    self._loop.call_soon(self._call_connection_lost, None)
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/asyncio/base_events.py", line 746, in call_soon
+    self._check_closed()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/asyncio/base_events.py", line 510, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+Task exception was never retrieved
+future: <Task finished name='Task-9048' coro=<AsyncClient.aclose() done, defined at /opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpx/_client.py:1978> exception=RuntimeError('Event loop is closed')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpx/_client.py", line 1985, in aclose
+    await self._transport.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpx/_transports/default.py", line 406, in aclose
+    await self._pool.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 353, in aclose
+    await self._close_connections(closing_connections)
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 345, in _close_connections
+    await connection.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/connection.py", line 173, in aclose
+    await self._connection.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/http11.py", line 258, in aclose
+    await self._network_stream.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_backends/anyio.py", line 53, in aclose
+    await self._stream.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/anyio/streams/tls.py", line 201, in aclose
+    await self.transport_stream.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/anyio/_backends/_asyncio.py", line 1306, in aclose
+    self._transport.close()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/asyncio/selector_events.py", line 700, in close
+    self._loop.call_soon(self._call_connection_lost, None)
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/asyncio/base_events.py", line 746, in call_soon
+    self._check_closed()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/asyncio/base_events.py", line 510, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+Task exception was never retrieved
+future: <Task finished name='Task-10653' coro=<AsyncClient.aclose() done, defined at /opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpx/_client.py:1978> exception=RuntimeError('Event loop is closed')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpx/_client.py", line 1985, in aclose
+    await self._transport.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpx/_transports/default.py", line 406, in aclose
+    await self._pool.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 353, in aclose
+    await self._close_connections(closing_connections)
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 345, in _close_connections
+    await connection.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/connection.py", line 173, in aclose
+    await self._connection.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/http11.py", line 258, in aclose
+    await self._network_stream.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_backends/anyio.py", line 53, in aclose
+    await self._stream.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/anyio/streams/tls.py", line 201, in aclose
+    await self.transport_stream.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/anyio/_backends/_asyncio.py", line 1306, in aclose
+    self._transport.close()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/asyncio/selector_events.py", line 700, in close
+    self._loop.call_soon(self._call_connection_lost, None)
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/asyncio/base_events.py", line 746, in call_soon
+    self._check_closed()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/asyncio/base_events.py", line 510, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+Task exception was never retrieved
+future: <Task finished name='Task-10654' coro=<AsyncClient.aclose() done, defined at /opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpx/_client.py:1978> exception=RuntimeError('Event loop is closed')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpx/_client.py", line 1985, in aclose
+    await self._transport.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpx/_transports/default.py", line 406, in aclose
+    await self._pool.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 353, in aclose
+    await self._close_connections(closing_connections)
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 345, in _close_connections
+    await connection.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/connection.py", line 173, in aclose
+    await self._connection.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/http11.py", line 258, in aclose
+    await self._network_stream.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_backends/anyio.py", line 53, in aclose
+    await self._stream.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/anyio/streams/tls.py", line 201, in aclose
+    await self.transport_stream.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/anyio/_backends/_asyncio.py", line 1306, in aclose
+    self._transport.close()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/asyncio/selector_events.py", line 700, in close
+    self._loop.call_soon(self._call_connection_lost, None)
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/asyncio/base_events.py", line 746, in call_soon
+    self._check_closed()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/asyncio/base_events.py", line 510, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+Task exception was never retrieved
+future: <Task finished name='Task-10655' coro=<AsyncClient.aclose() done, defined at /opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpx/_client.py:1978> exception=RuntimeError('Event loop is closed')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpx/_client.py", line 1985, in aclose
+    await self._transport.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpx/_transports/default.py", line 406, in aclose
+    await self._pool.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 353, in aclose
+    await self._close_connections(closing_connections)
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 345, in _close_connections
+    await connection.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/connection.py", line 173, in aclose
+    await self._connection.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/http11.py", line 258, in aclose
+    await self._network_stream.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_backends/anyio.py", line 53, in aclose
+    await self._stream.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/anyio/streams/tls.py", line 201, in aclose
+    await self.transport_stream.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/anyio/_backends/_asyncio.py", line 1306, in aclose
+    self._transport.close()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/asyncio/selector_events.py", line 700, in close
+    self._loop.call_soon(self._call_connection_lost, None)
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/asyncio/base_events.py", line 746, in call_soon
+    self._check_closed()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/asyncio/base_events.py", line 510, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+Task exception was never retrieved
+future: <Task finished name='Task-12383' coro=<AsyncClient.aclose() done, defined at /opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpx/_client.py:1978> exception=RuntimeError('Event loop is closed')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpx/_client.py", line 1985, in aclose
+    await self._transport.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpx/_transports/default.py", line 406, in aclose
+    await self._pool.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 353, in aclose
+    await self._close_connections(closing_connections)
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 345, in _close_connections
+    await connection.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/connection.py", line 173, in aclose
+    await self._connection.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/http11.py", line 258, in aclose
+    await self._network_stream.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_backends/anyio.py", line 53, in aclose
+    await self._stream.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/anyio/streams/tls.py", line 201, in aclose
+    await self.transport_stream.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/anyio/_backends/_asyncio.py", line 1306, in aclose
+    self._transport.close()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/asyncio/selector_events.py", line 700, in close
+    self._loop.call_soon(self._call_connection_lost, None)
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/asyncio/base_events.py", line 746, in call_soon
+    self._check_closed()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/asyncio/base_events.py", line 510, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+Task exception was never retrieved
+future: <Task finished name='Task-12384' coro=<AsyncClient.aclose() done, defined at /opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpx/_client.py:1978> exception=RuntimeError('Event loop is closed')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpx/_client.py", line 1985, in aclose
+    await self._transport.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpx/_transports/default.py", line 406, in aclose
+    await self._pool.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 353, in aclose
+    await self._close_connections(closing_connections)
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 345, in _close_connections
+    await connection.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/connection.py", line 173, in aclose
+    await self._connection.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/http11.py", line 258, in aclose
+    await self._network_stream.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_backends/anyio.py", line 53, in aclose
+    await self._stream.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/anyio/streams/tls.py", line 201, in aclose
+    await self.transport_stream.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/anyio/_backends/_asyncio.py", line 1306, in aclose
+    self._transport.close()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/asyncio/selector_events.py", line 700, in close
+    self._loop.call_soon(self._call_connection_lost, None)
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/asyncio/base_events.py", line 746, in call_soon
+    self._check_closed()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/asyncio/base_events.py", line 510, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+Task exception was never retrieved
+future: <Task finished name='Task-12385' coro=<AsyncClient.aclose() done, defined at /opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpx/_client.py:1978> exception=RuntimeError('Event loop is closed')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpx/_client.py", line 1985, in aclose
+    await self._transport.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpx/_transports/default.py", line 406, in aclose
+    await self._pool.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 353, in aclose
+    await self._close_connections(closing_connections)
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/connection_pool.py", line 345, in _close_connections
+    await connection.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/connection.py", line 173, in aclose
+    await self._connection.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_async/http11.py", line 258, in aclose
+    await self._network_stream.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/httpcore/_backends/anyio.py", line 53, in aclose
+    await self._stream.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/anyio/streams/tls.py", line 201, in aclose
+    await self.transport_stream.aclose()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/anyio/_backends/_asyncio.py", line 1306, in aclose
+    self._transport.close()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/asyncio/selector_events.py", line 700, in close
+    self._loop.call_soon(self._call_connection_lost, None)
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/asyncio/base_events.py", line 746, in call_soon
+    self._check_closed()
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/asyncio/base_events.py", line 510, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+[info] Loaded AMAZON_2016_10K — 941 spans
+[01/30] Verifying: What is the registrant's exact name?
+  CORRECT ✓  (4.9s)
+[02/30] Verifying: What is the state (or other jurisdiction) of incorporation and the IRS
+  CORRECT ✓  (5.5s)
+[03/30] Verifying: What is the address of principal executive offices and ZIP code?
+  CORRECT ✓  (4.8s)
+[04/30] Verifying: What is the registrant's telephone number?
+  CORRECT ✓  (4.5s)
+[05/30] Verifying: What is the fiscal year-end date stated on the cover?
+  CORRECT ✓  (4.6s)
+[06/30] Verifying: What is/are the trading symbol(s) and listing exchange(s)?
+  CORRECT ✓  (4.6s)
+[07/30] Verifying: How many shares of common stock were outstanding as of the cover-page 
+  CORRECT ✓  (6.0s)
+[08/30] Verifying: What are the reportable operating segments (list names; if none, recor
+  CORRECT ✓  (5.4s)
+[09/30] Verifying: What principal products/services are named in Item 1 (list top categor
+  AMBIGUOUS ~  (7.9s)
+  GT:      ["Retail products", "Retail third-party seller services", "Retail subscription s
+  Correct: The top categories explicitly named in Item 1 are the operating segments “North 
+[10/30] Verifying: What principal markets/geographies are named in Item 1 (list regions/c
+  INCORRECT ✗  (10.6s)
+  GT:      ["United States", "Germany", "United Kingdom", "Japan", "Rest of world"]
+  Correct: Item 1 does not name those principal markets/geographies. The named principal ma
+[11/30] Verifying: Are any "significant subsidiaries" identified (list names; "none" if n
+  CORRECT ✓  (8.5s)
+[12/30] Verifying: What is the location of principal properties (city/state/country as pr
+  INCORRECT ✗  (5.2s)
+  GT:      Seattle, Washington, United States
+  Correct: Seattle, Washington
+[13/30] Verifying: Does Item 1A (Risk Factors) appear (Yes/No; if No, record "not require
+  CORRECT ✓  (6.4s)
+[14/30] Verifying: How many distinct risk factor captions are presented in Item 1A (count
+  INCORRECT ✗  (10.9s)
+  GT:      Not disclosed
+  Correct: 24
+[15/30] Verifying: Does Item 1B (Unresolved Staff Comments) disclose any comments (Yes/No
+  CORRECT ✓  (3.4s)
+[16/30] Verifying: Does Item 3 (Legal Proceedings) disclose any material proceedings (Yes
+  INCORRECT ✗  (5.1s)
+  GT:      Yes
+  Correct: No
+[17/30] Verifying: Does Item 7 discuss liquidity and capital resources (Yes/No — MD&A mus
+  CORRECT ✓  (7.8s)
+[18/30] Verifying: Does Item 7 discuss off-balance-sheet arrangements (Yes/No or "not app
+  INCORRECT ✗  (9.3s)
+  GT:      Yes
+  Correct: not applicable
+[19/30] Verifying: Does Item 7A (Quantitative and Qualitative Disclosures about Market Ri
+  CORRECT ✓  (5.0s)
+[20/30] Verifying: If Item 7A appears, which market risks are quantified (select all that
+  INCORRECT ✗  (6.2s)
+  GT:      ["Interest rate", "Foreign exchange (FX)"]
+  Correct: ["Interest rate", "Foreign exchange (FX)", "Equity"]
+[21/30] Verifying: Who is the independent registered public accounting firm named in Item
+  CORRECT ✓  (4.8s)
+[22/30] Verifying: What audit opinion type is expressed for the consolidated financial st
+  CORRECT ✓  (6.6s)
+[23/30] Verifying: What is total revenue for the most recent fiscal year (from the audite
+  CORRECT ✓  (5.4s)
+[24/30] Verifying: What is net income (loss) for the most recent fiscal year?
+  CORRECT ✓  (5.6s)
+[25/30] Verifying: What is total assets at year-end (from the audited balance sheet)?
+  CORRECT ✓  (4.8s)
+[26/30] Verifying: What is long-term debt at year-end (0 if none)?
+  CORRECT ✓  (6.4s)
+[27/30] Verifying: Did management report any material weaknesses in internal control over
+  CORRECT ✓  (5.7s)
+[28/30] Verifying: Is Part III information (directors, executive officers, compensation, 
+  CORRECT ✓  (5.6s)
+[29/30] Verifying: If Part III is incorporated by reference, what is the proxy filing dea
+  INCORRECT ✗  (6.0s)
+  GT:      Not stated
+  Correct: Within 120 days after the end of the fiscal year to which this Report relates.
+[30/30] Verifying: List one material agreement or other exhibit number explicitly identif
+  CORRECT ✓  (5.1s)
+
+Analysis -> /Users/yiminglin/Documents/Codebase/LSF/data/financebench/truth_analysis/AMAZON_2016_10K_ground_truth_analysis.txt
+correct_labels.json updated with AMAZON_2016_10K.pdf
+
+Corrections: 8 questions adjusted — Q[9, 10, 12, 14, 16, 18, 20, 29]

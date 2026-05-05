@@ -1,0 +1,50 @@
+/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/langchain_community/utilities/__init__.py:8: LangChainDeprecationWarning: As of langchain-core 0.3.0, LangChain uses pydantic v2 internally. The langchain_core.pydantic_v1 module was a compatibility shim for pydantic v1, and should no longer be used. Please update the code to import from Pydantic directly.
+
+For example, replace imports like: `from langchain_core.pydantic_v1 import BaseModel`
+with: `from pydantic import BaseModel`
+or the v1 compatibility namespace if you are working in a code base that has not been fully upgraded to pydantic 2 yet. 	from pydantic.v1 import BaseModel
+
+  from langchain_community.utilities.requests import (
+/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/pydantic/_internal/_generate_schema.py:918: UserWarning: Mixing V1 models and V2 models (or constructs, like `TypeAdapter`) is not supported. Please upgrade `TextRequestsWrapper` to V2.
+  warn(
+Loading sampled docs ...
+  WARNING: missing data/financebench/processing/Pfizer_2023Q2_10Q_reconstructed.json
+  WARNING: missing data/financebench/processing/MGMRESORTS_2023_8K_dated-2023-03-01_reconstructed.json
+Loading unsampled docs ...
+  WARNING: missing data/financebench/processing/MGMRESORTS_2023Q2_10Q_reconstructed.json
+  WARNING: missing data/financebench/processing/NETFLIX_2023Q2_10Q_reconstructed.json
+  WARNING: missing data/financebench/processing/PAYPAL_2023Q2_10Q_reconstructed.json
+  WARNING: missing data/financebench/processing/SALESFORCE_2023Q3_10Q_reconstructed.json
+  WARNING: missing data/financebench/processing/WALMART_2024Q1_10Q_reconstructed.json
+  WARNING: missing data/financebench/processing/ULTABEAUTY_2023_8K_dated-2023-06-07_reconstructed.json
+  WARNING: missing data/financebench/processing/MCDONALDS_8K_dated-2023-01-06_reconstructed.json
+  WARNING: missing data/financebench/processing/MCDONALDS_8K_dated-2023-02-13_reconstructed.json
+  WARNING: missing data/financebench/processing/MCDONALDS_8K_dated-2023-08-14_reconstructed.json
+  WARNING: missing data/financebench/processing/MGMRESORTS_2023_8K_dated-2023-09-12_reconstructed.json
+  WARNING: missing data/financebench/processing/PEPSICO_2023_8K_dated-2023-05-05_reconstructed.json
+  WARNING: missing data/financebench/processing/SALESFORCE_2021_8K_dated-2023-01-04_reconstructed.json
+Questions: 11  sampled: 18  unsampled: 68
+
+
+Question: What stock exchange is the company's primary common stock listed on?
+  [gen] SKIP what_stock_exchange_is_the_companys_primary_common_stock_lis_18
+  [apply:sampled] SKIP (all 18 cached)
+  [apply:unsampled] SKIP (all 68 cached)
+  [eval:sampled] SKIP
+  [eval:unsampled] SKIP
+
+Question: What is the reporting period covered by this document (e.g. fiscal year ended, quarter ended, or event date)?
+  [gen] SKIP what_is_the_reporting_period_covered_by_this_document_eg_fis_18
+  [apply:sampled] SKIP (all 18 cached)
+  [apply:unsampled] SKIP (all 68 cached)
+  [eval:sampled] SKIP
+  [eval:unsampled] SKIP
+
+Question: What is the exact name of the company (registrant) this document relates to?
+  [gen] SKIP what_is_the_exact_name_of_the_company_registrant_this_docume_18
+  [apply:sampled] SKIP (all 18 cached)
+  [apply:unsampled] SKIP (all 68 cached)
+  [eval:sampled] SKIP
+  [eval:unsampled] SKIP
+
+Question: What document type or SEC form is this (e.g. 10-K, 10-Q, 8-K, earnings release, annual report)?

@@ -1,0 +1,1142 @@
+/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/langchain_community/utilities/__init__.py:8: LangChainDeprecationWarning: As of langchain-core 0.3.0, LangChain uses pydantic v2 internally. The langchain_core.pydantic_v1 module was a compatibility shim for pydantic v1, and should no longer be used. Please update the code to import from Pydantic directly.
+
+For example, replace imports like: `from langchain_core.pydantic_v1 import BaseModel`
+with: `from pydantic import BaseModel`
+or the v1 compatibility namespace if you are working in a code base that has not been fully upgraded to pydantic 2 yet. 	from pydantic.v1 import BaseModel
+
+  from langchain_community.utilities.requests import (
+/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/pydantic/_internal/_generate_schema.py:918: UserWarning: Mixing V1 models and V2 models (or constructs, like `TypeAdapter`) is not supported. Please upgrade `TextRequestsWrapper` to V2.
+  warn(
+Loading sampled docs ...
+Loading unsampled docs ...
+Questions: 10  sampled: 10  unsampled: 50
+
+
+Question: What is long-term debt at year-end (0 if none)?
+
+
+[1m> Entering new None chain...[0m
+[32;1m[1;3m
+Invoking: `summarize_answer_locations` with `{}`
+
+
+[0m[36;1m[1;3mdoc_name               page  label            level   bold  all_cap  path_text               answer_snippet
+-----------------------------------------------------------------------------------------------------------
+AMCOR_2019_10K         N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: 5,314.4 million)
+COSTCO_2017_10K        18    table            Body    0     0        Costco Wholesale Corpo  | As of and for the year ended | Sept. 3
+BOEING_2018_10K        N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: $10,657 million)
+AMAZON_2018_10K        N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: $50,708 million)
+EBAY_2021_10K          N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: $7,727 million)
+AMAZON_2016_10K        N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: $7,694 million)
+CORNING_2022_10K       N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: 6,687 million)
+NIKE_2021_10K          N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: $9,413 million)
+LOCKHEEDMARTIN_2022_10K N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: $15,547 million)
+JOHNSON_JOHNSON_2022_10K N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: $26.9 billion)[0m[32;1m[1;3m
+Invoking: `write_rule` with `{'rule_name': 'rule_financial_statement_tables_long_term_debt', 'code': 'def rule_financial_statement_tables_long_term_debt(doc: dict) -> list[dict]:\n    """Retrieve financial statement tables likely containing long-term debt year-end values."""\n    try:\n        import re\n        texts = doc.get("texts", [])\n        out = []\n        for span in texts:\n            if span.get("label") != "table":\n                continue\n            text = (span.get("text") or "")\n            path = ((span.get("structure") or {}).get("path_text") or "")\n            combined = (path + "\\n" + text).lower()\n            if not any(k in combined for k in [\n                "item 8", "financial statements", "financial statement", "supplementary data",\n                "consolidated balance", "balance sheet", "statement of financial position",\n                "financial position", "long-term debt", "long term debt", "long-term borrowings",\n                "long term borrowings", "debt"\n            ]):\n                continue\n            cells = (((span.get("table_data") or {}).get("cells")) or [])\n            cell_text = " ".join((c.get("text") or "") for c in cells).lower()\n            if any(k in cell_text for k in [\n                "long-term debt", "long term debt", "long-term borrowings", "long term borrowings",\n                "total debt", "borrowings", "debt"\n            ]) or any(k in combined for k in ["balance sheet", "statement of financial position", "consolidated balance"]):\n                out.append(span)\n        return out\n    except Exception:\n        return []'}`
+responded: Plan: the only directly located answer is in a table on the financial statements pages, and for this question the dominant structural pattern is almost certainly the balance sheet / financial position table under Item 8 or equivalent, often with “long-term debt” as a row. I’ll start with one broad table rule anchored to financial-statement paths and balance-sheet / financial-position / debt keywords, aiming to cover most docs with a single rule.
+
+[0m[38;5;200m[1;3mOK: rule registered — rule_financial_statement_tables_long_term_debt[0m[32;1m[1;3m
+Invoking: `test_rule` with `{'rule_name': 'rule_financial_statement_tables_long_term_debt'}`
+
+
+[0m[36;1m[1;3mdoc_name               hit    retrieved_tokens  retrieved_snippet
+-----------------------------------------------------------------
+AMCOR_2019_10K         ✗      5989              '| Item 1. | Business | 6 |\n| --- | --- | --- |\n| Item 1A.
+COSTCO_2017_10K        ✓      3932              '| As of and for the year ended | Sept. 3, 2017 (53 weeks) |
+BOEING_2018_10K        ✗      8846              '| Years ended December 31, | 2018 | 2017 | 2016 |\n| --- | 
+AMAZON_2018_10K        ✗      5133              '|  | December 31, |  |  |  |  |\n|  | 2014 | 2015 | 2016 | 
+EBAY_2021_10K          ✗      5607              '|  | Page Number |\n| --- | --- |\n| 1. Consolidated Financ
+AMAZON_2016_10K        ✗      3905              '|  | December 31, |  |  |  |  |\n|  | 2012 | 2013 | 2014 | 
+CORNING_2022_10K       ✗      6936              '|  | Year ended December 31, 2022 |  |  |  |  |\n|  | Net s
+NIKE_2021_10K          ✗      4825              '|  | AVERAGE FOR THE TRAILING FIVE QUARTERS ENDED |  |\n|  
+LOCKHEEDMARTIN_2022_10K ✗      3991              '| (In millions, except per share data) | 2022 | 2021 | 2020
+JOHNSON_JOHNSON_2022_10K ✗      7803              '| (Dollars In Billions) |  |\n| --- | --- |\n| $ | (11.7) d
+
+Hit rate: 1/10 (0.10)[0m[32;1m[1;3m
+Invoking: `inspect_answer_context` with `{'doc_name': 'AMAZON_2018_10K'}`
+responded: Hit rate is too low, so I need to generalize structurally by understanding the non-located answer contexts. Since most are NOT_LOCATED, I’ll inspect several in parallel to identify the dominant variant before adding the next broad rule.
+
+[0m[32;1m[1;3m
+Invoking: `inspect_answer_context` with `{'doc_name': 'AMAZON_2016_10K'}`
+responded: Hit rate is too low, so I need to generalize structurally by understanding the non-located answer contexts. Since most are NOT_LOCATED, I’ll inspect several in parallel to identify the dominant variant before adding the next broad rule.
+
+[0m[32;1m[1;3m
+Invoking: `inspect_answer_context` with `{'doc_name': 'BOEING_2018_10K'}`
+responded: Hit rate is too low, so I need to generalize structurally by understanding the non-located answer contexts. Since most are NOT_LOCATED, I’ll inspect several in parallel to identify the dominant variant before adding the next broad rule.
+
+[0m[32;1m[1;3m
+Invoking: `inspect_answer_context` with `{'doc_name': 'EBAY_2021_10K'}`
+responded: Hit rate is too low, so I need to generalize structurally by understanding the non-located answer contexts. Since most are NOT_LOCATED, I’ll inspect several in parallel to identify the dominant variant before adding the next broad rule.
+
+[0m[32;1m[1;3m
+Invoking: `inspect_answer_context` with `{'doc_name': 'NIKE_2021_10K'}`
+responded: Hit rate is too low, so I need to generalize structurally by understanding the non-located answer contexts. Since most are NOT_LOCATED, I’ll inspect several in parallel to identify the dominant variant before adding the next broad rule.
+
+[0m[32;1m[1;3m
+Invoking: `inspect_answer_context` with `{'doc_name': 'LOCKHEEDMARTIN_2022_10K'}`
+responded: Hit rate is too low, so I need to generalize structurally by understanding the non-located answer contexts. Since most are NOT_LOCATED, I’ll inspect several in parallel to identify the dominant variant before adding the next broad rule.
+
+[0m[32;1m[1;3m
+Invoking: `inspect_answer_context` with `{'doc_name': 'JOHNSON_JOHNSON_2022_10K'}`
+responded: Hit rate is too low, so I need to generalize structurally by understanding the non-located answer contexts. Since most are NOT_LOCATED, I’ll inspect several in parallel to identify the dominant variant before adding the next broad rule.
+
+[0m[32;1m[1;3m
+Invoking: `inspect_answer_context` with `{'doc_name': 'CORNING_2022_10K'}`
+responded: Hit rate is too low, so I need to generalize structurally by understanding the non-located answer contexts. Since most are NOT_LOCATED, I’ll inspect several in parallel to identify the dominant variant before adding the next broad rule.
+
+[0m[32;1m[1;3m
+Invoking: `inspect_answer_context` with `{'doc_name': 'AMCOR_2019_10K'}`
+responded: Hit rate is too low, so I need to generalize structurally by understanding the non-located answer contexts. Since most are NOT_LOCATED, I’ll inspect several in parallel to identify the dominant variant before adding the next broad rule.
+
+[0m[33;1m[1;3mAnswer not found by substring match in AMAZON_2018_10K. GT: '$50,708 million'[0m[33;1m[1;3mAnswer not found by substring match in AMAZON_2016_10K. GT: '$7,694 million'[0m[33;1m[1;3mAnswer not found by substring match in BOEING_2018_10K. GT: '$10,657 million'[0m[33;1m[1;3mAnswer not found by substring match in EBAY_2021_10K. GT: '$7,727 million'[0m[33;1m[1;3mAnswer not found by substring match in NIKE_2021_10K. GT: '$9,413 million'[0m[33;1m[1;3mAnswer not found by substring match in LOCKHEEDMARTIN_2022_10K. GT: '$15,547 million'[0m[33;1m[1;3mAnswer not found by substring match in JOHNSON_JOHNSON_2022_10K. GT: '$26.9 billion'[0m[33;1m[1;3mAnswer not found by substring match in CORNING_2022_10K. GT: '6,687 million'[0m[33;1m[1;3mAnswer not found by substring match in AMCOR_2019_10K. GT: '5,314.4 million'[0m[32;1m[1;3m
+Invoking: `show_uncovered_docs` with `{}`
+
+
+[0m[33;1m[1;3mUncovered (no registered rule hits):
+  - AMCOR_2019_10K
+  - BOEING_2018_10K
+  - AMAZON_2018_10K
+  - EBAY_2021_10K
+  - AMAZON_2016_10K
+  - CORNING_2022_10K
+  - NIKE_2021_10K
+  - LOCKHEEDMARTIN_2022_10K
+  - JOHNSON_JOHNSON_2022_10K
+
+Covered: 1/10[0m[32;1m[1;3m
+Invoking: `diagnose_failing_doc` with `{'doc_name': 'AMAZON_2018_10K'}`
+responded: I’ll diagnose a few uncovered docs to see what the current rule is pulling and what structural variant the answer likely lives in.
+
+[0m[32;1m[1;3m
+Invoking: `diagnose_failing_doc` with `{'doc_name': 'BOEING_2018_10K'}`
+responded: I’ll diagnose a few uncovered docs to see what the current rule is pulling and what structural variant the answer likely lives in.
+
+[0m[32;1m[1;3m
+Invoking: `diagnose_failing_doc` with `{'doc_name': 'NIKE_2021_10K'}`
+responded: I’ll diagnose a few uncovered docs to see what the current rule is pulling and what structural variant the answer likely lives in.
+
+[0m[32;1m[1;3m
+Invoking: `diagnose_failing_doc` with `{'doc_name': 'JOHNSON_JOHNSON_2022_10K'}`
+responded: I’ll diagnose a few uncovered docs to see what the current rule is pulling and what structural variant the answer likely lives in.
+
+[0m[38;5;200m[1;3m=== Diagnosis: BOEING_2018_10K ===
+
+Ground truth: '$10,657 million'
+
+Rule results:
+  rule_financial_statement_tables_long_term_debt:  retrieved='| Years ended December 31, | 2018 | 2017 | 2016 |\n| --- | --- | --- | --- |\n| Earnings from operatio'
+
+Answer location (inspect_answer_context):
+  Answer not found by substring match in BOEING_2018_10K. GT: '$10,657 million'
+
+Structural diff vs. passing docs (1 passing):
+  This doc (BOEING_2018_10K): answer span NOT LOCATED by substring match
+  Passing docs (up to 3 shown):
+    COSTCO_2017_10K: label=table  level=Body  bold=0  all_cap=0  path_text='Costco Wholesale Corporation | PART II | Item 6—Selected Financial Data | SELECTED FINANCIAL DATA (dollars in millions, except per share data)'[0m[38;5;200m[1;3m=== Diagnosis: AMAZON_2018_10K ===
+
+Ground truth: '$50,708 million'
+
+Rule results:
+  rule_financial_statement_tables_long_term_debt:  retrieved='|  | December 31, |  |  |  |  |\n|  | 2014 | 2015 | 2016 | 2017 | 2018 |\n|  | (in millions) |  |  |  '
+
+Answer location (inspect_answer_context):
+  Answer not found by substring match in AMAZON_2018_10K. GT: '$50,708 million'
+
+Structural diff vs. passing docs (1 passing):
+  This doc (AMAZON_2018_10K): answer span NOT LOCATED by substring match
+  Passing docs (up to 3 shown):
+    COSTCO_2017_10K: label=table  level=Body  bold=0  all_cap=0  path_text='Costco Wholesale Corporation | PART II | Item 6—Selected Financial Data | SELECTED FINANCIAL DATA (dollars in millions, except per share data)'[0m[38;5;200m[1;3m=== Diagnosis: JOHNSON_JOHNSON_2022_10K ===
+
+Ground truth: '$26.9 billion'
+
+Rule results:
+  rule_financial_statement_tables_long_term_debt:  retrieved='| (Dollars In Billions) |  |\n| --- | --- |\n| $ | (11.7) dividends to shareholders |\n|  | (6.0) repur'
+
+Answer location (inspect_answer_context):
+  Answer not found by substring match in JOHNSON_JOHNSON_2022_10K. GT: '$26.9 billion'
+
+Structural diff vs. passing docs (1 passing):
+  This doc (JOHNSON_JOHNSON_2022_10K): answer span NOT LOCATED by substring match
+  Passing docs (up to 3 shown):
+    COSTCO_2017_10K: label=table  level=Body  bold=0  all_cap=0  path_text='Costco Wholesale Corporation | PART II | Item 6—Selected Financial Data | SELECTED FINANCIAL DATA (dollars in millions, except per share data)'[0m[38;5;200m[1;3m=== Diagnosis: NIKE_2021_10K ===
+
+Ground truth: '$9,413 million'
+
+Rule results:
+  rule_financial_statement_tables_long_term_debt:  retrieved='|  | AVERAGE FOR THE TRAILING FIVE QUARTERS ENDED |  |\n|  | MAY 31, 2021 | MAY 31, 2020 |\n| --- | --'
+
+Answer location (inspect_answer_context):
+  Answer not found by substring match in NIKE_2021_10K. GT: '$9,413 million'
+
+Structural diff vs. passing docs (1 passing):
+  This doc (NIKE_2021_10K): answer span NOT LOCATED by substring match
+  Passing docs (up to 3 shown):
+    COSTCO_2017_10K: label=table  level=Body  bold=0  all_cap=0  path_text='Costco Wholesale Corporation | PART II | Item 6—Selected Financial Data | SELECTED FINANCIAL DATA (dollars in millions, except per share data)'[0m[32;1m[1;3m
+Invoking: `write_rule` with `{'rule_name': 'rule_balance_sheet_tables', 'code': 'def rule_balance_sheet_tables(doc: dict) -> list[dict]:\n    """Retrieve tables that are balance sheets or statements of financial position."""\n    try:\n        texts = doc.get("texts", [])\n        out = []\n        for span in texts:\n            if span.get("label") != "table":\n                continue\n            text = (span.get("text") or "")\n            path = ((span.get("structure") or {}).get("path_text") or "")\n            combined = (path + "\\n" + text).lower()\n            if any(k in combined for k in [\n                "consolidated balance sheets",\n                "consolidated balance sheet",\n                "balance sheets",\n                "balance sheet",\n                "statement of financial position",\n                "statements of financial position",\n                "financial position"\n            ]):\n                out.append(span)\n        return out\n    except Exception:\n        return []'}`
+responded: The current rule is overfiring on many financial tables. A better broad rule is to target balance-sheet / financial-position tables specifically, not all Item 8 tables. I’ll add a generalized balance-sheet table rule anchored to path/text phrases like “consolidated balance sheets” and “statement of financial position,” which should cover the dominant pattern across these filings.
+
+[0m[38;5;200m[1;3mOK: rule registered — rule_balance_sheet_tables[0m[32;1m[1;3m
+Invoking: `test_rule` with `{'rule_name': 'rule_balance_sheet_tables'}`
+
+
+[0m[36;1m[1;3mdoc_name               hit    retrieved_tokens  retrieved_snippet
+-----------------------------------------------------------------
+AMCOR_2019_10K         ✗      2893              '| Item 1. | Business | 6 |\n| --- | --- | --- |\n| Item 1A.
+COSTCO_2017_10K        ✓      2287              '| As of and for the year ended | Sept. 3, 2017 (53 weeks) |
+BOEING_2018_10K        ✗      3029              '| (Dollars in millions) | 2018 | 2017 |\n| --- | --- | --- 
+AMAZON_2018_10K        ✗      1468              '|  | December 31, |  |  |  |  |\n|  | 2014 | 2015 | 2016 | 
+EBAY_2021_10K          ✗      2840              '|  | Page Number |\n| --- | --- |\n| 1. Consolidated Financ
+AMAZON_2016_10K        ✗      783               '|  | December 31, |  |  |  |  |\n|  | 2012 | 2013 | 2014 | 
+CORNING_2022_10K       ✗      2568              '|  | December 31, |  |\n|  | 2022 | 2021 |\n| --- | --- | -
+NIKE_2021_10K          ✗      2146              '|  | MAY 31, |  |\n| (In millions) | 2021 | 2020 |\n| --- |
+LOCKHEEDMARTIN_2022_10K ✗      1687              '| (In millions, except per share data) | 2022 | 2021 | 2020
+JOHNSON_JOHNSON_2022_10K ✗      1847              '| 40 Consolidated Balance Sheets |\n| --- |\n| 41 Consolida
+
+Hit rate: 1/10 (0.10)[0m[32;1m[1;3m
+Invoking: `show_uncovered_docs` with `{}`
+responded: Still low on substring hit, but likely retrieving the right tables for many docs. I’ll check union coverage after adding this broader structural rule, then fill remaining gaps with targeted variants.
+
+[0m[33;1m[1;3mUncovered (no registered rule hits):
+  - AMCOR_2019_10K
+  - BOEING_2018_10K
+  - AMAZON_2018_10K
+  - EBAY_2021_10K
+  - AMAZON_2016_10K
+  - CORNING_2022_10K
+  - NIKE_2021_10K
+  - LOCKHEEDMARTIN_2022_10K
+  - JOHNSON_JOHNSON_2022_10K
+
+Covered: 1/10[0m[32;1m[1;3m
+Invoking: `write_rule` with `{'rule_name': 'rule_selected_financial_data_tables', 'code': 'def rule_selected_financial_data_tables(doc: dict) -> list[dict]:\n    """Retrieve selected financial data tables that often include long-term debt year-end values."""\n    try:\n        texts = doc.get("texts", [])\n        out = []\n        for span in texts:\n            if span.get("label") != "table":\n                continue\n            text = (span.get("text") or "")\n            path = ((span.get("structure") or {}).get("path_text") or "")\n            combined = (path + "\\n" + text).lower()\n            if any(k in combined for k in [\n                "selected financial data",\n                "selected consolidated financial data",\n                "five-year selected",\n                "five year selected",\n                "selected data"\n            ]):\n                out.append(span)\n        return out\n    except Exception:\n        return []'}`
+responded: I’ll add a targeted rule for “selected financial data / five-year data” tables, since Costco’s answer is there and some companies may report debt in selected data rather than the balance sheet.
+
+[0m[38;5;200m[1;3mOK: rule registered — rule_selected_financial_data_tables[0m[32;1m[1;3m
+Invoking: `test_union` with `{}`
+
+
+[0m[36;1m[1;3mMerge accuracy: 7/10 (0.7)
+
+Failing docs:
+  AMCOR_2019_10K:
+    retrieved: '| Item 1. | Business | 6 |\n| --- | --- | --- |\n| Item 1A. | Risk Factors | 9 |\n| Item 1B. | Unresolved Staff Comment
+    predicted: '5,309.0'
+    ground_truth: '5,314.4 million'
+  AMAZON_2018_10K:
+    retrieved: '|  |  | Page |\n| --- | --- | --- |\n| PART I |  |  |\n| Item 1. | Business | 3 |\n| Item 1A. | Risk Factors | 6 |\n| I
+    predicted: '23,495'
+    ground_truth: '$50,708 million'
+  LOCKHEEDMARTIN_2022_10K:
+    retrieved: '| PART I |  | Page |\n| --- | --- | --- |\n| ITEM 1. | Business .......................................................
+    predicted: '15,429'
+    ground_truth: '$15,547 million'[0m[32;1m[1;3m
+Invoking: `diagnose_failing_doc` with `{'doc_name': 'AMCOR_2019_10K'}`
+responded: Great—union accuracy is already 0.7, which means the broad structural retrieval is helping the LLM on many docs despite substring misses. I only need to fix the three failures. I’ll diagnose each failing doc.
+
+[0m[32;1m[1;3m
+Invoking: `diagnose_failing_doc` with `{'doc_name': 'AMAZON_2018_10K'}`
+responded: Great—union accuracy is already 0.7, which means the broad structural retrieval is helping the LLM on many docs despite substring misses. I only need to fix the three failures. I’ll diagnose each failing doc.
+
+[0m[32;1m[1;3m
+Invoking: `diagnose_failing_doc` with `{'doc_name': 'LOCKHEEDMARTIN_2022_10K'}`
+responded: Great—union accuracy is already 0.7, which means the broad structural retrieval is helping the LLM on many docs despite substring misses. I only need to fix the three failures. I’ll diagnose each failing doc.
+
+[0m[38;5;200m[1;3m=== Diagnosis: AMAZON_2018_10K ===
+
+Ground truth: '$50,708 million'
+
+Rule results:
+  rule_financial_statement_tables_long_term_debt:  retrieved='|  | December 31, |  |  |  |  |\n|  | 2014 | 2015 | 2016 | 2017 | 2018 |\n|  | (in millions) |  |  |  '
+  rule_balance_sheet_tables:  retrieved='|  | December 31, |  |  |  |  |\n|  | 2014 | 2015 | 2016 | 2017 | 2018 |\n|  | (in millions) |  |  |  '
+  rule_selected_financial_data_tables:  retrieved='|  |  | Page |\n| --- | --- | --- |\n| PART I |  |  |\n| Item 1. | Business | 3 |\n| Item 1A. | Risk Fac'
+
+Answer location (inspect_answer_context):
+  Answer not found by substring match in AMAZON_2018_10K. GT: '$50,708 million'
+
+Structural diff vs. passing docs (1 passing):
+  This doc (AMAZON_2018_10K): answer span NOT LOCATED by substring match
+  Passing docs (up to 3 shown):
+    COSTCO_2017_10K: label=table  level=Body  bold=0  all_cap=0  path_text='Costco Wholesale Corporation | PART II | Item 6—Selected Financial Data | SELECTED FINANCIAL DATA (dollars in millions, except per share data)'[0m[38;5;200m[1;3m=== Diagnosis: LOCKHEEDMARTIN_2022_10K ===
+
+Ground truth: '$15,547 million'
+
+Rule results:
+  rule_financial_statement_tables_long_term_debt:  retrieved='| (In millions, except per share data) | 2022 | 2021 | 2020 | 2019 | 2018 |\n| --- | --- | --- | --- '
+  rule_balance_sheet_tables:  retrieved='| (In millions, except per share data) | 2022 | 2021 | 2020 | 2019 | 2018 |\n| --- | --- | --- | --- '
+  rule_selected_financial_data_tables:  retrieved='| PART I |  | Page |\n| --- | --- | --- |\n| ITEM 1. | Business ......................................'
+
+Answer location (inspect_answer_context):
+  Answer not found by substring match in LOCKHEEDMARTIN_2022_10K. GT: '$15,547 million'
+
+Structural diff vs. passing docs (1 passing):
+  This doc (LOCKHEEDMARTIN_2022_10K): answer span NOT LOCATED by substring match
+  Passing docs (up to 3 shown):
+    COSTCO_2017_10K: label=table  level=Body  bold=0  all_cap=0  path_text='Costco Wholesale Corporation | PART II | Item 6—Selected Financial Data | SELECTED FINANCIAL DATA (dollars in millions, except per share data)'[0m[38;5;200m[1;3m=== Diagnosis: AMCOR_2019_10K ===
+
+Ground truth: '5,314.4 million'
+
+Rule results:
+  rule_financial_statement_tables_long_term_debt:  retrieved='| Item 1. | Business | 6 |\n| --- | --- | --- |\n| Item 1A. | Risk Factors | 9 |\n| Item 1B. | Unresolv'
+  rule_balance_sheet_tables:  retrieved='| Item 1. | Business | 6 |\n| --- | --- | --- |\n| Item 1A. | Risk Factors | 9 |\n| Item 1B. | Unresolv'
+  rule_selected_financial_data_tables:  retrieved='| Item 1. | Business | 6 |\n| --- | --- | --- |\n| Item 1A. | Risk Factors | 9 |\n| Item 1B. | Unresolv'
+
+Answer location (inspect_answer_context):
+  Answer not found by substring match in AMCOR_2019_10K. GT: '5,314.4 million'
+
+Structural diff vs. passing docs (1 passing):
+  This doc (AMCOR_2019_10K): answer span NOT LOCATED by substring match
+  Passing docs (up to 3 shown):
+    COSTCO_2017_10K: label=table  level=Body  bold=0  all_cap=0  path_text='Costco Wholesale Corporation | PART II | Item 6—Selected Financial Data | SELECTED FINANCIAL DATA (dollars in millions, except per share data)'[0mStopping agent prematurely due to triggering stop condition
+[32;1m[1;3m[0m
+
+[1m> Finished chain.[0m
+  [gen] what_is_longterm_debt_at_yearend_0_if_none_10: 3 rules
+  [apply:sampled] rules=3  docs=10
+  [apply:unsampled] rules=3  docs=50
+  [eval:sampled] SKIP
+  [eval:unsampled] SKIP
+
+Question: What is net income (loss) for the most recent fiscal year?
+
+
+[1m> Entering new None chain...[0m
+[32;1m[1;3m
+Invoking: `summarize_answer_locations` with `{}`
+
+
+[0m[36;1m[1;3mdoc_name               page  label            level   bold  all_cap  path_text               answer_snippet
+-----------------------------------------------------------------------------------------------------------
+AMCOR_2019_10K         24    text             Body    0     0        AMCOR PLC | PART II |   Net income attributable to Amcor plc dec
+COSTCO_2017_10K        18    table            Body    0     0        Costco Wholesale Corpo  | As of and for the year ended | Sept. 3
+BOEING_2018_10K        N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: $10,460 million)
+AMAZON_2018_10K        N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: $10,073 million)
+EBAY_2021_10K          N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: $13,608 million)
+AMAZON_2016_10K        N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: $2,371 million)
+CORNING_2022_10K       24    text             Body    0     0        2018 | Item 7. Managem  For the year ended December 31, 2022, we
+NIKE_2021_10K          N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: $5,727 million)
+LOCKHEEDMARTIN_2022_10K N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: $5,732 million)
+JOHNSON_JOHNSON_2022_10K N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: $17.9 billion)[0m[32;1m[1;3m
+Invoking: `write_rule` with `{'rule_name': 'rule_financial_statements_net_income', 'code': 'def rule_financial_statements_net_income(doc: dict) -> list[dict]:\n    """Retrieve financial statement or MD&A spans likely containing net income for the latest fiscal year."""\n    try:\n        import re\n        out = []\n        for span in doc.get("texts", []):\n            text = (span.get("text") or "")\n            path = ((span.get("structure") or {}).get("path_text") or "")\n            label = span.get("label") or ""\n            hay = f"{path} {text}".lower()\n            in_fin_section = (\n                "financial statements" in hay\n                or "financial statement" in hay\n                or "supplementary data" in hay\n                or "management\'s discussion and analysis" in hay\n                or "management’s discussion and analysis" in hay\n                or "results of operations" in hay\n                or "statement of income" in hay\n                or "statement of earnings" in hay\n                or "statement of operations" in hay\n                or "income statement" in hay\n                or "consolidated results of operations" in hay\n            )\n            mentions_metric = (\n                "net income" in hay\n                or "net earnings" in hay\n                or "net loss" in hay\n                or "net income (loss)" in hay\n                or "net earnings (loss)" in hay\n            )\n            if in_fin_section and (mentions_metric or label == "table"):\n                out.append(span)\n        return out\n    except Exception:\n        return []\n'}`
+responded: Plan: the dominant pattern is answers appearing in or near Item 8 / Item 7 financial statement sections, often as a table or text under paths containing “Management’s Discussion and Analysis” or “Financial Statements and Supplementary Data.” I’ll start with one broad rule anchored to those financial-statement/MD&A paths and table/text spans mentioning net income or net earnings.
+
+[0m[38;5;200m[1;3mOK: rule registered — rule_financial_statements_net_income[0m[32;1m[1;3m
+Invoking: `test_rule` with `{'rule_name': 'rule_financial_statements_net_income'}`
+
+
+[0m[36;1m[1;3mdoc_name               hit    retrieved_tokens  retrieved_snippet
+-----------------------------------------------------------------
+AMCOR_2019_10K         ✓      10533             '| Item 1. | Business | 6 |\n| --- | --- | --- |\n| Item 1A.
+COSTCO_2017_10K        ✓      8405              '|  |  | Page |\n| --- | --- | --- |\n| PART I |  |  |\n| It
+BOEING_2018_10K        ✗      19447             '| PART I |  |  | Page |\n| --- | --- | --- | --- |\n|  | It
+AMAZON_2018_10K        ✗      14324             '|  |  | Page |\n| --- | --- | --- |\n| PART I |  |  |\n| It
+EBAY_2021_10K          ✗      12956             '|  |  | Page |\n| --- | --- | --- |\n| Part |  |  |\n| Item
+AMAZON_2016_10K        ✗      13204             '|  |  | Page |\n| --- | --- | --- |\n| PART I |  |  |\n| It
+CORNING_2022_10K       ✓      5405              'For the year ended December 31, 2022, we generated net inco
+NIKE_2021_10K          ✗      24963             '|  |  | PAGE |\n| --- | --- | --- |\n| PART I |  | 1 |\n| I
+LOCKHEEDMARTIN_2022_10K ✗      18760             '| PART I |  | Page |\n| --- | --- | --- |\n| ITEM 1. | Busi
+JOHNSON_JOHNSON_2022_10K ✗      11637             '| 1 | Business | 1 |\n| --- | --- | --- |\n|  | General | 1
+
+Hit rate: 3/10 (0.30)[0m[32;1m[1;3m
+Invoking: `inspect_answer_context` with `{'doc_name': 'BOEING_2018_10K'}`
+responded: Hit rate is too low, so I need to generalize. The misses are likely because many answers are in summary tables or nearby text that don’t literally contain the exact ground-truth formatting, and several NOT_LOCATED docs need context inspection. First I’ll inspect the NOT_LOCATED docs in parallel to identify the dominant uncovered structural variant.
+
+[0m[32;1m[1;3m
+Invoking: `inspect_answer_context` with `{'doc_name': 'AMAZON_2018_10K'}`
+responded: Hit rate is too low, so I need to generalize. The misses are likely because many answers are in summary tables or nearby text that don’t literally contain the exact ground-truth formatting, and several NOT_LOCATED docs need context inspection. First I’ll inspect the NOT_LOCATED docs in parallel to identify the dominant uncovered structural variant.
+
+[0m[32;1m[1;3m
+Invoking: `inspect_answer_context` with `{'doc_name': 'EBAY_2021_10K'}`
+responded: Hit rate is too low, so I need to generalize. The misses are likely because many answers are in summary tables or nearby text that don’t literally contain the exact ground-truth formatting, and several NOT_LOCATED docs need context inspection. First I’ll inspect the NOT_LOCATED docs in parallel to identify the dominant uncovered structural variant.
+
+[0m[32;1m[1;3m
+Invoking: `inspect_answer_context` with `{'doc_name': 'AMAZON_2016_10K'}`
+responded: Hit rate is too low, so I need to generalize. The misses are likely because many answers are in summary tables or nearby text that don’t literally contain the exact ground-truth formatting, and several NOT_LOCATED docs need context inspection. First I’ll inspect the NOT_LOCATED docs in parallel to identify the dominant uncovered structural variant.
+
+[0m[32;1m[1;3m
+Invoking: `inspect_answer_context` with `{'doc_name': 'NIKE_2021_10K'}`
+responded: Hit rate is too low, so I need to generalize. The misses are likely because many answers are in summary tables or nearby text that don’t literally contain the exact ground-truth formatting, and several NOT_LOCATED docs need context inspection. First I’ll inspect the NOT_LOCATED docs in parallel to identify the dominant uncovered structural variant.
+
+[0m[32;1m[1;3m
+Invoking: `inspect_answer_context` with `{'doc_name': 'LOCKHEEDMARTIN_2022_10K'}`
+responded: Hit rate is too low, so I need to generalize. The misses are likely because many answers are in summary tables or nearby text that don’t literally contain the exact ground-truth formatting, and several NOT_LOCATED docs need context inspection. First I’ll inspect the NOT_LOCATED docs in parallel to identify the dominant uncovered structural variant.
+
+[0m[32;1m[1;3m
+Invoking: `inspect_answer_context` with `{'doc_name': 'JOHNSON_JOHNSON_2022_10K'}`
+responded: Hit rate is too low, so I need to generalize. The misses are likely because many answers are in summary tables or nearby text that don’t literally contain the exact ground-truth formatting, and several NOT_LOCATED docs need context inspection. First I’ll inspect the NOT_LOCATED docs in parallel to identify the dominant uncovered structural variant.
+
+[0m[33;1m[1;3mAnswer not found by substring match in AMAZON_2018_10K. GT: '$10,073 million'[0m[33;1m[1;3mAnswer not found by substring match in EBAY_2021_10K. GT: '$13,608 million'[0m[33;1m[1;3mAnswer not found by substring match in AMAZON_2016_10K. GT: '$2,371 million'[0m[33;1m[1;3mAnswer not found by substring match in BOEING_2018_10K. GT: '$10,460 million'[0m[33;1m[1;3mAnswer not found by substring match in NIKE_2021_10K. GT: '$5,727 million'[0m[33;1m[1;3mAnswer not found by substring match in LOCKHEEDMARTIN_2022_10K. GT: '$5,732 million'[0m[33;1m[1;3mAnswer not found by substring match in JOHNSON_JOHNSON_2022_10K. GT: '$17.9 billion'[0m[32;1m[1;3m
+Invoking: `write_rule` with `{'rule_name': 'rule_item7_item8_financial_sections', 'code': 'def rule_item7_item8_financial_sections(doc: dict) -> list[dict]:\n    """Retrieve broad Item 7/Item 8 financial sections and nearby statement-of-income content."""\n    try:\n        out = []\n        for span in doc.get("texts", []):\n            text = (span.get("text") or "")\n            path = ((span.get("structure") or {}).get("path_text") or "")\n            level = ((span.get("structure") or {}).get("level") or "")\n            hay = f"{path} {text}".lower()\n            if (\n                "item 7" in hay\n                or "item 8" in hay\n                or "management\'s discussion and analysis" in hay\n                or "management’s discussion and analysis" in hay\n                or "results of operations" in hay\n                or "financial statements and supplementary data" in hay\n                or "financial statements" in hay\n                or "supplementary data" in hay\n                or "statement of income" in hay\n                or "statement of earnings" in hay\n                or "statement of operations" in hay\n                or "income before" in hay\n                or "net earnings" in hay\n                or "net income" in hay\n                or "net loss" in hay\n            ):\n                out.append(span)\n        return out\n    except Exception:\n        return []\n'}`
+responded: The substring matcher can’t locate those exact answer strings, so I’ll use a broader structural rule that targets the canonical financial statement pages/paths more aggressively, especially Item 8 / Item 7 sections and statement-of-income / operations tables, which should still retrieve the answer-containing spans for LLM union.
+
+[0m[38;5;200m[1;3mOK: rule registered — rule_item7_item8_financial_sections[0m[32;1m[1;3m
+Invoking: `test_rule` with `{'rule_name': 'rule_item7_item8_financial_sections'}`
+
+
+[0m[36;1m[1;3mdoc_name               hit    retrieved_tokens  retrieved_snippet
+-----------------------------------------------------------------
+AMCOR_2019_10K         ✓      54263             '| Item 1. | Business | 6 |\n| --- | --- | --- |\n| Item 1A.
+COSTCO_2017_10K        ✓      32894             '|  |  | Page |\n| --- | --- | --- |\n| PART I |  |  |\n| It
+BOEING_2018_10K        ✗      55049             '| PART I |  |  | Page |\n| --- | --- | --- | --- |\n|  | It
+AMAZON_2018_10K        ✗      44145             '|  |  | Page |\n| --- | --- | --- |\n| PART I |  |  |\n| It
+EBAY_2021_10K          ✗      52852             '|  |  | Page |\n| --- | --- | --- |\n| Part |  |  |\n| Item
+AMAZON_2016_10K        ✗      43303             '|  |  | Page |\n| --- | --- | --- |\n| PART I |  |  |\n| It
+CORNING_2022_10K       ✓      28868             'This report contains forward-looking statements that involv
+NIKE_2021_10K          ✗      66627             '|  |  | PAGE |\n| --- | --- | --- |\n| PART I |  | 1 |\n| I
+LOCKHEEDMARTIN_2022_10K ✗      73185             '| PART I |  | Page |\n| --- | --- | --- |\n| ITEM 1. | Busi
+JOHNSON_JOHNSON_2022_10K ✗      41556             '| 1 | Business | 1 |\n| --- | --- | --- |\n|  | General | 1
+
+Hit rate: 3/10 (0.30)[0m[32;1m[1;3m
+Invoking: `show_uncovered_docs` with `{}`
+
+
+[0m[33;1m[1;3mUncovered (no registered rule hits):
+  - BOEING_2018_10K
+  - AMAZON_2018_10K
+  - EBAY_2021_10K
+  - AMAZON_2016_10K
+  - NIKE_2021_10K
+  - LOCKHEEDMARTIN_2022_10K
+  - JOHNSON_JOHNSON_2022_10K
+
+Covered: 3/10[0m[32;1m[1;3m
+Invoking: `diagnose_failing_doc` with `{'doc_name': 'BOEING_2018_10K'}`
+responded: I’ll diagnose the uncovered docs in parallel to see which structural variant is common among them.
+
+[0m[32;1m[1;3m
+Invoking: `diagnose_failing_doc` with `{'doc_name': 'AMAZON_2018_10K'}`
+responded: I’ll diagnose the uncovered docs in parallel to see which structural variant is common among them.
+
+[0m[32;1m[1;3m
+Invoking: `diagnose_failing_doc` with `{'doc_name': 'EBAY_2021_10K'}`
+responded: I’ll diagnose the uncovered docs in parallel to see which structural variant is common among them.
+
+[0m[32;1m[1;3m
+Invoking: `diagnose_failing_doc` with `{'doc_name': 'AMAZON_2016_10K'}`
+responded: I’ll diagnose the uncovered docs in parallel to see which structural variant is common among them.
+
+[0m[32;1m[1;3m
+Invoking: `diagnose_failing_doc` with `{'doc_name': 'NIKE_2021_10K'}`
+responded: I’ll diagnose the uncovered docs in parallel to see which structural variant is common among them.
+
+[0m[32;1m[1;3m
+Invoking: `diagnose_failing_doc` with `{'doc_name': 'LOCKHEEDMARTIN_2022_10K'}`
+responded: I’ll diagnose the uncovered docs in parallel to see which structural variant is common among them.
+
+[0m[32;1m[1;3m
+Invoking: `diagnose_failing_doc` with `{'doc_name': 'JOHNSON_JOHNSON_2022_10K'}`
+responded: I’ll diagnose the uncovered docs in parallel to see which structural variant is common among them.
+
+[0m[38;5;200m[1;3m=== Diagnosis: AMAZON_2016_10K ===
+
+Ground truth: '$2,371 million'
+
+Rule results:
+  rule_financial_statements_net_income:  retrieved='|  |  | Page |\n| --- | --- | --- |\n| PART I |  |  |\n| Item 1. | Business | 3 |\n| Item 1A. | Risk Fac'
+  rule_item7_item8_financial_sections:  retrieved='|  |  | Page |\n| --- | --- | --- |\n| PART I |  |  |\n| Item 1. | Business | 3 |\n| Item 1A. | Risk Fac'
+
+Answer location (inspect_answer_context):
+  Answer not found by substring match in AMAZON_2016_10K. GT: '$2,371 million'
+
+Structural diff vs. passing docs (3 passing):
+  This doc (AMAZON_2016_10K): answer span NOT LOCATED by substring match
+  Passing docs (up to 3 shown):
+    AMCOR_2019_10K: label=text  level=Body  bold=0  all_cap=0  path_text="AMCOR PLC | PART II | Item 7. - Management's Discussion and Analysis of Financial Condition and Results of Operations | Consolidated Results of Operations"
+    COSTCO_2017_10K: label=table  level=Body  bold=0  all_cap=0  path_text='Costco Wholesale Corporation | PART II | Item 6—Selected Financial Data | SELECTED FINANCIAL DATA (dollars in millions, except per share data)'
+    CORNING_2022_10K: label=text  level=Body  bold=0  all_cap=0  path_text='2018 | Item 7. Management’s Discussion and Analysis of Financial Condition and Results of Operations | 2022 Results'[0m[38;5;200m[1;3m=== Diagnosis: BOEING_2018_10K ===
+
+Ground truth: '$10,460 million'
+
+Rule results:
+  rule_financial_statements_net_income:  retrieved='| PART I |  |  | Page |\n| --- | --- | --- | --- |\n|  | Item 1. | Business | 1 |\n|  | Item 1A. | Risk'
+  rule_item7_item8_financial_sections:  retrieved='| PART I |  |  | Page |\n| --- | --- | --- | --- |\n|  | Item 1. | Business | 1 |\n|  | Item 1A. | Risk'
+
+Answer location (inspect_answer_context):
+  Answer not found by substring match in BOEING_2018_10K. GT: '$10,460 million'
+
+Structural diff vs. passing docs (3 passing):
+  This doc (BOEING_2018_10K): answer span NOT LOCATED by substring match
+  Passing docs (up to 3 shown):
+    AMCOR_2019_10K: label=text  level=Body  bold=0  all_cap=0  path_text="AMCOR PLC | PART II | Item 7. - Management's Discussion and Analysis of Financial Condition and Results of Operations | Consolidated Results of Operations"
+    COSTCO_2017_10K: label=table  level=Body  bold=0  all_cap=0  path_text='Costco Wholesale Corporation | PART II | Item 6—Selected Financial Data | SELECTED FINANCIAL DATA (dollars in millions, except per share data)'
+    CORNING_2022_10K: label=text  level=Body  bold=0  all_cap=0  path_text='2018 | Item 7. Management’s Discussion and Analysis of Financial Condition and Results of Operations | 2022 Results'[0m[38;5;200m[1;3m=== Diagnosis: NIKE_2021_10K ===
+
+Ground truth: '$5,727 million'
+
+Rule results:
+  rule_financial_statements_net_income:  retrieved='|  |  | PAGE |\n| --- | --- | --- |\n| PART I |  | 1 |\n| ITEM 1. | Business | 1 |\n|  | General | 1 |\n|'
+  rule_item7_item8_financial_sections:  retrieved='|  |  | PAGE |\n| --- | --- | --- |\n| PART I |  | 1 |\n| ITEM 1. | Business | 1 |\n|  | General | 1 |\n|'
+
+Answer location (inspect_answer_context):
+  Answer not found by substring match in NIKE_2021_10K. GT: '$5,727 million'
+
+Structural diff vs. passing docs (3 passing):
+  This doc (NIKE_2021_10K): answer span NOT LOCATED by substring match
+  Passing docs (up to 3 shown):
+    AMCOR_2019_10K: label=text  level=Body  bold=0  all_cap=0  path_text="AMCOR PLC | PART II | Item 7. - Management's Discussion and Analysis of Financial Condition and Results of Operations | Consolidated Results of Operations"
+    COSTCO_2017_10K: label=table  level=Body  bold=0  all_cap=0  path_text='Costco Wholesale Corporation | PART II | Item 6—Selected Financial Data | SELECTED FINANCIAL DATA (dollars in millions, except per share data)'
+    CORNING_2022_10K: label=text  level=Body  bold=0  all_cap=0  path_text='2018 | Item 7. Management’s Discussion and Analysis of Financial Condition and Results of Operations | 2022 Results'[0m[38;5;200m[1;3m=== Diagnosis: EBAY_2021_10K ===
+
+Ground truth: '$13,608 million'
+
+Rule results:
+  rule_financial_statements_net_income:  retrieved='|  |  | Page |\n| --- | --- | --- |\n| Part |  |  |\n| Item 1. | Business | 4 |\n| Item 1A. | Risk Facto'
+  rule_item7_item8_financial_sections:  retrieved='|  |  | Page |\n| --- | --- | --- |\n| Part |  |  |\n| Item 1. | Business | 4 |\n| Item 1A. | Risk Facto'
+
+Answer location (inspect_answer_context):
+  Answer not found by substring match in EBAY_2021_10K. GT: '$13,608 million'
+
+Structural diff vs. passing docs (3 passing):
+  This doc (EBAY_2021_10K): answer span NOT LOCATED by substring match
+  Passing docs (up to 3 shown):
+    AMCOR_2019_10K: label=text  level=Body  bold=0  all_cap=0  path_text="AMCOR PLC | PART II | Item 7. - Management's Discussion and Analysis of Financial Condition and Results of Operations | Consolidated Results of Operations"
+    COSTCO_2017_10K: label=table  level=Body  bold=0  all_cap=0  path_text='Costco Wholesale Corporation | PART II | Item 6—Selected Financial Data | SELECTED FINANCIAL DATA (dollars in millions, except per share data)'
+    CORNING_2022_10K: label=text  level=Body  bold=0  all_cap=0  path_text='2018 | Item 7. Management’s Discussion and Analysis of Financial Condition and Results of Operations | 2022 Results'[0m[38;5;200m[1;3m=== Diagnosis: LOCKHEEDMARTIN_2022_10K ===
+
+Ground truth: '$5,732 million'
+
+Rule results:
+  rule_financial_statements_net_income:  retrieved='| PART I |  | Page |\n| --- | --- | --- |\n| ITEM 1. | Business ......................................'
+  rule_item7_item8_financial_sections:  retrieved='| PART I |  | Page |\n| --- | --- | --- |\n| ITEM 1. | Business ......................................'
+
+Answer location (inspect_answer_context):
+  Answer not found by substring match in LOCKHEEDMARTIN_2022_10K. GT: '$5,732 million'
+
+Structural diff vs. passing docs (3 passing):
+  This doc (LOCKHEEDMARTIN_2022_10K): answer span NOT LOCATED by substring match
+  Passing docs (up to 3 shown):
+    AMCOR_2019_10K: label=text  level=Body  bold=0  all_cap=0  path_text="AMCOR PLC | PART II | Item 7. - Management's Discussion and Analysis of Financial Condition and Results of Operations | Consolidated Results of Operations"
+    COSTCO_2017_10K: label=table  level=Body  bold=0  all_cap=0  path_text='Costco Wholesale Corporation | PART II | Item 6—Selected Financial Data | SELECTED FINANCIAL DATA (dollars in millions, except per share data)'
+    CORNING_2022_10K: label=text  level=Body  bold=0  all_cap=0  path_text='2018 | Item 7. Management’s Discussion and Analysis of Financial Condition and Results of Operations | 2022 Results'[0m[38;5;200m[1;3m=== Diagnosis: AMAZON_2018_10K ===
+
+Ground truth: '$10,073 million'
+
+Rule results:
+  rule_financial_statements_net_income:  retrieved='|  |  | Page |\n| --- | --- | --- |\n| PART I |  |  |\n| Item 1. | Business | 3 |\n| Item 1A. | Risk Fac'
+  rule_item7_item8_financial_sections:  retrieved='|  |  | Page |\n| --- | --- | --- |\n| PART I |  |  |\n| Item 1. | Business | 3 |\n| Item 1A. | Risk Fac'
+
+Answer location (inspect_answer_context):
+  Answer not found by substring match in AMAZON_2018_10K. GT: '$10,073 million'
+
+Structural diff vs. passing docs (3 passing):
+  This doc (AMAZON_2018_10K): answer span NOT LOCATED by substring match
+  Passing docs (up to 3 shown):
+    AMCOR_2019_10K: label=text  level=Body  bold=0  all_cap=0  path_text="AMCOR PLC | PART II | Item 7. - Management's Discussion and Analysis of Financial Condition and Results of Operations | Consolidated Results of Operations"
+    COSTCO_2017_10K: label=table  level=Body  bold=0  all_cap=0  path_text='Costco Wholesale Corporation | PART II | Item 6—Selected Financial Data | SELECTED FINANCIAL DATA (dollars in millions, except per share data)'
+    CORNING_2022_10K: label=text  level=Body  bold=0  all_cap=0  path_text='2018 | Item 7. Management’s Discussion and Analysis of Financial Condition and Results of Operations | 2022 Results'[0m[38;5;200m[1;3m=== Diagnosis: JOHNSON_JOHNSON_2022_10K ===
+
+Ground truth: '$17.9 billion'
+
+Rule results:
+  rule_financial_statements_net_income:  retrieved='| 1 | Business | 1 |\n| --- | --- | --- |\n|  | General | 1 |\n|  | Segments of Business | 1 |\n|  | Geo'
+  rule_item7_item8_financial_sections:  retrieved='| 1 | Business | 1 |\n| --- | --- | --- |\n|  | General | 1 |\n|  | Segments of Business | 1 |\n|  | Geo'
+
+Answer location (inspect_answer_context):
+  Answer not found by substring match in JOHNSON_JOHNSON_2022_10K. GT: '$17.9 billion'
+
+Structural diff vs. passing docs (3 passing):
+  This doc (JOHNSON_JOHNSON_2022_10K): answer span NOT LOCATED by substring match
+  Passing docs (up to 3 shown):
+    AMCOR_2019_10K: label=text  level=Body  bold=0  all_cap=0  path_text="AMCOR PLC | PART II | Item 7. - Management's Discussion and Analysis of Financial Condition and Results of Operations | Consolidated Results of Operations"
+    COSTCO_2017_10K: label=table  level=Body  bold=0  all_cap=0  path_text='Costco Wholesale Corporation | PART II | Item 6—Selected Financial Data | SELECTED FINANCIAL DATA (dollars in millions, except per share data)'
+    CORNING_2022_10K: label=text  level=Body  bold=0  all_cap=0  path_text='2018 | Item 7. Management’s Discussion and Analysis of Financial Condition and Results of Operations | 2022 Results'[0m[32;1m[1;3m
+Invoking: `write_rule` with `{'rule_name': 'rule_late_page_item7_item8_sections', 'code': 'def rule_late_page_item7_item8_sections(doc: dict) -> list[dict]:\n    """Retrieve later-page Item 7/8 financial sections while excluding front-matter tables of contents."""\n    try:\n        out = []\n        for span in doc.get("texts", []):\n            text = (span.get("text") or "")\n            path = ((span.get("structure") or {}).get("path_text") or "")\n            page = span.get("page_no") or 0\n            hay = f"{path} {text}".lower()\n            if page <= 5:\n                continue\n            if "table of contents" in hay or "index" in hay:\n                continue\n            if (\n                "item 7" in hay\n                or "item 8" in hay\n                or "management\'s discussion and analysis" in hay\n                or "management’s discussion and analysis" in hay\n                or "results of operations" in hay\n                or "selected financial data" in hay\n                or "financial statements and supplementary data" in hay\n                or "financial statements" in hay\n                or "statement of income" in hay\n                or "statement of earnings" in hay\n                or "statement of operations" in hay\n                or "net sales" in hay\n                or "net earnings" in hay\n                or "net income" in hay\n                or "net loss" in hay\n            ):\n                out.append(span)\n        return out\n    except Exception:\n        return []\n'}`
+responded: The common variant is still Item 7 / Item 8, but my current rules are over-retrieving TOC and early references instead of the actual later sections. I’ll add a targeted rule that excludes early pages and focuses on later-page financial sections, which should better capture the real answer spans.
+
+[0m[38;5;200m[1;3mOK: rule registered — rule_late_page_item7_item8_sections[0m[32;1m[1;3m
+Invoking: `test_rule` with `{'rule_name': 'rule_late_page_item7_item8_sections'}`
+
+
+[0m[36;1m[1;3mdoc_name               hit    retrieved_tokens  retrieved_snippet
+-----------------------------------------------------------------
+AMCOR_2019_10K         ✓      53533             'Accounting Standards Codification ("ASC") 280, "Segment Rep
+COSTCO_2017_10K        ✓      35884             'The risks described below could materially and adversely af
+BOEING_2018_10K        ✗      53301             'framework would allow us to pursue rights to contribution f
+AMAZON_2018_10K        ✗      43710             'We expect a disproportionate amount of our net sales to occ
+EBAY_2021_10K          ✗      51953             'With two additional states adopting Internet sales tax laws
+AMAZON_2016_10K        ✗      42601             'We expect a disproportionate amount of our net sales to occ
+CORNING_2022_10K       ✓      29432             'Hemlock and Emerging Growth Businesses represented 11% of C
+NIKE_2021_10K          ✗      65226             'We monitor protectionist trends and developments throughout
+LOCKHEEDMARTIN_2022_10K ✗      73746             'The U.S. Government and in limited cases certain other gove
+JOHNSON_JOHNSON_2022_10K ✗      40531             'The Company is organized into three business segments: Cons
+
+Hit rate: 3/10 (0.30)[0m[32;1m[1;3m
+Invoking: `test_union` with `{}`
+responded: Coverage by substring match is still 3/10, but the union may still be enough for LLM QA because the rules now retrieve the relevant financial sections broadly. I’ll checkpoint with test_union to measure true merge accuracy before adding more rules.
+
+[0m[36;1m[1;3mMerge accuracy: 8/10 (0.8)
+
+Failing docs:
+  AMCOR_2019_10K:
+    retrieved: '| Item 1. | Business | 6 |\n| --- | --- | --- |\n| Item 1A. | Risk Factors | 9 |\n| Item 1B. | Unresolved Staff Comment
+    predicted: '437.4'
+    ground_truth: '430.2 million'
+  COSTCO_2017_10K:
+    retrieved: '|  |  | Page |\n| --- | --- | --- |\n| PART I |  |  |\n| Item 1. | Business | 3 |\n| Item 1A. | Risk Factors | 8 |\n| I
+    predicted: '$2,714'
+    ground_truth: '2,679'[0m[32;1m[1;3m
+Invoking: `write_rule` with `{'rule_name': 'rule_precise_net_income_rows', 'code': 'def rule_precise_net_income_rows(doc: dict) -> list[dict]:\n    """Retrieve precise net income rows/text in results-of-operations or selected-financial-data sections."""\n    try:\n        out = []\n        for span in doc.get("texts", []):\n            text = (span.get("text") or "")\n            path = ((span.get("structure") or {}).get("path_text") or "")\n            hay = f"{path} {text}".lower()\n            if (\n                "consolidated results of operations" in hay\n                or "selected financial data" in hay\n                or "2022 results" in hay\n                or "2021 results" in hay\n                or "2020 results" in hay\n                or "2019 results" in hay\n                or "2018 results" in hay\n                or "2017 results" in hay\n                or "2016 results" in hay\n            ) and (\n                "net income" in hay\n                or "net earnings" in hay\n                or "net income attributable" in hay\n                or "net earnings attributable" in hay\n            ):\n                out.append(span)\n        return out\n    except Exception:\n        return []\n'}`
+responded: We’re at 0.8, and the failures are actually covered docs where the union is too broad and distracts the LLM. I need a precision rule for the passing structural pattern: specific spans under “Consolidated Results of Operations” / “Selected Financial Data” that mention net income. This should improve AMCOR and COSTCO without hurting others.
+
+[0m[38;5;200m[1;3mOK: rule registered — rule_precise_net_income_rows[0mStopping agent prematurely due to triggering stop condition
+[32;1m[1;3m[0m
+
+[1m> Finished chain.[0m
+  [gen] what_is_net_income_loss_for_the_most_recent_fiscal_year_10: 4 rules
+  [apply:sampled] rules=4  docs=10
+  [apply:unsampled] rules=4  docs=50
+  [eval:sampled] accuracy=0.90 (9/10)  cost=0.6080
+  [eval:unsampled] accuracy=0.76 (38/50)  cost=0.5400
+
+Question: What is total revenue for the most recent fiscal year (from the audited income statement)?
+
+
+[1m> Entering new None chain...[0m
+[32;1m[1;3m
+Invoking: `summarize_answer_locations` with `{}`
+
+
+[0m[36;1m[1;3mdoc_name               page  label            level   bold  all_cap  path_text               answer_snippet
+-----------------------------------------------------------------------------------------------------------
+AMCOR_2019_10K         N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: 9,458.2 million)
+COSTCO_2017_10K        18    table            Body    0     0        Costco Wholesale Corpo  | As of and for the year ended | Sept. 3
+BOEING_2018_10K        N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: $101,127 million)
+AMAZON_2018_10K        N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: $232,887 million)
+EBAY_2021_10K          N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: $10,420 million)
+AMAZON_2016_10K        N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: $135,987 million)
+CORNING_2022_10K       N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: 14,189 million)
+NIKE_2021_10K          N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: $44,538 million)
+LOCKHEEDMARTIN_2022_10K N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: $65,984 million)
+JOHNSON_JOHNSON_2022_10K 28    text             Body    0     0        JOHNSON & JOHNSON | PA  In 2022, worldwide sales increased 1.3% [0m[32;1m[1;3m
+Invoking: `write_rule` with `{'rule_name': 'rule_item8_financial_statements_income_statement', 'code': 'def rule_item8_financial_statements_income_statement(doc: dict) -> list[dict]:\n    """Retrieve spans in Item 8 / financial statements areas, especially income statement and revenue tables."""\n    try:\n        import re\n        texts = doc.get("texts", [])\n        out = []\n        for span in texts:\n            text = (span.get("text") or "")\n            path = ((span.get("structure") or {}).get("path_text") or "")\n            label = span.get("label") or ""\n            hay = (path + "\\n" + text).lower()\n            item8 = (\n                "item 8" in hay\n                or "financial statements and supplementary data" in hay\n                or "financial statements" in hay\n                or "supplementary data" in hay\n            )\n            income_stmt = (\n                "statement of income" in hay\n                or "statements of income" in hay\n                or "income statement" in hay\n                or "statements of earnings" in hay\n                or "statement of earnings" in hay\n                or "statement of operations" in hay\n                or "statements of operations" in hay\n                or "consolidated revenue" in hay\n                or "net sales" in hay\n                or "total revenue" in hay\n                or "sales to customers" in hay\n            )\n            if (item8 and (label in {"table", "text", "section_header"})) or income_stmt:\n                out.append(span)\n        return out\n    except Exception:\n        return []'}`
+responded: Dominant pattern: the answer is usually in the audited financial statements / income statement area, often as a table or nearby text under paths containing Part II / Item 8 / Financial Statements and Supplementary Data. Since most answers were not substring-located, I’ll start with one broad structural rule anchored to Item 8 / financial statements / income statement language and include both tables and nearby text spans.
+
+[0m[38;5;200m[1;3mOK: rule registered — rule_item8_financial_statements_income_statement[0m[32;1m[1;3m
+Invoking: `test_rule` with `{'rule_name': 'rule_item8_financial_statements_income_statement'}`
+
+
+[0m[36;1m[1;3mdoc_name               hit    retrieved_tokens  retrieved_snippet
+-----------------------------------------------------------------
+AMCOR_2019_10K         ✗      17047             '| Item 1. | Business | 6 |\n| --- | --- | --- |\n| Item 1A.
+COSTCO_2017_10K        ✓      26444             '|  |  | Page |\n| --- | --- | --- |\n| PART I |  |  |\n| It
+BOEING_2018_10K        ✗      36022             '| PART I |  |  | Page |\n| --- | --- | --- | --- |\n|  | It
+AMAZON_2018_10K        ✗      36106             '|  |  | Page |\n| --- | --- | --- |\n| PART I |  |  |\n| It
+EBAY_2021_10K          ✗      37014             '|  |  | Page |\n| --- | --- | --- |\n| Part |  |  |\n| Item
+AMAZON_2016_10K        ✗      35347             '|  |  | Page |\n| --- | --- | --- |\n| PART I |  |  |\n| It
+CORNING_2022_10K       ✗      14032             'The Optical Communications segment represented 34% of Corni
+NIKE_2021_10K          ✗      40760             '|  |  | PAGE |\n| --- | --- | --- |\n| PART I |  | 1 |\n| I
+LOCKHEEDMARTIN_2022_10K ✗      50924             '| PART I |  | Page |\n| --- | --- | --- |\n| ITEM 1. | Busi
+JOHNSON_JOHNSON_2022_10K ✗      27906             '| 1 | Business | 1 |\n| --- | --- | --- |\n|  | General | 1
+
+Hit rate: 1/10 (0.10)[0m[32;1m[1;3m
+Invoking: `show_uncovered_docs` with `{}`
+responded: Hit rate is too low because the rule is over-retrieving broad TOC/Item 8 references without isolating the actual audited statement spans. I need to generalize structurally toward tables/text that explicitly mention revenue/sales and audited statement names, but first I’ll inspect uncovered docs.
+
+[0m[33;1m[1;3mUncovered (no registered rule hits):
+  - AMCOR_2019_10K
+  - BOEING_2018_10K
+  - AMAZON_2018_10K
+  - EBAY_2021_10K
+  - AMAZON_2016_10K
+  - CORNING_2022_10K
+  - NIKE_2021_10K
+  - LOCKHEEDMARTIN_2022_10K
+  - JOHNSON_JOHNSON_2022_10K
+
+Covered: 1/10[0m[32;1m[1;3m
+Invoking: `diagnose_failing_doc` with `{'doc_name': 'AMCOR_2019_10K'}`
+
+
+[0m[32;1m[1;3m
+Invoking: `diagnose_failing_doc` with `{'doc_name': 'BOEING_2018_10K'}`
+
+
+[0m[32;1m[1;3m
+Invoking: `diagnose_failing_doc` with `{'doc_name': 'AMAZON_2018_10K'}`
+
+
+[0m[32;1m[1;3m
+Invoking: `diagnose_failing_doc` with `{'doc_name': 'EBAY_2021_10K'}`
+
+
+[0m[32;1m[1;3m
+Invoking: `diagnose_failing_doc` with `{'doc_name': 'AMAZON_2016_10K'}`
+
+
+[0m[32;1m[1;3m
+Invoking: `diagnose_failing_doc` with `{'doc_name': 'CORNING_2022_10K'}`
+
+
+[0m[32;1m[1;3m
+Invoking: `diagnose_failing_doc` with `{'doc_name': 'NIKE_2021_10K'}`
+
+
+[0m[32;1m[1;3m
+Invoking: `diagnose_failing_doc` with `{'doc_name': 'LOCKHEEDMARTIN_2022_10K'}`
+
+
+[0m[32;1m[1;3m
+Invoking: `diagnose_failing_doc` with `{'doc_name': 'JOHNSON_JOHNSON_2022_10K'}`
+
+
+[0m[38;5;200m[1;3m=== Diagnosis: LOCKHEEDMARTIN_2022_10K ===
+
+Ground truth: '$65,984 million'
+
+Rule results:
+  rule_item8_financial_statements_income_statement:  retrieved='| PART I |  | Page |\n| --- | --- | --- |\n| ITEM 1. | Business ......................................'
+
+Answer location (inspect_answer_context):
+  Answer not found by substring match in LOCKHEEDMARTIN_2022_10K. GT: '$65,984 million'
+
+Structural diff vs. passing docs (1 passing):
+  This doc (LOCKHEEDMARTIN_2022_10K): answer span NOT LOCATED by substring match
+  Passing docs (up to 3 shown):
+    COSTCO_2017_10K: label=table  level=Body  bold=0  all_cap=0  path_text='Costco Wholesale Corporation | PART II | Item 6—Selected Financial Data | SELECTED FINANCIAL DATA (dollars in millions, except per share data)'[0m[38;5;200m[1;3m=== Diagnosis: AMCOR_2019_10K ===
+
+Ground truth: '9,458.2 million'
+
+Rule results:
+  rule_item8_financial_statements_income_statement:  retrieved='| Item 1. | Business | 6 |\n| --- | --- | --- |\n| Item 1A. | Risk Factors | 9 |\n| Item 1B. | Unresolv'
+
+Answer location (inspect_answer_context):
+  Answer not found by substring match in AMCOR_2019_10K. GT: '9,458.2 million'
+
+Structural diff vs. passing docs (1 passing):
+  This doc (AMCOR_2019_10K): answer span NOT LOCATED by substring match
+  Passing docs (up to 3 shown):
+    COSTCO_2017_10K: label=table  level=Body  bold=0  all_cap=0  path_text='Costco Wholesale Corporation | PART II | Item 6—Selected Financial Data | SELECTED FINANCIAL DATA (dollars in millions, except per share data)'[0m[38;5;200m[1;3m=== Diagnosis: NIKE_2021_10K ===
+
+Ground truth: '$44,538 million'
+
+Rule results:
+  rule_item8_financial_statements_income_statement:  retrieved='|  |  | PAGE |\n| --- | --- | --- |\n| PART I |  | 1 |\n| ITEM 1. | Business | 1 |\n|  | General | 1 |\n|'
+
+Answer location (inspect_answer_context):
+  Answer not found by substring match in NIKE_2021_10K. GT: '$44,538 million'
+
+Structural diff vs. passing docs (1 passing):
+  This doc (NIKE_2021_10K): answer span NOT LOCATED by substring match
+  Passing docs (up to 3 shown):
+    COSTCO_2017_10K: label=table  level=Body  bold=0  all_cap=0  path_text='Costco Wholesale Corporation | PART II | Item 6—Selected Financial Data | SELECTED FINANCIAL DATA (dollars in millions, except per share data)'[0m[38;5;200m[1;3m=== Diagnosis: BOEING_2018_10K ===
+
+Ground truth: '$101,127 million'
+
+Rule results:
+  rule_item8_financial_statements_income_statement:  retrieved='| PART I |  |  | Page |\n| --- | --- | --- | --- |\n|  | Item 1. | Business | 1 |\n|  | Item 1A. | Risk'
+
+Answer location (inspect_answer_context):
+  Answer not found by substring match in BOEING_2018_10K. GT: '$101,127 million'
+
+Structural diff vs. passing docs (1 passing):
+  This doc (BOEING_2018_10K): answer span NOT LOCATED by substring match
+  Passing docs (up to 3 shown):
+    COSTCO_2017_10K: label=table  level=Body  bold=0  all_cap=0  path_text='Costco Wholesale Corporation | PART II | Item 6—Selected Financial Data | SELECTED FINANCIAL DATA (dollars in millions, except per share data)'[0m[38;5;200m[1;3m=== Diagnosis: EBAY_2021_10K ===
+
+Ground truth: '$10,420 million'
+
+Rule results:
+  rule_item8_financial_statements_income_statement:  retrieved='|  |  | Page |\n| --- | --- | --- |\n| Part |  |  |\n| Item 1. | Business | 4 |\n| Item 1A. | Risk Facto'
+
+Answer location (inspect_answer_context):
+  Answer not found by substring match in EBAY_2021_10K. GT: '$10,420 million'
+
+Structural diff vs. passing docs (1 passing):
+  This doc (EBAY_2021_10K): answer span NOT LOCATED by substring match
+  Passing docs (up to 3 shown):
+    COSTCO_2017_10K: label=table  level=Body  bold=0  all_cap=0  path_text='Costco Wholesale Corporation | PART II | Item 6—Selected Financial Data | SELECTED FINANCIAL DATA (dollars in millions, except per share data)'[0m[38;5;200m[1;3m=== Diagnosis: JOHNSON_JOHNSON_2022_10K ===
+
+Ground truth: '$94.9 billion'
+
+Rule results:
+  rule_item8_financial_statements_income_statement:  retrieved='| 1 | Business | 1 |\n| --- | --- | --- |\n|  | General | 1 |\n|  | Segments of Business | 1 |\n|  | Geo'
+
+Answer location (inspect_answer_context):
+  [idx=243] text='$48.6'  label=text  page=28  bold=0  level=Body  path_text='JOHNSON & JOHNSON | PART II | Item 7. MANAGEMENT’S DISCUSSION AND ANALYSIS OF RESULTS OF OPERATIONS AND FINANCIAL CONDITION | Results of Operations'
+  [idx=244] text='Analysis of Consolidated Sales'  label=section_header  page=28  bold=1  level=H4  path_text='JOHNSON & JOHNSON | PART II | Item 7. MANAGEMENT’S DISCUSSION AND ANALYSIS OF RESULTS OF OPERATIONS AND FINANCIAL CONDITION | Analysis of Consolidated Sales'
+  [idx=245] text='2022 Sales by Segment (in billions)'  label=text  page=28  bold=0  level=Body  path_text='JOHNSON & JOHNSON | PART II | Item 7. MANAGEMENT’S DISCUSSION AND ANALYSIS OF RESULTS OF OPERATIONS AND FINANCIAL CONDITION | Analysis of Consolidated Sales'
+  [idx=246] text='For discussion on results of operations and financial condition pertaining to th'  label=text  page=28  bold=0  level=Body  path_text='JOHNSON & JOHNSON | PART II | Item 7. MANAGEMENT’S DISCUSSION AND ANALYSIS OF RESULTS OF OPERATIONS AND FINANCIAL CONDITION | Analysis of Consolidated Sales'
+  [idx=247] text='$16.8'  label=text  page=28  bold=0  level=Body  path_text='JOHNSON & JOHNSON | PART II | Item 7. MANAGEMENT’S DISCUSSION AND ANALYSIS OF RESULTS OF OPERATIONS AND FINANCIAL CONDITION | Analysis of Consolidated Sales'
+  [idx=248] text='In 2022, worldwide sales increased 1.3% to $94.9 billion as compared to an incre'  label=text  page=28  bold=0  level=Body  path_text='JOHNSON & JOHNSON | PART II | Item 7. MANAGEMENT’S DISCUSSION AND ANALYSIS OF RESULTS OF OPERATIONS AND FINANCIAL CONDITION | Analysis of Consolidated Sales'  ← ANSWER HERE
+  [idx=249] text='| Sales increase/(decrease) due to: | 2022 | 2021 |\n| --- | --- | --- |\n| Volume'  label=section_header  page=28  bold=1  level=H4  path_text='JOHNSON & JOHNSON | PART II | Item 7. MANAGEMENT’S DISCUSSION AND ANALYSIS OF RESULTS OF OPERATIONS AND FINANCIAL CONDITION | | Sales increase/(decrease) due to: | 2022 | 2021 |\n| --- | --- | --- |\n| Volume | 6.9 % | 12.9 % |\n| Price | (0.8) | (0.7) |\n| Currency | (4.8) | 1.4 |\n| Total | 1.3% | 13.6% |'
+  [idx=250] text='$6.1'  label=text  page=28  bold=0  level=Body  path_text='JOHNSON & JOHNSON | PART II | Item 7. MANAGEMENT’S DISCUSSION AND ANALYSIS OF RESULTS OF OPERATIONS AND FINANCIAL CONDITION | | Sales increase/(decrease) due to: | 2022 | 2021 |\n| --- | --- | --- |\n| Volume | 6.9 % | 12.9 % |\n| Price | (0.8) | (0.7) |\n| Currency | (4.8) | 1.4 |\n| Total | 1.3% | 13.6% |'
+  [idx=251] text='Europe'  label=text  page=28  bold=0  level=Body  path_text='JOHNSON & JOHNSON | PART II | Item 7. MANAGEMENT’S DISCUSSION AND ANALYSIS OF RESULTS OF OPERATIONS AND FINANCIAL CONDITION | | Sales increase/(decrease) due to: | 2022 | 2021 |\n| --- | --- | --- |\n| Volume | 6.9 % | 12.9 % |\n| Price | (0.8) | (0.7) |\n| Currency | (4.8) | 1.4 |\n| Total | 1.3% | 13.6% |'
+  [idx=252] text='The net impact of acquisitions and divestitures on the worldwide sales growth wa'  label=text  page=28  bold=0  level=Body  path_text='JOHNSON & JOHNSON | PART II | Item 7. MANAGEMENT’S DISCUSSION AND ANALYSIS OF RESULTS OF OPERATIONS AND FINANCIAL CONDITION | | Sales increase/(decrease) due to: | 2022 | 2021 |\n| --- | --- | --- |\n| Volume | 6.9 % | 12.9 % |\n| Price | (0.8) | (0.7) |\n| Currency | (4.8) | 1.4 |\n| Total | 1.3% | 13.6% |'
+  [idx=253] text='Sales by U.S. companies were $48.6 billion in 2022 and $47.2 billion in 2021. Th'  label=text  page=28  bold=0  level=Body  path_text='JOHNSON & JOHNSON | PART II | Item 7. MANAGEMENT’S DISCUSSION AND ANALYSIS OF RESULTS OF OPERATIONS AND FINANCIAL CONDITION | | Sales increase/(decrease) due to: | 2022 | 2021 |\n| --- | --- | --- |\n| Volume | 6.9 % | 12.9 % |\n| Price | (0.8) | (0.7) |\n| Currency | (4.8) | 1.4 |\n| Total | 1.3% | 13.6% |'
+
+Structural diff vs. passing docs (1 passing):
+  This doc (JOHNSON_JOHNSON_2022_10K):
+    label=text  level=Body  bold=0  all_cap=0  path_text='JOHNSON & JOHNSON | PART II | Item 7. MANAGEMENT’S DISCUSSION AND ANALYSIS OF RESULTS OF OPERATIONS AND FINANCIAL CONDITION | Analysis of Consolidated Sales'
+  Passing docs (up to 3 shown):
+    COSTCO_2017_10K: label=table  level=Body  bold=0  all_cap=0  path_text='Costco Wholesale Corporation | PART II | Item 6—Selected Financial Data | SELECTED FINANCIAL DATA (dollars in millions, except per share data)'[0m[38;5;200m[1;3m=== Diagnosis: AMAZON_2018_10K ===
+
+Ground truth: '$232,887 million'
+
+Rule results:
+  rule_item8_financial_statements_income_statement:  retrieved='|  |  | Page |\n| --- | --- | --- |\n| PART I |  |  |\n| Item 1. | Business | 3 |\n| Item 1A. | Risk Fac'
+
+Answer location (inspect_answer_context):
+  Answer not found by substring match in AMAZON_2018_10K. GT: '$232,887 million'
+
+Structural diff vs. passing docs (1 passing):
+  This doc (AMAZON_2018_10K): answer span NOT LOCATED by substring match
+  Passing docs (up to 3 shown):
+    COSTCO_2017_10K: label=table  level=Body  bold=0  all_cap=0  path_text='Costco Wholesale Corporation | PART II | Item 6—Selected Financial Data | SELECTED FINANCIAL DATA (dollars in millions, except per share data)'[0m[38;5;200m[1;3m=== Diagnosis: CORNING_2022_10K ===
+
+Ground truth: '14,189 million'
+
+Rule results:
+  rule_item8_financial_statements_income_statement:  retrieved='The Optical Communications segment represented 34% of Corning’s total segment net sales in 2022.\nThe'
+
+Answer location (inspect_answer_context):
+  Answer not found by substring match in CORNING_2022_10K. GT: '14,189 million'
+
+Structural diff vs. passing docs (1 passing):
+  This doc (CORNING_2022_10K): answer span NOT LOCATED by substring match
+  Passing docs (up to 3 shown):
+    COSTCO_2017_10K: label=table  level=Body  bold=0  all_cap=0  path_text='Costco Wholesale Corporation | PART II | Item 6—Selected Financial Data | SELECTED FINANCIAL DATA (dollars in millions, except per share data)'[0m[38;5;200m[1;3m=== Diagnosis: AMAZON_2016_10K ===
+
+Ground truth: '$135,987 million'
+
+Rule results:
+  rule_item8_financial_statements_income_statement:  retrieved='|  |  | Page |\n| --- | --- | --- |\n| PART I |  |  |\n| Item 1. | Business | 3 |\n| Item 1A. | Risk Fac'
+
+Answer location (inspect_answer_context):
+  Answer not found by substring match in AMAZON_2016_10K. GT: '$135,987 million'
+
+Structural diff vs. passing docs (1 passing):
+  This doc (AMAZON_2016_10K): answer span NOT LOCATED by substring match
+  Passing docs (up to 3 shown):
+    COSTCO_2017_10K: label=table  level=Body  bold=0  all_cap=0  path_text='Costco Wholesale Corporation | PART II | Item 6—Selected Financial Data | SELECTED FINANCIAL DATA (dollars in millions, except per share data)'[0m[32;1m[1;3m
+Invoking: `write_rule` with `{'rule_name': 'rule_partii_sales_revenue_tables_text', 'code': 'def rule_partii_sales_revenue_tables_text(doc: dict) -> list[dict]:\n    """Retrieve Part II financial/MD&A spans mentioning sales or revenue, favoring substantive pages over TOCs."""\n    try:\n        texts = doc.get("texts", [])\n        out = []\n        for span in texts:\n            text = (span.get("text") or "")\n            path = ((span.get("structure") or {}).get("path_text") or "")\n            label = span.get("label") or ""\n            page = span.get("page_no") or 0\n            hay = (path + "\\n" + text).lower()\n            in_partii = "part ii" in hay or "item 7" in hay or "item 8" in hay or "item 6" in hay\n            sales_rev = any(k in hay for k in [\n                "net sales", "total revenue", "total revenues", "revenue", "revenues",\n                "worldwide sales", "analysis of consolidated sales", "sales by segment",\n                "statement of earnings", "statement of income", "statement of operations",\n                "selected financial data"\n            ])\n            substantive = page > 3 or any(k in hay for k in [\n                "as of and for the year ended", "in millions", "in billions", "dollars in millions", "dollars in billions"\n            ])\n            if label in {"table", "text", "section_header"} and in_partii and sales_rev and substantive:\n                out.append(span)\n        return out\n    except Exception:\n        return []'}`
+responded: The failures suggest two structural variants:
+1) audited statement tables in Part II / Item 8 or selected financial data tables;
+2) MD&A “Analysis of Consolidated Sales” text in Part II / Item 7 for J&J.
+I’ll add a broader but more targeted rule for Part II tables/text mentioning net sales / total revenue / sales / revenue, anchored to Item 7/8/6 and excluding obvious TOC pages by requiring page > 3 or strong financial keywords.
+
+[0m[38;5;200m[1;3mOK: rule registered — rule_partii_sales_revenue_tables_text[0m[32;1m[1;3m
+Invoking: `test_rule` with `{'rule_name': 'rule_partii_sales_revenue_tables_text'}`
+
+
+[0m[36;1m[1;3mdoc_name               hit    retrieved_tokens  retrieved_snippet
+-----------------------------------------------------------------
+AMCOR_2019_10K         ✗      9090              'Item 6. - Selected Financial Data\nFive-Year Consolidated R
+COSTCO_2017_10K        ✓      9025              'Item 6—Selected Financial Data\nThe following table sets fo
+BOEING_2018_10K        ✗      14748             'Item 6. Selected Financial Data\n| Years ended December 31,
+AMAZON_2018_10K        ✗      10430             '|  | Year Ended December 31, |  |  |  |  |\n|  | 2014 | 201
+EBAY_2021_10K          ✗      5834              'On February 13, 2020, we closed the previously announced sa
+AMAZON_2016_10K        ✗      11159             '|  | Year Ended December 31, |  |  |  |  |\n|  | 2012 | 201
+CORNING_2022_10K       ✗      3385              'Net sales for the year ended December 31, 2022 were $14.2 b
+NIKE_2021_10K          ✗      18511             'ITEM 6. SELECTED FINANCIAL DATA\nNot applicable.\n2021 FORM
+LOCKHEEDMARTIN_2022_10K ✗      15808             'ITEM 6. Selected Financial Data\n| (In millions, except per
+JOHNSON_JOHNSON_2022_10K ✓      3678              'In the event the Company is not successful in defending its
+
+Hit rate: 2/10 (0.20)[0m[32;1m[1;3m
+Invoking: `inspect_answer_context` with `{'doc_name': 'BOEING_2018_10K'}`
+responded: Still low, but now we’re close on several docs: Corning retrieved the right sentence semantically but not exact substring due to formatting; Amazon/Boeing/Lockheed likely have the right tables but with formatting differences. I’ll inspect the local answer contexts for the key remaining structural variants using the dedicated context tool.
+
+[0m[32;1m[1;3m
+Invoking: `inspect_answer_context` with `{'doc_name': 'AMAZON_2018_10K'}`
+responded: Still low, but now we’re close on several docs: Corning retrieved the right sentence semantically but not exact substring due to formatting; Amazon/Boeing/Lockheed likely have the right tables but with formatting differences. I’ll inspect the local answer contexts for the key remaining structural variants using the dedicated context tool.
+
+[0m[32;1m[1;3m
+Invoking: `inspect_answer_context` with `{'doc_name': 'AMAZON_2016_10K'}`
+responded: Still low, but now we’re close on several docs: Corning retrieved the right sentence semantically but not exact substring due to formatting; Amazon/Boeing/Lockheed likely have the right tables but with formatting differences. I’ll inspect the local answer contexts for the key remaining structural variants using the dedicated context tool.
+
+[0m[32;1m[1;3m
+Invoking: `inspect_answer_context` with `{'doc_name': 'EBAY_2021_10K'}`
+responded: Still low, but now we’re close on several docs: Corning retrieved the right sentence semantically but not exact substring due to formatting; Amazon/Boeing/Lockheed likely have the right tables but with formatting differences. I’ll inspect the local answer contexts for the key remaining structural variants using the dedicated context tool.
+
+[0m[32;1m[1;3m
+Invoking: `inspect_answer_context` with `{'doc_name': 'CORNING_2022_10K'}`
+responded: Still low, but now we’re close on several docs: Corning retrieved the right sentence semantically but not exact substring due to formatting; Amazon/Boeing/Lockheed likely have the right tables but with formatting differences. I’ll inspect the local answer contexts for the key remaining structural variants using the dedicated context tool.
+
+[0m[32;1m[1;3m
+Invoking: `inspect_answer_context` with `{'doc_name': 'NIKE_2021_10K'}`
+responded: Still low, but now we’re close on several docs: Corning retrieved the right sentence semantically but not exact substring due to formatting; Amazon/Boeing/Lockheed likely have the right tables but with formatting differences. I’ll inspect the local answer contexts for the key remaining structural variants using the dedicated context tool.
+
+[0m[32;1m[1;3m
+Invoking: `inspect_answer_context` with `{'doc_name': 'LOCKHEEDMARTIN_2022_10K'}`
+responded: Still low, but now we’re close on several docs: Corning retrieved the right sentence semantically but not exact substring due to formatting; Amazon/Boeing/Lockheed likely have the right tables but with formatting differences. I’ll inspect the local answer contexts for the key remaining structural variants using the dedicated context tool.
+
+[0m[32;1m[1;3m
+Invoking: `inspect_answer_context` with `{'doc_name': 'AMCOR_2019_10K'}`
+responded: Still low, but now we’re close on several docs: Corning retrieved the right sentence semantically but not exact substring due to formatting; Amazon/Boeing/Lockheed likely have the right tables but with formatting differences. I’ll inspect the local answer contexts for the key remaining structural variants using the dedicated context tool.
+
+[0m[33;1m[1;3mAnswer not found by substring match in AMAZON_2018_10K. GT: '$232,887 million'[0m[33;1m[1;3mAnswer not found by substring match in EBAY_2021_10K. GT: '$10,420 million'[0m[33;1m[1;3mAnswer not found by substring match in BOEING_2018_10K. GT: '$101,127 million'[0m[33;1m[1;3mAnswer not found by substring match in CORNING_2022_10K. GT: '14,189 million'[0m[33;1m[1;3mAnswer not found by substring match in NIKE_2021_10K. GT: '$44,538 million'[0m[33;1m[1;3mAnswer not found by substring match in LOCKHEEDMARTIN_2022_10K. GT: '$65,984 million'[0m[33;1m[1;3mAnswer not found by substring match in AMCOR_2019_10K. GT: '9,458.2 million'[0m[33;1m[1;3mAnswer not found by substring match in AMAZON_2016_10K. GT: '$135,987 million'[0m[32;1m[1;3m
+Invoking: `write_rule` with `{'rule_name': 'rule_selected_financial_data_tables', 'code': 'def rule_selected_financial_data_tables(doc: dict) -> list[dict]:\n    """Retrieve selected financial data tables and adjacent headers in Part II."""\n    try:\n        texts = doc.get("texts", [])\n        out = []\n        for span in texts:\n            text = (span.get("text") or "")\n            path = ((span.get("structure") or {}).get("path_text") or "")\n            label = span.get("label") or ""\n            page = span.get("page_no") or 0\n            hay = (path + "\\n" + text).lower()\n            if page >= 4 and label in {"table", "text", "section_header"}:\n                if (\n                    "selected financial data" in hay\n                    or "five-year consolidated" in hay\n                    or "years ended december 31" in hay\n                    or "years ended may 31" in hay\n                    or "as of and for the year ended" in hay\n                ):\n                    out.append(span)\n        return out\n    except Exception:\n        return []'}`
+responded: Since substring location fails broadly, the best path to merge accuracy is a small set of broad semantic retrieval rules that pull the likely answer-bearing audited statement tables and nearby selected financial data/MD&A sales spans. I’ll add one rule for “Selected Financial Data” tables and one for “Net sales / revenue” text on substantive Part II pages, which should improve union QA even when exact formatting differs.
+
+[0m[38;5;200m[1;3mOK: rule registered — rule_selected_financial_data_tables[0m[32;1m[1;3m
+Invoking: `write_rule` with `{'rule_name': 'rule_substantive_partii_sales_revenue_text', 'code': 'def rule_substantive_partii_sales_revenue_text(doc: dict) -> list[dict]:\n    """Retrieve substantive Part II text spans discussing sales or revenue totals."""\n    try:\n        texts = doc.get("texts", [])\n        out = []\n        for span in texts:\n            text = (span.get("text") or "")\n            path = ((span.get("structure") or {}).get("path_text") or "")\n            label = span.get("label") or ""\n            page = span.get("page_no") or 0\n            hay = (path + "\\n" + text).lower()\n            if label not in {"text", "section_header", "table"}:\n                continue\n            if page < 4:\n                continue\n            if not ("part ii" in hay or "item 7" in hay or "item 8" in hay or "item 6" in hay):\n                continue\n            if any(k in hay for k in [\n                "net sales for the year ended",\n                "worldwide sales increased",\n                "worldwide sales",\n                "sales by segment",\n                "analysis of consolidated sales",\n                "total revenue",\n                "total revenues",\n                "net sales",\n                "revenue for the year ended",\n                "revenues for the year ended"\n            ]):\n                out.append(span)\n        return out\n    except Exception:\n        return []'}`
+
+
+[0m[38;5;200m[1;3mOK: rule registered — rule_substantive_partii_sales_revenue_text[0m[32;1m[1;3m
+Invoking: `show_uncovered_docs` with `{}`
+
+
+[0m[33;1m[1;3mUncovered (no registered rule hits):
+  - AMCOR_2019_10K
+  - BOEING_2018_10K
+  - AMAZON_2018_10K
+  - EBAY_2021_10K
+  - AMAZON_2016_10K
+  - CORNING_2022_10K
+  - NIKE_2021_10K
+  - LOCKHEEDMARTIN_2022_10K
+
+Covered: 2/10[0m[32;1m[1;3m
+Invoking: `test_union` with `{}`
+responded: Coverage by substring is still incomplete, but the union now contains the right semantic regions for most docs. I’ll checkpoint with true union evaluation, since merge accuracy is the actual objective and formatting mismatches may still allow correct QA.
+
+[0m[36;1m[1;3mMerge accuracy: 9/10 (0.9)
+
+Failing docs:
+  COSTCO_2017_10K:
+    retrieved: '|  |  | Page |\n| --- | --- | --- |\n| PART I |  |  |\n| Item 1. | Business | 3 |\n| Item 1A. | Risk Factors | 8 |\n| I
+    predicted: '$129,025'
+    ground_truth: '126,172'[0mStopping agent prematurely due to triggering stop condition
+[32;1m[1;3m[0m
+
+[1m> Finished chain.[0m
+  [gen] what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10: 4 rules
+  [apply:sampled] rules=4  docs=10
+  [apply:unsampled] rules=4  docs=50
+  [eval:sampled] accuracy=0.90 (9/10)  cost=0.4323
+  [eval:unsampled] accuracy=0.82 (41/50)  cost=0.4098
+
+Question: What is total assets at year-end (from the audited balance sheet)?
+
+
+[1m> Entering new None chain...[0m
+[32;1m[1;3m
+Invoking: `summarize_answer_locations` with `{}`
+
+
+[0m[36;1m[1;3mdoc_name               page  label            level   bold  all_cap  path_text               answer_snippet
+-----------------------------------------------------------------------------------------------------------
+AMCOR_2019_10K         N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: 17,165.0 million)
+COSTCO_2017_10K        18    table            Body    0     0        Costco Wholesale Corpo  | As of and for the year ended | Sept. 3
+BOEING_2018_10K        N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: $117,359 million)
+AMAZON_2018_10K        N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: $162,648 million)
+EBAY_2021_10K          N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: $26,626 million)
+AMAZON_2016_10K        N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: $83,402 million)
+CORNING_2022_10K       N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: 29,499 million)
+NIKE_2021_10K          N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: $37,740 million)
+LOCKHEEDMARTIN_2022_10K N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: $52,880 million)
+JOHNSON_JOHNSON_2022_10K N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: $187.4 billion)[0m[32;1m[1;3m
+Invoking: `write_rule` with `{'rule_name': 'rule_item8_balance_sheet_tables', 'code': 'def rule_item8_balance_sheet_tables(doc: dict) -> list[dict]:\n    """Retrieve Item 8 financial statement tables that look like audited balance sheets."""\n    try:\n        import re\n        out = []\n        for span in doc.get("texts", []):\n            text = (span.get("text") or "")\n            path = ((span.get("structure") or {}).get("path_text") or "")\n            label = span.get("label") or ""\n            blob = f"{path} {text}".lower()\n            if label != "table":\n                continue\n            if not (\n                "financial statements" in blob\n                or "financial statement" in blob\n                or "financial statements and supplementary data" in blob\n                or "item 8" in blob\n            ):\n                continue\n            if (\n                "balance sheet" in blob\n                or "balance sheets" in blob\n                or "statement of financial position" in blob\n                or "consolidated balance" in blob\n                or "consolidated statements of financial position" in blob\n            ):\n                out.append(span)\n        return out\n    except Exception:\n        return []\n'}`
+responded: Plan: the dominant pattern is almost certainly the audited balance sheet table under Item 8 / Financial Statements, often a table span with path_text containing Financial Statements and a balance-sheet title. Since substring location failed for 9/10 docs, I’ll start with one broad structural rule that retrieves table spans whose path or text indicates Item 8 / Financial Statements and a balance sheet / statement of financial position. This should cover the main audited-balance-sheet variant across most docs with a single rule.
+
+[0m[38;5;200m[1;3mOK: rule registered — rule_item8_balance_sheet_tables[0m[32;1m[1;3m
+Invoking: `test_rule` with `{'rule_name': 'rule_item8_balance_sheet_tables'}`
+
+
+[0m[36;1m[1;3mdoc_name               hit    retrieved_tokens  retrieved_snippet
+-----------------------------------------------------------------
+AMCOR_2019_10K         ✗      580               '| Item 1. | Business | 6 |\n| --- | --- | --- |\n| Item 1A.
+COSTCO_2017_10K        ✗      239               '|  | Page |\n| --- | --- |\n| Reports of Independent Regist
+BOEING_2018_10K        ✗      1808              '|  | Page |\n| --- | --- |\n| Consolidated Statements of Op
+AMAZON_2018_10K        ✗      1315              '|  | Page |\n| --- | --- |\n| Report of Ernst &Young LLP, I
+EBAY_2021_10K          ✗      796               '|  | Page Number |\n| --- | --- |\n| 1. Consolidated Financ
+AMAZON_2016_10K        ✗      630               '|  | Page |\n| --- | --- |\n| Report of Ernst &Young LLP, I
+CORNING_2022_10K       ✗      378               '|  |  | Page |\n| --- | --- | --- |\n| Report of Independen
+NIKE_2021_10K          ✗      2146              '|  | MAY 31, |  |\n| (In millions) | 2021 | 2020 |\n| --- |
+LOCKHEEDMARTIN_2022_10K ✗      672               '|  | December 31, |  |\n|  | 2022 | 2021 |\n| --- | --- | -
+JOHNSON_JOHNSON_2022_10K ✗      886               '| 40 Consolidated Balance Sheets |\n| --- |\n| 41 Consolida
+
+Hit rate: 0/10 (0.00)[0m[32;1m[1;3m
+Invoking: `show_uncovered_docs` with `{}`
+responded: Hit rate is 0, so I need to generalize/adjust before adding more rules. The failure pattern suggests the answer is often in nearby financial-statement tables whose text may not explicitly include the exact balance-sheet title, or the answer formatting differs from GT. I’ll inspect uncovered docs next, then diagnose structural variants.
+
+[0m[33;1m[1;3mUncovered (no registered rule hits):
+  - AMCOR_2019_10K
+  - COSTCO_2017_10K
+  - BOEING_2018_10K
+  - AMAZON_2018_10K
+  - EBAY_2021_10K
+  - AMAZON_2016_10K
+  - CORNING_2022_10K
+  - NIKE_2021_10K
+  - LOCKHEEDMARTIN_2022_10K
+  - JOHNSON_JOHNSON_2022_10K
+
+Covered: 0/10[0m[32;1m[1;3m
+Invoking: `diagnose_failing_doc` with `{'doc_name': 'AMCOR_2019_10K'}`
+
+
+[0m[32;1m[1;3m
+Invoking: `diagnose_failing_doc` with `{'doc_name': 'COSTCO_2017_10K'}`
+
+
+[0m[32;1m[1;3m
+Invoking: `diagnose_failing_doc` with `{'doc_name': 'BOEING_2018_10K'}`
+
+
+[0m[32;1m[1;3m
+Invoking: `diagnose_failing_doc` with `{'doc_name': 'AMAZON_2018_10K'}`
+
+
+[0m[32;1m[1;3m
+Invoking: `diagnose_failing_doc` with `{'doc_name': 'EBAY_2021_10K'}`
+
+
+[0m[32;1m[1;3m
+Invoking: `diagnose_failing_doc` with `{'doc_name': 'AMAZON_2016_10K'}`
+
+
+[0m[32;1m[1;3m
+Invoking: `diagnose_failing_doc` with `{'doc_name': 'CORNING_2022_10K'}`
+
+
+[0m[32;1m[1;3m
+Invoking: `diagnose_failing_doc` with `{'doc_name': 'NIKE_2021_10K'}`
+
+
+[0m[32;1m[1;3m
+Invoking: `diagnose_failing_doc` with `{'doc_name': 'LOCKHEEDMARTIN_2022_10K'}`
+
+
+[0m[32;1m[1;3m
+Invoking: `diagnose_failing_doc` with `{'doc_name': 'JOHNSON_JOHNSON_2022_10K'}`
+
+
+[0m[38;5;200m[1;3m=== Diagnosis: COSTCO_2017_10K ===
+
+Ground truth: '36,347'
+
+Rule results:
+  rule_item8_balance_sheet_tables:  retrieved='|  | Page |\n| --- | --- |\n| Reports of Independent Registered Public Accounting Firm | 39 |\n| Consol'
+
+Answer location (inspect_answer_context):
+  [idx=180] text='(1) Includes a special cash dividend of $7.00 per share.'  label=text  page=17  bold=0  level=Body  path_text='Costco Wholesale Corporation | PART II | Item 5—Market for Registrant’s Common Equity, Related Stockholder Matters and Issuer Purchases of Equity Securities | Market Information and Dividend Policy'
+  [idx=181] text='Payment of future dividends is subject to declaration by the Board of Directors.'  label=text  page=17  bold=0  level=Body  path_text='Costco Wholesale Corporation | PART II | Item 5—Market for Registrant’s Common Equity, Related Stockholder Matters and Issuer Purchases of Equity Securities | Market Information and Dividend Policy'
+  [idx=182] text='Item 6—Selected Financial Data'  label=section_header  page=18  bold=1  level=H3  path_text='Costco Wholesale Corporation | PART II | Item 6—Selected Financial Data'
+  [idx=183] text='The following table sets forth information concerning our consolidated financial'  label=text  page=18  bold=0  level=Body  path_text='Costco Wholesale Corporation | PART II | Item 6—Selected Financial Data'
+  [idx=184] text='SELECTED FINANCIAL DATA (dollars in millions, except per share data)'  label=section_header  page=18  bold=1  level=H4  path_text='Costco Wholesale Corporation | PART II | Item 6—Selected Financial Data | SELECTED FINANCIAL DATA (dollars in millions, except per share data)'
+  [idx=185] text='| As of and for the year ended | Sept. 3, 2017 (53 weeks) | Aug. 28, 2016 (52 we'  label=table  page=18  bold=0  level=Body  path_text='Costco Wholesale Corporation | PART II | Item 6—Selected Financial Data | SELECTED FINANCIAL DATA (dollars in millions, except per share data)'  ← ANSWER HERE
+  [idx=186] text='_______________'  label=text  page=18  bold=0  level=Body  path_text='Costco Wholesale Corporation | PART II | Item 6—Selected Financial Data | SELECTED FINANCIAL DATA (dollars in millions, except per share data)'
+  [idx=187] text='(1) Net sales less merchandise costs.'  label=text  page=18  bold=0  level=Body  path_text='Costco Wholesale Corporation | PART II | Item 6—Selected Financial Data | SELECTED FINANCIAL DATA (dollars in millions, except per share data)'
+  [idx=188] text='(2) Includes net sales from warehouses and websites operating for more than one '  label=text  page=18  bold=0  level=Body  path_text='Costco Wholesale Corporation | PART II | Item 6—Selected Financial Data | SELECTED FINANCIAL DATA (dollars in millions, except per share data)'
+  [idx=189] text='Item 7—Management’s Discussion and Analysis of Financial Condition and Results o'  label=section_header  page=19  bold=0  level=H4  path_text='Costco Wholesale Corporation | PART II | Item 6—Selected Financial Data | Item 7—Management’s Discussion and Analysis of Financial Condition and Results of Operations (amounts in millions, except per share, share, membership fee, and warehouse count data)'
+  [idx=190] text='Preopening Expenses'  label=section_header  page=24  bold=1  level=H5  path_text='Costco Wholesale Corporation | PART II | Item 6—Selected Financial Data | Item 7—Management’s Discussion and Analysis of Financial Condition and Results of Operations (amounts in millions, except per share, share, membership fee, and warehouse count data) | Preopening Expenses'
+
+No passing docs found yet — no rule covers any document.[0m[38;5;200m[1;3m=== Diagnosis: AMCOR_2019_10K ===
+
+Ground truth: '17,165.0 million'
+
+Rule results:
+  rule_item8_balance_sheet_tables:  retrieved='| Item 1. | Business | 6 |\n| --- | --- | --- |\n| Item 1A. | Risk Factors | 9 |\n| Item 1B. | Unresolv'
+
+Answer location (inspect_answer_context):
+  Answer not found by substring match in AMCOR_2019_10K. GT: '17,165.0 million'
+
+No passing docs found yet — no rule covers any document.[0m[38;5;200m[1;3m=== Diagnosis: LOCKHEEDMARTIN_2022_10K ===
+
+Ground truth: '$52,880 million'
+
+Rule results:
+  rule_item8_balance_sheet_tables:  retrieved='|  | December 31, |  |\n|  | 2022 | 2021 |\n| --- | --- | --- |\n| Assets |  |  |\n| Current assets |  |'
+
+Answer location (inspect_answer_context):
+  Answer not found by substring match in LOCKHEEDMARTIN_2022_10K. GT: '$52,880 million'
+
+No passing docs found yet — no rule covers any document.[0m[38;5;200m[1;3m=== Diagnosis: AMAZON_2016_10K ===
+
+Ground truth: '$83,402 million'
+
+Rule results:
+  rule_item8_balance_sheet_tables:  retrieved='|  | Page |\n| --- | --- |\n| Report of Ernst &Young LLP, Independent Registered Public Accounting Fir'
+
+Answer location (inspect_answer_context):
+  Answer not found by substring match in AMAZON_2016_10K. GT: '$83,402 million'
+
+No passing docs found yet — no rule covers any document.[0m[38;5;200m[1;3m=== Diagnosis: AMAZON_2018_10K ===
+
+Ground truth: '$162,648 million'
+
+Rule results:
+  rule_item8_balance_sheet_tables:  retrieved='|  | Page |\n| --- | --- |\n| Report of Ernst &Young LLP, Independent Registered Public Accounting Fir'
+
+Answer location (inspect_answer_context):
+  Answer not found by substring match in AMAZON_2018_10K. GT: '$162,648 million'
+
+No passing docs found yet — no rule covers any document.[0m[38;5;200m[1;3m=== Diagnosis: EBAY_2021_10K ===
+
+Ground truth: '$26,626 million'
+
+Rule results:
+  rule_item8_balance_sheet_tables:  retrieved='|  | Page Number |\n| --- | --- |\n| 1. Consolidated Financial Statements: |  |\n| Report of Independen'
+
+Answer location (inspect_answer_context):
+  Answer not found by substring match in EBAY_2021_10K. GT: '$26,626 million'
+
+No passing docs found yet — no rule covers any document.[0m[38;5;200m[1;3m=== Diagnosis: BOEING_2018_10K ===
+
+Ground truth: '$117,359 million'
+
+Rule results:
+  rule_item8_balance_sheet_tables:  retrieved='|  | Page |\n| --- | --- |\n| Consolidated Statements of Operations | 48 |\n| Consolidated Statements o'
+
+Answer location (inspect_answer_context):
+  Answer not found by substring match in BOEING_2018_10K. GT: '$117,359 million'
+
+No passing docs found yet — no rule covers any document.[0m[38;5;200m[1;3m=== Diagnosis: CORNING_2022_10K ===
+
+Ground truth: '29,499 million'
+
+Rule results:
+  rule_item8_balance_sheet_tables:  retrieved='|  |  | Page |\n| --- | --- | --- |\n| Report of Independent Registered Public Accounting Firm (PCAOB '
+
+Answer location (inspect_answer_context):
+  Answer not found by substring match in CORNING_2022_10K. GT: '29,499 million'
+
+No passing docs found yet — no rule covers any document.[0m[38;5;200m[1;3m=== Diagnosis: NIKE_2021_10K ===
+
+Ground truth: '$37,740 million'
+
+Rule results:
+  rule_item8_balance_sheet_tables:  retrieved='|  | MAY 31, |  |\n| (In millions) | 2021 | 2020 |\n| --- | --- | --- |\n| ASSETS |  |  |\n| Current ass'
+
+Answer location (inspect_answer_context):
+  Answer not found by substring match in NIKE_2021_10K. GT: '$37,740 million'
+
+No passing docs found yet — no rule covers any document.[0m[38;5;200m[1;3m=== Diagnosis: JOHNSON_JOHNSON_2022_10K ===
+
+Ground truth: '$187.4 billion'
+
+Rule results:
+  rule_item8_balance_sheet_tables:  retrieved='| 40 Consolidated Balance Sheets |\n| --- |\n| 41 Consolidated Statements of Earnings |\n| 42 Consolida'
+
+Answer location (inspect_answer_context):
+  Answer not found by substring match in JOHNSON_JOHNSON_2022_10K. GT: '$187.4 billion'
+
+No passing docs found yet — no rule covers any document.[0m[32;1m[1;3m
+Invoking: `write_rule` with `{'rule_name': 'rule_assets_tables_item6_item8', 'code': 'def rule_assets_tables_item6_item8(doc: dict) -> list[dict]:\n    """Retrieve Item 6/8 tables likely containing total assets from selected financial data or audited statements."""\n    try:\n        out = []\n        for span in doc.get("texts", []):\n            if (span.get("label") or "") != "table":\n                continue\n            text = (span.get("text") or "")\n            path = ((span.get("structure") or {}).get("path_text") or "")\n            blob = f"{path} {text}".lower()\n            in_scope = (\n                "item 8" in blob\n                or "financial statements" in blob\n                or "financial statements and supplementary data" in blob\n                or "consolidated financial statements" in blob\n                or "item 6" in blob\n                or "selected financial data" in blob\n            )\n            if not in_scope:\n                continue\n            asset_signal = (\n                "total assets" in blob\n                or "assets" in blob\n                or "statement of financial position" in blob\n                or "balance sheet" in blob\n                or "balance sheets" in blob\n                or "as of and for the year ended" in blob\n                or "as of" in blob\n            )\n            if asset_signal:\n                out.append(span)\n        return out\n    except Exception:\n        return []\n'}`
+responded: Diagnosis shows two key variants:
+1) Many docs already retrieve the actual balance-sheet table, but substring match fails because the exact GT formatting differs.
+2) COSTCO’s answer is in Selected Financial Data, not the balance sheet table.
+
+So I’ll add one broader rule that retrieves Item 8 / financial statement tables plus Selected Financial Data tables, anchored by path_text and table content patterns like Assets / Total assets / As of. This should maximize coverage with one rule.
+
+[0m[38;5;200m[1;3mOK: rule registered — rule_assets_tables_item6_item8[0m[32;1m[1;3m
+Invoking: `test_rule` with `{'rule_name': 'rule_assets_tables_item6_item8'}`
+
+
+[0m[36;1m[1;3mdoc_name               hit    retrieved_tokens  retrieved_snippet
+-----------------------------------------------------------------
+AMCOR_2019_10K         ✗      1561              '| Item 1. | Business | 6 |\n| --- | --- | --- |\n| Item 1A.
+COSTCO_2017_10K        ✓      1716              '| As of and for the year ended | Sept. 3, 2017 (53 weeks) |
+BOEING_2018_10K        ✗      6977              '|  | Page |\n| --- | --- |\n| Consolidated Statements of Op
+AMAZON_2018_10K        ✗      4207              '|  | December 31, |  |  |  |  |\n|  | 2014 | 2015 | 2016 | 
+EBAY_2021_10K          ✗      3852              '|  | Page Number |\n| --- | --- |\n| 1. Consolidated Financ
+AMAZON_2016_10K        ✗      4524              '|  | December 31, |  |  |  |  |\n|  | 2012 | 2013 | 2014 | 
+CORNING_2022_10K       ✗      1616              '| 2.1 | Framework Agreement, dated as of October 22, 2013, 
+NIKE_2021_10K          ✗      5745              '|  | MAY 31, |  |\n| (In millions) | 2021 | 2020 |\n| --- |
+LOCKHEEDMARTIN_2022_10K ✗      6955              '| (In millions, except per share data) | 2022 | 2021 | 2020
+JOHNSON_JOHNSON_2022_10K ✗      2379              '| 40 Consolidated Balance Sheets |\n| --- |\n| 41 Consolida
+
+Hit rate: 1/10 (0.10)[0m[32;1m[1;3m
+Invoking: `write_rule` with `{'rule_name': 'rule_tables_with_total_assets_rows', 'code': 'def rule_tables_with_total_assets_rows(doc: dict) -> list[dict]:\n    """Retrieve tables that contain asset line items typical of balance sheets or selected financial data."""\n    try:\n        out = []\n        for span in doc.get("texts", []):\n            if (span.get("label") or "") != "table":\n                continue\n            text = (span.get("text") or "")\n            cells = (((span.get("table_data") or {}).get("cells")) or [])\n            blob = text.lower()\n            cell_text = " ".join((c.get("text") or "") for c in cells).lower()\n            full = blob + " " + cell_text\n            if "total assets" in full:\n                out.append(span)\n                continue\n            if (\n                "assets" in full\n                and "current assets" in full\n                and (\n                    "total liabilities" in full\n                    or "liabilities and stockholders\' equity" in full\n                    or "liabilities and shareholders\' equity" in full\n                    or "shareholders\' equity" in full\n                    or "stockholders\' equity" in full\n                )\n            ):\n                out.append(span)\n                continue\n            if (\n                "assets" in full\n                and "net sales" in full\n                and "total assets" in full\n            ):\n                out.append(span)\n        return out\n    except Exception:\n        return []\n'}`
+responded: Still too low, but now COSTCO is covered. The remaining docs likely need broader retrieval of the actual statement tables regardless of exact path/title, and some docs have answer formatting mismatches. I’ll add a targeted broad rule for tables containing asset rows and year columns, especially “Assets / Total assets / Current assets” patterns, without over-anchoring to Item 8.
+
+[0m[38;5;200m[1;3mOK: rule registered — rule_tables_with_total_assets_rows[0m

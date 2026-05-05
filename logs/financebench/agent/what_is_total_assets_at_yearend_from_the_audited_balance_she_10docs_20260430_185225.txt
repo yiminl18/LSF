@@ -1,0 +1,235 @@
+Question: What is total assets at year-end (from the audited balance sheet)?
+Slug: what_is_total_assets_at_yearend_from_the_audited_balance_she
+Docs (N): 10
+Latency: 145.879s
+Agent turns (tool calls): 23
+Agent input tokens: 3277811
+Agent output tokens: 2239
+Judge input tokens: 52807
+Judge output tokens: 273
+Total LLM calls (QA+judge): 40
+Merge accuracy: 9/10 (0.90)
+Avg cost ratio: 0.02932
+
+=== Step 1: summarize_answer_locations ===
+Input: {}
+Output:
+doc_name               page  label            level   bold  all_cap  path_text               answer_snippet
+-----------------------------------------------------------------------------------------------------------
+AMCOR_2019_10K         N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: 17,165.0 million)
+COSTCO_2017_10K        18    table            Body    0     0        Costco Wholesale Corpo  | As of and for the year ended | Sept. 3
+BOEING_2018_10K        N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: $117,359 million)
+AMAZON_2018_10K        N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: $162,648 million)
+EBAY_2021_10K          N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: $26,626 million)
+AMAZON_2016_10K        N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: $83,402 million)
+CORNING_2022_10K       N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: 29,499 million)
+NIKE_2021_10K          N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: $37,740 million)
+LOCKHEEDMARTIN_2022_10K N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: $52,880 million)
+JOHNSON_JOHNSON_2022_10K N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: $187.4 billion)
+
+=== Step 2: write_rule ===
+Input: {"rule_name": "rule_item8_balance_sheet_tables", "code": "def rule_item8_balance_sheet_tables(doc: dict) -> list[dict]:\n    \"\"\"Retrieve balance-sheet tables under Item 8 / financial statements sections.\"\"\"\n    try:\n        import re\n        out = []\n        for span in doc.get(\"texts\", []):\n            if span.get(\"label\") != \"table\":\n                continue\n            text = (span.get(\"text\") or \"\")\n            path = ((span.get(\"structure\") or {}).get(\"path_text\") or \"\")\n            t = text.lower()\n            p = path.lower()\n            item8 = (\n                \"item 8\" in p\n                or \"financial statements and supplementary data\" in p\n                or \"financial statements\" in p\n                or \"supplementary data\" in p\n            )\n            balance = (\n                \"balance sheet\" in t\n                or \"balance sheets\" in t\n                or \"statement of financial position\" in t\n                or \"statement of financial positions\" in t\n            )\n            assets = \"total assets\" in t or \"assets\" in t\n            if item8 and balance and assets:\n                out.append(span)\n        return out\n    except Exception:\n        return []\n"}
+Output:
+OK: rule registered — rule_item8_balance_sheet_tables
+
+=== Step 3: test_rule ===
+Input: {"rule_name": "rule_item8_balance_sheet_tables"}
+Output:
+doc_name               hit    ret_tokens  cost_ratio  snippet
+-------------------------------------------------------------
+AMCOR_2019_10K         ✗      0           0.0000      '(empty)'
+COSTCO_2017_10K        ✗      0           0.0000      '(empty)'
+BOEING_2018_10K        ✗      402         0.0045      '|  | Page |\n| --- | --- |\n| Consolidated Statements of Op
+AMAZON_2018_10K        ✗      0           0.0000      '(empty)'
+EBAY_2021_10K          ✗      424         0.0041      '|  |  | December 31, |  |\n|  | Balance Sheet Location | 20
+AMAZON_2016_10K        ✗      0           0.0000      '(empty)'
+CORNING_2022_10K       ✗      378         0.0035      '|  |  | Page |\n| --- | --- | --- |\n| Report of Independen
+NIKE_2021_10K          ✗      247         0.0027      '|  | DERIVATIVE ASSETS |  |  |\n|  |  | MAY 31, |  |\n| (Do
+LOCKHEEDMARTIN_2022_10K ✗      0           0.0000      '(empty)'
+JOHNSON_JOHNSON_2022_10K ✗      0           0.0000      '(empty)'
+
+Hit rate: 0/10 (0.00)   Avg cost ratio: 0.0015
+
+=== Step 4: show_uncovered_docs ===
+Input: {}
+Output:
+Uncovered (no registered rule hits):
+  - AMCOR_2019_10K
+  - COSTCO_2017_10K
+  - BOEING_2018_10K
+  - AMAZON_2018_10K
+  - EBAY_2021_10K
+  - AMAZON_2016_10K
+  - CORNING_2022_10K
+  - NIKE_2021_10K
+  - LOCKHEEDMARTIN_2022_10K
+  - JOHNSON_JOHNSON_2022_10K
+
+Covered: 0/10
+
+=== Step 5: diagnose_failing_doc ===
+Input: {"doc_name": "AMCOR_2019_10K"}
+Output:
+
+
+=== Step 6: diagnose_failing_doc ===
+Input: {"doc_name": "COSTCO_2017_10K"}
+Output:
+
+
+=== Step 7: diagnose_failing_doc ===
+Input: {"doc_name": "BOEING_2018_10K"}
+Output:
+
+
+=== Step 8: diagnose_failing_doc ===
+Input: {"doc_name": "AMAZON_2018_10K"}
+Output:
+
+
+=== Step 9: diagnose_failing_doc ===
+Input: {"doc_name": "EBAY_2021_10K"}
+Output:
+
+
+=== Step 10: diagnose_failing_doc ===
+Input: {"doc_name": "AMAZON_2016_10K"}
+Output:
+
+
+=== Step 11: diagnose_failing_doc ===
+Input: {"doc_name": "CORNING_2022_10K"}
+Output:
+
+
+=== Step 12: diagnose_failing_doc ===
+Input: {"doc_name": "NIKE_2021_10K"}
+Output:
+
+
+=== Step 13: diagnose_failing_doc ===
+Input: {"doc_name": "LOCKHEEDMARTIN_2022_10K"}
+Output:
+
+
+=== Step 14: diagnose_failing_doc ===
+Input: {"doc_name": "JOHNSON_JOHNSON_2022_10K"}
+Output:
+=== Diagnosis: BOEING_2018_10K ===
+
+Ground truth: '$117,359 million'
+
+Rule results:
+  rule_item8_balance_sheet_tables:  retrieved='|  | Page |\n| --- | --- |\n| Consolidated Statements of Operations | 48 |\n| Consolidated Statements o'
+
+Answer location (inspect_answer_context):
+  Answer not found by substring match in BOEING_2018_10K. GT: '$117,359 million'
+
+No passing docs found yet — no rule covers any document.
+
+=== Step 15: write_rule ===
+Input: {"rule_name": "rule_selected_financial_data_total_assets", "code": "def rule_selected_financial_data_total_assets(doc: dict) -> list[dict]:\n    \"\"\"Retrieve Item 6 selected financial data tables containing total assets.\"\"\"\n    try:\n        out = []\n        for span in doc.get(\"texts\", []):\n            if span.get(\"label\") != \"table\":\n                continue\n            path = ((span.get(\"structure\") or {}).get(\"path_text\") or \"\").lower()\n            text = (span.get(\"text\") or \"\").lower()\n            if \"item 6\" not in path and \"selected financial data\" not in path:\n                continue\n            if \"selected financial data\" not in path and \"selected financial data\" not in text:\n                continue\n            if \"total assets\" in text or \"assets\" in text:\n                out.append(span)\n                continue\n            cells = (((span.get(\"table_data\") or {}).get(\"cells\")) or [])\n            cell_text = \" \".join((c.get(\"text\") or \"\") for c in cells).lower()\n            if \"total assets\" in cell_text:\n                out.append(span)\n        return out\n    except Exception:\n        return []\n"}
+Output:
+OK: rule registered — rule_selected_financial_data_total_assets
+
+=== Step 16: write_rule ===
+Input: {"rule_name": "rule_financial_tables_total_assets_cells", "code": "def rule_financial_tables_total_assets_cells(doc: dict) -> list[dict]:\n    \"\"\"Retrieve financial statement tables whose cells include total assets under Item 8 or similar financial sections.\"\"\"\n    try:\n        out = []\n        for span in doc.get(\"texts\", []):\n            if span.get(\"label\") != \"table\":\n                continue\n            path = ((span.get(\"structure\") or {}).get(\"path_text\") or \"\").lower()\n            text = (span.get(\"text\") or \"\").lower()\n            cells = (((span.get(\"table_data\") or {}).get(\"cells\")) or [])\n            cell_text = \" \".join((c.get(\"text\") or \"\") for c in cells).lower()\n            in_fin = (\n                \"item 8\" in path\n                or \"financial statements and supplementary data\" in path\n                or \"financial statements\" in path\n                or \"supplementary data\" in path\n                or \"consolidated balance sheet\" in path\n                or \"consolidated balance sheets\" in path\n            )\n            has_assets = \"total assets\" in cell_text or \"total assets\" in text\n            has_statement_cue = (\n                \"balance sheet\" in cell_text\n                or \"balance sheets\" in cell_text\n                or \"statement of financial position\" in cell_text\n                or \"statement of financial positions\" in cell_text\n                or \"assets\" in cell_text\n            )\n            if in_fin and has_assets and has_statement_cue:\n                out.append(span)\n        return out\n    except Exception:\n        return []\n"}
+Output:
+OK: rule registered — rule_financial_tables_total_assets_cells
+
+=== Step 17: test_rule ===
+Input: {"rule_name": "rule_selected_financial_data_total_assets"}
+Output:
+
+
+=== Step 18: test_rule ===
+Input: {"rule_name": "rule_financial_tables_total_assets_cells"}
+Output:
+
+
+=== Step 19: show_uncovered_docs ===
+Input: {}
+Output:
+doc_name               hit    ret_tokens  cost_ratio  snippet
+-------------------------------------------------------------
+AMCOR_2019_10K         ✗      796         0.0095      '| As of June 30, | 2019 | 2018 |\n| --- | --- | --- |\n| As
+COSTCO_2017_10K        ✓      1165        0.0230      '|  | September 3, 2017 | August 28, 2016 |\n| --- | --- | -
+BOEING_2018_10K        ✗      1406        0.0159      '| December 31, | 2018 | 2017 |\n| --- | --- | --- |\n| Asse
+AMAZON_2018_10K        ✗      536         0.0079      '|  | December 31, |  |\n|  | 2017 | 2018 |\n| --- | --- | -
+EBAY_2021_10K          ✗      708         0.0068      '|  | December 31, |  |\n|  | 2021 | 2020 |\n|  | (In millio
+AMAZON_2016_10K        ✗      534         0.0084      '|  | December 31, |  |\n|  | 2015 | 2016 |\n| --- | --- | -
+CORNING_2022_10K       ✗      0           0.0000      '(empty)'
+NIKE_2021_10K          ✗      592         0.0066      '|  | MAY 31, |  |\n| (In millions) | 2021 | 2020 |\n| --- |
+LOCKHEEDMARTIN_2022_10K ✗      634         0.0060      '|  | December 31, |  |\n|  | 2022 | 2021 |\n| --- | --- | -
+JOHNSON_JOHNSON_2022_10K ✗      793         0.0064      '|  | 2022 | 2021 |\n| --- | --- | --- |\n| Assets |  |  |\n
+
+Hit rate: 1/10 (0.10)   Avg cost ratio: 0.0091
+
+=== Step 20: write_rule ===
+Input: {"rule_name": "rule_balance_sheet_assets_liabilities_table", "code": "def rule_balance_sheet_assets_liabilities_table(doc: dict) -> list[dict]:\n    \"\"\"Retrieve likely balance-sheet tables by assets/liabilities row cues in financial statement sections.\"\"\"\n    try:\n        out = []\n        for span in doc.get(\"texts\", []):\n            if span.get(\"label\") != \"table\":\n                continue\n            path = ((span.get(\"structure\") or {}).get(\"path_text\") or \"\").lower()\n            text = (span.get(\"text\") or \"\").lower()\n            cells = (((span.get(\"table_data\") or {}).get(\"cells\")) or [])\n            cell_text = \" \".join((c.get(\"text\") or \"\") for c in cells).lower()\n            in_fin = (\n                \"item 8\" in path\n                or \"financial statements\" in path\n                or \"supplementary data\" in path\n                or \"selected financial data\" in path\n            )\n            has_assets = \"assets\" in cell_text or \"assets\" in text\n            has_liab = \"liabilities\" in cell_text or \"liabilities\" in text\n            has_equity = \"equity\" in cell_text or \"shareholders' equity\" in cell_text or \"stockholders' equity\" in cell_text or \"equity\" in text\n            if in_fin and has_assets and (has_liab or has_equity):\n                out.append(span)\n        return out\n    except Exception:\n        return []\n"}
+Output:
+OK: rule registered — rule_balance_sheet_assets_liabilities_table
+
+=== Step 21: test_rule ===
+Input: {"rule_name": "rule_balance_sheet_assets_liabilities_table"}
+Output:
+doc_name               hit    ret_tokens  cost_ratio  snippet
+-------------------------------------------------------------
+AMCOR_2019_10K         ✗      591         0.0070      '|  | Years ended June 30, |  |  |  |  |\n| (dollars in mill
+COSTCO_2017_10K        ✓      977         0.0193      '| As of and for the year ended | Sept. 3, 2017 (53 weeks) |
+BOEING_2018_10K        ✗      6699        0.0757      '|  | Page |\n| --- | --- |\n| Consolidated Statements of Op
+AMAZON_2018_10K        ✗      2115        0.0313      '|  | Year Ended December 31, |  |  |\n|  | 2016 | 2017 | 20
+EBAY_2021_10K          ✗      1564        0.0150      '|  | September 30, |  |  |\n|  | 2021 |  |  |\n|  | (In mil
+AMAZON_2016_10K        ✗      2119        0.0334      '|  | Year Ended December 31, |  |  |\n|  | 2014 | 2015 | 20
+CORNING_2022_10K       ✗      378         0.0035      '|  |  | Page |\n| --- | --- | --- |\n| Report of Independen
+NIKE_2021_10K          ✗      2234        0.0248      '|  | MAY 31, |  |\n| (In millions) | 2021 | 2020 |\n| --- |
+LOCKHEEDMARTIN_2022_10K ✗      2480        0.0235      '| (In millions, except per share data) | 2022 | 2021 | 2020
+JOHNSON_JOHNSON_2022_10K ✗      1998        0.0162      '|  | 2022 | 2021 |\n| --- | --- | --- |\n| Assets |  |  |\n
+
+Hit rate: 1/10 (0.10)   Avg cost ratio: 0.0250
+
+=== Step 22: test_union ===
+Input: {}
+Output:
+Merge accuracy: 9/10 (0.9)  Avg cost ratio: 0.02932
+
+Failing docs:
+  CORNING_2022_10K:
+    retrieved: '|  |  | Page |\n| --- | --- | --- |\n| Report of Independent Registered Public Accounting Firm (PCAOB ID 238) |  | 56 |
+    predicted: 'NOT FOUND'
+    ground_truth: '29,499 million'
+
+Per-doc cost:
+  ✓ AMCOR_2019_10K                           cost_ratio=0.01649
+  ✓ COSTCO_2017_10K                          cost_ratio=0.04236
+  ✓ BOEING_2018_10K                          cost_ratio=0.07574
+  ✓ AMAZON_2018_10K                          cost_ratio=0.03126
+  ✓ EBAY_2021_10K                            cost_ratio=0.02181
+  ✓ AMAZON_2016_10K                          cost_ratio=0.03344
+  ✗ CORNING_2022_10K                         cost_ratio=0.00353
+  ✓ NIKE_2021_10K                            cost_ratio=0.02757
+  ✓ LOCKHEEDMARTIN_2022_10K                  cost_ratio=0.02477
+  ✓ JOHNSON_JOHNSON_2022_10K                 cost_ratio=0.01621
+
+=== Step 23: inspect_answer_context ===
+Input: {"doc_name": "CORNING_2022_10K"}
+Output:
+Answer not found by substring match in CORNING_2022_10K. GT: '29,499 million'
+
+=== Registered Rules ===
+  rule_item8_balance_sheet_tables                     hit_rate=0.00  avg_cost=0.00149  file=rules/llm/financebench_agent/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm/rule_item8_balance_sheet_tables.py
+  rule_selected_financial_data_total_assets           hit_rate=0.10  avg_cost=0.00336  file=rules/llm/financebench_agent/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm/rule_selected_financial_data_total_assets.py
+  rule_financial_tables_total_assets_cells            hit_rate=0.10  avg_cost=0.00906  file=rules/llm/financebench_agent/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm/rule_financial_tables_total_assets_cells.py
+  rule_balance_sheet_assets_liabilities_table         hit_rate=0.10  avg_cost=0.02498  file=rules/llm/financebench_agent/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm/rule_balance_sheet_assets_liabilities_table.py
+
+Merge accuracy:        0.90  (9/10)
+Avg cost ratio:        0.02932
+Total LLM calls:       40
+Agent input tokens:    3277811
+Agent output tokens:   2239
+Judge input tokens:    52807
+Judge output tokens:   273
+Latency:               145.9s
+
+=== Final Answer ===
+Agent stopped due to max iterations.

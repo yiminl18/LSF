@@ -1,0 +1,609 @@
+/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/langchain_community/utilities/__init__.py:8: LangChainDeprecationWarning: As of langchain-core 0.3.0, LangChain uses pydantic v2 internally. The langchain_core.pydantic_v1 module was a compatibility shim for pydantic v1, and should no longer be used. Please update the code to import from Pydantic directly.
+
+For example, replace imports like: `from langchain_core.pydantic_v1 import BaseModel`
+with: `from pydantic import BaseModel`
+or the v1 compatibility namespace if you are working in a code base that has not been fully upgraded to pydantic 2 yet. 	from pydantic.v1 import BaseModel
+
+  from langchain_community.utilities.requests import (
+/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/pydantic/_internal/_generate_schema.py:918: UserWarning: Mixing V1 models and V2 models (or constructs, like `TypeAdapter`) is not supported. Please upgrade `TextRequestsWrapper` to V2.
+  warn(
+Question: What is long-term debt at year-end (0 if none)?
+
+Documents loaded: 10
+Ground truth entries: 10
+
+
+
+[1m> Entering new None chain...[0m
+[32;1m[1;3m
+Invoking: `test_rules` with `{'code': 'def _safe_text(span):\n    try:\n        return (span.get(\'text\') or \'\')\n    except Exception:\n        return \'\'\n\n\ndef _safe_path(span):\n    try:\n        return ((span.get(\'structure\') or {}).get(\'path_text\') or \'\')\n    except Exception:\n        return \'\'\n\n\ndef rule_balance_sheet_long_term_debt(doc: dict) -> list[dict]:\n    """Find balance sheet tables/spans with long-term debt/debt in long-term liabilities."""\n    try:\n        out = []\n        for span in doc.get(\'texts\', []):\n            txt = _safe_text(span).lower()\n            path = _safe_path(span).lower()\n            if span.get(\'label\') == \'table\':\n                table_txt = txt\n                if (\'balance sheet\' in path or \'balance sheets\' in path or \'consolidated balance sheet\' in table_txt or \'condensed consolidated balance sheet\' in table_txt or \'balance sheets\' in table_txt):\n                    if (\'long-term liabilities\' in table_txt and \'| debt |\' in table_txt) or \'long-term debt\' in table_txt or \'long term debt\' in table_txt:\n                        out.append(span)\n            else:\n                if (\'balance sheet\' in path or \'balance sheets\' in path) and (\'long-term debt\' in txt or \'long term debt\' in txt):\n                    out.append(span)\n        return out\n    except Exception:\n        return []\n\n\ndef rule_debt_note_year_end(doc: dict) -> list[dict]:\n    """Find debt note disclosures explicitly stating year-end long-term debt or debt balances."""\n    try:\n        out = []\n        for span in doc.get(\'texts\', []):\n            txt = _safe_text(span).lower()\n            path = _safe_path(span).lower()\n            if (\'debt\' in path or \'long-term debt\' in path or \'long term debt\' in path or \'borrow\' in path):\n                if (\'year-end\' in txt or \'year end\' in txt or \'as of\' in txt or \'at \' in txt):\n                    out.append(span)\n            elif (\'long-term debt\' in txt or \'long term debt\' in txt) and (\'year-end\' in txt or \'year end\' in txt or \'as of\' in txt):\n                out.append(span)\n        return out\n    except Exception:\n        return []\n\n\ndef rule_no_debt_8k(doc: dict) -> list[dict]:\n    """For short 8-K/bylaws/dividend docs with no financial statements, return spans indicating document type so QA can answer 0."""\n    try:\n        texts = doc.get(\'texts\', [])\n        has_balance = any(\'balance sheet\' in _safe_text(s).lower() or \'balance sheet\' in _safe_path(s).lower() for s in texts)\n        has_10q10k = any(\'10-q\' in _safe_text(s).lower() or \'10-k\' in _safe_text(s).lower() for s in texts)\n        has_8k = any(\'form 8-k\' in _safe_text(s).lower() or \'current report\' in _safe_text(s).lower() for s in texts)\n        if has_8k and not has_balance and not has_10q10k:\n            return [s for s in texts if \'form 8-k\' in _safe_text(s).lower() or \'current report\' in _safe_text(s).lower()][:3]\n        return []\n    except Exception:\n        return []\n'}`
+
+
+[0m[36;1m[1;3m{
+  "rule_balance_sheet_long_term_debt": {
+    "AMCOR_2019_10K": {
+      "retrieved_text": "|  | Years ended June 30, |  |  |  |  |\n| (dollars in millions, except per share amounts) | 2019 (1) | 2018 | 2017 | 2016 | 2015 |\n| --- | --- | --- | --- | --- | --- |\n| Selected Consolidated Income Statement Data |  |  |  |  |  |\n| Net sales | $ 9,458.2 | $ 9,319.1 | $ 9,101.0 | $ 9,421.3 | $ 9,61",
+      "predicted": "1,587.7",
+      "ground_truth": "5,314.4 million",
+      "correct": false
+    },
+    "ADOBE_2022Q2_10Q": {
+      "retrieved_text": "",
+      "predicted": "NOT FOUND",
+      "ground_truth": "$3,631 million",
+      "correct": false
+    },
+    "COSTCO_2017_10K": {
+      "retrieved_text": "|  | September 3, 2017 | August 28, 2016 |\n| --- | --- | --- |\n| ASSETS |  |  |\n| CURRENT ASSETS |  |  |\n| Cash and cash equivalents | $ 4,546 | $ 3,379 |\n| Short-term investments | 1,233 | 1,350 |\n| Receivables, net | 1,432 | 1,252 |\n| Merchandise inventories | 9,834 | 8,969 |\n| Other current asset",
+      "predicted": "6,573",
+      "ground_truth": "6,573",
+      "correct": true
+    },
+    "BOEING_2018_10K": {
+      "retrieved_text": "",
+      "predicted": "NOT FOUND",
+      "ground_truth": "$10,657 million",
+      "correct": false
+    },
+    "INTEL_2022Q4_EARNINGS": {
+      "retrieved_text": "| (In Millions, Except Par Value; Unaudited) | Dec 31, 2022 | Dec 25, 2021 |\n| --- | --- | --- |\n| Assets |  |  |\n| Current assets: |  |  |\n| Cash and cash equivalents | $ 11,144 | $ 4,827 |\n| Short-term investments | 17,194 | 24,426 |\n| Accounts receivable | 4,133 | 9,457 |\n| Inventories |  |  |\n| ",
+      "predicted": "37,684",
+      "ground_truth": "$37,684,000,000",
+      "correct": false
+    },
+    "AMAZON_2018_10K": {
+      "retrieved_text": "|  | December 31, |  |\n|  | 2017 | 2018 |\n| --- | --- | --- |\n| ASSETS |  |  |\n| Current assets: |  |  |\n| Cash and cash equivalents | $ 20,522 | $ 31,750 |\n| Marketable securities | 10,464 | 9,500 |\n| Inventories | 16,047 | 17,174 |\n| Accounts receivable, net and other | 13,164 | 16,677 |\n| Total c",
+      "predicted": "23,495",
+      "ground_truth": "$50,708 million",
+      "correct": false
+    },
+    "EBAY_2021_10K": {
+      "retrieved_text": "|  | December 31, |  |\n|  | 2021 | 2020 |\n|  | (In millions, except par value) |  |\n| --- | --- | --- |\n| ASSETS |  |  |\n| Current assets: |  |  |\n| Cash and cash equivalents | $ 1,379 | 1,101 |\n| Short-term investments | 5,944 | 2,392 |\n| Accounts receivable, net of allowance for doubtful accounts ",
+      "predicted": "7,727",
+      "ground_truth": "$7,727 million",
+      "correct": false
+    },
+    "AMAZON_2016_10K": {
+      "retrieved_text": "|  | December 31, |  |\n|  | 2015 | 2016 |\n| --- | --- | --- |\n| ASSETS |  |  |\n| Current assets: |  |  |\n| Cash and cash equivalents | $ 15,890 | $ 19,334 |\n| Marketable securities | 3,918 | 6,647 |\n| Inventories | 10,243 | 11,461 |\n| Accounts receivable, net and other | 5,654 | 8,339 |\n| Total curr",
+      "predicted": "8,227 and 7,694",
+      "ground_truth": "$7,694 million",
+      "correct": false
+    },
+    "COSTCO_2023_8K_dated-2023-08-09": {
+      "retrieved_text": "",
+      "predicted": "NOT FOUND",
+      "ground_truth": "0",
+      "correct": false
+    },
+    "FOOTLOCKER_2023Q3_10Q": {
+      "retrieved_text": "| ($ in millions, except share amounts) | October 29, 2022 | October 30, 2021 | January 29, 2022* |\n| --- | --- | --- | --- |\n| ASSETS |  |  |  |\n| Current assets: |  |  |  |\n| Cash and cash equivalents | 351 | $ 1,339 | $ 804 |\n| Merchandise inventories | 1,685 | 1,301 | 1,266 |\n| Other current ass",
+      "predicted": "448",
+      "ground_truth": "448 million",
+      "correct": false
+    },
+    "accuracy": 0.1,
+    "num_correct": 1,
+    "num_spans_avg": 1.0
+  },
+  "rule_debt_note_year_end": {
+    "AMCOR_2019_10K": {
+      "retrieved_text": "A substantial portion of our borrowing capacity bears interest at a variable rate based on the London Interbank Offered Rate (\"LIBOR\"). In July 2017, the United Kingdom\u2019s Financial Conduct Authority (\u201cFCA\u201d), which regulates LIBOR, announced that it intends to phase out LIBOR by the end of 2021. The ",
+      "predicted": "5,309.0",
+      "ground_truth": "5,314.4 million",
+      "correct": false
+    },
+    "ADOBE_2022Q2_10Q": {
+      "retrieved_text": "The carrying value of our borrowings as of June 2, 2023 and December 2, 2022 were as follows:\n\n| (dollars in millions) | Issuance Date | Due Date | Effective Interest Rate | 2023 | 2022 |\n| --- | --- | --- | --- | --- | --- |\n| 1.70% 2023 Notes | February 2020 | February 2023 | 1.92% | $ - | $ 500 |",
+      "predicted": "$ 3,629",
+      "ground_truth": "$3,631 million",
+      "correct": false
+    },
+    "COSTCO_2017_10K": {
+      "retrieved_text": "| As of and for the year ended | Sept. 3, 2017 (53 weeks) | Aug. 28, 2016 (52 weeks) | Aug. 30, 2015 (52 weeks) | Aug. 31, 2014 (52 weeks) | Sept. 1, 2013 (52 weeks) |\n| --- | --- | --- | --- | --- | --- |\n| RESULTS OF OPERATIONS |  |  |  |  |  |\n| Net sales | $ 126,172 | $ 116,073 | $ 113,666 | $ 1",
+      "predicted": "6,573",
+      "ground_truth": "6,573",
+      "correct": true
+    },
+    "BOEING_2018_10K": {
+      "retrieved_text": "We may be unable to obtain debt to fund our operations and contractual commitments at competitive rates, on commercially reasonable terms or in sufficient amounts.\n\nWe depend, in part, upon the issuance of debt to fund our operations and contractual commitments. As of December 31, 2018 and 2017 , ou",
+      "predicted": "NOT FOUND",
+      "ground_truth": "$10,657 million",
+      "correct": false
+    },
+    "INTEL_2022Q4_EARNINGS": {
+      "retrieved_text": "",
+      "predicted": "NOT FOUND",
+      "ground_truth": "$37,684,000,000",
+      "correct": false
+    },
+    "AMAZON_2018_10K": {
+      "retrieved_text": "Our long-term debt was $24.7 billion and $23.5 billion as of December 31, 2017 and 2018 . Our other long-term liabilities were $21.0 billion and $27.2 billion as of December 31, 2017 and 2018 . See Item 8 of Part II, \u201cFinancial Statements and Supplementary Data \u2014 Note 5 \u2014 Debt and Note 6 \u2014 Other Lon",
+      "predicted": "$23.5 billion",
+      "ground_truth": "$50,708 million",
+      "correct": false
+    },
+    "EBAY_2021_10K": {
+      "retrieved_text": "|  | Year Ended December 31, |  |  |\n|  | 2021 | 2020 | 2019 |\n|  | (In millions) |  |  |\n| --- | --- | --- | --- |\n| Cash flows from operating activities: |  |  |  |\n| Net income | $ 13,608 | $ 5,667 | $ 1,786 |\n| (Income) loss from discontinued operations, net of income taxes | (13,356) | (3,180) ",
+      "predicted": "7,727",
+      "ground_truth": "$7,727 million",
+      "correct": false
+    },
+    "AMAZON_2016_10K": {
+      "retrieved_text": "We had no borrowings outstanding under our $3.0 billion unsecured revolving credit facility (the \u201cCredit Agreement\u201d) and $495 million of borrowings outstanding under our $500 million secured revolving credit facility (the \u201cCredit Facility\u201d) as of December 31, 2016 . See Item 8 of Part II, \u201cFinancial",
+      "predicted": "$7.7 billion",
+      "ground_truth": "$7,694 million",
+      "correct": false
+    },
+    "COSTCO_2023_8K_dated-2023-08-09": {
+      "retrieved_text": "",
+      "predicted": "NOT FOUND",
+      "ground_truth": "0",
+      "correct": false
+    },
+    "FOOTLOCKER_2023Q3_10Q": {
+      "retrieved_text": "The fair value of long-term debt is determined by using model-derived valuations in which all significant inputs or significant value drivers are observable in active markets and, therefore, are classified as Level 2. The balance as of October 29, 2022 includes the $400 million 4% Notes. The carryin",
+      "predicted": "$400 million",
+      "ground_truth": "448 million",
+      "correct": false
+    },
+    "accuracy": 0.1,
+    "num_correct": 1,
+    "num_spans_avg": 6.8
+  },
+  "rule_no_debt_8k": {
+    "AMCOR_2019_10K": {
+      "retrieved_text": "",
+      "predicted": "NOT FOUND",
+      "ground_truth": "5,314.4 million",
+      "correct": false
+    },
+    "ADOBE_2022Q2_10Q": {
+      "retrieved_text": "",
+      "predicted": "NOT FOUND",
+      "ground_truth": "$3,631 million",
+      "correct": false
+    },
+    "COSTCO_2017_10K": {
+      "retrieved_text": "",
+      "predicted": "NOT FOUND",
+      "ground_truth": "6,573",
+      "correct": false
+    },
+    "BOEING_2018_10K": {
+      "retrieved_text": "",
+      "predicted": "NOT FOUND",
+      "ground_truth": "$10,657 million",
+      "correct": false
+    },
+    "INTEL_2022Q4_EARNINGS": {
+      "retrieved_text": "",
+      "predicted": "NOT FOUND",
+      "ground_truth": "$37,684,000,000",
+      "correct": false
+    },
+    "AMAZON_2018_10K": {
+      "retrieved_text": "",
+      "predicted": "NOT FOUND",
+      "ground_truth": "$50,708 million",
+      "correct": false
+    },
+    "EBAY_2021_10K": {
+      "retrieved_text": "",
+      "predicted": "NOT FOUND",
+      "ground_truth": "$7,727 million",
+      "correct": false
+    },
+    "AMAZON_2016_10K": {
+      "retrieved_text": "",
+      "predicted": "NOT FOUND",
+      "ground_truth": "$7,694 million",
+      "correct": false
+    },
+    "COSTCO_2023_8K_dated-2023-08-09": {
+      "retrieved_text": "",
+      "predicted": "NOT FOUND",
+      "ground_truth": "0",
+      "correct": false
+    },
+    "FOOTLOCKER_2023Q3_10Q": {
+      "retrieved_text": "",
+      "predicted": "NOT FOUND",
+      "ground_truth": "448 million",
+      "correct": false
+    },
+    "accuracy": 0.0,
+    "num_correct": 0,
+    "num_spans_avg": 0.0
+  }
+}[0m[32;1m[1;3m
+Invoking: `test_rules` with `{'code': 'def _t(span):\n    try:\n        return (span.get(\'text\') or \'\')\n    except Exception:\n        return \'\'\n\n\ndef _p(span):\n    try:\n        return ((span.get(\'structure\') or {}).get(\'path_text\') or \'\')\n    except Exception:\n        return \'\'\n\n\ndef rule_long_term_debt_balance_sheet_tables(doc: dict) -> list[dict]:\n    """Retrieve balance sheet tables likely containing long-term debt / debt at year-end."""\n    try:\n        out = []\n        for s in doc.get(\'texts\', []):\n            txt = _t(s)\n            low = txt.lower()\n            path = _p(s).lower()\n            if s.get(\'label\') != \'table\':\n                continue\n            is_balance = (\'balance sheet\' in low or \'balance sheets\' in low or \'balance sheet\' in path or \'balance sheets\' in path)\n            if not is_balance:\n                continue\n            if (\'long-term debt\' in low or \'long term debt\' in low or \'long-term liabilities\' in low or \'long term liabilities\' in low or \'| debt |\' in low):\n                out.append(s)\n        return out\n    except Exception:\n        return []\n\n\ndef rule_long_term_debt_textual_disclosure(doc: dict) -> list[dict]:\n    """Retrieve textual disclosures explicitly stating long-term debt at year-end/as of date."""\n    try:\n        out = []\n        for s in doc.get(\'texts\', []):\n            txt = _t(s)\n            low = txt.lower()\n            path = _p(s).lower()\n            if (\'long-term debt\' in low or \'long term debt\' in low):\n                out.append(s)\n                continue\n            if (\'debt\' in low and (\'as of december\' in low or \'as of june\' in low or \'as of october\' in low or \'as of september\' in low or \'year-end\' in low or \'year end\' in low)):\n                if (\'long-term\' in low or \'long term\' in low or \'current portion\' in low or \'borrowings outstanding\' in low):\n                    out.append(s)\n                    continue\n            if (\'debt\' in path or \'borrowings\' in path) and (\'as of\' in low or \'year-end\' in low or \'year end\' in low):\n                out.append(s)\n        return out\n    except Exception:\n        return []\n\n\ndef rule_8k_no_long_term_debt(doc: dict) -> list[dict]:\n    """8-K current reports without financial statements imply no year-end long-term debt answer in this collection."""\n    try:\n        texts = doc.get(\'texts\', [])\n        has_8k = any(\'form 8-k\' in _t(s).lower() for s in texts)\n        has_balance = any(\'balance sheet\' in _t(s).lower() or \'balance sheet\' in _p(s).lower() for s in texts)\n        if has_8k and not has_balance:\n            return [s for s in texts if \'form 8-k\' in _t(s).lower() or \'current report\' in _t(s).lower()][:5]\n        return []\n    except Exception:\n        return []\n'}`
+
+
+[0m[36;1m[1;3m{
+  "rule_long_term_debt_balance_sheet_tables": {
+    "AMCOR_2019_10K": {
+      "retrieved_text": "|  | Years ended June 30, |  |  |  |  |\n| (dollars in millions, except per share amounts) | 2019 (1) | 2018 | 2017 | 2016 | 2015 |\n| --- | --- | --- | --- | --- | --- |\n| Selected Consolidated Income Statement Data |  |  |  |  |  |\n| Net sales | $ 9,458.2 | $ 9,319.1 | $ 9,101.0 | $ 9,421.3 | $ 9,61",
+      "predicted": "1,587.7",
+      "ground_truth": "5,314.4 million",
+      "correct": false
+    },
+    "ADOBE_2022Q2_10Q": {
+      "retrieved_text": "",
+      "predicted": "NOT FOUND",
+      "ground_truth": "$3,631 million",
+      "correct": false
+    },
+    "COSTCO_2017_10K": {
+      "retrieved_text": "| As of and for the year ended | Sept. 3, 2017 (53 weeks) | Aug. 28, 2016 (52 weeks) | Aug. 30, 2015 (52 weeks) | Aug. 31, 2014 (52 weeks) | Sept. 1, 2013 (52 weeks) |\n| --- | --- | --- | --- | --- | --- |\n| RESULTS OF OPERATIONS |  |  |  |  |  |\n| Net sales | $ 126,172 | $ 116,073 | $ 113,666 | $ 1",
+      "predicted": "6,573",
+      "ground_truth": "6,573",
+      "correct": true
+    },
+    "BOEING_2018_10K": {
+      "retrieved_text": "",
+      "predicted": "NOT FOUND",
+      "ground_truth": "$10,657 million",
+      "correct": false
+    },
+    "INTEL_2022Q4_EARNINGS": {
+      "retrieved_text": "| (In Millions, Except Par Value; Unaudited) | Dec 31, 2022 | Dec 25, 2021 |\n| --- | --- | --- |\n| Assets |  |  |\n| Current assets: |  |  |\n| Cash and cash equivalents | $ 11,144 | $ 4,827 |\n| Short-term investments | 17,194 | 24,426 |\n| Accounts receivable | 4,133 | 9,457 |\n| Inventories |  |  |\n| ",
+      "predicted": "37,684",
+      "ground_truth": "$37,684,000,000",
+      "correct": false
+    },
+    "AMAZON_2018_10K": {
+      "retrieved_text": "|  | December 31, |  |\n|  | 2017 | 2018 |\n| --- | --- | --- |\n| ASSETS |  |  |\n| Current assets: |  |  |\n| Cash and cash equivalents | $ 20,522 | $ 31,750 |\n| Marketable securities | 10,464 | 9,500 |\n| Inventories | 16,047 | 17,174 |\n| Accounts receivable, net and other | 13,164 | 16,677 |\n| Total c",
+      "predicted": "23,495",
+      "ground_truth": "$50,708 million",
+      "correct": false
+    },
+    "EBAY_2021_10K": {
+      "retrieved_text": "|  | December 31, |  |\n|  | 2021 | 2020 |\n|  | (In millions, except par value) |  |\n| --- | --- | --- |\n| ASSETS |  |  |\n| Current assets: |  |  |\n| Cash and cash equivalents | $ 1,379 | 1,101 |\n| Short-term investments | 5,944 | 2,392 |\n| Accounts receivable, net of allowance for doubtful accounts ",
+      "predicted": "7,727",
+      "ground_truth": "$7,727 million",
+      "correct": false
+    },
+    "AMAZON_2016_10K": {
+      "retrieved_text": "|  | December 31, |  |\n|  | 2015 | 2016 |\n| --- | --- | --- |\n| ASSETS |  |  |\n| Current assets: |  |  |\n| Cash and cash equivalents | $ 15,890 | $ 19,334 |\n| Marketable securities | 3,918 | 6,647 |\n| Inventories | 10,243 | 11,461 |\n| Accounts receivable, net and other | 5,654 | 8,339 |\n| Total curr",
+      "predicted": "7,694",
+      "ground_truth": "$7,694 million",
+      "correct": false
+    },
+    "COSTCO_2023_8K_dated-2023-08-09": {
+      "retrieved_text": "",
+      "predicted": "NOT FOUND",
+      "ground_truth": "0",
+      "correct": false
+    },
+    "FOOTLOCKER_2023Q3_10Q": {
+      "retrieved_text": "| ($ in millions, except share amounts) | October 29, 2022 | October 30, 2021 | January 29, 2022* |\n| --- | --- | --- | --- |\n| ASSETS |  |  |  |\n| Current assets: |  |  |  |\n| Cash and cash equivalents | 351 | $ 1,339 | $ 804 |\n| Merchandise inventories | 1,685 | 1,301 | 1,266 |\n| Other current ass",
+      "predicted": "448",
+      "ground_truth": "448 million",
+      "correct": false
+    },
+    "accuracy": 0.1,
+    "num_correct": 1,
+    "num_spans_avg": 1.1
+  },
+  "rule_long_term_debt_textual_disclosure": {
+    "AMCOR_2019_10K": {
+      "retrieved_text": "In addition to using cash provided by operations, we regularly issue commercial paper to meet our short-term liquidity needs. Our credit ratings are important to our ability to issue commercial paper at favorable rates of interest. A downgrade in our credit rating could increase the cost of borrowin",
+      "predicted": "5,309.0",
+      "ground_truth": "5,314.4 million",
+      "correct": false
+    },
+    "ADOBE_2022Q2_10Q": {
+      "retrieved_text": "The carrying value of our borrowings as of June 2, 2023 and December 2, 2022 were as follows:\n\n| (dollars in millions) | Issuance Date | Due Date | Effective Interest Rate | 2023 | 2022 |\n| --- | --- | --- | --- | --- | --- |\n| 1.70% 2023 Notes | February 2020 | February 2023 | 1.92% | $ - | $ 500 |",
+      "predicted": "3,629",
+      "ground_truth": "$3,631 million",
+      "correct": false
+    },
+    "COSTCO_2017_10K": {
+      "retrieved_text": "| As of and for the year ended | Sept. 3, 2017 (53 weeks) | Aug. 28, 2016 (52 weeks) | Aug. 30, 2015 (52 weeks) | Aug. 31, 2014 (52 weeks) | Sept. 1, 2013 (52 weeks) |\n| --- | --- | --- | --- | --- | --- |\n| RESULTS OF OPERATIONS |  |  |  |  |  |\n| Net sales | $ 126,172 | $ 116,073 | $ 113,666 | $ 1",
+      "predicted": "$6,573",
+      "ground_truth": "6,573",
+      "correct": false
+    },
+    "BOEING_2018_10K": {
+      "retrieved_text": "We depend, in part, upon the issuance of debt to fund our operations and contractual commitments. As of December 31, 2018 and 2017 , our airplane financing commitments totaled $19,462 million and $10,221 million . If we require additional funding in order to fund outstanding financing commitments or",
+      "predicted": "$10,657 million",
+      "ground_truth": "$10,657 million",
+      "correct": true
+    },
+    "INTEL_2022Q4_EARNINGS": {
+      "retrieved_text": "",
+      "predicted": "NOT FOUND",
+      "ground_truth": "$37,684,000,000",
+      "correct": false
+    },
+    "AMAZON_2018_10K": {
+      "retrieved_text": "Cash provided by (used in) financing activities was $(3.7) billion , $9.9 billion , and $(7.7) billion in 2016 , 2017 , and 2018 . Cash outflows from financing activities result from principal repayments on obligations related to capital leases and finance leases and repayments of long-term debt and",
+      "predicted": "23,495",
+      "ground_truth": "$50,708 million",
+      "correct": false
+    },
+    "EBAY_2021_10K": {
+      "retrieved_text": "The primary objective of our investment activities is to preserve principal while at the same time improving yields without significantly increasing risk. To achieve this objective, we maintain our cash equivalents and short-term and long-term investments in a variety of asset types, including bank ",
+      "predicted": "7,727",
+      "ground_truth": "$7,727 million",
+      "correct": false
+    },
+    "AMAZON_2016_10K": {
+      "retrieved_text": "Cash provided by (used in) financing activities was $4.4 billion , $(3.8) billion , and $(2.9) billion in 2014 , 2015 , and 2016 . Cash outflows from financing activities result from principal repayments on obligations related to capital leases and finance leases and repayments of long-term debt and",
+      "predicted": "$7.7 billion",
+      "ground_truth": "$7,694 million",
+      "correct": false
+    },
+    "COSTCO_2023_8K_dated-2023-08-09": {
+      "retrieved_text": "",
+      "predicted": "NOT FOUND",
+      "ground_truth": "0",
+      "correct": false
+    },
+    "FOOTLOCKER_2023Q3_10Q": {
+      "retrieved_text": "| ($ in millions, except share amounts) | October 29, 2022 | October 30, 2021 | January 29, 2022* |\n| --- | --- | --- | --- |\n| ASSETS |  |  |  |\n| Current assets: |  |  |  |\n| Cash and cash equivalents | 351 | $ 1,339 | $ 804 |\n| Merchandise inventories | 1,685 | 1,301 | 1,266 |\n| Other current ass",
+      "predicted": "448",
+      "ground_truth": "448 million",
+      "correct": false
+    },
+    "accuracy": 0.1,
+    "num_correct": 1,
+    "num_spans_avg": 9.9
+  },
+  "rule_8k_no_long_term_debt": {
+    "AMCOR_2019_10K": {
+      "retrieved_text": "",
+      "predicted": "NOT FOUND",
+      "ground_truth": "5,314.4 million",
+      "correct": false
+    },
+    "ADOBE_2022Q2_10Q": {
+      "retrieved_text": "",
+      "predicted": "NOT FOUND",
+      "ground_truth": "$3,631 million",
+      "correct": false
+    },
+    "COSTCO_2017_10K": {
+      "retrieved_text": "",
+      "predicted": "NOT FOUND",
+      "ground_truth": "6,573",
+      "correct": false
+    },
+    "BOEING_2018_10K": {
+      "retrieved_text": "",
+      "predicted": "NOT FOUND",
+      "ground_truth": "$10,657 million",
+      "correct": false
+    },
+    "INTEL_2022Q4_EARNINGS": {
+      "retrieved_text": "",
+      "predicted": "NOT FOUND",
+      "ground_truth": "$37,684,000,000",
+      "correct": false
+    },
+    "AMAZON_2018_10K": {
+      "retrieved_text": "",
+      "predicted": "NOT FOUND",
+      "ground_truth": "$50,708 million",
+      "correct": false
+    },
+    "EBAY_2021_10K": {
+      "retrieved_text": "",
+      "predicted": "NOT FOUND",
+      "ground_truth": "$7,727 million",
+      "correct": false
+    },
+    "AMAZON_2016_10K": {
+      "retrieved_text": "",
+      "predicted": "NOT FOUND",
+      "ground_truth": "$7,694 million",
+      "correct": false
+    },
+    "COSTCO_2023_8K_dated-2023-08-09": {
+      "retrieved_text": "",
+      "predicted": "NOT FOUND",
+      "ground_truth": "0",
+      "correct": false
+    },
+    "FOOTLOCKER_2023Q3_10Q": {
+      "retrieved_text": "",
+      "predicted": "NOT FOUND",
+      "ground_truth": "448 million",
+      "correct": false
+    },
+    "accuracy": 0.0,
+    "num_correct": 0,
+    "num_spans_avg": 0.0
+  }
+}[0m[32;1m[1;3m```python
+def _safe_text(span):
+    try:
+        return (span.get("text") or "")
+    except Exception:
+        return ""
+
+
+def _safe_path(span):
+    try:
+        return ((span.get("structure") or {}).get("path_text") or "")
+    except Exception:
+        return ""
+
+
+def _cells_text(span):
+    try:
+        if span.get("label") != "table":
+            return ""
+        cells = ((span.get("table_data") or {}).get("cells") or [])
+        return " | ".join((c.get("text") or "") for c in cells)
+    except Exception:
+        return ""
+
+
+def _table_has_row_label(span, labels):
+    try:
+        if span.get("label") != "table":
+            return False
+        cells = ((span.get("table_data") or {}).get("cells") or [])
+        labels_l = [x.lower() for x in labels]
+        for c in cells:
+            txt = (c.get("text") or "").strip().lower()
+            if txt in labels_l:
+                return True
+        return False
+    except Exception:
+        return False
+
+
+def rule_long_term_debt_balance_sheet(doc: dict) -> list[dict]:
+    """Balance sheet tables/spans containing long-term debt or debt under long-term liabilities."""
+    try:
+        out = []
+        for span in doc.get("texts", []):
+            txt = _safe_text(span)
+            low = txt.lower()
+            path = _safe_path(span).lower()
+            cells = _cells_text(span).lower()
+
+            is_balance = (
+                "balance sheet" in low
+                or "balance sheets" in low
+                or "balance sheet" in path
+                or "balance sheets" in path
+                or "condensed consolidated balance sheets" in low
+                or "consolidated balance sheets" in low
+            )
+            if not is_balance:
+                continue
+
+            if span.get("label") == "table":
+                if (
+                    "long-term debt" in cells
+                    or "long term debt" in cells
+                    or ("long-term liabilities" in cells and _table_has_row_label(span, ["Debt", "Long-term debt"]))
+                    or ("long term liabilities" in cells and _table_has_row_label(span, ["Debt", "Long-term debt"]))
+                    or _table_has_row_label(span, ["Long-term debt"])
+                ):
+                    out.append(span)
+            else:
+                if "long-term debt" in low or "long term debt" in low:
+                    out.append(span)
+        return out
+    except Exception:
+        return []
+
+
+def rule_total_debt_balance_sheet(doc: dict) -> list[dict]:
+    """Balance sheet tables where the answer is simply the long-term/noncurrent 'Debt' row."""
+    try:
+        out = []
+        for span in doc.get("texts", []):
+            if span.get("label") != "table":
+                continue
+            low = _safe_text(span).lower()
+            path = _safe_path(span).lower()
+            cells = _cells_text(span).lower()
+
+            is_balance = (
+                "balance sheet" in low
+                or "balance sheets" in low
+                or "balance sheet" in path
+                or "balance sheets" in path
+            )
+            if not is_balance:
+                continue
+
+            if (
+                _table_has_row_label(span, ["Debt"])
+                and (
+                    "long-term liabilities" in cells
+                    or "long term liabilities" in cells
+                    or "non-current liabilities" in cells
+                    or "liabilities and stockholders' equity" in cells
+                )
+            ):
+                out.append(span)
+        return out
+    except Exception:
+        return []
+
+
+def rule_debt_note_or_text_disclosure(doc: dict) -> list[dict]:
+    """Debt note / MD&A text explicitly stating long-term debt or debt balances as of year-end."""
+    try:
+        out = []
+        for span in doc.get("texts", []):
+            txt = _safe_text(span)
+            low = txt.lower()
+            path = _safe_path(span).lower()
+
+            if "long-term debt" in low or "long term debt" in low:
+                out.append(span)
+                continue
+
+            if (
+                ("debt" in low or "borrowings" in low)
+                and (
+                    "as of december" in low
+                    or "as of june" in low
+                    or "as of october" in low
+                    or "as of september" in low
+                    or "year-end" in low
+                    or "year end" in low
+                )
+            ):
+                out.append(span)
+                continue
+
+            if (
+                ("debt" in path or "borrowings" in path)
+                and ("as of" in low or "year-end" in low or "year end" in low)
+            ):
+                out.append(span)
+        return out
+    except Exception:
+        return []
+
+
+def rule_no_long_term_debt_8k(doc: dict) -> list[dict]:
+    """8-K current reports with no balance sheet / financial statements; answer should be 0."""
+    try:
+        texts = doc.get("texts", [])
+        has_8k = any("form 8-k" in _safe_text(s).lower() for s in texts)
+        has_balance = any(
+            "balance sheet" in _safe_text(s).lower() or "balance sheet" in _safe_path(s).lower()
+            for s in texts
+        )
+        if has_8k and not has_balance:
+            return [
+                s for s in texts
+                if "form 8-k" in _safe_text(s).lower()
+                or "current report" in _safe_text(s).lower()
+            ][:5]
+        return []
+    except Exception:
+        return []
+```[0m
+
+[1m> Finished chain.[0m
+
+=== Result Summary ===
+Agent turns:      2
+Rules generated:  10
+Best indl acc:    0.00
+Merge accuracy:   0.00  (0/10)
+Latency:          176.1s
+Input tokens:     0
+Output tokens:    0
+
+Rules:
+  rule_balance_sheet_long_term_debt                   indl=0.00  (0/10)
+  rule_debt_note_year_end                             indl=0.00  (0/10)
+  rule_no_debt_8k                                     indl=0.00  (0/10)
+  rule_long_term_debt_balance_sheet_tables            indl=0.00  (0/10)
+  rule_long_term_debt_textual_disclosure              indl=0.00  (0/10)
+  rule_8k_no_long_term_debt                           indl=0.00  (0/10)
+  rule_long_term_debt_balance_sheet                   indl=0.00  (0/10)
+  rule_total_debt_balance_sheet                       indl=0.00  (0/10)
+  rule_debt_note_or_text_disclosure                   indl=0.00  (0/10)
+  rule_no_long_term_debt_8k                           indl=0.00  (0/10)

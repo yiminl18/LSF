@@ -1,0 +1,222 @@
+Question: How many shares of common stock were outstanding as of the cover-page reference date?
+Slug: how_many_shares_of_common_stock_were_outstanding_as_of_the_c
+Docs (N): 10
+Latency: 852.565s
+Agent turns (tool calls): 16
+Agent input tokens: 3290513
+Agent output tokens: 2328
+Judge input tokens: 2886
+Judge output tokens: 157
+Total LLM calls (QA+judge): 20
+Merge accuracy: 9/10 (0.90)
+Avg cost ratio: 0.00045
+
+=== Step 1: summarize_answer_locations ===
+Input: {}
+Output:
+doc_name               page  label            level   bold  all_cap  path_text               answer_snippet
+-----------------------------------------------------------------------------------------------------------
+AMCOR_2019_10K         2     text             Body    0     0        AMCOR PLC | Trading Sy  As of August 29, 2019, the Registrant ha
+COSTCO_2017_10K        1     text             Body    0     0        Costco Wholesale Corpo  The number of shares outstanding of the 
+BOEING_2018_10K        1     text             Body    0     0        THE BOEING COMPANY      The number of shares of the registrant’s
+AMAZON_2018_10K        1     text             Body    0     0        AMAZON.COM, INC.        491,202,890
+EBAY_2021_10K          2     text             Body    0     0        Form 10-K | The Nasdaq  587,528,915 shares of common stock issue
+AMAZON_2016_10K        1     text             Body    0     0        AMAZON.COM, INC.        280,129,378,534 477,170,618
+CORNING_2022_10K       1     text             Body    0     0        GLW | New York Stock E  There were 846,563,422 shares of common 
+NIKE_2021_10K          1     text             Body    0     0        NIKE, Inc. | YES        1,581,801,224
+LOCKHEEDMARTIN_2022_10K 1     text             Body    0     0        FORM 10-K | LOCKHEED M  There were 255,297,298 shares of our com
+JOHNSON_JOHNSON_2022_10K 2     text             Body    0     0        JOHNSON & JOHNSON | SE  On February 10, 2023, there were 2,604,2
+
+=== Step 2: write_rule ===
+Input: {"rule_name": "rule_cover_page_shares_outstanding", "code": "def rule_cover_page_shares_outstanding(doc: dict) -> list[dict]:\n    \"\"\"Retrieve cover-page body text on pages 1-2 mentioning shares/common stock outstanding.\"\"\"\n    try:\n        import re\n        out = []\n        for span in doc.get(\"texts\", []):\n            if span.get(\"label\") != \"text\":\n                continue\n            if span.get(\"page_no\") not in (1, 2):\n                continue\n            txt = (span.get(\"text\") or \"\")\n            path = ((span.get(\"structure\") or {}).get(\"path_text\") or \"\")\n            hay = f\"{path} {txt}\".lower()\n            if (\n                \"shares outstanding\" in hay\n                or \"shares of common stock outstanding\" in hay\n                or \"number of shares of common stock outstanding\" in hay\n                or \"common stock issued and outstanding\" in hay\n                or \"common stock outstanding as of\" in hay\n                or \"number of shares outstanding as of\" in hay\n            ):\n                out.append(span)\n        return out\n    except Exception:\n        return []\n"}
+Output:
+OK: rule registered — rule_cover_page_shares_outstanding
+
+=== Step 3: test_rule ===
+Input: {"rule_name": "rule_cover_page_shares_outstanding"}
+Output:
+doc_name               hit    ret_tokens  cost_ratio  snippet
+-------------------------------------------------------------
+AMCOR_2019_10K         ✗      0           0.0000      '(empty)'
+COSTCO_2017_10K        ✓      29          0.0006      'The number of shares outstanding of the registrant’s common
+BOEING_2018_10K        ✓      94          0.0011      'As of June 30, 2018 , there were 575,883,680 common shares 
+AMAZON_2018_10K        ✗      16          0.0002      'Number of shares of common stock outstanding as of January 
+EBAY_2021_10K          ✓      22          0.0002      '587,528,915 shares of common stock issued and outstanding a
+AMAZON_2016_10K        ✗      16          0.0003      'Number of shares of common stock outstanding as of January 
+CORNING_2022_10K       ✓      23          0.0002      'There were 846,563,422 shares of common stock outstanding a
+NIKE_2021_10K          ✗      0           0.0000      '(empty)'
+LOCKHEEDMARTIN_2022_10K ✗      0           0.0000      '(empty)'
+JOHNSON_JOHNSON_2022_10K ✓      25          0.0002      'On February 10, 2023, there were 2,604,286,303 shares of Co
+
+Hit rate: 5/10 (0.50)   Avg cost ratio: 0.0003
+
+=== Step 4: show_uncovered_docs ===
+Input: {}
+Output:
+Uncovered (no registered rule hits):
+  - AMCOR_2019_10K
+  - AMAZON_2018_10K
+  - AMAZON_2016_10K
+  - NIKE_2021_10K
+  - LOCKHEEDMARTIN_2022_10K
+
+Covered: 5/10
+
+=== Step 5: diagnose_failing_doc ===
+Input: {"doc_name": "AMCOR_2019_10K"}
+Output:
+
+
+=== Step 6: diagnose_failing_doc ===
+Input: {"doc_name": "AMAZON_2018_10K"}
+Output:
+
+
+=== Step 7: diagnose_failing_doc ===
+Input: {"doc_name": "AMAZON_2016_10K"}
+Output:
+
+
+=== Step 8: diagnose_failing_doc ===
+Input: {"doc_name": "NIKE_2021_10K"}
+Output:
+
+
+=== Step 9: diagnose_failing_doc ===
+Input: {"doc_name": "LOCKHEEDMARTIN_2022_10K"}
+Output:
+=== Diagnosis: LOCKHEEDMARTIN_2022_10K ===
+
+Ground truth: '255,297,298'
+
+Rule results:
+  rule_cover_page_shares_outstanding:  retrieved=[]  (empty)
+
+Answer location (inspect_answer_context):
+  [idx=44] text='Indicate by check mark whether the registrant has filed a report on and attestat'  label=text  page=1  bold=0  level=Body  path_text='FORM 10-K | LOCKHEED MARTIN CORPORATION'
+  [idx=45] text='☐'  label=checkbox_unselected  page=1  bold=0  level=Body  path_text='FORM 10-K | LOCKHEED MARTIN CORPORATION'
+  [idx=46] text='No ☒'  label=checkbox_selected  page=1  bold=0  level=Body  path_text='FORM 10-K | LOCKHEED MARTIN CORPORATION'
+  [idx=47] text='Indicate by check mark whether the registrant is a shell company (as defined in '  label=text  page=1  bold=0  level=Body  path_text='FORM 10-K | LOCKHEED MARTIN CORPORATION'
+  [idx=48] text='The aggregate market value of voting and non-voting common stock held by non-aff'  label=text  page=1  bold=0  level=Body  path_text='FORM 10-K | LOCKHEED MARTIN CORPORATION'
+  [idx=49] text='There were 255,297,298 shares of our common stock, $1 par value per share, outst'  label=text  page=1  bold=0  level=Body  path_text='FORM 10-K | LOCKHEED MARTIN CORPORATION'  ← ANSWER HERE
+  [idx=50] text='DOCUMENTS INCORPORATED BY REFERENCE'  label=text  page=1  bold=1  level=Body  path_text='FORM 10-K | LOCKHEED MARTIN CORPORATION'
+  [idx=51] text='Portions of Lockheed Martin Corporation’s 2023 Definitive Proxy Statement are in'  label=text  page=1  bold=0  level=Body  path_text='FORM 10-K | LOCKHEED MARTIN CORPORATION'
+  [idx=52] text='Table of Contents'  label=section_header  page=2  bold=1  level=H3  path_text='FORM 10-K | LOCKHEED MARTIN CORPORATION | Table of Contents'
+  [idx=53] text='| PART I |  | Page |\n| --- | --- | --- |\n| ITEM 1. | Business ..................'  label=table  page=2  bold=0  level=Body  path_text='FORM 10-K | LOCKHEED MARTIN CORPORATION | Table of Contents'
+  [idx=54] text='PART I'  label=section_header  page=3  bold=1  level=H3  path_text='FORM 10-K | LOCKHEED MARTIN CORPORATION | PART I'
+
+Structural diff vs. passing docs (5 passing):
+  This doc (LOCKHEEDMARTIN_2022_10K):
+    label=text  level=Body  bold=0  all_cap=0  path_text='FORM 10-K | LOCKHEED MARTIN CORPORATION'
+  Passing docs (up to 3 shown):
+    COSTCO_2017_10K: label=text  level=Body  bold=0  all_cap=0  path_text='Costco Wholesale Corporation'
+    BOEING_2018_10K: label=text  level=Body  bold=0  all_cap=0  path_text='THE BOEING COMPANY'
+    EBAY_2021_10K: label=text  level=Body  bold=0  all_cap=0  path_text='Form 10-K | The Nasdaq Global Select Market'
+
+=== Step 10: write_rule ===
+Input: {"rule_name": "rule_cover_page_numeric_share_spans", "code": "def rule_cover_page_numeric_share_spans(doc: dict) -> list[dict]:\n    \"\"\"Retrieve page 1-2 cover-page body spans tied to common-stock outstanding disclosures, including adjacent numeric-only spans.\"\"\"\n    try:\n        import re\n        texts = doc.get(\"texts\", []) or []\n        out = []\n        n = len(texts)\n        for i, span in enumerate(texts):\n            if span.get(\"label\") != \"text\":\n                continue\n            if span.get(\"page_no\") not in (1, 2):\n                continue\n            txt = (span.get(\"text\") or \"\")\n            path = ((span.get(\"structure\") or {}).get(\"path_text\") or \"\")\n            hay = f\"{path} {txt}\".lower()\n            is_numericish = bool(re.fullmatch(r\"[\\$\\s,0-9\\.]+\", txt.strip())) and any(ch.isdigit() for ch in txt)\n            direct = (\n                \"issued and outstanding\" in hay\n                or \"shares of our common stock\" in hay\n                or \"shares of common stock\" in hay\n                or \"common stock outstanding\" in hay\n                or \"number of shares of common stock outstanding\" in hay\n                or \"number of shares outstanding\" in hay\n            )\n            nearby = False\n            if is_numericish:\n                for j in (i-3, i-2, i-1, i+1, i+2, i+3):\n                    if 0 <= j < n:\n                        s2 = texts[j]\n                        if s2.get(\"label\") != \"text\":\n                            continue\n                        if s2.get(\"page_no\") != span.get(\"page_no\"):\n                            continue\n                        p2 = ((s2.get(\"structure\") or {}).get(\"path_text\") or \"\")\n                        t2 = (s2.get(\"text\") or \"\")\n                        h2 = f\"{p2} {t2}\".lower()\n                        if (\n                            \"common stock outstanding\" in h2\n                            or \"shares of common stock\" in h2\n                            or \"shares of our common stock\" in h2\n                            or \"issued and outstanding\" in h2\n                            or \"number of shares\" in h2\n                        ):\n                            nearby = True\n                            break\n            if direct or nearby:\n                out.append(span)\n        return out\n    except Exception:\n        return []\n"}
+Output:
+OK: rule registered — rule_cover_page_numeric_share_spans
+
+=== Step 11: test_rule ===
+Input: {"rule_name": "rule_cover_page_numeric_share_spans"}
+Output:
+doc_name               hit    ret_tokens  cost_ratio  snippet
+-------------------------------------------------------------
+AMCOR_2019_10K         ✓      27          0.0003      'As of August 29, 2019, the Registrant had 1,625,907,855 sha
+COSTCO_2017_10K        ✓      29          0.0006      'The number of shares outstanding of the registrant’s common
+BOEING_2018_10K        ✓      29          0.0003      'The number of shares of the registrant’s common stock outst
+AMAZON_2018_10K        ✓      30          0.0004      'Number of shares of common stock outstanding as of January 
+EBAY_2021_10K          ✓      22          0.0002      '587,528,915 shares of common stock issued and outstanding a
+AMAZON_2016_10K        ✓      30          0.0005      'Number of shares of common stock outstanding as of January 
+CORNING_2022_10K       ✓      23          0.0002      'There were 846,563,422 shares of common stock outstanding a
+NIKE_2021_10K          ✗      24          0.0003      "As of July 9, 2021, the number of shares of the Registrant'
+LOCKHEEDMARTIN_2022_10K ✓      32          0.0003      'There were 255,297,298 shares of our common stock, $1 par v
+JOHNSON_JOHNSON_2022_10K ✓      25          0.0002      'On February 10, 2023, there were 2,604,286,303 shares of Co
+
+Hit rate: 9/10 (0.90)   Avg cost ratio: 0.0003
+
+=== Step 12: show_uncovered_docs ===
+Input: {}
+Output:
+Uncovered (no registered rule hits):
+  - NIKE_2021_10K
+
+Covered: 9/10
+
+=== Step 13: diagnose_failing_doc ===
+Input: {"doc_name": "NIKE_2021_10K"}
+Output:
+=== Diagnosis: NIKE_2021_10K ===
+
+Ground truth: '1,581,801,224'
+
+Rule results:
+  rule_cover_page_shares_outstanding:  retrieved=[]  (empty)
+  rule_cover_page_numeric_share_spans:  retrieved="As of July 9, 2021, the number of shares of the Registrant's Common Stock outstanding were:"
+
+Answer location (inspect_answer_context):
+  [idx=67] text='170,815,547,402'  label=text  page=1  bold=0  level=Body  path_text='NIKE, Inc. | YES'
+  [idx=68] text='$'  label=text  page=1  bold=0  level=Body  path_text='NIKE, Inc. | YES'
+  [idx=69] text='180,448,113,046'  label=text  page=1  bold=0  level=Body  path_text='NIKE, Inc. | YES'
+  [idx=70] text='305,011,252'  label=text  page=1  bold=0  level=Body  path_text='NIKE, Inc. | YES'
+  [idx=71] text='1,276,789,972'  label=text  page=1  bold=0  level=Body  path_text='NIKE, Inc. | YES'
+  [idx=72] text='1,581,801,224'  label=text  page=1  bold=0  level=Body  path_text='NIKE, Inc. | YES'  ← ANSWER HERE
+  [idx=73] text='DOCUMENTS INCORPORATED BY REFERENCE:'  label=section_header  page=1  bold=1  level=H2  path_text='NIKE, Inc. | DOCUMENTS INCORPORATED BY REFERENCE:'
+  [idx=74] text="Parts of Registrant's Proxy Statement for the Annual Meeting of Shareholders to "  label=text  page=1  bold=0  level=Body  path_text='NIKE, Inc. | DOCUMENTS INCORPORATED BY REFERENCE:'
+  [idx=75] text='Indicate by check mark:'  label=section_header  page=1  bold=1  level=H2  path_text='NIKE, Inc. | Indicate by check mark:'
+  [idx=76] text='if the registrant is a well-known seasoned issuer, as defined in Rule 405 of the'  label=text  page=1  bold=0  level=Body  path_text='NIKE, Inc. | Indicate by check mark:'
+  [idx=77] text='•'  label=text  page=1  bold=0  level=Body  path_text='NIKE, Inc. | Indicate by check mark:'
+
+Structural diff vs. passing docs (9 passing):
+  This doc (NIKE_2021_10K):
+    label=text  level=Body  bold=0  all_cap=0  path_text='NIKE, Inc. | YES'
+  Passing docs (up to 3 shown):
+    AMCOR_2019_10K: label=text  level=Body  bold=0  all_cap=0  path_text='AMCOR PLC | Trading Symbol(s)'
+    COSTCO_2017_10K: label=text  level=Body  bold=0  all_cap=0  path_text='Costco Wholesale Corporation'
+    BOEING_2018_10K: label=text  level=Body  bold=0  all_cap=0  path_text='THE BOEING COMPANY'
+
+=== Step 14: write_rule ===
+Input: {"rule_name": "rule_nike_adjacent_share_numbers", "code": "def rule_nike_adjacent_share_numbers(doc: dict) -> list[dict]:\n    \"\"\"Retrieve adjacent numeric cover-page spans following a shares-outstanding lead-in, for split disclosures like NIKE.\"\"\"\n    try:\n        import re\n        texts = doc.get(\"texts\", []) or []\n        out = []\n        n = len(texts)\n        for i, span in enumerate(texts):\n            if span.get(\"label\") != \"text\":\n                continue\n            if span.get(\"page_no\") not in (1, 2):\n                continue\n            txt = (span.get(\"text\") or \"\")\n            path = ((span.get(\"structure\") or {}).get(\"path_text\") or \"\")\n            hay = f\"{path} {txt}\".lower()\n            if \"number of shares of the registrant's common stock outstanding\" in hay or \"number of shares of the registrant’s common stock outstanding\" in hay:\n                out.append(span)\n                for j in range(i + 1, min(i + 6, n)):\n                    s2 = texts[j]\n                    if s2.get(\"label\") != \"text\":\n                        continue\n                    if s2.get(\"page_no\") != span.get(\"page_no\"):\n                        continue\n                    p2 = ((s2.get(\"structure\") or {}).get(\"path_text\") or \"\")\n                    if p2 != path:\n                        continue\n                    t2 = (s2.get(\"text\") or \"\").strip()\n                    if re.fullmatch(r\"[\\$,0-9\\s]+\", t2) and any(ch.isdigit() for ch in t2):\n                        out.append(s2)\n                break\n        return out\n    except Exception:\n        return []\n"}
+Output:
+OK: rule registered — rule_nike_adjacent_share_numbers
+
+=== Step 15: test_rule ===
+Input: {"rule_name": "rule_nike_adjacent_share_numbers"}
+Output:
+doc_name               hit    ret_tokens  cost_ratio  snippet
+-------------------------------------------------------------
+AMCOR_2019_10K         ✗      0           0.0000      '(empty)'
+COSTCO_2017_10K        ✗      0           0.0000      '(empty)'
+BOEING_2018_10K        ✓      29          0.0003      'The number of shares of the registrant’s common stock outst
+AMAZON_2018_10K        ✗      0           0.0000      '(empty)'
+EBAY_2021_10K          ✗      0           0.0000      '(empty)'
+AMAZON_2016_10K        ✗      0           0.0000      '(empty)'
+CORNING_2022_10K       ✗      0           0.0000      '(empty)'
+NIKE_2021_10K          ✗      39          0.0004      "As of July 9, 2021, the number of shares of the Registrant'
+LOCKHEEDMARTIN_2022_10K ✗      0           0.0000      '(empty)'
+JOHNSON_JOHNSON_2022_10K ✗      0           0.0000      '(empty)'
+
+Hit rate: 1/10 (0.10)   Avg cost ratio: 0.0001
+
+=== Step 16: write_rule ===
+Input: {"rule_name": "rule_nike_adjacent_share_numbers", "code": "def rule_nike_adjacent_share_numbers(doc: dict) -> list[dict]:\n    \"\"\"Retrieve split numeric cover-page spans after a registrant common-stock outstanding lead-in.\"\"\"\n    try:\n        import re\n        texts = doc.get(\"texts\", []) or []\n        out = []\n        n = len(texts)\n        for i, span in enumerate(texts):\n            if span.get(\"label\") != \"text\":\n                continue\n            if span.get(\"page_no\") not in (1, 2):\n                continue\n            txt = (span.get(\"text\") or \"\")\n            path = ((span.get(\"structure\") or {}).get(\"path_text\") or \"\")\n            hay = f\"{path} {txt}\".lower()\n            if \"number of shares of the registrant's common stock outstanding\" in hay or \"number of shares of the registrant’s common stock outstanding\" in hay:\n                out.append(span)\n                for j in range(i + 1, min(i + 12, n)):\n                    s2 = texts[j]\n                    if s2.get(\"label\") != \"text\":\n                        continue\n                    if s2.get(\"page_no\") != span.get(\"page_no\"):\n                        continue\n                    p2 = ((s2.get(\"structure\") or {}).get(\"path_text\") or \"\")\n                    if p2 != path:\n                        continue\n                    t2 = (s2.get(\"text\") or \"\").strip()\n                    if re.fullmatch(r\"[\\$,0-9\\s]+\", t2) and any(ch.isdigit() for ch in t2):\n                        out.append(s2)\n                return out\n        return out\n    except Exception:\n        return []\n"}
+Output:
+OK: rule registered — rule_nike_adjacent_share_numbers
+
+=== Registered Rules ===
+  rule_cover_page_shares_outstanding                  hit_rate=0.50  avg_cost=0.00028  file=rules/llm/financebench_agent/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_cover_page_shares_outstanding.py
+  rule_cover_page_numeric_share_spans                 hit_rate=0.90  avg_cost=0.00033  file=rules/llm/financebench_agent/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_cover_page_numeric_share_spans.py
+  rule_nike_adjacent_share_numbers                    hit_rate=0.20  avg_cost=0.00011  file=rules/llm/financebench_agent/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_nike_adjacent_share_numbers.py
+
+Merge accuracy:        0.90  (9/10)
+Avg cost ratio:        0.00045
+Total LLM calls:       20
+Agent input tokens:    3290513
+Agent output tokens:   2328
+Judge input tokens:    2886
+Judge output tokens:   157
+Latency:               852.6s
+
+=== Final Answer ===
+Agent stopped due to max iterations.

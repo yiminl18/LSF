@@ -1,0 +1,59 @@
+=== rule_gen_agent_coarse ===
+Question:   What is long-term debt at year-end (0 if none)?
+Slug:       what_is_longterm_debt_at_yearend_0_if_none
+Docs (N):   10
+Timestamp:  2026-04-29T04:22:57Z
+Max iters:  10
+
+--- Agent Turn 1 ---
+[LLM] Proposed 3 rule(s): rule_balance_sheet_long_term_debt, rule_debt_note_year_end, rule_no_debt_8k
+[TOOL CALL] test_rules(code="def _safe_text(span):     try:         return (span.get('text') or '')     except Exception:         return ''   def _safe_path(span):     try:         return ((span.get('structure') or {}).get('path_"...)
+[TOOL RESULT] rule_balance_sheet_long_term_debt: accuracy=1/10 | rule_debt_note_year_end: accuracy=1/10 | rule_no_debt_8k: accuracy=0/10
+
+--- Agent Turn 2 ---
+[LLM] Proposed 3 rule(s): rule_long_term_debt_balance_sheet_tables, rule_long_term_debt_textual_disclosure, rule_8k_no_long_term_debt
+[TOOL CALL] test_rules(code="def _t(span):     try:         return (span.get('text') or '')     except Exception:         return ''   def _p(span):     try:         return ((span.get('structure') or {}).get('path_text') or '')   "...)
+[TOOL RESULT] rule_long_term_debt_balance_sheet_tables: accuracy=1/10 | rule_long_term_debt_textual_disclosure: accuracy=1/10 | rule_8k_no_long_term_debt: accuracy=0/10
+
+--- Final Agent Message ---
+[LLM] ```python
+def _safe_text(span):
+    try:
+        return (span.get("text") or "")
+    except Exception:
+        return ""
+
+
+def _safe_path(span):
+    try:
+        return ((span.get("structure") or {}).get("path_text") or "")
+    except Exception:
+        return ""
+
+
+def _cells_text(span):
+    try:
+        if span.get("label") != "table":
+            return ""
+        cells = ((span.get("table_data") or {}).get("cells") or [])
+        return " | ".join((c.get("text") or "") for c in cells)
+    exc
+
+=== Final Rules ===
+rule_balance_sheet_long_term_debt
+rule_debt_note_year_end
+rule_no_debt_8k
+rule_long_term_debt_balance_sheet_tables
+rule_long_term_debt_textual_disclosure
+rule_8k_no_long_term_debt
+rule_long_term_debt_balance_sheet
+rule_total_debt_balance_sheet
+rule_debt_note_or_text_disclosure
+rule_no_long_term_debt_8k
+Union (merge) accuracy:  0/10  (0.00)
+
+=== Summary ===
+Total agent turns:   2
+Total input tokens:  0
+Total output tokens: 0
+Total latency:       176.1s

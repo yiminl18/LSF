@@ -1,0 +1,237 @@
+Question: What is the reporting period covered by this document (e.g. fiscal year ended, quarter ended, or event date)?
+Slug: what_is_the_reporting_period_covered_by_this_document_eg_fis
+Docs (N): 18
+Latency: 261.078s
+Agent turns (tool calls): 7
+Agent input tokens: 5021315
+Agent output tokens: 1641
+Judge input tokens: 15841
+Judge output tokens: 1052
+Total LLM calls (QA+judge): 108
+Merge accuracy: 17/18 (0.94)
+Avg cost ratio: 0.00226
+
+=== Step 1: summarize_answer_locations ===
+Input: {}
+Output:
+doc_name               page  label            level   bold  all_cap  path_text               answer_snippet
+-----------------------------------------------------------------------------------------------------------
+BOEING_2019_10K        1     text             Body    0     0        FORM 10-K               For the fiscal year ended December 31, 2
+ADOBE_2020_10K         1     text             Body    1     0        FORM 10-K               For the fiscal year ended November 27, 2
+ACTIVISIONBLIZZARD_2020_10K 1     text             Body    1     0        FORM 10-K               For the Fiscal Year Ended December 31, 2
+COSTCO_2018_10K        1     text             Body    1     0        FORM 10-K | ☒ ANNUAL R  For the fiscal year ended September 2, 2
+AMCOR_2019_10K         1     text             Body    1     0        FORM 10-K | ANNUAL REP  For the Fiscal Year Ended June 30, 2019
+AMAZON_2020_10K        1     text             Body    1     0        FORM 10-K               For the fiscal year ended December 31, 2
+AMAZON_2019_10K        1     text             Body    1     0        FORM 10-K               For the fiscal year ended December 31, 2
+ADOBE_2021_10K         1     text             Body    1     0        FORM 10-K               For the fiscal year ended December 3, 20
+EBAY_2022_10K          1     checkbox_selected Body    1     0        Form 10-K               ☒ ANNUAL REPORT PURSUANT TO SECTION 13 O
+ADOBE_2019_10K         1     text             Body    1     0        FORM 10-K               For the fiscal year ended November 29, 2
+AMCOR_2023Q2_10Q       1     text             Body    1     0        FORM 10-Q               ☒ QUARTERLY REPORT PURSUANT TO SECTION 1
+ADOBE_2022Q2_10Q       1     section_header   H2      1     0        FORM 10-Q | For the qu  For the quarterly period ended June 2, 2
+ACTIVSIONBLIZZARD_2023Q2_10Q 1     text             Body    1     0        FORM 10-Q | ☒ QUARTERL  For the Quarterly Period Ended June 30, 
+3M_2023Q2_10Q          1     text             Body    1     0        FORM 10-Q               ☒ QUARTERLY REPORT PURSUANT TO SECTION 1
+AMCOR_2022_8K_2022-07-01 1     text             Body    0     0        FORM 8-K | CURRENT REP  Date of Report (Date of earliest event r
+COSTCO_2023_8K_dated-2023-08-09 1     text             Body    1     0        FORM 8-K                Date of Report (Date of earliest event r
+COSTCO_2023_8K_dated-2023-08-16 1     text             Body    1     0        FORM 8-K                Date of Report (Date of earliest event r
+FOOTLOCKER_2022_8K_dated-2022-05-20 1     text             Body    0     0        CURRENT REPORT | Pursu  Date of report (Date of earliest event r
+
+=== Step 2: write_rule ===
+Input: {"rule_name": "rule_reporting_period_cover_header", "code": "def rule_reporting_period_cover_header(doc: dict) -> list[dict]:\n    \"\"\"Retrieve page-1 cover-header spans stating the fiscal/quarterly period or event date.\"\"\"\n    try:\n        import re\n        texts = doc.get(\"texts\", []) or []\n        out = []\n        for span in texts:\n            if not isinstance(span, dict):\n                continue\n            if span.get(\"page_no\") != 1:\n                continue\n            label = span.get(\"label\")\n            if label not in {\"text\", \"section_header\", \"checkbox_selected\"}:\n                continue\n            st = span.get(\"structure\") or {}\n            path = (st.get(\"path_text\") or \"\")\n            txt = (span.get(\"text\") or \"\")\n            txt_l = txt.lower()\n            path_l = path.lower()\n            if not (\n                \"form 10-k\" in path_l or\n                \"form 10-q\" in path_l or\n                \"form 8-k\" in path_l or\n                \"current report\" in path_l\n            ):\n                continue\n            if (\n                \"fiscal year ended\" in txt_l or\n                \"quarterly period ended\" in txt_l or\n                \"quarter ended\" in txt_l or\n                \"date of report\" in txt_l or\n                \"earliest event reported\" in txt_l\n            ):\n                out.append(span)\n                continue\n            # catch combined annual/quarterly report checkbox/header lines on cover page\n            if re.search(r\"\\bannual report\\b|\\bquarterly report\\b\", txt_l) and re.search(r\"ended\\b\", txt_l):\n                out.append(span)\n        return out\n    except Exception:\n        return []\n"}
+Output:
+OK: rule registered — rule_reporting_period_cover_header
+
+=== Step 3: test_rule ===
+Input: {"rule_name": "rule_reporting_period_cover_header"}
+Output:
+doc_name               hit    ret_tokens  cost_ratio  snippet
+-------------------------------------------------------------
+BOEING_2019_10K        ✓      13          0.0001      'For the fiscal year ended December 31, 2019 or'
+ADOBE_2020_10K         ✓      12          0.0001      'For the fiscal year ended November 27, 2020'
+ACTIVISIONBLIZZARD_2020_10K ✓      12          0.0001      'For the Fiscal Year Ended December 31, 2020'
+COSTCO_2018_10K        ✓      13          0.0003      'For the fiscal year ended September 2, 2018 or'
+AMCOR_2019_10K         ✓      12          0.0001      'For the Fiscal Year Ended June 30, 2019'
+AMAZON_2020_10K        ✓      12          0.0002      'For the fiscal year ended December 31, 2020'
+AMAZON_2019_10K        ✓      12          0.0002      'For the fiscal year ended December 31, 2019'
+ADOBE_2021_10K         ✓      12          0.0002      'For the fiscal year ended December 3, 2021'
+EBAY_2022_10K          ✓      43          0.0005      '☒ ANNUAL REPORT PURSUANT TO SECTION 13 OR 15(d) OF THE SECU
+ADOBE_2019_10K         ✓      13          0.0001      'For the fiscal year ended November 29, 2019 or'
+AMCOR_2023Q2_10Q       ✓      43          0.0013      '☒ QUARTERLY REPORT PURSUANT TO SECTION 13 OR 15(d) OF THE S
+ADOBE_2022Q2_10Q       ✓      12          0.0003      'For the quarterly period ended June 2, 2023'
+ACTIVSIONBLIZZARD_2023Q2_10Q ✓      12          0.0002      'For the Quarterly Period Ended June 30, 2023'
+3M_2023Q2_10Q          ✓      43          0.0005      '☒ QUARTERLY REPORT PURSUANT TO SECTION 13 OR 15(d) OF THE S
+AMCOR_2022_8K_2022-07-01 ✓      26          0.0047      'Date of Report (Date of earliest event reported): July 1, 2
+COSTCO_2023_8K_dated-2023-08-09 ✓      17          0.0007      'Date of Report (Date of earliest event reported): August 9,
+COSTCO_2023_8K_dated-2023-08-16 ✓      17          0.0156      'Date of Report (Date of earliest event reported): August 16
+FOOTLOCKER_2022_8K_dated-2022-05-20 ✓      26          0.0144      'Date of report (Date of earliest event reported): May 20, 2
+
+Hit rate: 18/18 (1.00)   Avg cost ratio: 0.0022
+
+=== Step 4: show_uncovered_docs ===
+Input: {}
+Output:
+All 18 documents covered. Covered: 18/18
+
+=== Step 5: test_union ===
+Input: {}
+Output:
+Merge accuracy: 17/18 (0.9444)  Avg cost ratio: 0.00221
+
+Failing docs:
+  AMCOR_2023Q2_10Q:
+    retrieved: '☒ QUARTERLY REPORT PURSUANT TO SECTION 13 OR 15(d) OF THE SECURITIES EXCHANGE ACT OF 1934 For the Quarterly Period Ende
+    predicted: 'December 31, 2022'
+    ground_truth: 'Quarterly period ended December 31, 2022'
+
+Per-doc cost:
+  ✓ BOEING_2019_10K                          cost_ratio=0.00014
+  ✓ ADOBE_2020_10K                           cost_ratio=0.00013
+  ✓ ACTIVISIONBLIZZARD_2020_10K              cost_ratio=0.00012
+  ✓ COSTCO_2018_10K                          cost_ratio=0.00027
+  ✓ AMCOR_2019_10K                           cost_ratio=0.00014
+  ✓ AMAZON_2020_10K                          cost_ratio=0.00020
+  ✓ AMAZON_2019_10K                          cost_ratio=0.00019
+  ✓ ADOBE_2021_10K                           cost_ratio=0.00016
+  ✓ EBAY_2022_10K                            cost_ratio=0.00047
+  ✓ ADOBE_2019_10K                           cost_ratio=0.00014
+  ✗ AMCOR_2023Q2_10Q                         cost_ratio=0.00135
+  ✓ ADOBE_2022Q2_10Q                         cost_ratio=0.00028
+  ✓ ACTIVSIONBLIZZARD_2023Q2_10Q             cost_ratio=0.00023
+  ✓ 3M_2023Q2_10Q                            cost_ratio=0.00052
+  ✓ AMCOR_2022_8K_2022-07-01                 cost_ratio=0.00467
+  ✓ COSTCO_2023_8K_dated-2023-08-09          cost_ratio=0.00071
+  ✓ COSTCO_2023_8K_dated-2023-08-16          cost_ratio=0.01564
+  ✓ FOOTLOCKER_2022_8K_dated-2022-05-20      cost_ratio=0.01441
+
+=== Step 6: write_rule ===
+Input: {"rule_name": "rule_reporting_period_10q_header_textspan", "code": "def rule_reporting_period_10q_header_textspan(doc: dict) -> list[dict]:\n    \"\"\"Retrieve page-1 FORM 10-Q cover section headers whose text_span contains the quarterly period ended phrase.\"\"\"\n    try:\n        texts = doc.get(\"texts\", []) or []\n        out = []\n        for span in texts:\n            if not isinstance(span, dict):\n                continue\n            if span.get(\"page_no\") != 1:\n                continue\n            if span.get(\"label\") != \"section_header\":\n                continue\n            st = span.get(\"structure\") or {}\n            path = (st.get(\"path_text\") or \"\").lower()\n            txt = (span.get(\"text\") or \"\").lower()\n            txt_span = (span.get(\"text_span\") or \"\").lower()\n            if \"form 10-q\" not in path:\n                continue\n            if \"quarterly period ended\" in txt_span or (\"quarterly report\" in txt and \"ended\" in txt_span):\n                out.append(span)\n        return out\n    except Exception:\n        return []\n"}
+Output:
+OK: rule registered — rule_reporting_period_10q_header_textspan
+
+=== Step 7: test_union ===
+Input: {}
+Output:
+Merge accuracy: 17/18 (0.9444)  Avg cost ratio: 0.00226
+
+Failing docs:
+  AMCOR_2023Q2_10Q:
+    retrieved: 'FORM 10-Q\n\n☒ QUARTERLY REPORT PURSUANT TO SECTION 13 OR 15(d) OF THE SECURITIES EXCHANGE ACT OF 1934 For the Quarterl
+    predicted: 'December 31, 2022'
+    ground_truth: 'Quarterly period ended December 31, 2022'
+
+Per-doc cost:
+  ✓ BOEING_2019_10K                          cost_ratio=0.00014
+  ✓ ADOBE_2020_10K                           cost_ratio=0.00013
+  ✓ ACTIVISIONBLIZZARD_2020_10K              cost_ratio=0.00012
+  ✓ COSTCO_2018_10K                          cost_ratio=0.00027
+  ✓ AMCOR_2019_10K                           cost_ratio=0.00014
+  ✓ AMAZON_2020_10K                          cost_ratio=0.00020
+  ✓ AMAZON_2019_10K                          cost_ratio=0.00019
+  ✓ ADOBE_2021_10K                           cost_ratio=0.00016
+  ✓ EBAY_2022_10K                            cost_ratio=0.00047
+  ✓ ADOBE_2019_10K                           cost_ratio=0.00014
+  ✗ AMCOR_2023Q2_10Q                         cost_ratio=0.00150
+  ✓ ADOBE_2022Q2_10Q                         cost_ratio=0.00028
+  ✓ ACTIVSIONBLIZZARD_2023Q2_10Q             cost_ratio=0.00086
+  ✓ 3M_2023Q2_10Q                            cost_ratio=0.00058
+  ✓ AMCOR_2022_8K_2022-07-01                 cost_ratio=0.00467
+  ✓ COSTCO_2023_8K_dated-2023-08-09          cost_ratio=0.00071
+  ✓ COSTCO_2023_8K_dated-2023-08-16          cost_ratio=0.01564
+  ✓ FOOTLOCKER_2022_8K_dated-2022-05-20      cost_ratio=0.01441
+
+=== Registered Rules ===
+  rule_reporting_period_cover_header                  hit_rate=1.00  avg_cost=0.00221  file=rules/agent/financebench_mix_doc/what_is_the_reporting_period_covered_by_this_document_eg_fis_18_llm/rule_reporting_period_cover_header.py
+  rule_reporting_period_10q_header_textspan           hit_rate=0.00  avg_cost=0.00004  file=rules/agent/financebench_mix_doc/what_is_the_reporting_period_covered_by_this_document_eg_fis_18_llm/rule_reporting_period_10q_header_textspan.py
+
+Merge accuracy:        0.94  (17/18)
+Avg cost ratio:        0.00226
+Total LLM calls:       108
+Agent input tokens:    5021315
+Agent output tokens:   1641
+Judge input tokens:    15841
+Judge output tokens:   1052
+Latency:               261.1s
+
+=== Final Answer ===
+Done. We achieved:
+
+- merge_accuracy: 0.9444
+- avg_cost_ratio: 0.00226
+
+Registered rules:
+- rule_reporting_period_cover_header
+- rule_reporting_period_10q_header_textspan
+
+Final rule code:
+
+```python
+def rule_reporting_period_cover_header(doc: dict) -> list[dict]:
+    """Retrieve page-1 cover-header spans stating the fiscal/quarterly period or event date."""
+    try:
+        import re
+        texts = doc.get("texts", []) or []
+        out = []
+        for span in texts:
+            if not isinstance(span, dict):
+                continue
+            if span.get("page_no") != 1:
+                continue
+            label = span.get("label")
+            if label not in {"text", "section_header", "checkbox_selected"}:
+                continue
+            st = span.get("structure") or {}
+            path = (st.get("path_text") or "")
+            txt = (span.get("text") or "")
+            txt_l = txt.lower()
+            path_l = path.lower()
+            if not (
+                "form 10-k" in path_l or
+                "form 10-q" in path_l or
+                "form 8-k" in path_l or
+                "current report" in path_l
+            ):
+                continue
+            if (
+                "fiscal year ended" in txt_l or
+                "quarterly period ended" in txt_l or
+                "quarter ended" in txt_l or
+                "date of report" in txt_l or
+                "earliest event reported" in txt_l
+            ):
+                out.append(span)
+                continue
+            if re.search(r"\bannual report\b|\bquarterly report\b", txt_l) and re.search(r"ended\b", txt_l):
+                out.append(span)
+        return out
+    except Exception:
+        return []
+```
+
+```python
+def rule_reporting_period_10q_header_textspan(doc: dict) -> list[dict]:
+    """Retrieve page-1 FORM 10-Q cover section headers whose text_span contains the quarterly period ended phrase."""
+    try:
+        texts = doc.get("texts", []) or []
+        out = []
+        for span in texts:
+            if not isinstance(span, dict):
+                continue
+            if span.get("page_no") != 1:
+                continue
+            if span.get("label") != "section_header":
+                continue
+            st = span.get("structure") or {}
+            path = (st.get("path_text") or "").lower()
+            txt = (span.get("text") or "").lower()
+            txt_span = (span.get("text_span") or "").lower()
+            if "form 10-q" not in path:
+                continue
+            if "quarterly period ended" in txt_span or ("quarterly report" in txt and "ended" in txt_span):
+                out.append(span)
+        return out
+    except Exception:
+        return []
+```
+
+Note:
+- One doc still fails in union QA: AMCOR_2023Q2_10Q
+- But primary target is met (> 0.90) with very low cost.

@@ -1,0 +1,613 @@
+
+======================================================================
+Question: What is long-term debt at year-end (0 if none)?
+Slug:     what_is_longterm_debt_at_yearend_0_if_none_10
+Rules:    37
+
+  Split: sampled (10 docs)
+    eval rule_balance_sheet_current_and_long_term_sections: cached (acc=0.00)
+    eval rule_balance_sheet_debt_numeric_cells_any: cached (acc=0.20)
+    eval rule_balance_sheet_debt_row_anywhere: cached (acc=0.30)
+    eval rule_balance_sheet_liabilities_section: cached (acc=0.20)
+    eval rule_balance_sheet_long_term_debt_numeric_cells: cached (acc=0.10)
+    eval rule_balance_sheet_long_term_debt_row: cached (acc=0.30)
+    eval rule_balance_sheet_long_term_liabilities_debt: cached (acc=0.00)
+    eval rule_balance_sheet_noncurrent_debt: cached (acc=0.00)
+    eval rule_balance_sheet_page_30_to_60: cached (acc=0.00)
+    eval rule_balance_sheet_page_3_to_10: cached (acc=0.00)
+    eval rule_balance_sheet_total_liabilities_near_debt: cached (acc=0.00)
+    eval rule_balance_sheet_with_debt_and_date_columns: cached (acc=0.20)
+    eval rule_condensed_balance_sheet_long_term_debt: cached (acc=0.00)
+    eval rule_consolidated_balance_sheet_long_term_debt: cached (acc=0.30)
+    eval rule_consolidated_balance_sheets_debt_row: cached (acc=0.20)
+    eval rule_debt_in_balance_sheet_path: cached (acc=0.30)
+    eval rule_debt_row_in_consolidated_balance_sheets_cells: cached (acc=0.20)
+    eval rule_debt_under_long_term_liabilities_cells: cached (acc=0.00)
+    eval rule_debt_value_in_press_release_balance_sheet_cells: cached (acc=0.00)
+    eval rule_earnings_release_consolidated_balance_sheets: cached (acc=0.00)
+    eval rule_item1_financial_statements_balance_sheet: cached (acc=0.00)
+    eval rule_item8_financial_statements_balance_sheet: cached (acc=0.00)
+    eval rule_long_term_debt_cell_candidates: cached (acc=0.00)
+    eval rule_long_term_debt_header_or_table_same_page: cached (acc=0.30)
+    eval rule_long_term_debt_note_header: cached (acc=0.00)
+    eval rule_long_term_debt_note_text: cached (acc=0.10)
+    eval rule_long_term_debt_or_zero_8k: cached (acc=0.00)
+    eval rule_long_term_debt_page_near_balance_sheet_header: cached (acc=0.30)
+    eval rule_long_term_debt_text_span: cached (acc=0.20)
+    eval rule_long_term_debt_zero_if_absent: cached (acc=0.00)
+    eval rule_long_term_liabilities_header_row: cached (acc=0.40)
+    eval rule_page_early_balance_sheet_tables: cached (acc=0.00)
+    eval rule_press_release_balance_sheet_debt: cached (acc=0.00)
+    eval rule_table_row_label_debt: cached (acc=0.00)
+    eval rule_table_row_label_long_term_debt: cached (acc=0.60)
+    eval rule_table_with_current_and_long_term_debt: cached (acc=0.30)
+    eval rule_year_end_balance_sheet_table: cached (acc=0.20)
+  Saved summary: results/financebench/eval/what_is_longterm_debt_at_yearend_0_if_none_10/summary.json
+
+======================================================================
+Question: What is net income (loss) for the most recent fiscal year?
+Slug:     what_is_net_income_loss_for_the_most_recent_fiscal_year_10
+Rules:    47
+
+  Split: sampled (10 docs)
+    eval rule_annual_report_table_of_contents_income_statement_locator: cached (acc=0.00)
+    eval rule_consolidated_statements_of_income_section: cached (acc=0.10)
+    eval rule_consolidated_statements_of_operations_section: cached (acc=0.30)
+    eval rule_exclude_non_financial_forms_by_form_type: cached (acc=0.50)
+    eval rule_full_year_2022_or_recent_year_summary_text: cached (acc=0.00)
+    eval rule_full_year_net_income_bullet: cached (acc=0.00)
+    eval rule_full_year_results_heading: cached (acc=0.00)
+    eval rule_income_before_taxes_then_net_income_table: cached (acc=0.20)
+    eval rule_item_1_financial_statements_tables_10q: cached (acc=0.10)
+    eval rule_item_8_financial_statements_tables: cached (acc=0.30)
+    eval rule_most_recent_fiscal_year_annual_report_pages: cached (acc=0.50)
+    eval rule_net_income_attributable_row_header_cell: cached (acc=0.10)
+    eval rule_net_income_attributable_simple_row: cached (acc=0.10)
+    eval rule_net_income_in_earnings_release_statement_table: cached (acc=0.00)
+    eval rule_net_income_in_press_release_financial_table: cached (acc=0.00)
+    eval rule_net_income_in_table_with_period_columns: cached (acc=0.50)
+    eval rule_net_income_loss_parenthetical_row: cached (acc=0.20)
+    eval rule_net_income_loss_row_any_table: cached (acc=0.50)
+    eval rule_net_income_row_header_cell: cached (acc=0.40)
+    eval rule_net_income_row_in_cash_flows_table: cached (acc=0.30)
+    eval rule_net_income_row_in_condensed_financials: cached (acc=0.00)
+    eval rule_net_income_row_in_consolidated_financials: cached (acc=0.40)
+    eval rule_net_income_row_in_income_statement_table: cached (acc=0.30)
+    eval rule_net_income_row_in_operations_statement_table: cached (acc=0.40)
+    eval rule_net_income_simple_row: cached (acc=0.30)
+    eval rule_news_summary_full_year_results: cached (acc=0.00)
+    eval rule_page_1_or_early_pages_earnings_release: cached (acc=0.00)
+    eval rule_page_around_income_statement: cached (acc=0.50)
+    eval rule_path_contains_financial_results: cached (acc=0.00)
+    eval rule_path_contains_item_1_financial_statements: cached (acc=0.00)
+    eval rule_path_contains_item_8_financial_statements: cached (acc=0.30)
+    eval rule_path_contains_news_release: cached (acc=0.00)
+    eval rule_primary_financial_statement_heading_spans: cached (acc=0.00)
+    eval rule_recent_fiscal_year_column_income_table: cached (acc=0.50)
+    eval rule_recent_year_net_income_in_press_release_statement: cached (acc=0.00)
+    eval rule_tables_near_primary_financial_statement_heading: cached (acc=0.40)
+    eval rule_tables_on_pages_after_toc_with_net_income: cached (acc=0.50)
+    eval rule_tables_with_net_income_and_eps: cached (acc=0.20)
+    eval rule_tables_with_net_income_and_gross_margin: cached (acc=0.20)
+    eval rule_tables_with_net_income_and_interest_other: cached (acc=0.30)
+    eval rule_tables_with_net_income_and_operating_income_loss: cached (acc=0.40)
+    eval rule_tables_with_net_income_and_revenue_rows: cached (acc=0.40)
+    eval rule_tables_with_net_income_and_tax_rows: cached (acc=0.20)
+    eval rule_tables_with_recent_annual_columns_and_net_income: cached (acc=0.30)
+    eval rule_tables_with_recent_quarter_and_ytd_columns_and_net_income: cached (acc=0.00)
+    eval rule_twelve_months_ended_net_income_table: cached (acc=0.00)
+    eval rule_years_ended_net_income_table: cached (acc=0.50)
+  Saved summary: results/financebench/eval/what_is_net_income_loss_for_the_most_recent_fiscal_year_10/summary.json
+
+======================================================================
+Question: What is total revenue for the most recent fiscal year (from the audited income statement)?
+Slug:     what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10
+Rules:    40
+
+  Split: sampled (10 docs)
+    eval rule_annual_report_news_summary_full_year_revenue: cached (acc=0.00)
+    eval rule_any_table_with_revenue_and_large_numeric_values: cached (acc=0.60)
+    eval rule_audited_income_statement_page_from_toc: cached (acc=0.50)
+    eval rule_condensed_statements_of_income_heading: cached (acc=0.00)
+    eval rule_consolidated_statement_of_income_heading: cached (acc=0.30)
+    eval rule_consolidated_statements_income_net_revenue: cached (acc=0.10)
+    eval rule_exclude_non_10k_10q_8k_like: cached (acc=0.00)
+    eval rule_income_statement_markdown_table: cached (acc=0.60)
+    eval rule_income_statement_total_revenue_row: cached (acc=0.60)
+    eval rule_item_1_financial_statements_tables: cached (acc=0.00)
+    eval rule_item_8_financial_statements_tables: cached (acc=0.40)
+    eval rule_net_revenue_row: cached (acc=0.10)
+    eval rule_net_sales_row: cached (acc=0.40)
+    eval rule_page_1_or_2_toc_financial_statement_locator: cached (acc=0.00)
+    eval rule_page_1_summary_revenue_bullet: cached (acc=0.00)
+    eval rule_page_around_statement_of_income: cached (acc=0.60)
+    eval rule_page_range_financial_statement_core: cached (acc=0.00)
+    eval rule_path_contains_financial_statements_and_revenue: cached (acc=0.40)
+    eval rule_path_item_business_note_segment_information: cached (acc=0.30)
+    eval rule_press_release_business_unit_summary_annual_revenue: cached (acc=0.00)
+    eval rule_press_release_consolidated_statements_income: cached (acc=0.10)
+    eval rule_recent_fiscal_year_column_headers: cached (acc=0.60)
+    eval rule_revenue_in_business_overview_text: cached (acc=0.00)
+    eval rule_revenue_note_table_total: cached (acc=0.00)
+    eval rule_revenue_summary_text_anywhere: cached (acc=0.00)
+    eval rule_sales_or_revenue_first_numeric_row: cached (acc=0.60)
+    eval rule_sales_row_in_operations_statement: cached (acc=0.00)
+    eval rule_segment_results_total_revenue_table: cached (acc=0.20)
+    eval rule_statement_of_income_heading: cached (acc=0.60)
+    eval rule_table_near_item_8_or_item_1_heading: cached (acc=0.10)
+    eval rule_table_row_total_revenue_recent_period: cached (acc=0.60)
+    eval rule_table_with_most_recent_year_and_total_row: cached (acc=0.60)
+    eval rule_table_with_net_revenue_under_consolidated_income: cached (acc=0.00)
+    eval rule_table_with_revenue_and_period_headers: cached (acc=0.50)
+    eval rule_table_with_row_net_sales_and_years: cached (acc=0.40)
+    eval rule_table_with_row_sales_and_multiple_periods: cached (acc=0.00)
+    eval rule_table_with_row_total_revenue_and_periods: cached (acc=0.20)
+    eval rule_table_with_sales_row_under_condensed_operations: cached (acc=0.00)
+    eval rule_table_with_total_net_revenue_under_segment_results: cached (acc=0.10)
+    eval rule_total_revenue_row: cached (acc=0.20)
+  Saved summary: results/financebench/eval/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10/summary.json
+
+======================================================================
+Question: What is total assets at year-end (from the audited balance sheet)?
+Slug:     what_is_total_assets_at_yearend_from_the_audited_balance_she_10
+Rules:    43
+
+  Split: sampled (10 docs)
+    eval rule_assets_section_table_with_total_assets: cached (acc=0.50)
+    eval rule_balance_sheet_heading_nearby_table: cached (acc=0.50)
+    eval rule_balance_sheet_heading_page: cached (acc=0.50)
+    eval rule_balance_sheet_on_early_financial_pages: cached (acc=0.10)
+    eval rule_balance_sheet_section_header: cached (acc=0.00)
+    eval rule_balance_sheet_section_header_with_total_assets: cached (acc=0.00)
+    eval rule_condensed_consolidated_balance_sheet_table: cached (acc=0.00)
+    eval rule_consolidated_balance_sheet_table: cached (acc=0.10)
+    eval rule_earnings_release_balance_sheet_table: cached (acc=0.00)
+    eval rule_exclude_non_10k_10q_8k_by_balance_sheet_presence: cached (acc=0.70)
+    eval rule_intel_consolidated_balance_sheets: cached (acc=0.00)
+    eval rule_item_8_balance_sheet_table: cached (acc=0.00)
+    eval rule_page_with_balance_sheet_and_total_assets: cached (acc=0.40)
+    eval rule_path_contains_balance_sheet: cached (acc=0.50)
+    eval rule_path_contains_condensed_consolidated_financial_statements: cached (acc=0.10)
+    eval rule_path_contains_item_1_financial_statements: cached (acc=0.10)
+    eval rule_path_contains_item_8_financial_statements: cached (acc=0.30)
+    eval rule_table_with_assets_and_liabilities_and_equity: cached (acc=0.30)
+    eval rule_table_with_assets_header_and_date_columns: cached (acc=0.30)
+    eval rule_table_with_in_millions_and_total_assets: cached (acc=0.40)
+    eval rule_table_with_total_assets_and_accounts_receivable: cached (acc=0.50)
+    eval rule_table_with_total_assets_and_assets_row_header: cached (acc=0.50)
+    eval rule_table_with_total_assets_and_audited_context: cached (acc=0.30)
+    eval rule_table_with_total_assets_and_cash_and_equivalents: cached (acc=0.50)
+    eval rule_table_with_total_assets_and_current_assets: cached (acc=0.50)
+    eval rule_table_with_total_assets_and_first_col_row_header: cached (acc=0.70)
+    eval rule_table_with_total_assets_and_goodwill: cached (acc=0.40)
+    eval rule_table_with_total_assets_and_inventory: cached (acc=0.30)
+    eval rule_table_with_total_assets_and_other_assets: cached (acc=0.40)
+    eval rule_table_with_total_assets_and_property_plant_equipment: cached (acc=0.50)
+    eval rule_table_with_total_assets_and_stockholders_equity: cached (acc=0.50)
+    eval rule_table_with_total_assets_and_total_assets_text_only: cached (acc=0.70)
+    eval rule_table_with_total_assets_and_total_current_assets: cached (acc=0.50)
+    eval rule_table_with_total_assets_and_total_liabilities: cached (acc=0.50)
+    eval rule_table_with_total_assets_and_total_liabilities_equity: cached (acc=0.30)
+    eval rule_table_with_total_assets_and_two_or_more_date_columns: cached (acc=0.70)
+    eval rule_table_with_total_assets_and_unaudited: cached (acc=0.20)
+    eval rule_table_with_total_assets_near_top_of_doc: cached (acc=0.10)
+    eval rule_table_with_total_assets_not_cash_flow: cached (acc=0.70)
+    eval rule_table_with_year_end_columns_and_total_assets: cached (acc=0.60)
+    eval rule_total_assets_in_section_header_text: cached (acc=0.00)
+    eval rule_total_assets_row_any_table: cached (acc=0.70)
+    eval rule_total_assets_row_in_balance_sheet_table: cached (acc=0.50)
+  Saved summary: results/financebench/eval/what_is_total_assets_at_yearend_from_the_audited_balance_she_10/summary.json
+
+======================================================================
+Question: What is the registrant's telephone number?
+Slug:     what_is_the_registrants_telephone_number_10
+Rules:    47
+
+  Split: sampled (10 docs)
+    eval rule_10k_cover_phone_after_zip: cached (acc=0.20)
+    eval rule_10q_cover_phone_parenthetical: cached (acc=0.50)
+    eval rule_8k_cover_phone_phrase: cached (acc=0.40)
+    eval rule_cover_page_company_block_with_phone_and_ein: cached (acc=0.00)
+    eval rule_cover_page_company_block_with_phone_and_exact_name: cached (acc=0.00)
+    eval rule_cover_page_phone_after_company_name: cached (acc=0.70)
+    eval rule_cover_page_phone_before_table_of_contents: cached (acc=0.70)
+    eval rule_cover_page_phone_not_in_risk_or_business_sections: cached (acc=0.70)
+    eval rule_cover_page_phone_with_company_metadata_keywords: cached (acc=0.10)
+    eval rule_page1_area_code_phrase: cached (acc=0.40)
+    eval rule_page1_phone_number_pattern: cached (acc=0.70)
+    eval rule_page1_phone_number_pattern_excluding_non_sec: cached (acc=0.70)
+    eval rule_page1_telephone_phrase: cached (acc=0.40)
+    eval rule_phone_after_principal_executive_offices: cached (acc=0.10)
+    eval rule_phone_in_address_and_telephone_line: cached (acc=0.00)
+    eval rule_phone_in_body_depth_2_or_3: cached (acc=0.70)
+    eval rule_phone_in_bold_small_cover_text: cached (acc=0.40)
+    eval rule_phone_in_company_cover_block_before_securities_registered: cached (acc=0.60)
+    eval rule_phone_in_company_cover_text_only: cached (acc=0.30)
+    eval rule_phone_in_company_header_block: cached (acc=0.70)
+    eval rule_phone_in_cover_company_h1_or_h2: cached (acc=0.10)
+    eval rule_phone_in_cover_company_h1_textspan: cached (acc=0.00)
+    eval rule_phone_in_cover_header_or_body_with_area_code: cached (acc=0.50)
+    eval rule_phone_in_cover_header_or_body_with_telephone_word: cached (acc=0.50)
+    eval rule_phone_in_cover_metadata_cluster: cached (acc=0.70)
+    eval rule_phone_in_cover_page_excluding_press_release: cached (acc=0.70)
+    eval rule_phone_in_cover_page_metadata_band: cached (acc=0.70)
+    eval rule_phone_in_cover_page_with_company_h1_present: cached (acc=0.60)
+    eval rule_phone_in_cover_page_with_form_type: cached (acc=0.70)
+    eval rule_phone_in_first_25_spans: cached (acc=0.70)
+    eval rule_phone_in_first_page_first_30_spans: cached (acc=0.70)
+    eval rule_phone_in_h1_company_textspan_cover: cached (acc=0.00)
+    eval rule_phone_in_h2_header: cached (acc=0.10)
+    eval rule_phone_in_h2_with_registrant_label_below: cached (acc=0.10)
+    eval rule_phone_in_non_table_non_list_cover: cached (acc=0.70)
+    eval rule_phone_in_page1_section_header_or_text: cached (acc=0.70)
+    eval rule_phone_in_parenthetical_registrant_line: cached (acc=0.10)
+    eval rule_phone_in_same_or_next_span_after_address: cached (acc=0.50)
+    eval rule_phone_in_same_path_as_company_name: cached (acc=0.60)
+    eval rule_phone_in_section_header_with_registrant_phrase: cached (acc=0.00)
+    eval rule_phone_in_span_with_principal_executive_or_zip: cached (acc=0.10)
+    eval rule_phone_in_text_or_textspan_anywhere: cached (acc=0.70)
+    eval rule_phone_in_text_with_registrant_phrase: cached (acc=0.40)
+    eval rule_phone_in_textspan_anywhere: cached (acc=0.00)
+    eval rule_phone_near_address_keywords: cached (acc=0.20)
+    eval rule_phone_near_zip_code: cached (acc=0.20)
+    eval rule_phone_under_exact_name_registrant: cached (acc=0.00)
+  Saved summary: results/financebench/eval/what_is_the_registrants_telephone_number_10/summary.json
+
+======================================================================
+Question: How many shares of common stock were outstanding as of the cover-page reference date?
+Slug:     how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10
+Rules:    42
+
+  Split: sampled (10 docs)
+    eval rule_any_span_common_stock_outstanding: cached (acc=0.40)
+    eval rule_any_span_outstanding_share_count: cached (acc=0.50)
+    eval rule_any_table_common_stock_outstanding: cached (acc=0.00)
+    eval rule_balance_sheet_authorized_issued_outstanding_row: cached (acc=0.00)
+    eval rule_balance_sheet_common_stock_issued_outstanding: cached (acc=0.00)
+    eval rule_balance_sheet_common_stock_row_cell: cached (acc=0.00)
+    eval rule_cover_page_company_header_block: cached (acc=0.00)
+    eval rule_cover_page_h1_with_outstanding: cached (acc=0.00)
+    eval rule_page1_balance_sheet_cover_table: cached (acc=0.00)
+    eval rule_page1_common_shares_outstanding: cached (acc=0.00)
+    eval rule_page1_common_stock_outstanding_as_of: cached (acc=0.10)
+    eval rule_page1_common_stock_row_with_two_dates: cached (acc=0.00)
+    eval rule_page1_company_block_followed_by_outstanding: cached (acc=0.00)
+    eval rule_page1_cover_page_company_section_body: cached (acc=0.30)
+    eval rule_page1_cover_page_million_phrase: cached (acc=0.10)
+    eval rule_page1_cover_page_number_of_shares_outstanding_or_balance_sheet: cached (acc=0.30)
+    eval rule_page1_cover_page_numeric_line: cached (acc=0.10)
+    eval rule_page1_cover_page_numeric_line_after_label: cached (acc=0.10)
+    eval rule_page1_cover_page_reference_date: cached (acc=0.30)
+    eval rule_page1_cover_page_shares_issued_and_outstanding_table: cached (acc=0.00)
+    eval rule_page1_cover_page_shares_outstanding_number_phrase: cached (acc=0.20)
+    eval rule_page1_form10k_or_10q_cover_disclosure: cached (acc=0.00)
+    eval rule_page1_h2_or_body_outstanding: cached (acc=0.30)
+    eval rule_page1_issued_and_outstanding_table_row: cached (acc=0.00)
+    eval rule_page1_number_of_shares_common_stock_outstanding: cached (acc=0.10)
+    eval rule_page1_number_of_shares_outstanding: cached (acc=0.20)
+    eval rule_page1_number_of_shares_outstanding_of_common_stock: cached (acc=0.10)
+    eval rule_page1_number_of_shares_outstanding_short_form: cached (acc=0.20)
+    eval rule_page1_outstanding_cover_page_date: cached (acc=0.20)
+    eval rule_page1_outstanding_near_end_of_cover: cached (acc=0.30)
+    eval rule_page1_outstanding_of_registrants_common_stock: cached (acc=0.20)
+    eval rule_page1_outstanding_sentence: cached (acc=0.30)
+    eval rule_page1_shares_outstanding_as_of: cached (acc=0.10)
+    eval rule_page1_text_after_market_value: cached (acc=0.20)
+    eval rule_page1_text_with_million_outstanding: cached (acc=0.10)
+    eval rule_page1_text_with_numbered_outstanding_sentence: cached (acc=0.20)
+    eval rule_page1_text_with_outstanding_and_common: cached (acc=0.30)
+    eval rule_page1_text_with_outstanding_and_date: cached (acc=0.30)
+    eval rule_page1_text_with_outstanding_and_registrant: cached (acc=0.30)
+    eval rule_page1_text_with_outstanding_and_stock: cached (acc=0.30)
+    eval rule_page1_text_with_shares_issued_and_outstanding: cached (acc=0.00)
+    eval rule_page1_top_half_candidate: cached (acc=0.20)
+  Saved summary: results/financebench/eval/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10/summary.json
+
+======================================================================
+Question: What is the registrant's exact name?
+Slug:     what_is_the_registrants_exact_name_10
+Rules:    23
+
+  Split: sampled (10 docs)
+    eval rule_cover_page_company_name_from_path_root: cached (acc=0.60)
+    eval rule_cover_page_exact_name_h2_header: cached (acc=0.10)
+    eval rule_cover_page_first_company_like_header_after_form: cached (acc=0.70)
+    eval rule_cover_page_h1_before_exact_name_text: cached (acc=0.70)
+    eval rule_cover_page_h1_with_many_identity_children: cached (acc=0.60)
+    eval rule_cover_page_identity_cluster_header: cached (acc=0.70)
+    eval rule_cover_page_parent_of_address_block: cached (acc=0.40)
+    eval rule_cover_page_parent_of_telephone_block: cached (acc=0.20)
+    eval rule_cover_page_section_header_with_exact_name_child: cached (acc=0.70)
+    eval rule_cover_page_text_before_exact_name_when_not_header: cached (acc=0.70)
+    eval rule_exact_name_parent_h1: cached (acc=0.70)
+    eval rule_news_release_company_header_before_news_release: cached (acc=0.00)
+    eval rule_news_release_top_company_header: cached (acc=0.40)
+    eval rule_page1_before_state_or_ein: cached (acc=0.40)
+    eval rule_page1_bold_text_company_name_near_top: cached (acc=0.70)
+    eval rule_page1_company_name_before_state_value: cached (acc=0.60)
+    eval rule_page1_company_name_text_with_exact_name_in_text_span: cached (acc=0.70)
+    eval rule_page1_first_h1_not_form_or_commission: cached (acc=0.50)
+    eval rule_page1_h1_with_body_child_exact_name: cached (acc=0.60)
+    eval rule_page1_large_bold_company_header: cached (acc=0.60)
+    eval rule_page1_path_text_is_company_name: cached (acc=0.60)
+    eval rule_parent_of_cover_page_identity_block: cached (acc=0.40)
+    eval rule_path_text_single_company_name: cached (acc=0.60)
+  Saved summary: results/financebench/eval/what_is_the_registrants_exact_name_10/summary.json
+
+======================================================================
+Question: What is the state (or other jurisdiction) of incorporation and the IRS Employer Identification Number?
+Slug:     what_is_the_state_or_other_jurisdiction_of_incorporation_and_10
+Rules:    35
+
+  Split: sampled (10 docs)
+    eval rule_body_text_with_ein_label: cached (acc=0.00)
+    eval rule_body_text_with_jurisdiction_label: cached (acc=0.00)
+    eval rule_combined_state_and_ein_same_span: cached (acc=0.10)
+    eval rule_company_cover_block_all_page1: cached (acc=0.50)
+    eval rule_cover_block_with_state_and_file_and_ein: cached (acc=0.10)
+    eval rule_cover_metadata_after_exact_name: cached (acc=0.70)
+    eval rule_cover_metadata_before_address: cached (acc=0.20)
+    eval rule_cover_path_form_10q_or_10k: cached (acc=0.10)
+    eval rule_ein_pattern_anywhere: cached (acc=0.10)
+    eval rule_exclude_non_sec_templates: cached (acc=0.70)
+    eval rule_h2_cover_headers_with_jurisdiction_or_ein: cached (acc=0.20)
+    eval rule_page1_after_form_before_table_of_contents: cached (acc=0.70)
+    eval rule_page1_body_metadata_values: cached (acc=0.40)
+    eval rule_page1_body_sequence_state_then_ein: cached (acc=0.50)
+    eval rule_page1_bold_state_name_or_ein: cached (acc=0.60)
+    eval rule_page1_company_header_children: cached (acc=0.60)
+    eval rule_page1_cover_answer_window: cached (acc=0.20)
+    eval rule_page1_cover_cluster_between_exact_name_and_address: cached (acc=0.20)
+    eval rule_page1_cover_metadata_breadcrumb: cached (acc=0.40)
+    eval rule_page1_cover_metadata_font_small: cached (acc=0.70)
+    eval rule_page1_exact_name_block: cached (acc=0.00)
+    eval rule_page1_first_20_spans_with_cover_signals: cached (acc=0.30)
+    eval rule_page1_h1_h2_cover_metadata: cached (acc=0.20)
+    eval rule_page1_h2_sequence_state_then_ein: cached (acc=0.00)
+    eval rule_page1_jurisdiction_or_ein_keywords: cached (acc=0.30)
+    eval rule_page1_non_table_non_list_cover_metadata: cached (acc=0.30)
+    eval rule_page1_section_header_values: cached (acc=0.10)
+    eval rule_page1_state_ein_and_address_triplet: cached (acc=0.70)
+    eval rule_page1_state_names_common: cached (acc=0.00)
+    eval rule_page1_text_after_company_name: cached (acc=0.50)
+    eval rule_page1_top_quarter: cached (acc=0.00)
+    eval rule_path_contains_company_name_page1: cached (acc=0.60)
+    eval rule_separate_state_and_ein_adjacent_page1: cached (acc=0.10)
+    eval rule_state_or_ein_in_text_span: cached (acc=0.20)
+    eval rule_state_value_near_ein_page1: cached (acc=0.10)
+  Saved summary: results/financebench/eval/what_is_the_state_or_other_jurisdiction_of_incorporation_and_10/summary.json
+
+======================================================================
+Question: What is the address of principal executive offices and ZIP code?
+Slug:     what_is_the_address_of_principal_executive_offices_and_zip_c_10
+Rules:    38
+
+  Split: sampled (10 docs)
+    rule_apply rule_page1_address_like_with_city_state_zip: 9 docs remaining
+    rule_apply rule_page1_address_like_with_exact_answer_shape: 10 docs remaining
+    rule_apply rule_page1_address_like_with_exact_name_block: 10 docs remaining
+    rule_apply rule_page1_address_like_with_phone_nearby: 10 docs remaining
+    rule_apply rule_page1_address_like_with_phone_same_span: 10 docs remaining
+    rule_apply rule_page1_address_like_with_registrant_context: 10 docs remaining
+    rule_apply rule_page1_address_like_with_state_name: 10 docs remaining
+    rule_apply rule_page1_address_like_with_street_suffix: 10 docs remaining
+    rule_apply rule_page1_address_like_with_zip_pattern: 10 docs remaining
+    rule_apply rule_page1_address_or_zip_keyword: 10 docs remaining
+    rule_apply rule_page1_after_ein_before_phone: 10 docs remaining
+    rule_apply rule_page1_body_text_address_only: 10 docs remaining
+    rule_apply rule_page1_bold_address_like_with_label_in_text_span: 10 docs remaining
+    rule_apply rule_page1_bold_address_like_with_path_text: 10 docs remaining
+    rule_apply rule_page1_company_block_address_lines: 10 docs remaining
+    rule_apply rule_page1_h1_or_h2_with_address_in_text_span: 10 docs remaining
+    rule_apply rule_page1_h2_sequence_address_zip: 10 docs remaining
+    rule_apply rule_page1_section_header_address_only: 10 docs remaining
+    rule_apply rule_page1_text_address_like_followed_by_address_label: 10 docs remaining
+    rule_apply rule_page1_text_before_zip_code_label: 10 docs remaining
+    rule_apply rule_page1_top_half_address_like: 10 docs remaining
+    rule_apply rule_page1_zip_code_label_spans: 10 docs remaining
+    rule_apply rule_press_release_company_header_address: 10 docs remaining
+    rule_apply rule_press_release_page1_address_child_of_company: 10 docs remaining
+    eval rule_10q_page1_address_of_principal_executive_offices_zip ...
+      acc=0.00  cost=0.00005
+    eval rule_8k_page1_address_of_principal_executive_offices_and_zip ...
+      acc=0.10  cost=0.00014
+    eval rule_address_line_before_parenthetical_address_label ...
+      acc=0.50  cost=0.00026
+    eval rule_address_line_with_company_city_state_zip ...
+      acc=0.50  cost=0.00048
+    eval rule_page1_address_block_between_state_and_phone ...
+      acc=0.30  cost=0.00575
+    eval rule_page1_address_label_spans ...
+      acc=0.20  cost=0.00039
+    eval rule_page1_address_like_excluding_financial_tables ...
+      acc=0.70  cost=0.00299
+    eval rule_page1_address_like_in_text_or_text_span ...
+      acc=0.70  cost=0.00638
+    eval rule_page1_address_like_near_company_name ...
+      acc=0.70  cost=0.00298
+    eval rule_page1_address_like_near_ein ...
+      acc=0.40  cost=0.00055
+    eval rule_page1_address_like_not_sec_header ...
+      acc=0.70  cost=0.00570
+    eval rule_page1_address_like_under_form_header ...
+      acc=0.10  cost=0.00129
+    eval rule_page1_address_like_with_body_level_2_or_3 ...
+      acc=0.40  cost=0.00201
+    eval rule_page1_address_like_with_bold_or_header ...
+      acc=0.70  cost=0.00158
+    eval rule_page1_address_like_with_city_state_zip ...
+      acc=0.40  cost=0.00034
+    eval rule_page1_address_like_with_exact_answer_shape ...
+      acc=0.50  cost=0.00048
+    eval rule_page1_address_like_with_exact_name_block ...
+      acc=0.30  cost=0.00136
+    eval rule_page1_address_like_with_phone_nearby ...
+      acc=0.40  cost=0.00045
+    eval rule_page1_address_like_with_phone_same_span ...
+      acc=0.00  cost=0.00029
+    eval rule_page1_address_like_with_registrant_context ...
+      acc=0.70  cost=0.00668
+    eval rule_page1_address_like_with_state_name ...
+      acc=0.50  cost=0.00150
+    eval rule_page1_address_like_with_street_suffix ...
+      acc=0.50  cost=0.00038
+    eval rule_page1_address_like_with_zip_pattern ...
+      acc=0.50  cost=0.00112
+    eval rule_page1_address_or_zip_keyword ...
+      acc=0.30  cost=0.00040
+    eval rule_page1_after_ein_before_phone ...
+      acc=0.30  cost=0.00575
+    eval rule_page1_body_text_address_only ...
+      acc=0.40  cost=0.00864
+    eval rule_page1_bold_address_like_with_label_in_text_span ...
+      acc=0.20  cost=0.00006
+    eval rule_page1_bold_address_like_with_path_text ...
+      acc=0.30  cost=0.00033
+    eval rule_page1_company_block_address_lines ...
+      acc=0.60  cost=0.00507
+    eval rule_page1_h1_or_h2_with_address_in_text_span ...
+      acc=0.00  cost=0.00053
+    eval rule_page1_h2_sequence_address_zip ...
+      acc=0.00  cost=0.00000
+    eval rule_page1_section_header_address_only ...
+      acc=0.30  cost=0.00033
+    eval rule_page1_text_address_like_followed_by_address_label ...
+      acc=0.30  cost=0.00036
+    eval rule_page1_text_before_zip_code_label ...
+      acc=0.20  cost=0.00035
+    eval rule_page1_top_half_address_like ...
+      acc=0.70  cost=0.00154
+    eval rule_page1_zip_code_label_spans ...
+      acc=0.10  cost=0.00028
+    eval rule_press_release_company_header_address ...
+      acc=0.00  cost=0.00026
+    eval rule_press_release_page1_address_child_of_company ...
+      acc=0.30  cost=0.00402
+  Saved summary: results/financebench/eval/what_is_the_address_of_principal_executive_offices_and_zip_c_10/summary.json
+
+======================================================================
+Question: What is/are the trading symbol(s) and listing exchange(s)?
+Slug:     what_isare_the_trading_symbols_and_listing_exchanges_10
+Rules:    38
+
+  Split: sampled (10 docs)
+    rule_apply rule_business_sentence_with_symbol_quotes: 10 docs remaining
+    rule_apply rule_business_sentence_with_trades_on_exchange: 10 docs remaining
+    rule_apply rule_cover_company_header: 10 docs remaining
+    rule_apply rule_cover_span_with_embedded_common_stock_and_exchange: 10 docs remaining
+    rule_apply rule_cover_span_with_embedded_section12b_and_exchange: 10 docs remaining
+    rule_apply rule_cover_span_with_embedded_symbol_and_exchange: 10 docs remaining
+    rule_apply rule_cover_under_company_header: 10 docs remaining
+    rule_apply rule_exclude_non_sec_filing_like_intel_release: 10 docs remaining
+    rule_apply rule_item1_business_exchange_sentence: 10 docs remaining
+    rule_apply rule_item1_business_symbol_sentence: 10 docs remaining
+    rule_apply rule_item1_business_ticker_sentence: 10 docs remaining
+    rule_apply rule_item5_market_for_common_equity_toc: 10 docs remaining
+    rule_apply rule_page1_all_tables: 10 docs remaining
+    rule_apply rule_page1_bold_small_registration_lines: 10 docs remaining
+    rule_apply rule_page1_common_stock_phrase: 10 docs remaining
+    rule_apply rule_page1_company_cover_block: 10 docs remaining
+    rule_apply rule_page1_company_cover_block_with_answer_terms: 10 docs remaining
+    rule_apply rule_page1_exchange_name_values: 10 docs remaining
+    rule_apply rule_page1_exchange_registered_phrase: 10 docs remaining
+    rule_apply rule_page1_near_top: 10 docs remaining
+    rule_apply rule_page1_registration_cluster_keywords: 10 docs remaining
+    rule_apply rule_page1_section12b_phrase: 10 docs remaining
+    rule_apply rule_page1_symbol_values: 10 docs remaining
+    rule_apply rule_page1_table_with_class_symbol_exchange_triplet: 10 docs remaining
+    rule_apply rule_page1_table_with_exchange_header: 10 docs remaining
+    rule_apply rule_page1_table_with_trading_symbol_header: 10 docs remaining
+    rule_apply rule_page1_text_after_common_stock: 10 docs remaining
+    rule_apply rule_page1_text_after_exchange_header: 10 docs remaining
+    rule_apply rule_page1_text_after_section12b: 10 docs remaining
+    rule_apply rule_page1_text_after_title_of_each_class: 10 docs remaining
+    rule_apply rule_page1_text_after_trading_symbol: 10 docs remaining
+    rule_apply rule_page1_title_of_each_class_phrase: 10 docs remaining
+    rule_apply rule_page1_trading_symbol_phrase: 10 docs remaining
+    rule_apply rule_table_cells_class_symbol_exchange_row: 10 docs remaining
+    rule_apply rule_table_cells_symbol_exchange: 10 docs remaining
+    rule_apply rule_table_row_common_stock: 10 docs remaining
+    rule_apply rule_table_row_contains_exchange_value: 10 docs remaining
+    rule_apply rule_table_row_contains_symbol_and_exchange: 10 docs remaining
+    eval rule_business_sentence_with_symbol_quotes ...
+      acc=0.30  cost=0.00074
+    eval rule_business_sentence_with_trades_on_exchange ...
+      acc=0.30  cost=0.00049
+    eval rule_cover_company_header ...
+      acc=0.00  cost=0.00037
+    eval rule_cover_span_with_embedded_common_stock_and_exchange ...
+      acc=0.00  cost=0.00016
+    eval rule_cover_span_with_embedded_section12b_and_exchange ...
+      acc=0.00  cost=0.00002
+    eval rule_cover_span_with_embedded_symbol_and_exchange ...
+      acc=0.00  cost=0.00016
+    eval rule_cover_under_company_header ...
+      acc=0.20  cost=0.01307
+    eval rule_exclude_non_sec_filing_like_intel_release ...
+      acc=0.00  cost=0.00051
+    eval rule_item1_business_exchange_sentence ...
+      acc=0.30  cost=0.00186
+    eval rule_item1_business_symbol_sentence ...
+      acc=0.30  cost=0.00074
+    eval rule_item1_business_ticker_sentence ...
+      acc=0.30  cost=0.00074
+    eval rule_item5_market_for_common_equity_toc ...
+      acc=0.00  cost=0.00364
+    eval rule_page1_all_tables ...
+      acc=0.00  cost=0.00292
+    eval rule_page1_bold_small_registration_lines ...
+      acc=0.10  cost=0.00185
+    eval rule_page1_common_stock_phrase ...
+      acc=0.00  cost=0.00125
+    eval rule_page1_company_cover_block ...
+      acc=0.00  cost=0.00010
+    eval rule_page1_company_cover_block_with_answer_terms ...
+      acc=0.00  cost=0.00000
+    eval rule_page1_exchange_name_values ...
+      acc=0.00  cost=0.00028
+    eval rule_page1_exchange_registered_phrase ...
+      acc=0.00  cost=0.00026
+    eval rule_page1_near_top ...
+      acc=0.10  cost=0.01681
+    eval rule_page1_registration_cluster_keywords ...
+      acc=0.00  cost=0.00169
+    eval rule_page1_section12b_phrase ...
+      acc=0.00  cost=0.00023
+    eval rule_page1_symbol_values ...
+      acc=0.00  cost=0.00002
+    eval rule_page1_table_with_class_symbol_exchange_triplet ...
+      acc=0.00  cost=0.00016
+    eval rule_page1_table_with_exchange_header ...
+      acc=0.00  cost=0.00016
+    eval rule_page1_table_with_trading_symbol_header ...
+      acc=0.00  cost=0.00016
+    eval rule_page1_text_after_common_stock ...
+      acc=0.20  cost=0.00551
+    eval rule_page1_text_after_exchange_header ...
+      acc=0.10  cost=0.00242
+    eval rule_page1_text_after_section12b ...
+      acc=0.20  cost=0.00115
+    eval rule_page1_text_after_title_of_each_class ...
+      acc=0.20  cost=0.00168
+    eval rule_page1_text_after_trading_symbol ...
+      acc=0.30  cost=0.00246
+    eval rule_page1_title_of_each_class_phrase ...
+      acc=0.00  cost=0.00022
+    eval rule_page1_trading_symbol_phrase ...
+      acc=0.00  cost=0.00020
+    eval rule_table_cells_class_symbol_exchange_row ...
+      acc=0.00  cost=0.00006
+    eval rule_table_cells_symbol_exchange ...
+      acc=0.00  cost=0.00028
+    eval rule_table_row_common_stock ...
+      acc=0.00  cost=0.05479
+    eval rule_table_row_contains_exchange_value ...
+      acc=0.00  cost=0.00016
+    eval rule_table_row_contains_symbol_and_exchange ...
+      acc=0.00  cost=0.00016
+  Saved summary: results/financebench/eval/what_isare_the_trading_symbols_and_listing_exchanges_10/summary.json
+
+
+Building final aggregate summary...
+Saved aggregate: results/financebench/eval_individual_all/summary.json
+Done.

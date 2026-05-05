@@ -1,0 +1,231 @@
+Question: What is total revenue for the most recent fiscal year (from the audited income statement)?
+Slug: what_is_total_revenue_for_the_most_recent_fiscal_year_from_t
+Docs (N): 10
+Latency: 182.469s
+Iterations: 27
+Input tokens: 0
+Output tokens: 0
+Total LLM calls: 40
+Merge accuracy: 9/10 (0.90)
+
+=== Step 1: summarize_answer_locations ===
+Input: {}
+Output:
+doc_name               page  label            level   bold  all_cap  path_text               answer_snippet
+-----------------------------------------------------------------------------------------------------------
+AMCOR_2019_10K         N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: 9,458.2 million)
+COSTCO_2017_10K        18    table            Body    0     0        Costco Wholesale Corpo  | As of and for the year ended | Sept. 3
+BOEING_2018_10K        N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: $101,127 million)
+AMAZON_2018_10K        N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: $232,887 million)
+EBAY_2021_10K          N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: $10,420 million)
+AMAZON_2016_10K        N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: $135,987 million)
+CORNING_2022_10K       N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: 14,189 million)
+NIKE_2021_10K          N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: $44,538 million)
+LOCKHEEDMARTIN_2022_10K N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: $65,984 million)
+JOHNSON_JOHNSON_2022_10K 28    text             Body    0     0        JOHNSON & JOHNSON | PA  In 2022, worldwide sales increased 1.3% 
+
+=== Step 2: write_rule ===
+Input: {"rule_name": "rule_item8_financial_statements_income_statement", "code": "def rule_item8_financial_statements_income_statement(doc: dict) -> list[dict]:\n    \"\"\"Retrieve spans in Item 8 / financial statements areas, especially income statement and revenue tables.\"\"\"\n    try:\n        import re\n        texts = doc.get(\"texts\", [])\n        out = []\n        for span in texts:\n            text = (span.get(\"text\") or \"\")\n            path = ((span.get(\"structure\") or {}).get(\"path_text\") or \"\")\n            label = span.get(\"label\") or \"\"\n            hay = (path + \"\\n\" + text).lower()\n            item8 = (\n                \"item 8\" in hay\n                or \"financial statements and supplementary data\" in hay\n                or \"financial statements\" in hay\n                or \"supplementary data\" in hay\n            )\n            income_stmt = (\n                \"statement of income\" in hay\n                or \"statements of income\" in hay\n                or \"income statement\" in hay\n                or \"statements of earnings\" in hay\n                or \"statement of earnings\" in hay\n                or \"statement of operations\" in hay\n                or \"statements of operations\" in hay\n                or \"consolidated revenue\" in hay\n                or \"net sales\" in hay\n                or \"total revenue\" in hay\n                or \"sales to customers\" in hay\n            )\n            if (item8 and (label in {\"table\", \"text\", \"section_header\"})) or income_stmt:\n                out.append(span)\n        return out\n    except Exception:\n        return []"}
+Output:
+OK: rule registered — rule_item8_financial_statements_income_statement
+
+=== Step 3: test_rule ===
+Input: {"rule_name": "rule_item8_financial_statements_income_statement"}
+Output:
+doc_name               hit    retrieved_tokens  retrieved_snippet
+-----------------------------------------------------------------
+AMCOR_2019_10K         ✗      17047             '| Item 1. | Business | 6 |\n| --- | --- | --- |\n| Item 1A.
+COSTCO_2017_10K        ✓      26444             '|  |  | Page |\n| --- | --- | --- |\n| PART I |  |  |\n| It
+BOEING_2018_10K        ✗      36022             '| PART I |  |  | Page |\n| --- | --- | --- | --- |\n|  | It
+AMAZON_2018_10K        ✗      36106             '|  |  | Page |\n| --- | --- | --- |\n| PART I |  |  |\n| It
+EBAY_2021_10K          ✗      37014             '|  |  | Page |\n| --- | --- | --- |\n| Part |  |  |\n| Item
+AMAZON_2016_10K        ✗      35347             '|  |  | Page |\n| --- | --- | --- |\n| PART I |  |  |\n| It
+CORNING_2022_10K       ✗      14032             'The Optical Communications segment represented 34% of Corni
+NIKE_2021_10K          ✗      40760             '|  |  | PAGE |\n| --- | --- | --- |\n| PART I |  | 1 |\n| I
+LOCKHEEDMARTIN_2022_10K ✗      50924             '| PART I |  | Page |\n| --- | --- | --- |\n| ITEM 1. | Busi
+JOHNSON_JOHNSON_2022_10K ✗      27906             '| 1 | Business | 1 |\n| --- | --- | --- |\n|  | General | 1
+
+Hit rate: 1/10 (0.10)
+
+=== Step 4: show_uncovered_docs ===
+Input: {}
+Output:
+Uncovered (no registered rule hits):
+  - AMCOR_2019_10K
+  - BOEING_2018_10K
+  - AMAZON_2018_10K
+  - EBAY_2021_10K
+  - AMAZON_2016_10K
+  - CORNING_2022_10K
+  - NIKE_2021_10K
+  - LOCKHEEDMARTIN_2022_10K
+  - JOHNSON_JOHNSON_2022_10K
+
+Covered: 1/10
+
+=== Step 5: diagnose_failing_doc ===
+Input: {"doc_name": "AMCOR_2019_10K"}
+Output:
+
+
+=== Step 6: diagnose_failing_doc ===
+Input: {"doc_name": "BOEING_2018_10K"}
+Output:
+
+
+=== Step 7: diagnose_failing_doc ===
+Input: {"doc_name": "EBAY_2021_10K"}
+Output:
+
+
+=== Step 8: diagnose_failing_doc ===
+Input: {"doc_name": "AMAZON_2018_10K"}
+Output:
+
+
+=== Step 9: diagnose_failing_doc ===
+Input: {"doc_name": "AMAZON_2016_10K"}
+Output:
+
+
+=== Step 10: diagnose_failing_doc ===
+Input: {"doc_name": "CORNING_2022_10K"}
+Output:
+
+
+=== Step 11: diagnose_failing_doc ===
+Input: {"doc_name": "NIKE_2021_10K"}
+Output:
+
+
+=== Step 12: diagnose_failing_doc ===
+Input: {"doc_name": "LOCKHEEDMARTIN_2022_10K"}
+Output:
+
+
+=== Step 13: diagnose_failing_doc ===
+Input: {"doc_name": "JOHNSON_JOHNSON_2022_10K"}
+Output:
+=== Diagnosis: AMAZON_2016_10K ===
+
+Ground truth: '$135,987 million'
+
+Rule results:
+  rule_item8_financial_statements_income_statement:  retrieved='|  |  | Page |\n| --- | --- | --- |\n| PART I |  |  |\n| Item 1. | Business | 3 |\n| Item 1A. | Risk Fac'
+
+Answer location (inspect_answer_context):
+  Answer not found by substring match in AMAZON_2016_10K. GT: '$135,987 million'
+
+Structural diff vs. passing docs (1 passing):
+  This doc (AMAZON_2016_10K): answer span NOT LOCATED by substring match
+  Passing docs (up to 3 shown):
+    COSTCO_2017_10K: label=table  level=Body  bold=0  all_cap=0  path_text='Costco Wholesale Corporation | PART II | Item 6—Selected Financial Data | SELECTED FINANCIAL DATA (dollars in millions, except per share data)'
+
+=== Step 14: write_rule ===
+Input: {"rule_name": "rule_partii_sales_revenue_tables_text", "code": "def rule_partii_sales_revenue_tables_text(doc: dict) -> list[dict]:\n    \"\"\"Retrieve Part II financial/MD&A spans mentioning sales or revenue, favoring substantive pages over TOCs.\"\"\"\n    try:\n        texts = doc.get(\"texts\", [])\n        out = []\n        for span in texts:\n            text = (span.get(\"text\") or \"\")\n            path = ((span.get(\"structure\") or {}).get(\"path_text\") or \"\")\n            label = span.get(\"label\") or \"\"\n            page = span.get(\"page_no\") or 0\n            hay = (path + \"\\n\" + text).lower()\n            in_partii = \"part ii\" in hay or \"item 7\" in hay or \"item 8\" in hay or \"item 6\" in hay\n            sales_rev = any(k in hay for k in [\n                \"net sales\", \"total revenue\", \"total revenues\", \"revenue\", \"revenues\",\n                \"worldwide sales\", \"analysis of consolidated sales\", \"sales by segment\",\n                \"statement of earnings\", \"statement of income\", \"statement of operations\",\n                \"selected financial data\"\n            ])\n            substantive = page > 3 or any(k in hay for k in [\n                \"as of and for the year ended\", \"in millions\", \"in billions\", \"dollars in millions\", \"dollars in billions\"\n            ])\n            if label in {\"table\", \"text\", \"section_header\"} and in_partii and sales_rev and substantive:\n                out.append(span)\n        return out\n    except Exception:\n        return []"}
+Output:
+OK: rule registered — rule_partii_sales_revenue_tables_text
+
+=== Step 15: test_rule ===
+Input: {"rule_name": "rule_partii_sales_revenue_tables_text"}
+Output:
+doc_name               hit    retrieved_tokens  retrieved_snippet
+-----------------------------------------------------------------
+AMCOR_2019_10K         ✗      9090              'Item 6. - Selected Financial Data\nFive-Year Consolidated R
+COSTCO_2017_10K        ✓      9025              'Item 6—Selected Financial Data\nThe following table sets fo
+BOEING_2018_10K        ✗      14748             'Item 6. Selected Financial Data\n| Years ended December 31,
+AMAZON_2018_10K        ✗      10430             '|  | Year Ended December 31, |  |  |  |  |\n|  | 2014 | 201
+EBAY_2021_10K          ✗      5834              'On February 13, 2020, we closed the previously announced sa
+AMAZON_2016_10K        ✗      11159             '|  | Year Ended December 31, |  |  |  |  |\n|  | 2012 | 201
+CORNING_2022_10K       ✗      3385              'Net sales for the year ended December 31, 2022 were $14.2 b
+NIKE_2021_10K          ✗      18511             'ITEM 6. SELECTED FINANCIAL DATA\nNot applicable.\n2021 FORM
+LOCKHEEDMARTIN_2022_10K ✗      15808             'ITEM 6. Selected Financial Data\n| (In millions, except per
+JOHNSON_JOHNSON_2022_10K ✓      3678              'In the event the Company is not successful in defending its
+
+Hit rate: 2/10 (0.20)
+
+=== Step 16: inspect_answer_context ===
+Input: {"doc_name": "AMAZON_2018_10K"}
+Output:
+
+
+=== Step 17: inspect_answer_context ===
+Input: {"doc_name": "EBAY_2021_10K"}
+Output:
+
+
+=== Step 18: inspect_answer_context ===
+Input: {"doc_name": "BOEING_2018_10K"}
+Output:
+
+
+=== Step 19: inspect_answer_context ===
+Input: {"doc_name": "CORNING_2022_10K"}
+Output:
+
+
+=== Step 20: inspect_answer_context ===
+Input: {"doc_name": "NIKE_2021_10K"}
+Output:
+
+
+=== Step 21: inspect_answer_context ===
+Input: {"doc_name": "LOCKHEEDMARTIN_2022_10K"}
+Output:
+
+
+=== Step 22: inspect_answer_context ===
+Input: {"doc_name": "AMCOR_2019_10K"}
+Output:
+
+
+=== Step 23: inspect_answer_context ===
+Input: {"doc_name": "AMAZON_2016_10K"}
+Output:
+Answer not found by substring match in AMAZON_2016_10K. GT: '$135,987 million'
+
+=== Step 24: write_rule ===
+Input: {"rule_name": "rule_selected_financial_data_tables", "code": "def rule_selected_financial_data_tables(doc: dict) -> list[dict]:\n    \"\"\"Retrieve selected financial data tables and adjacent headers in Part II.\"\"\"\n    try:\n        texts = doc.get(\"texts\", [])\n        out = []\n        for span in texts:\n            text = (span.get(\"text\") or \"\")\n            path = ((span.get(\"structure\") or {}).get(\"path_text\") or \"\")\n            label = span.get(\"label\") or \"\"\n            page = span.get(\"page_no\") or 0\n            hay = (path + \"\\n\" + text).lower()\n            if page >= 4 and label in {\"table\", \"text\", \"section_header\"}:\n                if (\n                    \"selected financial data\" in hay\n                    or \"five-year consolidated\" in hay\n                    or \"years ended december 31\" in hay\n                    or \"years ended may 31\" in hay\n                    or \"as of and for the year ended\" in hay\n                ):\n                    out.append(span)\n        return out\n    except Exception:\n        return []"}
+Output:
+OK: rule registered — rule_selected_financial_data_tables
+
+=== Step 25: write_rule ===
+Input: {"rule_name": "rule_substantive_partii_sales_revenue_text", "code": "def rule_substantive_partii_sales_revenue_text(doc: dict) -> list[dict]:\n    \"\"\"Retrieve substantive Part II text spans discussing sales or revenue totals.\"\"\"\n    try:\n        texts = doc.get(\"texts\", [])\n        out = []\n        for span in texts:\n            text = (span.get(\"text\") or \"\")\n            path = ((span.get(\"structure\") or {}).get(\"path_text\") or \"\")\n            label = span.get(\"label\") or \"\"\n            page = span.get(\"page_no\") or 0\n            hay = (path + \"\\n\" + text).lower()\n            if label not in {\"text\", \"section_header\", \"table\"}:\n                continue\n            if page < 4:\n                continue\n            if not (\"part ii\" in hay or \"item 7\" in hay or \"item 8\" in hay or \"item 6\" in hay):\n                continue\n            if any(k in hay for k in [\n                \"net sales for the year ended\",\n                \"worldwide sales increased\",\n                \"worldwide sales\",\n                \"sales by segment\",\n                \"analysis of consolidated sales\",\n                \"total revenue\",\n                \"total revenues\",\n                \"net sales\",\n                \"revenue for the year ended\",\n                \"revenues for the year ended\"\n            ]):\n                out.append(span)\n        return out\n    except Exception:\n        return []"}
+Output:
+OK: rule registered — rule_substantive_partii_sales_revenue_text
+
+=== Step 26: show_uncovered_docs ===
+Input: {}
+Output:
+Uncovered (no registered rule hits):
+  - AMCOR_2019_10K
+  - BOEING_2018_10K
+  - AMAZON_2018_10K
+  - EBAY_2021_10K
+  - AMAZON_2016_10K
+  - CORNING_2022_10K
+  - NIKE_2021_10K
+  - LOCKHEEDMARTIN_2022_10K
+
+Covered: 2/10
+
+=== Step 27: test_union ===
+Input: {}
+Output:
+Merge accuracy: 9/10 (0.9)
+
+Failing docs:
+  COSTCO_2017_10K:
+    retrieved: '|  |  | Page |\n| --- | --- | --- |\n| PART I |  |  |\n| Item 1. | Business | 3 |\n| Item 1A. | Risk Factors | 8 |\n| I
+    predicted: '$129,025'
+    ground_truth: '126,172'
+
+=== Registered Rules ===
+  rule_item8_financial_statements_income_statement: hit_rate=0.10
+  rule_partii_sales_revenue_tables_text: hit_rate=0.20
+  rule_selected_financial_data_tables: hit_rate=0.10
+  rule_substantive_partii_sales_revenue_text: hit_rate=0.20
+  MERGE: 9/10 (acc=0.90)  cost=0.43229
+
+=== Final Answer ===
+Agent stopped due to max iterations.

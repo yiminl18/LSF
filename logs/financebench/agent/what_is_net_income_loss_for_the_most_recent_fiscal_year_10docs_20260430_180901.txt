@@ -1,0 +1,224 @@
+Question: What is net income (loss) for the most recent fiscal year?
+Slug: what_is_net_income_loss_for_the_most_recent_fiscal_year
+Docs (N): 10
+Latency: 180.962s
+Iterations: 24
+Input tokens: 0
+Output tokens: 0
+Total LLM calls: 40
+Merge accuracy: 8/10 (0.80)
+
+=== Step 1: summarize_answer_locations ===
+Input: {}
+Output:
+doc_name               page  label            level   bold  all_cap  path_text               answer_snippet
+-----------------------------------------------------------------------------------------------------------
+AMCOR_2019_10K         24    text             Body    0     0        AMCOR PLC | PART II |   Net income attributable to Amcor plc dec
+COSTCO_2017_10K        18    table            Body    0     0        Costco Wholesale Corpo  | As of and for the year ended | Sept. 3
+BOEING_2018_10K        N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: $10,460 million)
+AMAZON_2018_10K        N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: $10,073 million)
+EBAY_2021_10K          N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: $13,608 million)
+AMAZON_2016_10K        N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: $2,371 million)
+CORNING_2022_10K       24    text             Body    0     0        2018 | Item 7. Managem  For the year ended December 31, 2022, we
+NIKE_2021_10K          N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: $5,727 million)
+LOCKHEEDMARTIN_2022_10K N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: $5,732 million)
+JOHNSON_JOHNSON_2022_10K N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: $17.9 billion)
+
+=== Step 2: write_rule ===
+Input: {"rule_name": "rule_financial_statements_net_income", "code": "def rule_financial_statements_net_income(doc: dict) -> list[dict]:\n    \"\"\"Retrieve financial statement or MD&A spans likely containing net income for the latest fiscal year.\"\"\"\n    try:\n        import re\n        out = []\n        for span in doc.get(\"texts\", []):\n            text = (span.get(\"text\") or \"\")\n            path = ((span.get(\"structure\") or {}).get(\"path_text\") or \"\")\n            label = span.get(\"label\") or \"\"\n            hay = f\"{path} {text}\".lower()\n            in_fin_section = (\n                \"financial statements\" in hay\n                or \"financial statement\" in hay\n                or \"supplementary data\" in hay\n                or \"management's discussion and analysis\" in hay\n                or \"management’s discussion and analysis\" in hay\n                or \"results of operations\" in hay\n                or \"statement of income\" in hay\n                or \"statement of earnings\" in hay\n                or \"statement of operations\" in hay\n                or \"income statement\" in hay\n                or \"consolidated results of operations\" in hay\n            )\n            mentions_metric = (\n                \"net income\" in hay\n                or \"net earnings\" in hay\n                or \"net loss\" in hay\n                or \"net income (loss)\" in hay\n                or \"net earnings (loss)\" in hay\n            )\n            if in_fin_section and (mentions_metric or label == \"table\"):\n                out.append(span)\n        return out\n    except Exception:\n        return []\n"}
+Output:
+OK: rule registered — rule_financial_statements_net_income
+
+=== Step 3: test_rule ===
+Input: {"rule_name": "rule_financial_statements_net_income"}
+Output:
+doc_name               hit    retrieved_tokens  retrieved_snippet
+-----------------------------------------------------------------
+AMCOR_2019_10K         ✓      10533             '| Item 1. | Business | 6 |\n| --- | --- | --- |\n| Item 1A.
+COSTCO_2017_10K        ✓      8405              '|  |  | Page |\n| --- | --- | --- |\n| PART I |  |  |\n| It
+BOEING_2018_10K        ✗      19447             '| PART I |  |  | Page |\n| --- | --- | --- | --- |\n|  | It
+AMAZON_2018_10K        ✗      14324             '|  |  | Page |\n| --- | --- | --- |\n| PART I |  |  |\n| It
+EBAY_2021_10K          ✗      12956             '|  |  | Page |\n| --- | --- | --- |\n| Part |  |  |\n| Item
+AMAZON_2016_10K        ✗      13204             '|  |  | Page |\n| --- | --- | --- |\n| PART I |  |  |\n| It
+CORNING_2022_10K       ✓      5405              'For the year ended December 31, 2022, we generated net inco
+NIKE_2021_10K          ✗      24963             '|  |  | PAGE |\n| --- | --- | --- |\n| PART I |  | 1 |\n| I
+LOCKHEEDMARTIN_2022_10K ✗      18760             '| PART I |  | Page |\n| --- | --- | --- |\n| ITEM 1. | Busi
+JOHNSON_JOHNSON_2022_10K ✗      11637             '| 1 | Business | 1 |\n| --- | --- | --- |\n|  | General | 1
+
+Hit rate: 3/10 (0.30)
+
+=== Step 4: inspect_answer_context ===
+Input: {"doc_name": "AMAZON_2018_10K"}
+Output:
+
+
+=== Step 5: inspect_answer_context ===
+Input: {"doc_name": "EBAY_2021_10K"}
+Output:
+
+
+=== Step 6: inspect_answer_context ===
+Input: {"doc_name": "AMAZON_2016_10K"}
+Output:
+
+
+=== Step 7: inspect_answer_context ===
+Input: {"doc_name": "BOEING_2018_10K"}
+Output:
+
+
+=== Step 8: inspect_answer_context ===
+Input: {"doc_name": "NIKE_2021_10K"}
+Output:
+
+
+=== Step 9: inspect_answer_context ===
+Input: {"doc_name": "LOCKHEEDMARTIN_2022_10K"}
+Output:
+
+
+=== Step 10: inspect_answer_context ===
+Input: {"doc_name": "JOHNSON_JOHNSON_2022_10K"}
+Output:
+Answer not found by substring match in JOHNSON_JOHNSON_2022_10K. GT: '$17.9 billion'
+
+=== Step 11: write_rule ===
+Input: {"rule_name": "rule_item7_item8_financial_sections", "code": "def rule_item7_item8_financial_sections(doc: dict) -> list[dict]:\n    \"\"\"Retrieve broad Item 7/Item 8 financial sections and nearby statement-of-income content.\"\"\"\n    try:\n        out = []\n        for span in doc.get(\"texts\", []):\n            text = (span.get(\"text\") or \"\")\n            path = ((span.get(\"structure\") or {}).get(\"path_text\") or \"\")\n            level = ((span.get(\"structure\") or {}).get(\"level\") or \"\")\n            hay = f\"{path} {text}\".lower()\n            if (\n                \"item 7\" in hay\n                or \"item 8\" in hay\n                or \"management's discussion and analysis\" in hay\n                or \"management’s discussion and analysis\" in hay\n                or \"results of operations\" in hay\n                or \"financial statements and supplementary data\" in hay\n                or \"financial statements\" in hay\n                or \"supplementary data\" in hay\n                or \"statement of income\" in hay\n                or \"statement of earnings\" in hay\n                or \"statement of operations\" in hay\n                or \"income before\" in hay\n                or \"net earnings\" in hay\n                or \"net income\" in hay\n                or \"net loss\" in hay\n            ):\n                out.append(span)\n        return out\n    except Exception:\n        return []\n"}
+Output:
+OK: rule registered — rule_item7_item8_financial_sections
+
+=== Step 12: test_rule ===
+Input: {"rule_name": "rule_item7_item8_financial_sections"}
+Output:
+doc_name               hit    retrieved_tokens  retrieved_snippet
+-----------------------------------------------------------------
+AMCOR_2019_10K         ✓      54263             '| Item 1. | Business | 6 |\n| --- | --- | --- |\n| Item 1A.
+COSTCO_2017_10K        ✓      32894             '|  |  | Page |\n| --- | --- | --- |\n| PART I |  |  |\n| It
+BOEING_2018_10K        ✗      55049             '| PART I |  |  | Page |\n| --- | --- | --- | --- |\n|  | It
+AMAZON_2018_10K        ✗      44145             '|  |  | Page |\n| --- | --- | --- |\n| PART I |  |  |\n| It
+EBAY_2021_10K          ✗      52852             '|  |  | Page |\n| --- | --- | --- |\n| Part |  |  |\n| Item
+AMAZON_2016_10K        ✗      43303             '|  |  | Page |\n| --- | --- | --- |\n| PART I |  |  |\n| It
+CORNING_2022_10K       ✓      28868             'This report contains forward-looking statements that involv
+NIKE_2021_10K          ✗      66627             '|  |  | PAGE |\n| --- | --- | --- |\n| PART I |  | 1 |\n| I
+LOCKHEEDMARTIN_2022_10K ✗      73185             '| PART I |  | Page |\n| --- | --- | --- |\n| ITEM 1. | Busi
+JOHNSON_JOHNSON_2022_10K ✗      41556             '| 1 | Business | 1 |\n| --- | --- | --- |\n|  | General | 1
+
+Hit rate: 3/10 (0.30)
+
+=== Step 13: show_uncovered_docs ===
+Input: {}
+Output:
+Uncovered (no registered rule hits):
+  - BOEING_2018_10K
+  - AMAZON_2018_10K
+  - EBAY_2021_10K
+  - AMAZON_2016_10K
+  - NIKE_2021_10K
+  - LOCKHEEDMARTIN_2022_10K
+  - JOHNSON_JOHNSON_2022_10K
+
+Covered: 3/10
+
+=== Step 14: diagnose_failing_doc ===
+Input: {"doc_name": "BOEING_2018_10K"}
+Output:
+
+
+=== Step 15: diagnose_failing_doc ===
+Input: {"doc_name": "AMAZON_2018_10K"}
+Output:
+
+
+=== Step 16: diagnose_failing_doc ===
+Input: {"doc_name": "EBAY_2021_10K"}
+Output:
+
+
+=== Step 17: diagnose_failing_doc ===
+Input: {"doc_name": "AMAZON_2016_10K"}
+Output:
+
+
+=== Step 18: diagnose_failing_doc ===
+Input: {"doc_name": "NIKE_2021_10K"}
+Output:
+
+
+=== Step 19: diagnose_failing_doc ===
+Input: {"doc_name": "LOCKHEEDMARTIN_2022_10K"}
+Output:
+
+
+=== Step 20: diagnose_failing_doc ===
+Input: {"doc_name": "JOHNSON_JOHNSON_2022_10K"}
+Output:
+=== Diagnosis: JOHNSON_JOHNSON_2022_10K ===
+
+Ground truth: '$17.9 billion'
+
+Rule results:
+  rule_financial_statements_net_income:  retrieved='| 1 | Business | 1 |\n| --- | --- | --- |\n|  | General | 1 |\n|  | Segments of Business | 1 |\n|  | Geo'
+  rule_item7_item8_financial_sections:  retrieved='| 1 | Business | 1 |\n| --- | --- | --- |\n|  | General | 1 |\n|  | Segments of Business | 1 |\n|  | Geo'
+
+Answer location (inspect_answer_context):
+  Answer not found by substring match in JOHNSON_JOHNSON_2022_10K. GT: '$17.9 billion'
+
+Structural diff vs. passing docs (3 passing):
+  This doc (JOHNSON_JOHNSON_2022_10K): answer span NOT LOCATED by substring match
+  Passing docs (up to 3 shown):
+    AMCOR_2019_10K: label=text  level=Body  bold=0  all_cap=0  path_text="AMCOR PLC | PART II | Item 7. - Management's Discussion and Analysis of Financial Condition and Results of Operations | Consolidated Results of Operations"
+    COSTCO_2017_10K: label=table  level=Body  bold=0  all_cap=0  path_text='Costco Wholesale Corporation | PART II | Item 6—Selected Financial Data | SELECTED FINANCIAL DATA (dollars in millions, except per share data)'
+    CORNING_2022_10K: label=text  level=Body  bold=0  all_cap=0  path_text='2018 | Item 7. Management’s Discussion and Analysis of Financial Condition and Results of Operations | 2022 Results'
+
+=== Step 21: write_rule ===
+Input: {"rule_name": "rule_late_page_item7_item8_sections", "code": "def rule_late_page_item7_item8_sections(doc: dict) -> list[dict]:\n    \"\"\"Retrieve later-page Item 7/8 financial sections while excluding front-matter tables of contents.\"\"\"\n    try:\n        out = []\n        for span in doc.get(\"texts\", []):\n            text = (span.get(\"text\") or \"\")\n            path = ((span.get(\"structure\") or {}).get(\"path_text\") or \"\")\n            page = span.get(\"page_no\") or 0\n            hay = f\"{path} {text}\".lower()\n            if page <= 5:\n                continue\n            if \"table of contents\" in hay or \"index\" in hay:\n                continue\n            if (\n                \"item 7\" in hay\n                or \"item 8\" in hay\n                or \"management's discussion and analysis\" in hay\n                or \"management’s discussion and analysis\" in hay\n                or \"results of operations\" in hay\n                or \"selected financial data\" in hay\n                or \"financial statements and supplementary data\" in hay\n                or \"financial statements\" in hay\n                or \"statement of income\" in hay\n                or \"statement of earnings\" in hay\n                or \"statement of operations\" in hay\n                or \"net sales\" in hay\n                or \"net earnings\" in hay\n                or \"net income\" in hay\n                or \"net loss\" in hay\n            ):\n                out.append(span)\n        return out\n    except Exception:\n        return []\n"}
+Output:
+OK: rule registered — rule_late_page_item7_item8_sections
+
+=== Step 22: test_rule ===
+Input: {"rule_name": "rule_late_page_item7_item8_sections"}
+Output:
+doc_name               hit    retrieved_tokens  retrieved_snippet
+-----------------------------------------------------------------
+AMCOR_2019_10K         ✓      53533             'Accounting Standards Codification ("ASC") 280, "Segment Rep
+COSTCO_2017_10K        ✓      35884             'The risks described below could materially and adversely af
+BOEING_2018_10K        ✗      53301             'framework would allow us to pursue rights to contribution f
+AMAZON_2018_10K        ✗      43710             'We expect a disproportionate amount of our net sales to occ
+EBAY_2021_10K          ✗      51953             'With two additional states adopting Internet sales tax laws
+AMAZON_2016_10K        ✗      42601             'We expect a disproportionate amount of our net sales to occ
+CORNING_2022_10K       ✓      29432             'Hemlock and Emerging Growth Businesses represented 11% of C
+NIKE_2021_10K          ✗      65226             'We monitor protectionist trends and developments throughout
+LOCKHEEDMARTIN_2022_10K ✗      73746             'The U.S. Government and in limited cases certain other gove
+JOHNSON_JOHNSON_2022_10K ✗      40531             'The Company is organized into three business segments: Cons
+
+Hit rate: 3/10 (0.30)
+
+=== Step 23: test_union ===
+Input: {}
+Output:
+Merge accuracy: 8/10 (0.8)
+
+Failing docs:
+  AMCOR_2019_10K:
+    retrieved: '| Item 1. | Business | 6 |\n| --- | --- | --- |\n| Item 1A. | Risk Factors | 9 |\n| Item 1B. | Unresolved Staff Comment
+    predicted: '437.4'
+    ground_truth: '430.2 million'
+  COSTCO_2017_10K:
+    retrieved: '|  |  | Page |\n| --- | --- | --- |\n| PART I |  |  |\n| Item 1. | Business | 3 |\n| Item 1A. | Risk Factors | 8 |\n| I
+    predicted: '$2,714'
+    ground_truth: '2,679'
+
+=== Step 24: write_rule ===
+Input: {"rule_name": "rule_precise_net_income_rows", "code": "def rule_precise_net_income_rows(doc: dict) -> list[dict]:\n    \"\"\"Retrieve precise net income rows/text in results-of-operations or selected-financial-data sections.\"\"\"\n    try:\n        out = []\n        for span in doc.get(\"texts\", []):\n            text = (span.get(\"text\") or \"\")\n            path = ((span.get(\"structure\") or {}).get(\"path_text\") or \"\")\n            hay = f\"{path} {text}\".lower()\n            if (\n                \"consolidated results of operations\" in hay\n                or \"selected financial data\" in hay\n                or \"2022 results\" in hay\n                or \"2021 results\" in hay\n                or \"2020 results\" in hay\n                or \"2019 results\" in hay\n                or \"2018 results\" in hay\n                or \"2017 results\" in hay\n                or \"2016 results\" in hay\n            ) and (\n                \"net income\" in hay\n                or \"net earnings\" in hay\n                or \"net income attributable\" in hay\n                or \"net earnings attributable\" in hay\n            ):\n                out.append(span)\n        return out\n    except Exception:\n        return []\n"}
+Output:
+OK: rule registered — rule_precise_net_income_rows
+
+=== Registered Rules ===
+  rule_financial_statements_net_income: hit_rate=0.30
+  rule_item7_item8_financial_sections: hit_rate=0.30
+  rule_late_page_item7_item8_sections: hit_rate=0.30
+  rule_precise_net_income_rows: hit_rate=0.30
+  MERGE: 8/10 (acc=0.80)  cost=0.60798
+
+=== Final Answer ===
+Agent stopped due to max iterations.

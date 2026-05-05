@@ -1,0 +1,383 @@
+/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/langchain_community/utilities/__init__.py:8: LangChainDeprecationWarning: As of langchain-core 0.3.0, LangChain uses pydantic v2 internally. The langchain_core.pydantic_v1 module was a compatibility shim for pydantic v1, and should no longer be used. Please update the code to import from Pydantic directly.
+
+For example, replace imports like: `from langchain_core.pydantic_v1 import BaseModel`
+with: `from pydantic import BaseModel`
+or the v1 compatibility namespace if you are working in a code base that has not been fully upgraded to pydantic 2 yet. 	from pydantic.v1 import BaseModel
+
+  from langchain_community.utilities.requests import (
+/opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/pydantic/_internal/_generate_schema.py:918: UserWarning: Mixing V1 models and V2 models (or constructs, like `TypeAdapter`) is not supported. Please upgrade `TextRequestsWrapper` to V2.
+  warn(
+Loading sampled docs ...
+  WARNING: missing data/financebench/processing/Pfizer_2023Q2_10Q_reconstructed.json
+  WARNING: missing data/financebench/processing/MGMRESORTS_2023_8K_dated-2023-03-01_reconstructed.json
+Loading unsampled docs ...
+  WARNING: missing data/financebench/processing/MGMRESORTS_2023Q2_10Q_reconstructed.json
+  WARNING: missing data/financebench/processing/NETFLIX_2023Q2_10Q_reconstructed.json
+  WARNING: missing data/financebench/processing/PAYPAL_2023Q2_10Q_reconstructed.json
+  WARNING: missing data/financebench/processing/SALESFORCE_2023Q3_10Q_reconstructed.json
+  WARNING: missing data/financebench/processing/WALMART_2024Q1_10Q_reconstructed.json
+  WARNING: missing data/financebench/processing/ULTABEAUTY_2023_8K_dated-2023-06-07_reconstructed.json
+  WARNING: missing data/financebench/processing/MCDONALDS_8K_dated-2023-01-06_reconstructed.json
+  WARNING: missing data/financebench/processing/MCDONALDS_8K_dated-2023-02-13_reconstructed.json
+  WARNING: missing data/financebench/processing/MCDONALDS_8K_dated-2023-08-14_reconstructed.json
+  WARNING: missing data/financebench/processing/MGMRESORTS_2023_8K_dated-2023-09-12_reconstructed.json
+  WARNING: missing data/financebench/processing/PEPSICO_2023_8K_dated-2023-05-05_reconstructed.json
+  WARNING: missing data/financebench/processing/SALESFORCE_2021_8K_dated-2023-01-04_reconstructed.json
+Questions: 12  sampled: 18  unsampled: 68
+
+
+Question: What stock exchange is the company's primary common stock listed on?
+  [gen] SKIP what_stock_exchange_is_the_companys_primary_common_stock_lis_18
+  [apply:sampled] SKIP (all 18 cached)
+  [apply:unsampled] SKIP (all 68 cached)
+  [eval:sampled] SKIP
+  [eval:unsampled] SKIP
+
+Question: What is the reporting period covered by this document (e.g. fiscal year ended, quarter ended, or event date)?
+  [gen] SKIP what_is_the_reporting_period_covered_by_this_document_eg_fis_18
+  [apply:sampled] SKIP (all 18 cached)
+  [apply:unsampled] SKIP (all 68 cached)
+  [eval:sampled] SKIP
+  [eval:unsampled] SKIP
+
+Question: What is the exact name of the company (registrant) this document relates to?
+  [gen] SKIP what_is_the_exact_name_of_the_company_registrant_this_docume_18
+  [apply:sampled] SKIP (all 18 cached)
+  [apply:unsampled] SKIP (all 68 cached)
+  [eval:sampled] SKIP
+  [eval:unsampled] SKIP
+
+Question: What is the company's principal executive offices address (city and state/country) as stated in this document?
+
+
+[1m> Entering new None chain...[0m
+[32;1m[1;3m
+Invoking: `summarize_answer_locations` with `{}`
+
+
+[0m[36;1m[1;3mdoc_name               page  label            level   bold  all_cap  path_text               answer_snippet
+-----------------------------------------------------------------------------------------------------------
+BOEING_2019_10K        1     checkbox_selected Body    1     0        THE BOEING COMPANY      Chicago, IL
+ADOBE_2020_10K         1     text             Body    1     0        ADOBE INC.              345 Park Avenue, San Jose, California 95
+ACTIVISIONBLIZZARD_2020_10K 26    text             Body    0     0        ACTIVISION BLIZZARD, I  Our principal corporate and administrati
+COSTCO_2018_10K        16    text             Body    0     0        Costco Wholesale Corpo  At the end of fiscal 2018 , our warehous
+AMCOR_2019_10K         N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: Warmley, Bristol, United Kingd)
+AMAZON_2020_10K        1     text             Body    1     0        AMAZON.COM, INC.        410 Terry Avenue North Seattle, Washingt
+AMAZON_2019_10K        1     text             Body    1     0        AMAZON.COM, INC.        410 Terry Avenue North Seattle, Washingt
+ADOBE_2021_10K         1     text             Body    1     0        ADOBE INC.              345 Park Avenue, San Jose, California 95
+EBAY_2022_10K          4     text             Body    0     0        Form 10-K | PART I | I  eBay Inc. was formed as a sole proprieto
+ADOBE_2019_10K         1     text             Body    1     0        ADOBE INC.              345 Park Avenue, San Jose, California 95
+AMCOR_2023Q2_10Q       N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: Warmley, Bristol, United Kingd)
+ADOBE_2022Q2_10Q       1     section_header   H2      1     0        ADOBE INC. | 345 Park   345 Park Avenue, San Jose, California 95
+ACTIVSIONBLIZZARD_2023Q2_10Q N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: Santa Monica, CA)
+3M_2023Q2_10Q          1     section_header   H2      1     0        3M COMPANY | 3M Center  3M Center, St. Paul, Minnesota
+AMCOR_2022_8K_2022-07-01 N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: Warmley, Bristol, United Kingd)
+COSTCO_2023_8K_dated-2023-08-09 1     text             Body    1     0        COSTCO WHOLESALE CORPO  999 Lake Drive Issaquah, WA 98027
+COSTCO_2023_8K_dated-2023-08-16 1     text             Body    1     0        COSTCO WHOLESALE CORPO  999 Lake Drive Issaquah, WA 98027
+FOOTLOCKER_2022_8K_dated-2022-05-20 1     section_header   H2      1     0        Foot Locker, Inc. | 33  330 West 34th Street, New York, New York[0m[32;1m[1;3m
+Invoking: `write_rule` with `{'rule_name': 'rule_front_page_principal_office_block', 'code': 'def rule_front_page_principal_office_block(doc: dict) -> list[dict]:\n    """Retrieve front-page registrant address block around principal executive offices."""\n    try:\n        import re\n        texts = doc.get("texts", [])\n        out = []\n        for span in texts:\n            if span.get("page_no") != 1:\n                continue\n            label = span.get("label", "")\n            path = ((span.get("structure") or {}).get("path_text") or "").lower()\n            text = span.get("text", "") or ""\n            t = text.lower()\n            if not path:\n                continue\n            if label not in {"text", "section_header", "table"}:\n                continue\n            if not any(k in path for k in ["inc.", "corporation", "company", "plc", "blizzard", "boeing", "amazon", "adobe", "ebay", "3m", "foot locker", "costco", "amcor"]):\n                continue\n            if (\n                "address of principal executive offices" in t\n                or "address and telephone number" in t\n                or "address of principal executive offices" in path\n                or re.search(r"\\b\\d{1,5}\\b.*?,\\s*[a-z].*?\\b(?:al|ak|az|ar|ca|co|ct|de|fl|ga|hi|ia|id|il|in|ks|ky|la|ma|md|me|mi|mn|mo|ms|mt|nc|nd|ne|nh|nj|nm|nv|ny|oh|ok|or|pa|ri|sc|sd|tn|tx|ut|va|vt|wa|wi|wv|dc)\\b", t)\n                or re.search(r"\\b\\d{1,5}\\b.*?(united kingdom|australia|canada|new york|california|minnesota|washington)\\b", t)\n            ):\n                out.append(span)\n        return out\n    except Exception:\n        return []'}`
+responded: Plan: dominant pattern is front-page registrant block with the city/state in a bold Body text or H2 under the company H1, often adjacent to “Address of principal executive offices.” I’ll start with one broad, low-cost rule anchored to page 1 and front-matter path_text, matching address-label cues and common registrant-block formatting.
+
+[0m[38;5;200m[1;3mOK: rule registered — rule_front_page_principal_office_block[0m[32;1m[1;3m
+Invoking: `test_rule` with `{'rule_name': 'rule_front_page_principal_office_block'}`
+
+
+[0m[36;1m[1;3mdoc_name               hit    ret_tokens  cost_ratio  snippet
+-------------------------------------------------------------
+BOEING_2019_10K        ✗      312         0.0034      '(Address of principal executive offices)\nIndicate by check
+ADOBE_2020_10K         ✓      291         0.0032      '345 Park Avenue, San Jose, California 95110-2704\n(Address 
+ACTIVISIONBLIZZARD_2020_10K ✗      6           0.0001      '(Address of principal executive offices)'
+COSTCO_2018_10K        ✗      105         0.0021      '999 Lake Drive, Issaquah, WA 98027\n(Address of principal e
+AMCOR_2019_10K         ✗      22          0.0003      '83 Tower Road North Warmley, Bristol BS30 8XP United Kingdo
+AMAZON_2020_10K        ✓      39          0.0007      '410 Terry Avenue North Seattle, Washington 98109-5210 (206)
+AMAZON_2019_10K        ✓      39          0.0006      '410 Terry Avenue North Seattle, Washington 98109-5210 (206)
+ADOBE_2021_10K         ✓      291         0.0038      '345 Park Avenue, San Jose, California 95110-2704\n(Address 
+EBAY_2022_10K          ✗      0           0.0000      '(empty)'
+ADOBE_2019_10K         ✓      292         0.0032      '345 Park Avenue, San Jose, California 95110-2704\n(Address 
+AMCOR_2023Q2_10Q       ✗      94          0.0029      '83 Tower Road North Warmley, Bristol BS30 8XP United Kingdo
+ADOBE_2022Q2_10Q       ✓      24          0.0006      '345 Park Avenue, San Jose, California 95110-2704\n(Address 
+ACTIVSIONBLIZZARD_2023Q2_10Q ✗      6           0.0001      '(Address of principal executive offices)'
+3M_2023Q2_10Q          ✗      122         0.0015      '(Address of Principal Executive Offices)\n| Title of each c
+AMCOR_2022_8K_2022-07-01 ✗      17          0.0031      '83 Tower Road North Warmley, Bristol United Kingdom\n(Addre
+COSTCO_2023_8K_dated-2023-08-09 ✗      12          0.0005      '98027 (Address of principal executive offices and zip code)
+COSTCO_2023_8K_dated-2023-08-16 ✗      12          0.0110      '98027 (Address of principal executive offices and zip code)
+FOOTLOCKER_2022_8K_dated-2022-05-20 ✓      26          0.0144      '330 West 34th Street, New York, New York 10001\n(Address of
+
+Hit rate: 7/18 (0.39)   Avg cost ratio: 0.0029[0m[32;1m[1;3m
+Invoking: `show_uncovered_docs` with `{}`
+
+
+[0m[33;1m[1;3mUncovered (no registered rule hits):
+  - BOEING_2019_10K
+  - ACTIVISIONBLIZZARD_2020_10K
+  - COSTCO_2018_10K
+  - AMCOR_2019_10K
+  - EBAY_2022_10K
+  - AMCOR_2023Q2_10Q
+  - ACTIVSIONBLIZZARD_2023Q2_10Q
+  - 3M_2023Q2_10Q
+  - AMCOR_2022_8K_2022-07-01
+  - COSTCO_2023_8K_dated-2023-08-09
+  - COSTCO_2023_8K_dated-2023-08-16
+
+Covered: 7/18[0m[32;1m[1;3m
+Invoking: `diagnose_failing_doc` with `{'doc_name': 'BOEING_2019_10K'}`
+
+
+[0m[32;1m[1;3m
+Invoking: `diagnose_failing_doc` with `{'doc_name': 'ACTIVISIONBLIZZARD_2020_10K'}`
+
+
+[0m[32;1m[1;3m
+Invoking: `diagnose_failing_doc` with `{'doc_name': 'COSTCO_2018_10K'}`
+
+
+[0m[32;1m[1;3m
+Invoking: `diagnose_failing_doc` with `{'doc_name': 'AMCOR_2019_10K'}`
+
+
+[0m[32;1m[1;3m
+Invoking: `diagnose_failing_doc` with `{'doc_name': 'EBAY_2022_10K'}`
+
+
+[0m[32;1m[1;3m
+Invoking: `diagnose_failing_doc` with `{'doc_name': 'AMCOR_2023Q2_10Q'}`
+
+
+[0m[32;1m[1;3m
+Invoking: `diagnose_failing_doc` with `{'doc_name': 'ACTIVSIONBLIZZARD_2023Q2_10Q'}`
+
+
+[0m[32;1m[1;3m
+Invoking: `diagnose_failing_doc` with `{'doc_name': '3M_2023Q2_10Q'}`
+
+
+[0m[32;1m[1;3m
+Invoking: `diagnose_failing_doc` with `{'doc_name': 'AMCOR_2022_8K_2022-07-01'}`
+
+
+[0m[32;1m[1;3m
+Invoking: `diagnose_failing_doc` with `{'doc_name': 'COSTCO_2023_8K_dated-2023-08-09'}`
+
+
+[0m[32;1m[1;3m
+Invoking: `diagnose_failing_doc` with `{'doc_name': 'COSTCO_2023_8K_dated-2023-08-16'}`
+
+
+[0m[38;5;200m[1;3m=== Diagnosis: BOEING_2019_10K ===
+
+Ground truth: 'Chicago, IL'
+
+Rule results:
+  rule_front_page_principal_office_block:  retrieved='(Address of principal executive offices)\nIndicate by check mark whether the registrant (1) has filed'
+
+Answer location (inspect_answer_context):
+  [idx=8] text='Commission file number 1-442'  label=text  page=1  bold=0  level=Body  path_text='FORM 10-K'
+  [idx=9] text='THE BOEING COMPANY'  label=section_header  page=1  bold=1  level=H1  path_text='THE BOEING COMPANY'
+  [idx=10] text='(Exact name of registrant as specified in its charter)'  label=text  page=1  bold=1  level=Body  path_text='THE BOEING COMPANY'
+  [idx=11] text='Delaware'  label=text  page=1  bold=1  level=Body  path_text='THE BOEING COMPANY'
+  [idx=12] text='(State or other jurisdiction of incorporation or organization)'  label=text  page=1  bold=1  level=Body  path_text='THE BOEING COMPANY'
+  [idx=13] text='Chicago, IL'  label=checkbox_selected  page=1  bold=1  level=Body  path_text='THE BOEING COMPANY'  ← ANSWER HERE
+  [idx=14] text='100 N. Riverside Plaza,'  label=section_header  page=1  bold=1  level=H2  path_text='THE BOEING COMPANY | 100 N. Riverside Plaza,'
+  [idx=15] text='(Address of principal executive offices)'  label=text  page=1  bold=1  level=Body  path_text='THE BOEING COMPANY | 100 N. Riverside Plaza,'
+  [idx=16] text='91-0425694'  label=text  page=1  bold=1  level=Body  path_text='THE BOEING COMPANY | 100 N. Riverside Plaza,'
+  [idx=17] text='(I.R.S. Employer Identification No.)'  label=text  page=1  bold=1  level=Body  path_text='THE BOEING COMPANY | 100 N. Riverside Plaza,'
+  [idx=18] text='60606-1596'  label=text  page=1  bold=1  level=Body  path_text='THE BOEING COMPANY | 100 N. Riverside Plaza,'
+
+Structural diff vs. passing docs (7 passing):
+  This doc (BOEING_2019_10K):
+    label=checkbox_selected  level=Body  bold=1  all_cap=0  path_text='THE BOEING COMPANY'
+  Passing docs (up to 3 shown):
+    ADOBE_2020_10K: label=text  level=Body  bold=1  all_cap=0  path_text='ADOBE INC.'
+    AMAZON_2020_10K: label=text  level=Body  bold=1  all_cap=0  path_text='AMAZON.COM, INC.'
+    AMAZON_2019_10K: label=text  level=Body  bold=1  all_cap=0  path_text='AMAZON.COM, INC.'[0m[38;5;200m[1;3m=== Diagnosis: COSTCO_2018_10K ===
+
+Ground truth: 'Issaquah, Washington'
+
+Rule results:
+  rule_front_page_principal_office_block:  retrieved='999 Lake Drive, Issaquah, WA 98027\n(Address of principal executive offices) (Zip Code)\nIndicate by c'
+
+Answer location (inspect_answer_context):
+  [idx=141] text='_______________'  label=text  page=16  bold=0  level=Body  path_text='Costco Wholesale Corporation | PART I | Item 2—Properties | Warehouse Properties'
+  [idx=142] text='(1) 106 of the 157 leases are land-only leases, where Costco owns the building.'  label=text  page=16  bold=0  level=Body  path_text='Costco Wholesale Corporation | PART I | Item 2—Properties | Warehouse Properties'
+  [idx=143] text='(2) In fiscal 2018, Costco purchased the remaining equity interest and three for'  label=text  page=16  bold=0  level=Body  path_text='Costco Wholesale Corporation | PART I | Item 2—Properties | Warehouse Properties'
+  [idx=144] text='The following schedule shows warehouse openings, net of closings and relocations'  label=text  page=16  bold=0  level=Body  path_text='Costco Wholesale Corporation | PART I | Item 2—Properties | Warehouse Properties'
+  [idx=145] text='|  | United States | Canada | Other International | Total | Total Warehouses in '  label=table  page=16  bold=0  level=Body  path_text='Costco Wholesale Corporation | PART I | Item 2—Properties | Warehouse Properties'
+  [idx=146] text='At the end of fiscal 2018 , our warehouses contained approximately 110.7 million'  label=text  page=16  bold=0  level=Body  path_text='Costco Wholesale Corporation | PART I | Item 2—Properties | Warehouse Properties'  ← ANSWER HERE
+  [idx=147] text='Item 3—Legal Proceedings'  label=section_header  page=17  bold=1  level=H3  path_text='Costco Wholesale Corporation | PART I | Item 3—Legal Proceedings'
+  [idx=148] text='See discussion of Legal Proceedings in Note 10 to the consolidated financial sta'  label=text  page=17  bold=0  level=Body  path_text='Costco Wholesale Corporation | PART I | Item 3—Legal Proceedings'
+  [idx=149] text='Item 4—Mine Safety Disclosures'  label=section_header  page=17  bold=1  level=H3  path_text='Costco Wholesale Corporation | PART I | Item 4—Mine Safety Disclosures'
+  [idx=150] text='Not applicable.'  label=text  page=17  bold=0  level=Body  path_text='Costco Wholesale Corporation | PART I | Item 4—Mine Safety Disclosures'
+  [idx=151] text='General'  label=section_header  page=3  bold=1  level=H3  path_text='Costco Wholesale Corporation | PART I | General'
+
+Structural diff vs. passing docs (7 passing):
+  This doc (COSTCO_2018_10K):
+    label=text  level=Body  bold=0  all_cap=0  path_text='Costco Wholesale Corporation | PART I | Item 2—Properties | Warehouse Properties'
+  Passing docs (up to 3 shown):
+    ADOBE_2020_10K: label=text  level=Body  bold=1  all_cap=0  path_text='ADOBE INC.'
+    AMAZON_2020_10K: label=text  level=Body  bold=1  all_cap=0  path_text='AMAZON.COM, INC.'
+    AMAZON_2019_10K: label=text  level=Body  bold=1  all_cap=0  path_text='AMAZON.COM, INC.'[0m[38;5;200m[1;3m=== Diagnosis: ACTIVISIONBLIZZARD_2020_10K ===
+
+Ground truth: 'Santa Monica, CA'
+
+Rule results:
+  rule_front_page_principal_office_block:  retrieved='(Address of principal executive offices)'
+
+Answer location (inspect_answer_context):
+  [idx=237] text='Because our products and services are discretionary spending, if general economi'  label=section_header  page=25  bold=1  level=H4  path_text='ACTIVISION BLIZZARD, INC. | PART I | Item 1A. RISK FACTORS | Because our products and services are discretionary spending, if general economic conditions decline, demand for our products could decline.'
+  [idx=238] text='Purchases of our products and services involve discretionary spending on the par'  label=text  page=25  bold=0  level=Body  path_text='ACTIVISION BLIZZARD, INC. | PART I | Item 1A. RISK FACTORS | Because our products and services are discretionary spending, if general economic conditions decline, demand for our products could decline.'
+  [idx=239] text='Item 1B. UNRESOLVED STAFF COMMENTS'  label=section_header  page=26  bold=1  level=H3  path_text='ACTIVISION BLIZZARD, INC. | PART I | Item 1B. UNRESOLVED STAFF COMMENTS'
+  [idx=240] text='None.'  label=text  page=26  bold=0  level=Body  path_text='ACTIVISION BLIZZARD, INC. | PART I | Item 1B. UNRESOLVED STAFF COMMENTS'
+  [idx=241] text='Item 2. PROPERTIES'  label=section_header  page=26  bold=1  level=H3  path_text='ACTIVISION BLIZZARD, INC. | PART I | Item 2. PROPERTIES'
+  [idx=242] text='Our principal corporate and administrative offices, which include our Activision'  label=text  page=26  bold=0  level=Body  path_text='ACTIVISION BLIZZARD, INC. | PART I | Item 2. PROPERTIES'  ← ANSWER HERE
+  [idx=243] text='We anticipate no difficulty in extending the leases of our facilities or obtaini'  label=text  page=26  bold=0  level=Body  path_text='ACTIVISION BLIZZARD, INC. | PART I | Item 2. PROPERTIES'
+  [idx=244] text='Item 3. LEGAL PROCEEDINGS'  label=section_header  page=26  bold=1  level=H3  path_text='ACTIVISION BLIZZARD, INC. | PART I | Item 3. LEGAL PROCEEDINGS'
+  [idx=245] text='Refer to Note 22 of the notes to the consolidated financial statements included '  label=text  page=26  bold=0  level=Body  path_text='ACTIVISION BLIZZARD, INC. | PART I | Item 3. LEGAL PROCEEDINGS'
+  [idx=246] text='Item 4. MINE SAFETY DISCLOSURES'  label=section_header  page=26  bold=1  level=H3  path_text='ACTIVISION BLIZZARD, INC. | PART I | Item 4. MINE SAFETY DISCLOSURES'
+  [idx=247] text='Not applicable.'  label=text  page=26  bold=0  level=Body  path_text='ACTIVISION BLIZZARD, INC. | PART I | Item 4. MINE SAFETY DISCLOSURES'
+
+Structural diff vs. passing docs (7 passing):
+  This doc (ACTIVISIONBLIZZARD_2020_10K):
+    label=text  level=Body  bold=0  all_cap=0  path_text='ACTIVISION BLIZZARD, INC. | PART I | Item 2. PROPERTIES'
+  Passing docs (up to 3 shown):
+    ADOBE_2020_10K: label=text  level=Body  bold=1  all_cap=0  path_text='ADOBE INC.'
+    AMAZON_2020_10K: label=text  level=Body  bold=1  all_cap=0  path_text='AMAZON.COM, INC.'
+    AMAZON_2019_10K: label=text  level=Body  bold=1  all_cap=0  path_text='AMAZON.COM, INC.'[0m[38;5;200m[1;3m=== Diagnosis: EBAY_2022_10K ===
+
+Ground truth: 'San Jose, California'
+
+Rule results:
+  rule_front_page_principal_office_block:  retrieved=[]  (empty)
+
+Answer location (inspect_answer_context):
+  [idx=21] text='PART I'  label=section_header  page=4  bold=1  level=H2  path_text='Form 10-K | PART I'
+  [idx=22] text='FORWARD-LOOKING STATEMENTS'  label=section_header  page=4  bold=1  level=H3  path_text='Form 10-K | PART I | FORWARD-LOOKING STATEMENTS'
+  [idx=23] text='This Annual Report on Form 10-K contains forward-looking statements within the m'  label=text  page=4  bold=0  level=Body  path_text='Form 10-K | PART I | FORWARD-LOOKING STATEMENTS'
+  [idx=24] text='ITEM 1: BUSINESS'  label=section_header  page=4  bold=1  level=H3  path_text='Form 10-K | PART I | ITEM 1: BUSINESS'
+  [idx=25] text='Overview'  label=section_header  page=4  bold=1  level=H4  path_text='Form 10-K | PART I | ITEM 1: BUSINESS | Overview'
+  [idx=26] text='eBay Inc. was formed as a sole proprietorship in September 1995 and was incorpor'  label=text  page=4  bold=0  level=Body  path_text='Form 10-K | PART I | ITEM 1: BUSINESS | Overview'  ← ANSWER HERE
+  [idx=27] text='eBay is a global commerce leader through our Marketplace platforms which connect'  label=text  page=4  bold=0  level=Body  path_text='Form 10-K | PART I | ITEM 1: BUSINESS | Overview'
+  [idx=28] text='Our Strategy'  label=section_header  page=4  bold=1  level=H4  path_text='Form 10-K | PART I | ITEM 1: BUSINESS | Our Strategy'
+  [idx=29] text='As a global commerce leader and third-party marketplace, our technologies and se'  label=text  page=4  bold=0  level=Body  path_text='Form 10-K | PART I | ITEM 1: BUSINESS | Our Strategy'
+  [idx=30] text='eBay’s strategy is to leverage technology to enhance the marketplace experience '  label=text  page=4  bold=0  level=Body  path_text='Form 10-K | PART I | ITEM 1: BUSINESS | Our Strategy'
+  [idx=31] text='Since late 2021, eBay has managed payments for all transactions on our Marketpla'  label=text  page=4  bold=0  level=Body  path_text='Form 10-K | PART I | ITEM 1: BUSINESS | Our Strategy'
+
+Structural diff vs. passing docs (7 passing):
+  This doc (EBAY_2022_10K):
+    label=text  level=Body  bold=0  all_cap=0  path_text='Form 10-K | PART I | ITEM 1: BUSINESS | Overview'
+  Passing docs (up to 3 shown):
+    ADOBE_2020_10K: label=text  level=Body  bold=1  all_cap=0  path_text='ADOBE INC.'
+    AMAZON_2020_10K: label=text  level=Body  bold=1  all_cap=0  path_text='AMAZON.COM, INC.'
+    AMAZON_2019_10K: label=text  level=Body  bold=1  all_cap=0  path_text='AMAZON.COM, INC.'[0m[38;5;200m[1;3m=== Diagnosis: AMCOR_2023Q2_10Q ===
+
+Ground truth: 'Warmley, Bristol, United Kingdom'
+
+Rule results:
+  rule_front_page_principal_office_block:  retrieved='83 Tower Road North Warmley, Bristol BS30 8XP United Kingdom\n(Address of principal executive offices'
+
+Answer location (inspect_answer_context):
+  Answer not found by substring match in AMCOR_2023Q2_10Q. GT: 'Warmley, Bristol, United Kingdom'
+
+Structural diff vs. passing docs (7 passing):
+  This doc (AMCOR_2023Q2_10Q): answer span NOT LOCATED by substring match
+  Passing docs (up to 3 shown):
+    ADOBE_2020_10K: label=text  level=Body  bold=1  all_cap=0  path_text='ADOBE INC.'
+    AMAZON_2020_10K: label=text  level=Body  bold=1  all_cap=0  path_text='AMAZON.COM, INC.'
+    AMAZON_2019_10K: label=text  level=Body  bold=1  all_cap=0  path_text='AMAZON.COM, INC.'[0m[38;5;200m[1;3m=== Diagnosis: AMCOR_2019_10K ===
+
+Ground truth: 'Warmley, Bristol, United Kingdom'
+
+Rule results:
+  rule_front_page_principal_office_block:  retrieved='83 Tower Road North Warmley, Bristol BS30 8XP United Kingdom\n(Address of principal executive offices'
+
+Answer location (inspect_answer_context):
+  Answer not found by substring match in AMCOR_2019_10K. GT: 'Warmley, Bristol, United Kingdom'
+
+Structural diff vs. passing docs (7 passing):
+  This doc (AMCOR_2019_10K): answer span NOT LOCATED by substring match
+  Passing docs (up to 3 shown):
+    ADOBE_2020_10K: label=text  level=Body  bold=1  all_cap=0  path_text='ADOBE INC.'
+    AMAZON_2020_10K: label=text  level=Body  bold=1  all_cap=0  path_text='AMAZON.COM, INC.'
+    AMAZON_2019_10K: label=text  level=Body  bold=1  all_cap=0  path_text='AMAZON.COM, INC.'[0m[38;5;200m[1;3m=== Diagnosis: AMCOR_2022_8K_2022-07-01 ===
+
+Ground truth: 'Warmley, Bristol, United Kingdom'
+
+Rule results:
+  rule_front_page_principal_office_block:  retrieved='83 Tower Road North Warmley, Bristol United Kingdom\n(Address of principal executive offices)'
+
+Answer location (inspect_answer_context):
+  Answer not found by substring match in AMCOR_2022_8K_2022-07-01. GT: 'Warmley, Bristol, United Kingdom'
+
+Structural diff vs. passing docs (7 passing):
+  This doc (AMCOR_2022_8K_2022-07-01): answer span NOT LOCATED by substring match
+  Passing docs (up to 3 shown):
+    ADOBE_2020_10K: label=text  level=Body  bold=1  all_cap=0  path_text='ADOBE INC.'
+    AMAZON_2020_10K: label=text  level=Body  bold=1  all_cap=0  path_text='AMAZON.COM, INC.'
+    AMAZON_2019_10K: label=text  level=Body  bold=1  all_cap=0  path_text='AMAZON.COM, INC.'[0m[38;5;200m[1;3m=== Diagnosis: ACTIVSIONBLIZZARD_2023Q2_10Q ===
+
+Ground truth: 'Santa Monica, CA'
+
+Rule results:
+  rule_front_page_principal_office_block:  retrieved='(Address of principal executive offices)'
+
+Answer location (inspect_answer_context):
+  Answer not found by substring match in ACTIVSIONBLIZZARD_2023Q2_10Q. GT: 'Santa Monica, CA'
+
+Structural diff vs. passing docs (7 passing):
+  This doc (ACTIVSIONBLIZZARD_2023Q2_10Q): answer span NOT LOCATED by substring match
+  Passing docs (up to 3 shown):
+    ADOBE_2020_10K: label=text  level=Body  bold=1  all_cap=0  path_text='ADOBE INC.'
+    AMAZON_2020_10K: label=text  level=Body  bold=1  all_cap=0  path_text='AMAZON.COM, INC.'
+    AMAZON_2019_10K: label=text  level=Body  bold=1  all_cap=0  path_text='AMAZON.COM, INC.'[0m[38;5;200m[1;3m=== Diagnosis: 3M_2023Q2_10Q ===
+
+Ground truth: 'St. Paul, Minnesota'
+
+Rule results:
+  rule_front_page_principal_office_block:  retrieved='(Address of Principal Executive Offices)\n| Title of each class | Trading Symbol(s) | Name of each ex'
+
+Answer location (inspect_answer_context):
+  [idx=7] text='Commission file number: 1-3285'  label=text  page=1  bold=1  level=Body  path_text='FORM 10-Q'
+  [idx=8] text='3M COMPANY'  label=section_header  page=1  bold=1  level=H1  path_text='3M COMPANY'
+  [idx=9] text='(Exact name of registrant as specified in its charter)'  label=text  page=1  bold=0  level=Body  path_text='3M COMPANY'
+  [idx=10] text='Delaware'  label=section_header  page=1  bold=1  level=H2  path_text='3M COMPANY | Delaware'
+  [idx=11] text='(State or other jurisdiction of incorporation)'  label=text  page=1  bold=0  level=Body  path_text='3M COMPANY | Delaware'
+  [idx=12] text='3M Center, St. Paul, Minnesota'  label=section_header  page=1  bold=1  level=H2  path_text='3M COMPANY | 3M Center, St. Paul, Minnesota'  ← ANSWER HERE
+  [idx=13] text='(Address of Principal Executive Offices)'  label=text  page=1  bold=0  level=Body  path_text='3M COMPANY | 3M Center, St. Paul, Minnesota'
+  [idx=14] text='41-0417775'  label=section_header  page=1  bold=1  level=H2  path_text='3M COMPANY | 41-0417775'
+  [idx=15] text='(IRS Employer Identification No.)'  label=text  page=1  bold=0  level=Body  path_text='3M COMPANY | 41-0417775'
+  [idx=16] text='55144-1000'  label=section_header  page=1  bold=1  level=H2  path_text='3M COMPANY | 55144-1000'
+  [idx=17] text='(Zip Code)'  label=text  page=1  bold=0  level=Body  path_text='3M COMPANY | 55144-1000'
+
+Structural diff vs. passing docs (7 passing):
+  This doc (3M_2023Q2_10Q):
+    label=section_header  level=H2  bold=1  all_cap=0  path_text='3M COMPANY | 3M Center, St. Paul, Minnesota'
+  Passing docs (up to 3 shown):
+    ADOBE_2020_10K: label=text  level=Body  bold=1  all_cap=0  path_text='ADOBE INC.'
+    AMAZON_2020_10K: label=text  level=Body  bold=1  all_cap=0  path_text='AMAZON.COM, INC.'
+    AMAZON_2019_10K: label=text  level=Body  bold=1  all_cap=0  path_text='AMAZON.COM, INC.'[0m[38;5;200m[1;3m=== Diagnosis: COSTCO_2023_8K_dated-2023-08-09 ===
+
+Ground truth: 'Issaquah, WA'
+
+Rule results:
+  rule_front_page_principal_office_block:  retrieved='98027 (Address of principal executive offices and zip code)'
+
+Answer location (inspect_answer_context):
+  [idx=10] text='0-20355'  label=text  page=1  bold=1  level=Body  path_text='COSTCO WHOLESALE CORPORATION'
+  [idx=11] text='(State or other jurisdiction of incorporation)'  label=text  page=1  bold=1  level=Body  path_text='COSTCO WHOLESALE CORPORATION'
+  [idx=12] text='91-1223280'  label=text  page=1  bold=1  level=Body  path_text='COSTCO WHOLESALE CORPORATION'
+  [idx=13] text='(Commission File No.)'  label=text  page=1  bold=1  level=Body  path_text='COSTCO WHOLESALE CORPORATION'
+  [idx=14] text='(I.R.S. Employer Identification No.)'  label=text  page=1  bold=1  level=Body  path_text='COSTCO WHOLESALE CORPORATION'
+  [idx=15] text='999 Lake Drive Issaquah, WA 98027'  label=text  page=1  bold=1  level=Body  path_text='COSTCO WHOLESALE CORPORATION'  ← ANSWER HERE
+  [idx=16] text='98027 (Address of principal executive offices and zip code)'  label=text  page=1  bold=1  level=Body  path_text='COSTCO WHOLESALE CORPORATION'
+  [idx=17] text='Registrant’s telephone number, including area code: 425-313-8100'  label=text  page=1  bold=1  level=Body  path_text='COSTCO WHOLESALE CORPORATION'
+  [idx=18] text='Check the appropriate box below if the Form 8-K filing is intended to simultaneo'  label=text  page=1  bold=0  level=Body  path_text='COSTCO WHOLESALE CORPORATION'
+  [idx=19] text='☐ Written communications pursuant to Rule 425 under the Securities Act (17 CFR 2'  label=checkbox_unselected  page=1  bold=0  level=Body  path_text='COSTCO WHOLESALE CORPORATION'
+  [idx=20] text='☐ Soliciting material pursuant to Rule 14a-12 under the Exchange Act (17 CFR 240'  label=checkbox_unselected  page=1  bold=0  level=Body  path_text='COSTCO WHOLESALE CORPORATION'
+
+Structural diff vs. passing docs (7 passing):
+  This doc (COSTCO_2023_8K_dated-2023-08-09):
+    label=text  level=Body  bold=1  all_cap=0  path_text='COSTCO WHOLESALE CORPORATION'
+  Passing docs (up to 3 shown):
+    ADOBE_2020_10K: label=text  level=Body  bold=1  all_cap=0  path_text='ADOBE INC.'
+    AMAZON_2020_10K: label=text  level=Body  bold=1  all_cap=0  path_text='AMAZON.COM, INC.'
+    AMAZON_2019_10K: label=text  level=Body  bold=1  all_cap=0  path_text='AMAZON.COM, INC.'[0m

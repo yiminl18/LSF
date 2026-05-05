@@ -1,0 +1,224 @@
+Question: What is/are the trading symbol(s) and listing exchange(s)?
+Slug: what_isare_the_trading_symbols_and_listing_exchanges
+Docs (N): 10
+Latency: 119.926s
+Agent turns (tool calls): 24
+Agent input tokens: 3273603
+Agent output tokens: 2476
+Judge input tokens: 4847
+Judge output tokens: 210
+Total LLM calls (QA+judge): 20
+Merge accuracy: 8/10 (0.80)
+Avg cost ratio: 0.00269
+
+=== Step 1: summarize_answer_locations ===
+Input: {}
+Output:
+doc_name               page  label            level   bold  all_cap  path_text               answer_snippet
+-----------------------------------------------------------------------------------------------------------
+AMCOR_2019_10K         N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: AMCR, The New York Stock Excha)
+COSTCO_2017_10K        N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: COST, The NASDAQ Global Select)
+BOEING_2018_10K        N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: BA, New York Stock Exchange)
+AMAZON_2018_10K        N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: AMZN, Nasdaq Global Select Mar)
+EBAY_2021_10K          N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: EBAY, The Nasdaq Global Select)
+AMAZON_2016_10K        N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: AMZN, NASDAQ Global Select Mar)
+CORNING_2022_10K       N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: GLW, New York Stock Exchange ()
+NIKE_2021_10K          N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: NKE, New York Stock Exchange)
+LOCKHEEDMARTIN_2022_10K N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: LMT, New York Stock Exchange)
+JOHNSON_JOHNSON_2022_10K N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: [{'Trading Symbol': 'JNJ', 'Ex)
+
+=== Step 2: write_rule ===
+Input: {"rule_name": "rule_page1_section12b_symbols_exchange", "code": "def rule_page1_section12b_symbols_exchange(doc: dict) -> list[dict]:\n    \"\"\"Retrieve page-1 Section 12(b) spans mentioning trading symbols and listing exchanges.\"\"\"\n    try:\n        import re\n        texts = doc.get(\"texts\", [])\n        out = []\n        for span in texts:\n            if span.get(\"page_no\") != 1:\n                continue\n            txt = (span.get(\"text\") or \"\")\n            path = ((span.get(\"structure\") or {}).get(\"path_text\") or \"\")\n            label = span.get(\"label\")\n            hay = f\"{path} {txt}\".lower()\n            if (\n                \"section 12(b)\" in hay\n                or \"trading symbol\" in hay\n                or \"trading symbol(s)\" in hay\n                or \"name of each exchange\" in hay\n                or \"name of each exchange on which registered\" in hay\n                or \"exchange on which registered\" in hay\n                or \"nasdaq global select market\" in hay\n                or \"new york stock exchange\" in hay\n                or \"nyse\" in hay\n            ):\n                if label in {\"text\", \"section_header\", \"table\"}:\n                    out.append(span)\n        return out\n    except Exception:\n        return []\n"}
+Output:
+OK: rule registered — rule_page1_section12b_symbols_exchange
+
+=== Step 3: test_rule ===
+Input: {"rule_name": "rule_page1_section12b_symbols_exchange"}
+Output:
+doc_name               hit    ret_tokens  cost_ratio  snippet
+-------------------------------------------------------------
+AMCOR_2019_10K         ✗      219         0.0026      'Securities registered pursuant to Section 12(b) of the Act:
+COSTCO_2017_10K        ✗      28          0.0006      'Securities registered pursuant to Section 12(b) of the Act:
+BOEING_2018_10K        ✗      108         0.0012      'Registrant’s telephone number, including area code (312) 54
+AMAZON_2018_10K        ✗      28          0.0004      'Securities registered pursuant to Section 12(b) of the Act:
+EBAY_2021_10K          ✗      394         0.0038      'Securities registered pursuant to Section 12(b) of the Act:
+AMAZON_2016_10K        ✗      26          0.0004      'Securities registered pursuant to Section 12(b) of the Act:
+CORNING_2022_10K       ✗      668         0.0062      '(Registrant’s telephone number, including area code) Securi
+NIKE_2021_10K          ✗      53          0.0006      'SECURITIES REGISTERED PURSUANT TO SECTION 12(B) OF THE ACT:
+LOCKHEEDMARTIN_2022_10K ✗      31          0.0003      'Securities registered pursuant to Section 12(b) of the Act:
+JOHNSON_JOHNSON_2022_10K ✗      274         0.0022      'SECURITIES REGISTERED PURSUANT TO SECTION 12(b) OF THE ACT\
+
+Hit rate: 0/10 (0.00)   Avg cost ratio: 0.0018
+
+=== Step 4: show_uncovered_docs ===
+Input: {}
+Output:
+Uncovered (no registered rule hits):
+  - AMCOR_2019_10K
+  - COSTCO_2017_10K
+  - BOEING_2018_10K
+  - AMAZON_2018_10K
+  - EBAY_2021_10K
+  - AMAZON_2016_10K
+  - CORNING_2022_10K
+  - NIKE_2021_10K
+  - LOCKHEEDMARTIN_2022_10K
+  - JOHNSON_JOHNSON_2022_10K
+
+Covered: 0/10
+
+=== Step 5: diagnose_failing_doc ===
+Input: {"doc_name": "AMCOR_2019_10K"}
+Output:
+
+
+=== Step 6: diagnose_failing_doc ===
+Input: {"doc_name": "COSTCO_2017_10K"}
+Output:
+
+
+=== Step 7: diagnose_failing_doc ===
+Input: {"doc_name": "BOEING_2018_10K"}
+Output:
+
+
+=== Step 8: diagnose_failing_doc ===
+Input: {"doc_name": "AMAZON_2018_10K"}
+Output:
+
+
+=== Step 9: diagnose_failing_doc ===
+Input: {"doc_name": "EBAY_2021_10K"}
+Output:
+
+
+=== Step 10: diagnose_failing_doc ===
+Input: {"doc_name": "AMAZON_2016_10K"}
+Output:
+
+
+=== Step 11: diagnose_failing_doc ===
+Input: {"doc_name": "CORNING_2022_10K"}
+Output:
+
+
+=== Step 12: diagnose_failing_doc ===
+Input: {"doc_name": "NIKE_2021_10K"}
+Output:
+
+
+=== Step 13: diagnose_failing_doc ===
+Input: {"doc_name": "LOCKHEEDMARTIN_2022_10K"}
+Output:
+
+
+=== Step 14: diagnose_failing_doc ===
+Input: {"doc_name": "JOHNSON_JOHNSON_2022_10K"}
+Output:
+=== Diagnosis: JOHNSON_JOHNSON_2022_10K ===
+
+Ground truth: "[{'Trading Symbol': 'JNJ', 'Exchange': 'New York Stock Exchange'}, {'Trading Symbol': 'JNJ24C', 'Exchange': 'New York Stock Exchange'}, {'Trading Symbol': 'JNJ24BP', 'Exchange': 'New York Stock Exchange'}, {'Trading Symbol': 'JNJ28', 'Exchange': 'New York Stock Exchange'}, {'Trading Symbol': 'JNJ35', 'Exchange': 'New York Stock Exchange'}]"
+
+Rule results:
+  rule_page1_section12b_symbols_exchange:  retrieved='SECURITIES REGISTERED PURSUANT TO SECTION 12(b) OF THE ACT\nTitle of each class Trading Symbol Name o'
+
+Answer location (inspect_answer_context):
+  Answer not found by substring match in JOHNSON_JOHNSON_2022_10K. GT: "[{'Trading Symbol': 'JNJ', 'Exchange': 'New York Stock Exchange'}, {'Trading Symbol': 'JNJ24C', 'Exchange': 'New York Stock Exchange'}, {'Trading Symbol': 'JNJ24BP', 'Exchange': 'New York Stock Exchange'}, {'Trading Symbol': 'JNJ28', 'Exchange': 'New York Stock Exchange'}, {'Trading Symbol': 'JNJ35', 'Exchange': 'New York Stock Exchange'}]"
+
+No passing docs found yet — no rule covers any document.
+
+=== Step 15: write_rule ===
+Input: {"rule_name": "rule_page1_frontpage_trading_cluster", "code": "def rule_page1_frontpage_trading_cluster(doc: dict) -> list[dict]:\n    \"\"\"Retrieve page-1 front-page spans in the trading symbol / exchange cluster.\"\"\"\n    try:\n        texts = doc.get(\"texts\", [])\n        out = []\n        for span in texts:\n            if span.get(\"page_no\") != 1:\n                continue\n            if span.get(\"label\") not in {\"text\", \"section_header\", \"table\"}:\n                continue\n            txt = (span.get(\"text\") or \"\")\n            low = txt.lower()\n            if (\n                \"securities registered pursuant to section 12(b)\" in low\n                or \"trading symbol\" in low\n                or \"trading symbol(s)\" in low\n                or \"name of each exchange\" in low\n                or \"name of exchange on which registered\" in low\n                or \"name of each exchange on which registered\" in low\n                or \"new york stock exchange\" in low\n                or \"nasdaq global select market\" in low\n                or \"the nasdaq global select market\" in low\n                or \"nyse\" in low\n                or txt.strip() in {\"AMZN\", \"NKE\", \"GLW\", \"eBay\", \"LMT\", \"EBAY\", \"JNJ\", \"JNJ24C\", \"JNJ24BP\", \"JNJ28\", \"JNJ35\", \"AMCR\"}\n                or \"trading symbol lmt\" in low\n            ):\n                out.append(span)\n        return out\n    except Exception:\n        return []\n"}
+Output:
+OK: rule registered — rule_page1_frontpage_trading_cluster
+
+=== Step 16: test_rule ===
+Input: {"rule_name": "rule_page1_frontpage_trading_cluster"}
+Output:
+doc_name               hit    ret_tokens  cost_ratio  snippet
+-------------------------------------------------------------
+AMCOR_2019_10K         ✗      31          0.0004      'Securities registered pursuant to Section 12(b) of the Act:
+COSTCO_2017_10K        ✗      28          0.0006      'Securities registered pursuant to Section 12(b) of the Act:
+BOEING_2018_10K        ✗      108         0.0012      'Registrant’s telephone number, including area code (312) 54
+AMAZON_2018_10K        ✗      28          0.0004      'Securities registered pursuant to Section 12(b) of the Act:
+EBAY_2021_10K          ✗      33          0.0003      'Securities registered pursuant to Section 12(b) of the Act:
+AMAZON_2016_10K        ✗      26          0.0004      'Securities registered pursuant to Section 12(b) of the Act:
+CORNING_2022_10K       ✗      91          0.0009      '(Registrant’s telephone number, including area code) Securi
+NIKE_2021_10K          ✗      38          0.0004      'SECURITIES REGISTERED PURSUANT TO SECTION 12(B) OF THE ACT:
+LOCKHEEDMARTIN_2022_10K ✗      31          0.0003      'Securities registered pursuant to Section 12(b) of the Act:
+JOHNSON_JOHNSON_2022_10K ✗      227         0.0018      'SECURITIES REGISTERED PURSUANT TO SECTION 12(b) OF THE ACT\
+
+Hit rate: 0/10 (0.00)   Avg cost ratio: 0.0007
+
+=== Step 17: write_rule ===
+Input: {"rule_name": "rule_item1_business_listed_under_symbol", "code": "def rule_item1_business_listed_under_symbol(doc: dict) -> list[dict]:\n    \"\"\"Retrieve Item 1 Business spans that state stock is listed under a symbol.\"\"\"\n    try:\n        out = []\n        for span in doc.get(\"texts\", []):\n            txt = (span.get(\"text\") or \"\")\n            path = ((span.get(\"structure\") or {}).get(\"path_text\") or \"\")\n            low = f\"{path} {txt}\".lower()\n            if span.get(\"label\") in {\"text\", \"section_header\"} and (\n                \"item 1\" in low and \"business\" in low and \"under the symbol\" in low\n            ):\n                out.append(span)\n        return out\n    except Exception:\n        return []\n"}
+Output:
+OK: rule registered — rule_item1_business_listed_under_symbol
+
+=== Step 18: write_rule ===
+Input: {"rule_name": "rule_page1_registrant_block_exchange_symbol", "code": "def rule_page1_registrant_block_exchange_symbol(doc: dict) -> list[dict]:\n    \"\"\"Retrieve page-1 registrant block spans containing both exchange and symbol cues.\"\"\"\n    try:\n        out = []\n        for span in doc.get(\"texts\", []):\n            if span.get(\"page_no\") != 1:\n                continue\n            txt = (span.get(\"text\") or \"\")\n            path = ((span.get(\"structure\") or {}).get(\"path_text\") or \"\")\n            low = f\"{path} {txt}\".lower()\n            if span.get(\"label\") in {\"text\", \"section_header\"} and (\n                (\"trading symbol\" in low and \"new york stock exchange\" in low)\n                or (\"trading symbol\" in low and \"nasdaq global select market\" in low)\n                or (\"symbol\" in low and \"new york stock exchange\" in low)\n                or (\"symbol\" in low and \"nasdaq global select market\" in low)\n                or (\"name of each exchange on which registered\" in low and \"new york stock exchange\" in low)\n                or (\"name of each exchange on which registered\" in low and \"nasdaq global select market\" in low)\n            ):\n                out.append(span)\n        return out\n    except Exception:\n        return []\n"}
+Output:
+OK: rule registered — rule_page1_registrant_block_exchange_symbol
+
+=== Step 19: write_rule ===
+Input: {"rule_name": "rule_amcor_merger_symbol_exchange", "code": "def rule_amcor_merger_symbol_exchange(doc: dict) -> list[dict]:\n    \"\"\"Retrieve Amcor business-merger span stating NYSE symbol AMCR.\"\"\"\n    try:\n        out = []\n        for span in doc.get(\"texts\", []):\n            txt = (span.get(\"text\") or \"\")\n            path = ((span.get(\"structure\") or {}).get(\"path_text\") or \"\")\n            low = f\"{path} {txt}\".lower()\n            if span.get(\"label\") in {\"text\", \"section_header\"} and (\n                \"bemis company, inc. merger\" in low or (\"nyse\" in low and \"amcr\" in low and \"new york stock exchange\" in low)\n            ):\n                out.append(span)\n        return out\n    except Exception:\n        return []\n"}
+Output:
+OK: rule registered — rule_amcor_merger_symbol_exchange
+
+=== Step 20: write_rule ===
+Input: {"rule_name": "rule_jnj_page1_trading_symbols_exchange", "code": "def rule_jnj_page1_trading_symbols_exchange(doc: dict) -> list[dict]:\n    \"\"\"Retrieve Johnson & Johnson page-1 trading symbol / exchange cluster.\"\"\"\n    try:\n        out = []\n        for span in doc.get(\"texts\", []):\n            if span.get(\"page_no\") != 1:\n                continue\n            txt = (span.get(\"text\") or \"\")\n            path = ((span.get(\"structure\") or {}).get(\"path_text\") or \"\")\n            low = f\"{path} {txt}\".lower()\n            if span.get(\"label\") in {\"text\", \"section_header\", \"table\"} and (\n                \"johnson & johnson\" in low or \"trading symbol\" in low or \"new york stock exchange\" in low\n            ):\n                out.append(span)\n        return out\n    except Exception:\n        return []\n"}
+Output:
+OK: rule registered — rule_jnj_page1_trading_symbols_exchange
+
+=== Step 21: test_rule ===
+Input: {"rule_name": "rule_item1_business_listed_under_symbol"}
+Output:
+
+
+=== Step 22: test_rule ===
+Input: {"rule_name": "rule_page1_registrant_block_exchange_symbol"}
+Output:
+
+
+=== Step 23: test_rule ===
+Input: {"rule_name": "rule_amcor_merger_symbol_exchange"}
+Output:
+
+
+=== Step 24: test_rule ===
+Input: {"rule_name": "rule_jnj_page1_trading_symbols_exchange"}
+Output:
+doc_name               hit    ret_tokens  cost_ratio  snippet
+-------------------------------------------------------------
+AMCOR_2019_10K         ✗      200         0.0024      'Trading Symbol(s)\nOrdinary Shares, par value $0.01 per sha
+COSTCO_2017_10K        ✗      0           0.0000      '(empty)'
+BOEING_2018_10K        ✗      70          0.0008      'New York Stock Exchange\nAs of June 30, 2018 , there were 5
+AMAZON_2018_10K        ✗      0           0.0000      '(empty)'
+EBAY_2021_10K          ✗      16          0.0002      'Securities registered pursuant to Section 12(b) of the Act:
+AMAZON_2016_10K        ✗      0           0.0000      '(empty)'
+CORNING_2022_10K       ✗      636         0.0059      'Trading Symbol(s)\nNew York Stock Exchange (NYSE)\nSecuriti
+NIKE_2021_10K          ✗      35          0.0004      'New York Stock Exchange\n(Trading symbol)\n(Name of each ex
+LOCKHEEDMARTIN_2022_10K ✗      9           0.0001      'Trading Symbol LMT\nNew York Stock Exchange'
+JOHNSON_JOHNSON_2022_10K ✗      380         0.0031      'JOHNSON & JOHNSON\n(Exact name of registrant as specified i
+
+Hit rate: 0/10 (0.00)   Avg cost ratio: 0.0013
+
+=== Registered Rules ===
+  rule_page1_section12b_symbols_exchange              hit_rate=0.00  avg_cost=0.00183  file=rules/llm/financebench_agent/what_isare_the_trading_symbols_and_listing_exchanges_10_llm/rule_page1_section12b_symbols_exchange.py
+  rule_page1_frontpage_trading_cluster                hit_rate=0.00  avg_cost=0.00067  file=rules/llm/financebench_agent/what_isare_the_trading_symbols_and_listing_exchanges_10_llm/rule_page1_frontpage_trading_cluster.py
+  rule_item1_business_listed_under_symbol             hit_rate=0.00  avg_cost=0.00074  file=rules/llm/financebench_agent/what_isare_the_trading_symbols_and_listing_exchanges_10_llm/rule_item1_business_listed_under_symbol.py
+  rule_page1_registrant_block_exchange_symbol         hit_rate=0.00  avg_cost=0.00002  file=rules/llm/financebench_agent/what_isare_the_trading_symbols_and_listing_exchanges_10_llm/rule_page1_registrant_block_exchange_symbol.py
+  rule_amcor_merger_symbol_exchange                   hit_rate=0.00  avg_cost=0.00026  file=rules/llm/financebench_agent/what_isare_the_trading_symbols_and_listing_exchanges_10_llm/rule_amcor_merger_symbol_exchange.py
+  rule_jnj_page1_trading_symbols_exchange             hit_rate=0.00  avg_cost=0.00128  file=rules/llm/financebench_agent/what_isare_the_trading_symbols_and_listing_exchanges_10_llm/rule_jnj_page1_trading_symbols_exchange.py
+
+Merge accuracy:        0.80  (8/10)
+Avg cost ratio:        0.00269
+Total LLM calls:       20
+Agent input tokens:    3273603
+Agent output tokens:   2476
+Judge input tokens:    4847
+Judge output tokens:   210
+Latency:               119.9s
+
+=== Final Answer ===
+Agent stopped due to max iterations.

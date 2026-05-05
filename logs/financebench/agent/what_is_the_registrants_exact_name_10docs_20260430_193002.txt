@@ -1,0 +1,139 @@
+Question: What is the registrant's exact name?
+Slug: what_is_the_registrants_exact_name
+Docs (N): 10
+Latency: 72.204s
+Agent turns (tool calls): 5
+Agent input tokens: 1623921
+Agent output tokens: 1155
+Judge input tokens: 5372
+Judge output tokens: 308
+Total LLM calls (QA+judge): 40
+Merge accuracy: 10/10 (1.00)
+Avg cost ratio: 0.00044
+
+=== Step 1: summarize_answer_locations ===
+Input: {}
+Output:
+doc_name               page  label            level   bold  all_cap  path_text               answer_snippet
+-----------------------------------------------------------------------------------------------------------
+AMCOR_2019_10K         1     section_header   H1      1     1        AMCOR PLC               AMCOR PLC
+COSTCO_2017_10K        1     section_header   H1      1     0        Costco Wholesale Corpo  Costco Wholesale Corporation
+BOEING_2018_10K        1     section_header   H1      1     1        THE BOEING COMPANY      THE BOEING COMPANY
+AMAZON_2018_10K        1     section_header   H1      1     1        AMAZON.COM, INC.        AMAZON.COM, INC.
+EBAY_2021_10K          1     section_header   H2      1     0        Form 10-K | eBay Inc.   eBay Inc.
+AMAZON_2016_10K        1     section_header   H1      1     1        AMAZON.COM, INC.        AMAZON.COM, INC.
+CORNING_2022_10K       1     section_header   H1      1     1        CORNING INCORPORATED    CORNING INCORPORATED
+NIKE_2021_10K          1     text             Body    1     0                                NIKE, Inc.
+LOCKHEEDMARTIN_2022_10K 1     section_header   H2      1     1        FORM 10-K | LOCKHEED M  LOCKHEED MARTIN CORPORATION
+JOHNSON_JOHNSON_2022_10K 1     section_header   H1      1     1        JOHNSON & JOHNSON       JOHNSON & JOHNSON
+
+=== Step 2: write_rule ===
+Input: {"rule_name": "rule_cover_exact_name_bold", "code": "def rule_cover_exact_name_bold(doc: dict) -> list[dict]:\n    \"\"\"Retrieve bold cover-page company-name spans near the exact-name-of-registrant cue.\"\"\"\n    try:\n        import re\n        texts = doc.get(\"texts\", []) or []\n        out = []\n        n = len(texts)\n        for i, span in enumerate(texts):\n            if not isinstance(span, dict):\n                continue\n            if span.get(\"page_no\") != 1:\n                continue\n            if span.get(\"bold\") != 1:\n                continue\n            if span.get(\"label\") not in {\"section_header\", \"text\"}:\n                continue\n            txt = (span.get(\"text\") or \"\").strip()\n            if not txt or len(txt) > 120:\n                continue\n            if re.search(r\"exact name of registrant\", txt, re.I):\n                continue\n            path = ((span.get(\"structure\") or {}).get(\"path_text\") or \"\")\n            window = texts[max(0, i-3):min(n, i+4)]\n            nearby = \" \".join((s.get(\"text\") or \"\") for s in window if isinstance(s, dict))\n            if re.search(r\"exact name of registrant\", nearby, re.I) or re.search(r\"exact name of registrant\", path, re.I):\n                out.append(span)\n                continue\n            if span.get(\"label\") == \"section_header\" and ((span.get(\"structure\") or {}).get(\"level\") in {\"H1\", \"H2\"}):\n                if any(re.search(r\"exact name of registrant\", (texts[j].get(\"text\") or \"\"), re.I) for j in range(i+1, min(n, i+4)) if isinstance(texts[j], dict)):\n                    out.append(span)\n        return out\n    except Exception:\n        return []\n"}
+Output:
+OK: rule registered — rule_cover_exact_name_bold
+
+=== Step 3: test_rule ===
+Input: {"rule_name": "rule_cover_exact_name_bold"}
+Output:
+doc_name               hit    ret_tokens  cost_ratio  snippet
+-------------------------------------------------------------
+AMCOR_2019_10K         ✓      54          0.0006      'For the Fiscal Year Ended June 30, 2019\nCommission File Nu
+COSTCO_2017_10K        ✓      42          0.0008      'TRANSITION REPORT PURSUANT TO SECTION 13 OR 15(d) OF THE SE
+BOEING_2018_10K        ✓      27          0.0003      'THE BOEING COMPANY\nDelaware\nState or other jurisdiction o
+AMAZON_2018_10K        ✓      34          0.0005      'Commission File No. 000-22513\nAMAZON.COM, INC.\nDelaware\n
+EBAY_2021_10K          ✓      24          0.0002      'Commission file number 001-37713\neBay Inc.\nDelaware\n2025
+AMAZON_2016_10K        ✓      34          0.0005      'Commission File No. 000-22513\nAMAZON.COM, INC.\nDelaware\n
+CORNING_2022_10K       ✓      68          0.0006      '☐ TRANSITION REPORT PURSUANT TO SECTION 13 OR 15(d) OF THE 
+NIKE_2021_10K          ✓      27          0.0003      'Commission File No. 1-10635\nNIKE, Inc.\nNIKE, Inc.\nOregon
+LOCKHEEDMARTIN_2022_10K ✓      16          0.0002      'LOCKHEED MARTIN CORPORATION\nMaryland\n6801 Rockledge Drive
+JOHNSON_JOHNSON_2022_10K ✓      32          0.0003      'Commission file number 1-3215\nJOHNSON & JOHNSON\nNew Jerse
+
+Hit rate: 10/10 (1.00)   Avg cost ratio: 0.0004
+
+=== Step 4: show_uncovered_docs ===
+Input: {}
+Output:
+All 10 documents covered. Covered: 10/10
+
+=== Step 5: test_union ===
+Input: {}
+Output:
+Merge accuracy: 10/10 (1.0)  Avg cost ratio: 0.00044
+All documents correct!
+
+Per-doc cost:
+  ✓ AMCOR_2019_10K                           cost_ratio=0.00064
+  ✓ COSTCO_2017_10K                          cost_ratio=0.00083
+  ✓ BOEING_2018_10K                          cost_ratio=0.00031
+  ✓ AMAZON_2018_10K                          cost_ratio=0.00050
+  ✓ EBAY_2021_10K                            cost_ratio=0.00023
+  ✓ AMAZON_2016_10K                          cost_ratio=0.00054
+  ✓ CORNING_2022_10K                         cost_ratio=0.00064
+  ✓ NIKE_2021_10K                            cost_ratio=0.00030
+  ✓ LOCKHEEDMARTIN_2022_10K                  cost_ratio=0.00015
+  ✓ JOHNSON_JOHNSON_2022_10K                 cost_ratio=0.00026
+
+=== Registered Rules ===
+  rule_cover_exact_name_bold                          hit_rate=1.00  avg_cost=0.00044  file=rules/llm/financebench_agent/what_is_the_registrants_exact_name_10_llm/rule_cover_exact_name_bold.py
+
+Merge accuracy:        1.00  (10/10)
+Avg cost ratio:        0.00044
+Total LLM calls:       40
+Agent input tokens:    1623921
+Agent output tokens:   1155
+Judge input tokens:    5372
+Judge output tokens:   308
+Latency:               72.2s
+
+=== Final Answer ===
+Done — achieved:
+
+- merge_accuracy: 1.00
+- avg_cost_ratio: 0.00044
+
+Registered rule:
+
+```python
+def rule_cover_exact_name_bold(doc: dict) -> list[dict]:
+    """Retrieve bold cover-page company-name spans near the exact-name-of-registrant cue."""
+    try:
+        import re
+        texts = doc.get("texts", []) or []
+        out = []
+        n = len(texts)
+        for i, span in enumerate(texts):
+            if not isinstance(span, dict):
+                continue
+            if span.get("page_no") != 1:
+                continue
+            if span.get("bold") != 1:
+                continue
+            if span.get("label") not in {"section_header", "text"}:
+                continue
+            txt = (span.get("text") or "").strip()
+            if not txt or len(txt) > 120:
+                continue
+            if re.search(r"exact name of registrant", txt, re.I):
+                continue
+            path = ((span.get("structure") or {}).get("path_text") or "")
+            window = texts[max(0, i-3):min(n, i+4)]
+            nearby = " ".join((s.get("text") or "") for s in window if isinstance(s, dict))
+            if re.search(r"exact name of registrant", nearby, re.I) or re.search(r"exact name of registrant", path, re.I):
+                out.append(span)
+                continue
+            if span.get("label") == "section_header" and ((span.get("structure") or {}).get("level") in {"H1", "H2"}):
+                if any(re.search(r"exact name of registrant", (texts[j].get("text") or ""), re.I) for j in range(i+1, min(n, i+4)) if isinstance(texts[j], dict)):
+                    out.append(span)
+        return out
+    except Exception:
+        return []
+```
+
+Summary:
+- One broad cover-page rule was sufficient.
+- It captures the registrant name on page 1 across all 10 filings, including variants like:
+  - H1 company-name headers
+  - H2 company-name headers
+  - bold body-text company name near the “Exact name of registrant” cue
+
+No further tightening is needed given the already tiny cost.

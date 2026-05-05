@@ -1,0 +1,244 @@
+Question: What is long-term debt at year-end (0 if none)?
+Slug: what_is_longterm_debt_at_yearend_0_if_none
+Docs (N): 10
+Latency: 147.396s
+Iterations: 25
+Input tokens: 0
+Output tokens: 0
+Total LLM calls: 40
+Merge accuracy: 7/10 (0.70)
+
+=== Step 1: summarize_answer_locations ===
+Input: {}
+Output:
+doc_name               page  label            level   bold  all_cap  path_text               answer_snippet
+-----------------------------------------------------------------------------------------------------------
+AMCOR_2019_10K         N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: 5,314.4 million)
+COSTCO_2017_10K        18    table            Body    0     0        Costco Wholesale Corpo  | As of and for the year ended | Sept. 3
+BOEING_2018_10K        N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: $10,657 million)
+AMAZON_2018_10K        N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: $50,708 million)
+EBAY_2021_10K          N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: $7,727 million)
+AMAZON_2016_10K        N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: $7,694 million)
+CORNING_2022_10K       N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: 6,687 million)
+NIKE_2021_10K          N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: $9,413 million)
+LOCKHEEDMARTIN_2022_10K N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: $15,547 million)
+JOHNSON_JOHNSON_2022_10K N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: $26.9 billion)
+
+=== Step 2: write_rule ===
+Input: {"rule_name": "rule_financial_statement_tables_long_term_debt", "code": "def rule_financial_statement_tables_long_term_debt(doc: dict) -> list[dict]:\n    \"\"\"Retrieve financial statement tables likely containing long-term debt year-end values.\"\"\"\n    try:\n        import re\n        texts = doc.get(\"texts\", [])\n        out = []\n        for span in texts:\n            if span.get(\"label\") != \"table\":\n                continue\n            text = (span.get(\"text\") or \"\")\n            path = ((span.get(\"structure\") or {}).get(\"path_text\") or \"\")\n            combined = (path + \"\\n\" + text).lower()\n            if not any(k in combined for k in [\n                \"item 8\", \"financial statements\", \"financial statement\", \"supplementary data\",\n                \"consolidated balance\", \"balance sheet\", \"statement of financial position\",\n                \"financial position\", \"long-term debt\", \"long term debt\", \"long-term borrowings\",\n                \"long term borrowings\", \"debt\"\n            ]):\n                continue\n            cells = (((span.get(\"table_data\") or {}).get(\"cells\")) or [])\n            cell_text = \" \".join((c.get(\"text\") or \"\") for c in cells).lower()\n            if any(k in cell_text for k in [\n                \"long-term debt\", \"long term debt\", \"long-term borrowings\", \"long term borrowings\",\n                \"total debt\", \"borrowings\", \"debt\"\n            ]) or any(k in combined for k in [\"balance sheet\", \"statement of financial position\", \"consolidated balance\"]):\n                out.append(span)\n        return out\n    except Exception:\n        return []"}
+Output:
+OK: rule registered — rule_financial_statement_tables_long_term_debt
+
+=== Step 3: test_rule ===
+Input: {"rule_name": "rule_financial_statement_tables_long_term_debt"}
+Output:
+doc_name               hit    retrieved_tokens  retrieved_snippet
+-----------------------------------------------------------------
+AMCOR_2019_10K         ✗      5989              '| Item 1. | Business | 6 |\n| --- | --- | --- |\n| Item 1A.
+COSTCO_2017_10K        ✓      3932              '| As of and for the year ended | Sept. 3, 2017 (53 weeks) |
+BOEING_2018_10K        ✗      8846              '| Years ended December 31, | 2018 | 2017 | 2016 |\n| --- | 
+AMAZON_2018_10K        ✗      5133              '|  | December 31, |  |  |  |  |\n|  | 2014 | 2015 | 2016 | 
+EBAY_2021_10K          ✗      5607              '|  | Page Number |\n| --- | --- |\n| 1. Consolidated Financ
+AMAZON_2016_10K        ✗      3905              '|  | December 31, |  |  |  |  |\n|  | 2012 | 2013 | 2014 | 
+CORNING_2022_10K       ✗      6936              '|  | Year ended December 31, 2022 |  |  |  |  |\n|  | Net s
+NIKE_2021_10K          ✗      4825              '|  | AVERAGE FOR THE TRAILING FIVE QUARTERS ENDED |  |\n|  
+LOCKHEEDMARTIN_2022_10K ✗      3991              '| (In millions, except per share data) | 2022 | 2021 | 2020
+JOHNSON_JOHNSON_2022_10K ✗      7803              '| (Dollars In Billions) |  |\n| --- | --- |\n| $ | (11.7) d
+
+Hit rate: 1/10 (0.10)
+
+=== Step 4: inspect_answer_context ===
+Input: {"doc_name": "AMAZON_2018_10K"}
+Output:
+
+
+=== Step 5: inspect_answer_context ===
+Input: {"doc_name": "AMAZON_2016_10K"}
+Output:
+
+
+=== Step 6: inspect_answer_context ===
+Input: {"doc_name": "BOEING_2018_10K"}
+Output:
+
+
+=== Step 7: inspect_answer_context ===
+Input: {"doc_name": "EBAY_2021_10K"}
+Output:
+
+
+=== Step 8: inspect_answer_context ===
+Input: {"doc_name": "NIKE_2021_10K"}
+Output:
+
+
+=== Step 9: inspect_answer_context ===
+Input: {"doc_name": "LOCKHEEDMARTIN_2022_10K"}
+Output:
+
+
+=== Step 10: inspect_answer_context ===
+Input: {"doc_name": "JOHNSON_JOHNSON_2022_10K"}
+Output:
+
+
+=== Step 11: inspect_answer_context ===
+Input: {"doc_name": "CORNING_2022_10K"}
+Output:
+
+
+=== Step 12: inspect_answer_context ===
+Input: {"doc_name": "AMCOR_2019_10K"}
+Output:
+Answer not found by substring match in AMCOR_2019_10K. GT: '5,314.4 million'
+
+=== Step 13: show_uncovered_docs ===
+Input: {}
+Output:
+Uncovered (no registered rule hits):
+  - AMCOR_2019_10K
+  - BOEING_2018_10K
+  - AMAZON_2018_10K
+  - EBAY_2021_10K
+  - AMAZON_2016_10K
+  - CORNING_2022_10K
+  - NIKE_2021_10K
+  - LOCKHEEDMARTIN_2022_10K
+  - JOHNSON_JOHNSON_2022_10K
+
+Covered: 1/10
+
+=== Step 14: diagnose_failing_doc ===
+Input: {"doc_name": "AMAZON_2018_10K"}
+Output:
+
+
+=== Step 15: diagnose_failing_doc ===
+Input: {"doc_name": "BOEING_2018_10K"}
+Output:
+
+
+=== Step 16: diagnose_failing_doc ===
+Input: {"doc_name": "NIKE_2021_10K"}
+Output:
+
+
+=== Step 17: diagnose_failing_doc ===
+Input: {"doc_name": "JOHNSON_JOHNSON_2022_10K"}
+Output:
+=== Diagnosis: NIKE_2021_10K ===
+
+Ground truth: '$9,413 million'
+
+Rule results:
+  rule_financial_statement_tables_long_term_debt:  retrieved='|  | AVERAGE FOR THE TRAILING FIVE QUARTERS ENDED |  |\n|  | MAY 31, 2021 | MAY 31, 2020 |\n| --- | --'
+
+Answer location (inspect_answer_context):
+  Answer not found by substring match in NIKE_2021_10K. GT: '$9,413 million'
+
+Structural diff vs. passing docs (1 passing):
+  This doc (NIKE_2021_10K): answer span NOT LOCATED by substring match
+  Passing docs (up to 3 shown):
+    COSTCO_2017_10K: label=table  level=Body  bold=0  all_cap=0  path_text='Costco Wholesale Corporation | PART II | Item 6—Selected Financial Data | SELECTED FINANCIAL DATA (dollars in millions, except per share data)'
+
+=== Step 18: write_rule ===
+Input: {"rule_name": "rule_balance_sheet_tables", "code": "def rule_balance_sheet_tables(doc: dict) -> list[dict]:\n    \"\"\"Retrieve tables that are balance sheets or statements of financial position.\"\"\"\n    try:\n        texts = doc.get(\"texts\", [])\n        out = []\n        for span in texts:\n            if span.get(\"label\") != \"table\":\n                continue\n            text = (span.get(\"text\") or \"\")\n            path = ((span.get(\"structure\") or {}).get(\"path_text\") or \"\")\n            combined = (path + \"\\n\" + text).lower()\n            if any(k in combined for k in [\n                \"consolidated balance sheets\",\n                \"consolidated balance sheet\",\n                \"balance sheets\",\n                \"balance sheet\",\n                \"statement of financial position\",\n                \"statements of financial position\",\n                \"financial position\"\n            ]):\n                out.append(span)\n        return out\n    except Exception:\n        return []"}
+Output:
+OK: rule registered — rule_balance_sheet_tables
+
+=== Step 19: test_rule ===
+Input: {"rule_name": "rule_balance_sheet_tables"}
+Output:
+doc_name               hit    retrieved_tokens  retrieved_snippet
+-----------------------------------------------------------------
+AMCOR_2019_10K         ✗      2893              '| Item 1. | Business | 6 |\n| --- | --- | --- |\n| Item 1A.
+COSTCO_2017_10K        ✓      2287              '| As of and for the year ended | Sept. 3, 2017 (53 weeks) |
+BOEING_2018_10K        ✗      3029              '| (Dollars in millions) | 2018 | 2017 |\n| --- | --- | --- 
+AMAZON_2018_10K        ✗      1468              '|  | December 31, |  |  |  |  |\n|  | 2014 | 2015 | 2016 | 
+EBAY_2021_10K          ✗      2840              '|  | Page Number |\n| --- | --- |\n| 1. Consolidated Financ
+AMAZON_2016_10K        ✗      783               '|  | December 31, |  |  |  |  |\n|  | 2012 | 2013 | 2014 | 
+CORNING_2022_10K       ✗      2568              '|  | December 31, |  |\n|  | 2022 | 2021 |\n| --- | --- | -
+NIKE_2021_10K          ✗      2146              '|  | MAY 31, |  |\n| (In millions) | 2021 | 2020 |\n| --- |
+LOCKHEEDMARTIN_2022_10K ✗      1687              '| (In millions, except per share data) | 2022 | 2021 | 2020
+JOHNSON_JOHNSON_2022_10K ✗      1847              '| 40 Consolidated Balance Sheets |\n| --- |\n| 41 Consolida
+
+Hit rate: 1/10 (0.10)
+
+=== Step 20: show_uncovered_docs ===
+Input: {}
+Output:
+Uncovered (no registered rule hits):
+  - AMCOR_2019_10K
+  - BOEING_2018_10K
+  - AMAZON_2018_10K
+  - EBAY_2021_10K
+  - AMAZON_2016_10K
+  - CORNING_2022_10K
+  - NIKE_2021_10K
+  - LOCKHEEDMARTIN_2022_10K
+  - JOHNSON_JOHNSON_2022_10K
+
+Covered: 1/10
+
+=== Step 21: write_rule ===
+Input: {"rule_name": "rule_selected_financial_data_tables", "code": "def rule_selected_financial_data_tables(doc: dict) -> list[dict]:\n    \"\"\"Retrieve selected financial data tables that often include long-term debt year-end values.\"\"\"\n    try:\n        texts = doc.get(\"texts\", [])\n        out = []\n        for span in texts:\n            if span.get(\"label\") != \"table\":\n                continue\n            text = (span.get(\"text\") or \"\")\n            path = ((span.get(\"structure\") or {}).get(\"path_text\") or \"\")\n            combined = (path + \"\\n\" + text).lower()\n            if any(k in combined for k in [\n                \"selected financial data\",\n                \"selected consolidated financial data\",\n                \"five-year selected\",\n                \"five year selected\",\n                \"selected data\"\n            ]):\n                out.append(span)\n        return out\n    except Exception:\n        return []"}
+Output:
+OK: rule registered — rule_selected_financial_data_tables
+
+=== Step 22: test_union ===
+Input: {}
+Output:
+Merge accuracy: 7/10 (0.7)
+
+Failing docs:
+  AMCOR_2019_10K:
+    retrieved: '| Item 1. | Business | 6 |\n| --- | --- | --- |\n| Item 1A. | Risk Factors | 9 |\n| Item 1B. | Unresolved Staff Comment
+    predicted: '5,309.0'
+    ground_truth: '5,314.4 million'
+  AMAZON_2018_10K:
+    retrieved: '|  |  | Page |\n| --- | --- | --- |\n| PART I |  |  |\n| Item 1. | Business | 3 |\n| Item 1A. | Risk Factors | 6 |\n| I
+    predicted: '23,495'
+    ground_truth: '$50,708 million'
+  LOCKHEEDMARTIN_2022_10K:
+    retrieved: '| PART I |  | Page |\n| --- | --- | --- |\n| ITEM 1. | Business .......................................................
+    predicted: '15,429'
+    ground_truth: '$15,547 million'
+
+=== Step 23: diagnose_failing_doc ===
+Input: {"doc_name": "AMAZON_2018_10K"}
+Output:
+
+
+=== Step 24: diagnose_failing_doc ===
+Input: {"doc_name": "LOCKHEEDMARTIN_2022_10K"}
+Output:
+
+
+=== Step 25: diagnose_failing_doc ===
+Input: {"doc_name": "AMCOR_2019_10K"}
+Output:
+=== Diagnosis: AMCOR_2019_10K ===
+
+Ground truth: '5,314.4 million'
+
+Rule results:
+  rule_financial_statement_tables_long_term_debt:  retrieved='| Item 1. | Business | 6 |\n| --- | --- | --- |\n| Item 1A. | Risk Factors | 9 |\n| Item 1B. | Unresolv'
+  rule_balance_sheet_tables:  retrieved='| Item 1. | Business | 6 |\n| --- | --- | --- |\n| Item 1A. | Risk Factors | 9 |\n| Item 1B. | Unresolv'
+  rule_selected_financial_data_tables:  retrieved='| Item 1. | Business | 6 |\n| --- | --- | --- |\n| Item 1A. | Risk Factors | 9 |\n| Item 1B. | Unresolv'
+
+Answer location (inspect_answer_context):
+  Answer not found by substring match in AMCOR_2019_10K. GT: '5,314.4 million'
+
+Structural diff vs. passing docs (1 passing):
+  This doc (AMCOR_2019_10K): answer span NOT LOCATED by substring match
+  Passing docs (up to 3 shown):
+    COSTCO_2017_10K: label=table  level=Body  bold=0  all_cap=0  path_text='Costco Wholesale Corporation | PART II | Item 6—Selected Financial Data | SELECTED FINANCIAL DATA (dollars in millions, except per share data)'
+
+=== Registered Rules ===
+  rule_financial_statement_tables_long_term_debt: hit_rate=0.10
+  rule_balance_sheet_tables: hit_rate=0.10
+  rule_selected_financial_data_tables: hit_rate=0.10
+  MERGE: 7/10 (acc=0.70)  cost=0.07277
+
+=== Final Answer ===
+Agent stopped due to max iterations.

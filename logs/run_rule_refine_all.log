@@ -1,0 +1,271 @@
+SKIP (exists): what_is_longterm_debt_at_yearend_0_if_none_10
+SKIP (exists): what_is_net_income_loss_for_the_most_recent_fiscal_year_10
+SKIP (exists): what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10
+SKIP (exists): what_is_total_assets_at_yearend_from_the_audited_balance_she_10
+SKIP (exists): what_is_the_registrants_telephone_number_10
+SKIP (exists): how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10
+SKIP (exists): what_is_the_registrants_exact_name_10
+SKIP (exists): what_is_the_state_or_other_jurisdiction_of_incorporation_and_10
+
+Question: What is the address of principal executive offices and ZIP code?
+  rules=61  target_acc=0.90  docs=10
+  [cost] rule_address_header_text_itself: 0.0000
+  [cost] rule_address_in_span_preceding_zip_label: 0.0002
+  [cost] rule_address_in_text_span_followed_by_address_label: 0.0002
+  [cost] rule_combined_address_and_zip_same_span: 0.0002
+  [cost] rule_company_cover_block_with_ein_and_zip: 0.0014
+  [cost] rule_main_header_block_first_40_spans: 0.0002
+  [cost] rule_page1_address_after_state_before_ein: 0.0001
+  [cost] rule_page1_address_before_phone_number_pattern: 0.0004
+  [cost] rule_page1_address_before_securities_registered: 0.0012
+  [cost] rule_page1_address_before_zip_label: 0.0003
+  [cost] rule_page1_address_block_from_split_lines: 0.0005
+  [cost] rule_page1_address_candidates_excluding_ir: 0.0007
+  [cost] rule_page1_address_from_text_or_text_span: 0.0002
+  [cost] rule_page1_address_in_path_text: 0.0005
+  [cost] rule_page1_address_label_and_phone_cluster: 0.0015
+  [cost] rule_page1_address_label_spans: 0.0003
+  [cost] rule_page1_address_like_excluding_long_narrative: 0.0001
+  [cost] rule_page1_address_like_with_bold_and_small_font: 0.0003
+  [cost] rule_page1_address_like_with_known_cover_labels: 0.0000
+  [cost] rule_page1_address_near_exact_name_of_registrant: 0.0013
+  [cost] rule_page1_address_near_state_and_ein: 0.0005
+  [cost] rule_page1_address_near_zip: 0.0009
+  [cost] rule_page1_address_or_zip_neighbors: 0.0013
+  [cost] rule_page1_address_or_zip_single_token_headers: 0.0002
+  [cost] rule_page1_address_with_city_state_no_zip: 0.0000
+  [cost] rule_page1_address_with_country_or_state: 0.0006
+  [cost] rule_page1_address_with_principal_offices_in_text_span: 0.0000
+  [cost] rule_page1_address_with_zip_no_label: 0.0001
+  [cost] rule_page1_address_zip_same_or_adjacent: 0.0002
+  [cost] rule_page1_after_company_name_before_phone: 0.0012
+  [cost] rule_page1_after_company_name_until_securities: 0.0003
+  [cost] rule_page1_any_address_like_text: 0.0002
+  [cost] rule_page1_before_documents_incorporated: 0.0023
+  [cost] rule_page1_before_securities_registered: 0.0000
+  [cost] rule_page1_bold_address_like_text: 0.0002
+  [cost] rule_page1_bold_short_address_fragments: 0.0002
+  [cost] rule_page1_city_state_zip_only: 0.0001
+  [cost] rule_page1_combined_address_phone_spans: 0.0001
+  [cost] rule_page1_company_header_children: 0.0058
+  [cost] rule_page1_contains_address_and_telephone_phrase: 0.0001
+  [cost] rule_page1_contains_principal_executive_offices_phrase: 0.0003
+  [cost] rule_page1_cover_address_cluster_broad: 0.0008
+  [cost] rule_page1_cover_metadata_cluster: 0.0017
+  [cost] rule_page1_cover_page_metadata_all: 0.0009
+  [cost] rule_page1_cover_page_metadata_cluster: 0.0010
+  [cost] rule_page1_first_40_spans_address_like: 0.0003
+  [cost] rule_page1_h2_address_headers: 0.0001
+  [cost] rule_page1_h2_or_h3_short_metadata_headers: 0.0001
+  [cost] rule_page1_main_company_block_section_header: 0.0003
+  [cost] rule_page1_main_company_path_text: 0.0005
+  [cost] rule_page1_metadata_with_state_ein_address_zip: 0.0025
+  [cost] rule_page1_spans_after_ein: 0.0017
+  [cost] rule_page1_spans_before_phone: 0.0006
+  [cost] rule_page1_spans_before_telephone: 0.0009
+  [cost] rule_page1_split_address_and_zip_sequence: 0.0002
+  [cost] rule_page1_top_cover_block: 0.0057
+  [cost] rule_page1_under_company_header: 0.0067
+  [cost] rule_page1_zip_code_label_spans: 0.0002
+  [cost] rule_split_address_then_zip_consecutive: 0.0001
+  [cost] rule_text_contains_exact_address_label_only: 0.0001
+  [cost] rule_text_span_contains_address_label: 0.0001
+  [sorted] cheapest=rule_page1_before_securities_registered  most_expensive=rule_page1_under_company_header
+  [baseline] avg_cost_all=0.0097  valid_rules=61
+    [exp k=1] acc=0.10 target=0.90 cost=0.0000 latency=19.9s action=continue
+    [exp k=2] acc=0.20 target=0.90 cost=0.0001 latency=19.5s action=continue
+    [exp k=4] acc=0.30 target=0.90 cost=0.0001 latency=22.8s action=continue
+    [exp k=8] acc=0.40 target=0.90 cost=0.0002 latency=24.4s action=continue
+    [exp k=16] acc=0.80 target=0.90 cost=0.0005 latency=19.9s action=continue
+    [exp k=32] acc=0.90 target=0.90 cost=0.0008 latency=19.6s action=candidate_found
+    [prune i=31] remove=rule_page1_contains_principal_executive_offices_phrase acc=0.90 cost=0.0008 latency=19.2s action=removed
+    [prune i=30] remove=rule_page1_address_label_spans acc=0.90 cost=0.0008 latency=21.3s action=removed
+    [prune i=29] remove=rule_page1_first_40_spans_address_like acc=0.90 cost=0.0008 latency=19.4s action=removed
+    [prune i=28] remove=rule_page1_after_company_name_until_securities acc=0.90 cost=0.0008 latency=18.9s action=removed
+    [prune i=27] remove=rule_page1_address_from_text_or_text_span acc=0.90 cost=0.0008 latency=18.0s action=removed
+    [prune i=26] remove=rule_address_in_text_span_followed_by_address_label acc=0.90 cost=0.0007 latency=18.0s action=removed
+    [prune i=25] remove=rule_page1_any_address_like_text acc=0.90 cost=0.0007 latency=18.8s action=removed
+    [prune i=24] remove=rule_page1_bold_address_like_text acc=0.90 cost=0.0007 latency=19.2s action=removed
+    [prune i=23] remove=rule_page1_address_zip_same_or_adjacent acc=0.90 cost=0.0007 latency=18.3s action=removed
+    [prune i=22] remove=rule_page1_split_address_and_zip_sequence acc=0.90 cost=0.0007 latency=18.1s action=removed
+    [prune i=21] remove=rule_main_header_block_first_40_spans acc=0.90 cost=0.0007 latency=19.9s action=removed
+    [prune i=20] remove=rule_combined_address_and_zip_same_span acc=0.90 cost=0.0007 latency=18.2s action=removed
+    [prune i=19] remove=rule_page1_bold_short_address_fragments acc=0.90 cost=0.0007 latency=21.6s action=removed
+    [prune i=18] remove=rule_address_in_span_preceding_zip_label acc=0.90 cost=0.0006 latency=19.6s action=removed
+    [prune i=17] remove=rule_page1_zip_code_label_spans acc=0.80 cost=0.0006 latency=19.1s action=kept
+    [prune i=16] remove=rule_page1_address_or_zip_single_token_headers acc=0.90 cost=0.0005 latency=20.3s action=removed
+    [prune i=15] remove=rule_page1_city_state_zip_only acc=0.80 cost=0.0005 latency=21.0s action=kept
+    [prune i=14] remove=rule_text_span_contains_address_label acc=0.90 cost=0.0005 latency=19.0s action=removed
+    [prune i=13] remove=rule_page1_address_with_zip_no_label acc=0.90 cost=0.0005 latency=19.3s action=removed
+    [prune i=12] remove=rule_page1_address_like_excluding_long_narrative acc=0.90 cost=0.0005 latency=18.4s action=removed
+    [prune i=11] remove=rule_page1_combined_address_phone_spans acc=0.90 cost=0.0005 latency=18.0s action=removed
+    [prune i=10] remove=rule_split_address_then_zip_consecutive acc=0.90 cost=0.0005 latency=18.8s action=removed
+    [prune i=9] remove=rule_text_contains_exact_address_label_only acc=0.90 cost=0.0005 latency=18.4s action=removed
+    [prune i=8] remove=rule_page1_contains_address_and_telephone_phrase acc=0.90 cost=0.0004 latency=18.1s action=removed
+    [prune i=7] remove=rule_page1_h2_or_h3_short_metadata_headers acc=0.90 cost=0.0004 latency=18.8s action=removed
+    [prune i=6] remove=rule_page1_h2_address_headers acc=0.90 cost=0.0004 latency=18.2s action=removed
+    [prune i=5] remove=rule_page1_address_after_state_before_ein acc=0.80 cost=0.0003 latency=18.5s action=kept
+    [prune i=4] remove=rule_page1_address_with_principal_offices_in_text_span acc=0.90 cost=0.0004 latency=18.6s action=removed
+    [prune i=3] remove=rule_page1_address_like_with_known_cover_labels acc=0.90 cost=0.0004 latency=20.4s action=removed
+    [prune i=2] remove=rule_address_header_text_itself acc=0.90 cost=0.0004 latency=18.5s action=removed
+    [prune i=1] remove=rule_page1_address_with_city_state_no_zip acc=0.70 cost=0.0003 latency=19.5s action=kept
+  selected=5/61  acc=0.90  cost_reduction=96.40%  llm_calls=760
+
+Question: What is/are the trading symbol(s) and listing exchange(s)?
+  rules=65  target_acc=1.00  docs=10
+  [cost] rule_business_path_and_stock_terms: 0.0189
+  [cost] rule_business_sentence_trades_on_exchange: 0.0011
+  [cost] rule_business_sentence_under_symbol: 0.0016
+  [cost] rule_cover_page_company_section_header: 0.0001
+  [cost] rule_cover_page_embedded_symbol_exchange: 0.0001
+  [cost] rule_cover_page_registration_sequence: 0.1829
+  [cost] rule_cover_page_table_cells_symbol_exchange: 0.0000
+  [cost] rule_cover_page_table_headers: 0.0001
+  [cost] rule_cover_page_table_row_security_registration: 0.0000
+  [cost] rule_exact_exchange_label_values: 0.0001
+  [cost] rule_exact_symbol_values: 0.0000
+  [cost] rule_inline_registered_under_symbol: 0.0013
+  [cost] rule_item1_business_exchange_sentence: 0.0008
+  [cost] rule_item1_business_page3_symbol_exchange: 0.0008
+  [cost] rule_item1_business_symbol_sentence: 0.0008
+  [cost] rule_jnj_multi_symbol_exchange_cover: 0.0006
+  [cost] rule_jnj_multi_symbol_exchange_table: 0.0005
+  [cost] rule_page1_after_company_name_until_documents_incorporated: 0.0042
+  [cost] rule_page1_after_trading_symbol_header: 0.0008
+  [cost] rule_page1_allcaps_ticker_headers: 0.0000
+  [cost] rule_page1_before_exchange_header: 0.0013
+  [cost] rule_page1_body_spans_with_exchange_or_symbol: 0.0004
+  [cost] rule_page1_bold_smallfont_registration_values: 0.0000
+  [cost] rule_page1_company_header_with_embedded_answer: 0.0001
+  [cost] rule_page1_exact_exchange_spans: 0.0001
+  [cost] rule_page1_exchange_after_symbol_like: 0.0002
+  [cost] rule_page1_exchange_after_ticker_header: 0.0000
+  [cost] rule_page1_exchange_before_symbol_like: 0.0000
+  [cost] rule_page1_exchange_in_registration_window: 0.0012
+  [cost] rule_page1_exchange_keyword: 0.0006
+  [cost] rule_page1_exchange_name_spans: 0.0003
+  [cost] rule_page1_exchange_symbol_split_reverse: 0.0000
+  [cost] rule_page1_exchange_then_symbol_adjacent: 0.0001
+  [cost] rule_page1_h2_h3_registration_headers: 0.0001
+  [cost] rule_page1_header_path_registration: 0.0018
+  [cost] rule_page1_major_exchange_names: 0.0004
+  [cost] rule_page1_nasdaq_or_nyse_only: 0.0003
+  [cost] rule_page1_near_company_name_and_section12b: 0.0007
+  [cost] rule_page1_near_exchange_label: 0.0009
+  [cost] rule_page1_near_title_of_each_class: 0.0007
+  [cost] rule_page1_near_trading_symbol_label: 0.0005
+  [cost] rule_page1_registration_block_all: 0.0007
+  [cost] rule_page1_registration_block_with_symbol_and_exchange_same_span: 0.0003
+  [cost] rule_page1_registration_data_band: 0.0025
+  [cost] rule_page1_registration_keywords_broad: 0.0049
+  [cost] rule_page1_registration_sentences_with_registered: 0.0001
+  [cost] rule_page1_section12b_block: 0.0041
+  [cost] rule_page1_section_12b_block: 0.0019
+  [cost] rule_page1_security_registration_cluster: 0.0005
+  [cost] rule_page1_short_bold_upper_tokens: 0.0000
+  [cost] rule_page1_symbol_exchange_pair_window: 0.0013
+  [cost] rule_page1_symbol_exchange_split_across_adjacent_spans: 0.0000
+  [cost] rule_page1_symbol_like_spans: 0.0000
+  [cost] rule_page1_symbol_like_spans_near_exchange: 0.0000
+  [cost] rule_page1_symbol_then_exchange_adjacent: 0.0001
+  [cost] rule_page1_symbols_in_registration_window: 0.0000
+  [cost] rule_page1_title_trading_exchange_cluster: 0.0007
+  [cost] rule_page1_top_30_spans_registration: 0.0020
+  [cost] rule_page1_topmatter_short_values_after_common_stock: 0.0001
+  [cost] rule_page1_topmatter_with_common_stock_and_exchange: 0.0003
+  [cost] rule_page1_under_company_header: 0.0070
+  [cost] rule_path_contains_company_topmatter: 0.0052
+  [cost] rule_table_12b_headers: 0.0000
+  [cost] rule_table_cells_symbol_exchange: 0.0001
+  [cost] rule_title_trading_exchange_triplet: 0.0059
+  [sorted] cheapest=rule_cover_page_table_cells_symbol_exchange  most_expensive=rule_cover_page_registration_sequence
+  [baseline] avg_cost_all=0.1161  valid_rules=65
+    [exp k=1] acc=0.00 target=1.00 cost=0.0000 latency=20.0s action=continue
+    [exp k=2] acc=0.00 target=1.00 cost=0.0000 latency=27.4s action=continue
+    [exp k=4] acc=0.00 target=1.00 cost=0.0000 latency=22.7s action=continue
+    [exp k=8] acc=0.20 target=1.00 cost=0.0000 latency=17.3s action=continue
+    [exp k=16] acc=0.40 target=1.00 cost=0.0001 latency=18.1s action=continue
+    [exp k=32] acc=0.50 target=1.00 cost=0.0009 latency=18.8s action=continue
+    [exp k=64] acc=0.90 target=1.00 cost=0.0308 latency=20.5s action=continue
+    [exp k=65] acc=1.00 target=1.00 cost=0.1161 latency=28.6s action=candidate_found
+    [prune i=64] remove=rule_cover_page_registration_sequence acc=0.90 cost=0.0308 latency=20.2s action=kept
+    [prune i=63] remove=rule_business_path_and_stock_terms acc=1.00 cost=0.1086 latency=30.1s action=removed
+    [prune i=62] remove=rule_page1_under_company_header acc=1.00 cost=0.1073 latency=30.0s action=removed
+    [prune i=61] remove=rule_title_trading_exchange_triplet acc=1.00 cost=0.1073 latency=27.4s action=removed
+    [prune i=60] remove=rule_path_contains_company_topmatter acc=1.00 cost=0.1073 latency=25.4s action=removed
+    [prune i=59] remove=rule_page1_registration_keywords_broad acc=1.00 cost=0.1073 latency=27.3s action=removed
+    [prune i=58] remove=rule_page1_after_company_name_until_documents_incorporated acc=1.00 cost=0.1060 latency=28.9s action=removed
+    [prune i=57] remove=rule_page1_section12b_block acc=1.00 cost=0.1058 latency=28.1s action=removed
+    [prune i=56] remove=rule_page1_registration_data_band acc=1.00 cost=0.1047 latency=28.8s action=removed
+    [prune i=55] remove=rule_page1_top_30_spans_registration acc=1.00 cost=0.1043 latency=31.4s action=removed
+    [prune i=54] remove=rule_page1_section_12b_block acc=1.00 cost=0.1034 latency=27.7s action=removed
+    [prune i=53] remove=rule_page1_header_path_registration acc=1.00 cost=0.1025 latency=27.5s action=removed
+    [prune i=52] remove=rule_business_sentence_under_symbol acc=1.00 cost=0.1025 latency=25.8s action=removed
+    [prune i=51] remove=rule_page1_before_exchange_header acc=1.00 cost=0.1021 latency=28.0s action=removed
+    [prune i=50] remove=rule_inline_registered_under_symbol acc=1.00 cost=0.1021 latency=26.0s action=removed
+    [prune i=49] remove=rule_page1_symbol_exchange_pair_window acc=1.00 cost=0.1020 latency=28.1s action=removed
+    [prune i=48] remove=rule_page1_exchange_in_registration_window acc=1.00 cost=0.1018 latency=24.0s action=removed
+    [prune i=47] remove=rule_business_sentence_trades_on_exchange acc=1.00 cost=0.1018 latency=26.9s action=removed
+    [prune i=46] remove=rule_page1_near_exchange_label acc=1.00 cost=0.1018 latency=27.2s action=removed
+    [prune i=45] remove=rule_page1_after_trading_symbol_header acc=1.00 cost=0.1018 latency=25.5s action=removed
+    [prune i=44] remove=rule_item1_business_symbol_sentence acc=1.00 cost=0.1018 latency=26.4s action=removed
+    [prune i=43] remove=rule_item1_business_page3_symbol_exchange acc=1.00 cost=0.1018 latency=24.4s action=removed
+    [prune i=42] remove=rule_item1_business_exchange_sentence acc=1.00 cost=0.1015 latency=24.3s action=removed
+    [prune i=41] remove=rule_page1_registration_block_all acc=1.00 cost=0.1015 latency=24.2s action=removed
+    [prune i=40] remove=rule_page1_title_trading_exchange_cluster acc=1.00 cost=0.1015 latency=24.6s action=removed
+    [prune i=39] remove=rule_page1_near_company_name_and_section12b acc=1.00 cost=0.1015 latency=27.3s action=removed
+    [prune i=38] remove=rule_page1_near_title_of_each_class acc=1.00 cost=0.1015 latency=24.4s action=removed
+    [prune i=37] remove=rule_jnj_multi_symbol_exchange_cover acc=1.00 cost=0.1015 latency=27.6s action=removed
+    [prune i=36] remove=rule_page1_exchange_keyword acc=1.00 cost=0.1015 latency=26.0s action=removed
+    [prune i=35] remove=rule_page1_near_trading_symbol_label acc=1.00 cost=0.1015 latency=27.6s action=removed
+    [prune i=34] remove=rule_jnj_multi_symbol_exchange_table acc=1.00 cost=0.1015 latency=27.8s action=removed
+    [prune i=33] remove=rule_page1_security_registration_cluster acc=1.00 cost=0.1015 latency=24.5s action=removed
+    [prune i=32] remove=rule_page1_body_spans_with_exchange_or_symbol acc=1.00 cost=0.1015 latency=24.3s action=removed
+    [prune i=31] remove=rule_page1_major_exchange_names acc=1.00 cost=0.1015 latency=25.0s action=removed
+    [prune i=30] remove=rule_page1_nasdaq_or_nyse_only acc=1.00 cost=0.1015 latency=25.3s action=removed
+    [prune i=29] remove=rule_page1_exchange_name_spans acc=1.00 cost=0.1015 latency=27.3s action=removed
+    [prune i=28] remove=rule_page1_topmatter_with_common_stock_and_exchange acc=1.00 cost=0.1015 latency=24.5s action=removed
+    [prune i=27] remove=rule_page1_registration_block_with_symbol_and_exchange_same_span acc=1.00 cost=0.1015 latency=24.4s action=removed
+    [prune i=26] remove=rule_page1_exchange_after_symbol_like acc=1.00 cost=0.1014 latency=24.5s action=removed
+    [prune i=25] remove=rule_cover_page_table_headers acc=1.00 cost=0.1014 latency=26.2s action=removed
+    [prune i=24] remove=rule_cover_page_company_section_header acc=1.00 cost=0.1014 latency=29.3s action=removed
+    [prune i=23] remove=rule_page1_registration_sentences_with_registered acc=1.00 cost=0.1014 latency=29.4s action=removed
+    [prune i=22] remove=rule_page1_h2_h3_registration_headers acc=1.00 cost=0.1014 latency=24.9s action=removed
+    [prune i=21] remove=rule_page1_company_header_with_embedded_answer acc=1.00 cost=0.1014 latency=25.4s action=removed
+    [prune i=20] remove=rule_page1_symbol_then_exchange_adjacent acc=1.00 cost=0.1013 latency=26.8s action=removed
+    [prune i=19] remove=rule_table_cells_symbol_exchange acc=1.00 cost=0.1012 latency=27.1s action=removed
+    [prune i=18] remove=rule_page1_exchange_then_symbol_adjacent acc=1.00 cost=0.1012 latency=26.5s action=removed
+    [prune i=17] remove=rule_page1_topmatter_short_values_after_common_stock acc=1.00 cost=0.1012 latency=29.5s action=removed
+    [prune i=16] remove=rule_page1_exact_exchange_spans acc=1.00 cost=0.1012 latency=25.4s action=removed
+    [prune i=15] remove=rule_exact_exchange_label_values acc=1.00 cost=0.1012 latency=26.5s action=removed
+    [prune i=14] remove=rule_cover_page_embedded_symbol_exchange acc=0.90 cost=0.1012 latency=25.4s action=kept
+    [prune i=13] remove=rule_page1_exchange_before_symbol_like acc=1.00 cost=0.1012 latency=26.2s action=removed
+    [prune i=12] remove=rule_page1_bold_smallfont_registration_values acc=1.00 cost=0.1012 latency=40.7s action=removed
+    [prune i=11] remove=rule_page1_short_bold_upper_tokens acc=1.00 cost=0.1012 latency=22.9s action=removed
+    [prune i=10] remove=rule_page1_symbol_like_spans_near_exchange acc=1.00 cost=0.1012 latency=27.5s action=removed
+    [prune i=9] remove=rule_page1_symbol_like_spans acc=1.00 cost=0.1012 latency=28.7s action=removed
+    [prune i=8] remove=rule_exact_symbol_values acc=1.00 cost=0.1012 latency=27.6s action=removed
+    [prune i=7] remove=rule_page1_exchange_after_ticker_header acc=1.00 cost=0.1012 latency=36.1s action=removed
+    [prune i=6] remove=rule_page1_symbol_exchange_split_across_adjacent_spans acc=1.00 cost=0.1012 latency=33.6s action=removed
+    [prune i=5] remove=rule_page1_allcaps_ticker_headers acc=1.00 cost=0.1012 latency=29.0s action=removed
+    [prune i=4] remove=rule_page1_symbols_in_registration_window acc=0.90 cost=0.1011 latency=29.9s action=kept
+    [prune i=3] remove=rule_table_12b_headers acc=1.00 cost=0.1012 latency=38.9s action=removed
+    [prune i=2] remove=rule_page1_exchange_symbol_split_reverse acc=1.00 cost=0.1012 latency=29.8s action=removed
+    [prune i=1] remove=rule_cover_page_table_row_security_registration acc=1.00 cost=0.1012 latency=28.8s action=removed
+  selected=4/65  acc=1.00  cost_reduction=12.88%  llm_calls=1460
+
+=== Rule Refinement Summary ===
+Question                                             All   Sel    Acc  CostSaved  LLMCalls
+------------------------------------------------------------------------------------------
+  What is long-term debt at year-end (0 if none)?     40     6   0.50     76.1%       420
+  What is net income (loss) for the most recent fi    33    14   0.90     27.7%       760
+  What is total revenue for the most recent fiscal    37     5   0.90     97.6%       420
+  What is total assets at year-end (from the audit   118    27   0.90     83.2%      1420
+  What is the registrant's telephone number?          78     5   1.00     96.4%      1420
+  How many shares of common stock were outstanding   100     7   0.90     88.6%      1420
+  What is the registrant's exact name?                25     2   0.90     99.8%       140
+  What is the state (or other jurisdiction) of inc    55     3   1.00     98.9%       420
+  What is the address of principal executive offic    61     5   0.90     96.4%       760
+  What is/are the trading symbol(s) and listing ex    65     4   1.00     12.9%      1460
+
+Results: results/llm_rule_refine/
