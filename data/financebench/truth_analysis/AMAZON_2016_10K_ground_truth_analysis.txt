@@ -1,0 +1,254 @@
+Ground Truth Verification Analysis
+Document: AMAZON_2016_10K
+Date: 2026-04-27
+============================================================
+
+Q1 — What is the registrant's exact name?
+------------------------------------------------------------
+Ground Truth : AMAZON.COM, INC.
+Verdict      : CORRECT
+Evidence     : “AMAZON.COM, INC.” “(Exact name of registrant as specified in its charter)” (page 1)
+Correct Ans  : AMAZON.COM, INC.
+Reasoning    : The cover page of the 10-K explicitly lists the registrant’s exact name as “AMAZON.COM, INC.”, matching the proposed answer exactly.
+
+Q2 — What is the state (or other jurisdiction) of incorporation and the IRS Employer Identification Number?
+------------------------------------------------------------
+Ground Truth : Delaware, 91-1646860
+Verdict      : CORRECT
+Evidence     : “Delaware” “(State or other jurisdiction of incorporation or organization)” and “91-1646860” “(I.R.S. Employer Identification No.)” (page 1)
+Correct Ans  : Delaware, 91-1646860
+Reasoning    : The cover page of the 2016 Form 10-K explicitly lists Delaware as the state of incorporation and 91-1646860 as the I.R.S. Employer Identification Number.
+
+Q3 — What is the address of principal executive offices and ZIP code?
+------------------------------------------------------------
+Ground Truth : 410 Terry Avenue North, Seattle, Washington 98109-5210
+Verdict      : CORRECT
+Evidence     : “410 Terry Avenue North Seattle, Washington 98109-5210 (206) 266-1000” and “(Address and telephone number, including area code, of registrant’s principal executive offices)” (page 1)
+Correct Ans  : 410 Terry Avenue North, Seattle, Washington 98109-5210
+Reasoning    : The document explicitly lists the registrant’s principal executive offices as “410 Terry Avenue North Seattle, Washington 98109-5210,” which matches the proposed answer.
+
+Q4 — What is the registrant's telephone number?
+------------------------------------------------------------
+Ground Truth : (206) 266-1000
+Verdict      : CORRECT
+Evidence     : “410 Terry Avenue North Seattle, Washington 98109-5210 (206) 266-1000” and “(Address and telephone number, including area code, of registrant’s principal executive offices)” (page 1)
+Correct Ans  : (206) 266-1000
+Reasoning    : The cover page of the 2016 10-K lists the registrant’s principal executive office address followed by its telephone number, which matches the proposed answer exactly.
+
+Q5 — What is the fiscal year-end date stated on the cover?
+------------------------------------------------------------
+Ground Truth : December 31, 2016
+Verdict      : CORRECT
+Evidence     : “For the fiscal year ended December 31, 2016” (page 1)
+Correct Ans  : December 31, 2016
+Reasoning    : The cover page of the Form 10-K explicitly states the fiscal year ended date as December 31, 2016, which matches the proposed answer.
+
+Q6 — What is/are the trading symbol(s) and listing exchange(s)?
+------------------------------------------------------------
+Ground Truth : AMZN, NASDAQ Global Select Market
+Verdict      : CORRECT
+Evidence     : “NASDAQ Global Select Market” (page 1) and “Our common stock is traded on the NASDAQ Global Select Market under the symbol ‘AMZN.’” (page 16)
+Correct Ans  : AMZN, NASDAQ Global Select Market
+Reasoning    : The document explicitly identifies the exchange as the NASDAQ Global Select Market and the trading symbol as AMZN, matching the proposed answer.
+
+Q7 — How many shares of common stock were outstanding as of the cover-page reference date?
+------------------------------------------------------------
+Ground Truth : 477,170,618
+Verdict      : CORRECT
+Evidence     : “Number of shares of common stock outstanding as of January 25, 2017 … 477,170,618” (page 1)
+Correct Ans  : 477,170,618
+Reasoning    : The cover page on page 1 explicitly states the number of common shares outstanding as of the reference date, January 25, 2017, and it matches the proposed answer.
+
+Q8 — What are the reportable operating segments (list names; if none, record "single segment")?
+------------------------------------------------------------
+Ground Truth : ["North America", "International", "Amazon Web Services (AWS)"]
+Verdict      : CORRECT
+Evidence     : “We have organized our operations into three segments: North America, International, and AWS.” (page 66) Also: “We have organized our operations into three segments: North America, International, and Amazon Web Services (“AWS”).” (page 3)
+Correct Ans  : ["North America", "International", "Amazon Web Services (AWS)"]
+Reasoning    : The document explicitly states that Amazon has three operating/reportable segments: North America, International, and AWS. This matches the proposed answer.
+
+Q9 — What principal products/services are named in Item 1 (list top categories named)?
+------------------------------------------------------------
+Ground Truth : ["Retail products", "Retail third-party seller services", "Retail subscription services", "AWS", "Other"]
+Verdict      : AMBIGUOUS
+Evidence     : “We have organized our operations into three segments: North America, International, and Amazon Web Services (“AWS”).” (page 3) And under product information: “Net Sales: … Retail products … Retail third-party seller services … Retail subscription services … AWS … Other” (page 68)
+Correct Ans  : The top categories explicitly named in Item 1 are the operating segments “North America,” “International,” and “Amazon Web Services (AWS).” If the question instead intends the top net sales product/service categories used elsewhere in the filing, they are “Retail products,” “Retail third-party seller services,” “Retail subscription services,” “AWS,” and “Other.”
+Reasoning    : The proposed answer matches the net sales product/service categories shown in Note 11, not the categories named in Item 1. Item 1 itself explicitly names the principal top-level business segments as North America, International, and AWS, so the question is ambiguous between Item 1 segment categories and later product/service categories.
+
+Q10 — What principal markets/geographies are named in Item 1 (list regions/countries named)?
+------------------------------------------------------------
+Ground Truth : ["United States", "Germany", "United Kingdom", "Japan", "Rest of world"]
+Verdict      : INCORRECT
+Evidence     : “[page 68][table][AMAZON.COM, INC. | PART II | Item 8. Financial Statements and Supplementary Data | Tax Contingencies | Note 11—SEGMENT INFORMATION] | United States | $ 54,717 | $ 70,537 | $ 90,349 | | Germany | 11,919 | 11,816 | 14,148 | | United Kingdom | 8,341 | 9,033 | 9,547 | | Japan | 7,912 | 8,264 | 10,797 | | Rest of world | 6,099 | 7,356 | 11,146 |”
+Correct Ans  : Item 1 does not name those principal markets/geographies. The named principal markets/geographies “United States, Germany, United Kingdom, Japan, and Rest of world” appear in Note 11—Segment Information on page 68, not in Item 1.
+Reasoning    : The proposed list matches a table in Item 8, Note 11—Segment Information, but a review of Item 1 (“Business”) does not show these principal markets/geographies. Therefore the answer is not supported for Item 1.
+
+Q11 — Are any "significant subsidiaries" identified (list names; "none" if not listed)?
+------------------------------------------------------------
+Ground Truth : ["Amazon Services LLC", "Amazon Digital Services LLC", "Amazon Web Services, Inc.", "Amazon EU S.\u00e0 r.l.", "Amazon Fulfillment Services, Inc.", "Amazon Services International, Inc.", "Amazon Corporate LLC", "Amazon Technologies, Inc.", "Amazon.com Int\u2019l Sales, Inc.", "Amazon.com LLC"]
+Verdict      : CORRECT
+Evidence     : “[page 80][table] | Legal Name | Jurisdiction | Percent Owned | | --- | --- | --- | | Amazon Services LLC | Nevada | 100% | | Amazon Digital Services LLC | Delaware | 100% | | Amazon Web Services, Inc. | Delaware | 100% | | Amazon EU S.à r.l. | Luxembourg | 100% | | Amazon Fulfillment Services, Inc. | Delaware | 100% | | Amazon Services International, Inc. | Delaware | 100% | | Amazon Corporate LLC | Delaware | 100% | | Amazon Technologies, Inc. | Nevada | 100% | | Amazon.com Int'l Sales, Inc. | Delaware | 100% | | Amazon.com LLC | Delaware | 100% |”
+Correct Ans  : ["Amazon Services LLC", "Amazon Digital Services LLC", "Amazon Web Services, Inc.", "Amazon EU S.à r.l.", "Amazon Fulfillment Services, Inc.", "Amazon Services International, Inc.", "Amazon Corporate LLC", "Amazon Technologies, Inc.", "Amazon.com Int'l Sales, Inc.", "Amazon.com LLC"]
+Reasoning    : The filing includes a “LIST OF SIGNIFICANT SUBSIDIARIES” on page 80, and the proposed answer matches all names listed there.
+
+Q12 — What is the location of principal properties (city/state/country as presented; "not disclosed" if omitted)?
+------------------------------------------------------------
+Ground Truth : Seattle, Washington, United States
+Verdict      : INCORRECT
+Evidence     : “We own and lease our corporate headquarters in Seattle, Washington.” (page 15)
+Correct Ans  : Seattle, Washington
+Reasoning    : The document identifies the location only as “Seattle, Washington” and does not include “United States.” Therefore the proposed answer adds a country not presented in the filing.
+
+Q13 — Does Item 1A (Risk Factors) appear (Yes/No; if No, record "not required" for SRCs)?
+------------------------------------------------------------
+Ground Truth : Yes
+Verdict      : CORRECT
+Evidence     : “[page 6][H3] Item 1A. Risk Factors”
+Correct Ans  : Yes
+Reasoning    : The section headers show that “Item 1A. Risk Factors” is present in the filing, beginning on page 6. Therefore, the proposed answer “Yes” is supported by the document.
+
+Q14 — How many distinct risk factor captions are presented in Item 1A (count captions; "not disclosed" if not counted)?
+------------------------------------------------------------
+Ground Truth : Not disclosed
+Verdict      : INCORRECT
+Evidence     : “[section_header][page 6] We Face Intense Competition” … “[section_header][page 14] We Could Be Liable for Fraudulent or Unlawful Activities of Sellers” under “[HEADER][page 6] Item 1A. Risk Factors”
+Correct Ans  : 24
+Reasoning    : Item 1A contains distinct risk factor captions presented as section headers. Counting those captions from page 6 through page 14 yields 24, so the answer is disclosed and is not “Not disclosed.”
+
+Q15 — Does Item 1B (Unresolved Staff Comments) disclose any comments (Yes/No or "not applicable")?
+------------------------------------------------------------
+Ground Truth : None
+Verdict      : CORRECT
+Evidence     : “Item 1B. Unresolved Staff Comments” — “None.” (page 14)
+Correct Ans  : None
+Reasoning    : The Item 1B section explicitly states “None.”, so the proposed answer matches the document exactly.
+
+Q16 — Does Item 3 (Legal Proceedings) disclose any material proceedings (Yes/No)?
+------------------------------------------------------------
+Ground Truth : Yes
+Verdict      : INCORRECT
+Evidence     : “Item 3. Legal Proceedings” states only: “See Item 8 of Part II, ‘Financial Statements and Supplementary Data—Note 7—Commitments and Contingencies—Legal Proceedings.’” (page 15)
+Correct Ans  : No
+Reasoning    : Item 3 itself does not disclose any specific material legal proceedings; it merely cross-references Note 7 in Item 8. Therefore, the proposed answer “Yes” is not supported by Item 3.
+
+Q17 — Does Item 7 discuss liquidity and capital resources (Yes/No — MD&A must address it)?
+------------------------------------------------------------
+Ground Truth : Yes
+Verdict      : CORRECT
+Evidence     : “Item 7. Management’s Discussion and Analysis of Financial Condition and Results of Operations” [page 18] and under Item 7, “Liquidity and Capital Resources” [page 21].
+Correct Ans  : Yes
+Reasoning    : The section headers show that Item 7 includes a subsection titled “Liquidity and Capital Resources,” so Item 7 does discuss liquidity and capital resources.
+
+Q18 — Does Item 7 discuss off-balance-sheet arrangements (Yes/No or "not applicable" if none)?
+------------------------------------------------------------
+Ground Truth : Yes
+Verdict      : INCORRECT
+Evidence     : “No spans found for 'off-balance-sheet'.” Also, under Item 7, the section headers shown are “Critical Accounting Judgments” (page 20), “Liquidity and Capital Resources” (page 21), “Results of Operations” (page 23), and “Non-GAAP Financial Measures” (page 30). [pages 18–30]
+Correct Ans  : not applicable
+Reasoning    : Item 7 is present, but the document does not discuss any “off-balance-sheet arrangements” there, and no such term appears in the filing. Therefore the supported answer is that none are applicable, not “Yes.”
+
+Q19 — Does Item 7A (Quantitative and Qualitative Disclosures about Market Risk) appear (Yes/No; "not required" for certain filers)?
+------------------------------------------------------------
+Ground Truth : Yes
+Verdict      : CORRECT
+Evidence     : “[page 32] Item 7A. Quantitative and Qualitative Disclosures About Market Risk” and “[page 32] We are exposed to market risk for the effect of interest rate changes, foreign currency fluctuations, and changes in the market values of our investments.”
+Correct Ans  : Yes
+Reasoning    : The document explicitly includes a section header for “Item 7A. Quantitative and Qualitative Disclosures About Market Risk” on page 32, confirming that Item 7A appears.
+
+Q20 — If Item 7A appears, which market risks are quantified (select all that appear: interest rate / FX / commodity / equity)?
+------------------------------------------------------------
+Ground Truth : ["Interest rate", "Foreign exchange (FX)"]
+Verdict      : INCORRECT
+Evidence     : “We are exposed to market risk for the effect of interest rate changes, foreign currency fluctuations, and changes in the market values of our investments.” (page 32) “Interest Rate Risk” (page 32); “Foreign Exchange Risk” (page 33); “Investment Risk” (page 33).
+Correct Ans  : ["Interest rate", "Foreign exchange (FX)", "Equity"]
+Reasoning    : Item 7A does quantify interest rate risk and foreign exchange risk, but it also includes “Investment Risk,” which discusses “equity and equity warrant investments,” i.e., equity market risk. There is no commodity risk section.
+
+Q21 — Who is the independent registered public accounting firm named in Item 8?
+------------------------------------------------------------
+Ground Truth : Ernst & Young LLP
+Verdict      : CORRECT
+Evidence     : “Report of Ernst &Young LLP, Independent Registered Public Accounting Firm” (page 34); “/s/ Ernst & Young LLP” (page 35)
+Correct Ans  : Ernst & Young LLP
+Reasoning    : Item 8’s index to the consolidated financial statements identifies the report as that of Ernst & Young LLP, and the report itself is signed by Ernst & Young LLP.
+
+Q22 — What audit opinion type is expressed for the consolidated financial statements (Unqualified/Qualified/Adverse/Disclaimer)?
+------------------------------------------------------------
+Ground Truth : Unqualified
+Verdict      : CORRECT
+Evidence     : “In our opinion, the financial statements referred to above present fairly, in all material respects, the consolidated financial position of Amazon.com, Inc. at December 31, 2016 and 2015, and the consolidated results of its operations and its cash flows for each of the three years in the period ended December 31, 2016, in conformity with U.S. generally accepted accounting principles.” (page 35)
+Correct Ans  : Unqualified
+Reasoning    : This is the standard clean audit opinion language indicating the consolidated financial statements are fairly presented in conformity with GAAP, which corresponds to an unqualified opinion.
+
+Q23 — What is total revenue for the most recent fiscal year (from the audited income statement)?
+------------------------------------------------------------
+Ground Truth : $135,987 million
+Verdict      : CORRECT
+Evidence     : “[page 37][table][CONSOLIDATED STATEMENTS OF OPERATIONS] | Total net sales | 88,988 | 107,006 | 135,987 |”
+Correct Ans  : $135,987 million
+Reasoning    : The most recent fiscal year in the audited income statement is 2016, and the Consolidated Statements of Operations report “Total net sales” of 135,987 million. This matches the proposed answer.
+
+Q24 — What is net income (loss) for the most recent fiscal year?
+------------------------------------------------------------
+Ground Truth : $2,371 million
+Verdict      : CORRECT
+Evidence     : “Net income (loss) | $ (241) | $ 596 | $ 2,371” for the year ended December 31, 2016 in the Consolidated Statements of Operations (page 37).
+Correct Ans  : $2,371 million
+Reasoning    : The most recent fiscal year in the 2016 10-K is 2016, and the document reports net income (loss) of $2,371 million for that year.
+
+Q25 — What is total assets at year-end (from the audited balance sheet)?
+------------------------------------------------------------
+Ground Truth : $83,402 million
+Verdict      : CORRECT
+Evidence     : “[page 39][table][AMAZON.COM, INC. | PART II | Item 8. Financial Statements and Supplementary Data | CONSOLIDATED BALANCE SHEETS | (in millions, except per share data)] … | Total assets | $ 64,747 | $ 83,402 |”
+Correct Ans  : $83,402 million
+Reasoning    : The audited Consolidated Balance Sheets on page 39 list total assets as $83,402 million at December 31, 2016. This matches the proposed answer.
+
+Q26 — What is long-term debt at year-end (0 if none)?
+------------------------------------------------------------
+Ground Truth : $7,694 million
+Verdict      : CORRECT
+Evidence     : “[page 39][table] | Long-term debt | 8,227 | 7,694 |” under “CONSOLIDATED BALANCE SHEETS” for “December 31, 2015 | 2016.”
+Correct Ans  : $7,694 million
+Reasoning    : The consolidated balance sheet reports long-term debt of $7,694 million as of December 31, 2016, which is the year-end amount. The proposed answer matches the document exactly.
+
+Q27 — Did management report any material weaknesses in internal control over financial reporting (Yes/No)?
+------------------------------------------------------------
+Ground Truth : No
+Verdict      : CORRECT
+Evidence     : “As a result of this assessment, management concluded that, as of December 31, 2016, our internal control over financial reporting was effective in providing reasonable assurance regarding the reliability of financial reporting and the preparation of financial statements for external purposes in accordance with generally accepted accounting principles.” (page 71)
+Correct Ans  : No
+Reasoning    : Management stated that internal control over financial reporting was effective as of December 31, 2016, which indicates no material weaknesses were reported. The auditor also stated, “In our opinion, Amazon.com, Inc. maintained, in all material respects, effective internal control over financial reporting as of December 31, 2016.” (page 72)
+
+Q28 — Is Part III information (directors, executive officers, compensation, ownership, etc.) incorporated by reference to a definitive proxy statement (Yes/No)?
+------------------------------------------------------------
+Ground Truth : Yes
+Verdict      : CORRECT
+Evidence     : “The information required by Part III of this Report, to the extent not set forth herein, is incorporated herein by reference from the registrant’s definitive proxy statement relating to the Annual Meeting of Shareholders to be held in 2017...” (page 1)
+Correct Ans  : Yes
+Reasoning    : The filing explicitly states that the information required by Part III is incorporated by reference from the company’s definitive proxy statement, so the proposed answer is supported by the document.
+
+Q29 — If Part III is incorporated by reference, what is the proxy filing deadline stated on the 10-K (date or "not stated")?
+------------------------------------------------------------
+Ground Truth : Not stated
+Verdict      : INCORRECT
+Evidence     : “The information required by Part III of this Report, to the extent not set forth herein, is incorporated herein by reference from the registrant’s definitive proxy statement relating to the Annual Meeting of Shareholders to be held in 2017, which definitive proxy statement shall be filed with the Securities and Exchange Commission within 120 days after the end of the fiscal year to which this Report relates.” (page 1)
+Correct Ans  : Within 120 days after the end of the fiscal year to which this Report relates.
+Reasoning    : The 10-K explicitly states the proxy filing deadline on page 1. Therefore, “Not stated” is not supported by the document.
+
+Q30 — List one material agreement or other exhibit number explicitly identified in the Exhibit Index (e.g., "Exhibit 10.1: Credit Agreement")—or record "none listed" if no material agreements are identified.
+------------------------------------------------------------
+Ground Truth : Exhibit 10.1: 1997 Stock Incentive Plan (amended and restated)
+Verdict      : CORRECT
+Evidence     : “[page 77][table][AMAZON.COM, INC. | EXHIBIT INDEX] … | 10.1† | 1997 Stock Incentive Plan (amended and restated) (incorporated by reference to the Company's Quarterly Report on Form 10-Q for the Quarter ended March 31, 2013). |”
+Correct Ans  : Exhibit 10.1: 1997 Stock Incentive Plan (amended and restated)
+Reasoning    : The Exhibit Index on page 77 explicitly lists Exhibit 10.1 as “1997 Stock Incentive Plan (amended and restated).” This matches the proposed answer.
+
+============================================================
+SUMMARY
+============================================================
+Total questions : 30
+Correct         : 22
+Incorrect/Ambig : 8 — Q9, Q10, Q12, Q14, Q16, Q18, Q20, Q29
+Input tokens    : 220,414
+Output tokens   : 6,551
+Est. cost       : $0.6493

@@ -1,0 +1,254 @@
+Ground Truth Verification Analysis
+Document: APPLE_2016_10K
+Date: 2026-04-27
+============================================================
+
+Q1 — What is the registrant's exact name?
+------------------------------------------------------------
+Ground Truth : Apple Inc.
+Verdict      : CORRECT
+Evidence     : “Apple Inc.” “(Exact name of Registrant as specified in its charter)” (page 1)
+Correct Ans  : Apple Inc.
+Reasoning    : The document explicitly lists “Apple Inc.” as the exact name of the registrant on page 1, matching the proposed answer.
+
+Q2 — What is the state (or other jurisdiction) of incorporation and the IRS Employer Identification Number?
+------------------------------------------------------------
+Ground Truth : California, 94-2404110
+Verdict      : CORRECT
+Evidence     : “California” “(State or other jurisdiction of incorporation or organization)” and “94-2404110” “(I.R.S. Employer Identification No.)” (page 1)
+Correct Ans  : California, 94-2404110
+Reasoning    : The cover page of the 2016 10-K explicitly lists California as the state of incorporation and 94-2404110 as the I.R.S. Employer Identification Number.
+
+Q3 — What is the address of principal executive offices and ZIP code?
+------------------------------------------------------------
+Ground Truth : 1 Infinite Loop, Cupertino, California 95014
+Verdict      : CORRECT
+Evidence     : “1 Infinite Loop Cupertino, California” “(Address of principal executive offices)” and “95014” “(Zip Code)” (page 1)
+Correct Ans  : 1 Infinite Loop, Cupertino, California 95014
+Reasoning    : The filing’s cover page lists the principal executive offices as “1 Infinite Loop Cupertino, California” and separately gives the ZIP code as “95014,” which matches the proposed answer.
+
+Q4 — What is the registrant's telephone number?
+------------------------------------------------------------
+Ground Truth : (408) 996-1010
+Verdict      : CORRECT
+Evidence     : “Apple Inc. | (408) 996-1010” and “(Registrant’s telephone number, including area code)” (page 1)
+Correct Ans  : (408) 996-1010
+Reasoning    : The document explicitly lists the registrant’s telephone number on page 1 as “(408) 996-1010,” matching the proposed answer.
+
+Q5 — What is the fiscal year-end date stated on the cover?
+------------------------------------------------------------
+Ground Truth : September 24, 2016
+Verdict      : CORRECT
+Evidence     : “For the fiscal year ended September 24, 2016” (page 1)
+Correct Ans  : September 24, 2016
+Reasoning    : The cover page of the Form 10-K explicitly states the fiscal year ended date as September 24, 2016, which matches the proposed answer.
+
+Q6 — What is/are the trading symbol(s) and listing exchange(s)?
+------------------------------------------------------------
+Ground Truth : AAPL, NASDAQ
+Verdict      : CORRECT
+Evidence     : “The Company’s common stock is traded on the NASDAQ Stock Market LLC (“NASDAQ”) under the symbol AAPL.” (page 21)
+Correct Ans  : AAPL, NASDAQ
+Reasoning    : The document explicitly states that Apple’s common stock trades under the symbol AAPL on the NASDAQ Stock Market LLC, which matches the proposed answer.
+
+Q7 — How many shares of common stock were outstanding as of the cover-page reference date?
+------------------------------------------------------------
+Ground Truth : 5,332,313,000
+Verdict      : CORRECT
+Evidence     : “5,332,313,000 shares of common stock were issued and outstanding as of October 14, 2016.” (page 2)
+Correct Ans  : 5,332,313,000
+Reasoning    : The proposed answer exactly matches the number of common shares outstanding stated on the cover-page reference date in the filing.
+
+Q8 — What are the reportable operating segments (list names; if none, record "single segment")?
+------------------------------------------------------------
+Ground Truth : ["Americas", "Europe", "Greater China", "Japan", "Rest of Asia Pacific"]
+Verdict      : CORRECT
+Evidence     : “The Company’s reportable operating segments consist of the Americas, Europe, Greater China, Japan and Rest of Asia Pacific.” [page 70]
+Correct Ans  : ["Americas", "Europe", "Greater China", "Japan", "Rest of Asia Pacific"]
+Reasoning    : The proposed answer exactly matches the reportable operating segments explicitly listed in Note 11 of the 2016 10-K.
+
+Q9 — What principal products/services are named in Item 1 (list top categories named)?
+------------------------------------------------------------
+Ground Truth : ["iPhone", "iPad", "Mac", "Services", "Other Products"]
+Verdict      : CORRECT
+Evidence     : “[page 5] iPhone”; “[page 5] iPad”; “[page 5] Mac”; “[page 6] Services”; “[page 6] Other Products”
+Correct Ans  : ["iPhone", "iPad", "Mac", "Services", "Other Products"]
+Reasoning    : In Item 1 under the “Products” section, these are explicitly named as top-level product/service categories. The proposed answer matches those named categories.
+
+Q10 — What principal markets/geographies are named in Item 1 (list regions/countries named)?
+------------------------------------------------------------
+Ground Truth : ["Americas", "Europe", "Greater China", "Japan", "Rest of Asia Pacific"]
+Verdict      : CORRECT
+Evidence     : “The Company’s reportable operating segments consist of the Americas, Europe, Greater China, Japan and Rest of Asia Pacific. The Americas segment includes both North and South America. The Europe segment includes European countries, as well as India, the Middle East and Africa. The Greater China segment includes China, Hong Kong and Taiwan. The Rest of Asia Pacific segment includes Australia and those Asian countries not included in the Company’s other reportable operating segments.” (page 4)
+Correct Ans  : ["Americas", "Europe", "Greater China", "Japan", "Rest of Asia Pacific"]
+Reasoning    : Item 1 under “Business Organization” explicitly names these five principal geographic operating segments. The proposed answer matches the document exactly.
+
+Q11 — Are any "significant subsidiaries" identified (list names; "none" if not listed)?
+------------------------------------------------------------
+Ground Truth : ["Apple Sales International", "Apple Operations International", "Apple Operations Europe", "Braeburn Capital, Inc."]
+Verdict      : CORRECT
+Evidence     : “Subsidiaries of Apple Inc.*” followed by the table on page 100 listing: “Apple Sales International | Ireland,” “Apple Operations International | Ireland,” “Apple Operations Europe | Ireland,” and “Braeburn Capital, Inc. | Nevada, U.S.”
+Correct Ans  : ["Apple Sales International", "Apple Operations International", "Apple Operations Europe", "Braeburn Capital, Inc."]
+Reasoning    : The document includes a “Subsidiaries of Apple Inc.*” table on page 100, and the four names in the proposed answer exactly match the subsidiaries listed there.
+
+Q12 — What is the location of principal properties (city/state/country as presented; "not disclosed" if omitted)?
+------------------------------------------------------------
+Ground Truth : Cupertino, California, U.S.
+Verdict      : CORRECT
+Evidence     : “1 Infinite Loop Cupertino, California (Address of principal executive offices)” (page 1)
+Correct Ans  : Cupertino, California, U.S.
+Reasoning    : The document gives the principal executive offices address as “1 Infinite Loop Cupertino, California,” which supports the city/state as Cupertino, California. The country is not explicitly stated in that line, but the proposed answer’s “U.S.” is consistent with the filing context.
+
+Q13 — Does Item 1A (Risk Factors) appear (Yes/No; if No, record "not required" for SRCs)?
+------------------------------------------------------------
+Ground Truth : Yes
+Verdict      : CORRECT
+Evidence     : “Item 1A. Risk Factors” appears in the section headers on page 11. [page 11]
+Correct Ans  : Yes
+Reasoning    : The document explicitly includes a section titled “Item 1A. Risk Factors,” so the proposed answer is supported by the filing.
+
+Q14 — How many distinct risk factor captions are presented in Item 1A (count captions; "not disclosed" if not counted)?
+------------------------------------------------------------
+Ground Truth : Not disclosed
+Verdict      : INCORRECT
+Evidence     : Item 1A contains multiple distinct risk factor captions presented as section headers, including for example: “[section_header] Global and regional economic conditions could materially adversely affect the Company.” (page 11), “[section_header] The Company is subject to laws and regulations worldwide, changes to which could increase the Company’s costs and individually or in the aggregate adversely affect the Company’s business.” (page 15), and “[section_header] The Company’s stock price is subject to volatility.” (page 18). Counting all such captions in Item 1A yields 23 distinct risk factor captions (pages 11–18).
+Correct Ans  : 23
+Reasoning    : The proposed answer says the count is not disclosed, but Item 1A explicitly presents each risk factor under its own caption/section header. Counting those captions across pages 11–18 gives 23.
+
+Q15 — Does Item 1B (Unresolved Staff Comments) disclose any comments (Yes/No or "not applicable")?
+------------------------------------------------------------
+Ground Truth : None
+Verdict      : CORRECT
+Evidence     : “[page 20] Item 1B. Unresolved Staff Comments” and “[page 20] None.”
+Correct Ans  : None
+Reasoning    : The Item 1B section explicitly states “None,” so the proposed answer matches the document exactly.
+
+Q16 — Does Item 3 (Legal Proceedings) disclose any material proceedings (Yes/No)?
+------------------------------------------------------------
+Ground Truth : No
+Verdict      : CORRECT
+Evidence     : “The Company is subject to legal proceedings and claims that have not been fully resolved and that have arisen in the ordinary course of business. In the opinion of management, there was not at least a reasonable possibility the Company may have incurred a material loss, or a material loss in excess of a recorded accrual, with respect to loss contingencies for asserted legal and other claims.” [page 20] “The Company settled certain matters during the fourth quarter of 2016 that did not individually or in the aggregate have a material impact on the Company’s financial condition or operating results.” [page 20]
+Correct Ans  : No
+Reasoning    : Item 3 acknowledges ongoing legal proceedings, but it does not disclose any proceedings that management considered material. The section explicitly says there was not a reasonable possibility of a material loss and that settled matters were not material.
+
+Q17 — Does Item 7 discuss liquidity and capital resources (Yes/No — MD&A must address it)?
+------------------------------------------------------------
+Ground Truth : Yes
+Verdict      : CORRECT
+Evidence     : “[page 25] Item 7. Management’s Discussion and Analysis of Financial Condition and Results of Operations” and “[page 32][H5] Liquidity and Capital Resources”
+Correct Ans  : Yes
+Reasoning    : The section headers show that Item 7 is the MD&A section and it explicitly includes a subsection titled “Liquidity and Capital Resources,” so Item 7 does discuss it.
+
+Q18 — Does Item 7 discuss off-balance-sheet arrangements (Yes/No or "not applicable" if none)?
+------------------------------------------------------------
+Ground Truth : Yes
+Verdict      : INCORRECT
+Evidence     : “Off-Balance Sheet Arrangements and Contractual Obligations” (page 34). “The Company has not entered into any transactions with unconsolidated entities whereby the Company has financial guarantees, subordinated retained interests, derivative instruments, or other contingent arrangements that expose the Company to material continuing risks, contingent liabilities, or any other obligation under a variable interest in an unconsolidated entity...” (page 34)
+Correct Ans  : not applicable
+Reasoning    : Item 7 does include a section on off-balance-sheet arrangements, but it states the Company has not entered into such arrangements. Therefore, the correct response to whether Item 7 discusses off-balance-sheet arrangements is “not applicable” if none.
+
+Q19 — Does Item 7A (Quantitative and Qualitative Disclosures about Market Risk) appear (Yes/No; "not required" for certain filers)?
+------------------------------------------------------------
+Ground Truth : Yes
+Verdict      : CORRECT
+Evidence     : “Item 7A.Quantitative and Qualitative Disclosures About Market Risk” (page 39)
+Correct Ans  : Yes
+Reasoning    : The section headers explicitly include Item 7A on page 39, so the document does contain Item 7A.
+
+Q20 — If Item 7A appears, which market risks are quantified (select all that appear: interest rate / FX / commodity / equity)?
+------------------------------------------------------------
+Ground Truth : ["Interest rate", "FX"]
+Verdict      : CORRECT
+Evidence     : “[HEADER][page 39] Item 7A.Quantitative and Qualitative Disclosures About Market Risk” and the section headers under it are “[section_header][page 39] Interest Rate and Foreign Currency Risk Management,” “[section_header][page 39] Interest Rate Risk,” and “[section_header][page 39] Foreign Currency Risk.” The section quantifies both risks: “a hypothetical 100 basis point increase in interest rates… would result in a $4.9 billion… incremental decline” and “increase by $271 million” (page 39); and for FX, “the Company estimates with 95% confidence, a maximum one-day loss in fair value of $434 million” (page 40).
+Correct Ans  : ["Interest rate", "FX"]
+Reasoning    : Item 7A appears and includes quantified disclosures for interest rate risk and foreign currency risk. There is no quantified commodity or equity market risk disclosed in Item 7A.
+
+Q21 — Who is the independent registered public accounting firm named in Item 8?
+------------------------------------------------------------
+Ground Truth : Ernst & Young LLP
+Verdict      : CORRECT
+Evidence     : “Reports of Ernst & Young LLP, Independent Registered Public Accounting Firm | 70” (Item 8, page 41)
+Correct Ans  : Ernst & Young LLP
+Reasoning    : Item 8’s index to consolidated financial statements explicitly names “Ernst & Young LLP” as the independent registered public accounting firm. Therefore, the proposed answer matches the document.
+
+Q22 — What audit opinion type is expressed for the consolidated financial statements (Unqualified/Qualified/Adverse/Disclaimer)?
+------------------------------------------------------------
+Ground Truth : Unqualified
+Verdict      : CORRECT
+Evidence     : “In our opinion, the financial statements referred to above present fairly, in all material respects, the consolidated financial position of Apple Inc. at September 24, 2016 and September 26, 2015, and the consolidated results of its operations and its cash flows for each of the three years in the period ended September 24, 2016, in conformity with U.S. generally accepted accounting principles.” (page 74)
+Correct Ans  : Unqualified
+Reasoning    : This is standard unqualified audit opinion language stating the financial statements “present fairly, in all material respects” in conformity with GAAP, with no qualifications, adverse language, or disclaimer.
+
+Q23 — What is total revenue for the most recent fiscal year (from the audited income statement)?
+------------------------------------------------------------
+Ground Truth : 215,639 million
+Verdict      : CORRECT
+Evidence     : “CONSOLIDATED STATEMENTS OF OPERATIONS … Net sales | $ 215,639 | $ 233,715 | $ 182,795” (page 42)
+Correct Ans  : 215,639 million
+Reasoning    : The most recent fiscal year in the audited income statement is the year ended September 24, 2016, and the Consolidated Statements of Operations report net sales (total revenue) of $215,639 million.
+
+Q24 — What is net income (loss) for the most recent fiscal year?
+------------------------------------------------------------
+Ground Truth : 45,687 million
+Verdict      : CORRECT
+Evidence     : “| Net income | $ 45,687 | $ 53,394 | $ 39,510 |” from the “CONSOLIDATED STATEMENTS OF OPERATIONS” for “September 24, 2016” on page 42.
+Correct Ans  : 45,687 million
+Reasoning    : The most recent fiscal year in the 2016 10-K is the year ended September 24, 2016, and the document reports net income of $45,687 million for that year.
+
+Q25 — What is total assets at year-end (from the audited balance sheet)?
+------------------------------------------------------------
+Ground Truth : 321,686 million
+Verdict      : CORRECT
+Evidence     : “[page 44][table][Apple Inc. | Item 8. Financial Statements and Supplementary Data | CONSOLIDATED BALANCE SHEETS] … | Total assets | $ 321,686 | $ 290,345 |”
+Correct Ans  : 321,686 million
+Reasoning    : The audited Consolidated Balance Sheets show total assets of $321,686 million as of September 24, 2016, which matches the proposed answer.
+
+Q26 — What is long-term debt at year-end (0 if none)?
+------------------------------------------------------------
+Ground Truth : 78,927 million
+Verdict      : INCORRECT
+Evidence     : “Long-term debt | 75,427 | 53,329” from the Consolidated Balance Sheets (page 44). Also, the debt note shows: “Less: Current portion of long-term debt, net | (3,500) … Total long-term debt | $ 75,427” (page 62).
+Correct Ans  : 75,427 million
+Reasoning    : The proposed answer, 78,927 million, is total term debt, not long-term debt. The document’s year-end balance sheet reports long-term debt specifically as 75,427 million.
+
+Q27 — Did management report any material weaknesses in internal control over financial reporting (Yes/No)?
+------------------------------------------------------------
+Ground Truth : No
+Verdict      : CORRECT
+Evidence     : “Based on the Company’s assessment, management has concluded that its internal control over financial reporting was effective as of September 24, 2016 to provide reasonable assurance regarding the reliability of financial reporting and the preparation of financial statements in accordance with GAAP.” (page 76)
+Correct Ans  : No
+Reasoning    : Management concluded internal control over financial reporting was effective, which indicates no material weaknesses were reported. The filing also contains no statement identifying any material weakness.
+
+Q28 — Is Part III information (directors, executive officers, compensation, ownership, etc.) incorporated by reference to a definitive proxy statement (Yes/No)?
+------------------------------------------------------------
+Ground Truth : Yes
+Verdict      : CORRECT
+Evidence     : “Portions of the Registrant’s definitive proxy statement relating to its 2017 annual meeting of shareholders (the “ 2017 Proxy Statement”) are incorporated by reference into Part III of this Annual Report on Form 10-K where indicated.” (page 2) “Item 10. Directors, Executive Officers and Corporate Governance … is incorporated herein by reference.” (page 77) “Item 11. Executive Compensation … is incorporated herein by reference.” (page 77) “Item 12. Security Ownership of Certain Beneficial Owners and Management and Related Stockholder Matters … is incorporated herein by reference.” (page 77)
+Correct Ans  : Yes
+Reasoning    : The 10-K explicitly states that portions of the definitive 2017 proxy statement are incorporated by reference into Part III, and the specific Part III items covering directors, executive officers, compensation, and ownership each say they are incorporated by reference.
+
+Q29 — If Part III is incorporated by reference, what is the proxy filing deadline stated on the 10-K (date or "not stated")?
+------------------------------------------------------------
+Ground Truth : Not stated
+Verdict      : INCORRECT
+Evidence     : “Portions of the Registrant’s definitive proxy statement relating to its 2017 annual meeting of shareholders (the “ 2017 Proxy Statement”) are incorporated by reference into Part III of this Annual Report on Form 10-K where indicated. The 2017 Proxy Statement will be filed with the U.S. Securities and Exchange Commission within 120 days after the end of the fiscal year to which this report relates.” (page 2)
+Correct Ans  : Within 120 days after the end of the fiscal year to which the report relates.
+Reasoning    : The 10-K explicitly states the proxy filing deadline in the “Documents Incorporated by Reference” section, so “Not stated” is not supported by the document.
+
+Q30 — List one material agreement or other exhibit number explicitly identified in the Exhibit Index (e.g., "Exhibit 10.1: Credit Agreement")—or record "none listed" if no material agreements are identified.
+------------------------------------------------------------
+Ground Truth : Exhibit 10.1: Employee Stock Purchase Plan
+Verdict      : CORRECT
+Evidence     : “10.1* | Employee Stock Purchase Plan, as amended and restated as of March 10, 2015. | 8-K | 10.1 | 3/13/15” (page 80)
+Correct Ans  : Exhibit 10.1: Employee Stock Purchase Plan
+Reasoning    : The Exhibit Index explicitly lists Exhibit 10.1 as “Employee Stock Purchase Plan, as amended and restated as of March 10, 2015,” so the proposed answer matches the document.
+
+============================================================
+SUMMARY
+============================================================
+Total questions : 30
+Correct         : 26
+Incorrect/Ambig : 4 — Q14, Q18, Q26, Q29
+Input tokens    : 192,526
+Output tokens   : 6,145
+Est. cost       : $0.5735

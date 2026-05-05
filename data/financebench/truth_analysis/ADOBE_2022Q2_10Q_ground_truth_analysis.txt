@@ -1,0 +1,254 @@
+Ground Truth Verification Analysis
+Document: ADOBE_2022Q2_10Q
+Date: 2026-04-27
+============================================================
+
+Q1 — What is the registrant's exact name?
+------------------------------------------------------------
+Ground Truth : Adobe Inc.
+Verdict      : CORRECT
+Evidence     : “[ADOBE INC.] (Exact name of registrant as specified in its charter)” (page 1)
+Correct Ans  : Adobe Inc.
+Reasoning    : The cover page explicitly lists the registrant’s exact name as “ADOBE INC.,” which corresponds to “Adobe Inc.” in the proposed answer.
+
+Q2 — What is the state (or other jurisdiction) of incorporation and the IRS Employer Identification Number?
+------------------------------------------------------------
+Ground Truth : Delaware, 77-0019522
+Verdict      : CORRECT
+Evidence     : “Delaware” “(State or other jurisdiction of incorporation or organization)” and “77-0019522” “(I.R.S. Employer Identification No.)” (page 1)
+Correct Ans  : Delaware, 77-0019522
+Reasoning    : The cover page of the Form 10-Q lists Delaware as the state of incorporation and 77-0019522 as the IRS Employer Identification Number, matching the proposed answer.
+
+Q3 — What is the address of principal executive offices and ZIP code?
+------------------------------------------------------------
+Ground Truth : 345 Park Avenue, San Jose, California 95110-2704
+Verdict      : CORRECT
+Evidence     : “ADOBE INC. | 345 Park Avenue, San Jose, California 95110-2704 (Address of principal executive offices and zip code)” (page 1)
+Correct Ans  : 345 Park Avenue, San Jose, California 95110-2704
+Reasoning    : The document explicitly lists this exact address and ZIP code as the “Address of principal executive offices and zip code” on page 1, matching the proposed answer exactly.
+
+Q4 — What is the registrant's telephone number?
+------------------------------------------------------------
+Ground Truth : (408) 536-6000
+Verdict      : CORRECT
+Evidence     : “(408) 536-6000” — “Registrant’s telephone number, including area code” (page 1)
+Correct Ans  : (408) 536-6000
+Reasoning    : The cover page of the Form 10-Q explicitly lists the registrant’s telephone number as “(408) 536-6000,” which matches the proposed answer.
+
+Q5 — What is the fiscal year-end date stated on the cover?
+------------------------------------------------------------
+Ground Truth : None
+Verdict      : INCORRECT
+Evidence     : “For the quarterly period ended June 2, 2023” (page 1)
+Correct Ans  : June 2, 2023
+Reasoning    : The cover page states the reporting period end date as “For the quarterly period ended June 2, 2023.” The proposed answer “None” is therefore not supported by the document.
+
+Q6 — What is/are the trading symbol(s) and listing exchange(s)?
+------------------------------------------------------------
+Ground Truth : ADBE, NASDAQ
+Verdict      : CORRECT
+Evidence     : “Common Stock, $0.0001 par value per share” — “ADBE” — “NASDAQ” under “Securities registered pursuant to Section 12(b) of the Act” (page 1)
+Correct Ans  : ADBE, NASDAQ
+Reasoning    : The cover page lists the registrant’s common stock trading symbol as ADBE and the exchange on which it is registered as NASDAQ.
+
+Q7 — How many shares of common stock were outstanding as of the cover-page reference date?
+------------------------------------------------------------
+Ground Truth : 455.8 million
+Verdict      : CORRECT
+Evidence     : “As of June 23, 2023, 455.8 million shares of the registrant’s common stock, $0.0001 par value per share, were issued and outstanding.” (page 1)
+Correct Ans  : 455.8 million
+Reasoning    : The cover page explicitly states that 455.8 million shares of common stock were issued and outstanding as of the reference date, June 23, 2023. This matches the proposed answer exactly.
+
+Q8 — What are the reportable operating segments (list names; if none, record "single segment")?
+------------------------------------------------------------
+Ground Truth : ["Digital Media", "Digital Experience", "Publishing and Advertising"]
+Verdict      : CORRECT
+Evidence     : “We have the following reportable segments: Digital Media, Digital Experience, and Publishing and Advertising.” (page 29)
+Correct Ans  : ["Digital Media", "Digital Experience", "Publishing and Advertising"]
+Reasoning    : The document explicitly lists these three reportable operating segments on page 29, which matches the proposed answer exactly.
+
+Q9 — What principal products/services are named in Item 1 (list top categories named)?
+------------------------------------------------------------
+Ground Truth : ["Creative Cloud", "Document Cloud", "Adobe Experience Cloud"]
+Verdict      : AMBIGUOUS
+Evidence     : “[page 10][table][... ITEM 1. CONDENSED CONSOLIDATED FINANCIAL STATEMENTS | NOTE 2. REVENUE] | Creative Cloud | $ 2,852 | $ 2,605 | $ 5,613 | $ 5,153 | | Document Cloud | 659 | 595 | 1,293 | 1,157 | Total Digital Media revenue ...” and “[page 29][text][... ITEM 2. MANAGEMENT’S DISCUSSION AND ANALYSIS ...] Our subscription revenue is comprised primarily of fees we charge for our subscription and hosted service offerings, and related support, including Creative Cloud and certain of our Adobe Experience Cloud and Document Cloud services.”
+Correct Ans  : The document does name “Creative Cloud,” “Document Cloud,” and “Adobe Experience Cloud,” but not in an “Item 1. Business” section. In this 10-Q, Item 1 is “Condensed Consolidated Financial Statements,” where the top named categories shown are “Creative Cloud” and “Document Cloud” (page 10); “Adobe Experience Cloud” appears in Item 2/MD&A, not Item 1.
+Reasoning    : The proposed answer matches product/service categories mentioned in the filing overall, but the question specifically says “Item 1.” In this 10-Q, Item 1 is financial statements rather than a business description, and only Creative Cloud and Document Cloud are clearly listed there.
+
+Q10 — What principal markets/geographies are named in Item 1 (list regions/countries named)?
+------------------------------------------------------------
+Ground Truth : ["Americas", "EMEA", "APAC"]
+Verdict      : CORRECT
+Evidence     : “[page 10][table][ADOBE INC. | PART I—FINANCIAL INFORMATION | ITEM 1. CONDENSED CONSOLIDATED FINANCIAL STATEMENTS | NOTE 2. REVENUE] … | Americas | $ 2,879 | $ 2,524 | $ 5,658 | $ 4,970 | | EMEA | 1,213 | 1,157 | 2,386 | 2,293 | | APAC | 724 | 705 | 1,427 | 1,385 |”
+Correct Ans  : ["Americas", "EMEA", "APAC"]
+Reasoning    : In Item 1, Note 2. Revenue lists revenue by geographic area and names the regions as Americas, EMEA, and APAC. This matches the proposed answer exactly.
+
+Q11 — Are any "significant subsidiaries" identified (list names; "none" if not listed)?
+------------------------------------------------------------
+Ground Truth : None
+Verdict      : CORRECT
+Evidence     : “ITEM 6. EXHIBITS” / “INDEX TO EXHIBITS” on page 54 lists the exhibits filed or incorporated by reference, and there is no Exhibit 21 or any exhibit/section identifying “significant subsidiaries.” [page 54]
+Correct Ans  : None
+Reasoning    : The 10-Q’s exhibit index does not include an exhibit for significant subsidiaries, and no section in the filing identifies any “significant subsidiaries” by name. Therefore, the proposed answer “None” is supported by the document.
+
+Q12 — What is the location of principal properties (city/state/country as presented; "not disclosed" if omitted)?
+------------------------------------------------------------
+Ground Truth : San Jose, California, United States
+Verdict      : CORRECT
+Evidence     : “345 Park Avenue, San Jose, California 95110-2704 (Address of principal executive offices and zip code)” (page 1)
+Correct Ans  : San Jose, California, United States
+Reasoning    : The document identifies the principal executive offices as being in San Jose, California. While the country is not explicitly stated in that line, San Jose, California is in the United States, so the proposed answer is consistent with the document.
+
+Q13 — Does Item 1A (Risk Factors) appear (Yes/No; if No, record "not required" for SRCs)?
+------------------------------------------------------------
+Ground Truth : Yes
+Verdict      : CORRECT
+Evidence     : “[page 39][section_header][ADOBE INC. | PART II—OTHER INFORMATION | ITEM 1A. RISK FACTORS] ITEM 1A. RISK FACTORS” and “[page 2][table] … | Item 1A. | Risk Factors | 39 |”
+Correct Ans  : Yes
+Reasoning    : The document explicitly includes “ITEM 1A. RISK FACTORS” in Part II, and the table of contents lists Item 1A on page 39.
+
+Q14 — How many distinct risk factor captions are presented in Item 1A (count captions; "not disclosed" if not counted)?
+------------------------------------------------------------
+Ground Truth : Not disclosed
+Verdict      : INCORRECT
+Evidence     : “Risks Related to Our Ability to Grow Our Business” (page 39); “Risks Related to the Operation of Our Business” (page 42); “Risks Related to Laws and Regulations” (page 46); “Risks Related to Financial Performance” (page 49); “General Risk Factors” (page 50)
+Correct Ans  : 5
+Reasoning    : Item 1A explicitly presents five distinct risk factor category captions. Therefore, the answer is disclosed and should be counted as 5, not “Not disclosed.”
+
+Q15 — Does Item 1B (Unresolved Staff Comments) disclose any comments (Yes/No or "not applicable")?
+------------------------------------------------------------
+Ground Truth : Not applicable
+Verdict      : AMBIGUOUS
+Evidence     : “[page 39][section_header] ITEM 1. LEGAL PROCEEDINGS” and “[page 39][section_header] ITEM 1A. RISK FACTORS” … “[page 53][section_header] ITEM 2. UNREGISTERED SALES OF EQUITY SECURITIES AND USE OF PROCEEDS” and “[page 53][section_header] ITEM 4. MINE SAFETY DISCLOSURES” / “[page 53][text] Not applicable.”
+Correct Ans  : Item 1B (Unresolved Staff Comments) does not appear in this filing.
+Reasoning    : In Part II, the filing shows Items 1, 1A, 2, 4, 5, and 6, but no Item 1B section is present. The “Not applicable” disclosure on page 53 belongs to Item 4 (Mine Safety Disclosures), not Item 1B.
+
+Q16 — Does Item 3 (Legal Proceedings) disclose any material proceedings (Yes/No)?
+------------------------------------------------------------
+Ground Truth : No
+Verdict      : INCORRECT
+Evidence     : “ITEM 1. LEGAL PROCEEDINGS … See Note 13 of our notes to condensed consolidated financial statements for information regarding our legal proceedings.” (page 39) “In addition to intellectual property disputes, we are subject to legal proceedings, claims, including claims relating to commercial, employment and other matters, and investigations, including government investigations.” (page 22)
+Correct Ans  : Yes
+Reasoning    : Item 1 expressly refers readers to Note 13 for information regarding legal proceedings, and Note 13 states that Adobe is subject to legal proceedings and investigations. Therefore, Item 3/Item 1 Legal Proceedings does disclose proceedings, so “No” is not supported by the document.
+
+Q17 — Does Item 7 discuss liquidity and capital resources (Yes/No — MD&A must address it)?
+------------------------------------------------------------
+Ground Truth : Yes
+Verdict      : CORRECT
+Evidence     : “[page 25][H3] ITEM 2. MANAGEMENT’S DISCUSSION AND ANALYSIS OF FINANCIAL CONDITION AND RESULTS OF OPERATIONS” and “[page 36][H4] Liquidity and Capital Resources Considerations”; also “[page 35][text][ADOBE INC. | PART I—FINANCIAL INFORMATION | ITEM 2. MANAGEMENT’S DISCUSSION AND ANALYSIS OF FINANCIAL CONDITION AND RESULTS OF OPERATIONS] LIQUIDITY AND CAPITAL RESOURCES” (pages 25, 35–36)
+Correct Ans  : Yes
+Reasoning    : The MD&A section in this filing is Item 2 of the 10-Q, and it explicitly includes a subsection titled “Liquidity and Capital Resources Considerations,” so MD&A does address liquidity and capital resources.
+
+Q18 — Does Item 7 discuss off-balance-sheet arrangements (Yes/No or "not applicable" if none)?
+------------------------------------------------------------
+Ground Truth : Yes
+Verdict      : INCORRECT
+Evidence     : “No spans found for 'Off-Balance Sheet Arrangements'.” “No spans found for 'Item 7'.” The Form 10-Q table of contents shows “ITEM 2. MANAGEMENT’S DISCUSSION AND ANALYSIS OF FINANCIAL CONDITION AND RESULTS OF OPERATIONS” on page 25 and does not include any Item 7. [pages 2, 25]
+Correct Ans  : not applicable
+Reasoning    : This is a Form 10-Q, where MD&A is Item 2, not Item 7. The document contains no Item 7 and no discussion labeled “Off-Balance Sheet Arrangements,” so the correct response is not applicable.
+
+Q19 — Does Item 7A (Quantitative and Qualitative Disclosures about Market Risk) appear (Yes/No; "not required" for certain filers)?
+------------------------------------------------------------
+Ground Truth : Yes
+Verdict      : CORRECT
+Evidence     : “[page 38][H3] ITEM 3. QUANTITATIVE AND QUALITATIVE DISCLOSURES ABOUT MARKET RISK”
+Correct Ans  : Yes
+Reasoning    : The section headers show that the filing includes a market risk disclosure item. In a Form 10-Q, this disclosure appears as Item 3, which corresponds to the requested “Quantitative and Qualitative Disclosures about Market Risk.”
+
+Q20 — If Item 7A appears, which market risks are quantified (select all that appear: interest rate / FX / commodity / equity)?
+------------------------------------------------------------
+Ground Truth : ["Interest rate", "FX"]
+Verdict      : CORRECT
+Evidence     : “[page 38][section_header] ITEM 3. QUANTITATIVE AND QUALITATIVE DISCLOSURES ABOUT MARKET RISK” and “[page 38][text] There have been no material changes in our market risk exposures for the six months ended June 2, 2023, as compared to those discussed in our Annual Report on Form 10-K for the fiscal year ended December 2, 2022.” Also, “[page 16][text] We may use derivatives to partially offset our business exposure to foreign currency and interest rate risk on expected future cash flows and certain existing assets and liabilities.” No spans were found for “commodity.”
+Correct Ans  : ["Interest rate", "FX"]
+Reasoning    : The filing includes Item 3 (the 10-Q equivalent of market risk disclosure) and explicitly references foreign currency and interest rate risk. There is no evidence in the document of quantified commodity or equity market risk.
+
+Q21 — Who is the independent registered public accounting firm named in Item 8?
+------------------------------------------------------------
+Ground Truth : None
+Verdict      : INCORRECT
+Evidence     : “ITEM 6. EXHIBITS” and the exhibit index on page 54 list only exhibits such as “31.1 Certification of Chief Executive Officer,” “31.2 Certification of Chief Financial Officer,” and XBRL exhibits; there is no “Item 8” in this Form 10-Q. [page 54] The table of contents shows items only through “ITEM 6. EXHIBITS.” [page 2, page 54]
+Correct Ans  : This Form 10-Q does not contain an Item 8, so no independent registered public accounting firm is named in Item 8.
+Reasoning    : The proposed answer “None” is too vague. The document is a Form 10-Q, whose contents in this filing run through Item 6, and there is no Item 8 section in which an independent registered public accounting firm could be named.
+
+Q22 — What audit opinion type is expressed for the consolidated financial statements (Unqualified/Qualified/Adverse/Disclaimer)?
+------------------------------------------------------------
+Ground Truth : None
+Verdict      : INCORRECT
+Evidence     : “We have prepared the accompanying unaudited condensed consolidated financial statements pursuant to the rules and regulations of the U.S. Securities and Exchange Commission (the “SEC”).” (page 9) ; “The condensed consolidated balance sheet as of December 2, 2022 has been derived from the audited consolidated financial statements at that date...” (page 3)
+Correct Ans  : No audit opinion is expressed in this Form 10-Q; the interim condensed consolidated financial statements are unaudited.
+Reasoning    : A quarterly report on Form 10-Q contains unaudited interim financial statements, and this filing explicitly says the condensed consolidated financial statements are “unaudited.” Therefore, no audit opinion type such as unqualified, qualified, adverse, or disclaimer is expressed in this document.
+
+Q23 — What is total revenue for the most recent fiscal year (from the audited income statement)?
+------------------------------------------------------------
+Ground Truth : $9,471 million
+Verdict      : INCORRECT
+Evidence     : “We have prepared the accompanying unaudited condensed consolidated financial statements…” (page 9). Also, the income statement in this 10-Q shows: “Total revenue | 4,816 | 4,386 | 9,471 | 8,648” for the “Six Months Ended June 2, 2023” and “June 3, 2022” (page 4).
+Correct Ans  : The 10-Q does not contain an audited income statement. It contains unaudited condensed consolidated financial statements, and total revenue for the most recent period shown is $9,471 million for the six months ended June 2, 2023.
+Reasoning    : The proposed answer gives the six-month total revenue from the unaudited 10-Q income statement, not from an audited income statement or most recent fiscal year. Therefore it does not match the question as asked.
+
+Q24 — What is net income (loss) for the most recent fiscal year?
+------------------------------------------------------------
+Ground Truth : $2,542 million
+Verdict      : INCORRECT
+Evidence     : “[page 4][table] … | Net income | $ 1,295 | $ 1,178 | $ 2,542 | $ 2,444 |” and “[page 8][table] … | Net income | $ 2,542 | $ 2,444 |”
+Correct Ans  : $2,444 million for the most recent fiscal year shown (fiscal 2022); $2,542 million is for the six months ended June 2, 2023, not a full fiscal year.
+Reasoning    : The proposed answer matches year-to-date net income for the six months ended June 2, 2023 in this 10-Q, not net income for a full fiscal year. The document’s comparative prior fiscal-year period shown is fiscal 2022, with net income of $2,444 million for the six months ended June 3, 2022.
+
+Q25 — What is total assets at year-end (from the audited balance sheet)?
+------------------------------------------------------------
+Ground Truth : $27,838 million
+Verdict      : INCORRECT
+Evidence     : “[page 3] | Total assets | $ 27,838 | $ 27,165 |” in the balance sheet table with columns “June 2, 2023 (Unaudited)” and “December 2, 2022 (*)”.
+Correct Ans  : $27,165 million
+Reasoning    : The proposed answer uses the unaudited current-period total assets amount. The question asks for total assets at year-end from the audited balance sheet, which corresponds to December 2, 2022 and is $27,165 million.
+
+Q26 — What is long-term debt at year-end (0 if none)?
+------------------------------------------------------------
+Ground Truth : $3,631 million
+Verdict      : CORRECT
+Evidence     : “[page 22][table][NOTE 14. DEBT] … ‘Carrying value of long-term debt | | | | $ 3,631 | $ 3,629’” and “[page 3][table] … ‘Long-term liabilities: | Debt | 3,631 | 3,629’” (June 2, 2023 and December 2, 2022, respectively).
+Correct Ans  : $3,631 million
+Reasoning    : The document reports long-term debt of $3,631 million as of June 2, 2023. This matches the proposed answer.
+
+Q27 — Did management report any material weaknesses in internal control over financial reporting (Yes/No)?
+------------------------------------------------------------
+Ground Truth : No
+Verdict      : CORRECT
+Evidence     : “Based on their evaluation as of June 2, 2023, our Chief Executive Officer and Chief Financial Officer have concluded that our disclosure controls and procedures … were effective at the reasonable assurance level…” and “There were no changes in our internal control over financial reporting during the quarter ended June 2, 2023 that have materially affected, or are reasonably likely to materially affect, our internal control over financial reporting.” (page 38)
+Correct Ans  : No
+Reasoning    : The controls and procedures section states management concluded the controls were effective and does not report any material weakness in internal control over financial reporting.
+
+Q28 — Is Part III information (directors, executive officers, compensation, ownership, etc.) incorporated by reference to a definitive proxy statement (Yes/No)?
+------------------------------------------------------------
+Ground Truth : Yes
+Verdict      : AMBIGUOUS
+Evidence     : The Form 10-Q contains no Part III incorporation statement. Page 1 identifies the filing as a “FORM 10-Q” for the “quarterly period ended June 2, 2023” and page 54 only states: “The certifications attached as Exhibits 32.1 and 32.2 that accompany this Quarterly Report on Form 10-Q, are not deemed filed with the Securities and Exchange Commission and are not to be incorporated by reference into any filing of Adobe Inc...” (page 54).
+Correct Ans  : The document does not state that Part III information is incorporated by reference to a definitive proxy statement.
+Reasoning    : Part III incorporation by reference to a definitive proxy statement is typically a Form 10-K disclosure, not a Form 10-Q item. In this 10-Q, I could not find any statement supporting “Yes,” so the proposed answer is not supported by the document.
+
+Q29 — If Part III is incorporated by reference, what is the proxy filing deadline stated on the 10-K (date or "not stated")?
+------------------------------------------------------------
+Ground Truth : Not stated
+Verdict      : AMBIGUOUS
+Evidence     : “These financial statements and accompanying notes should be read in conjunction with the consolidated financial statements and notes thereto in our Annual Report on Form 10-K for the fiscal year ended December 2, 2022 on file with the SEC (our “Annual Report”).” (page 9) “No spans found for ‘Part III’.” / “No spans found for ‘definitive proxy’.” / “No spans found for ‘120 days’.”
+Correct Ans  : not stated in this 10-Q
+Reasoning    : The provided document is Adobe’s Q2 2023 Form 10-Q, not the Form 10-K itself. It references the 2022 Form 10-K, but the 10-Q does not contain the 10-K cover language about Part III incorporation by reference or any proxy filing deadline, so the deadline is not stated in this document.
+
+Q30 — List one material agreement or other exhibit number explicitly identified in the Exhibit Index (e.g., "Exhibit 10.1: Credit Agreement")—or record "none listed" if no material agreements are identified.
+------------------------------------------------------------
+Ground Truth : Exhibit 10.1: 2019 Equity Incentive Plan, as amended
+Verdict      : CORRECT
+Evidence     : “[page 54][table][ADOBE INC. | PART II—OTHER INFORMATION | ITEM 6. EXHIBITS | INDEX TO EXHIBITS] … | 10.1 | 2019 Equity Incentive Plan, as amended* | 8-K | 4/24/23 | 10.1 | 000-15175 | |”
+Correct Ans  : Exhibit 10.1: 2019 Equity Incentive Plan, as amended
+Reasoning    : The Exhibit Index on page 54 explicitly lists Exhibit 10.1 as “2019 Equity Incentive Plan, as amended*.” The proposed answer matches the exhibit number and description, aside from omitting the asterisk footnote marker.
+
+============================================================
+SUMMARY
+============================================================
+Total questions : 30
+Correct         : 17
+Incorrect/Ambig : 13 — Q5, Q9, Q14, Q15, Q16, Q18, Q21, Q22, Q23, Q24, Q25, Q28, Q29
+Input tokens    : 244,700
+Output tokens   : 8,032
+Est. cost       : $0.7322

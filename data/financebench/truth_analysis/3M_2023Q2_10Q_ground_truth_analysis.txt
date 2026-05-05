@@ -1,0 +1,185 @@
+Ground Truth vs Predicted Answer Analysis
+Document: 3M_2023Q2_10Q
+Date: 2026-04-26
+============================================================
+
+Questions where predicted answer differs from ground truth: Q8, Q9, Q18, Q20, Q23, Q25, Q26, Q28, Q30
+
+------------------------------------------------------------
+Q8 — Reportable Operating Segments
+------------------------------------------------------------
+Ground Truth : single segment
+Predicted    : Safety and Industrial; Transportation and Electronics; Health Care; Consumer (4 segments)
+
+Evidence [p52, p64]:
+  "3M manages its operations in four business segments. The reportable segments are
+   Safety and Industrial; Transportation and Electronics; Health Care; and Consumer."
+
+Verdict: MODEL CORRECT. GT is wrong. The document explicitly names four reportable segments.
+
+------------------------------------------------------------
+Q9 — Principal Products/Services Named in Item 1
+------------------------------------------------------------
+Ground Truth : 19 product categories (Abrasives, Automotive Aftermarket, Closure and Masking
+               Systems, Electrical Markets, Industrial Adhesives and Tapes, Personal Safety,
+               Roofing Granules, Advanced Materials, Automotive and Aerospace, Commercial Solutions,
+               Electronics, Transportation Safety, Health Information Systems, Medical Solutions,
+               Oral Care, Separation and Purification Sciences, Construction and Home Improvement
+               Markets, Home Health and Auto Care, Stationery and Office)
+Predicted    : 4 business segment names only
+
+Evidence [p9 table]:
+  Net Sales table explicitly breaks out all product divisions:
+  Abrasives $675M, Automotive Aftermarket $617M, Closure and Masking Systems $486M,
+  Electrical Markets $653M, Industrial Adhesives and Tapes $1,089M, Personal Safety $1,781M,
+  Roofing Granules $243M, ... (six months ended June 30, 2023)
+
+Note: In a 10-Q "Item 1" refers to Financial Statements, not Business. The product categories
+appear in the MD&A/segment sales tables, not a Business description section.
+
+Verdict: GT CORRECT. Model missed the product-level breakdown table on p9.
+
+------------------------------------------------------------
+Q18 — Does Item 7 Discuss Off-Balance-Sheet Arrangements?
+------------------------------------------------------------
+Ground Truth : Yes
+Predicted    : Not applicable
+
+Evidence [p71]:
+  "The Company also had $315 million in stand-alone letters of credit and bank guarantees
+   issued and outstanding at June 30, 2023. These instruments are utilized in connection
+   with normal business activities."
+
+  [p74]: References the 10-K Item 7 for full off-balance-sheet contractual obligations detail.
+
+Note: This is a 10-Q so there is no "Item 7"; the MD&A is Item 2. Letters of credit are
+off-balance-sheet instruments and are disclosed in Item 2 (Financial Condition and Liquidity).
+
+Verdict: GT CORRECT. The MD&A does disclose off-balance-sheet items (letters of credit).
+Model incorrectly said "not applicable."
+
+------------------------------------------------------------
+Q20 — Which Market Risks Are Quantified in Item 7A?
+------------------------------------------------------------
+Ground Truth : interest rate, FX
+Predicted    : Item 7A was not found in this 10-Q
+
+Evidence [p76]:
+  "In the context of Item 3, 3M is exposed to market risk due to the risk of loss arising
+   from adverse changes in foreign currency exchange rates, interest rates and commodity
+   prices... For a discussion of sensitivity analysis related to these types of market
+   risks, refer to Part II, Item 7A, Quantitative..."
+
+Evidence [p21 table]:
+  "Foreign currency forward/option contracts | $72 | $128 | $78 | $134 (Pretax Gain/Loss)"
+  "Interest rate contracts | - | - | - | -"
+
+Note: The model correctly located Item 3 (= Item 7A equivalent in a 10-Q) for Q19 but then
+contradicted itself for Q20 by saying the section was not found.
+
+Verdict: GT CORRECT. Both interest rate and FX risks are quantified in the filing.
+Model gave an inconsistent and incorrect response.
+
+------------------------------------------------------------
+Q23 — Total Revenue for Most Recent Fiscal Year
+------------------------------------------------------------
+Ground Truth : $16,356 million
+Predicted    : Not in filing / statements are unaudited
+
+Evidence [p3 income statement table]:
+  "Net sales | $8,325 | $8,702 | $16,356 | $17,531"
+  (Three months ended / Six months ended June 30, 2023 / 2022)
+
+Note: $16,356M is the six-month (H1 2023) net sales figure, not a full fiscal year, and the
+financial statements are explicitly labeled "Unaudited." The question asks for the "most recent
+fiscal year from the audited income statement," which technically does not exist in a 10-Q.
+The GT benchmark interprets "most recent fiscal year" as the filing period (H1 2023).
+
+Verdict: AMBIGUOUS. The $16,356M figure exists in the document. The model was correct that
+it is unaudited and not a full-year figure, but wrong to say the data is absent from the filing.
+GT is applying a loose interpretation of "fiscal year."
+
+------------------------------------------------------------
+Q25 — Total Assets at Year-End
+------------------------------------------------------------
+Ground Truth : $48,880 million  (June 30, 2023)
+Predicted    : $46,455 million  (December 31, 2022)
+
+Evidence [p5 Consolidated Balance Sheet]:
+  Total assets | June 30, 2023: $48,880M | December 31, 2022: $46,455M
+
+Note: "Year-end" conventionally means fiscal year-end (December 31, 2022 = $46,455M).
+However, the GT benchmark convention for 10-Q is to use the most recent balance sheet date
+in the filing (June 30, 2023 = $48,880M).
+
+Verdict: GT CORRECT by benchmark convention. Model pulled the wrong column
+(fiscal year-end instead of most recent period end).
+
+------------------------------------------------------------
+Q26 — Long-Term Debt at Year-End
+------------------------------------------------------------
+Ground Truth : $12,954 million  (June 30, 2023)
+Predicted    : $14,001 million  (December 31, 2022)
+
+Evidence [p5 Consolidated Balance Sheet]:
+  Long-term debt | June 30, 2023: $12,954M | December 31, 2022: $14,001M
+
+Note: Same interpretation issue as Q25. GT uses the most recent period (June 30, 2023);
+model used the actual fiscal year-end (December 31, 2022).
+
+Verdict: GT CORRECT by benchmark convention. Same root cause as Q25.
+
+------------------------------------------------------------
+Q28 — Is Part III Incorporated by Reference to Proxy Statement?
+------------------------------------------------------------
+Ground Truth : Yes
+Predicted    : No
+
+Evidence [pp. 85-92]:
+  Reviewed all pages: Part II items (mine safety, equity buybacks, exhibits),
+  Sarbanes-Oxley 302 and 906 certifications. Zero mention of Part III, directors,
+  executive compensation, or proxy statement incorporation anywhere in the filing.
+
+Note: Part III (Directors, Executive Officers, Compensation, Ownership) is a 10-K concept.
+A Form 10-Q does not contain Part III and does not incorporate it by reference to a proxy.
+
+Verdict: MODEL CORRECT. GT is wrong. This is a 10-Q — Part III does not exist.
+GT answer of "Yes" appears to be a ground truth labeling error.
+
+------------------------------------------------------------
+Q30 — One Material Exhibit from Exhibit Index
+------------------------------------------------------------
+Ground Truth : Exhibit 10.1: Settlement Agreement
+Predicted    : Exhibit 10.2: Amendment No. 1 to Five-Year Credit Agreement
+
+Evidence [p86 Exhibit Index table]:
+  10.1 | Settlement Agreement, dated as of June 22, 2023, of 3M Company is incorporated
+         by reference from our Form 8-K dated June 22, 2023.
+  10.2 | Amendment No. 1, dated July 7, 2023, to the Five-Year Credit Agreement is
+         incorporated by reference from our Form 8-K dated July 10, 2023.
+
+Note: Both are valid material agreements. The question asks for "one" example; Exhibit 10.1
+is listed first and is the higher-profile item (a $10B+ PFAS settlement).
+
+Verdict: GT CORRECT. Both exhibits are acceptable answers, but 10.1 is the first listed.
+Model retrieved the second exhibit (10.2) instead.
+
+============================================================
+SUMMARY TABLE
+============================================================
+
+Q#  | Who Is Right?      | Root Cause
+----|--------------------|-------------------------------------------------
+Q8  | MODEL correct      | GT labeling error — doc clearly has 4 segments
+Q9  | GT correct         | Model missed product-level table on p9
+Q18 | GT correct         | Model failed to recognize letters of credit as off-BS
+Q20 | GT correct         | Model inconsistently forgot section it found in Q19
+Q23 | Ambiguous          | Data present but is 6-month unaudited, not fiscal year
+Q25 | GT correct (conv.) | Model used Dec 2022 column instead of Jun 2023
+Q26 | GT correct (conv.) | Same wrong-column issue as Q25
+Q28 | MODEL correct      | GT labeling error — 10-Q has no Part III
+Q30 | GT correct         | Model returned Exhibit 10.2 instead of 10.1
+
+Ground truth errors confirmed: Q8, Q28
+Model errors confirmed: Q9, Q18, Q20, Q25, Q26, Q30
+Ambiguous / interpretation-dependent: Q23

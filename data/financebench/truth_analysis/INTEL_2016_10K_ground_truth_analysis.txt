@@ -1,0 +1,254 @@
+Ground Truth Verification Analysis
+Document: INTEL_2016_10K
+Date: 2026-04-27
+============================================================
+
+Q1 — What is the registrant's exact name?
+------------------------------------------------------------
+Ground Truth : Intel Corporation
+Verdict      : CORRECT
+Evidence     : “INTEL CORPORATION (Exact name of registrant as specified in its charter)” (page 1)
+Correct Ans  : Intel Corporation
+Reasoning    : The cover page explicitly states the registrant’s exact name as “INTEL CORPORATION,” which matches the proposed answer aside from capitalization.
+
+Q2 — What is the state (or other jurisdiction) of incorporation and the IRS Employer Identification Number?
+------------------------------------------------------------
+Ground Truth : Delaware, 94-1672743
+Verdict      : CORRECT
+Evidence     : “Delaware” — “State or other jurisdiction of incorporation or organization” and “94-1672743” — “(I.R.S. Employer Identification No.)” (page 1)
+Correct Ans  : Delaware, 94-1672743
+Reasoning    : The cover page of the 10-K explicitly lists Delaware as the state of incorporation and 94-1672743 as the IRS Employer Identification Number, matching the proposed answer exactly.
+
+Q3 — What is the address of principal executive offices and ZIP code?
+------------------------------------------------------------
+Ground Truth : 2200 Mission College Boulevard, Santa Clara, California 95054-1549
+Verdict      : CORRECT
+Evidence     : “2200 Mission College Boulevard, Santa Clara, California” “(Address of principal executive offices)” and “95054-1549” “(Zip Code)” (page 1)
+Correct Ans  : 2200 Mission College Boulevard, Santa Clara, California 95054-1549
+Reasoning    : The cover page of the 2016 Form 10-K lists the principal executive offices as “2200 Mission College Boulevard, Santa Clara, California” and separately gives the ZIP code as “95054-1549,” matching the proposed answer.
+
+Q4 — What is the registrant's telephone number?
+------------------------------------------------------------
+Ground Truth : (408) 765-8080
+Verdict      : CORRECT
+Evidence     : “Registrant’s telephone number, including area code (408) 765-8080” (page 1)
+Correct Ans  : (408) 765-8080
+Reasoning    : The document explicitly lists the registrant’s telephone number on page 1, and it matches the proposed answer exactly.
+
+Q5 — What is the fiscal year-end date stated on the cover?
+------------------------------------------------------------
+Ground Truth : December 31, 2016
+Verdict      : CORRECT
+Evidence     : “x ANNUAL REPORT PURSUANT TO SECTION 13 OR 15(d) OF THE SECURITIES EXCHANGE ACT OF 1934 For the fiscal year ended December 31, 2016.” (page 1)
+Correct Ans  : December 31, 2016
+Reasoning    : The cover page explicitly states the report is “For the fiscal year ended December 31, 2016,” which matches the proposed answer.
+
+Q6 — What is/are the trading symbol(s) and listing exchange(s)?
+------------------------------------------------------------
+Ground Truth : Common stock, $0.001 par value: The NASDAQ Global Select Market
+Verdict      : INCORRECT
+Evidence     : “Securities registered pursuant to Section 12(b) of the Act: … Title of each class … Common stock, $0.001 par value … Name of each exchange on which registered … The NASDAQ Global Select Market*” (page 1); “Intel’s common stock (symbol INTC) trades on the NASDAQ Global Select Market.” (page 111)
+Correct Ans  : Trading symbol: INTC; Listing exchange: The NASDAQ Global Select Market; Security: Common stock, $0.001 par value
+Reasoning    : The proposed answer gives the security class and exchange, but omits the actual trading symbol. The document identifies the symbol as “INTC” and the exchange as “The NASDAQ Global Select Market.”
+
+Q7 — How many shares of common stock were outstanding as of the cover-page reference date?
+------------------------------------------------------------
+Ground Truth : 4,728 million shares of common stock outstanding as of February 7, 2017
+Verdict      : CORRECT
+Evidence     : “4,728 million shares of common stock outstanding as of February 7, 2017” (page 1)
+Correct Ans  : 4,728 million shares of common stock outstanding as of February 7, 2017
+Reasoning    : The cover-page text on page 1 states exactly the same number of shares and date as the proposed answer.
+
+Q8 — What are the reportable operating segments (list names; if none, record "single segment")?
+------------------------------------------------------------
+Ground Truth : ["Client Computing Group (CCG)", "Data Center Group (DCG)", "Internet of Things Group (IOTG)", "Non-Volatile Memory Solutions Group (NSG)", "Intel Security Group (ISecG)", "Programmable Solutions Group (PSG)", "All Other"]
+Verdict      : INCORRECT
+Evidence     : “CCG and DCG are our reportable operating segments. IOTG, NSG, ISecG, and PSG do not meet the quantitative thresholds to qualify as reportable operating segments; however, we have elected to disclose the results of these non-reportable operating segments. The NTG operating segment does not meet the quantitative thresholds to qualify as a reportable segment and NTG results are included within the ‘all other’ category.” (page 70)
+Correct Ans  : ["Client Computing Group (CCG)", "Data Center Group (DCG)"]
+Reasoning    : The document explicitly states that only CCG and DCG are reportable operating segments. The other groups listed in the proposed answer are disclosed but are not reportable segments, and “All Other” is a category rather than a reportable operating segment.
+
+Q9 — What principal products/services are named in Item 1 (list top categories named)?
+------------------------------------------------------------
+Ground Truth : ["Platforms for notebooks, desktops, tablets, phones", "Data center platforms", "Internet of Things platforms", "NAND flash memory products", "Security software products", "Programmable semiconductors"]
+Verdict      : CORRECT
+Evidence     : “Includes platforms designed for notebooks, 2 in 1 systems, desktops (including all-in-ones and high-end enthusiast PCs), tablets, phones, wireless and wired connectivity products, and mobile communication components.” (page 6) “Includes workload-optimized platforms and related products designed for enterprise, cloud, and communication infrastructure market segments.” (page 6) “Includes platforms designed for Internet of Things market segments, including retail, transportation, industrial, video, buildings and smart cities, along with a broad range of other market segments.” (page 6) “Includes NAND flash memory products primarily used in solid-state drives.” (page 6) “Includes security software products designed to deliver innovative solutions that secure computers, mobile devices, and networks around the world.” (page 6) “Includes programmable semiconductors (primarily FPGAs) and related products for a broad range of market segments, including communications, data center, industrial, military, and automotive.” (page 6)
+Correct Ans  : ["Platforms for notebooks, desktops, tablets, phones", "Data center platforms", "Internet of Things platforms", "NAND flash memory products", "Security software products", "Programmable semiconductors"]
+Reasoning    : Item 1, under “Business Organization,” names these principal product/service categories through Intel’s operating segments. The proposed answer is a concise paraphrase of the categories explicitly listed on page 6.
+
+Q10 — What principal markets/geographies are named in Item 1 (list regions/countries named)?
+------------------------------------------------------------
+Ground Truth : ["United States", "China (including Hong Kong)", "Singapore", "Taiwan", "Other countries"]
+Verdict      : INCORRECT
+Evidence     : “For additional information regarding our operating segments, including the planned divestiture of ISecG, see ‘Note 4: Operating Segments and Geographic Information’…” (page 6) “| China (including Hong Kong) | $ 13,977 | $ 11,679 | $ 11,197 | | United States | 12,957 | 11,121 | 9,828 | | Singapore | 12,780 | 11,544 | 11,573 | | Taiwan | 9,953 | 10,661 | 8,955 | | Other countries | 9,720 | 10,350 | 14,317 |” (page 72)
+Correct Ans  : Item 1 does not itself list principal markets/geographies by region/country. In Item 1, Intel refers readers to “Note 4: Operating Segments and Geographic Information.” The named geographies shown there are: United States; China (including Hong Kong); Singapore; Taiwan; and Other countries.
+Reasoning    : The proposed list of geographies matches the document’s geographic revenue table, but that table appears in Note 4 under Item 8, not in Item 1. Since the question asks what is named in Item 1, the proposed answer is not strictly supported by Item 1 itself.
+
+Q11 — Are any "significant subsidiaries" identified (list names; "none" if not listed)?
+------------------------------------------------------------
+Ground Truth : ["IM Flash Technologies, LLC", "Cloudera, Inc.", "Beijing UniSpreadtrum Technology Ltd."]
+Verdict      : INCORRECT
+Evidence     : “SUBSIDIARIES (All 100% Owned) 1” and the table listing subsidiaries, including “Intel Electronics Finance Limited,” “Intel International, Inc.,” “Intel Commodities Limited,” … “Intel China Finance I (HK) Limited” with footnote “1 As of December 31, 2016.” (page 143) Also, the filing lists Exhibit “21.1 | Intel Corporation Subsidiaries” (page 121). The proposed names appear elsewhere as investments, not subsidiaries: “IM Flash Technologies, LLC | $ 849 | 49%,” “Cloudera, Inc. | 225 | 16%” (page 79).
+Correct Ans  : ["Intel Electronics Finance Limited", "Intel International, Inc.", "Intel Commodities Limited", "Intel Phils. Holding LLC", "Synchroquartz U.S. Corporation", "Intel European Finance Corporation", "Intel Capital Corporation", "McAfee, LLC", "McAfee Suomi Funding LLC", "Intel Overseas Funding Corporation", "Mission College Investments Ltd.", "Intel Security Holdings, Inc.", "Intel Americas, Inc.", "Intel Technology (US), LLC", "Wind River Systems, Inc.", "Altera Corporation", "Intel International Finance CVBA", "Intel Benelux B.V.", "Intel Holdings B.V.", "Altera International, Inc.", "Intel Finance B.V.", "Intel Corporation (UK) Ltd.", "Intel Technologies, Inc.", "Intel Ireland Limited", "Intel Warehouse Leixlip Unlimited Company", "Intel Electronics Ltd.", "Intel Israel (74) Limited", "Intel Tools and Equipment Ltd.", "Intel Semi Conductors Ltd.", "Intel Semiconductor (Dalian) Ltd.", "Intel Malaysia Sdn. Berhad", "Intel Technology Sdn. Berhad", "Intel Semiconductor (US) LLC", "Intel Asia Holding Limited", "Intel China Ltd.", "Intel Products (Chengdu) Ltd.", "Intel China Finance Holding (HK) Limited", "Intel China Finance I (HK) Limited"]
+Reasoning    : The document does identify subsidiaries in Exhibit 21.1 on page 143, but the proposed answer lists two equity method investments and one company not shown in the subsidiaries exhibit. Therefore the proposed answer does not match the document’s listed subsidiaries.
+
+Q12 — What is the location of principal properties (city/state/country as presented; "not disclosed" if omitted)?
+------------------------------------------------------------
+Ground Truth : ["United States", "Ireland", "Israel", "China", "Malaysia"]
+Verdict      : INCORRECT
+Evidence     : “As of December 31, 2016, our major facilities consisted of:” followed by “| (Square Feet in Millions) | United States | Other Countries | Total |” and “Our principal executive offices are located in the U.S. and the majority of our wafer manufacturing activities in 2016 were also located in the U.S.” (page 27)
+Correct Ans  : ["United States", "not disclosed"]
+Reasoning    : The Properties section does not list specific principal property locations such as Ireland, Israel, China, or Malaysia. It only discloses facilities in “United States” and aggregated “Other Countries,” so the proposed answer is more specific than the document supports.
+
+Q13 — Does Item 1A (Risk Factors) appear (Yes/No; if No, record "not required" for SRCs)?
+------------------------------------------------------------
+Ground Truth : Yes
+Verdict      : CORRECT
+Evidence     : “ITEM 1A. RISK FACTORS” (page 18)
+Correct Ans  : Yes
+Reasoning    : The document explicitly includes a section header for “Item 1A. Risk Factors,” so the item does appear in the filing.
+
+Q14 — How many distinct risk factor captions are presented in Item 1A (count captions; "not disclosed" if not counted)?
+------------------------------------------------------------
+Ground Truth : Not disclosed
+Verdict      : INCORRECT
+Evidence     : “[page 18][section_header] Changes in product demand can adversely affect our financial results.”; “[page 19][section_header] We operate globally and are subject to significant risks in many jurisdictions.”; “[page 20][section_header] We are vulnerable to product and manufacturing-related risks.”; “[page 22][section_header] We are subject to IP risks and risks associated with litigation and regulatory proceedings.”; “[page 23][section_header] We must attract, retain, and motivate key employees.”; “[page 24][section_header] We are subject to cybersecurity and privacy risks.”; “[page 24][section_header] We are subject to risks associated with transactions.”; “[page 25][section_header] We are subject to sales-related risks.”; “[page 26][section_header] Our results of operations could vary as a result of the methods, estimates, and judgments that we use in applying accounting policies.”; “[page 26][section_header] Changes in our effective tax rate may reduce our net income.”; “[page 26][section_header] We may have fluctuations in the amount and frequency of our stock repurchases.”; “[page 26][section_header] Workforce restructuring actions may be disruptive to our operations and adversely affect our financial results.”
+Correct Ans  : 12 distinct risk factor captions
+Reasoning    : Item 1A explicitly presents risk factors as separate section headers, and counting those captions yields 12. Therefore, the answer is disclosed and is not “Not disclosed.”
+
+Q15 — Does Item 1B (Unresolved Staff Comments) disclose any comments (Yes/No or "not applicable")?
+------------------------------------------------------------
+Ground Truth : Not applicable
+Verdict      : CORRECT
+Evidence     : “ITEM 1B. UNRESOLVED STAFF COMMENTS” … “Not applicable.” (page 27)
+Correct Ans  : Not applicable
+Reasoning    : The Item 1B section explicitly states “Not applicable,” so the proposed answer matches the document exactly.
+
+Q16 — Does Item 3 (Legal Proceedings) disclose any material proceedings (Yes/No)?
+------------------------------------------------------------
+Ground Truth : None
+Verdict      : INCORRECT
+Evidence     : "ITEM 3. LEGAL PROCEEDINGS" ... "For a discussion of legal proceedings, see \"Note 20: Commitments and Contingencies\" in Part II, Item 8 of this Form 10-K." (page 27) ; "We are a party to various legal proceedings, including those noted in this section." (page 107)
+Correct Ans  : Yes
+Reasoning    : Item 3 does disclose legal proceedings by expressly cross-referencing Note 20, and the referenced section states that Intel is a party to various legal proceedings. Therefore, the proposed answer "None" is not supported by the document.
+
+Q17 — Does Item 7 discuss liquidity and capital resources (Yes/No — MD&A must address it)?
+------------------------------------------------------------
+Ground Truth : Yes
+Verdict      : CORRECT
+Evidence     : “ITEM 7. MANAGEMENT’S DISCUSSION AND ANALYSIS OF FINANCIAL CONDITION AND RESULTS OF OPERATIONS” (page 31) and under Item 7: “• Liquidity and Capital Resources . Analysis of changes in our balance sheets and cash flows, and discussion of our financial condition and potential sources of liquidity.” (page 31). The section also appears later as “Liquidity and Capital Resources” (page 44).
+Correct Ans  : Yes
+Reasoning    : Item 7 explicitly includes a subsection titled “Liquidity and Capital Resources,” so the MD&A does address liquidity and capital resources.
+
+Q18 — Does Item 7 discuss off-balance-sheet arrangements (Yes/No or "not applicable" if none)?
+------------------------------------------------------------
+Ground Truth : Yes
+Verdict      : CORRECT
+Evidence     : “• Contractual Obligations and Off-Balance-Sheet Arrangements. Overview of contractual obligations, contingent liabilities, commitments, and off-balance- sheet arrangements outstanding as of December 31, 2016, including expected payment schedule.” (page 31) “As of December 31, 2016, we did not have any significant off-balance-sheet arrangements, as defined in Item 303(a)(4)(ii) of SEC Regulation S-K.” (page 49)
+Correct Ans  : Yes
+Reasoning    : Item 7 explicitly includes a subsection on “Contractual Obligations and Off-Balance-Sheet Arrangements,” and that subsection states the company did not have any significant off-balance-sheet arrangements.
+
+Q19 — Does Item 7A (Quantitative and Qualitative Disclosures about Market Risk) appear (Yes/No; "not required" for certain filers)?
+------------------------------------------------------------
+Ground Truth : Yes
+Verdict      : CORRECT
+Evidence     : “ITEM 7A. QUANTITATIVE AND QUALITATIVE DISCLOSURES ABOUT MARKET RISK” appears in the section headers on page 50.
+Correct Ans  : Yes
+Reasoning    : The filing explicitly includes Item 7A as a named section, so the proposed answer is supported by the document.
+
+Q20 — If Item 7A appears, which market risks are quantified (select all that appear: interest rate / FX / commodity / equity)?
+------------------------------------------------------------
+Ground Truth : ["Interest rate", "FX"]
+Verdict      : INCORRECT
+Evidence     : “ITEM 7A. QUANTITATIVE AND QUALITATIVE DISCLOSURES ABOUT MARKET RISK” includes the subsections “Currency Exchange Rates,” “Interest Rates,” “Equity Prices,” and “Commodity Price Risk.” [pages 50-51] It also states: “We are affected by changes in currency exchange and interest rates, as well as equity and commodity prices.” [page 50]
+Correct Ans  : ["Interest rate", "FX", "equity", "commodity"]
+Reasoning    : Item 7A appears in the filing and explicitly quantifies/discusses all four listed market risk categories, not just interest rate and FX. The proposed answer omits equity and commodity.
+
+Q21 — Who is the independent registered public accounting firm named in Item 8?
+------------------------------------------------------------
+Ground Truth : Ernst & Young LLP
+Verdict      : CORRECT
+Evidence     : “Our independent registered public accounting firm, Ernst & Young LLP, independently assessed the effectiveness of the company’s internal control over financial reporting, as stated in the firm’s attestation report, which is included within Part II, Item 8 of this Form 10-K.” (page 111) “/s/ Ernst & Young LLP” under “REPORT OF INDEPENDENT REGISTERED PUBLIC ACCOUNTING FIRM” in Item 8. (page 53)
+Correct Ans  : Ernst & Young LLP
+Reasoning    : The document explicitly identifies Ernst & Young LLP as the independent registered public accounting firm, and its report appears in Part II, Item 8.
+
+Q22 — What audit opinion type is expressed for the consolidated financial statements (Unqualified/Qualified/Adverse/Disclaimer)?
+------------------------------------------------------------
+Ground Truth : Unqualified
+Verdict      : CORRECT
+Evidence     : “In our opinion, the financial statements referred to above present fairly, in all material respects, the consolidated financial position of Intel Corporation at December 31, 2016 and December 26, 2015, and the consolidated results of its operations and its cash flows for each of the three years in the period ended December 31, 2016, in conformity with U.S. generally accepted accounting principles.” (page 53)
+Correct Ans  : Unqualified
+Reasoning    : The phrase “present fairly, in all material respects” is the standard wording for an unqualified audit opinion, and there is no qualifying, adverse, or disclaimer language.
+
+Q23 — What is total revenue for the most recent fiscal year (from the audited income statement)?
+------------------------------------------------------------
+Ground Truth : $59,387 million
+Verdict      : CORRECT
+Evidence     : “INTEL CORPORATION CONSOLIDATED STATEMENTS OF INCOME … | Net revenue | $ 59,387 | $ 55,355 | $ 55,870 |” (page 55)
+Correct Ans  : $59,387 million
+Reasoning    : The most recent fiscal year shown in the audited consolidated statements of income is Dec. 31, 2016, and net revenue for that year is listed as $59,387 million. The proposed answer matches the audited income statement.
+
+Q24 — What is net income (loss) for the most recent fiscal year?
+------------------------------------------------------------
+Ground Truth : $10,316 million
+Verdict      : CORRECT
+Evidence     : “| Net income | $ 10,316 | $ 11,420 | $ 11,704 |” from “INTEL CORPORATION CONSOLIDATED STATEMENTS OF INCOME” for “Dec 31, 2016” (page 55).
+Correct Ans  : $10,316 million
+Reasoning    : The most recent fiscal year in the 2016 10-K is 2016, and the consolidated statements of income report net income of $10,316 million for that year.
+
+Q25 — What is total assets at year-end (from the audited balance sheet)?
+------------------------------------------------------------
+Ground Truth : $113,327 million
+Verdict      : CORRECT
+Evidence     : “We have audited the accompanying consolidated balance sheets of Intel Corporation as of December 31, 2016 and December 26, 2015...” (page 53) and “Total assets | $ 113,327 | $ 101,459” in the “INTEL CORPORATION CONSOLIDATED BALANCE SHEETS” table (page 57).
+Correct Ans  : $113,327 million
+Reasoning    : The audited consolidated balance sheets show total assets of $113,327 million as of December 31, 2016. This matches the proposed answer exactly.
+
+Q26 — What is long-term debt at year-end (0 if none)?
+------------------------------------------------------------
+Ground Truth : $25,283 million
+Verdict      : INCORRECT
+Evidence     : “Current liabilities: … Short-term debt | $ 4,634 … Long-term debt | 20,649” (page 57, Consolidated Balance Sheets)
+Correct Ans  : $20,649 million
+Reasoning    : The proposed answer of $25,283 million is total debt (“Short-term and long-term debt”), not long-term debt alone. The balance sheet separately reports year-end long-term debt as $20,649 million.
+
+Q27 — Did management report any material weaknesses in internal control over financial reporting (Yes/No)?
+------------------------------------------------------------
+Ground Truth : No
+Verdict      : CORRECT
+Evidence     : “In our opinion, Intel Corporation maintained, in all material respects, effective internal control over financial reporting as of December 31, 2016, based on the COSO criteria.” (page 54)
+Correct Ans  : No
+Reasoning    : Management stated that internal control over financial reporting was effective as of December 31, 2016, which indicates no material weaknesses were reported. The auditor’s unqualified opinion on effective internal control supports this conclusion.
+
+Q28 — Is Part III information (directors, executive officers, compensation, ownership, etc.) incorporated by reference to a definitive proxy statement (Yes/No)?
+------------------------------------------------------------
+Ground Truth : Yes
+Verdict      : CORRECT
+Evidence     : “Portions of the registrant’s proxy statement related to its 2017 Annual Stockholders’ Meeting to be filed subsequently are incorporated by reference into Part III of this Annual Report on Form 10-K. Except as expressly incorporated by reference, the registrant’s proxy statement shall not be deemed to be part of this report.” (page 1)
+Correct Ans  : Yes
+Reasoning    : The filing explicitly states that portions of the proxy statement for the 2017 Annual Stockholders’ Meeting are incorporated by reference into Part III, which covers directors, executive officers, compensation, ownership, and related matters.
+
+Q29 — If Part III is incorporated by reference, what is the proxy filing deadline stated on the 10-K (date or "not stated")?
+------------------------------------------------------------
+Ground Truth : Not stated
+Verdict      : CORRECT
+Evidence     : “Portions of the registrant’s proxy statement related to its 2017 Annual Stockholders’ Meeting to be filed subsequently are incorporated by reference into Part III of this Annual Report on Form 10-K.” (page 1)
+Correct Ans  : Not stated
+Reasoning    : The 10-K says the proxy statement will be filed subsequently and incorporated by reference into Part III, but it does not give any filing deadline date or mention a deadline such as 120 days.
+
+Q30 — List one material agreement or other exhibit number explicitly identified in the Exhibit Index (e.g., "Exhibit 10.1: Credit Agreement")—or record "none listed" if no material agreements are identified.
+------------------------------------------------------------
+Ground Truth : Exhibit 10.1: Intel Corporation 2006 Equity Incentive Plan
+Verdict      : CORRECT
+Evidence     : “| 10.1** | Intel Corporation 2006 Equity Incentive Plan, as | 8-K | 000-06217 | 10.1 | 5/22/2006 | |” (page 116) and “| | amended and restated, effective May 17, 2006 | | | | |” (page 117)
+Correct Ans  : Exhibit 10.1: Intel Corporation 2006 Equity Incentive Plan
+Reasoning    : The Exhibit Index explicitly lists Exhibit 10.1 as the Intel Corporation 2006 Equity Incentive Plan. Although the description continues onto the next page with “as amended and restated, effective May 17, 2006,” the proposed answer correctly identifies the exhibit number and agreement/plan name.
+
+============================================================
+SUMMARY
+============================================================
+Total questions : 30
+Correct         : 21
+Incorrect/Ambig : 9 — Q6, Q8, Q10, Q11, Q12, Q14, Q16, Q20, Q26
+Input tokens    : 338,652
+Output tokens   : 7,725
+Est. cost       : $0.9625

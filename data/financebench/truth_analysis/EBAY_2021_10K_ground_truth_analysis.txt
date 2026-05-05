@@ -1,0 +1,254 @@
+Ground Truth Verification Analysis
+Document: EBAY_2021_10K
+Date: 2026-04-27
+============================================================
+
+Q1 — What is the registrant's exact name?
+------------------------------------------------------------
+Ground Truth : eBay Inc.
+Verdict      : CORRECT
+Evidence     : “eBay Inc.” (Exact name of registrant as specified in its charter) [page 1]
+Correct Ans  : eBay Inc.
+Reasoning    : The cover page of the Form 10-K identifies the registrant’s exact name as “eBay Inc.,” which matches the proposed answer.
+
+Q2 — What is the state (or other jurisdiction) of incorporation and the IRS Employer Identification Number?
+------------------------------------------------------------
+Ground Truth : Delaware, 77-0430924
+Verdict      : CORRECT
+Evidence     : “Delaware” “(State or other jurisdiction of incorporation or organization)” (page 1); “77-0430924 (I.R.S. Employer Identification No.)” (page 1)
+Correct Ans  : Delaware, 77-0430924
+Reasoning    : The cover page of the Form 10-K lists Delaware as the state of incorporation and 77-0430924 as the IRS Employer Identification Number, matching the proposed answer.
+
+Q3 — What is the address of principal executive offices and ZIP code?
+------------------------------------------------------------
+Ground Truth : 2025 Hamilton Avenue, San Jose, California 95125
+Verdict      : CORRECT
+Evidence     : “Our principal executive offices are located at 2025 Hamilton Avenue, San Jose, California, 95125” (page 4)
+Correct Ans  : 2025 Hamilton Avenue, San Jose, California 95125
+Reasoning    : The proposed answer matches the address and ZIP code stated in the 10-K. The document explicitly identifies this as the location of the principal executive offices.
+
+Q4 — What is the registrant's telephone number?
+------------------------------------------------------------
+Ground Truth : (408) 376-7108
+Verdict      : CORRECT
+Evidence     : “Registrant’s telephone number, including area code: (408) 376-7108” (page 1)
+Correct Ans  : (408) 376-7108
+Reasoning    : The cover page of the Form 10-K explicitly lists the registrant’s telephone number as (408) 376-7108, which matches the proposed answer.
+
+Q5 — What is the fiscal year-end date stated on the cover?
+------------------------------------------------------------
+Ground Truth : December 31, 2021
+Verdict      : CORRECT
+Evidence     : “☒ ANNUAL REPORT PURSUANT TO SECTION 13 OR 15(d) OF THE SECURITIES EXCHANGE ACT OF 1934 For the fiscal year ended December 31, 2021.” (page 1)
+Correct Ans  : December 31, 2021
+Reasoning    : The cover page explicitly states the fiscal year ended date as December 31, 2021, which matches the proposed answer.
+
+Q6 — What is/are the trading symbol(s) and listing exchange(s)?
+------------------------------------------------------------
+Ground Truth : EBAY, The Nasdaq Global Select Market
+Verdict      : CORRECT
+Evidence     : “Securities registered pursuant to Section 12(b) of the Act: Trading symbol” … “Common stock” … “eBay” … “The Nasdaq Global Select Market” (page 1)
+Correct Ans  : EBAY, The Nasdaq Global Select Market
+Reasoning    : The cover page lists the Section 12(b) securities information showing the trading symbol as eBay/EBAY and the exchange as The Nasdaq Global Select Market. This matches the proposed answer.
+
+Q7 — How many shares of common stock were outstanding as of the cover-page reference date?
+------------------------------------------------------------
+Ground Truth : 587,528,915
+Verdict      : CORRECT
+Evidence     : “587,528,915 shares of common stock issued and outstanding as of February 21, 2022.” (page 2)
+Correct Ans  : 587,528,915
+Reasoning    : The cover-page disclosure on page 2 states the exact number of common shares issued and outstanding as of the reference date, which matches the proposed answer.
+
+Q8 — What are the reportable operating segments (list names; if none, record "single segment")?
+------------------------------------------------------------
+Ground Truth : single segment
+Verdict      : INCORRECT
+Evidence     : “We have one operating and reportable segment. Our reportable segment is Marketplace, which includes our online marketplace located at www.ebay.com, its localized counterparts and the eBay suite of mobile apps.” (page 79)
+Correct Ans  : Marketplace
+Reasoning    : The filing does not say eBay has a “single segment” without naming it; it explicitly identifies the one reportable operating segment as Marketplace.
+
+Q9 — What principal products/services are named in Item 1 (list top categories named)?
+------------------------------------------------------------
+Ground Truth : ["Marketplace platforms", "Managed payments", "Advertising initiatives"]
+Verdict      : INCORRECT
+Evidence     : “eBay is a global commerce leader through our Marketplace platforms…” (page 4); “We earn revenue primarily through fees collected on paid sales, payment processing and first-party advertising.” (page 4); “We generate revenue primarily from the transactions we successfully enable, including monetization of managed payments and first-party advertising and through marketing services.” (page 6)
+Correct Ans  : ["Marketplace platforms", "Payment processing / managed payments", "First-party advertising", "Marketing services"]
+Reasoning    : Item 1 names Marketplace platforms, payment processing/managed payments, first-party advertising, and marketing services as the principal products/services or revenue-generating offerings. “Advertising initiatives” is not the named category in Item 1, and the proposed answer omits marketing services.
+
+Q10 — What principal markets/geographies are named in Item 1 (list regions/countries named)?
+------------------------------------------------------------
+Ground Truth : ["United States", "United Kingdom", "Germany", "Rest of world"]
+Verdict      : INCORRECT
+Evidence     : “eBay is a global commerce leader through our Marketplace platforms which connect millions of buyers and sellers in more than 190 markets around the world. The platforms include our online marketplace located at www.ebay.com and its localized counterparts, including off-platform businesses in Japan and Turkey...” (page 4) “Revenues are attributed to U.S. and international geographies...” (page 34) “| U.S. | $ 5,048 | ... | United Kingdom | 1,913 | ... | Germany | 1,249 | ... | Rest of world | 2,210 | ... |” (page 79)
+Correct Ans  : ["U.S.", "international", "Japan", "Turkey"]
+Reasoning    : In Item 1, the named markets/geographies are the global scope plus the specifically named countries “Japan” and “Turkey”; Item 1 does not list “United Kingdom,” “Germany,” or “Rest of world.” Those appear elsewhere in the 10-K’s revenue-by-geography disclosures, not in Item 1.
+
+Q11 — Are any "significant subsidiaries" identified (list names; "none" if not listed)?
+------------------------------------------------------------
+Ground Truth : ["None"]
+Verdict      : INCORRECT
+Evidence     : “LIST OF SUBSIDIARIES” and “The following is a list of our subsidiaries as of December 31, 2021 that are required to be disclosed pursuant to Item 601(b)(21) of Regulation S-K.” (page 150) “eBay GmbH” (Germany), “eBay International” (Luxembourg), “eBay Sarl” (Luxembourg), “eBay International” (Switzerland), “eBay Marketplaces” (Switzerland), “eBay (UK) Limited” (United Kingdom), “eBay Commerce Inc.” (United States) (page 150)
+Correct Ans  : ["eBay GmbH", "eBay International", "eBay Sarl", "eBay International", "eBay Marketplaces", "eBay (UK) Limited", "eBay Commerce Inc."]
+Reasoning    : The filing does list subsidiaries in the “LIST OF SUBSIDIARIES” section on page 150, so the proposed answer of “None” is not supported by the document. While the document does not use the exact phrase “significant subsidiaries,” it does provide the subsidiaries required to be disclosed under Item 601(b)(21).
+
+Q12 — What is the location of principal properties (city/state/country as presented; "not disclosed" if omitted)?
+------------------------------------------------------------
+Ground Truth : ["San Jose, California, United States", "Utah, United States"]
+Verdict      : INCORRECT
+Evidence     : “Our headquarters are located in San Jose, California and occupies approximately 0.5 million square feet. Our owned data centers are solely located in Utah.” (page 28)
+Correct Ans  : ["San Jose, California", "Utah"]
+Reasoning    : The document’s Properties section identifies the locations only as “San Jose, California” and “Utah.” It does not include “United States” in the stated locations, so the proposed answer adds information not presented in the filing.
+
+Q13 — Does Item 1A (Risk Factors) appear (Yes/No; if No, record "not required" for SRCs)?
+------------------------------------------------------------
+Ground Truth : Yes
+Verdict      : CORRECT
+Evidence     : "[page 3][table][Form 10-K | TABLE OF CONTENTS] | Item 1A. | Risk Factors | 11 |" and "[page 11][section_header][Form 10-K | PART I | Item 1A: RISK FACTORS] Item 1A: RISK FACTORS"
+Correct Ans  : Yes
+Reasoning    : The table of contents lists Item 1A, Risk Factors, on page 11, and the document contains the actual section header "Item 1A: RISK FACTORS" on page 11.
+
+Q14 — How many distinct risk factor captions are presented in Item 1A (count captions; "not disclosed" if not counted)?
+------------------------------------------------------------
+Ground Truth : Not disclosed
+Verdict      : INCORRECT
+Evidence     : “[page 11] Risk Factors Summary:” and the Item 1A section contains the following risk factor category captions: “[page 12] Business, Economic, Market and Operating Risks,” “[page 20] Regulatory and Legal Risks,” “[page 24] Interest Rate and Indebtedness Risks,” “[page 25] Tax Risks,” and “[page 26] Transactional Risks.”
+Correct Ans  : 6 distinct captions
+Reasoning    : Item 1A does disclose captions. Counting the captions presented within Item 1A gives six total: Risk Factors Summary, Business, Economic, Market and Operating Risks, Regulatory and Legal Risks, Interest Rate and Indebtedness Risks, Tax Risks, and Transactional Risks.
+
+Q15 — Does Item 1B (Unresolved Staff Comments) disclose any comments (Yes/No or "not applicable")?
+------------------------------------------------------------
+Ground Truth : Not applicable
+Verdict      : CORRECT
+Evidence     : “ITEM 1B: UNRESOLVED STAFF COMMENTS” followed by “Not applicable.” (page 28)
+Correct Ans  : Not applicable
+Reasoning    : The filing explicitly states “Not applicable.” under Item 1B, so the proposed answer matches the document.
+
+Q16 — Does Item 3 (Legal Proceedings) disclose any material proceedings (Yes/No)?
+------------------------------------------------------------
+Ground Truth : None
+Verdict      : INCORRECT
+Evidence     : “ITEM 3: LEGAL PROCEEDINGS … This information is set forth under ‘Note 12 — Commitments and Contingencies – Litigation and Other Legal Matters’ to the consolidated financial statements included in Part IV, Item 15 of this Annual Report on Form 10-K is incorporated herein by reference.” (page 28) “We are involved in legal and regulatory proceedings on an ongoing basis.” (page 101)
+Correct Ans  : Yes
+Reasoning    : Item 3 does disclose legal proceedings by incorporating Note 12 by reference, and Note 12 states that eBay is involved in ongoing legal and regulatory proceedings. Therefore, the proposed answer “None” is not supported by the document.
+
+Q17 — Does Item 7 discuss liquidity and capital resources (Yes/No — MD&A must address it)?
+------------------------------------------------------------
+Ground Truth : Yes
+Verdict      : CORRECT
+Evidence     : “[page 31][H3] ITEM 7: MANAGEMENT’S DISCUSSION AND ANALYSIS OF FINANCIAL CONDITION AND RESULTS OF OPERATIONS” and within Item 7, “[page 43][H5] Liquidity and Capital Resource Requirements”
+Correct Ans  : Yes
+Reasoning    : Item 7 is the MD&A section, and the section hierarchy explicitly shows a subsection titled “Liquidity and Capital Resource Requirements” under Item 7. Therefore, Item 7 does discuss liquidity and capital resources.
+
+Q18 — Does Item 7 discuss off-balance-sheet arrangements (Yes/No or "not applicable" if none)?
+------------------------------------------------------------
+Ground Truth : Yes
+Verdict      : INCORRECT
+Evidence     : “As of December 31, 2021, we had no off-balance sheet arrangements that have, or are reasonably likely to have, a current or future material effect on our consolidated financial condition, results of operations, liquidity, capital expenditures or capital resources.” (page 101)
+Correct Ans  : not applicable
+Reasoning    : Item 7 discusses liquidity, leases, purchase obligations, and taxes on page 44, but the filing’s explicit statement on off-balance sheet arrangements says there were none. Therefore, the correct response is “not applicable,” not “Yes.”
+
+Q19 — Does Item 7A (Quantitative and Qualitative Disclosures about Market Risk) appear (Yes/No; "not required" for certain filers)?
+------------------------------------------------------------
+Ground Truth : Yes
+Verdict      : CORRECT
+Evidence     : “Item 7A. | Quantitative and Qualitative Disclosures About Market Risk | 49” (page 3) and “ITEM 7A: QUANTITATIVE AND QUALITATIVE DISCLOSURES ABOUT MARKET RISK” (page 49)
+Correct Ans  : Yes
+Reasoning    : The table of contents lists Item 7A on page 49, and the document contains the actual section header for Item 7A on page 49. Therefore, Item 7A does appear in the filing.
+
+Q20 — If Item 7A appears, which market risks are quantified (select all that appear: interest rate / FX / commodity / equity)?
+------------------------------------------------------------
+Ground Truth : ["interest rate"]
+Verdict      : INCORRECT
+Evidence     : “ITEM 7A: QUANTITATIVE AND QUALITATIVE DISCLOSURES ABOUT MARKET RISK” includes the section headers “Interest Rate Risk” and “Equity Price Risk.” It states: “A hypothetical 100 basis point increase in interest rates would have resulted in a decrease in the fair value of our investments of $4 million...” and “As of December 31, 2021, a one dollar change in Adevinta’s common stock, holding other factors constant, would increase or decrease the fair value of the investment by approximately $405 million.” (page 49)
+Correct Ans  : ["interest rate", "equity"]
+Reasoning    : Item 7A appears in the filing and quantifies both interest rate risk and equity price risk. I found no quantified FX or commodity risk disclosures in Item 7A.
+
+Q21 — Who is the independent registered public accounting firm named in Item 8?
+------------------------------------------------------------
+Ground Truth : PricewaterhouseCoopers LLP
+Verdict      : CORRECT
+Evidence     : “The effectiveness of our internal control over financial reporting as of December 31, 2021 has been audited by PricewaterhouseCoopers LLP, an independent registered public accounting firm...” (page 52) ; “/s/ PricewaterhouseCoopers LLP” in the “Report of Independent Registered Public Accounting Firm” (page 56).
+Correct Ans  : PricewaterhouseCoopers LLP
+Reasoning    : The filing explicitly identifies PricewaterhouseCoopers LLP as the independent registered public accounting firm, and the audit report is signed by that firm.
+
+Q22 — What audit opinion type is expressed for the consolidated financial statements (Unqualified/Qualified/Adverse/Disclaimer)?
+------------------------------------------------------------
+Ground Truth : Unqualified
+Verdict      : CORRECT
+Evidence     : “In our opinion, the consolidated financial statements referred to above present fairly, in all material respects, the financial position of the Company as of December 31, 2021 and 2020, and the results of its operations and its cash flows for each of the three years in the period ended December 31, 2021 in conformity with accounting principles generally accepted in the United States of America.” (page 55)
+Correct Ans  : Unqualified
+Reasoning    : The phrase “present fairly, in all material respects” is the standard wording for an unqualified audit opinion. There is no language indicating a qualified, adverse, or disclaimer opinion.
+
+Q23 — What is total revenue for the most recent fiscal year (from the audited income statement)?
+------------------------------------------------------------
+Ground Truth : $10,420 million
+Verdict      : CORRECT
+Evidence     : “CONSOLIDATED STATEMENT OF INCOME” shows “Net revenues | $ 10,420 | $ 8,894 | $ 7,429” for the “Year Ended December 31” (page 58).
+Correct Ans  : $10,420 million
+Reasoning    : The audited income statement on page 58 lists 2021 net revenues as $10,420 million, which matches the proposed answer for the most recent fiscal year.
+
+Q24 — What is net income (loss) for the most recent fiscal year?
+------------------------------------------------------------
+Ground Truth : $13,608 million
+Verdict      : CORRECT
+Evidence     : “Net income | $ 13,608 | $ 5,667 | $ 1,786” from the “CONSOLIDATED STATEMENT OF INCOME” for the “Year Ended December 31, 2021 | 2020 | 2019” (page 58).
+Correct Ans  : $13,608 million
+Reasoning    : The most recent fiscal year in the 2021 10-K is 2021, and the consolidated statement of income reports net income of $13,608 million for that year.
+
+Q25 — What is total assets at year-end (from the audited balance sheet)?
+------------------------------------------------------------
+Ground Truth : $26,626 million
+Verdict      : CORRECT
+Evidence     : “CONSOLIDATED BALANCE SHEET” shows “Total assets | $ 26,626 | 19,310” for “December 31, 2021 | 2020” (page 57).
+Correct Ans  : $26,626 million
+Reasoning    : The audited consolidated balance sheet on page 57 reports total assets of $26,626 million at December 31, 2021, which matches the proposed answer.
+
+Q26 — What is long-term debt at year-end (0 if none)?
+------------------------------------------------------------
+Ground Truth : $7,727 million
+Verdict      : CORRECT
+Evidence     : “Long-term debt | 7,727 | 7,740” from the Consolidated Balance Sheet (page 57). Also, Note 10 — Debt shows “Total long-term debt | 7,727” as of December 31, 2021 (page 96).
+Correct Ans  : $7,727 million
+Reasoning    : The document explicitly reports long-term debt of $7,727 million at December 31, 2021 year-end, matching the proposed answer.
+
+Q27 — Did management report any material weaknesses in internal control over financial reporting (Yes/No)?
+------------------------------------------------------------
+Ground Truth : No
+Verdict      : CORRECT
+Evidence     : “Management’s annual report on internal control over financial reporting: Our management is responsible for establishing and maintaining adequate internal control over financial reporting... Based on its evaluation under the framework in Internal Control - Integrated Framework, our management concluded that our internal control over financial reporting was effective as of December 31, 2021.” (page 52)
+Correct Ans  : No
+Reasoning    : Management concluded that internal control over financial reporting was effective as of December 31, 2021, which indicates no material weaknesses were reported. The auditor also stated the company “maintained, in all material respects, effective internal control over financial reporting” (page 55).
+
+Q28 — Is Part III information (directors, executive officers, compensation, ownership, etc.) incorporated by reference to a definitive proxy statement (Yes/No)?
+------------------------------------------------------------
+Ground Truth : Yes
+Verdict      : CORRECT
+Evidence     : “Part III incorporates information by reference from the definitive proxy statement for the registrant’s 2022 Annual Meeting of Stockholders.” (page 2)
+Correct Ans  : Yes
+Reasoning    : The filing explicitly states that Part III information is incorporated by reference from the definitive proxy statement, so the proposed answer is supported by the document.
+
+Q29 — If Part III is incorporated by reference, what is the proxy filing deadline stated on the 10-K (date or "not stated")?
+------------------------------------------------------------
+Ground Truth : Not stated
+Verdict      : INCORRECT
+Evidence     : “Part III incorporates information by reference from the definitive proxy statement for the registrant’s 2022 Annual Meeting of Stockholders.” (page 2) “Incorporated by reference from our Proxy Statement for our 2022 Annual Meeting of Stockholders to be filed with the SEC within 120 days after the end of the year ended December 31, 2021.” (page 53)
+Correct Ans  : Within 120 days after December 31, 2021
+Reasoning    : The 10-K does state a proxy filing deadline for the Part III information incorporated by reference. It says the proxy statement will be filed “within 120 days after” year-end December 31, 2021.
+
+Q30 — List one material agreement or other exhibit number explicitly identified in the Exhibit Index (e.g., "Exhibit 10.1: Credit Agreement")—or record "none listed" if no material agreements are identified.
+------------------------------------------------------------
+Ground Truth : Exhibit 10.15: Deferred Compensation Plan
+Verdict      : CORRECT
+Evidence     : “[page 117][table][Form 10-K | PART IV | ITEM 16: FORM 10-K SUMMARY | INDEX TO EXHIBITS] … **10.15+ | eBay Inc. Deferred Compensation Plan, as amended and restated effective January 1, 2022. | X | | | |**”
+Correct Ans  : Exhibit 10.15: Deferred Compensation Plan
+Reasoning    : The Exhibit Index explicitly lists Exhibit 10.15 as “eBay Inc. Deferred Compensation Plan, as amended and restated effective January 1, 2022,” so the proposed answer correctly identifies one material agreement/other exhibit number from the index.
+
+============================================================
+SUMMARY
+============================================================
+Total questions : 30
+Correct         : 20
+Incorrect/Ambig : 10 — Q8, Q9, Q10, Q11, Q12, Q14, Q16, Q18, Q20, Q29
+Input tokens    : 424,922
+Output tokens   : 7,170
+Est. cost       : $1.1699

@@ -1,0 +1,254 @@
+Ground Truth Verification Analysis
+Document: BOEING_2018_10K
+Date: 2026-04-27
+============================================================
+
+Q1 — What is the registrant's exact name?
+------------------------------------------------------------
+Ground Truth : THE BOEING COMPANY
+Verdict      : CORRECT
+Evidence     : “[page 1][text] THE BOEING COMPANY (Exact name of registrant as specified in its charter)”
+Correct Ans  : THE BOEING COMPANY
+Reasoning    : The filing explicitly lists the registrant’s exact name on page 1 as “THE BOEING COMPANY,” which matches the proposed answer exactly.
+
+Q2 — What is the state (or other jurisdiction) of incorporation and the IRS Employer Identification Number?
+------------------------------------------------------------
+Ground Truth : Delaware, 91-0425694
+Verdict      : CORRECT
+Evidence     : “Delaware” and “91-0425694” appear on page 1, with the labels “State or other jurisdiction of incorporation or organization” and “(I.R.S. Employer Identification No.)” respectively. (Page 1)
+Correct Ans  : Delaware, 91-0425694
+Reasoning    : The cover page of the 2018 10-K explicitly lists Delaware as the state of incorporation and 91-0425694 as the IRS Employer Identification Number, matching the proposed answer.
+
+Q3 — What is the address of principal executive offices and ZIP code?
+------------------------------------------------------------
+Ground Truth : 100 N. Riverside Plaza, Chicago, IL 60606-1596
+Verdict      : INCORRECT
+Evidence     : “100 N. Riverside Plaza, Chicago, IL” “(Address of principal executive offices)” and “60606-1596” “(Zip Code)” (page 1)
+Correct Ans  : 100 N. Riverside Plaza, Chicago, IL 60606-1596
+Reasoning    : The cover page of the 10-K lists the principal executive office address and ZIP code exactly as “100 N. Riverside Plaza, Chicago, IL” and “60606-1596.” This matches the proposed answer.
+
+Q4 — What is the registrant's telephone number?
+------------------------------------------------------------
+Ground Truth : (312) 544-2000
+Verdict      : CORRECT
+Evidence     : “Registrant’s telephone number, including area code (312) 544-2000” (page 1)
+Correct Ans  : (312) 544-2000
+Reasoning    : The document explicitly lists the registrant’s telephone number on page 1, and it matches the proposed answer exactly.
+
+Q5 — What is the fiscal year-end date stated on the cover?
+------------------------------------------------------------
+Ground Truth : December 31, 2018
+Verdict      : CORRECT
+Evidence     : “For the fiscal year ended December 31, 2018” (page 1)
+Correct Ans  : December 31, 2018
+Reasoning    : The cover page explicitly states the fiscal year ended date as December 31, 2018, which matches the proposed answer.
+
+Q6 — What is/are the trading symbol(s) and listing exchange(s)?
+------------------------------------------------------------
+Ground Truth : BA, New York Stock Exchange
+Verdict      : CORRECT
+Evidence     : “The principal market for our common stock is the New York Stock Exchange where it trades under the symbol BA.” (page 18) Also, page 1 lists “New York Stock Exchange” as the “Name of each exchange on which registered.”
+Correct Ans  : BA, New York Stock Exchange
+Reasoning    : The filing explicitly states that Boeing’s common stock trades under the symbol “BA” on the New York Stock Exchange, matching the proposed answer.
+
+Q7 — How many shares of common stock were outstanding as of the cover-page reference date?
+------------------------------------------------------------
+Ground Truth : 564,985,109
+Verdict      : CORRECT
+Evidence     : “The number of shares of the registrant’s common stock outstanding as of February 1, 2019 was 564,985,109 .” (page 1)
+Correct Ans  : 564,985,109
+Reasoning    : The cover page explicitly states the number of common shares outstanding as of the reference date, and it matches the proposed answer exactly.
+
+Q8 — What are the reportable operating segments (list names; if none, record "single segment")?
+------------------------------------------------------------
+Ground Truth : ["Commercial Airplanes (BCA)", "Defense, Space & Security (BDS)", "Global Services (BGS)", "Boeing Capital (BCC)"]
+Verdict      : CORRECT
+Evidence     : “We are organized based on the products and services we offer. We operate in four reportable segments:” followed by “• Commercial Airplanes (BCA);” “• Defense, Space & Security ( BDS );” “• Global Services ( BGS );” and “• Boeing Capital ( BCC ).” (page 3) Also: “we now operate in four reportable segments: Commercial Airplanes (BCA); Defense, Space & Security (BDS), Global Services (BGS), and Boeing Capital (BCC).” (page 57)
+Correct Ans  : ["Commercial Airplanes (BCA)", "Defense, Space & Security (BDS)", "Global Services (BGS)", "Boeing Capital (BCC)"]
+Reasoning    : The document explicitly states Boeing operates in four reportable segments and lists the same four names as in the proposed answer.
+
+Q9 — What principal products/services are named in Item 1 (list top categories named)?
+------------------------------------------------------------
+Ground Truth : ["Commercial jet aircraft", "Fleet support services", "Military aircraft and weapons systems", "Satellite systems", "Space exploration", "Parts and maintenance services"]
+Verdict      : INCORRECT
+Evidence     : “We operate in four reportable segments: • Commercial Airplanes (BCA); • Defense, Space & Security (BDS); • Global Services (BGS); • Boeing Capital (BCC).” (page 3) “This segment develops, produces and markets commercial jet aircraft and provides fleet support services...” (page 3) “This segment is engaged in the research, development, production and modification of manned and unmanned military aircraft and weapons systems...” (page 3) “...satellite systems, including government and commercial satellites and space exploration.” (page 3) “This segment provides services to our commercial and defense customers worldwide... including supply chain and logistics management, engineering, maintenance and modifications, upgrades and conversions, spare parts, pilot and maintenance training systems and services, technical and maintenance documents, and data analytics and digital services.” (pages 3-4)
+Correct Ans  : ["Commercial Airplanes", "Defense, Space & Security", "Global Services", "Boeing Capital"]
+Reasoning    : The proposed answer mixes segment names with examples of products/services. In Item 1, the top categories named are the four reportable segments, not the individual product/service examples listed within those segments.
+
+Q10 — What principal markets/geographies are named in Item 1 (list regions/countries named)?
+------------------------------------------------------------
+Ground Truth : ["United States", "Asia", "Europe", "Middle East", "Oceania", "Canada", "Africa", "Latin America"]
+Verdict      : INCORRECT
+Evidence     : “[page 4] The commercial jet aircraft market and the airline industry remain extremely competitive. We face aggressive international competitors who are intent on increasing their market share, such as Airbus and other entrants from Russia, China and Japan.” Also, Item 1 states: “[page 3] BDS' primary customer is the United States Department of Defense ( U.S. DoD ).”
+Correct Ans  : ["United States", "Russia", "China", "Japan"]
+Reasoning    : In Item 1, the named countries/markets are the United States, Russia, China, and Japan. The proposed answer includes regions such as Asia, Europe, Middle East, Oceania, Canada, Africa, and Latin America, but those are not named in Item 1.
+
+Q11 — Are any "significant subsidiaries" identified (list names; "none" if not listed)?
+------------------------------------------------------------
+Ground Truth : ["Aviall Services, Inc.", "Boeing Capital Corporation", "Insitu, Inc.", "Jeppesen Sanderson, Inc.", "KLX Inc."]
+Verdict      : INCORRECT
+Evidence     : “The Boeing Company Subsidiaries” table lists the following names on page 131: “Astro Limited,” “Aviall Services, Inc.,” “Aviall, Inc.,” “BCC Equipment Leasing Corporation,” “Boeing Aircraft Holding Company,” “Boeing Capital Corporation,” “Boeing CAS Holding GmbH,” “Boeing Commercial Aviation Services Europe Limited,” “Boeing Defence Australia Ltd,” “Boeing Deutschland GmbH,” “Boeing Europe B.V.,” “Boeing European Holdings Limited,” “Boeing Global Holdings Corporation,” “Boeing Intellectual Property Licensing Company,” “Boeing International Logistics Spares, Inc.,” “Boeing Netherlands B.V.,” “Insitu, Inc.,” “Jeppesen Deutschland GmbH,” “Jeppesen Sanderson, Inc.,” and “KLX Inc.” Page 131 also states: “In accordance with Item 601(b)(21) of Regulation S-K, the company has omitted from this Exhibit the names of its subsidiaries which, considered in the aggregate or as a single subsidiary, do not constitute a significant subsidiary as defined in Rule 1-02(w) of Regulation S-X.”
+Correct Ans  : ["Astro Limited", "Aviall Services, Inc.", "Aviall, Inc.", "BCC Equipment Leasing Corporation", "Boeing Aircraft Holding Company", "Boeing Capital Corporation", "Boeing CAS Holding GmbH", "Boeing Commercial Aviation Services Europe Limited", "Boeing Defence Australia Ltd", "Boeing Deutschland GmbH", "Boeing Europe B.V.", "Boeing European Holdings Limited", "Boeing Global Holdings Corporation", "Boeing Intellectual Property Licensing Company", "Boeing International Logistics Spares, Inc.", "Boeing Netherlands B.V.", "Insitu, Inc.", "Jeppesen Deutschland GmbH", "Jeppesen Sanderson, Inc.", "KLX Inc."]
+Reasoning    : The proposed answer includes only 5 subsidiaries, but page 131 provides a longer list of subsidiaries in Exhibit 21 and indicates omitted subsidiaries are those that are not significant. Therefore, the proposed answer is incomplete.
+
+Q12 — What is the location of principal properties (city/state/country as presented; "not disclosed" if omitted)?
+------------------------------------------------------------
+Ground Truth : ["Greater Seattle, WA; Greater Charleston, SC; Portland, OR; Greater Los Angeles, CA; Greater Salt Lake City, UT; Australia; Canada"]
+Verdict      : CORRECT
+Evidence     : “• Commercial Airplanes – Greater Seattle, WA; Greater Charleston, SC; Portland, OR; Greater Los Angeles, CA; Greater Salt Lake City, UT; Australia; and Canada” (page 16)
+Correct Ans  : ["Greater Seattle, WA; Greater Charleston, SC; Portland, OR; Greater Los Angeles, CA; Greater Salt Lake City, UT; Australia; Canada"]
+Reasoning    : The proposed answer matches the locations listed in Item 2, Properties for Commercial Airplanes, which is where the document presents these principal properties. The only minor difference is punctuation/conjunction (“and Canada”), not substance.
+
+Q13 — Does Item 1A (Risk Factors) appear (Yes/No; if No, record "not required" for SRCs)?
+------------------------------------------------------------
+Ground Truth : Yes
+Verdict      : CORRECT
+Evidence     : “[page 7][section_header][THE BOEING COMPANY | PART I | Item 1A. Risk Factors] Item 1A. Risk Factors” and the table of contents on page 2 lists “Item 1A. | Risk Factors | 5”.
+Correct Ans  : Yes
+Reasoning    : The filing explicitly includes a section titled “Item 1A. Risk Factors,” so Item 1A does appear in the 10-K.
+
+Q14 — How many distinct risk factor captions are presented in Item 1A (count captions; "not disclosed" if not counted)?
+------------------------------------------------------------
+Ground Truth : Not disclosed
+Verdict      : INCORRECT
+Evidence     : “Item 1A. Risk Factors” begins on page 7 and contains distinct risk factor captions as section headers, including “Our Commercial Airplanes and Global Services businesses depend heavily on commercial airlines, and are subject to unique risks.” (page 7) and continuing through “Substantial pension and other postretirement benefit obligations have a material impact on our earnings, shareholders’ equity and cash flows from operations, and could have significant adverse impacts in future periods.” (page 15). The next item, “Item 1B. Unresolved Staff Comments,” starts on page 16. Counting the section-header captions under Item 1A gives 20 captions.
+Correct Ans  : 20
+Reasoning    : The document does disclose the risk factors as separately captioned section headers within Item 1A. Counting those captions from page 7 through page 15, before Item 1B begins on page 16, yields 20 distinct risk factor captions.
+
+Q15 — Does Item 1B (Unresolved Staff Comments) disclose any comments (Yes/No or "not applicable")?
+------------------------------------------------------------
+Ground Truth : No
+Verdict      : INCORRECT
+Evidence     : “Item 1B. Unresolved Staff Comments” followed by “Not applicable” (page 16)
+Correct Ans  : not applicable
+Reasoning    : The filing does not disclose any unresolved staff comments; instead, Item 1B explicitly states “Not applicable.” Therefore, the proposed answer “No” is not the document’s stated disclosure.
+
+Q16 — Does Item 3 (Legal Proceedings) disclose any material proceedings (Yes/No)?
+------------------------------------------------------------
+Ground Truth : Yes
+Verdict      : INCORRECT
+Evidence     : “Currently, we are involved in a number of legal proceedings. For a discussion of contingencies related to legal proceedings, see Note 22 to our Consolidated Financial Statements, which is hereby incorporated by reference.” (page 17)
+Correct Ans  : No
+Reasoning    : Item 3 states only that the company is involved in a number of legal proceedings and refers readers to Note 22; it does not disclose any specific material proceedings in Item 3 itself.
+
+Q17 — Does Item 7 discuss liquidity and capital resources (Yes/No — MD&A must address it)?
+------------------------------------------------------------
+Ground Truth : Yes
+Verdict      : CORRECT
+Evidence     : “Item 7. Management’s Discussion and Analysis of Financial Condition and Results of Operations” (page 20) and within Item 7, “Liquidity and Capital Resources” followed by “Cash Flow Summary” (page 38).
+Correct Ans  : Yes
+Reasoning    : Item 7 is explicitly titled to cover financial condition, and the content under Item 7 includes a specific subsection labeled “Liquidity and Capital Resources,” confirming that MD&A addresses it.
+
+Q18 — Does Item 7 discuss off-balance-sheet arrangements (Yes/No or "not applicable" if none)?
+------------------------------------------------------------
+Ground Truth : Yes
+Verdict      : CORRECT
+Evidence     : “Off-Balance Sheet Arrangements” (page 42) and “We are a party to certain off-balance sheet arrangements including certain guarantees. For discussion of these arrangements, see Note 15 to our Consolidated Financial Statements.” (page 42)
+Correct Ans  : Yes
+Reasoning    : Item 7 includes a specific subsection titled “Off-Balance Sheet Arrangements,” and the text explicitly states that Boeing is a party to such arrangements. Therefore, the proposed answer is supported by the document.
+
+Q19 — Does Item 7A (Quantitative and Qualitative Disclosures about Market Risk) appear (Yes/No; "not required" for certain filers)?
+------------------------------------------------------------
+Ground Truth : Yes
+Verdict      : CORRECT
+Evidence     : “[page 48][H3] Item 7A. Quantitative and Qualitative Disclosures About Market Risk”
+Correct Ans  : Yes
+Reasoning    : The section headers explicitly include Item 7A on page 48, so it does appear in the filing.
+
+Q20 — If Item 7A appears, which market risks are quantified (select all that appear: interest rate / FX / commodity / equity)?
+------------------------------------------------------------
+Ground Truth : ["Interest rate", "FX", "Commodity"]
+Verdict      : INCORRECT
+Evidence     : “[HEADER][page 48] Item 7A. Quantitative and Qualitative Disclosures About Market Risk” and the only quantified risk subsections shown are “[section_header][page 48] Interest Rate Risk” and “[section_header][page 48] Foreign Currency Exchange Rate Risk.” The text states: “As of December 31, 2018, the impact over the next 12 months of a 100 basis point rise in interest rates to our pre-tax earnings would not be significant.” and “At December 31, 2018, a 10% increase or decrease in the exchange rate in our portfolio of foreign currency contracts would have increased or decreased our unrealized losses by $262 million.” (page 48)
+Correct Ans  : ["Interest rate", "FX"]
+Reasoning    : Item 7A appears and quantifies interest rate risk and foreign currency exchange rate risk. There is no commodity or equity market risk disclosure shown under Item 7A.
+
+Q21 — Who is the independent registered public accounting firm named in Item 8?
+------------------------------------------------------------
+Ground Truth : Deloitte & Touche LLP
+Verdict      : CORRECT
+Evidence     : “Our internal control over financial reporting as of December 31, 2018, has been audited by Deloitte & Touche LLP, an independent registered public accounting firm, as stated in their report which is included in Item 8 of this report and is incorporated by reference herein.” (page 121)
+Correct Ans  : Deloitte & Touche LLP
+Reasoning    : The filing explicitly identifies Deloitte & Touche LLP as the independent registered public accounting firm, and it states that their report is included in Item 8.
+
+Q22 — What audit opinion type is expressed for the consolidated financial statements (Unqualified/Qualified/Adverse/Disclaimer)?
+------------------------------------------------------------
+Ground Truth : Unqualified
+Verdict      : CORRECT
+Evidence     : “In our opinion, the financial statements present fairly, in all material respects, the financial position of the Company as of December 31, 2018 and 2017, and the results of its operations and its cash flows for each of the three years in the period ended December 31, 2018, in conformity with accounting principles generally accepted in the United States of America.” (page 118)
+Correct Ans  : Unqualified
+Reasoning    : This is standard clean audit opinion language indicating the auditors issued an unqualified opinion on the consolidated financial statements.
+
+Q23 — What is total revenue for the most recent fiscal year (from the audited income statement)?
+------------------------------------------------------------
+Ground Truth : $101,127 million
+Verdict      : CORRECT
+Evidence     : “The Boeing Company and Subsidiaries Consolidated Statements of Operations” shows for 2018: “Total revenues | 101,127” (page 50).
+Correct Ans  : $101,127 million
+Reasoning    : The most recent fiscal year in the audited income statement is 2018, and the Consolidated Statements of Operations reports total revenues of 101,127 million dollars.
+
+Q24 — What is net income (loss) for the most recent fiscal year?
+------------------------------------------------------------
+Ground Truth : $10,460 million
+Verdict      : CORRECT
+Evidence     : “Net earnings | $10,460 | $8,458 | $5,034” from “The Boeing Company and Subsidiaries Consolidated Statements of Operations” for the “Years ended December 31” (page 50).
+Correct Ans  : $10,460 million
+Reasoning    : The most recent fiscal year shown is 2018, and Boeing reports net earnings of $10,460 million for that year. The proposed answer matches the document.
+
+Q25 — What is total assets at year-end (from the audited balance sheet)?
+------------------------------------------------------------
+Ground Truth : $117,359 million
+Verdict      : CORRECT
+Evidence     : “The Boeing Company and Subsidiaries Consolidated Statements of Financial Position” shows “Total assets | $117,359 | $112,362” for “December 31, 2018” and “2017” on page 52.
+Correct Ans  : $117,359 million
+Reasoning    : The audited balance sheet (Consolidated Statements of Financial Position) reports total assets of $117,359 million at December 31, 2018, which matches the proposed answer.
+
+Q26 — What is long-term debt at year-end (0 if none)?
+------------------------------------------------------------
+Ground Truth : $10,657 million
+Verdict      : CORRECT
+Evidence     : “[page 52][table] … | Long-term debt | 10,657 | 9,782 |”
+Correct Ans  : $10,657 million
+Reasoning    : The Consolidated Statements of Financial Position list Boeing’s year-end long-term debt as 10,657 million at December 31, 2018. This matches the proposed answer.
+
+Q27 — Did management report any material weaknesses in internal control over financial reporting (Yes/No)?
+------------------------------------------------------------
+Ground Truth : No
+Verdict      : CORRECT
+Evidence     : “In our opinion, the Company maintained, in all material respects, effective internal control over financial reporting as of December 31, 2018...” (page 119)
+Correct Ans  : No
+Reasoning    : Management stated that internal control over financial reporting was effective as of December 31, 2018, and there is no disclosure of any material weakness. The auditor also gave an unqualified opinion on internal control over financial reporting.
+
+Q28 — Is Part III information (directors, executive officers, compensation, ownership, etc.) incorporated by reference to a definitive proxy statement (Yes/No)?
+------------------------------------------------------------
+Ground Truth : Yes
+Verdict      : CORRECT
+Evidence     : “Part III incorporates information by reference to the registrant’s definitive proxy statement, to be filed with the Securities and Exchange Commission within 120 days after the close of the fiscal year ended December 31, 2018.” (page 1)
+Correct Ans  : Yes
+Reasoning    : The filing explicitly states that Part III information is incorporated by reference to the company’s definitive proxy statement. Therefore, the proposed answer is supported by the document.
+
+Q29 — If Part III is incorporated by reference, what is the proxy filing deadline stated on the 10-K (date or "not stated")?
+------------------------------------------------------------
+Ground Truth : Not stated
+Verdict      : INCORRECT
+Evidence     : “Part III incorporates information by reference to the registrant’s definitive proxy statement, to be filed with the Securities and Exchange Commission within 120 days after the close of the fiscal year ended December 31, 2018.” (page 1)
+Correct Ans  : Within 120 days after the close of the fiscal year ended December 31, 2018.
+Reasoning    : The 10-K does state a proxy filing deadline for Part III incorporation by reference. It specifies that the definitive proxy statement will be filed within 120 days after fiscal year-end.
+
+Q30 — List one material agreement or other exhibit number explicitly identified in the Exhibit Index (e.g., "Exhibit 10.1: Credit Agreement")—or record "none listed" if no material agreements are identified.
+------------------------------------------------------------
+Ground Truth : Exhibit 10.1: 364-Day Credit Agreement
+Verdict      : CORRECT
+Evidence     : “[page 126][table][THE BOEING COMPANY | PART IV | 3. Exhibits] | 10.1 | 364-Day Credit Agreement, dated as of October 31, 2018, among The Boeing Company, Citibank, N.A. and JPMorgan Chase Bank, N.A. as joint lead arrangers and joint book managers, JPMorgan Chase Bank, N.A. as syndication agent and Citibank, N.A. as administrative agent (Exhibit 10.1 to the Company's Current Report on Form 8-K dated October 29, 2018). |”
+Correct Ans  : Exhibit 10.1: 364-Day Credit Agreement
+Reasoning    : The Exhibit list in Part IV explicitly identifies Exhibit 10.1 as “364-Day Credit Agreement” on page 126, matching the proposed answer.
+
+============================================================
+SUMMARY
+============================================================
+Total questions : 30
+Correct         : 21
+Incorrect/Ambig : 9 — Q3, Q9, Q10, Q11, Q14, Q15, Q16, Q20, Q29
+Input tokens    : 199,501
+Output tokens   : 6,730
+Est. cost       : $0.5997

@@ -1,0 +1,254 @@
+Ground Truth Verification Analysis
+Document: BESTBUY_2020_10K
+Date: 2026-04-27
+============================================================
+
+Q1 — What is the registrant's exact name?
+------------------------------------------------------------
+Ground Truth : BEST BUY CO., INC.
+Verdict      : CORRECT
+Evidence     : “BEST BUY CO., INC.” followed by “(Exact name of registrant as specified in its charter)” (page 1)
+Correct Ans  : BEST BUY CO., INC.
+Reasoning    : The cover page of the Form 10-K explicitly identifies the registrant’s exact name as “BEST BUY CO., INC.”, which matches the proposed answer exactly.
+
+Q2 — What is the state (or other jurisdiction) of incorporation and the IRS Employer Identification Number?
+------------------------------------------------------------
+Ground Truth : Minnesota, 41-0907483
+Verdict      : CORRECT
+Evidence     : “Minnesota” and “State or other jurisdiction of incorporation or organization” and “41-0907483” “(I.R.S. Employer Identification No.)” (page 1)
+Correct Ans  : Minnesota, 41-0907483
+Reasoning    : The cover page of the 10-K lists the registrant’s state of incorporation as Minnesota and its I.R.S. Employer Identification Number as 41-0907483, matching the proposed answer.
+
+Q3 — What is the address of principal executive offices and ZIP code?
+------------------------------------------------------------
+Ground Truth : 7601 Penn Avenue South, Richfield, Minnesota, 55423
+Verdict      : CORRECT
+Evidence     : “7601 Penn Avenue South Richfield, Minnesota” and “55423” under “(Address of principal executive offices)” on page 1.
+Correct Ans  : 7601 Penn Avenue South, Richfield, Minnesota, 55423
+Reasoning    : The document’s cover page lists the address of the principal executive offices as 7601 Penn Avenue South, Richfield, Minnesota, with ZIP code 55423, which matches the proposed answer.
+
+Q4 — What is the registrant's telephone number?
+------------------------------------------------------------
+Ground Truth : (612) 291-1000
+Verdict      : CORRECT
+Evidence     : “(612) 291-1000” and “(Registrant’s telephone number, including area code)” (page 1)
+Correct Ans  : (612) 291-1000
+Reasoning    : The cover page of the 10-K lists the registrant’s telephone number as “(612) 291-1000,” matching the proposed answer exactly.
+
+Q5 — What is the fiscal year-end date stated on the cover?
+------------------------------------------------------------
+Ground Truth : February 1, 2020
+Verdict      : CORRECT
+Evidence     : “For the fiscal year ended February 1, 2020” (page 1)
+Correct Ans  : February 1, 2020
+Reasoning    : The cover page of the Form 10-K explicitly states the fiscal year-end date as February 1, 2020, which matches the proposed answer.
+
+Q6 — What is/are the trading symbol(s) and listing exchange(s)?
+------------------------------------------------------------
+Ground Truth : BBY, New York Stock Exchange
+Verdict      : CORRECT
+Evidence     : “[page 1][table] | Title of each class | Trading Symbol | Name of exchange on which registered | … | Common Stock, $0.10 par value per share | BBY | New York Stock Exchange |”
+Correct Ans  : BBY, New York Stock Exchange
+Reasoning    : The cover page table explicitly lists the trading symbol as “BBY” and the exchange as “New York Stock Exchange,” matching the proposed answer.
+
+Q7 — How many shares of common stock were outstanding as of the cover-page reference date?
+------------------------------------------------------------
+Ground Truth : 256,971,220
+Verdict      : CORRECT
+Evidence     : “As of March 18, 2020, the registrant had 256,971,220 shares of its common stock, $0.10 par value per share, issued and outstanding.” (page 1)
+Correct Ans  : 256,971,220
+Reasoning    : The cover-page disclosure on page 1 states the exact number of common shares outstanding as of the reference date, and it matches the proposed answer.
+
+Q8 — What are the reportable operating segments (list names; if none, record "single segment")?
+------------------------------------------------------------
+Ground Truth : ["Domestic", "International"]
+Verdict      : CORRECT
+Evidence     : “We have two reportable segments: Domestic and International.” (page 4) ; “Revenue by reportable segment” lists “Domestic” and “International.” (page 65)
+Correct Ans  : ["Domestic", "International"]
+Reasoning    : The filing explicitly states that Best Buy has two reportable segments, and the segment note in the financial statements confirms the same two segment names.
+
+Q9 — What principal products/services are named in Item 1 (list top categories named)?
+------------------------------------------------------------
+Ground Truth : ["Computing and Mobile Phones", "Consumer Electronics", "Appliances", "Entertainment", "Services", "Other"]
+Verdict      : CORRECT
+Evidence     : “Our Domestic and International segments have offerings in six revenue categories. The key components of each revenue category are as follows:” [page 4] “• Computing and Mobile Phones …; • Consumer Electronics …; • Appliances …; • Entertainment …; • Services …; and • Other …” [page 4]
+Correct Ans  : ["Computing and Mobile Phones", "Consumer Electronics", "Appliances", "Entertainment", "Services", "Other"]
+Reasoning    : Item 1 under “Merchandise and Services” explicitly lists these six revenue categories. The proposed answer matches the document exactly.
+
+Q10 — What principal markets/geographies are named in Item 1 (list regions/countries named)?
+------------------------------------------------------------
+Ground Truth : ["United States", "Canada", "Mexico"]
+Verdict      : CORRECT
+Evidence     : “We have operations in the U.S., Canada and Mexico.” (page 4) Also, “The International segment is comprised of all operations in Canada and Mexico…” (page 4)
+Correct Ans  : ["United States", "Canada", "Mexico"]
+Reasoning    : Item 1 names the company’s operations/geographies as the U.S., Canada, and Mexico. “U.S.” corresponds to “United States,” so the proposed answer matches the document.
+
+Q11 — Are any "significant subsidiaries" identified (list names; "none" if not listed)?
+------------------------------------------------------------
+Ground Truth : None
+Verdict      : AMBIGUOUS
+Evidence     : "21.1 | Subsidiaries of the Registrant | | | | X |" (page 70) ; "Item 16. Form 10-K Summary. [text] None." (page 70)
+Correct Ans  : The 10-K itself does not list any significant subsidiaries by name; it only indicates that Exhibit 21.1, "Subsidiaries of the Registrant," is filed separately.
+Reasoning    : The proposed answer says "None," but the filing shows an attached Exhibit 21.1 for subsidiaries, so the document does not affirmatively state there are no significant subsidiaries. At the same time, no subsidiary names are listed in the body of the 10-K spans provided.
+
+Q12 — What is the location of principal properties (city/state/country as presented; "not disclosed" if omitted)?
+------------------------------------------------------------
+Ground Truth : Richfield, Minnesota, United States
+Verdict      : INCORRECT
+Evidence     : “[page 17][table] | Principal corporate headquarters (2) | Richfield, Minnesota | - | 1,452 |”
+Correct Ans  : Richfield, Minnesota
+Reasoning    : The document discloses the location of the principal corporate headquarters as “Richfield, Minnesota.” It does not include “United States” in the location as presented.
+
+Q13 — Does Item 1A (Risk Factors) appear (Yes/No; if No, record "not required" for SRCs)?
+------------------------------------------------------------
+Ground Truth : Yes
+Verdict      : CORRECT
+Evidence     : “| Item 1A. | Risk Factors. | 7 |” (page 3) and “Item 1A. Risk Factors.” (page 7)
+Correct Ans  : Yes
+Reasoning    : The table of contents lists “Item 1A. Risk Factors.” on page 7, and page 7 contains the section header “Item 1A. Risk Factors.” Therefore, Item 1A does appear in the filing.
+
+Q14 — How many distinct risk factor captions are presented in Item 1A (count captions; "not disclosed" if not counted)?
+------------------------------------------------------------
+Ground Truth : Not disclosed
+Verdict      : INCORRECT
+Evidence     : “Each of the following risk factors should carefully be considered…” (page 7) followed by distinct risk factor captions beginning with “We face strong competition from multi-channel retailers…” (page 7) and continuing through “Our international activities are subject to many of the same risks as described above…” (page 14). Counting the section_header captions in Item 1A yields 27 distinct risk factor captions.
+Correct Ans  : 27
+Reasoning    : Item 1A does disclose and enumerate its risk factors as separate section-header captions. Counting those captions from pages 7 through 14 gives a total of 27, so “Not disclosed” is not supported by the document.
+
+Q15 — Does Item 1B (Unresolved Staff Comments) disclose any comments (Yes/No or "not applicable")?
+------------------------------------------------------------
+Ground Truth : Not applicable
+Verdict      : CORRECT
+Evidence     : “Item 1B. Unresolved Staff Comments.” … “Not applicable.” (page 15)
+Correct Ans  : Not applicable
+Reasoning    : The Item 1B section explicitly states “Not applicable,” indicating there were no unresolved staff comments disclosed.
+
+Q16 — Does Item 3 (Legal Proceedings) disclose any material proceedings (Yes/No)?
+------------------------------------------------------------
+Ground Truth : No
+Verdict      : CORRECT
+Evidence     : “Item 3. Legal Proceedings. … For additional information regarding our legal proceedings, see Note 13, Contingencies and Commitments” (page 18). “We are involved in a number of legal proceedings… We provide disclosure of matters where we believe it is reasonably possible the impact may be material to our Consolidated Financial Statements.” (page 65)
+Correct Ans  : No
+Reasoning    : Item 3 itself does not disclose any specific material legal proceeding; it only cross-references Note 13. Note 13 says the company is involved in legal proceedings generally, but does not identify any specific material proceeding.
+
+Q17 — Does Item 7 discuss liquidity and capital resources (Yes/No — MD&A must address it)?
+------------------------------------------------------------
+Ground Truth : Yes
+Verdict      : CORRECT
+Evidence     : “Our MD&A is presented in the following sections: … • Liquidity and Capital Resources” (page 22)
+Correct Ans  : Yes
+Reasoning    : Item 7 is the MD&A section, and the document explicitly states that it addresses liquidity and includes a subsection titled “Liquidity and Capital Resources.”
+
+Q18 — Does Item 7 discuss off-balance-sheet arrangements (Yes/No or "not applicable" if none)?
+------------------------------------------------------------
+Ground Truth : Yes
+Verdict      : INCORRECT
+Evidence     : “Off-Balance-Sheet Arrangements and Contractual Obligations” and “We do not have outstanding off-balance-sheet arrangements.” (page 32)
+Correct Ans  : not applicable
+Reasoning    : Item 7 does include a discussion of off-balance-sheet arrangements, but the document states there are none outstanding. Since the question asks “Yes/No or ‘not applicable’ if none,” the supported answer is “not applicable,” not “Yes.”
+
+Q19 — Does Item 7A (Quantitative and Qualitative Disclosures about Market Risk) appear (Yes/No; "not required" for certain filers)?
+------------------------------------------------------------
+Ground Truth : Yes
+Verdict      : CORRECT
+Evidence     : “[page 3][table] … | Item 7A. | Quantitative and Qualitative Disclosures About Market Risk. | 34 |” and “[page 34][section_header] Item 7A. Quantitative and Qualitative Disclosures About Market Risk.”
+Correct Ans  : Yes
+Reasoning    : The table of contents lists Item 7A on page 34, and the document includes the actual section header for Item 7A on page 34, so it does appear in the filing.
+
+Q20 — If Item 7A appears, which market risks are quantified (select all that appear: interest rate / FX / commodity / equity)?
+------------------------------------------------------------
+Ground Truth : ["Interest rate"]
+Verdict      : INCORRECT
+Evidence     : “Item 7A. Quantitative and Qualitative Disclosures About Market Risk.” (page 34) “Interest Rate Risk” (page 34) and “Foreign Currency Exchange Rate Risk” (page 34). The section also quantifies both: “a 50-basis point increase in short-term interest rates would have led to an estimated $5 million reduction in net interest expense” (page 34) and “We estimate that foreign currency exchange rate fluctuations had a net unfavorable impact on our revenue of approximately $29 million and a net favorable impact on earnings of approximately $1 million in fiscal 2020.” (page 35)
+Correct Ans  : ["Interest rate", "FX"]
+Reasoning    : Item 7A does appear, and it includes quantified disclosures for both interest rate risk and foreign currency exchange rate risk. There is no evidence in Item 7A of quantified commodity or equity market risk.
+
+Q21 — Who is the independent registered public accounting firm named in Item 8?
+------------------------------------------------------------
+Ground Truth : Deloitte & Touche LLP
+Verdict      : CORRECT
+Evidence     : “The accompanying consolidated financial statements have been audited by Deloitte & Touche LLP, an independent registered public accounting firm...” (page 36)
+Correct Ans  : Deloitte & Touche LLP
+Reasoning    : Item 8 explicitly identifies Deloitte & Touche LLP as the independent registered public accounting firm, so the proposed answer matches the document.
+
+Q22 — What audit opinion type is expressed for the consolidated financial statements (Unqualified/Qualified/Adverse/Disclaimer)?
+------------------------------------------------------------
+Ground Truth : Unqualified
+Verdict      : CORRECT
+Evidence     : “In our opinion, the financial statements present fairly, in all material respects, the financial position of the Company as of February 1, 2020 and February 2, 2019, and the results of its operations and its cash flows for each of the three years in the period ended February 1, 2020, in conformity with accounting principles generally accepted in the United States of America.” (page 37)
+Correct Ans  : Unqualified
+Reasoning    : This is a standard clean audit opinion stating the financial statements “present fairly, in all material respects,” which corresponds to an unqualified opinion.
+
+Q23 — What is total revenue for the most recent fiscal year (from the audited income statement)?
+------------------------------------------------------------
+Ground Truth : 43,638 million
+Verdict      : CORRECT
+Evidence     : “Consolidated Statements of Earnings” shows “Revenue | $ 43,638 | $ 42,879 | $ 42,151” for “Fiscal Years Ended February 1, 2020, February 2, 2019, February 3, 2018” (page 41).
+Correct Ans  : 43,638 million
+Reasoning    : The audited income statement on page 41 lists revenue for the most recent fiscal year (ended February 1, 2020) as $43,638 million, which matches the proposed answer.
+
+Q24 — What is net income (loss) for the most recent fiscal year?
+------------------------------------------------------------
+Ground Truth : 1,541 million
+Verdict      : CORRECT
+Evidence     : “[page 22][table] | Fiscal Year | 2020 (1) | 2019 | 2018 (2) | 2017 | 2016 | … | Net earnings | 1,541 | 1,464 | 1,000 | 1,228 | 897 |”
+Correct Ans  : 1,541 million
+Reasoning    : The most recent fiscal year shown is 2020, and the table reports “Net earnings” of 1,541 (in millions). This matches the proposed answer.
+
+Q25 — What is total assets at year-end (from the audited balance sheet)?
+------------------------------------------------------------
+Ground Truth : 15,591 million
+Verdict      : CORRECT
+Evidence     : “Consolidated Balance Sheets” shows “Total assets | $ 15,591 | $ 12,901” for “February 1, 2020” and “February 2, 2019.” (page 40)
+Correct Ans  : 15,591 million
+Reasoning    : The audited balance sheet on page 40 reports total assets of $15,591 million at year-end (February 1, 2020), which matches the proposed answer.
+
+Q26 — What is long-term debt at year-end (0 if none)?
+------------------------------------------------------------
+Ground Truth : 1,257 million
+Verdict      : CORRECT
+Evidence     : “Long-term debt | 1,257 | 1,332” in the Consolidated Balance Sheets for “February 1, 2020” and “February 2, 2019” (page 40).
+Correct Ans  : 1,257 million
+Reasoning    : The year-end balance sheet reports long-term debt of $1,257 million as of February 1, 2020. This matches the proposed answer.
+
+Q27 — Did management report any material weaknesses in internal control over financial reporting (Yes/No)?
+------------------------------------------------------------
+Ground Truth : No
+Verdict      : CORRECT
+Evidence     : “Based on our assessment, we have concluded that our internal control over financial reporting was effective as of February 1, 2020. During our assessment, we did not identify any material weaknesses in our internal control over financial reporting.” (page 36)
+Correct Ans  : No
+Reasoning    : Management explicitly stated that it “did not identify any material weaknesses” in internal control over financial reporting, so the proposed answer is supported by the document.
+
+Q28 — Is Part III information (directors, executive officers, compensation, ownership, etc.) incorporated by reference to a definitive proxy statement (Yes/No)?
+------------------------------------------------------------
+Ground Truth : Yes
+Verdict      : CORRECT
+Evidence     : “Portions of the registrant's Definitive Proxy Statement relating to its 2020 Regular Meeting of Shareholders ("Proxy Statement") are incorporated by reference into Part III. The Proxy Statement will be filed with the U.S. Securities and Exchange Commission within 120 days after the end of the fiscal year to which this report relates.” (page 1)
+Correct Ans  : Yes
+Reasoning    : The filing explicitly states that Part III is incorporated by reference to the registrant’s Definitive Proxy Statement, so the proposed answer is supported by the document.
+
+Q29 — If Part III is incorporated by reference, what is the proxy filing deadline stated on the 10-K (date or "not stated")?
+------------------------------------------------------------
+Ground Truth : Not stated
+Verdict      : INCORRECT
+Evidence     : “Portions of the registrant's Definitive Proxy Statement relating to its 2020 Regular Meeting of Shareholders ("Proxy Statement") are incorporated by reference into Part III. The Proxy Statement will be filed with the U.S. Securities and Exchange Commission within 120 days after the end of the fiscal year to which this report relates.” (page 1) Also, Part III states: “The information required by this Item is incorporated by reference to the applicable information in the Company’s Proxy Statement for the 2020 Regular Meeting of Shareholders, which is expected to be filed with the SEC on or before May 31, 2020.” (page 68)
+Correct Ans  : On or before May 31, 2020
+Reasoning    : The 10-K does state a proxy filing deadline. It gives both a general deadline of within 120 days after fiscal year-end and, more specifically in Part III, says the proxy statement is expected to be filed on or before May 31, 2020.
+
+Q30 — List one material agreement or other exhibit number explicitly identified in the Exhibit Index (e.g., "Exhibit 10.1: Credit Agreement")—or record "none listed" if no material agreements are identified.
+------------------------------------------------------------
+Ground Truth : Exhibit 10.1: Five-Year Credit Agreement
+Verdict      : CORRECT
+Evidence     : “[page 69][table] ‘10.1 | Five-Year Credit Agreement dated as of April 17, 2018, among Best Buy Co., Inc., the Subsidiary Guarantors, the Lenders and JPMorgan Chase Bank, N.A., as administrative agent’”
+Correct Ans  : Exhibit 10.1: Five-Year Credit Agreement
+Reasoning    : The Exhibit Index on page 69 explicitly lists Exhibit 10.1 as a “Five-Year Credit Agreement,” so the proposed answer matches the document.
+
+============================================================
+SUMMARY
+============================================================
+Total questions : 30
+Correct         : 24
+Incorrect/Ambig : 6 — Q11, Q12, Q14, Q18, Q20, Q29
+Input tokens    : 186,969
+Output tokens   : 6,291
+Est. cost       : $0.5618

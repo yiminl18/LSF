@@ -1,0 +1,254 @@
+Ground Truth Verification Analysis
+Document: COSTCO_2017_10K
+Date: 2026-04-27
+============================================================
+
+Q1 — What is the registrant's exact name?
+------------------------------------------------------------
+Ground Truth : Costco Wholesale Corporation
+Verdict      : CORRECT
+Evidence     : “Costco Wholesale Corporation” “(Exact name of registrant as specified in its charter)” (page 1)
+Correct Ans  : Costco Wholesale Corporation
+Reasoning    : The cover page of the 10-K explicitly lists the registrant’s exact name as “Costco Wholesale Corporation,” matching the proposed answer exactly.
+
+Q2 — What is the state (or other jurisdiction) of incorporation and the IRS Employer Identification Number?
+------------------------------------------------------------
+Ground Truth : Washington, 91-1223280
+Verdict      : CORRECT
+Evidence     : “Washington” “(State or other jurisdiction of incorporation or organization)” and “91-1223280” “(I.R.S. Employer Identification No.)” (page 1)
+Correct Ans  : Washington, 91-1223280
+Reasoning    : The cover page of the 2017 Form 10-K lists the registrant’s state of incorporation as Washington and its IRS Employer Identification Number as 91-1223280, matching the proposed answer.
+
+Q3 — What is the address of principal executive offices and ZIP code?
+------------------------------------------------------------
+Ground Truth : 999 Lake Drive, Issaquah, WA 98027
+Verdict      : CORRECT
+Evidence     : “999 Lake Drive, Issaquah, WA 98027” and “(Address of principal executive offices) (Zip Code)” (page 1)
+Correct Ans  : 999 Lake Drive, Issaquah, WA 98027
+Reasoning    : The document’s cover page lists the registrant’s address directly above the label “Address of principal executive offices (Zip Code),” matching the proposed answer exactly.
+
+Q4 — What is the registrant's telephone number?
+------------------------------------------------------------
+Ground Truth : (425) 313-8100
+Verdict      : CORRECT
+Evidence     : “Registrant’s telephone number, including area code: (425) 313-8100” (page 1)
+Correct Ans  : (425) 313-8100
+Reasoning    : The document explicitly lists the registrant’s telephone number on page 1, and it matches the proposed answer exactly.
+
+Q5 — What is the fiscal year-end date stated on the cover?
+------------------------------------------------------------
+Ground Truth : September 3, 2017
+Verdict      : CORRECT
+Evidence     : “For the fiscal year ended September 3, 2017” (page 1)
+Correct Ans  : September 3, 2017
+Reasoning    : The cover page of the Form 10-K explicitly states the fiscal year ended date as September 3, 2017, matching the proposed answer.
+
+Q6 — What is/are the trading symbol(s) and listing exchange(s)?
+------------------------------------------------------------
+Ground Truth : COST, The NASDAQ Global Select Market
+Verdict      : CORRECT
+Evidence     : “Our common stock trades on the NASDAQ Global Select Market, under the symbol ‘COST.’” (page 3) Also, page 1 lists “Name of each exchange on which registered” as “The NASDAQ Global Select Market.”
+Correct Ans  : COST, The NASDAQ Global Select Market
+Reasoning    : The document explicitly states the trading symbol is “COST” and the listing exchange is “The NASDAQ Global Select Market,” matching the proposed answer.
+
+Q7 — How many shares of common stock were outstanding as of the cover-page reference date?
+------------------------------------------------------------
+Ground Truth : 436,989,606
+Verdict      : CORRECT
+Evidence     : “The number of shares outstanding of the registrant’s common stock as of October 10, 2017 was 436,989,606 .” (page 1)
+Correct Ans  : 436,989,606
+Reasoning    : The cover-page disclosure on page 1 states the exact number of common shares outstanding as of the reference date, and it matches the proposed answer.
+
+Q8 — What are the reportable operating segments (list names; if none, record "single segment")?
+------------------------------------------------------------
+Ground Truth : United States Operations, Canadian Operations, Other International Operations
+Verdict      : CORRECT
+Evidence     : “Our operating model is generally the same across our U.S., Canada, and Other International operating segments” (page 20). Also, Note 11 presents the segment table with columns: “United States Operations | Canadian Operations | Other International Operations | Total” (page 67).
+Correct Ans  : United States Operations, Canadian Operations, Other International Operations
+Reasoning    : The filing explicitly refers to U.S., Canada, and Other International operating segments, and the Note 11 segment reporting table names the three reportable segments as United States Operations, Canadian Operations, and Other International Operations.
+
+Q9 — What principal products/services are named in Item 1 (list top categories named)?
+------------------------------------------------------------
+Ground Truth : ["Foods", "Sundries", "Hardlines", "Fresh Foods", "Softlines", "Ancillary"]
+Verdict      : CORRECT
+Evidence     : “We generally refer to our merchandise categories as follows: • Foods (including dry foods, packaged foods, and groceries) • Sundries (including snack foods, candy, alcoholic and nonalcoholic beverages, and cleaning supplies) • Hardlines (including major appliances, electronics, health and beauty aids, hardware, and garden and patio) • Fresh Foods (including meat, produce, deli, and bakery) • Softlines (including apparel and small appliances) • Ancillary (including gas stations and pharmacy)” (page 4)
+Correct Ans  : ["Foods", "Sundries", "Hardlines", "Fresh Foods", "Softlines", "Ancillary"]
+Reasoning    : Item 1 explicitly lists these six top merchandise categories on page 4. The proposed answer matches the document exactly.
+
+Q10 — What principal markets/geographies are named in Item 1 (list regions/countries named)?
+------------------------------------------------------------
+Ground Truth : ["United States", "Canada", "United Kingdom", "Mexico", "Japan", "Australia", "Spain", "France", "Iceland", "Taiwan", "Korea"]
+Verdict      : CORRECT
+Evidence     : “We are principally engaged in the operation of membership warehouses in the United States (U.S.) and Puerto Rico, Canada, United Kingdom (U.K.), Mexico, Japan, Australia, Spain, France, Iceland and through majority-owned subsidiaries in Taiwan and Korea.” (page 3)
+Correct Ans  : ["United States", "Canada", "United Kingdom", "Mexico", "Japan", "Australia", "Spain", "France", "Iceland", "Taiwan", "Korea"]
+Reasoning    : Item 1 names all of the geographies in the proposed answer. The document also names Puerto Rico, but since the proposed answer’s listed regions/countries are all explicitly included, it is supported by the text.
+
+Q11 — Are any "significant subsidiaries" identified (list names; "none" if not listed)?
+------------------------------------------------------------
+Ground Truth : ["Costco Wholesale Membership, Inc.", "Costco Wholesale Canada Ltd.", "Costco Western Holdings, Ltd.", "Costco Wholesale United Kingdom Ltd.", "NW Re Ltd.", "PriceCostco International, Inc.", "Costco Wholesale Korea, Ltd.", "Costco de Mexico, S.A. de C.V.", "Costco Wholesale Japan, Ltd.", "Costco Insurance Agency, Inc.", "Costco Canada Holdings Inc."]
+Verdict      : CORRECT
+Evidence     : “The following is a list of subsidiaries of the Company as of September 3, 2017, omitting subsidiaries which, considered in the aggregate, would not constitute a significant subsidiary.” (page 70) “| Costco Wholesale Membership, Inc. | California | Costco Wholesale Membership, Inc. | | Costco Wholesale Canada Ltd. | Canadian Federal | Costco Wholesale Canada, Ltd., Costco Wholesale | | Costco Western Holdings, Ltd. | Canadian Federal | Costco Western Holdings, Ltd. | | Costco Wholesale United Kingdom Ltd. | United Kingdom | Costco Wholesale United Kingdom Ltd. | | NW Re Ltd. | Arizona | NW Re Ltd. | | PriceCostco International, Inc. | Nevada | PriceCostco International, Inc. | | Costco Wholesale Korea, Ltd. | Korea | Costco Wholesale Korea, Ltd. | | Costco de Mexico, S.A. de C.V. | Mexico | Costco de Mexico, S.A. de C.V. | | Costco Wholesale Japan, Ltd. | Japan | Costco Wholesale Japan, Ltd. | | Costco Insurance Agency, Inc. | Washington | Costco Insurance Agency, Inc. | | Costco Canada Holdings Inc. | Canadian Federal | Costco Canada Holdings Inc. |” (page 70)
+Correct Ans  : ["Costco Wholesale Membership, Inc.", "Costco Wholesale Canada Ltd.", "Costco Western Holdings, Ltd.", "Costco Wholesale United Kingdom Ltd.", "NW Re Ltd.", "PriceCostco International, Inc.", "Costco Wholesale Korea, Ltd.", "Costco de Mexico, S.A. de C.V.", "Costco Wholesale Japan, Ltd.", "Costco Insurance Agency, Inc.", "Costco Canada Holdings Inc."]
+Reasoning    : The filing includes a “SUBSIDIARIES OF THE COMPANY” section that explicitly lists subsidiaries while omitting those that would not constitute a significant subsidiary in the aggregate. The proposed answer exactly matches the names listed there.
+
+Q12 — What is the location of principal properties (city/state/country as presented; "not disclosed" if omitted)?
+------------------------------------------------------------
+Ground Truth : Issaquah, WA, United States
+Verdict      : INCORRECT
+Evidence     : “Our executive offices are located in Issaquah, Washington, and we maintain 18 regional offices in the U.S., Canada and Other International locations.” (page 16)
+Correct Ans  : Issaquah, Washington
+Reasoning    : The document’s properties section identifies the location only as “Issaquah, Washington.” It does not present the state as “WA” or include the country “United States” in the principal properties disclosure.
+
+Q13 — Does Item 1A (Risk Factors) appear (Yes/No; if No, record "not required" for SRCs)?
+------------------------------------------------------------
+Ground Truth : Yes
+Verdict      : CORRECT
+Evidence     : “[page 8][H3] Item 1A—Risk Factors”
+Correct Ans  : Yes
+Reasoning    : The section headers show that “Item 1A—Risk Factors” is present in the filing, beginning on page 8. Therefore, the proposed answer “Yes” is supported by the document.
+
+Q14 — How many distinct risk factor captions are presented in Item 1A (count captions; "not disclosed" if not counted)?
+------------------------------------------------------------
+Ground Truth : Not disclosed
+Verdict      : INCORRECT
+Evidence     : “Item 1A—Risk Factors” begins on page 8 and contains the following distinct risk factor captions as section headers: “We are highly dependent on the financial performance of our U.S. and Canadian operations.” (p. 8) through “We are involved in a number of legal proceedings and audits and some of these outcomes could adversely affect our business, financial condition and results of operations.” (p. 15). The section header list shows 24 H4 captions under Item 1A on pages 8–15.
+Correct Ans  : 24
+Reasoning    : Item 1A explicitly lists 24 separate risk factor captions as subheadings. Therefore, the answer is disclosed and should not be “Not disclosed.”
+
+Q15 — Does Item 1B (Unresolved Staff Comments) disclose any comments (Yes/No or "not applicable")?
+------------------------------------------------------------
+Ground Truth : None
+Verdict      : CORRECT
+Evidence     : “Item 1B—Unresolved Staff Comments” followed by “None.” (page 15)
+Correct Ans  : None
+Reasoning    : The Item 1B section explicitly states “None.” Therefore, the proposed answer matches the document.
+
+Q16 — Does Item 3 (Legal Proceedings) disclose any material proceedings (Yes/No)?
+------------------------------------------------------------
+Ground Truth : None
+Verdict      : INCORRECT
+Evidence     : “Item 3—Legal Proceedings … See discussion of Legal Proceedings in Note 10 to the consolidated financial statements included in Item 8 of this Report.” (page 16) “The Company is involved in a number of claims, proceedings and litigation arising from its business and property ownership.” (page 65)
+Correct Ans  : Yes
+Reasoning    : Item 3 does disclose legal proceedings by incorporating Note 10 by reference, and Note 10 states that the company is involved in a number of claims, proceedings, and litigation. Therefore, the proposed answer “None” is not supported by the document.
+
+Q17 — Does Item 7 discuss liquidity and capital resources (Yes/No — MD&A must address it)?
+------------------------------------------------------------
+Ground Truth : Yes
+Verdict      : CORRECT
+Evidence     : “[page 19][H4] Item 7—Management’s Discussion and Analysis of Financial Condition and Results of Operations” and within Item 7, “[page 26][H4] LIQUIDITY AND CAPITAL RESOURCES.”
+Correct Ans  : Yes
+Reasoning    : The section headers show that Item 7 is MD&A and it explicitly includes a subsection titled “LIQUIDITY AND CAPITAL RESOURCES,” so Item 7 does discuss it.
+
+Q18 — Does Item 7 discuss off-balance-sheet arrangements (Yes/No or "not applicable" if none)?
+------------------------------------------------------------
+Ground Truth : Yes
+Verdict      : INCORRECT
+Evidence     : “Off-Balance Sheet Arrangements” (page 28). “In the opinion of management, we have no off-balance sheet arrangements that have had, or are reasonably likely to have, a material current or future effect on our financial condition or financial statements other than operating leases, included in the table above and discussed in Note 1 and Note 5 to the consolidated financial statements included in Item 8 of this Report.” (page 28)
+Correct Ans  : not applicable
+Reasoning    : Item 7 does include a subsection on off-balance-sheet arrangements, but it states the company has no such arrangements with a material effect other than operating leases. Since the question asks “Yes/No or ‘not applicable’ if none,” the supported answer is “not applicable,” not “Yes.”
+
+Q19 — Does Item 7A (Quantitative and Qualitative Disclosures about Market Risk) appear (Yes/No; "not required" for certain filers)?
+------------------------------------------------------------
+Ground Truth : Yes
+Verdict      : CORRECT
+Evidence     : “Item 7A—Quantitative and Qualitative Disclosures About Market Risk (amounts in millions)” appears in the section headers on page 30, and continues on page 31.
+Correct Ans  : Yes
+Reasoning    : The document explicitly includes Item 7A as a section heading, so the proposed answer is supported by the filing.
+
+Q20 — If Item 7A appears, which market risks are quantified (select all that appear: interest rate / FX / commodity / equity)?
+------------------------------------------------------------
+Ground Truth : ["Interest rate", "FX"]
+Verdict      : INCORRECT
+Evidence     : “Our exposure to financial market risk results from fluctuations in interest rates and foreign currency exchange rates.” (page 30) “Foreign Currency-Exchange Risk” (page 31) “Commodity Price Risk” (page 31)
+Correct Ans  : ["Interest rate", "FX", "Commodity"]
+Reasoning    : Item 7A does quantify interest rate risk and foreign currency exchange risk, and it also explicitly includes a “Commodity Price Risk” section. There is no equity market risk section in Item 7A.
+
+Q21 — Who is the independent registered public accounting firm named in Item 8?
+------------------------------------------------------------
+Ground Truth : KPMG LLP
+Verdict      : CORRECT
+Evidence     : “The consolidated financial statements have been audited by **KPMG LLP, an independent registered public accounting firm**...” (page 32)
+Correct Ans  : KPMG LLP
+Reasoning    : Item 8 explicitly states that the consolidated financial statements were audited by KPMG LLP, identifying it as the independent registered public accounting firm.
+
+Q22 — What audit opinion type is expressed for the consolidated financial statements (Unqualified/Qualified/Adverse/Disclaimer)?
+------------------------------------------------------------
+Ground Truth : Unqualified
+Verdict      : CORRECT
+Evidence     : “In our opinion, the consolidated financial statements referred to above present fairly, in all material respects, the financial position of Costco Wholesale Corporation and subsidiaries as of September 3, 2017 and August 28, 2016, and the results of their operations and their cash flows for the 53-week period ended September 3, 2017, and the 52-week periods ended August 28, 2016 and August 30, 2015, in conformity with U.S. generally accepted accounting principles.” (page 39)
+Correct Ans  : Unqualified
+Reasoning    : The phrase “present fairly, in all material respects” is the standard wording for an unqualified audit opinion, and there is no qualifying, adverse, or disclaimer language shown.
+
+Q23 — What is total revenue for the most recent fiscal year (from the audited income statement)?
+------------------------------------------------------------
+Ground Truth : 126,172
+Verdict      : INCORRECT
+Evidence     : “COSTCO WHOLESALE CORPORATION CONSOLIDATED STATEMENTS OF INCOME … | Net sales | $ 126,172 | … | Membership fees | 2,853 | … | Total revenue | 129,025 | …” (page 42)
+Correct Ans  : 129,025
+Reasoning    : The proposed answer, 126,172, is net sales, not total revenue. The audited consolidated statements of income show total revenue for the most recent fiscal year as 129,025.
+
+Q24 — What is net income (loss) for the most recent fiscal year?
+------------------------------------------------------------
+Ground Truth : 2,679
+Verdict      : CORRECT
+Evidence     : “NET INCOME ATTRIBUTABLE TO COSTCO | $ 2,679 | $ 2,350 | $ 2,377” (page 42)
+Correct Ans  : 2,679
+Reasoning    : The most recent fiscal year in the 2017 10-K is the 53 weeks ended September 3, 2017, and the consolidated statements of income report net income attributable to Costco of $2,679 million.
+
+Q25 — What is total assets at year-end (from the audited balance sheet)?
+------------------------------------------------------------
+Ground Truth : 36,347
+Verdict      : CORRECT
+Evidence     : “COSTCO WHOLESALE CORPORATION CONSOLIDATED BALANCE SHEETS … TOTAL ASSETS | $ 36,347 | $ 33,163” (page 41)
+Correct Ans  : 36,347
+Reasoning    : The audited consolidated balance sheet on page 41 reports total assets of $36,347 million as of September 3, 2017, which matches the proposed answer.
+
+Q26 — What is long-term debt at year-end (0 if none)?
+------------------------------------------------------------
+Ground Truth : 6,573
+Verdict      : CORRECT
+Evidence     : “LONG-TERM DEBT, excluding current portion | 6,573 | 4,061” (page 41)
+Correct Ans  : 6,573
+Reasoning    : The consolidated balance sheet reports year-end long-term debt, excluding the current portion, as 6,573 million at September 3, 2017. This matches the proposed answer.
+
+Q27 — Did management report any material weaknesses in internal control over financial reporting (Yes/No)?
+------------------------------------------------------------
+Ground Truth : No
+Verdict      : CORRECT
+Evidence     : “Under the supervision and with the participation of our management, we assessed the effectiveness of our internal control over financial reporting as of September 3, 2017, using the criteria set forth by the Committee of Sponsoring Organizations of the Treadway Commission (COSO) in Internal Control—Integrated Framework (2013). Based on its assessment, management has concluded that our internal control over financial reporting was effective as of September 3, 2017.” (page 33)
+Correct Ans  : No
+Reasoning    : Management concluded that internal control over financial reporting was effective as of September 3, 2017, which indicates no material weaknesses were reported. The auditor also expressed “an unqualified opinion on the effectiveness” of internal control over financial reporting.
+
+Q28 — Is Part III information (directors, executive officers, compensation, ownership, etc.) incorporated by reference to a definitive proxy statement (Yes/No)?
+------------------------------------------------------------
+Ground Truth : Yes
+Verdict      : CORRECT
+Evidence     : “Portions of the Company’s Proxy Statement for the Annual Meeting of Shareholders to be held on January 30, 2018, are incorporated by reference into Part III of this Form 10-K.” (page 1)
+Correct Ans  : Yes
+Reasoning    : The 10-K explicitly states that portions of the company’s proxy statement are incorporated by reference into Part III. The Part III items on pages 33–34 also individually state that the required information is incorporated by reference to the proxy statement.
+
+Q29 — If Part III is incorporated by reference, what is the proxy filing deadline stated on the 10-K (date or "not stated")?
+------------------------------------------------------------
+Ground Truth : January 30, 2018
+Verdict      : INCORRECT
+Evidence     : “Information required by this Item concerning our directors and nominees for director is incorporated herein by reference to the sections entitled ‘Proposal 1: Election of Directors,’ ‘Directors,’ ‘Committees of the Board’ and ‘Section 16(a) Beneficial Ownership Reporting Compliance’ in Costco’s Proxy Statement for its 2018 annual meeting of stockholders, which will be filed with the SEC within 120 days of the end of our fiscal year (‘Proxy Statement’).” (page 33)
+Correct Ans  : within 120 days of the end of our fiscal year
+Reasoning    : The 10-K states the filing deadline for the proxy statement by timing (“within 120 days of the end of our fiscal year”), not as the meeting date of January 30, 2018. Therefore the proposed answer does not match the stated proxy filing deadline.
+
+Q30 — List one material agreement or other exhibit number explicitly identified in the Exhibit Index (e.g., "Exhibit 10.1: Credit Agreement")—or record "none listed" if no material agreements are identified.
+------------------------------------------------------------
+Ground Truth : Exhibit 10.1: Costco Wholesale Executive Health Plan
+Verdict      : CORRECT
+Evidence     : “[page 35][table][Costco Wholesale Corporation | PART IV | Item 15—Exhibits, Financial Statement Schedules] … ‘10.1* | Costco Wholesale Executive Health Plan | | 10-K | 9/2/2012 | 10/19/2012’”
+Correct Ans  : Exhibit 10.1: Costco Wholesale Executive Health Plan
+Reasoning    : The Exhibit Index table on page 35 explicitly lists exhibit 10.1 as “Costco Wholesale Executive Health Plan.” The proposed answer matches the document.
+
+============================================================
+SUMMARY
+============================================================
+Total questions : 30
+Correct         : 23
+Incorrect/Ambig : 7 — Q12, Q14, Q16, Q18, Q20, Q23, Q29
+Input tokens    : 168,865
+Output tokens   : 6,681
+Est. cost       : $0.5224
