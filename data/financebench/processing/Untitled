@@ -1,0 +1,10 @@
+PYTHONPATH=src /opt/homebrew/Caskroom/miniconda/base/envs/ML/bin/python -m core.pipeline.train_model \
+  --dataset pdfs \
+  --limit 10 \
+  --model_config xgb-sem-struc-v2 xgb-sem-struc-v3 xgb-sem-struc-v4 xgb-sem-struc-v5 \
+                 lm-sem-struc-v2 lm-sem-struc-v3 lm-sem-struc-v4 lm-sem-struc-v5 \
+  --seeds 41,42,43 \
+  --structure-variant reconstructed \
+  --experiment default \
+  --provider embeddinggemma \
+  --force
