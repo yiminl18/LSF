@@ -1,0 +1,32 @@
+
+Running gpt54 smoke tests …
+
+============================================================
+  1. Config check
+============================================================
+  endpoint   : https://embeddings-france.openai.azure.com/
+  api_version: 2024-12-01-preview
+  deployment : gpt-5.4
+  api_key    : 4BcDNLxx…
+
+============================================================
+  2. chat_completions() — basic call
+============================================================
+  [PASS] response (1.82s): 'Hello from GPT.'
+
+============================================================
+  3. gpt_54() — QA with context
+============================================================
+  [PASS] answer (1.20s): "Acme Corp's revenue in fiscal year 2024 was $4.2 billion."
+
+============================================================
+  4. gpt_54() — empty context (should decline)
+============================================================
+  [PASS] answer (1.30s): 'I don’t have enough information from the provided context to answer that.'
+
+============================================================
+  Summary: 4/4 passed
+============================================================
+
+  All tests passed.
+
