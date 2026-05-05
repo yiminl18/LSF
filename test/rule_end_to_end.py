@@ -8,6 +8,7 @@ import importlib.util
 import json
 import os
 import re
+import signal
 import sys
 import warnings
 from datetime import datetime, timezone
@@ -19,6 +20,25 @@ sys.path.insert(0, str(_ROOT / "src"))
 os.chdir(_ROOT)
 
 from rule_apply_merge import rule_apply_merge
+
+
+# ── Timeout helper (SIGALRM, Linux/macOS only) ─────────────────────────────────
+
+class _RuleGenTimeout(Exception):
+    pass
+
+def _run_with_timeout(fn, timeout_secs, **kwargs):
+    if timeout_secs <= 0:
+        return fn(**kwargs)
+    def _handler(signum, frame):
+        raise _RuleGenTimeout(f"rule gen timed out after {timeout_secs}s")
+    old = signal.signal(signal.SIGALRM, _handler)
+    signal.alarm(timeout_secs)
+    try:
+        return fn(**kwargs)
+    finally:
+        signal.alarm(0)
+        signal.signal(signal.SIGALRM, old)
 
 
 # ── Token counting ─────────────────────────────────────────────────────────────
@@ -130,8 +150,10 @@ def main():
     parser.add_argument("--processing-dir",   default="data/financebench/processing")
     parser.add_argument("--rules-dir",        default="rules/llm/financebench")
     parser.add_argument("--output-dir",       default="results/e2e")
-    parser.add_argument("--use-refine",       action="store_true")
-    parser.add_argument("--skip-existing",    action="store_true")
+    parser.add_argument("--use-refine",        action="store_true")
+    parser.add_argument("--skip-existing",     action="store_true")
+    parser.add_argument("--rule-gen-timeout",  type=int, default=0,
+                        help="Timeout in seconds for rule gen per query (0 = no limit)")
     args = parser.parse_args()
 
     # ── Dynamic import of rule_gen function ───────────────────────────────────
@@ -182,7 +204,9 @@ def main():
                     k: sample_labels[k][question]
                     for k in sample_labels if question in sample_labels[k]
                 }
-                gen_result = rule_gen_fn(
+                gen_result = _run_with_timeout(
+                    rule_gen_fn,
+                    args.rule_gen_timeout,
                     documents=sample_docs,
                     question=question,
                     ground_truth=ground_truth,
@@ -388,6 +412,9 @@ def main():
                 "avg_cost_ratio_unsampled":eval_splits.get("unsampled", {}).get("avg_cost_ratio"),
             })
 
+        except _RuleGenTimeout as e:
+            print(f"  TIMEOUT for '{question}': {e}", flush=True)
+            continue
         except Exception as e:
             import traceback
             print(f"  FATAL ERROR for '{question}': {e}", flush=True)
