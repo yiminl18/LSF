@@ -474,6 +474,18 @@ def main():
         )
     print(f"\nResults: {args.output_dir}/")
 
+    # ── Auto git push ─────────────────────────────────────────────────────────
+    import subprocess
+    try:
+        result_dir = str(out)
+        rules_dir  = args.rules_dir
+        subprocess.run(["git", "add", result_dir, rules_dir], check=True)
+        subprocess.run(["git", "commit", "-m", f"pipeline results: {Path(result_dir).name}"], check=True)
+        subprocess.run(["git", "push"], check=True)
+        print("  [git] pushed results to remote", flush=True)
+    except subprocess.CalledProcessError as e:
+        print(f"  [git] push failed: {e}", flush=True)
+
 
 if __name__ == "__main__":
     main()
