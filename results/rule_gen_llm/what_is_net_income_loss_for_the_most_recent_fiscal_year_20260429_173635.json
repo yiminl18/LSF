@@ -1,0 +1,189 @@
+{
+  "question": "What is net income (loss) for the most recent fiscal year?",
+  "question_slug": "what_is_net_income_loss_for_the_most_recent_fiscal_year",
+  "timestamp": "2026-04-29T17:36:35Z",
+  "model": "gpt54",
+  "num_documents": 10,
+  "doc_names": [
+    "AMCOR_2019_10K",
+    "COSTCO_2017_10K",
+    "BOEING_2018_10K",
+    "AMAZON_2018_10K",
+    "EBAY_2021_10K",
+    "AMAZON_2016_10K",
+    "CORNING_2022_10K",
+    "NIKE_2021_10K",
+    "LOCKHEEDMARTIN_2022_10K",
+    "JOHNSON_JOHNSON_2022_10K"
+  ],
+  "latency_seconds": 178.8,
+  "input_tokens": 268520,
+  "output_tokens": 5926,
+  "rules": [
+    {
+      "rule_name": "rule_net_income_row_in_income_statement_table",
+      "description": "Match tables containing a row labeled net income/loss in the income statement.",
+      "file": "rules/llm/financebench/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm/rule_net_income_row_in_income_statement_table.py"
+    },
+    {
+      "rule_name": "rule_net_income_row_in_financial_statements_section",
+      "description": "Match tables in Item 8 / Financial Statements and Supplementary Data with a net income row.",
+      "file": "rules/llm/financebench/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm/rule_net_income_row_in_financial_statements_section.py"
+    },
+    {
+      "rule_name": "rule_statement_of_income_heading_nearby",
+      "description": "Match section headers for Statement of Income / Operations that likely precede the answer table.",
+      "file": "rules/llm/financebench/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm/rule_statement_of_income_heading_nearby.py"
+    },
+    {
+      "rule_name": "rule_item8_financial_statements_pages",
+      "description": "Match spans on pages associated with Item 8 / Financial Statements from the table of contents.",
+      "file": "rules/llm/financebench/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm/rule_item8_financial_statements_pages.py"
+    },
+    {
+      "rule_name": "rule_toc_statement_of_income_page",
+      "description": "Match spans on the page listed in the TOC for Consolidated Statement of Income/Operations.",
+      "file": "rules/llm/financebench/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm/rule_toc_statement_of_income_page.py"
+    },
+    {
+      "rule_name": "rule_tables_with_recent_year_columns",
+      "description": "Match financial tables that contain recent year columns and a net income row.",
+      "file": "rules/llm/financebench/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm/rule_tables_with_recent_year_columns.py"
+    },
+    {
+      "rule_name": "rule_row_header_net_income_in_any_table",
+      "description": "Match any table where a row header cell is net income/loss/earnings.",
+      "file": "rules/llm/financebench/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm/rule_row_header_net_income_in_any_table.py"
+    },
+    {
+      "rule_name": "rule_table_with_net_income_and_three_years",
+      "description": "Match tables with a net income row and at least three distinct year labels.",
+      "file": "rules/llm/financebench/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm/rule_table_with_net_income_and_three_years.py"
+    },
+    {
+      "rule_name": "rule_mda_results_of_operations_net_income_text",
+      "description": "Match text spans in MD&A / Results of Operations mentioning net income or net earnings.",
+      "file": "rules/llm/financebench/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm/rule_mda_results_of_operations_net_income_text.py"
+    },
+    {
+      "rule_name": "rule_mda_item7_net_income_text",
+      "description": "Match Item 7 spans mentioning net income/loss/earnings.",
+      "file": "rules/llm/financebench/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm/rule_mda_item7_net_income_text.py"
+    },
+    {
+      "rule_name": "rule_selected_financial_data_net_income_table",
+      "description": "Match Selected Financial Data tables containing net income/earnings rows.",
+      "file": "rules/llm/financebench/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm/rule_selected_financial_data_net_income_table.py"
+    },
+    {
+      "rule_name": "rule_selected_financial_data_section",
+      "description": "Match section headers for Selected Financial Data, which often contain a net income row nearby.",
+      "file": "rules/llm/financebench/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm/rule_selected_financial_data_section.py"
+    },
+    {
+      "rule_name": "rule_net_income_in_bold_summary_text",
+      "description": "Match bold text spans mentioning net income/earnings/loss, often in summary sections.",
+      "file": "rules/llm/financebench/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm/rule_net_income_in_bold_summary_text.py"
+    },
+    {
+      "rule_name": "rule_recent_pages_with_net_income_mentions",
+      "description": "Match spans mentioning net income/earnings/loss on later pages where financial statements usually appear.",
+      "file": "rules/llm/financebench/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm/rule_recent_pages_with_net_income_mentions.py"
+    },
+    {
+      "rule_name": "rule_financial_statement_table_with_parentheses_and_dollars",
+      "description": "Match likely financial statement tables with dollar formatting and a net income row.",
+      "file": "rules/llm/financebench/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm/rule_financial_statement_table_with_parentheses_and_dollars.py"
+    },
+    {
+      "rule_name": "rule_page_after_statement_of_income_header",
+      "description": "Match spans on the same or next page after a Statement of Income/Operations header.",
+      "file": "rules/llm/financebench/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm/rule_page_after_statement_of_income_header.py"
+    },
+    {
+      "rule_name": "rule_toc_item7_page_then_following_pages",
+      "description": "Match spans on Item 7 pages and nearby pages, where some filers state net income in MD&A.",
+      "file": "rules/llm/financebench/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm/rule_toc_item7_page_then_following_pages.py"
+    },
+    {
+      "rule_name": "rule_any_span_with_net_income_loss_phrase",
+      "description": "Match any span explicitly containing the phrase net income (loss) or similar.",
+      "file": "rules/llm/financebench/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm/rule_any_span_with_net_income_loss_phrase.py"
+    },
+    {
+      "rule_name": "rule_tables_under_part_ii_with_net_income",
+      "description": "Match tables under Part II that mention net income/earnings/loss.",
+      "file": "rules/llm/financebench/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm/rule_tables_under_part_ii_with_net_income.py"
+    },
+    {
+      "rule_name": "rule_income_statement_named_in_toc_table",
+      "description": "Match TOC tables that explicitly list Statement of Income/Operations pages.",
+      "file": "rules/llm/financebench/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm/rule_income_statement_named_in_toc_table.py"
+    },
+    {
+      "rule_name": "rule_net_income_row_with_latest_year_value_table",
+      "description": "Match tables where a net income row appears alongside multiple numeric year values.",
+      "file": "rules/llm/financebench/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm/rule_net_income_row_with_latest_year_value_table.py"
+    },
+    {
+      "rule_name": "rule_pages_near_item8_from_toc_and_net_income",
+      "description": "Match spans near Item 8 pages that also mention net income/earnings/loss.",
+      "file": "rules/llm/financebench/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm/rule_pages_near_item8_from_toc_and_net_income.py"
+    },
+    {
+      "rule_name": "rule_tables_with_financial_units_and_recent_years",
+      "description": "Match financial tables using units like million/billion and containing year columns.",
+      "file": "rules/llm/financebench/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm/rule_tables_with_financial_units_and_recent_years.py"
+    },
+    {
+      "rule_name": "rule_consolidated_results_table",
+      "description": "Match tables under paths mentioning consolidated financial statements/results with net income row.",
+      "file": "rules/llm/financebench/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm/rule_consolidated_results_table.py"
+    },
+    {
+      "rule_name": "rule_item8_or_selected_data_headers",
+      "description": "Match headers for Item 8 or Selected Financial Data as anchors for nearby answer spans.",
+      "file": "rules/llm/financebench/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm/rule_item8_or_selected_data_headers.py"
+    },
+    {
+      "rule_name": "rule_nearby_after_anchor_headers",
+      "description": "Match spans within a short window after key financial headers.",
+      "file": "rules/llm/financebench/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm/rule_nearby_after_anchor_headers.py"
+    },
+    {
+      "rule_name": "rule_page_range_30_to_120_with_net_income",
+      "description": "Match net income mentions on mid/late pages where 10-K financial sections commonly appear.",
+      "file": "rules/llm/financebench/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm/rule_page_range_30_to_120_with_net_income.py"
+    },
+    {
+      "rule_name": "rule_first_financial_table_after_item8",
+      "description": "Match the first table after an Item 8 header, which is often a primary financial statement.",
+      "file": "rules/llm/financebench/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm/rule_first_financial_table_after_item8.py"
+    },
+    {
+      "rule_name": "rule_first_table_after_statement_of_income_header",
+      "description": "Match the first table after a Statement of Income/Operations header.",
+      "file": "rules/llm/financebench/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm/rule_first_table_after_statement_of_income_header.py"
+    },
+    {
+      "rule_name": "rule_tables_with_row_net_and_column_years",
+      "description": "Match tables where a net row coexists with year-like column headers.",
+      "file": "rules/llm/financebench/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm/rule_tables_with_row_net_and_column_years.py"
+    },
+    {
+      "rule_name": "rule_text_spans_with_net_income_and_year",
+      "description": "Match narrative text spans that mention net income/earnings/loss and a fiscal year.",
+      "file": "rules/llm/financebench/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm/rule_text_spans_with_net_income_and_year.py"
+    },
+    {
+      "rule_name": "rule_financial_tables_on_pages_from_toc_income_or_item8",
+      "description": "Match tables on pages identified by TOC as income statement or Item 8 pages.",
+      "file": "rules/llm/financebench/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm/rule_financial_tables_on_pages_from_toc_income_or_item8.py"
+    },
+    {
+      "rule_name": "rule_any_financial_table_with_net_row",
+      "description": "Broad recall rule: any table that looks financial and contains a net income/earnings/loss row.",
+      "file": "rules/llm/financebench/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm/rule_any_financial_table_with_net_row.py"
+    }
+  ]
+}

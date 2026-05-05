@@ -1,0 +1,168 @@
+{
+  "question": "What stock exchange is the company's primary common stock listed on?",
+  "question_slug": "what_stock_exchange_is_the_companys_primary_common_stock_lis",
+  "timestamp": "2026-05-04T22:58:49Z",
+  "model": "gpt54",
+  "num_documents": 18,
+  "doc_names": [
+    "BOEING_2019_10K",
+    "ADOBE_2020_10K",
+    "ACTIVISIONBLIZZARD_2020_10K",
+    "COSTCO_2018_10K",
+    "AMCOR_2019_10K",
+    "AMAZON_2020_10K",
+    "AMAZON_2019_10K",
+    "ADOBE_2021_10K",
+    "EBAY_2022_10K",
+    "ADOBE_2019_10K",
+    "AMCOR_2023Q2_10Q",
+    "ADOBE_2022Q2_10Q",
+    "ACTIVSIONBLIZZARD_2023Q2_10Q",
+    "3M_2023Q2_10Q",
+    "AMCOR_2022_8K_2022-07-01",
+    "COSTCO_2023_8K_dated-2023-08-09",
+    "COSTCO_2023_8K_dated-2023-08-16",
+    "FOOTLOCKER_2022_8K_dated-2022-05-20"
+  ],
+  "max_iterations": 12,
+  "agent_turns": 9,
+  "latency_seconds": 334.217,
+  "agent_input_tokens": 6278923,
+  "agent_output_tokens": 1588,
+  "judge_input_tokens": 10266,
+  "judge_output_tokens": 484,
+  "total_input_tokens": 6289189,
+  "total_output_tokens": 2072,
+  "total_llm_calls": 72,
+  "merge_accuracy": 1.0,
+  "merge_num_correct": 18,
+  "avg_cost_ratio": 0.00335,
+  "merge_per_doc": {
+    "BOEING_2019_10K": {
+      "predicted": "New York Stock Exchange",
+      "ground_truth": "New York Stock Exchange",
+      "correct": true,
+      "cost_ratio": 0.00104
+    },
+    "ADOBE_2020_10K": {
+      "predicted": "NASDAQ",
+      "ground_truth": "NASDAQ",
+      "correct": true,
+      "cost_ratio": 0.00029
+    },
+    "ACTIVISIONBLIZZARD_2020_10K": {
+      "predicted": "The Nasdaq Global Select Market",
+      "ground_truth": "The Nasdaq Global Select Market",
+      "correct": true,
+      "cost_ratio": 0.00081
+    },
+    "COSTCO_2018_10K": {
+      "predicted": "The NASDAQ Global Select Market",
+      "ground_truth": "The NASDAQ Global Select Market",
+      "correct": true,
+      "cost_ratio": 0.00057
+    },
+    "AMCOR_2019_10K": {
+      "predicted": "The New York Stock Exchange",
+      "ground_truth": "The New York Stock Exchange",
+      "correct": true,
+      "cost_ratio": 0.00027
+    },
+    "AMAZON_2020_10K": {
+      "predicted": "Nasdaq Global Select Market",
+      "ground_truth": "Nasdaq Global Select Market",
+      "correct": true,
+      "cost_ratio": 0.00088
+    },
+    "AMAZON_2019_10K": {
+      "predicted": "Nasdaq Global Select Market",
+      "ground_truth": "Nasdaq Global Select Market",
+      "correct": true,
+      "cost_ratio": 0.00085
+    },
+    "ADOBE_2021_10K": {
+      "predicted": "NASDAQ",
+      "ground_truth": "NASDAQ",
+      "correct": true,
+      "cost_ratio": 0.00034
+    },
+    "EBAY_2022_10K": {
+      "predicted": "The Nasdaq Global Select Market",
+      "ground_truth": "The Nasdaq Global Select Market",
+      "correct": true,
+      "cost_ratio": 0.00079
+    },
+    "ADOBE_2019_10K": {
+      "predicted": "NASDAQ",
+      "ground_truth": "NASDAQ",
+      "correct": true,
+      "cost_ratio": 0.00028
+    },
+    "AMCOR_2023Q2_10Q": {
+      "predicted": "New York Stock Exchange",
+      "ground_truth": "New York Stock Exchange",
+      "correct": true,
+      "cost_ratio": 0.00269
+    },
+    "ADOBE_2022Q2_10Q": {
+      "predicted": "NASDAQ",
+      "ground_truth": "NASDAQ",
+      "correct": true,
+      "cost_ratio": 0.00061
+    },
+    "ACTIVSIONBLIZZARD_2023Q2_10Q": {
+      "predicted": "The Nasdaq Global Select Market",
+      "ground_truth": "The Nasdaq Global Select Market",
+      "correct": true,
+      "cost_ratio": 0.00062
+    },
+    "3M_2023Q2_10Q": {
+      "predicted": "New York Stock Exchange",
+      "ground_truth": "New York Stock Exchange",
+      "correct": true,
+      "cost_ratio": 0.00157
+    },
+    "AMCOR_2022_8K_2022-07-01": {
+      "predicted": "New York Stock Exchange",
+      "ground_truth": "New York Stock Exchange",
+      "correct": true,
+      "cost_ratio": 0.00611
+    },
+    "COSTCO_2023_8K_dated-2023-08-09": {
+      "predicted": "NASDAQ",
+      "ground_truth": "NASDAQ",
+      "correct": true,
+      "cost_ratio": 0.00113
+    },
+    "COSTCO_2023_8K_dated-2023-08-16": {
+      "predicted": "NASDAQ",
+      "ground_truth": "NASDAQ",
+      "correct": true,
+      "cost_ratio": 0.02484
+    },
+    "FOOTLOCKER_2022_8K_dated-2022-05-20": {
+      "predicted": "New York Stock Exchange",
+      "ground_truth": "New York Stock Exchange",
+      "correct": true,
+      "cost_ratio": 0.01663
+    }
+  },
+  "rules": [
+    {
+      "rule_name": "rule_cover_page_exchange_listing",
+      "description": "Retrieve page-1 cover-page spans describing the exchange where common stock is registered.",
+      "hit_rate": 0.9444,
+      "avg_cost_ratio": 0.00327,
+      "file": "rules/agent/financebench_mix_doc/what_stock_exchange_is_the_companys_primary_common_stock_lis_18_llm/rule_cover_page_exchange_listing.py"
+    },
+    {
+      "rule_name": "rule_part_ii_common_stock_exchange",
+      "description": "Retrieve Part II Common Stock discussion that states the exchange where the stock trades.",
+      "hit_rate": 0.1667,
+      "avg_cost_ratio": 8e-05,
+      "file": "rules/agent/financebench_mix_doc/what_stock_exchange_is_the_companys_primary_common_stock_lis_18_llm/rule_part_ii_common_stock_exchange.py"
+    }
+  ],
+  "rule_dir": "rules/agent/financebench_mix_doc/what_stock_exchange_is_the_companys_primary_common_stock_lis_18_llm",
+  "log_file": "logs/financebench/agent/what_stock_exchange_is_the_companys_primary_common_stock_lis_18docs_20260504_225849.txt"
+}

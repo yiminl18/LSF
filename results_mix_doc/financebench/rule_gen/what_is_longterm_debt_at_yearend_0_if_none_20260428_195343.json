@@ -1,0 +1,209 @@
+{
+  "question": "What is long-term debt at year-end (0 if none)?",
+  "question_slug": "what_is_longterm_debt_at_yearend_0_if_none",
+  "timestamp": "2026-04-28T19:53:43Z",
+  "model": "gpt54",
+  "num_documents": 10,
+  "doc_names": [
+    "AMCOR_2019_10K",
+    "ADOBE_2022Q2_10Q",
+    "COSTCO_2017_10K",
+    "BOEING_2018_10K",
+    "INTEL_2022Q4_EARNINGS",
+    "AMAZON_2018_10K",
+    "EBAY_2021_10K",
+    "AMAZON_2016_10K",
+    "COSTCO_2023_8K_dated-2023-08-09",
+    "FOOTLOCKER_2023Q3_10Q"
+  ],
+  "latency_seconds": 210.171,
+  "input_tokens": 449716,
+  "output_tokens": 7220,
+  "rules": [
+    {
+      "rule_name": "rule_balance_sheet_long_term_debt_row",
+      "description": "Match balance sheet tables containing a long-term debt/debt row in long-term liabilities.",
+      "file": "rules/financebench/what_is_longterm_debt_at_yearend_0_if_none_10_llm/rule_balance_sheet_long_term_debt_row.py"
+    },
+    {
+      "rule_name": "rule_balance_sheet_debt_row_anywhere",
+      "description": "Match balance sheet tables with any debt row, favoring year-end statement tables.",
+      "file": "rules/financebench/what_is_longterm_debt_at_yearend_0_if_none_10_llm/rule_balance_sheet_debt_row_anywhere.py"
+    },
+    {
+      "rule_name": "rule_balance_sheet_long_term_liabilities_debt",
+      "description": "Match balance sheet tables where a debt row appears under long-term liabilities.",
+      "file": "rules/financebench/what_is_longterm_debt_at_yearend_0_if_none_10_llm/rule_balance_sheet_long_term_liabilities_debt.py"
+    },
+    {
+      "rule_name": "rule_condensed_balance_sheet_long_term_debt",
+      "description": "Match condensed consolidated balance sheet tables with long-term debt/debt rows.",
+      "file": "rules/financebench/what_is_longterm_debt_at_yearend_0_if_none_10_llm/rule_condensed_balance_sheet_long_term_debt.py"
+    },
+    {
+      "rule_name": "rule_consolidated_balance_sheet_long_term_debt",
+      "description": "Match consolidated balance sheet tables with long-term debt rows.",
+      "file": "rules/financebench/what_is_longterm_debt_at_yearend_0_if_none_10_llm/rule_consolidated_balance_sheet_long_term_debt.py"
+    },
+    {
+      "rule_name": "rule_balance_sheet_noncurrent_debt",
+      "description": "Match balance sheet tables mentioning non-current liabilities and debt.",
+      "file": "rules/financebench/what_is_longterm_debt_at_yearend_0_if_none_10_llm/rule_balance_sheet_noncurrent_debt.py"
+    },
+    {
+      "rule_name": "rule_long_term_debt_note_header",
+      "description": "Match note sections explicitly titled long-term debt or debt.",
+      "file": "rules/financebench/what_is_longterm_debt_at_yearend_0_if_none_10_llm/rule_long_term_debt_note_header.py"
+    },
+    {
+      "rule_name": "rule_long_term_debt_text_span",
+      "description": "Match text spans explicitly mentioning long-term debt at year-end.",
+      "file": "rules/financebench/what_is_longterm_debt_at_yearend_0_if_none_10_llm/rule_long_term_debt_text_span.py"
+    },
+    {
+      "rule_name": "rule_debt_in_balance_sheet_path",
+      "description": "Match any span under a balance sheet path that mentions debt.",
+      "file": "rules/financebench/what_is_longterm_debt_at_yearend_0_if_none_10_llm/rule_debt_in_balance_sheet_path.py"
+    },
+    {
+      "rule_name": "rule_item1_financial_statements_balance_sheet",
+      "description": "Match Item 1 financial statements sections containing balance sheet tables.",
+      "file": "rules/financebench/what_is_longterm_debt_at_yearend_0_if_none_10_llm/rule_item1_financial_statements_balance_sheet.py"
+    },
+    {
+      "rule_name": "rule_item8_financial_statements_balance_sheet",
+      "description": "Match Item 8 financial statements sections containing balance sheet tables.",
+      "file": "rules/financebench/what_is_longterm_debt_at_yearend_0_if_none_10_llm/rule_item8_financial_statements_balance_sheet.py"
+    },
+    {
+      "rule_name": "rule_page_early_balance_sheet_tables",
+      "description": "Match early-page balance sheet tables where debt answers often appear.",
+      "file": "rules/financebench/what_is_longterm_debt_at_yearend_0_if_none_10_llm/rule_page_early_balance_sheet_tables.py"
+    },
+    {
+      "rule_name": "rule_year_end_balance_sheet_table",
+      "description": "Match balance sheet tables with two date columns representing year-end comparisons.",
+      "file": "rules/financebench/what_is_longterm_debt_at_yearend_0_if_none_10_llm/rule_year_end_balance_sheet_table.py"
+    },
+    {
+      "rule_name": "rule_long_term_debt_cell_candidates",
+      "description": "Return synthetic span-like dicts for cells in rows labeled long-term debt.",
+      "file": "rules/financebench/what_is_longterm_debt_at_yearend_0_if_none_10_llm/rule_long_term_debt_cell_candidates.py"
+    },
+    {
+      "rule_name": "rule_debt_under_long_term_liabilities_cells",
+      "description": "Return synthetic cell spans for debt rows immediately following long-term liabilities headers.",
+      "file": "rules/financebench/what_is_longterm_debt_at_yearend_0_if_none_10_llm/rule_debt_under_long_term_liabilities_cells.py"
+    },
+    {
+      "rule_name": "rule_long_term_debt_or_zero_8k",
+      "description": "For non-financial 8-Ks, return no matches because long-term debt is typically absent (answer 0).",
+      "file": "rules/financebench/what_is_longterm_debt_at_yearend_0_if_none_10_llm/rule_long_term_debt_or_zero_8k.py"
+    },
+    {
+      "rule_name": "rule_press_release_balance_sheet_debt",
+      "description": "Match press release balance sheet tables with debt rows.",
+      "file": "rules/financebench/what_is_longterm_debt_at_yearend_0_if_none_10_llm/rule_press_release_balance_sheet_debt.py"
+    },
+    {
+      "rule_name": "rule_consolidated_balance_sheets_debt_row",
+      "description": "Match tables titled consolidated balance sheets that include debt rows.",
+      "file": "rules/financebench/what_is_longterm_debt_at_yearend_0_if_none_10_llm/rule_consolidated_balance_sheets_debt_row.py"
+    },
+    {
+      "rule_name": "rule_long_term_debt_page_near_balance_sheet_header",
+      "description": "Match spans on the same page as a balance sheet header that mention debt.",
+      "file": "rules/financebench/what_is_longterm_debt_at_yearend_0_if_none_10_llm/rule_long_term_debt_page_near_balance_sheet_header.py"
+    },
+    {
+      "rule_name": "rule_table_row_label_debt",
+      "description": "Return tables having a row header exactly or nearly equal to debt.",
+      "file": "rules/financebench/what_is_longterm_debt_at_yearend_0_if_none_10_llm/rule_table_row_label_debt.py"
+    },
+    {
+      "rule_name": "rule_table_row_label_long_term_debt",
+      "description": "Return tables having a row header containing long-term debt.",
+      "file": "rules/financebench/what_is_longterm_debt_at_yearend_0_if_none_10_llm/rule_table_row_label_long_term_debt.py"
+    },
+    {
+      "rule_name": "rule_table_with_current_and_long_term_debt",
+      "description": "Match tables containing both current debt and long-term debt patterns.",
+      "file": "rules/financebench/what_is_longterm_debt_at_yearend_0_if_none_10_llm/rule_table_with_current_and_long_term_debt.py"
+    },
+    {
+      "rule_name": "rule_balance_sheet_liabilities_section",
+      "description": "Match balance sheet tables containing liabilities and stockholders' equity sections.",
+      "file": "rules/financebench/what_is_longterm_debt_at_yearend_0_if_none_10_llm/rule_balance_sheet_liabilities_section.py"
+    },
+    {
+      "rule_name": "rule_earnings_release_consolidated_balance_sheets",
+      "description": "Match earnings release consolidated balance sheet tables with debt values.",
+      "file": "rules/financebench/what_is_longterm_debt_at_yearend_0_if_none_10_llm/rule_earnings_release_consolidated_balance_sheets.py"
+    },
+    {
+      "rule_name": "rule_balance_sheet_long_term_debt_numeric_cells",
+      "description": "Return synthetic cell spans for numeric values in long-term debt rows of balance sheet tables.",
+      "file": "rules/financebench/what_is_longterm_debt_at_yearend_0_if_none_10_llm/rule_balance_sheet_long_term_debt_numeric_cells.py"
+    },
+    {
+      "rule_name": "rule_balance_sheet_debt_numeric_cells_any",
+      "description": "Return synthetic cell spans for numeric values in any debt row of balance sheet tables.",
+      "file": "rules/financebench/what_is_longterm_debt_at_yearend_0_if_none_10_llm/rule_balance_sheet_debt_numeric_cells_any.py"
+    },
+    {
+      "rule_name": "rule_long_term_debt_note_text",
+      "description": "Match note text spans discussing long-term debt balances.",
+      "file": "rules/financebench/what_is_longterm_debt_at_yearend_0_if_none_10_llm/rule_long_term_debt_note_text.py"
+    },
+    {
+      "rule_name": "rule_balance_sheet_page_3_to_10",
+      "description": "Match balance sheet tables on pages 3-10, a common location in 10-Qs and earnings releases.",
+      "file": "rules/financebench/what_is_longterm_debt_at_yearend_0_if_none_10_llm/rule_balance_sheet_page_3_to_10.py"
+    },
+    {
+      "rule_name": "rule_balance_sheet_page_30_to_60",
+      "description": "Match balance sheet tables on pages 30-60, a common location in 10-K financial statements.",
+      "file": "rules/financebench/what_is_longterm_debt_at_yearend_0_if_none_10_llm/rule_balance_sheet_page_30_to_60.py"
+    },
+    {
+      "rule_name": "rule_long_term_debt_zero_if_absent",
+      "description": "Return empty when no debt/balance-sheet evidence exists, supporting 0 answers by fallback logic.",
+      "file": "rules/financebench/what_is_longterm_debt_at_yearend_0_if_none_10_llm/rule_long_term_debt_zero_if_absent.py"
+    },
+    {
+      "rule_name": "rule_long_term_debt_header_or_table_same_page",
+      "description": "Match tables on pages where a long-term debt/debt section header appears.",
+      "file": "rules/financebench/what_is_longterm_debt_at_yearend_0_if_none_10_llm/rule_long_term_debt_header_or_table_same_page.py"
+    },
+    {
+      "rule_name": "rule_balance_sheet_with_debt_and_date_columns",
+      "description": "Match balance sheet tables with debt rows and at least two date-like column headers.",
+      "file": "rules/financebench/what_is_longterm_debt_at_yearend_0_if_none_10_llm/rule_balance_sheet_with_debt_and_date_columns.py"
+    },
+    {
+      "rule_name": "rule_long_term_liabilities_header_row",
+      "description": "Return tables containing a long-term liabilities header row, useful precursor to debt values.",
+      "file": "rules/financebench/what_is_longterm_debt_at_yearend_0_if_none_10_llm/rule_long_term_liabilities_header_row.py"
+    },
+    {
+      "rule_name": "rule_debt_row_in_consolidated_balance_sheets_cells",
+      "description": "Return synthetic cell spans for debt rows in consolidated balance sheets.",
+      "file": "rules/financebench/what_is_longterm_debt_at_yearend_0_if_none_10_llm/rule_debt_row_in_consolidated_balance_sheets_cells.py"
+    },
+    {
+      "rule_name": "rule_balance_sheet_total_liabilities_near_debt",
+      "description": "Match balance sheet tables containing both debt and total liabilities rows.",
+      "file": "rules/financebench/what_is_longterm_debt_at_yearend_0_if_none_10_llm/rule_balance_sheet_total_liabilities_near_debt.py"
+    },
+    {
+      "rule_name": "rule_balance_sheet_current_and_long_term_sections",
+      "description": "Match balance sheet tables with both current liabilities and long-term liabilities sections.",
+      "file": "rules/financebench/what_is_longterm_debt_at_yearend_0_if_none_10_llm/rule_balance_sheet_current_and_long_term_sections.py"
+    },
+    {
+      "rule_name": "rule_debt_value_in_press_release_balance_sheet_cells",
+      "description": "Return synthetic cell spans for debt values in press-release balance sheet tables.",
+      "file": "rules/financebench/what_is_longterm_debt_at_yearend_0_if_none_10_llm/rule_debt_value_in_press_release_balance_sheet_cells.py"
+    }
+  ]
+}

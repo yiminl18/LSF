@@ -1,0 +1,289 @@
+{
+  "question": "If Part III is incorporated by reference, what is the proxy filing deadline stated on the 10-K (date or \"not stated\")?",
+  "question_slug": "if_part_iii_is_incorporated_by_reference_what_is_the_proxy_f",
+  "timestamp": "2026-04-28T19:03:42Z",
+  "model": "gpt54",
+  "num_documents": 10,
+  "doc_names": [
+    "AMCOR_2019_10K",
+    "ADOBE_2022Q2_10Q",
+    "COSTCO_2017_10K",
+    "BOEING_2018_10K",
+    "INTEL_2022Q4_EARNINGS",
+    "AMAZON_2018_10K",
+    "EBAY_2021_10K",
+    "AMAZON_2016_10K",
+    "COSTCO_2023_8K_dated-2023-08-09",
+    "FOOTLOCKER_2023Q3_10Q"
+  ],
+  "latency_seconds": 204.826,
+  "input_tokens": 449707,
+  "output_tokens": 6905,
+  "rules": [
+    {
+      "rule_name": "rule_documents_incorporated_by_reference_header",
+      "description": "Match spans that are the 'DOCUMENTS INCORPORATED BY REFERENCE' header, usually on the cover page.",
+      "file": "rules/financebench/if_part_iii_is_incorporated_by_reference_what_is_the_proxy_f_10_llm/rule_documents_incorporated_by_reference_header.py"
+    },
+    {
+      "rule_name": "rule_cover_page_documents_incorporated_by_reference",
+      "description": "Match page-1/2 spans mentioning documents incorporated by reference.",
+      "file": "rules/financebench/if_part_iii_is_incorporated_by_reference_what_is_the_proxy_f_10_llm/rule_cover_page_documents_incorporated_by_reference.py"
+    },
+    {
+      "rule_name": "rule_part_iii_incorporated_by_reference_text",
+      "description": "Match spans stating that Part III is incorporated by reference.",
+      "file": "rules/financebench/if_part_iii_is_incorporated_by_reference_what_is_the_proxy_f_10_llm/rule_part_iii_incorporated_by_reference_text.py"
+    },
+    {
+      "rule_name": "rule_proxy_statement_reference",
+      "description": "Match spans on the cover page that mention a proxy statement in connection with Part III.",
+      "file": "rules/financebench/if_part_iii_is_incorporated_by_reference_what_is_the_proxy_f_10_llm/rule_proxy_statement_reference.py"
+    },
+    {
+      "rule_name": "rule_definitive_proxy_statement_reference",
+      "description": "Match spans mentioning a definitive proxy statement, often the key incorporation sentence.",
+      "file": "rules/financebench/if_part_iii_is_incorporated_by_reference_what_is_the_proxy_f_10_llm/rule_definitive_proxy_statement_reference.py"
+    },
+    {
+      "rule_name": "rule_proxy_statement_for_annual_meeting",
+      "description": "Match spans mentioning proxy statement for an annual meeting, often containing the deadline/date.",
+      "file": "rules/financebench/if_part_iii_is_incorporated_by_reference_what_is_the_proxy_f_10_llm/rule_proxy_statement_for_annual_meeting.py"
+    },
+    {
+      "rule_name": "rule_annual_meeting_to_be_held_on_date",
+      "description": "Match spans saying the annual meeting is to be held on a specific date.",
+      "file": "rules/financebench/if_part_iii_is_incorporated_by_reference_what_is_the_proxy_f_10_llm/rule_annual_meeting_to_be_held_on_date.py"
+    },
+    {
+      "rule_name": "rule_portions_of_proxy_statement_part_iii",
+      "description": "Match the common 10-K sentence 'Portions of the Company's Proxy Statement ... are incorporated by reference into Part III'.",
+      "file": "rules/financebench/if_part_iii_is_incorporated_by_reference_what_is_the_proxy_f_10_llm/rule_portions_of_proxy_statement_part_iii.py"
+    },
+    {
+      "rule_name": "rule_information_required_by_part_iii",
+      "description": "Match the common sentence 'The information required by Part III ... is incorporated by reference'.",
+      "file": "rules/financebench/if_part_iii_is_incorporated_by_reference_what_is_the_proxy_f_10_llm/rule_information_required_by_part_iii.py"
+    },
+    {
+      "rule_name": "rule_part_iii_incorporates_information_by_reference",
+      "description": "Match spans saying Part III incorporates information by reference to a proxy statement.",
+      "file": "rules/financebench/if_part_iii_is_incorporated_by_reference_what_is_the_proxy_f_10_llm/rule_part_iii_incorporates_information_by_reference.py"
+    },
+    {
+      "rule_name": "rule_within_120_days_phrase",
+      "description": "Match spans containing the common SEC filing deadline phrase 'within 120 days'.",
+      "file": "rules/financebench/if_part_iii_is_incorporated_by_reference_what_is_the_proxy_f_10_llm/rule_within_120_days_phrase.py"
+    },
+    {
+      "rule_name": "rule_filed_with_sec_within_120_days",
+      "description": "Match spans saying the proxy statement will be filed with the SEC within 120 days after fiscal year end.",
+      "file": "rules/financebench/if_part_iii_is_incorporated_by_reference_what_is_the_proxy_f_10_llm/rule_filed_with_sec_within_120_days.py"
+    },
+    {
+      "rule_name": "rule_proxy_filed_within_120_days_after_year_end",
+      "description": "Match spans combining proxy statement language with 'within 120 days' and fiscal year end.",
+      "file": "rules/financebench/if_part_iii_is_incorporated_by_reference_what_is_the_proxy_f_10_llm/rule_proxy_filed_within_120_days_after_year_end.py"
+    },
+    {
+      "rule_name": "rule_cover_page_proxy_deadline_sentence",
+      "description": "Match likely answer spans on page 1 or 2 that mention proxy statement and either a date or 120-day deadline.",
+      "file": "rules/financebench/if_part_iii_is_incorporated_by_reference_what_is_the_proxy_f_10_llm/rule_cover_page_proxy_deadline_sentence.py"
+    },
+    {
+      "rule_name": "rule_page1_proxy_reference",
+      "description": "Match page-1 spans mentioning proxy, where the answer almost always lives in these filings.",
+      "file": "rules/financebench/if_part_iii_is_incorporated_by_reference_what_is_the_proxy_f_10_llm/rule_page1_proxy_reference.py"
+    },
+    {
+      "rule_name": "rule_page2_proxy_reference",
+      "description": "Match page-2 spans mentioning proxy, covering cases where the incorporation sentence spills to page 2.",
+      "file": "rules/financebench/if_part_iii_is_incorporated_by_reference_what_is_the_proxy_f_10_llm/rule_page2_proxy_reference.py"
+    },
+    {
+      "rule_name": "rule_cover_page_part_iii_proxy",
+      "description": "Match cover-page spans that mention both Part III and proxy-related language.",
+      "file": "rules/financebench/if_part_iii_is_incorporated_by_reference_what_is_the_proxy_f_10_llm/rule_cover_page_part_iii_proxy.py"
+    },
+    {
+      "rule_name": "rule_path_contains_documents_incorporated_by_reference",
+      "description": "Match spans under a structure path containing 'DOCUMENTS INCORPORATED BY REFERENCE'.",
+      "file": "rules/financebench/if_part_iii_is_incorporated_by_reference_what_is_the_proxy_f_10_llm/rule_path_contains_documents_incorporated_by_reference.py"
+    },
+    {
+      "rule_name": "rule_path_contains_form_10k_and_proxy",
+      "description": "Match spans whose section path suggests the cover/form area and whose text mentions proxy.",
+      "file": "rules/financebench/if_part_iii_is_incorporated_by_reference_what_is_the_proxy_f_10_llm/rule_path_contains_form_10k_and_proxy.py"
+    },
+    {
+      "rule_name": "rule_bold_cover_proxy_sentence",
+      "description": "Match bold cover-page spans mentioning proxy statement or incorporation by reference.",
+      "file": "rules/financebench/if_part_iii_is_incorporated_by_reference_what_is_the_proxy_f_10_llm/rule_bold_cover_proxy_sentence.py"
+    },
+    {
+      "rule_name": "rule_body_text_after_documents_header",
+      "description": "Match body text immediately under a 'DOCUMENTS INCORPORATED BY REFERENCE' path, often the exact answer span.",
+      "file": "rules/financebench/if_part_iii_is_incorporated_by_reference_what_is_the_proxy_f_10_llm/rule_body_text_after_documents_header.py"
+    },
+    {
+      "rule_name": "rule_section_header_with_embedded_proxy_sentence",
+      "description": "Match section_header spans whose text_span or text embeds the proxy incorporation sentence.",
+      "file": "rules/financebench/if_part_iii_is_incorporated_by_reference_what_is_the_proxy_f_10_llm/rule_section_header_with_embedded_proxy_sentence.py"
+    },
+    {
+      "rule_name": "rule_text_span_contains_proxy_reference",
+      "description": "Match spans where text_span contains proxy/incorporation language, useful for OCR-merged cover headers.",
+      "file": "rules/financebench/if_part_iii_is_incorporated_by_reference_what_is_the_proxy_f_10_llm/rule_text_span_contains_proxy_reference.py"
+    },
+    {
+      "rule_name": "rule_annual_meeting_date_regex",
+      "description": "Match spans containing an explicit annual meeting date, which is the answer in some filings.",
+      "file": "rules/financebench/if_part_iii_is_incorporated_by_reference_what_is_the_proxy_f_10_llm/rule_annual_meeting_date_regex.py"
+    },
+    {
+      "rule_name": "rule_any_month_day_year_near_proxy",
+      "description": "Match spans containing a month-day-year date near proxy/annual meeting language.",
+      "file": "rules/financebench/if_part_iii_is_incorporated_by_reference_what_is_the_proxy_f_10_llm/rule_any_month_day_year_near_proxy.py"
+    },
+    {
+      "rule_name": "rule_definitive_proxy_statement_within_120_days",
+      "description": "Match the common SEC template sentence referencing a definitive proxy statement intended to be filed within 120 days.",
+      "file": "rules/financebench/if_part_iii_is_incorporated_by_reference_what_is_the_proxy_f_10_llm/rule_definitive_proxy_statement_within_120_days.py"
+    },
+    {
+      "rule_name": "rule_part_iii_proxy_on_cover_h1_company",
+      "description": "Match spans under the company-name cover section that mention Part III/proxy incorporation.",
+      "file": "rules/financebench/if_part_iii_is_incorporated_by_reference_what_is_the_proxy_f_10_llm/rule_part_iii_proxy_on_cover_h1_company.py"
+    },
+    {
+      "rule_name": "rule_cover_page_small_font_proxy_reference",
+      "description": "Match small-font cover-page body text mentioning proxy statement or 120-day filing language.",
+      "file": "rules/financebench/if_part_iii_is_incorporated_by_reference_what_is_the_proxy_f_10_llm/rule_cover_page_small_font_proxy_reference.py"
+    },
+    {
+      "rule_name": "rule_part_iii_table_of_contents_rows",
+      "description": "Match table-of-contents tables containing Part III rows, useful as a weak locator for nearby incorporation language.",
+      "file": "rules/financebench/if_part_iii_is_incorporated_by_reference_what_is_the_proxy_f_10_llm/rule_part_iii_table_of_contents_rows.py"
+    },
+    {
+      "rule_name": "rule_cover_page_before_table_of_contents",
+      "description": "Match all page-1/2 spans before the main body where proxy incorporation language usually appears.",
+      "file": "rules/financebench/if_part_iii_is_incorporated_by_reference_what_is_the_proxy_f_10_llm/rule_cover_page_before_table_of_contents.py"
+    },
+    {
+      "rule_name": "rule_proxy_reference_with_shareholder_meeting",
+      "description": "Match spans mentioning proxy statement for a shareholder/shareholders meeting.",
+      "file": "rules/financebench/if_part_iii_is_incorporated_by_reference_what_is_the_proxy_f_10_llm/rule_proxy_reference_with_shareholder_meeting.py"
+    },
+    {
+      "rule_name": "rule_proxy_reference_with_stockholders_meeting",
+      "description": "Match spans mentioning proxy statement for an annual meeting of stockholders.",
+      "file": "rules/financebench/if_part_iii_is_incorporated_by_reference_what_is_the_proxy_f_10_llm/rule_proxy_reference_with_stockholders_meeting.py"
+    },
+    {
+      "rule_name": "rule_part_iii_incorporated_reference_no_date",
+      "description": "Match spans that indicate Part III incorporation by reference but only give a filing window, not a specific date.",
+      "file": "rules/financebench/if_part_iii_is_incorporated_by_reference_what_is_the_proxy_f_10_llm/rule_part_iii_incorporated_reference_no_date.py"
+    },
+    {
+      "rule_name": "rule_company_cover_section_header_with_proxy",
+      "description": "Match large company-name section headers whose embedded text includes the proxy incorporation sentence.",
+      "file": "rules/financebench/if_part_iii_is_incorporated_by_reference_what_is_the_proxy_f_10_llm/rule_company_cover_section_header_with_proxy.py"
+    },
+    {
+      "rule_name": "rule_proxy_reference_near_top_of_doc",
+      "description": "Match early-document spans mentioning proxy, exploiting the strong structural position on the first page.",
+      "file": "rules/financebench/if_part_iii_is_incorporated_by_reference_what_is_the_proxy_f_10_llm/rule_proxy_reference_near_top_of_doc.py"
+    },
+    {
+      "rule_name": "rule_part_iii_reference_near_top_of_doc",
+      "description": "Match early-document spans mentioning Part III, where the incorporation sentence usually appears.",
+      "file": "rules/financebench/if_part_iii_is_incorporated_by_reference_what_is_the_proxy_f_10_llm/rule_part_iii_reference_near_top_of_doc.py"
+    },
+    {
+      "rule_name": "rule_proxy_or_120_days_on_first_two_pages",
+      "description": "Broad high-recall rule for first-two-page spans mentioning proxy or 120-day filing timing.",
+      "file": "rules/financebench/if_part_iii_is_incorporated_by_reference_what_is_the_proxy_f_10_llm/rule_proxy_or_120_days_on_first_two_pages.py"
+    },
+    {
+      "rule_name": "rule_annual_meeting_date_or_proxy_deadline",
+      "description": "Broad rule matching either explicit annual meeting dates or generic proxy filing deadlines.",
+      "file": "rules/financebench/if_part_iii_is_incorporated_by_reference_what_is_the_proxy_f_10_llm/rule_annual_meeting_date_or_proxy_deadline.py"
+    },
+    {
+      "rule_name": "rule_cover_page_text_within_120_days_of_fiscal_year_end",
+      "description": "Match the exact template phrase 'within 120 days after the close/end of the fiscal year'.",
+      "file": "rules/financebench/if_part_iii_is_incorporated_by_reference_what_is_the_proxy_f_10_llm/rule_cover_page_text_within_120_days_of_fiscal_year_end.py"
+    },
+    {
+      "rule_name": "rule_proxy_reference_with_regulation_14a",
+      "description": "Match spans mentioning proxy statement filing pursuant to Regulation 14A.",
+      "file": "rules/financebench/if_part_iii_is_incorporated_by_reference_what_is_the_proxy_f_10_llm/rule_proxy_reference_with_regulation_14a.py"
+    },
+    {
+      "rule_name": "rule_part_iii_reference_with_definitive_proxy",
+      "description": "Match spans combining Part III incorporation language with 'definitive proxy statement'.",
+      "file": "rules/financebench/if_part_iii_is_incorporated_by_reference_what_is_the_proxy_f_10_llm/rule_part_iii_reference_with_definitive_proxy.py"
+    },
+    {
+      "rule_name": "rule_proxy_reference_with_intended_to_be_filed",
+      "description": "Match spans saying the proxy statement is intended to be filed, often followed by the 120-day deadline.",
+      "file": "rules/financebench/if_part_iii_is_incorporated_by_reference_what_is_the_proxy_f_10_llm/rule_proxy_reference_with_intended_to_be_filed.py"
+    },
+    {
+      "rule_name": "rule_part_iii_reference_with_annual_meeting_date",
+      "description": "Match spans where Part III incorporation sentence includes a specific annual meeting date.",
+      "file": "rules/financebench/if_part_iii_is_incorporated_by_reference_what_is_the_proxy_f_10_llm/rule_part_iii_reference_with_annual_meeting_date.py"
+    },
+    {
+      "rule_name": "rule_cover_page_h2_h3_proxy_reference",
+      "description": "Match H2/H3 cover-page spans mentioning proxy or incorporation by reference.",
+      "file": "rules/financebench/if_part_iii_is_incorporated_by_reference_what_is_the_proxy_f_10_llm/rule_cover_page_h2_h3_proxy_reference.py"
+    },
+    {
+      "rule_name": "rule_cover_page_body_proxy_reference",
+      "description": "Match body-level cover-page text spans mentioning proxy statement or annual meeting date.",
+      "file": "rules/financebench/if_part_iii_is_incorporated_by_reference_what_is_the_proxy_f_10_llm/rule_cover_page_body_proxy_reference.py"
+    },
+    {
+      "rule_name": "rule_any_span_with_part_iii_and_within_120_days",
+      "description": "Match any span containing both Part III and within-120-days language.",
+      "file": "rules/financebench/if_part_iii_is_incorporated_by_reference_what_is_the_proxy_f_10_llm/rule_any_span_with_part_iii_and_within_120_days.py"
+    },
+    {
+      "rule_name": "rule_any_span_with_proxy_and_filed_with_sec",
+      "description": "Match any span mentioning proxy statement and filing with the SEC.",
+      "file": "rules/financebench/if_part_iii_is_incorporated_by_reference_what_is_the_proxy_f_10_llm/rule_any_span_with_proxy_and_filed_with_sec.py"
+    },
+    {
+      "rule_name": "rule_any_span_with_proxy_and_annual_meeting",
+      "description": "Match any span mentioning both proxy statement and annual meeting language.",
+      "file": "rules/financebench/if_part_iii_is_incorporated_by_reference_what_is_the_proxy_f_10_llm/rule_any_span_with_proxy_and_annual_meeting.py"
+    },
+    {
+      "rule_name": "rule_any_span_with_part_iii_and_proxy",
+      "description": "Match any span mentioning both Part III and proxy, the core semantic pattern for this question.",
+      "file": "rules/financebench/if_part_iii_is_incorporated_by_reference_what_is_the_proxy_f_10_llm/rule_any_span_with_part_iii_and_proxy.py"
+    },
+    {
+      "rule_name": "rule_any_span_with_documents_incorporated_and_proxy",
+      "description": "Match any span mentioning both documents incorporated by reference and proxy statement.",
+      "file": "rules/financebench/if_part_iii_is_incorporated_by_reference_what_is_the_proxy_f_10_llm/rule_any_span_with_documents_incorporated_and_proxy.py"
+    },
+    {
+      "rule_name": "rule_cover_page_company_section_allcaps_proxy",
+      "description": "Match all-caps or bold company-cover spans that include proxy incorporation language.",
+      "file": "rules/financebench/if_part_iii_is_incorporated_by_reference_what_is_the_proxy_f_10_llm/rule_cover_page_company_section_allcaps_proxy.py"
+    },
+    {
+      "rule_name": "rule_specific_date_answer_candidates",
+      "description": "Return spans likely to contain the actual answer date when a specific proxy meeting date is stated.",
+      "file": "rules/financebench/if_part_iii_is_incorporated_by_reference_what_is_the_proxy_f_10_llm/rule_specific_date_answer_candidates.py"
+    },
+    {
+      "rule_name": "rule_not_stated_candidates_120_day_only",
+      "description": "Return spans that likely imply the answer is 'not stated' because they only provide a 120-day filing window.",
+      "file": "rules/financebench/if_part_iii_is_incorporated_by_reference_what_is_the_proxy_f_10_llm/rule_not_stated_candidates_120_day_only.py"
+    }
+  ]
+}

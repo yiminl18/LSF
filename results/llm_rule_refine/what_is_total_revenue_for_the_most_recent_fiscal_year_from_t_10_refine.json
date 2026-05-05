@@ -1,0 +1,127 @@
+{
+  "question": "What is total revenue for the most recent fiscal year (from the audited income statement)?",
+  "question_slug": "what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10",
+  "timestamp": "2026-04-29T21:51:31Z",
+  "model": "gpt54",
+  "num_documents": 10,
+  "target_accuracy": 0.9,
+  "all_rules_count": 37,
+  "selected_rules_count": 5,
+  "selected_rules": [
+    "rule_consolidated_statement_of_earnings_heading",
+    "rule_first_financial_table_after_item8",
+    "rule_income_statement_page_from_toc",
+    "rule_segment_note_revenue_tables",
+    "rule_item8_income_statement_tables"
+  ],
+  "merge_accuracy": 0.9,
+  "avg_cost_ratio": 0.015432,
+  "avg_cost_ratio_all_rules": 0.641228,
+  "cost_reduction_ratio": 0.975933,
+  "avg_latency_seconds": 51.015,
+  "total_llm_calls": 420,
+  "exponential_search_steps": 5,
+  "pruning_steps": 15,
+  "per_doc": [
+    {
+      "doc_name": "AMCOR_2019_10K",
+      "predicted": "9,458.2 million",
+      "ground_truth": "9,458.2 million",
+      "correct": true,
+      "retrieved_tokens": 687,
+      "latency_seconds": 1.279,
+      "total_doc_tokens": 84134,
+      "cost_ratio": 0.008166
+    },
+    {
+      "doc_name": "COSTCO_2017_10K",
+      "predicted": "NOT FOUND",
+      "ground_truth": "126,172",
+      "correct": false,
+      "retrieved_tokens": 239,
+      "latency_seconds": 0.862,
+      "total_doc_tokens": 50565,
+      "cost_ratio": 0.004727
+    },
+    {
+      "doc_name": "BOEING_2018_10K",
+      "predicted": "$101,127 million",
+      "ground_truth": "$101,127 million",
+      "correct": true,
+      "retrieved_tokens": 2095,
+      "latency_seconds": 0.884,
+      "total_doc_tokens": 88449,
+      "cost_ratio": 0.023686
+    },
+    {
+      "doc_name": "AMAZON_2018_10K",
+      "predicted": "$232,887 million",
+      "ground_truth": "$232,887 million",
+      "correct": true,
+      "retrieved_tokens": 1256,
+      "latency_seconds": 0.736,
+      "total_doc_tokens": 67659,
+      "cost_ratio": 0.018564
+    },
+    {
+      "doc_name": "EBAY_2021_10K",
+      "predicted": "$10,420 million",
+      "ground_truth": "$10,420 million",
+      "correct": true,
+      "retrieved_tokens": 1582,
+      "latency_seconds": 1.04,
+      "total_doc_tokens": 104188,
+      "cost_ratio": 0.015184
+    },
+    {
+      "doc_name": "AMAZON_2016_10K",
+      "predicted": "$135,987 million",
+      "ground_truth": "$135,987 million",
+      "correct": true,
+      "retrieved_tokens": 1396,
+      "latency_seconds": 2.701,
+      "total_doc_tokens": 63358,
+      "cost_ratio": 0.022034
+    },
+    {
+      "doc_name": "CORNING_2022_10K",
+      "predicted": "$14,189 million",
+      "ground_truth": "14,189 million",
+      "correct": true,
+      "retrieved_tokens": 3545,
+      "latency_seconds": 1.421,
+      "total_doc_tokens": 107052,
+      "cost_ratio": 0.033115
+    },
+    {
+      "doc_name": "NIKE_2021_10K",
+      "predicted": "$44,538 million",
+      "ground_truth": "$44,538 million",
+      "correct": true,
+      "retrieved_tokens": 381,
+      "latency_seconds": 1.18,
+      "total_doc_tokens": 89991,
+      "cost_ratio": 0.004234
+    },
+    {
+      "doc_name": "LOCKHEEDMARTIN_2022_10K",
+      "predicted": "$65,984 million",
+      "ground_truth": "$65,984 million",
+      "correct": true,
+      "retrieved_tokens": 1124,
+      "latency_seconds": 0.995,
+      "total_doc_tokens": 105703,
+      "cost_ratio": 0.010634
+    },
+    {
+      "doc_name": "JOHNSON_JOHNSON_2022_10K",
+      "predicted": "$94,943 million",
+      "ground_truth": "$94.9 billion",
+      "correct": true,
+      "retrieved_tokens": 1723,
+      "latency_seconds": 0.901,
+      "total_doc_tokens": 123226,
+      "cost_ratio": 0.013982
+    }
+  ]
+}

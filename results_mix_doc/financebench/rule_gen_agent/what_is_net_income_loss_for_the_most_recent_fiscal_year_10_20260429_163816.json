@@ -1,0 +1,150 @@
+{
+  "question": "What is net income (loss) for the most recent fiscal year?",
+  "question_slug": "what_is_net_income_loss_for_the_most_recent_fiscal_year",
+  "timestamp": "2026-04-29T16:38:16Z",
+  "model": "gpt54",
+  "num_documents": 10,
+  "doc_names": [
+    "AMCOR_2019_10K",
+    "ADOBE_2022Q2_10Q",
+    "COSTCO_2017_10K",
+    "BOEING_2018_10K",
+    "INTEL_2022Q4_EARNINGS",
+    "AMAZON_2018_10K",
+    "EBAY_2021_10K",
+    "AMAZON_2016_10K",
+    "COSTCO_2023_8K_dated-2023-08-09",
+    "FOOTLOCKER_2023Q3_10Q"
+  ],
+  "max_iterations": 15,
+  "target_accuracy": 0.9,
+  "agent_turns": 13,
+  "latency_seconds": 196.053,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "merge_accuracy": 0.7,
+  "merge_num_correct": 7,
+  "avg_cost_ratio": 0.04873,
+  "merge_per_doc": {
+    "AMCOR_2019_10K": {
+      "predicted": "437.4",
+      "ground_truth": "430.2 million",
+      "correct": false,
+      "cost_ratio": 0.02868
+    },
+    "ADOBE_2022Q2_10Q": {
+      "predicted": "$ 2,542",
+      "ground_truth": "$2,542 million",
+      "correct": true,
+      "cost_ratio": 0.04186
+    },
+    "COSTCO_2017_10K": {
+      "predicted": "2,679",
+      "ground_truth": "2,679",
+      "correct": true,
+      "cost_ratio": 0.07266
+    },
+    "BOEING_2018_10K": {
+      "predicted": "$10,460",
+      "ground_truth": "$10,460 million",
+      "correct": true,
+      "cost_ratio": 0.05234
+    },
+    "INTEL_2022Q4_EARNINGS": {
+      "predicted": "$ 8,017",
+      "ground_truth": "$8,017,000,000",
+      "correct": true,
+      "cost_ratio": 0.11786
+    },
+    "AMAZON_2018_10K": {
+      "predicted": "$ 10,073",
+      "ground_truth": "$10,073 million",
+      "correct": true,
+      "cost_ratio": 0.04558
+    },
+    "EBAY_2021_10K": {
+      "predicted": "$ 13,608",
+      "ground_truth": "$13,608 million",
+      "correct": true,
+      "cost_ratio": 0.02138
+    },
+    "AMAZON_2016_10K": {
+      "predicted": "$ 2,371",
+      "ground_truth": "$2,371 million",
+      "correct": true,
+      "cost_ratio": 0.05137
+    },
+    "COSTCO_2023_8K_dated-2023-08-09": {
+      "predicted": "NOT FOUND",
+      "ground_truth": "None",
+      "correct": false,
+      "cost_ratio": 4e-05
+    },
+    "FOOTLOCKER_2023Q3_10Q": {
+      "predicted": "NOT FOUND",
+      "ground_truth": "323 million",
+      "correct": false,
+      "cost_ratio": 0.05551
+    }
+  },
+  "rules": [
+    {
+      "rule_name": "rule_net_income_recent_year",
+      "description": "Find net income/loss for the most recent fiscal year from primary financial statement tables.",
+      "individual_accuracy": 0.5,
+      "individual_num_correct": 5,
+      "file": "rules/financebench/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_agent_claude/rule_net_income_recent_year.py"
+    },
+    {
+      "rule_name": "rule_net_income_fallback_selected_or_cashflow",
+      "description": "Fallback to selected financial data or cash flow tables when they clearly contain the latest net income row.",
+      "individual_accuracy": 0.7,
+      "individual_num_correct": 7,
+      "file": "rules/financebench/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_agent_claude/rule_net_income_fallback_selected_or_cashflow.py"
+    },
+    {
+      "rule_name": "rule_no_financials_8k",
+      "description": "Return synthetic None for 8-Ks that do not contain actual operating-results financial statements.",
+      "individual_accuracy": 0.0,
+      "individual_num_correct": 0,
+      "file": "rules/financebench/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_agent_claude/rule_no_financials_8k.py"
+    },
+    {
+      "rule_name": "rule_primary_income_tables",
+      "description": "Prefer primary statements of operations/income/comprehensive income and avoid MD&A, Item 16, and cash flow tables.",
+      "individual_accuracy": 0.4,
+      "individual_num_correct": 4,
+      "file": "rules/financebench/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_agent_claude/rule_primary_income_tables.py"
+    },
+    {
+      "rule_name": "rule_selected_or_summary_income_tables",
+      "description": "Fallback to selected financial data, Item 16 summary income tables, or cash flow tables when they contain the latest net income row.",
+      "individual_accuracy": 0.6,
+      "individual_num_correct": 6,
+      "file": "rules/financebench/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_agent_claude/rule_selected_or_summary_income_tables.py"
+    },
+    {
+      "rule_name": "rule_8k_none",
+      "description": "Return synthetic none/0 for 8-Ks that do not contain operating results financial statements.",
+      "individual_accuracy": 0.0,
+      "individual_num_correct": 0,
+      "file": "rules/financebench/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_agent_claude/rule_8k_none.py"
+    },
+    {
+      "rule_name": "rule_net_income_primary",
+      "description": "Locate net income/loss for the most recent fiscal year from primary income/comprehensive income tables.",
+      "individual_accuracy": 0.6,
+      "individual_num_correct": 6,
+      "file": "rules/financebench/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_agent_claude/rule_net_income_primary.py"
+    },
+    {
+      "rule_name": "rule_net_income_fallback",
+      "description": "Fallback to selected financial data, summary income tables, or cash flow tables when they clearly contain the latest net income row.",
+      "individual_accuracy": 0.6,
+      "individual_num_correct": 6,
+      "file": "rules/financebench/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_agent_claude/rule_net_income_fallback.py"
+    }
+  ],
+  "rule_dir": "rules/financebench/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_agent_claude",
+  "log_file": "logs/financebench/agent/what_is_net_income_loss_for_the_most_recent_fiscal_year_10docs_20260429_163816.txt"
+}

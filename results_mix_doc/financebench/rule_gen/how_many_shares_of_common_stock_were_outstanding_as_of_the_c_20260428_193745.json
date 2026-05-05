@@ -1,0 +1,234 @@
+{
+  "question": "How many shares of common stock were outstanding as of the cover-page reference date?",
+  "question_slug": "how_many_shares_of_common_stock_were_outstanding_as_of_the_c",
+  "timestamp": "2026-04-28T19:37:45Z",
+  "model": "gpt54",
+  "num_documents": 10,
+  "doc_names": [
+    "AMCOR_2019_10K",
+    "ADOBE_2022Q2_10Q",
+    "COSTCO_2017_10K",
+    "BOEING_2018_10K",
+    "INTEL_2022Q4_EARNINGS",
+    "AMAZON_2018_10K",
+    "EBAY_2021_10K",
+    "AMAZON_2016_10K",
+    "COSTCO_2023_8K_dated-2023-08-09",
+    "FOOTLOCKER_2023Q3_10Q"
+  ],
+  "latency_seconds": 159.68,
+  "input_tokens": 449729,
+  "output_tokens": 5897,
+  "rules": [
+    {
+      "rule_name": "rule_page1_outstanding_sentence",
+      "description": "Match page-1 spans containing both 'outstanding' and 'common stock'/'shares' language.",
+      "file": "rules/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_outstanding_sentence.py"
+    },
+    {
+      "rule_name": "rule_page1_number_of_shares_outstanding",
+      "description": "Match page-1 spans with the canonical phrase 'number of shares ... outstanding'.",
+      "file": "rules/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_number_of_shares_outstanding.py"
+    },
+    {
+      "rule_name": "rule_page1_common_stock_outstanding_as_of",
+      "description": "Match page-1 spans mentioning common stock outstanding as of a date.",
+      "file": "rules/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_common_stock_outstanding_as_of.py"
+    },
+    {
+      "rule_name": "rule_page1_shares_outstanding_as_of",
+      "description": "Match page-1 spans with 'shares outstanding as of' phrasing.",
+      "file": "rules/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_shares_outstanding_as_of.py"
+    },
+    {
+      "rule_name": "rule_page1_outstanding_cover_page_date",
+      "description": "Match page-1 spans where outstanding-share count is tied to a cover-page reference date.",
+      "file": "rules/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_outstanding_cover_page_date.py"
+    },
+    {
+      "rule_name": "rule_page1_issued_and_outstanding_table_row",
+      "description": "Match page-1 balance-sheet table rows that say common stock shares issued and outstanding.",
+      "file": "rules/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_issued_and_outstanding_table_row.py"
+    },
+    {
+      "rule_name": "rule_balance_sheet_common_stock_issued_outstanding",
+      "description": "Match balance-sheet tables whose common stock row includes issued/outstanding share counts.",
+      "file": "rules/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_balance_sheet_common_stock_issued_outstanding.py"
+    },
+    {
+      "rule_name": "rule_balance_sheet_authorized_issued_outstanding_row",
+      "description": "Match tables with a common stock row containing 'authorized', 'issued', and 'outstanding'.",
+      "file": "rules/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_balance_sheet_authorized_issued_outstanding_row.py"
+    },
+    {
+      "rule_name": "rule_balance_sheet_common_stock_row_cell",
+      "description": "Match table spans having a cell whose row text mentions common stock and outstanding shares.",
+      "file": "rules/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_balance_sheet_common_stock_row_cell.py"
+    },
+    {
+      "rule_name": "rule_cover_page_company_header_block",
+      "description": "Match large company-name cover-page header spans on page 1 that often contain the outstanding-share sentence.",
+      "file": "rules/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_cover_page_company_header_block.py"
+    },
+    {
+      "rule_name": "rule_cover_page_h1_with_outstanding",
+      "description": "Match page-1 H1/large section headers that themselves contain the outstanding-share sentence.",
+      "file": "rules/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_cover_page_h1_with_outstanding.py"
+    },
+    {
+      "rule_name": "rule_page1_text_with_outstanding_and_date",
+      "description": "Match page-1 body text spans containing 'outstanding' plus an explicit month-day-year date.",
+      "file": "rules/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_text_with_outstanding_and_date.py"
+    },
+    {
+      "rule_name": "rule_page1_text_with_numbered_outstanding_sentence",
+      "description": "Match page-1 spans containing a large comma-formatted number near 'outstanding'.",
+      "file": "rules/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_text_with_numbered_outstanding_sentence.py"
+    },
+    {
+      "rule_name": "rule_page1_text_with_million_outstanding",
+      "description": "Match page-1 spans containing 'million' near an outstanding-share statement.",
+      "file": "rules/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_text_with_million_outstanding.py"
+    },
+    {
+      "rule_name": "rule_page1_number_of_shares_common_stock_outstanding",
+      "description": "Match page-1 spans with 'number of shares of common stock outstanding' wording.",
+      "file": "rules/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_number_of_shares_common_stock_outstanding.py"
+    },
+    {
+      "rule_name": "rule_page1_outstanding_of_registrants_common_stock",
+      "description": "Match page-1 spans with 'registrant's common stock outstanding' wording.",
+      "file": "rules/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_outstanding_of_registrants_common_stock.py"
+    },
+    {
+      "rule_name": "rule_page1_common_shares_outstanding",
+      "description": "Match page-1 spans with 'common shares outstanding' wording.",
+      "file": "rules/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_common_shares_outstanding.py"
+    },
+    {
+      "rule_name": "rule_page1_number_of_shares_outstanding_of_common_stock",
+      "description": "Match page-1 spans with 'number of shares outstanding of ... common stock' wording.",
+      "file": "rules/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_number_of_shares_outstanding_of_common_stock.py"
+    },
+    {
+      "rule_name": "rule_page1_cover_page_reference_date",
+      "description": "Match page-1 spans that mention a date and outstanding shares, typical of cover-page reference-date disclosures.",
+      "file": "rules/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_cover_page_reference_date.py"
+    },
+    {
+      "rule_name": "rule_page1_top_half_candidate",
+      "description": "Return page-1 early spans with outstanding-share language, favoring top-of-document cover-page disclosures.",
+      "file": "rules/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_top_half_candidate.py"
+    },
+    {
+      "rule_name": "rule_page1_company_block_followed_by_outstanding",
+      "description": "Match page-1 spans near the company-name cover block that mention outstanding shares.",
+      "file": "rules/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_company_block_followed_by_outstanding.py"
+    },
+    {
+      "rule_name": "rule_page1_text_after_market_value",
+      "description": "Match page-1 spans that follow a market-value disclosure and contain the outstanding-share count.",
+      "file": "rules/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_text_after_market_value.py"
+    },
+    {
+      "rule_name": "rule_page1_text_with_outstanding_and_registrant",
+      "description": "Match page-1 spans containing both 'registrant' and 'outstanding'.",
+      "file": "rules/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_text_with_outstanding_and_registrant.py"
+    },
+    {
+      "rule_name": "rule_page1_text_with_outstanding_and_common",
+      "description": "Match page-1 spans containing both 'outstanding' and 'common'.",
+      "file": "rules/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_text_with_outstanding_and_common.py"
+    },
+    {
+      "rule_name": "rule_page1_text_with_outstanding_and_stock",
+      "description": "Match page-1 spans containing both 'outstanding' and 'stock'.",
+      "file": "rules/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_text_with_outstanding_and_stock.py"
+    },
+    {
+      "rule_name": "rule_page1_text_with_shares_issued_and_outstanding",
+      "description": "Match page-1 spans saying shares were issued and outstanding.",
+      "file": "rules/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_text_with_shares_issued_and_outstanding.py"
+    },
+    {
+      "rule_name": "rule_any_table_common_stock_outstanding",
+      "description": "Match any table mentioning common stock and outstanding shares, regardless of page.",
+      "file": "rules/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_any_table_common_stock_outstanding.py"
+    },
+    {
+      "rule_name": "rule_any_span_outstanding_share_count",
+      "description": "Broad high-recall rule for any span mentioning both outstanding and shares.",
+      "file": "rules/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_any_span_outstanding_share_count.py"
+    },
+    {
+      "rule_name": "rule_any_span_common_stock_outstanding",
+      "description": "Broad high-recall rule for any span mentioning common stock and outstanding.",
+      "file": "rules/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_any_span_common_stock_outstanding.py"
+    },
+    {
+      "rule_name": "rule_page1_form10k_or_10q_cover_disclosure",
+      "description": "Match page-1 spans under FORM 10-K/10-Q cover area that mention outstanding shares.",
+      "file": "rules/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_form10k_or_10q_cover_disclosure.py"
+    },
+    {
+      "rule_name": "rule_page1_h2_or_body_outstanding",
+      "description": "Match page-1 non-table spans with outstanding-share language in body/H2 cover disclosures.",
+      "file": "rules/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_h2_or_body_outstanding.py"
+    },
+    {
+      "rule_name": "rule_page1_cover_page_numeric_line",
+      "description": "Match short page-1 numeric lines that are likely the standalone outstanding-share count.",
+      "file": "rules/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_cover_page_numeric_line.py"
+    },
+    {
+      "rule_name": "rule_page1_cover_page_numeric_line_after_label",
+      "description": "Match standalone page-1 numeric spans that follow a label about shares outstanding.",
+      "file": "rules/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_cover_page_numeric_line_after_label.py"
+    },
+    {
+      "rule_name": "rule_page1_number_of_shares_outstanding_short_form",
+      "description": "Match page-1 spans with 'shares outstanding as of <date>' even if common stock is omitted.",
+      "file": "rules/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_number_of_shares_outstanding_short_form.py"
+    },
+    {
+      "rule_name": "rule_page1_outstanding_near_end_of_cover",
+      "description": "Match page-1 spans in the latter half of the cover page containing outstanding-share language.",
+      "file": "rules/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_outstanding_near_end_of_cover.py"
+    },
+    {
+      "rule_name": "rule_page1_cover_page_company_section_body",
+      "description": "Match body spans under the company-name H1 on page 1 that mention outstanding shares.",
+      "file": "rules/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_cover_page_company_section_body.py"
+    },
+    {
+      "rule_name": "rule_page1_balance_sheet_cover_table",
+      "description": "Match page-1 tables on the cover page that include common stock outstanding counts.",
+      "file": "rules/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_balance_sheet_cover_table.py"
+    },
+    {
+      "rule_name": "rule_page1_common_stock_row_with_two_dates",
+      "description": "Match page-1 balance-sheet tables where common stock row compares two periods and includes outstanding counts.",
+      "file": "rules/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_common_stock_row_with_two_dates.py"
+    },
+    {
+      "rule_name": "rule_page1_cover_page_shares_outstanding_number_phrase",
+      "description": "Match page-1 spans where a share count appears in the same sentence as 'outstanding'.",
+      "file": "rules/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_cover_page_shares_outstanding_number_phrase.py"
+    },
+    {
+      "rule_name": "rule_page1_cover_page_million_phrase",
+      "description": "Match page-1 spans where a decimal-million share count appears with common stock/outstanding language.",
+      "file": "rules/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_cover_page_million_phrase.py"
+    },
+    {
+      "rule_name": "rule_page1_cover_page_shares_issued_and_outstanding_table",
+      "description": "Match page-1 tables whose common stock row says shares issued and outstanding, a common 10-Q pattern.",
+      "file": "rules/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_cover_page_shares_issued_and_outstanding_table.py"
+    },
+    {
+      "rule_name": "rule_page1_cover_page_number_of_shares_outstanding_or_balance_sheet",
+      "description": "Union-style rule for the two dominant patterns: cover-page sentence or balance-sheet common-stock row.",
+      "file": "rules/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_cover_page_number_of_shares_outstanding_or_balance_sheet.py"
+    }
+  ]
+}

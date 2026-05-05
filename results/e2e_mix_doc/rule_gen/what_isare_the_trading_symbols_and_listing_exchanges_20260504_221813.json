@@ -1,0 +1,222 @@
+{
+  "question": "What is/are the trading symbol(s) and listing exchange(s)?",
+  "question_slug": "what_isare_the_trading_symbols_and_listing_exchanges",
+  "timestamp": "2026-05-04T22:18:13Z",
+  "model": "gpt54",
+  "num_documents": 18,
+  "doc_names": [
+    "BOEING_2019_10K",
+    "ADOBE_2020_10K",
+    "ACTIVISIONBLIZZARD_2020_10K",
+    "COSTCO_2018_10K",
+    "AMCOR_2019_10K",
+    "AMAZON_2020_10K",
+    "AMAZON_2019_10K",
+    "ADOBE_2021_10K",
+    "EBAY_2022_10K",
+    "ADOBE_2019_10K",
+    "AMCOR_2023Q2_10Q",
+    "ADOBE_2022Q2_10Q",
+    "ACTIVSIONBLIZZARD_2023Q2_10Q",
+    "3M_2023Q2_10Q",
+    "AMCOR_2022_8K_2022-07-01",
+    "COSTCO_2023_8K_dated-2023-08-09",
+    "COSTCO_2023_8K_dated-2023-08-16",
+    "FOOTLOCKER_2022_8K_dated-2022-05-20"
+  ],
+  "latency_seconds": 184.508,
+  "input_tokens": 624397,
+  "output_tokens": 6417,
+  "rules": [
+    {
+      "rule_name": "rule_page1_section12b_anchor",
+      "description": "Match spans on page 1 near 'Securities registered pursuant to Section 12(b) of the Act'.",
+      "file": "rules/llm/financebench_mix_doc/what_isare_the_trading_symbols_and_listing_exchanges_18_llm/rule_page1_section12b_anchor.py"
+    },
+    {
+      "rule_name": "rule_page1_trading_symbol_keyword",
+      "description": "Match spans on page 1 containing trading symbol keywords.",
+      "file": "rules/llm/financebench_mix_doc/what_isare_the_trading_symbols_and_listing_exchanges_18_llm/rule_page1_trading_symbol_keyword.py"
+    },
+    {
+      "rule_name": "rule_page1_exchange_registered_keyword",
+      "description": "Match spans on page 1 containing exchange-registration keywords.",
+      "file": "rules/llm/financebench_mix_doc/what_isare_the_trading_symbols_and_listing_exchanges_18_llm/rule_page1_exchange_registered_keyword.py"
+    },
+    {
+      "rule_name": "rule_page1_known_exchange_names",
+      "description": "Match page-1 spans that look like exchange names.",
+      "file": "rules/llm/financebench_mix_doc/what_isare_the_trading_symbols_and_listing_exchanges_18_llm/rule_page1_known_exchange_names.py"
+    },
+    {
+      "rule_name": "rule_page1_known_symbol_like_spans",
+      "description": "Match short page-1 spans that look like ticker symbols.",
+      "file": "rules/llm/financebench_mix_doc/what_isare_the_trading_symbols_and_listing_exchanges_18_llm/rule_page1_known_symbol_like_spans.py"
+    },
+    {
+      "rule_name": "rule_page1_symbol_exchange_after_headers",
+      "description": "Match spans immediately after 'Trading Symbol' or exchange header spans on page 1.",
+      "file": "rules/llm/financebench_mix_doc/what_isare_the_trading_symbols_and_listing_exchanges_18_llm/rule_page1_symbol_exchange_after_headers.py"
+    },
+    {
+      "rule_name": "rule_page1_under_company_header",
+      "description": "Match body spans on page 1 under the main company H1 that include listing-related content.",
+      "file": "rules/llm/financebench_mix_doc/what_isare_the_trading_symbols_and_listing_exchanges_18_llm/rule_page1_under_company_header.py"
+    },
+    {
+      "rule_name": "rule_table_section12b",
+      "description": "Match page-1 tables under the Section 12(b) registration area.",
+      "file": "rules/llm/financebench_mix_doc/what_isare_the_trading_symbols_and_listing_exchanges_18_llm/rule_table_section12b.py"
+    },
+    {
+      "rule_name": "rule_table_cells_symbol_exchange_columns",
+      "description": "Match table spans whose cells include trading symbol and exchange column headers.",
+      "file": "rules/llm/financebench_mix_doc/what_isare_the_trading_symbols_and_listing_exchanges_18_llm/rule_table_cells_symbol_exchange_columns.py"
+    },
+    {
+      "rule_name": "rule_table_rows_with_exchange_values",
+      "description": "Match table spans containing rows with exchange values like NYSE/NASDAQ.",
+      "file": "rules/llm/financebench_mix_doc/what_isare_the_trading_symbols_and_listing_exchanges_18_llm/rule_table_rows_with_exchange_values.py"
+    },
+    {
+      "rule_name": "rule_table_row_header_title_of_each_class",
+      "description": "Match tables whose cells include 'Title of each class' row/column header.",
+      "file": "rules/llm/financebench_mix_doc/what_isare_the_trading_symbols_and_listing_exchanges_18_llm/rule_table_row_header_title_of_each_class.py"
+    },
+    {
+      "rule_name": "rule_page1_company_header_blob_contains_listing",
+      "description": "Match large page-1 company header spans whose text_span contains listing information inline.",
+      "file": "rules/llm/financebench_mix_doc/what_isare_the_trading_symbols_and_listing_exchanges_18_llm/rule_page1_company_header_blob_contains_listing.py"
+    },
+    {
+      "rule_name": "rule_page1_text_near_section12b_window",
+      "description": "Match page-1 text spans in a local window around Section 12(b) anchor.",
+      "file": "rules/llm/financebench_mix_doc/what_isare_the_trading_symbols_and_listing_exchanges_18_llm/rule_page1_text_near_section12b_window.py"
+    },
+    {
+      "rule_name": "rule_page1_text_with_registered_phrase",
+      "description": "Match page-1 spans containing 'registered' in listing context.",
+      "file": "rules/llm/financebench_mix_doc/what_isare_the_trading_symbols_and_listing_exchanges_18_llm/rule_page1_text_with_registered_phrase.py"
+    },
+    {
+      "rule_name": "rule_page1_allcaps_short_symbols",
+      "description": "Match short all-caps page-1 spans likely to be ticker symbols.",
+      "file": "rules/llm/financebench_mix_doc/what_isare_the_trading_symbols_and_listing_exchanges_18_llm/rule_page1_allcaps_short_symbols.py"
+    },
+    {
+      "rule_name": "rule_page1_exchange_after_symbol",
+      "description": "Match page-1 spans immediately following symbol-like spans when they look like exchanges.",
+      "file": "rules/llm/financebench_mix_doc/what_isare_the_trading_symbols_and_listing_exchanges_18_llm/rule_page1_exchange_after_symbol.py"
+    },
+    {
+      "rule_name": "rule_item1_business_stock_listed",
+      "description": "Match Item 1/Business spans that state stock trades/listed under a symbol.",
+      "file": "rules/llm/financebench_mix_doc/what_isare_the_trading_symbols_and_listing_exchanges_18_llm/rule_item1_business_stock_listed.py"
+    },
+    {
+      "rule_name": "rule_item1_business_exchange_symbol_sentence",
+      "description": "Match business-section narrative sentences mentioning exchange and symbol together.",
+      "file": "rules/llm/financebench_mix_doc/what_isare_the_trading_symbols_and_listing_exchanges_18_llm/rule_item1_business_exchange_symbol_sentence.py"
+    },
+    {
+      "rule_name": "rule_page1_table_or_text_with_title_symbol_exchange_triplet",
+      "description": "Match spans containing the triplet of title/class, symbol, and exchange cues.",
+      "file": "rules/llm/financebench_mix_doc/what_isare_the_trading_symbols_and_listing_exchanges_18_llm/rule_page1_table_or_text_with_title_symbol_exchange_triplet.py"
+    },
+    {
+      "rule_name": "rule_page1_main_header_children_after_section12b",
+      "description": "Match page-1 body children under the main company header after the Section 12(b) line.",
+      "file": "rules/llm/financebench_mix_doc/what_isare_the_trading_symbols_and_listing_exchanges_18_llm/rule_page1_main_header_children_after_section12b.py"
+    },
+    {
+      "rule_name": "rule_page1_table_cells_return_matching_rows",
+      "description": "Match table spans where rows contain both a symbol-like cell and an exchange cell.",
+      "file": "rules/llm/financebench_mix_doc/what_isare_the_trading_symbols_and_listing_exchanges_18_llm/rule_page1_table_cells_return_matching_rows.py"
+    },
+    {
+      "rule_name": "rule_page1_bold_small_listing_lines",
+      "description": "Match bold page-1 small-font lines in the cover listing block.",
+      "file": "rules/llm/financebench_mix_doc/what_isare_the_trading_symbols_and_listing_exchanges_18_llm/rule_page1_bold_small_listing_lines.py"
+    },
+    {
+      "rule_name": "rule_page1_cover_block_after_phone",
+      "description": "Match spans after the registrant phone line on page 1 where listing info usually starts.",
+      "file": "rules/llm/financebench_mix_doc/what_isare_the_trading_symbols_and_listing_exchanges_18_llm/rule_page1_cover_block_after_phone.py"
+    },
+    {
+      "rule_name": "rule_page1_cover_block_before_section12g",
+      "description": "Match spans between Section 12(b) and Section 12(g) on page 1.",
+      "file": "rules/llm/financebench_mix_doc/what_isare_the_trading_symbols_and_listing_exchanges_18_llm/rule_page1_cover_block_before_section12g.py"
+    },
+    {
+      "rule_name": "rule_page1_table_header_trading_symbols_plural",
+      "description": "Match spans containing the exact plural header 'Trading Symbol(s)'.",
+      "file": "rules/llm/financebench_mix_doc/what_isare_the_trading_symbols_and_listing_exchanges_18_llm/rule_page1_table_header_trading_symbols_plural.py"
+    },
+    {
+      "rule_name": "rule_page1_table_header_trading_symbol_singular",
+      "description": "Match spans containing the exact singular header 'Trading Symbol'.",
+      "file": "rules/llm/financebench_mix_doc/what_isare_the_trading_symbols_and_listing_exchanges_18_llm/rule_page1_table_header_trading_symbol_singular.py"
+    },
+    {
+      "rule_name": "rule_page1_exchange_header_following_symbol_header",
+      "description": "Match exchange header spans that appear shortly after a trading symbol header on page 1.",
+      "file": "rules/llm/financebench_mix_doc/what_isare_the_trading_symbols_and_listing_exchanges_18_llm/rule_page1_exchange_header_following_symbol_header.py"
+    },
+    {
+      "rule_name": "rule_page1_company_cover_tables_and_neighbors",
+      "description": "Match page-1 tables in the company cover block plus nearby spans.",
+      "file": "rules/llm/financebench_mix_doc/what_isare_the_trading_symbols_and_listing_exchanges_18_llm/rule_page1_company_cover_tables_and_neighbors.py"
+    },
+    {
+      "rule_name": "rule_page1_known_company_cover_listing_block",
+      "description": "Match page-1 spans in the cover block that mention both a security class and listing metadata.",
+      "file": "rules/llm/financebench_mix_doc/what_isare_the_trading_symbols_and_listing_exchanges_18_llm/rule_page1_known_company_cover_listing_block.py"
+    },
+    {
+      "rule_name": "rule_page1_8k_inline_listing_sequence",
+      "description": "Match 8-K cover spans where title, symbol, and exchange appear inline in one large span.",
+      "file": "rules/llm/financebench_mix_doc/what_isare_the_trading_symbols_and_listing_exchanges_18_llm/rule_page1_8k_inline_listing_sequence.py"
+    },
+    {
+      "rule_name": "rule_page1_10q_inline_listing_sequence",
+      "description": "Match 10-Q cover spans where title, symbol, and exchange appear inline or split nearby.",
+      "file": "rules/llm/financebench_mix_doc/what_isare_the_trading_symbols_and_listing_exchanges_18_llm/rule_page1_10q_inline_listing_sequence.py"
+    },
+    {
+      "rule_name": "rule_page1_8k_company_header_with_symbol_exchange",
+      "description": "Match company H1 cover spans on page 1 whose text_span includes symbol and exchange.",
+      "file": "rules/llm/financebench_mix_doc/what_isare_the_trading_symbols_and_listing_exchanges_18_llm/rule_page1_8k_company_header_with_symbol_exchange.py"
+    },
+    {
+      "rule_name": "rule_page1_table_cells_extract_symbol_rows",
+      "description": "Match table spans with rows containing common stock/ordinary shares and symbol/exchange values.",
+      "file": "rules/llm/financebench_mix_doc/what_isare_the_trading_symbols_and_listing_exchanges_18_llm/rule_page1_table_cells_extract_symbol_rows.py"
+    },
+    {
+      "rule_name": "rule_page1_near_title_of_each_class",
+      "description": "Match spans near 'Title of each class' on page 1.",
+      "file": "rules/llm/financebench_mix_doc/what_isare_the_trading_symbols_and_listing_exchanges_18_llm/rule_page1_near_title_of_each_class.py"
+    },
+    {
+      "rule_name": "rule_page1_near_name_of_each_exchange",
+      "description": "Match spans near 'Name of each exchange on which registered' on page 1.",
+      "file": "rules/llm/financebench_mix_doc/what_isare_the_trading_symbols_and_listing_exchanges_18_llm/rule_page1_near_name_of_each_exchange.py"
+    },
+    {
+      "rule_name": "rule_page1_near_trading_symbol_header",
+      "description": "Match spans near 'Trading Symbol' header on page 1.",
+      "file": "rules/llm/financebench_mix_doc/what_isare_the_trading_symbols_and_listing_exchanges_18_llm/rule_page1_near_trading_symbol_header.py"
+    },
+    {
+      "rule_name": "rule_page1_exchange_or_symbol_in_same_path",
+      "description": "Match page-1 spans sharing a path_text with listing headers and containing symbol/exchange values.",
+      "file": "rules/llm/financebench_mix_doc/what_isare_the_trading_symbols_and_listing_exchanges_18_llm/rule_page1_exchange_or_symbol_in_same_path.py"
+    },
+    {
+      "rule_name": "rule_page1_first_page_only_listing_cluster",
+      "description": "Match the first-page cluster where listing answers almost always appear.",
+      "file": "rules/llm/financebench_mix_doc/what_isare_the_trading_symbols_and_listing_exchanges_18_llm/rule_page1_first_page_only_listing_cluster.py"
+    }
+  ]
+}

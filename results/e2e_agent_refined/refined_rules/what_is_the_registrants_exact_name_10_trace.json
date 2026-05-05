@@ -1,0 +1,47 @@
+{
+  "question": "What is the registrant's exact name?",
+  "question_slug": "what_is_the_registrants_exact_name_10",
+  "timestamp": "2026-04-30T21:57:09Z",
+  "target_accuracy": 1.0,
+  "all_rules_count": 1,
+  "sorted_rules": [
+    "rule_cover_exact_name_bold"
+  ],
+  "rule_costs": {
+    "rule_cover_exact_name_bold": 0.000439
+  },
+  "total_latency_seconds": 52.48,
+  "total_input_tokens": 6372,
+  "total_output_tokens": 308,
+  "iterations": [
+    {
+      "phase": "exp_search",
+      "step": 1,
+      "k": 1,
+      "rules": [
+        "rule_cover_exact_name_bold"
+      ],
+      "rules_count": 1,
+      "accuracy": 1.0,
+      "avg_cost_ratio": 0.000439,
+      "latency_seconds": 24.804,
+      "input_tokens": 3186,
+      "output_tokens": 154,
+      "action": "candidate_found"
+    },
+    {
+      "phase": "final",
+      "step": 1,
+      "rules": [
+        "rule_cover_exact_name_bold"
+      ],
+      "rules_count": 1,
+      "accuracy": 1.0,
+      "avg_cost_ratio": 0.000439,
+      "latency_seconds": 25.887,
+      "input_tokens": 3186,
+      "output_tokens": 154,
+      "action": "final_eval"
+    }
+  ]
+}

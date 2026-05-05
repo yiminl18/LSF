@@ -1,0 +1,149 @@
+{
+  "question": "What is the registrant's exact name?",
+  "question_slug": "what_is_the_registrants_exact_name",
+  "timestamp": "2026-04-29T17:54:29Z",
+  "model": "gpt54",
+  "num_documents": 10,
+  "doc_names": [
+    "AMCOR_2019_10K",
+    "COSTCO_2017_10K",
+    "BOEING_2018_10K",
+    "AMAZON_2018_10K",
+    "EBAY_2021_10K",
+    "AMAZON_2016_10K",
+    "CORNING_2022_10K",
+    "NIKE_2021_10K",
+    "LOCKHEEDMARTIN_2022_10K",
+    "JOHNSON_JOHNSON_2022_10K"
+  ],
+  "latency_seconds": 165.42,
+  "input_tokens": 268507,
+  "output_tokens": 5140,
+  "rules": [
+    {
+      "rule_name": "rule_exact_name_caption_parent",
+      "description": "Match spans whose text is the parent heading of a nearby '(Exact name of registrant...)' caption.",
+      "file": "rules/llm/financebench/what_is_the_registrants_exact_name_10_llm/rule_exact_name_caption_parent.py"
+    },
+    {
+      "rule_name": "rule_page1_h1_company_name",
+      "description": "Match page-1 H1/section_header spans that look like the registrant name block.",
+      "file": "rules/llm/financebench/what_is_the_registrants_exact_name_10_llm/rule_page1_h1_company_name.py"
+    },
+    {
+      "rule_name": "rule_page1_large_bold_name_before_exact_caption",
+      "description": "Match large bold page-1 spans immediately followed by the exact-name caption.",
+      "file": "rules/llm/financebench/what_is_the_registrants_exact_name_10_llm/rule_page1_large_bold_name_before_exact_caption.py"
+    },
+    {
+      "rule_name": "rule_path_text_is_company_name",
+      "description": "Match spans whose own path_text is just the company name heading near the top of page 1.",
+      "file": "rules/llm/financebench/what_is_the_registrants_exact_name_10_llm/rule_path_text_is_company_name.py"
+    },
+    {
+      "rule_name": "rule_page1_before_state_or_ein",
+      "description": "Match page-1 spans immediately preceding state/EIN/address metadata blocks in the cover page header.",
+      "file": "rules/llm/financebench/what_is_the_registrants_exact_name_10_llm/rule_page1_before_state_or_ein.py"
+    },
+    {
+      "rule_name": "rule_cover_page_first_company_like_heading",
+      "description": "Match the first page-1 bold heading after FORM 10-K that is not a form/SEC boilerplate heading.",
+      "file": "rules/llm/financebench/what_is_the_registrants_exact_name_10_llm/rule_cover_page_first_company_like_heading.py"
+    },
+    {
+      "rule_name": "rule_parent_of_page1_exact_name_caption",
+      "description": "Match the parent section_header of the exact-name caption on page 1.",
+      "file": "rules/llm/financebench/what_is_the_registrants_exact_name_10_llm/rule_parent_of_page1_exact_name_caption.py"
+    },
+    {
+      "rule_name": "rule_same_path_as_exact_name_caption",
+      "description": "Match all page-1 spans sharing the same path_text as the exact-name caption block.",
+      "file": "rules/llm/financebench/what_is_the_registrants_exact_name_10_llm/rule_same_path_as_exact_name_caption.py"
+    },
+    {
+      "rule_name": "rule_page1_bold_span_followed_by_exact_name_caption",
+      "description": "Match any bold page-1 span whose next one or two spans contain the exact-name caption.",
+      "file": "rules/llm/financebench/what_is_the_registrants_exact_name_10_llm/rule_page1_bold_span_followed_by_exact_name_caption.py"
+    },
+    {
+      "rule_name": "rule_page1_company_name_with_charter_phrase_in_text_span",
+      "description": "Match page-1 section headers whose text_span contains the exact-name charter phrase.",
+      "file": "rules/llm/financebench/what_is_the_registrants_exact_name_10_llm/rule_page1_company_name_with_charter_phrase_in_text_span.py"
+    },
+    {
+      "rule_name": "rule_page1_top_bold_non_boilerplate",
+      "description": "Match top-of-page-1 bold spans with alphabetic text excluding SEC/form boilerplate.",
+      "file": "rules/llm/financebench/what_is_the_registrants_exact_name_10_llm/rule_page1_top_bold_non_boilerplate.py"
+    },
+    {
+      "rule_name": "rule_page1_h1_or_h2_with_nearby_exact_name",
+      "description": "Match page-1 H1/H2 headings that have the exact-name caption within the next few spans.",
+      "file": "rules/llm/financebench/what_is_the_registrants_exact_name_10_llm/rule_page1_h1_or_h2_with_nearby_exact_name.py"
+    },
+    {
+      "rule_name": "rule_page1_first_span_with_exact_name_parent_chain",
+      "description": "Match ancestors and nearby spans around the exact-name caption to maximize recall.",
+      "file": "rules/llm/financebench/what_is_the_registrants_exact_name_10_llm/rule_page1_first_span_with_exact_name_parent_chain.py"
+    },
+    {
+      "rule_name": "rule_page1_company_heading_with_single_path",
+      "description": "Match page-1 headings whose path_text equals their text, a common cover-page company-name pattern.",
+      "file": "rules/llm/financebench/what_is_the_registrants_exact_name_10_llm/rule_page1_company_heading_with_single_path.py"
+    },
+    {
+      "rule_name": "rule_page1_before_state_header",
+      "description": "Match the nearest preceding page-1 span before a state-of-incorporation header/caption.",
+      "file": "rules/llm/financebench/what_is_the_registrants_exact_name_10_llm/rule_page1_before_state_header.py"
+    },
+    {
+      "rule_name": "rule_page1_before_address_header",
+      "description": "Match the nearest preceding page-1 span before an address-of-principal-executive-offices caption.",
+      "file": "rules/llm/financebench/what_is_the_registrants_exact_name_10_llm/rule_page1_before_address_header.py"
+    },
+    {
+      "rule_name": "rule_page1_first_large_company_text",
+      "description": "Match large page-1 text/section_header spans that look like a company name line.",
+      "file": "rules/llm/financebench/what_is_the_registrants_exact_name_10_llm/rule_page1_first_large_company_text.py"
+    },
+    {
+      "rule_name": "rule_item1_general_company_mention",
+      "description": "Match early Item 1 / General text spans that restate the company name.",
+      "file": "rules/llm/financebench/what_is_the_registrants_exact_name_10_llm/rule_item1_general_company_mention.py"
+    },
+    {
+      "rule_name": "rule_cover_page_name_all_caps_or_title_case",
+      "description": "Match page-1 company-name candidates in all caps or title case near the exact-name area.",
+      "file": "rules/llm/financebench/what_is_the_registrants_exact_name_10_llm/rule_cover_page_name_all_caps_or_title_case.py"
+    },
+    {
+      "rule_name": "rule_page1_near_exact_name_caption_same_page",
+      "description": "Match spans within a small page-1 neighborhood around the exact-name caption.",
+      "file": "rules/llm/financebench/what_is_the_registrants_exact_name_10_llm/rule_page1_near_exact_name_caption_same_page.py"
+    },
+    {
+      "rule_name": "rule_page1_section_header_with_company_suffix",
+      "description": "Match page-1 headings containing common company suffixes like Inc., Corporation, Company, plc, Incorporated.",
+      "file": "rules/llm/financebench/what_is_the_registrants_exact_name_10_llm/rule_page1_section_header_with_company_suffix.py"
+    },
+    {
+      "rule_name": "rule_page1_parent_of_state_ein_address_cluster",
+      "description": "Match parent headings of state/EIN/address cover-page metadata clusters.",
+      "file": "rules/llm/financebench/what_is_the_registrants_exact_name_10_llm/rule_page1_parent_of_state_ein_address_cluster.py"
+    },
+    {
+      "rule_name": "rule_page1_first_non_boilerplate_after_commission_file",
+      "description": "Match the first bold alphabetic span after the commission file number on page 1.",
+      "file": "rules/llm/financebench/what_is_the_registrants_exact_name_10_llm/rule_page1_first_non_boilerplate_after_commission_file.py"
+    },
+    {
+      "rule_name": "rule_item1_incorporated_sentence",
+      "description": "Match Item 1 text spans containing incorporation history, which often restate the exact registrant name.",
+      "file": "rules/llm/financebench/what_is_the_registrants_exact_name_10_llm/rule_item1_incorporated_sentence.py"
+    },
+    {
+      "rule_name": "rule_item1_first_company_sentence",
+      "description": "Match early business-description sentences that begin with the company name or company reference.",
+      "file": "rules/llm/financebench/what_is_the_registrants_exact_name_10_llm/rule_item1_first_company_sentence.py"
+    }
+  ]
+}

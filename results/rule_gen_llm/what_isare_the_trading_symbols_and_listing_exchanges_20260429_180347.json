@@ -1,0 +1,209 @@
+{
+  "question": "What is/are the trading symbol(s) and listing exchange(s)?",
+  "question_slug": "what_isare_the_trading_symbols_and_listing_exchanges",
+  "timestamp": "2026-04-29T18:03:47Z",
+  "model": "gpt54",
+  "num_documents": 10,
+  "doc_names": [
+    "AMCOR_2019_10K",
+    "COSTCO_2017_10K",
+    "BOEING_2018_10K",
+    "AMAZON_2018_10K",
+    "EBAY_2021_10K",
+    "AMAZON_2016_10K",
+    "CORNING_2022_10K",
+    "NIKE_2021_10K",
+    "LOCKHEEDMARTIN_2022_10K",
+    "JOHNSON_JOHNSON_2022_10K"
+  ],
+  "latency_seconds": 198.116,
+  "input_tokens": 268630,
+  "output_tokens": 6886,
+  "rules": [
+    {
+      "rule_name": "rule_page1_section_12b_block",
+      "description": "Match spans on page 1 near 'Securities registered pursuant to Section 12(b)' and exchange/symbol labels.",
+      "file": "rules/llm/financebench/what_isare_the_trading_symbols_and_listing_exchanges_10_llm/rule_page1_section_12b_block.py"
+    },
+    {
+      "rule_name": "rule_page1_exchange_name_spans",
+      "description": "Match page 1 spans whose text looks like an exchange name.",
+      "file": "rules/llm/financebench/what_isare_the_trading_symbols_and_listing_exchanges_10_llm/rule_page1_exchange_name_spans.py"
+    },
+    {
+      "rule_name": "rule_page1_symbol_like_spans_near_exchange",
+      "description": "Match short ticker-like page 1 spans near exchange-related text.",
+      "file": "rules/llm/financebench/what_isare_the_trading_symbols_and_listing_exchanges_10_llm/rule_page1_symbol_like_spans_near_exchange.py"
+    },
+    {
+      "rule_name": "rule_page1_title_trading_exchange_cluster",
+      "description": "Match spans in the page 1 cluster containing title/trading symbol/exchange labels and nearby values.",
+      "file": "rules/llm/financebench/what_isare_the_trading_symbols_and_listing_exchanges_10_llm/rule_page1_title_trading_exchange_cluster.py"
+    },
+    {
+      "rule_name": "rule_path_contains_company_topmatter",
+      "description": "Match top-matter spans under the company name on page 1 that mention exchange/symbol registration.",
+      "file": "rules/llm/financebench/what_isare_the_trading_symbols_and_listing_exchanges_10_llm/rule_path_contains_company_topmatter.py"
+    },
+    {
+      "rule_name": "rule_exact_exchange_label_values",
+      "description": "Match spans that are likely the value under 'Name of each exchange on which registered'.",
+      "file": "rules/llm/financebench/what_isare_the_trading_symbols_and_listing_exchanges_10_llm/rule_exact_exchange_label_values.py"
+    },
+    {
+      "rule_name": "rule_exact_symbol_values",
+      "description": "Match standalone ticker spans commonly used as trading symbols.",
+      "file": "rules/llm/financebench/what_isare_the_trading_symbols_and_listing_exchanges_10_llm/rule_exact_symbol_values.py"
+    },
+    {
+      "rule_name": "rule_inline_registered_under_symbol",
+      "description": "Match body text that states stock is listed/traded under a symbol.",
+      "file": "rules/llm/financebench/what_isare_the_trading_symbols_and_listing_exchanges_10_llm/rule_inline_registered_under_symbol.py"
+    },
+    {
+      "rule_name": "rule_item1_business_symbol_sentence",
+      "description": "Match Item 1 / Business spans that mention the stock exchange and symbol inline.",
+      "file": "rules/llm/financebench/what_isare_the_trading_symbols_and_listing_exchanges_10_llm/rule_item1_business_symbol_sentence.py"
+    },
+    {
+      "rule_name": "rule_page1_company_header_with_embedded_answer",
+      "description": "Match large page 1 company header spans whose text_span/text embeds the registration block.",
+      "file": "rules/llm/financebench/what_isare_the_trading_symbols_and_listing_exchanges_10_llm/rule_page1_company_header_with_embedded_answer.py"
+    },
+    {
+      "rule_name": "rule_table_12b_headers",
+      "description": "Match tables whose cells contain trading symbol / exchange registration headers.",
+      "file": "rules/llm/financebench/what_isare_the_trading_symbols_and_listing_exchanges_10_llm/rule_table_12b_headers.py"
+    },
+    {
+      "rule_name": "rule_table_cells_symbol_exchange",
+      "description": "Return pseudo-spans from table cells containing symbol/exchange values in registration tables.",
+      "file": "rules/llm/financebench/what_isare_the_trading_symbols_and_listing_exchanges_10_llm/rule_table_cells_symbol_exchange.py"
+    },
+    {
+      "rule_name": "rule_jnj_multi_symbol_exchange_table",
+      "description": "Match Johnson & Johnson-style page 1 registration table rows with multiple trading symbols and same exchange.",
+      "file": "rules/llm/financebench/what_isare_the_trading_symbols_and_listing_exchanges_10_llm/rule_jnj_multi_symbol_exchange_table.py"
+    },
+    {
+      "rule_name": "rule_page1_near_trading_symbol_label",
+      "description": "Match spans within a small window around a page 1 'Trading Symbol' label.",
+      "file": "rules/llm/financebench/what_isare_the_trading_symbols_and_listing_exchanges_10_llm/rule_page1_near_trading_symbol_label.py"
+    },
+    {
+      "rule_name": "rule_page1_near_exchange_label",
+      "description": "Match spans within a small window around a page 1 exchange label.",
+      "file": "rules/llm/financebench/what_isare_the_trading_symbols_and_listing_exchanges_10_llm/rule_page1_near_exchange_label.py"
+    },
+    {
+      "rule_name": "rule_page1_near_title_of_each_class",
+      "description": "Match spans around 'Title of each class' because symbol/exchange values usually follow immediately.",
+      "file": "rules/llm/financebench/what_isare_the_trading_symbols_and_listing_exchanges_10_llm/rule_page1_near_title_of_each_class.py"
+    },
+    {
+      "rule_name": "rule_business_sentence_trades_on_exchange",
+      "description": "Match business-description sentences saying common stock trades/listed on an exchange under a symbol.",
+      "file": "rules/llm/financebench/what_isare_the_trading_symbols_and_listing_exchanges_10_llm/rule_business_sentence_trades_on_exchange.py"
+    },
+    {
+      "rule_name": "rule_business_sentence_under_symbol",
+      "description": "Match sentences with 'under the symbol' even if exchange mention is nearby in same span.",
+      "file": "rules/llm/financebench/what_isare_the_trading_symbols_and_listing_exchanges_10_llm/rule_business_sentence_under_symbol.py"
+    },
+    {
+      "rule_name": "rule_page1_registration_block_all",
+      "description": "Return all page 1 spans from the first 12(b) registration mention until the 12(g) mention or end of top block.",
+      "file": "rules/llm/financebench/what_isare_the_trading_symbols_and_listing_exchanges_10_llm/rule_page1_registration_block_all.py"
+    },
+    {
+      "rule_name": "rule_page1_bold_smallfont_registration_values",
+      "description": "Match page 1 small-font bold spans likely used for ticker or exchange values in top matter.",
+      "file": "rules/llm/financebench/what_isare_the_trading_symbols_and_listing_exchanges_10_llm/rule_page1_bold_smallfont_registration_values.py"
+    },
+    {
+      "rule_name": "rule_page1_after_company_name_until_documents_incorporated",
+      "description": "Match page 1 spans between company-name header and 'Documents Incorporated by Reference' containing registration info.",
+      "file": "rules/llm/financebench/what_isare_the_trading_symbols_and_listing_exchanges_10_llm/rule_page1_after_company_name_until_documents_incorporated.py"
+    },
+    {
+      "rule_name": "rule_page1_registration_sentences_with_registered",
+      "description": "Match page 1 spans containing 'registered' plus exchange/symbol cues.",
+      "file": "rules/llm/financebench/what_isare_the_trading_symbols_and_listing_exchanges_10_llm/rule_page1_registration_sentences_with_registered.py"
+    },
+    {
+      "rule_name": "rule_page1_topmatter_short_values_after_common_stock",
+      "description": "Match short value spans following a 'Common Stock' span in page 1 top matter.",
+      "file": "rules/llm/financebench/what_isare_the_trading_symbols_and_listing_exchanges_10_llm/rule_page1_topmatter_short_values_after_common_stock.py"
+    },
+    {
+      "rule_name": "rule_page1_h2_h3_registration_headers",
+      "description": "Match H2/H3 page 1 section headers that are part of split registration layouts.",
+      "file": "rules/llm/financebench/what_isare_the_trading_symbols_and_listing_exchanges_10_llm/rule_page1_h2_h3_registration_headers.py"
+    },
+    {
+      "rule_name": "rule_page1_allcaps_ticker_headers",
+      "description": "Match all-caps short section headers on page 1 that are likely ticker symbols.",
+      "file": "rules/llm/financebench/what_isare_the_trading_symbols_and_listing_exchanges_10_llm/rule_page1_allcaps_ticker_headers.py"
+    },
+    {
+      "rule_name": "rule_page1_exchange_after_ticker_header",
+      "description": "Match exchange span immediately after a ticker-like section header on page 1.",
+      "file": "rules/llm/financebench/what_isare_the_trading_symbols_and_listing_exchanges_10_llm/rule_page1_exchange_after_ticker_header.py"
+    },
+    {
+      "rule_name": "rule_page1_registration_block_with_symbol_and_exchange_same_span",
+      "description": "Match page 1 spans that contain both a ticker-like token and an exchange name in the same text.",
+      "file": "rules/llm/financebench/what_isare_the_trading_symbols_and_listing_exchanges_10_llm/rule_page1_registration_block_with_symbol_and_exchange_same_span.py"
+    },
+    {
+      "rule_name": "rule_page1_symbol_exchange_split_across_adjacent_spans",
+      "description": "Match adjacent page 1 spans where one looks like a symbol and the next looks like an exchange.",
+      "file": "rules/llm/financebench/what_isare_the_trading_symbols_and_listing_exchanges_10_llm/rule_page1_symbol_exchange_split_across_adjacent_spans.py"
+    },
+    {
+      "rule_name": "rule_page1_exchange_symbol_split_reverse",
+      "description": "Match adjacent page 1 spans where one looks like an exchange and the next looks like a symbol.",
+      "file": "rules/llm/financebench/what_isare_the_trading_symbols_and_listing_exchanges_10_llm/rule_page1_exchange_symbol_split_reverse.py"
+    },
+    {
+      "rule_name": "rule_business_path_and_stock_terms",
+      "description": "Match spans under Item 1 / Business whose text mentions common stock, exchange, or symbol.",
+      "file": "rules/llm/financebench/what_isare_the_trading_symbols_and_listing_exchanges_10_llm/rule_business_path_and_stock_terms.py"
+    },
+    {
+      "rule_name": "rule_page1_registration_keywords_broad",
+      "description": "Broad high-recall rule for page 1 spans mentioning registration, symbol, exchange, or listing.",
+      "file": "rules/llm/financebench/what_isare_the_trading_symbols_and_listing_exchanges_10_llm/rule_page1_registration_keywords_broad.py"
+    },
+    {
+      "rule_name": "rule_page1_nasdaq_or_nyse_only",
+      "description": "Match any page 1 span containing only the core exchange names or abbreviations.",
+      "file": "rules/llm/financebench/what_isare_the_trading_symbols_and_listing_exchanges_10_llm/rule_page1_nasdaq_or_nyse_only.py"
+    },
+    {
+      "rule_name": "rule_page1_symbols_in_registration_window",
+      "description": "Match ticker-like spans appearing after the first 12(b) mention and before 12(g) on page 1.",
+      "file": "rules/llm/financebench/what_isare_the_trading_symbols_and_listing_exchanges_10_llm/rule_page1_symbols_in_registration_window.py"
+    },
+    {
+      "rule_name": "rule_page1_exchange_in_registration_window",
+      "description": "Match exchange-name spans appearing after the first 12(b) mention and before 12(g) on page 1.",
+      "file": "rules/llm/financebench/what_isare_the_trading_symbols_and_listing_exchanges_10_llm/rule_page1_exchange_in_registration_window.py"
+    },
+    {
+      "rule_name": "rule_page1_top_30_spans_registration",
+      "description": "Match registration-related spans among the first 30 spans, reflecting consistent top-of-document placement.",
+      "file": "rules/llm/financebench/what_isare_the_trading_symbols_and_listing_exchanges_10_llm/rule_page1_top_30_spans_registration.py"
+    },
+    {
+      "rule_name": "rule_page1_topmatter_with_common_stock_and_exchange",
+      "description": "Match page 1 spans mentioning common stock together with exchange/registration cues.",
+      "file": "rules/llm/financebench/what_isare_the_trading_symbols_and_listing_exchanges_10_llm/rule_page1_topmatter_with_common_stock_and_exchange.py"
+    },
+    {
+      "rule_name": "rule_page1_header_path_registration",
+      "description": "Match page 1 spans whose path_text itself contains registration-related terms.",
+      "file": "rules/llm/financebench/what_isare_the_trading_symbols_and_listing_exchanges_10_llm/rule_page1_header_path_registration.py"
+    }
+  ]
+}

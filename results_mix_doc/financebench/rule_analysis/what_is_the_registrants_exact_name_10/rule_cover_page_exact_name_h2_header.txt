@@ -1,0 +1,36 @@
+Rule: rule_cover_page_exact_name_h2_header
+Question: What is the registrant's exact name?
+Question slug: what_is_the_registrants_exact_name_10
+Accuracy (10-doc): 0.10
+Avg cost ratio:    0.00000
+
+Per-document results:
+  ✗ AMCOR_2019_10K                  retrieved=0   pred=NOT FOUND           gt=Amcor plc
+  ✗ ADOBE_2022Q2_10Q                retrieved=0   pred=NOT FOUND           gt=Adobe Inc.
+  ✗ COSTCO_2017_10K                 retrieved=0   pred=NOT FOUND           gt=Costco Wholesale Corporation
+  ✗ BOEING_2018_10K                 retrieved=0   pred=NOT FOUND           gt=THE BOEING COMPANY
+  ✗ INTEL_2022Q4_EARNINGS           retrieved=0   pred=NOT FOUND           gt=None (no GT)
+  ✗ AMAZON_2018_10K                 retrieved=0   pred=NOT FOUND           gt=Amazon.com, Inc.
+  ✓ EBAY_2021_10K                   retrieved=4   pred=eBay Inc.           gt=eBay Inc.
+  ✗ AMAZON_2016_10K                 retrieved=0   pred=NOT FOUND           gt=AMAZON.COM, INC.
+  ✗ COSTCO_2023_8K_dated-2023-08-09 retrieved=0   pred=NOT FOUND           gt=None (no GT)
+  ✗ FOOTLOCKER_2023Q3_10Q           retrieved=0   pred=NOT FOUND           gt=None (no GT)
+
+Root cause: H2 is not a consistent structural level for the company name.
+
+The rule looks exclusively for H2-level section_header spans on page 1 that match a
+legal-entity suffix (inc., corp., corporation, company, plc). It only fires for eBay
+because eBay's cover page happens to label "eBay Inc." as an H2 node. In every other
+filing the company name is either:
+  - An H1 span (most 10-K/10-Q cover pages)
+  - A text or section_header node at a different level
+  - Not labelled with a legal suffix in the span text (e.g. "3M COMPANY" passes but
+    most company names in this set do)
+
+The H2 slots in other documents contain boilerplate like "ANNUAL REPORT PURSUANT TO
+SECTION 13", state/EIN fields, address lines, or form period text — none of which are
+company names. The rule's H2 assumption is overfitted to a minority document layout.
+
+Fix direction: Change the level filter from H2-only to H1-or-H2, or drop the level
+filter entirely and rely on the legal-suffix pattern plus page-1 + section_header
+constraints, which is what the higher-accuracy rules do.

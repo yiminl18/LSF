@@ -1,0 +1,210 @@
+{
+  "question": "What is/are the trading symbol(s) and listing exchange(s)?",
+  "question_slug": "what_isare_the_trading_symbols_and_listing_exchanges_10",
+  "timestamp": "2026-04-30T22:11:33Z",
+  "target_accuracy": 0.8,
+  "all_rules_count": 6,
+  "sorted_rules": [
+    "rule_page1_registrant_block_exchange_symbol",
+    "rule_amcor_merger_symbol_exchange",
+    "rule_page1_frontpage_trading_cluster",
+    "rule_item1_business_listed_under_symbol",
+    "rule_jnj_page1_trading_symbols_exchange",
+    "rule_page1_section12b_symbols_exchange"
+  ],
+  "rule_costs": {
+    "rule_page1_registrant_block_exchange_symbol": 1.9e-05,
+    "rule_amcor_merger_symbol_exchange": 0.000263,
+    "rule_page1_frontpage_trading_cluster": 0.000669,
+    "rule_item1_business_listed_under_symbol": 0.000742,
+    "rule_jnj_page1_trading_symbols_exchange": 0.001282,
+    "rule_page1_section12b_symbols_exchange": 0.001833
+  },
+  "total_latency_seconds": 262.424,
+  "total_input_tokens": 45440,
+  "total_output_tokens": 1969,
+  "iterations": [
+    {
+      "phase": "exp_search",
+      "step": 1,
+      "k": 1,
+      "rules": [
+        "rule_page1_registrant_block_exchange_symbol"
+      ],
+      "rules_count": 1,
+      "accuracy": 0.0,
+      "avg_cost_ratio": 1.9e-05,
+      "latency_seconds": 24.432,
+      "input_tokens": 3027,
+      "output_tokens": 130,
+      "action": "continue"
+    },
+    {
+      "phase": "exp_search",
+      "step": 2,
+      "k": 2,
+      "rules": [
+        "rule_page1_registrant_block_exchange_symbol",
+        "rule_amcor_merger_symbol_exchange"
+      ],
+      "rules_count": 2,
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.000283,
+      "latency_seconds": 25.956,
+      "input_tokens": 3249,
+      "output_tokens": 141,
+      "action": "continue"
+    },
+    {
+      "phase": "exp_search",
+      "step": 3,
+      "k": 4,
+      "rules": [
+        "rule_page1_registrant_block_exchange_symbol",
+        "rule_amcor_merger_symbol_exchange",
+        "rule_page1_frontpage_trading_cluster",
+        "rule_item1_business_listed_under_symbol"
+      ],
+      "rules_count": 4,
+      "accuracy": 0.7,
+      "avg_cost_ratio": 0.001427,
+      "latency_seconds": 25.005,
+      "input_tokens": 4228,
+      "output_tokens": 213,
+      "action": "continue"
+    },
+    {
+      "phase": "exp_search",
+      "step": 4,
+      "k": 6,
+      "rules": [
+        "rule_page1_registrant_block_exchange_symbol",
+        "rule_amcor_merger_symbol_exchange",
+        "rule_page1_frontpage_trading_cluster",
+        "rule_item1_business_listed_under_symbol",
+        "rule_jnj_page1_trading_symbols_exchange",
+        "rule_page1_section12b_symbols_exchange"
+      ],
+      "rules_count": 6,
+      "accuracy": 0.8,
+      "avg_cost_ratio": 0.002687,
+      "latency_seconds": 26.024,
+      "input_tokens": 5509,
+      "output_tokens": 217,
+      "action": "candidate_found"
+    },
+    {
+      "phase": "pruning",
+      "step": 1,
+      "i": 5,
+      "rule_tested": "rule_page1_section12b_symbols_exchange",
+      "rules": [
+        "rule_page1_registrant_block_exchange_symbol",
+        "rule_amcor_merger_symbol_exchange",
+        "rule_page1_frontpage_trading_cluster",
+        "rule_item1_business_listed_under_symbol",
+        "rule_jnj_page1_trading_symbols_exchange"
+      ],
+      "rules_count": 5,
+      "accuracy": 0.8,
+      "avg_cost_ratio": 0.002337,
+      "latency_seconds": 25.147,
+      "input_tokens": 5153,
+      "output_tokens": 217,
+      "action": "removed"
+    },
+    {
+      "phase": "pruning",
+      "step": 2,
+      "i": 4,
+      "rule_tested": "rule_jnj_page1_trading_symbols_exchange",
+      "rules": [
+        "rule_page1_registrant_block_exchange_symbol",
+        "rule_amcor_merger_symbol_exchange",
+        "rule_page1_frontpage_trading_cluster",
+        "rule_item1_business_listed_under_symbol"
+      ],
+      "rules_count": 4,
+      "accuracy": 0.7,
+      "avg_cost_ratio": 0.001427,
+      "latency_seconds": 25.11,
+      "input_tokens": 4228,
+      "output_tokens": 213,
+      "action": "kept"
+    },
+    {
+      "phase": "pruning",
+      "step": 3,
+      "i": 3,
+      "rule_tested": "rule_item1_business_listed_under_symbol",
+      "rules": [
+        "rule_page1_registrant_block_exchange_symbol",
+        "rule_amcor_merger_symbol_exchange",
+        "rule_page1_frontpage_trading_cluster",
+        "rule_jnj_page1_trading_symbols_exchange"
+      ],
+      "rules_count": 4,
+      "accuracy": 0.5,
+      "avg_cost_ratio": 0.001841,
+      "latency_seconds": 24.902,
+      "input_tokens": 4857,
+      "output_tokens": 203,
+      "action": "kept"
+    },
+    {
+      "phase": "pruning",
+      "step": 4,
+      "i": 2,
+      "rule_tested": "rule_page1_frontpage_trading_cluster",
+      "rules": [
+        "rule_page1_registrant_block_exchange_symbol",
+        "rule_amcor_merger_symbol_exchange",
+        "rule_item1_business_listed_under_symbol",
+        "rule_jnj_page1_trading_symbols_exchange"
+      ],
+      "rules_count": 4,
+      "accuracy": 0.5,
+      "avg_cost_ratio": 0.002036,
+      "latency_seconds": 25.864,
+      "input_tokens": 4901,
+      "output_tokens": 201,
+      "action": "kept"
+    },
+    {
+      "phase": "pruning",
+      "step": 5,
+      "i": 1,
+      "rule_tested": "rule_amcor_merger_symbol_exchange",
+      "rules": [
+        "rule_page1_registrant_block_exchange_symbol",
+        "rule_page1_frontpage_trading_cluster",
+        "rule_item1_business_listed_under_symbol",
+        "rule_jnj_page1_trading_symbols_exchange"
+      ],
+      "rules_count": 4,
+      "accuracy": 0.8,
+      "avg_cost_ratio": 0.002325,
+      "latency_seconds": 25.935,
+      "input_tokens": 5144,
+      "output_tokens": 217,
+      "action": "removed"
+    },
+    {
+      "phase": "final",
+      "step": 1,
+      "rules": [
+        "rule_page1_registrant_block_exchange_symbol",
+        "rule_page1_frontpage_trading_cluster",
+        "rule_item1_business_listed_under_symbol",
+        "rule_jnj_page1_trading_symbols_exchange"
+      ],
+      "rules_count": 4,
+      "accuracy": 0.8,
+      "avg_cost_ratio": 0.002325,
+      "latency_seconds": 25.888,
+      "input_tokens": 5144,
+      "output_tokens": 217,
+      "action": "final_eval"
+    }
+  ]
+}

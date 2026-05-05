@@ -1,0 +1,108 @@
+Question: What is long-term debt at year-end (0 if none)?
+Question slug: what_is_longterm_debt_at_yearend_0_if_none_10
+Accuracy (sampled, 10 docs): 0.50 (5/10)
+Accuracy (unsampled, 50 docs): 0.60 (30/50)
+
+Per-document results (sampled):
+  ✗ AMCOR_2019_10K           gt="5,314.4 million"       pred="5,309.0"        (off by 5.4M)
+  ✗ ADOBE_2022Q2_10Q         gt="$3,631 million"        pred="3,629"          (off by $2M)
+  ✓ COSTCO_2017_10K          gt="6,573"                 pred="6,573"
+  ✓ BOEING_2018_10K          gt="$10,657 million"       pred="$10,657"
+  ✗ INTEL_2022Q4_EARNINGS    gt="$37,684,000,000"       pred="37,684"         (unit mismatch: gt in dollars, pred in millions)
+  ✗ AMAZON_2018_10K          gt="$50,708 million"       pred="23,495"         (wrong line item)
+  ✓ EBAY_2021_10K            gt="$7,727 million"        pred="7,727"
+  ✓ AMAZON_2016_10K          gt="$7,694 million"        pred="7,694"
+  ✗ COSTCO_2023_8K           gt="0"                     pred="NOT FOUND"      (no balance sheet in 8-K)
+  ✓ FOOTLOCKER_2023Q3_10Q    gt="448 million"           pred="448"
+
+===========================================================================
+ROOT CAUSE 1 — Wrong line item retrieved (AMAZON_2018_10K)
+===========================================================================
+AMAZON_2018 pred=23,495 vs gt=50,708 (off by more than 2x). The rules likely
+retrieved the "current portion of long-term debt" ($1,371M) plus "long-term
+debt" line from a debt footnote or a different period. The $23,495 matches the
+"total long-term obligations" in the operating lease / finance lease table, not
+the balance sheet line "Long-term debt". Rules such as rule_long_term_debt_note_text
+(avg 1,235 tokens from debt footnotes) pull in multiple debt-related paragraphs,
+confusing the LLM about which value to select.
+
+Fix: rules should prefer the primary consolidated balance sheet table over debt
+footnotes. Footnotes should only be fallback.
+
+===========================================================================
+ROOT CAUSE 2 — Unit/scale mismatch (INTEL_2022Q4_EARNINGS)
+===========================================================================
+INTEL's earnings release reports values in millions. The balance sheet shows
+"37,684" in a table where the header says "In Millions". The LLM returns 37,684
+but the ground truth is $37,684,000,000 (in dollars). The LLM fails to apply
+the "in millions" table header when formatting the answer.
+
+The judge correctly marks this as incorrect since 37,684 ≠ 37,684,000,000.
+However, the prediction is semantically correct — the retrieved content was
+accurate.
+
+Fix: This is a judge/ground-truth format issue as much as a rule issue. The LLM
+system prompt should instruct it to preserve the unit format as stated in the
+document (e.g., "37,684 million" or "$37.7 billion").
+
+===========================================================================
+ROOT CAUSE 3 — Off-by-small-amount (AMCOR, ADOBE)
+===========================================================================
+AMCOR 2019: gt=5,314.4 million, pred=5,309.0 (difference of $5.4M)
+ADOBE 2022Q2: gt=$3,631 million, pred=3,629 (difference of $2M)
+
+These small discrepancies suggest the rules are retrieving the correct balance
+sheet section but picking up a slightly different line item, such as:
+  - "Long-term debt, net" (after debt issuance cost deduction) vs
+    "Long-term debt, gross"
+  - "Current portion" excluded vs included
+  - Prior quarter value vs year-end value in a 10-Q
+
+The top token-consuming rules (rule_table_row_label_long_term_debt,
+rule_long_term_debt_note_text) retrieve entire tables including multiple rows,
+causing the LLM to sometimes select a nearby but slightly different row.
+
+Fix: rules should return the entire balance sheet table containing the debt row
+(so the LLM sees column headers and can select the correct year-end column),
+rather than individual cells.
+
+===========================================================================
+ROOT CAUSE 4 — 8-K format: no balance sheet (COSTCO_2023_8K)
+===========================================================================
+The COSTCO 2023 8-K filing does not contain a standard balance sheet. Ground
+truth is 0 (no long-term debt). All rules return 0 spans, LLM returns NOT FOUND
+instead of 0. None of the 37 rules handles the case where gt=0 and no debt line
+exists in the document.
+
+Fix: add a fallback rule that returns the first page of the document as context
+when no balance sheet is found, so the LLM can infer absence and return "0".
+
+===========================================================================
+BAD / NOISY RULES
+===========================================================================
+1. rule_long_term_debt_note_text (avg 1,235 tokens, hits=7/10)
+   - Returns all text spans in footnotes that mention "long-term debt". Footnotes
+     contain historical balances, maturity schedules, and covenants — multiple
+     different debt values that confuse the LLM.
+   - Fix: only use as fallback when balance sheet table is not found.
+
+2. rule_balance_sheet_liabilities_section (avg 493 tokens, hits=7/10)
+   - Returns the entire liabilities section, including current liabilities,
+     lease obligations, and other items beyond long-term debt.
+   - Fix: narrow to rows containing "long-term" in label.
+
+3. rule_long_term_liabilities_header_row (avg 944 tokens, hits=7/10)
+   - Returns the header row of the long-term liabilities section plus
+     neighboring rows — often includes multiple items, not just long-term debt.
+
+===========================================================================
+FIX DIRECTION
+===========================================================================
+- Prioritize rules that return the complete consolidated balance sheet table
+  (with column headers showing fiscal year dates), so the LLM can identify
+  the correct year-end column.
+- Demote debt footnote rules to fallback-only.
+- Add a rule that detects 8-K / press release balance sheets (consolidated
+  condensed) and handles the gt=0 / absent case.
+- Improve LLM system prompt to handle unit scaling (millions, billions, thousands)
+  by instructing it to state the value in the document's native unit.

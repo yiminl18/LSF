@@ -1,0 +1,105 @@
+{
+  "question": "What is the registrant's telephone number?",
+  "question_slug": "what_is_the_registrants_telephone_number",
+  "timestamp": "2026-04-30T21:44:31Z",
+  "model": "gpt54",
+  "num_documents": 10,
+  "doc_names": [
+    "AMCOR_2019_10K",
+    "COSTCO_2017_10K",
+    "BOEING_2018_10K",
+    "AMAZON_2018_10K",
+    "EBAY_2021_10K",
+    "AMAZON_2016_10K",
+    "CORNING_2022_10K",
+    "NIKE_2021_10K",
+    "LOCKHEEDMARTIN_2022_10K",
+    "JOHNSON_JOHNSON_2022_10K"
+  ],
+  "max_iterations": 12,
+  "agent_turns": 5,
+  "latency_seconds": 70.633,
+  "agent_input_tokens": 1624358,
+  "agent_output_tokens": 740,
+  "judge_input_tokens": 5460,
+  "judge_output_tokens": 356,
+  "total_input_tokens": 1629818,
+  "total_output_tokens": 1096,
+  "total_llm_calls": 40,
+  "merge_accuracy": 1.0,
+  "merge_num_correct": 10,
+  "avg_cost_ratio": 0.00043,
+  "merge_per_doc": {
+    "AMCOR_2019_10K": {
+      "predicted": "+44 117 9753200",
+      "ground_truth": "+44 117 9753200",
+      "correct": true,
+      "cost_ratio": 0.00037
+    },
+    "COSTCO_2017_10K": {
+      "predicted": "(425) 313-8100",
+      "ground_truth": "(425) 313-8100",
+      "correct": true,
+      "cost_ratio": 0.00067
+    },
+    "BOEING_2018_10K": {
+      "predicted": "(312) 544-2000",
+      "ground_truth": "(312) 544-2000",
+      "correct": true,
+      "cost_ratio": 0.00047
+    },
+    "AMAZON_2018_10K": {
+      "predicted": "(206) 266-1000",
+      "ground_truth": "(206) 266-1000",
+      "correct": true,
+      "cost_ratio": 0.00067
+    },
+    "EBAY_2021_10K": {
+      "predicted": "(408) 376-7108",
+      "ground_truth": "(408) 376-7108",
+      "correct": true,
+      "cost_ratio": 0.00017
+    },
+    "AMAZON_2016_10K": {
+      "predicted": "(206) 266-1000",
+      "ground_truth": "(206) 266-1000",
+      "correct": true,
+      "cost_ratio": 0.00071
+    },
+    "CORNING_2022_10K": {
+      "predicted": "607-974-9000",
+      "ground_truth": "607-974-9000",
+      "correct": true,
+      "cost_ratio": 0.00035
+    },
+    "NIKE_2021_10K": {
+      "predicted": "(503) 671-6453",
+      "ground_truth": "(503) 671-6453",
+      "correct": true,
+      "cost_ratio": 0.00049
+    },
+    "LOCKHEEDMARTIN_2022_10K": {
+      "predicted": "(301) 897-6000",
+      "ground_truth": "(301) 897-6000",
+      "correct": true,
+      "cost_ratio": 0.00025
+    },
+    "JOHNSON_JOHNSON_2022_10K": {
+      "predicted": "(732) 524-0400",
+      "ground_truth": "(732) 524-0400",
+      "correct": true,
+      "cost_ratio": 0.00019
+    }
+  },
+  "rules": [
+    {
+      "rule_name": "rule_cover_page_telephone",
+      "description": "Retrieve page-1 cover-page spans containing the registrant telephone number.",
+      "hit_rate": 1.0,
+      "avg_cost_ratio": 0.00043,
+      "file": "rules/llm/financebench_agent/what_is_the_registrants_telephone_number_10_llm/rule_cover_page_telephone.py"
+    }
+  ],
+  "rule_dir": "rules/llm/financebench_agent/what_is_the_registrants_telephone_number_10_llm",
+  "log_file": "logs/financebench/agent/what_is_the_registrants_telephone_number_10docs_20260430_214431.txt"
+}

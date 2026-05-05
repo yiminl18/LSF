@@ -1,0 +1,553 @@
+{
+  "question": "What is/are the trading symbol(s) and listing exchange(s)?",
+  "question_slug": "what_isare_the_trading_symbols_and_listing_exchanges_10",
+  "rule_slug": "what_isare_the_trading_symbols_and_listing_exchanges_10_refined",
+  "split": "unsampled_refined",
+  "n": 50,
+  "n_correct": 47,
+  "accuracy": 0.94,
+  "avg_latency": 1.653,
+  "avg_retrieved": 8237.5,
+  "avg_input_tok": 8297.4,
+  "avg_cost_ratio": 0.128985,
+  "per_doc": [
+    {
+      "doc_name": "AMCOR_2023_10K",
+      "predicted": "AMCR — New York Stock Exchange; AUKF/27 — New York Stock Exchange",
+      "ground_truth": [
+        {
+          "Trading Symbol": "AMCR",
+          "Exchange": "New York Stock Exchange"
+        },
+        {
+          "Trading Symbol": "AUKF/27",
+          "Exchange": "New York Stock Exchange"
+        }
+      ],
+      "correct": true,
+      "latency_seconds": 1.779,
+      "retrieved_tokens": 431,
+      "input_tokens": 517
+    },
+    {
+      "doc_name": "APPLE_2016_10K",
+      "predicted": "AAPL — NASDAQ Stock Market LLC (NASDAQ)",
+      "ground_truth": "AAPL, NASDAQ",
+      "correct": true,
+      "latency_seconds": 1.606,
+      "retrieved_tokens": 15275,
+      "input_tokens": 15330
+    },
+    {
+      "doc_name": "BESTBUY_2020_10K",
+      "predicted": "BBY — New York Stock Exchange",
+      "ground_truth": "BBY, New York Stock Exchange",
+      "correct": true,
+      "latency_seconds": 1.682,
+      "retrieved_tokens": 4266,
+      "input_tokens": 4348
+    },
+    {
+      "doc_name": "INTEL_2016_10K",
+      "predicted": "INTC — NASDAQ Global Select Market",
+      "ground_truth": "Common stock, $0.001 par value: The NASDAQ Global Select Market",
+      "correct": false,
+      "latency_seconds": 3.149,
+      "retrieved_tokens": 24265,
+      "input_tokens": 24266
+    },
+    {
+      "doc_name": "ACTIVISIONBLIZZARD_2017_10K",
+      "predicted": "ATVI — The Nasdaq Global Select Market",
+      "ground_truth": "ATVI, The Nasdaq Global Select Market",
+      "correct": true,
+      "latency_seconds": 1.78,
+      "retrieved_tokens": 12169,
+      "input_tokens": 12185
+    },
+    {
+      "doc_name": "ACTIVISIONBLIZZARD_2020_10K",
+      "predicted": "ATVI — The Nasdaq Global Select Market",
+      "ground_truth": "ATVI, The Nasdaq Global Select Market",
+      "correct": true,
+      "latency_seconds": 2.278,
+      "retrieved_tokens": 9838,
+      "input_tokens": 9882
+    },
+    {
+      "doc_name": "ADOBE_2015_10K",
+      "predicted": "ADBE — The NASDAQ Stock Market LLC (NASDAQ Global Select Market)",
+      "ground_truth": "NASDAQ: ADBE",
+      "correct": true,
+      "latency_seconds": 1.752,
+      "retrieved_tokens": 11490,
+      "input_tokens": 11518
+    },
+    {
+      "doc_name": "ADOBE_2016_10K",
+      "predicted": "ADBE — The NASDAQ Stock Market LLC (NASDAQ Global Select Market)",
+      "ground_truth": "ADBE, NASDAQ Global Select Market",
+      "correct": true,
+      "latency_seconds": 1.471,
+      "retrieved_tokens": 10557,
+      "input_tokens": 10591
+    },
+    {
+      "doc_name": "ADOBE_2017_10K",
+      "predicted": "ADBE — The NASDAQ Stock Market LLC (NASDAQ Global Select Market)",
+      "ground_truth": "ADBE, NASDAQ Global Select Market",
+      "correct": true,
+      "latency_seconds": 1.465,
+      "retrieved_tokens": 9685,
+      "input_tokens": 9729
+    },
+    {
+      "doc_name": "ADOBE_2018_10K",
+      "predicted": "ADBE — NASDAQ Global Select Market",
+      "ground_truth": "ADBE, NASDAQ Global Select Market",
+      "correct": true,
+      "latency_seconds": 2.585,
+      "retrieved_tokens": 9821,
+      "input_tokens": 9861
+    },
+    {
+      "doc_name": "ADOBE_2019_10K",
+      "predicted": "ADBE — NASDAQ",
+      "ground_truth": "ADBE, NASDAQ",
+      "correct": true,
+      "latency_seconds": 1.419,
+      "retrieved_tokens": 9290,
+      "input_tokens": 9341
+    },
+    {
+      "doc_name": "ADOBE_2020_10K",
+      "predicted": "ADBE — NASDAQ",
+      "ground_truth": "ADBE, NASDAQ",
+      "correct": true,
+      "latency_seconds": 4.727,
+      "retrieved_tokens": 7464,
+      "input_tokens": 7522
+    },
+    {
+      "doc_name": "ADOBE_2021_10K",
+      "predicted": "ADBE — NASDAQ",
+      "ground_truth": "ADBE, NASDAQ",
+      "correct": true,
+      "latency_seconds": 3.292,
+      "retrieved_tokens": 8424,
+      "input_tokens": 8485
+    },
+    {
+      "doc_name": "ADOBE_2022_10K",
+      "predicted": "ADBE — NASDAQ",
+      "ground_truth": [
+        {
+          "Trading Symbol": "ADBE",
+          "Listing Exchange": "NASDAQ"
+        }
+      ],
+      "correct": true,
+      "latency_seconds": 1.305,
+      "retrieved_tokens": 8430,
+      "input_tokens": 8491
+    },
+    {
+      "doc_name": "AMAZON_2015_10K",
+      "predicted": "AMZN — NASDAQ Global Select Market",
+      "ground_truth": "AMZN, NASDAQ Global Select Market",
+      "correct": true,
+      "latency_seconds": 1.687,
+      "retrieved_tokens": 4996,
+      "input_tokens": 5082
+    },
+    {
+      "doc_name": "AMAZON_2017_10K",
+      "predicted": "AMZN — Nasdaq Global Select Market",
+      "ground_truth": "AMZN, Nasdaq Global Select Market",
+      "correct": true,
+      "latency_seconds": 1.703,
+      "retrieved_tokens": 5386,
+      "input_tokens": 5466
+    },
+    {
+      "doc_name": "AMAZON_2019_10K",
+      "predicted": "AMZN; Nasdaq Global Select Market",
+      "ground_truth": "AMZN, Nasdaq Global Select Market",
+      "correct": true,
+      "latency_seconds": 1.845,
+      "retrieved_tokens": 5160,
+      "input_tokens": 5243
+    },
+    {
+      "doc_name": "AMAZON_2020_10K",
+      "predicted": "AMZN — Nasdaq Global Select Market",
+      "ground_truth": "AMZN, Nasdaq Global Select Market",
+      "correct": true,
+      "latency_seconds": 1.062,
+      "retrieved_tokens": 3709,
+      "input_tokens": 3795
+    },
+    {
+      "doc_name": "AMAZON_2022_10K",
+      "predicted": "AMZN — Nasdaq Global Select Market",
+      "ground_truth": "AMZN, Nasdaq Global Select Market",
+      "correct": true,
+      "latency_seconds": 0.938,
+      "retrieved_tokens": 2803,
+      "input_tokens": 2892
+    },
+    {
+      "doc_name": "AMCOR_2021_10K",
+      "predicted": "AMCR — New York Stock Exchange; AUKF/27 — New York Stock Exchange",
+      "ground_truth": [
+        {
+          "Trading Symbol": "AMCR",
+          "Exchange": "New York Stock Exchange"
+        },
+        {
+          "Trading Symbol": "AUKF/27",
+          "Exchange": "New York Stock Exchange"
+        }
+      ],
+      "correct": true,
+      "latency_seconds": 1.297,
+      "retrieved_tokens": 1051,
+      "input_tokens": 1124
+    },
+    {
+      "doc_name": "AMCOR_2022_10K",
+      "predicted": "AMCR — New York Stock Exchange; AUKF/27 — New York Stock Exchange",
+      "ground_truth": [
+        {
+          "symbol": "AMCR",
+          "exchange": "New York Stock Exchange"
+        },
+        {
+          "symbol": "AUKF/27",
+          "exchange": "New York Stock Exchange"
+        }
+      ],
+      "correct": true,
+      "latency_seconds": 1.376,
+      "retrieved_tokens": 431,
+      "input_tokens": 517
+    },
+    {
+      "doc_name": "AMD_2019_10K",
+      "predicted": "AMD — The NASDAQ Global Select Market",
+      "ground_truth": "AMD, The NASDAQ Global Select Market",
+      "correct": true,
+      "latency_seconds": 1.7,
+      "retrieved_tokens": 9047,
+      "input_tokens": 9125
+    },
+    {
+      "doc_name": "AMD_2020_10K",
+      "predicted": "AMD — The NASDAQ Global Select Market",
+      "ground_truth": "AMD, The NASDAQ Global Select Market",
+      "correct": true,
+      "latency_seconds": 1.49,
+      "retrieved_tokens": 6797,
+      "input_tokens": 6879
+    },
+    {
+      "doc_name": "AMD_2021_10K",
+      "predicted": "AMD — The NASDAQ Global Select Market",
+      "ground_truth": "AMD, The NASDAQ Global Select Market",
+      "correct": true,
+      "latency_seconds": 1.711,
+      "retrieved_tokens": 8767,
+      "input_tokens": 8822
+    },
+    {
+      "doc_name": "AMD_2022_10K",
+      "predicted": "AMD — The NASDAQ Global Select Market (NASDAQ)",
+      "ground_truth": "AMD, The NASDAQ Global Select Market",
+      "correct": true,
+      "latency_seconds": 1.031,
+      "retrieved_tokens": 3727,
+      "input_tokens": 3812
+    },
+    {
+      "doc_name": "APPLE_2015_10K",
+      "predicted": "AAPL — NASDAQ Stock Market LLC",
+      "ground_truth": "AAPL, NASDAQ Stock Market LLC",
+      "correct": true,
+      "latency_seconds": 1.38,
+      "retrieved_tokens": 8435,
+      "input_tokens": 8511
+    },
+    {
+      "doc_name": "APPLE_2017_10K",
+      "predicted": "AAPL — Nasdaq Stock Market LLC",
+      "ground_truth": "AAPL, The Nasdaq Stock Market LLC",
+      "correct": true,
+      "latency_seconds": 1.894,
+      "retrieved_tokens": 18100,
+      "input_tokens": 18121
+    },
+    {
+      "doc_name": "APPLE_2018_10K",
+      "predicted": "AAPL — The Nasdaq Stock Market LLC",
+      "ground_truth": "AAPL, The Nasdaq Stock Market LLC",
+      "correct": true,
+      "latency_seconds": 1.513,
+      "retrieved_tokens": 10392,
+      "input_tokens": 10454
+    },
+    {
+      "doc_name": "APPLE_2019_10K",
+      "predicted": "AAPL — The Nasdaq Stock Market LLC",
+      "ground_truth": "AAPL, The Nasdaq Stock Market LLC",
+      "correct": true,
+      "latency_seconds": 1.786,
+      "retrieved_tokens": 12204,
+      "input_tokens": 12259
+    },
+    {
+      "doc_name": "APPLE_2020_10K",
+      "predicted": "AAPL — The Nasdaq Stock Market LLC",
+      "ground_truth": "AAPL, The Nasdaq Stock Market LLC",
+      "correct": true,
+      "latency_seconds": 1.698,
+      "retrieved_tokens": 10357,
+      "input_tokens": 10416
+    },
+    {
+      "doc_name": "APPLE_2021_10K",
+      "predicted": "AAPL — The Nasdaq Stock Market LLC",
+      "ground_truth": "AAPL, The Nasdaq Stock Market LLC",
+      "correct": true,
+      "latency_seconds": 1.298,
+      "retrieved_tokens": 6212,
+      "input_tokens": 6285
+    },
+    {
+      "doc_name": "APPLE_2022_10K",
+      "predicted": "AAPL — The Nasdaq Stock Market LLC",
+      "ground_truth": {
+        "Common Stock": {
+          "Trading Symbol": "AAPL",
+          "Exchange": "The Nasdaq Stock Market LLC"
+        },
+        "1.000% Notes due 2022": {
+          "Exchange": "The Nasdaq Stock Market LLC"
+        },
+        "1.375% Notes due 2024": {
+          "Exchange": "The Nasdaq Stock Market LLC"
+        },
+        "0.000% Notes due 2025": {
+          "Exchange": "The Nasdaq Stock Market LLC"
+        },
+        "0.875% Notes due 2025": {
+          "Exchange": "The Nasdaq Stock Market LLC"
+        },
+        "1.625% Notes due 2026": {
+          "Exchange": "The Nasdaq Stock Market LLC"
+        },
+        "2.000% Notes due 2027": {
+          "Exchange": "The Nasdaq Stock Market LLC"
+        },
+        "1.375% Notes due 2029": {
+          "Exchange": "The Nasdaq Stock Market LLC"
+        },
+        "3.050% Notes due 2029": {
+          "Exchange": "The Nasdaq Stock Market LLC"
+        },
+        "0.500% Notes due 2031": {
+          "Exchange": "The Nasdaq Stock Market LLC"
+        },
+        "3.600% Notes due 2042": {
+          "Exchange": "The Nasdaq Stock Market LLC"
+        }
+      },
+      "correct": false,
+      "latency_seconds": 1.026,
+      "retrieved_tokens": 3743,
+      "input_tokens": 3828
+    },
+    {
+      "doc_name": "BESTBUY_2015_10K",
+      "predicted": "BBY — New York Stock Exchange",
+      "ground_truth": "BBY, New York Stock Exchange",
+      "correct": true,
+      "latency_seconds": 1.576,
+      "retrieved_tokens": 8158,
+      "input_tokens": 8220
+    },
+    {
+      "doc_name": "BESTBUY_2021_10K",
+      "predicted": "BBY — New York Stock Exchange",
+      "ground_truth": "BBY, New York Stock Exchange",
+      "correct": true,
+      "latency_seconds": 1.331,
+      "retrieved_tokens": 6515,
+      "input_tokens": 6587
+    },
+    {
+      "doc_name": "BESTBUY_2022_10K",
+      "predicted": "BBY — New York Stock Exchange",
+      "ground_truth": "BBY, New York Stock Exchange",
+      "correct": true,
+      "latency_seconds": 1.645,
+      "retrieved_tokens": 7515,
+      "input_tokens": 7572
+    },
+    {
+      "doc_name": "BESTBUY_2023_10K",
+      "predicted": "BBY — New York Stock Exchange",
+      "ground_truth": "BBY, New York Stock Exchange",
+      "correct": true,
+      "latency_seconds": 1.605,
+      "retrieved_tokens": 7361,
+      "input_tokens": 7429
+    },
+    {
+      "doc_name": "BOEING_2017_10K",
+      "predicted": "BA — New York Stock Exchange",
+      "ground_truth": "BA, New York Stock Exchange",
+      "correct": true,
+      "latency_seconds": 1.214,
+      "retrieved_tokens": 8730,
+      "input_tokens": 8785
+    },
+    {
+      "doc_name": "BOEING_2019_10K",
+      "predicted": "BA — New York Stock Exchange",
+      "ground_truth": "BA, New York Stock Exchange",
+      "correct": true,
+      "latency_seconds": 1.505,
+      "retrieved_tokens": 8459,
+      "input_tokens": 8529
+    },
+    {
+      "doc_name": "BOEING_2020_10K",
+      "predicted": "BA — New York Stock Exchange",
+      "ground_truth": "BA, New York Stock Exchange",
+      "correct": true,
+      "latency_seconds": 1.389,
+      "retrieved_tokens": 9222,
+      "input_tokens": 9280
+    },
+    {
+      "doc_name": "BOEING_2022_10K",
+      "predicted": "BA — New York Stock Exchange",
+      "ground_truth": "BA, New York Stock Exchange",
+      "correct": true,
+      "latency_seconds": 1.33,
+      "retrieved_tokens": 9202,
+      "input_tokens": 9261
+    },
+    {
+      "doc_name": "CORNING_2022_10K",
+      "predicted": "GLW — New York Stock Exchange (NYSE)",
+      "ground_truth": "GLW, New York Stock Exchange (NYSE)",
+      "correct": true,
+      "latency_seconds": 1.644,
+      "retrieved_tokens": 10597,
+      "input_tokens": 10595
+    },
+    {
+      "doc_name": "COSTCO_2015_10K",
+      "predicted": "COST — The NASDAQ Global Select Market",
+      "ground_truth": "COST, The NASDAQ Global Select Market",
+      "correct": true,
+      "latency_seconds": 1.167,
+      "retrieved_tokens": 4763,
+      "input_tokens": 4824
+    },
+    {
+      "doc_name": "COSTCO_2016_10K",
+      "predicted": "COST — The NASDAQ Global Select Market",
+      "ground_truth": "COST, The NASDAQ Global Select Market",
+      "correct": true,
+      "latency_seconds": 1.055,
+      "retrieved_tokens": 4757,
+      "input_tokens": 4819
+    },
+    {
+      "doc_name": "COSTCO_2018_10K",
+      "predicted": "COST — The NASDAQ Global Select Market",
+      "ground_truth": "COST, The NASDAQ Global Select Market",
+      "correct": true,
+      "latency_seconds": 1.044,
+      "retrieved_tokens": 4858,
+      "input_tokens": 4924
+    },
+    {
+      "doc_name": "GENERALMILLS_2022_10K",
+      "predicted": "GIS — New York Stock Exchange; GIS23A — New York Stock Exchange; GIS25A — New York Stock Exchange; GIS26 — New York Stock Exchange; GIS27 — New York Stock Exchange",
+      "ground_truth": [
+        {
+          "Trading Symbol": "GIS",
+          "Exchange": "New York Stock Exchange"
+        },
+        {
+          "Trading Symbol": "GIS23A",
+          "Exchange": "New York Stock Exchange"
+        },
+        {
+          "Trading Symbol": "GIS25A",
+          "Exchange": "New York Stock Exchange"
+        },
+        {
+          "Trading Symbol": "GIS26",
+          "Exchange": "New York Stock Exchange"
+        },
+        {
+          "Trading Symbol": "GIS27",
+          "Exchange": "New York Stock Exchange"
+        }
+      ],
+      "correct": true,
+      "latency_seconds": 1.97,
+      "retrieved_tokens": 12768,
+      "input_tokens": 12796
+    },
+    {
+      "doc_name": "INTEL_2022_10K",
+      "predicted": "INTC — Nasdaq Global Select Market",
+      "ground_truth": "INTC, Nasdaq Global Select Market",
+      "correct": true,
+      "latency_seconds": 1.279,
+      "retrieved_tokens": 5764,
+      "input_tokens": 5829
+    },
+    {
+      "doc_name": "KRAFTHEINZ_2021_10K",
+      "predicted": "KHC — The Nasdaq Stock Market LLC",
+      "ground_truth": "KHC, The Nasdaq Stock Market LLC",
+      "correct": true,
+      "latency_seconds": 1.976,
+      "retrieved_tokens": 11886,
+      "input_tokens": 11874
+    },
+    {
+      "doc_name": "FOOTLOCKER_2023_10K",
+      "predicted": "FL — New York Stock Exchange; Börse Stuttgart stock exchange in Germany",
+      "ground_truth": "FL, New York Stock Exchange",
+      "correct": false,
+      "latency_seconds": 1.68,
+      "retrieved_tokens": 11710,
+      "input_tokens": 11757
+    },
+    {
+      "doc_name": "NIKE_2019_10K",
+      "predicted": "NKE — New York Stock Exchange",
+      "ground_truth": "NKE, New York Stock Exchange",
+      "correct": true,
+      "latency_seconds": 1.174,
+      "retrieved_tokens": 5696,
+      "input_tokens": 5768
+    },
+    {
+      "doc_name": "LOCKHEEDMARTIN_2021_10K",
+      "predicted": "LMT — New York Stock Exchange",
+      "ground_truth": "LMT, New York Stock Exchange",
+      "correct": true,
+      "latency_seconds": 1.349,
+      "retrieved_tokens": 11193,
+      "input_tokens": 11323
+    }
+  ]
+}

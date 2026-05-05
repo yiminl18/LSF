@@ -1,0 +1,140 @@
+{
+  "question": "What is total revenue for the most recent fiscal year (from the audited income statement)?",
+  "question_slug": "what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10",
+  "timestamp": "2026-04-30T21:30:31Z",
+  "target_accuracy": 0.9,
+  "all_rules_count": 4,
+  "sorted_rules": [
+    "rule_selected_financial_data_tables",
+    "rule_substantive_partii_sales_revenue_text",
+    "rule_partii_sales_revenue_tables_text",
+    "rule_item8_financial_statements_income_statement"
+  ],
+  "rule_costs": {
+    "rule_selected_financial_data_tables": 0.044806,
+    "rule_substantive_partii_sales_revenue_text": 0.053277,
+    "rule_partii_sales_revenue_tables_text": 0.125615,
+    "rule_item8_financial_statements_income_statement": 0.387133
+  },
+  "total_latency_seconds": 221.011,
+  "total_input_tokens": 904005,
+  "total_output_tokens": 1049,
+  "iterations": [
+    {
+      "phase": "exp_search",
+      "step": 1,
+      "k": 1,
+      "rules": [
+        "rule_selected_financial_data_tables"
+      ],
+      "rules_count": 1,
+      "accuracy": 0.3,
+      "avg_cost_ratio": 0.044806,
+      "latency_seconds": 28.278,
+      "input_tokens": 36927,
+      "output_tokens": 140,
+      "action": "continue"
+    },
+    {
+      "phase": "exp_search",
+      "step": 2,
+      "k": 2,
+      "rules": [
+        "rule_selected_financial_data_tables",
+        "rule_substantive_partii_sales_revenue_text"
+      ],
+      "rules_count": 2,
+      "accuracy": 0.8,
+      "avg_cost_ratio": 0.085621,
+      "latency_seconds": 28.58,
+      "input_tokens": 70594,
+      "output_tokens": 150,
+      "action": "continue"
+    },
+    {
+      "phase": "exp_search",
+      "step": 3,
+      "k": 4,
+      "rules": [
+        "rule_selected_financial_data_tables",
+        "rule_substantive_partii_sales_revenue_text",
+        "rule_partii_sales_revenue_tables_text",
+        "rule_item8_financial_statements_income_statement"
+      ],
+      "rules_count": 4,
+      "accuracy": 0.9,
+      "avg_cost_ratio": 0.432286,
+      "latency_seconds": 43.325,
+      "input_tokens": 361813,
+      "output_tokens": 152,
+      "action": "candidate_found"
+    },
+    {
+      "phase": "pruning",
+      "step": 1,
+      "i": 3,
+      "rule_tested": "rule_item8_financial_statements_income_statement",
+      "rules": [
+        "rule_selected_financial_data_tables",
+        "rule_substantive_partii_sales_revenue_text",
+        "rule_partii_sales_revenue_tables_text"
+      ],
+      "rules_count": 3,
+      "accuracy": 0.9,
+      "avg_cost_ratio": 0.14393,
+      "latency_seconds": 31.479,
+      "input_tokens": 121359,
+      "output_tokens": 152,
+      "action": "removed"
+    },
+    {
+      "phase": "pruning",
+      "step": 2,
+      "i": 2,
+      "rule_tested": "rule_partii_sales_revenue_tables_text",
+      "rules": [
+        "rule_selected_financial_data_tables",
+        "rule_substantive_partii_sales_revenue_text"
+      ],
+      "rules_count": 2,
+      "accuracy": 0.8,
+      "avg_cost_ratio": 0.085621,
+      "latency_seconds": 27.168,
+      "input_tokens": 70594,
+      "output_tokens": 150,
+      "action": "kept"
+    },
+    {
+      "phase": "pruning",
+      "step": 3,
+      "i": 1,
+      "rule_tested": "rule_substantive_partii_sales_revenue_text",
+      "rules": [
+        "rule_selected_financial_data_tables",
+        "rule_partii_sales_revenue_tables_text"
+      ],
+      "rules_count": 2,
+      "accuracy": 0.9,
+      "avg_cost_ratio": 0.14393,
+      "latency_seconds": 28.201,
+      "input_tokens": 121359,
+      "output_tokens": 152,
+      "action": "removed"
+    },
+    {
+      "phase": "final",
+      "step": 1,
+      "rules": [
+        "rule_selected_financial_data_tables",
+        "rule_partii_sales_revenue_tables_text"
+      ],
+      "rules_count": 2,
+      "accuracy": 0.9,
+      "avg_cost_ratio": 0.14393,
+      "latency_seconds": 26.254,
+      "input_tokens": 121359,
+      "output_tokens": 153,
+      "action": "final_eval"
+    }
+  ]
+}

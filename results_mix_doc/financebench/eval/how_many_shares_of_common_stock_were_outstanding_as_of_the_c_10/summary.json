@@ -1,0 +1,344 @@
+{
+  "question": "How many shares of common stock were outstanding as of the cover-page reference date?",
+  "question_slug": "how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10",
+  "split": "sampled",
+  "num_documents": 10,
+  "rules": [
+    {
+      "rule_name": "rule_any_span_outstanding_share_count",
+      "accuracy": 0.5,
+      "avg_cost_ratio": 0.03432,
+      "avg_rule_apply_latency_seconds": 1.623,
+      "avg_judge_latency_seconds": 1.034,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_any_span_common_stock_outstanding",
+      "accuracy": 0.4,
+      "avg_cost_ratio": 0.02239,
+      "avg_rule_apply_latency_seconds": 1.333,
+      "avg_judge_latency_seconds": 1.139,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_text_with_outstanding_and_registrant",
+      "accuracy": 0.3,
+      "avg_cost_ratio": 0.000255,
+      "avg_rule_apply_latency_seconds": 1.234,
+      "avg_judge_latency_seconds": 1.21,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_cover_page_company_section_body",
+      "accuracy": 0.3,
+      "avg_cost_ratio": 0.000304,
+      "avg_rule_apply_latency_seconds": 1.12,
+      "avg_judge_latency_seconds": 1.083,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_cover_page_number_of_shares_outstanding_or_balance_sheet",
+      "accuracy": 0.3,
+      "avg_cost_ratio": 0.000314,
+      "avg_rule_apply_latency_seconds": 1.085,
+      "avg_judge_latency_seconds": 1.089,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_cover_page_reference_date",
+      "accuracy": 0.3,
+      "avg_cost_ratio": 0.000387,
+      "avg_rule_apply_latency_seconds": 1.045,
+      "avg_judge_latency_seconds": 1.098,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_h2_or_body_outstanding",
+      "accuracy": 0.3,
+      "avg_cost_ratio": 0.000387,
+      "avg_rule_apply_latency_seconds": 1.092,
+      "avg_judge_latency_seconds": 1.055,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_outstanding_near_end_of_cover",
+      "accuracy": 0.3,
+      "avg_cost_ratio": 0.000387,
+      "avg_rule_apply_latency_seconds": 1.274,
+      "avg_judge_latency_seconds": 1.136,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_outstanding_sentence",
+      "accuracy": 0.3,
+      "avg_cost_ratio": 0.000387,
+      "avg_rule_apply_latency_seconds": 1.062,
+      "avg_judge_latency_seconds": 1.059,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_text_with_outstanding_and_common",
+      "accuracy": 0.3,
+      "avg_cost_ratio": 0.000387,
+      "avg_rule_apply_latency_seconds": 1.071,
+      "avg_judge_latency_seconds": 1.034,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_text_with_outstanding_and_date",
+      "accuracy": 0.3,
+      "avg_cost_ratio": 0.000387,
+      "avg_rule_apply_latency_seconds": 1.053,
+      "avg_judge_latency_seconds": 1.079,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_text_with_outstanding_and_stock",
+      "accuracy": 0.3,
+      "avg_cost_ratio": 0.000387,
+      "avg_rule_apply_latency_seconds": 1.402,
+      "avg_judge_latency_seconds": 1.06,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_outstanding_of_registrants_common_stock",
+      "accuracy": 0.2,
+      "avg_cost_ratio": 0.000124,
+      "avg_rule_apply_latency_seconds": 1.103,
+      "avg_judge_latency_seconds": 1.102,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_text_after_market_value",
+      "accuracy": 0.2,
+      "avg_cost_ratio": 0.000213,
+      "avg_rule_apply_latency_seconds": 1.122,
+      "avg_judge_latency_seconds": 1.102,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_number_of_shares_outstanding",
+      "accuracy": 0.2,
+      "avg_cost_ratio": 0.000222,
+      "avg_rule_apply_latency_seconds": 1.055,
+      "avg_judge_latency_seconds": 1.146,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_number_of_shares_outstanding_short_form",
+      "accuracy": 0.2,
+      "avg_cost_ratio": 0.000222,
+      "avg_rule_apply_latency_seconds": 1.224,
+      "avg_judge_latency_seconds": 1.087,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_outstanding_cover_page_date",
+      "accuracy": 0.2,
+      "avg_cost_ratio": 0.000222,
+      "avg_rule_apply_latency_seconds": 1.126,
+      "avg_judge_latency_seconds": 1.105,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_cover_page_shares_outstanding_number_phrase",
+      "accuracy": 0.2,
+      "avg_cost_ratio": 0.000247,
+      "avg_rule_apply_latency_seconds": 1.029,
+      "avg_judge_latency_seconds": 1.228,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_text_with_numbered_outstanding_sentence",
+      "accuracy": 0.2,
+      "avg_cost_ratio": 0.000247,
+      "avg_rule_apply_latency_seconds": 1.138,
+      "avg_judge_latency_seconds": 1.121,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_top_half_candidate",
+      "accuracy": 0.2,
+      "avg_cost_ratio": 0.000296,
+      "avg_rule_apply_latency_seconds": 1.055,
+      "avg_judge_latency_seconds": 1.125,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_cover_page_numeric_line",
+      "accuracy": 0.1,
+      "avg_cost_ratio": 1.9e-05,
+      "avg_rule_apply_latency_seconds": 1.023,
+      "avg_judge_latency_seconds": 1.086,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_cover_page_numeric_line_after_label",
+      "accuracy": 0.1,
+      "avg_cost_ratio": 1.9e-05,
+      "avg_rule_apply_latency_seconds": 1.021,
+      "avg_judge_latency_seconds": 1.125,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_number_of_shares_outstanding_of_common_stock",
+      "accuracy": 0.1,
+      "avg_cost_ratio": 5.7e-05,
+      "avg_rule_apply_latency_seconds": 1.083,
+      "avg_judge_latency_seconds": 1.205,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_cover_page_million_phrase",
+      "accuracy": 0.1,
+      "avg_cost_ratio": 9.2e-05,
+      "avg_rule_apply_latency_seconds": 1.053,
+      "avg_judge_latency_seconds": 1.155,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_text_with_million_outstanding",
+      "accuracy": 0.1,
+      "avg_cost_ratio": 9.2e-05,
+      "avg_rule_apply_latency_seconds": 1.839,
+      "avg_judge_latency_seconds": 1.195,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_common_stock_outstanding_as_of",
+      "accuracy": 0.1,
+      "avg_cost_ratio": 0.000165,
+      "avg_rule_apply_latency_seconds": 1.144,
+      "avg_judge_latency_seconds": 1.1,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_number_of_shares_common_stock_outstanding",
+      "accuracy": 0.1,
+      "avg_cost_ratio": 0.000165,
+      "avg_rule_apply_latency_seconds": 1.302,
+      "avg_judge_latency_seconds": 1.134,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_shares_outstanding_as_of",
+      "accuracy": 0.1,
+      "avg_cost_ratio": 0.000165,
+      "avg_rule_apply_latency_seconds": 1.045,
+      "avg_judge_latency_seconds": 1.115,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_cover_page_h1_with_outstanding",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.0,
+      "avg_rule_apply_latency_seconds": 1.012,
+      "avg_judge_latency_seconds": 1.063,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_balance_sheet_cover_table",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.0,
+      "avg_rule_apply_latency_seconds": 1.02,
+      "avg_judge_latency_seconds": 1.159,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_common_stock_row_with_two_dates",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.0,
+      "avg_rule_apply_latency_seconds": 1.249,
+      "avg_judge_latency_seconds": 1.192,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_company_block_followed_by_outstanding",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.0,
+      "avg_rule_apply_latency_seconds": 1.021,
+      "avg_judge_latency_seconds": 1.077,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_cover_page_shares_issued_and_outstanding_table",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.0,
+      "avg_rule_apply_latency_seconds": 1.042,
+      "avg_judge_latency_seconds": 1.169,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_issued_and_outstanding_table_row",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.0,
+      "avg_rule_apply_latency_seconds": 1.046,
+      "avg_judge_latency_seconds": 1.062,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_text_with_shares_issued_and_outstanding",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.0,
+      "avg_rule_apply_latency_seconds": 1.088,
+      "avg_judge_latency_seconds": 1.062,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_common_shares_outstanding",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 7.3e-05,
+      "avg_rule_apply_latency_seconds": 1.224,
+      "avg_judge_latency_seconds": 1.08,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_form10k_or_10q_cover_disclosure",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 8.3e-05,
+      "avg_rule_apply_latency_seconds": 1.096,
+      "avg_judge_latency_seconds": 1.105,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_cover_page_company_header_block",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.000219,
+      "avg_rule_apply_latency_seconds": 1.065,
+      "avg_judge_latency_seconds": 1.175,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_balance_sheet_common_stock_issued_outstanding",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.008018,
+      "avg_rule_apply_latency_seconds": 1.045,
+      "avg_judge_latency_seconds": 1.054,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_balance_sheet_authorized_issued_outstanding_row",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.009493,
+      "avg_rule_apply_latency_seconds": 1.034,
+      "avg_judge_latency_seconds": 1.078,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_balance_sheet_common_stock_row_cell",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.015035,
+      "avg_rule_apply_latency_seconds": 1.079,
+      "avg_judge_latency_seconds": 1.149,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_any_table_common_stock_outstanding",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.018602,
+      "avg_rule_apply_latency_seconds": 1.233,
+      "avg_judge_latency_seconds": 1.124,
+      "num_documents": 10
+    }
+  ]
+}

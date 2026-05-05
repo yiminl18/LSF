@@ -1,0 +1,140 @@
+{
+  "question": "What is/are the trading symbol(s) and listing exchange(s)?",
+  "question_slug": "what_isare_the_trading_symbols_and_listing_exchanges",
+  "timestamp": "2026-04-30T19:45:45Z",
+  "model": "gpt54",
+  "num_documents": 10,
+  "doc_names": [
+    "AMCOR_2019_10K",
+    "COSTCO_2017_10K",
+    "BOEING_2018_10K",
+    "AMAZON_2018_10K",
+    "EBAY_2021_10K",
+    "AMAZON_2016_10K",
+    "CORNING_2022_10K",
+    "NIKE_2021_10K",
+    "LOCKHEEDMARTIN_2022_10K",
+    "JOHNSON_JOHNSON_2022_10K"
+  ],
+  "max_iterations": 12,
+  "agent_turns": 24,
+  "latency_seconds": 119.926,
+  "agent_input_tokens": 3273603,
+  "agent_output_tokens": 2476,
+  "judge_input_tokens": 4847,
+  "judge_output_tokens": 210,
+  "total_input_tokens": 3278450,
+  "total_output_tokens": 2686,
+  "total_llm_calls": 20,
+  "merge_accuracy": 0.8,
+  "merge_num_correct": 8,
+  "avg_cost_ratio": 0.00269,
+  "merge_per_doc": {
+    "AMCOR_2019_10K": {
+      "predicted": "AMCR — New York Stock Exchange; AMC — Australian Securities Exchange",
+      "ground_truth": "AMCR, The New York Stock Exchange",
+      "correct": false,
+      "cost_ratio": 0.00524
+    },
+    "COSTCO_2017_10K": {
+      "predicted": "COST — NASDAQ Global Select Market",
+      "ground_truth": "COST, The NASDAQ Global Select Market",
+      "correct": true,
+      "cost_ratio": 0.00328
+    },
+    "BOEING_2018_10K": {
+      "predicted": "NOT FOUND",
+      "ground_truth": "BA, New York Stock Exchange",
+      "correct": false,
+      "cost_ratio": 0.00122
+    },
+    "AMAZON_2018_10K": {
+      "predicted": "AMZN — Nasdaq Global Select Market",
+      "ground_truth": "AMZN, Nasdaq Global Select Market",
+      "correct": true,
+      "cost_ratio": 0.00149
+    },
+    "EBAY_2021_10K": {
+      "predicted": "eBay — The Nasdaq Global Select Market",
+      "ground_truth": "EBAY, The Nasdaq Global Select Market",
+      "correct": true,
+      "cost_ratio": 0.00381
+    },
+    "AMAZON_2016_10K": {
+      "predicted": "AMZN — NASDAQ Global Select Market",
+      "ground_truth": "AMZN, NASDAQ Global Select Market",
+      "correct": true,
+      "cost_ratio": 0.00156
+    },
+    "CORNING_2022_10K": {
+      "predicted": "GLW — New York Stock Exchange (NYSE)",
+      "ground_truth": "GLW, New York Stock Exchange (NYSE)",
+      "correct": true,
+      "cost_ratio": 0.00627
+    },
+    "NIKE_2021_10K": {
+      "predicted": "NKE — New York Stock Exchange",
+      "ground_truth": "NKE, New York Stock Exchange",
+      "correct": true,
+      "cost_ratio": 0.00062
+    },
+    "LOCKHEEDMARTIN_2022_10K": {
+      "predicted": "LMT — New York Stock Exchange",
+      "ground_truth": "LMT, New York Stock Exchange",
+      "correct": true,
+      "cost_ratio": 0.00029
+    },
+    "JOHNSON_JOHNSON_2022_10K": {
+      "predicted": "JNJ — New York Stock Exchange; JNJ24C — New York Stock Exchange; JNJ24BP — New York Stock Exchange; JNJ28 — New York Stock Exchange; JNJ35 — New York Stock Exchange",
+      "ground_truth": "[{'Trading Symbol': 'JNJ', 'Exchange': 'New York Stock Exchange'}, {'Trading Symbol': 'JNJ24C', 'Exchange': 'New York Stock Exchange'}, {'Trading Symbol': 'JNJ24BP', 'Exchange': 'New York Stock Exchange'}, {'Trading Symbol': 'JNJ28', 'Exchange': 'New York Stock Exchange'}, {'Trading Symbol': 'JNJ35', 'Exchange': 'New York Stock Exchange'}]",
+      "correct": true,
+      "cost_ratio": 0.00308
+    }
+  },
+  "rules": [
+    {
+      "rule_name": "rule_page1_section12b_symbols_exchange",
+      "description": "Retrieve page-1 Section 12(b) spans mentioning trading symbols and listing exchanges.",
+      "hit_rate": 0.0,
+      "avg_cost_ratio": 0.00183,
+      "file": "rules/llm/financebench_agent/what_isare_the_trading_symbols_and_listing_exchanges_10_llm/rule_page1_section12b_symbols_exchange.py"
+    },
+    {
+      "rule_name": "rule_page1_frontpage_trading_cluster",
+      "description": "Retrieve page-1 front-page spans in the trading symbol / exchange cluster.",
+      "hit_rate": 0.0,
+      "avg_cost_ratio": 0.00067,
+      "file": "rules/llm/financebench_agent/what_isare_the_trading_symbols_and_listing_exchanges_10_llm/rule_page1_frontpage_trading_cluster.py"
+    },
+    {
+      "rule_name": "rule_item1_business_listed_under_symbol",
+      "description": "Retrieve Item 1 Business spans that state stock is listed under a symbol.",
+      "hit_rate": 0.0,
+      "avg_cost_ratio": 0.00074,
+      "file": "rules/llm/financebench_agent/what_isare_the_trading_symbols_and_listing_exchanges_10_llm/rule_item1_business_listed_under_symbol.py"
+    },
+    {
+      "rule_name": "rule_page1_registrant_block_exchange_symbol",
+      "description": "Retrieve page-1 registrant block spans containing both exchange and symbol cues.",
+      "hit_rate": 0.0,
+      "avg_cost_ratio": 2e-05,
+      "file": "rules/llm/financebench_agent/what_isare_the_trading_symbols_and_listing_exchanges_10_llm/rule_page1_registrant_block_exchange_symbol.py"
+    },
+    {
+      "rule_name": "rule_amcor_merger_symbol_exchange",
+      "description": "Retrieve Amcor business-merger span stating NYSE symbol AMCR.",
+      "hit_rate": 0.0,
+      "avg_cost_ratio": 0.00026,
+      "file": "rules/llm/financebench_agent/what_isare_the_trading_symbols_and_listing_exchanges_10_llm/rule_amcor_merger_symbol_exchange.py"
+    },
+    {
+      "rule_name": "rule_jnj_page1_trading_symbols_exchange",
+      "description": "Retrieve Johnson & Johnson page-1 trading symbol / exchange cluster.",
+      "hit_rate": 0.0,
+      "avg_cost_ratio": 0.00128,
+      "file": "rules/llm/financebench_agent/what_isare_the_trading_symbols_and_listing_exchanges_10_llm/rule_jnj_page1_trading_symbols_exchange.py"
+    }
+  ],
+  "rule_dir": "rules/llm/financebench_agent/what_isare_the_trading_symbols_and_listing_exchanges_10_llm",
+  "log_file": "logs/financebench/agent/what_isare_the_trading_symbols_and_listing_exchanges_10docs_20260430_194545.txt"
+}

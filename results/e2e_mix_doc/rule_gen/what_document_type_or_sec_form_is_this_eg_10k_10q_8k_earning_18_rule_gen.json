@@ -1,0 +1,267 @@
+{
+  "question": "What document type or SEC form is this (e.g. 10-K, 10-Q, 8-K, earnings release, annual report)?",
+  "question_slug": "what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning",
+  "timestamp": "2026-05-04T21:42:21Z",
+  "model": "gpt54",
+  "num_documents": 18,
+  "doc_names": [
+    "BOEING_2019_10K",
+    "ADOBE_2020_10K",
+    "ACTIVISIONBLIZZARD_2020_10K",
+    "COSTCO_2018_10K",
+    "AMCOR_2019_10K",
+    "AMAZON_2020_10K",
+    "AMAZON_2019_10K",
+    "ADOBE_2021_10K",
+    "EBAY_2022_10K",
+    "ADOBE_2019_10K",
+    "AMCOR_2023Q2_10Q",
+    "ADOBE_2022Q2_10Q",
+    "ACTIVSIONBLIZZARD_2023Q2_10Q",
+    "3M_2023Q2_10Q",
+    "AMCOR_2022_8K_2022-07-01",
+    "COSTCO_2023_8K_dated-2023-08-09",
+    "COSTCO_2023_8K_dated-2023-08-16",
+    "FOOTLOCKER_2022_8K_dated-2022-05-20"
+  ],
+  "latency_seconds": 203.37,
+  "input_tokens": 624235,
+  "output_tokens": 6815,
+  "rules": [
+    {
+      "rule_name": "rule_form_heading_page1",
+      "description": "Match page-1 spans whose text is an SEC form heading like FORM 10-K/10-Q/8-K.",
+      "file": "rules/llm/financebench_mix_doc/what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning_18_llm/rule_form_heading_page1.py"
+    },
+    {
+      "rule_name": "rule_form_heading_any_page",
+      "description": "Match any span whose text contains a canonical SEC form heading.",
+      "file": "rules/llm/financebench_mix_doc/what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning_18_llm/rule_form_heading_any_page.py"
+    },
+    {
+      "rule_name": "rule_form_heading_section_header",
+      "description": "Match section_header spans that are SEC form headings.",
+      "file": "rules/llm/financebench_mix_doc/what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning_18_llm/rule_form_heading_section_header.py"
+    },
+    {
+      "rule_name": "rule_form_heading_top_of_doc",
+      "description": "Match SEC form headings appearing in the first 15 spans of the document.",
+      "file": "rules/llm/financebench_mix_doc/what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning_18_llm/rule_form_heading_top_of_doc.py"
+    },
+    {
+      "rule_name": "rule_form_heading_top_of_page1",
+      "description": "Match SEC form headings on page 1 among the first 25 page-1 spans.",
+      "file": "rules/llm/financebench_mix_doc/what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning_18_llm/rule_form_heading_top_of_page1.py"
+    },
+    {
+      "rule_name": "rule_form_h1_path_text",
+      "description": "Match H1-like spans whose path_text itself is a form name.",
+      "file": "rules/llm/financebench_mix_doc/what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning_18_llm/rule_form_h1_path_text.py"
+    },
+    {
+      "rule_name": "rule_current_report_heading",
+      "description": "Match spans with CURRENT REPORT, a common 8-K document-type heading.",
+      "file": "rules/llm/financebench_mix_doc/what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning_18_llm/rule_current_report_heading.py"
+    },
+    {
+      "rule_name": "rule_current_report_page1",
+      "description": "Match page-1 spans with CURRENT REPORT.",
+      "file": "rules/llm/financebench_mix_doc/what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning_18_llm/rule_current_report_page1.py"
+    },
+    {
+      "rule_name": "rule_quarterly_report_phrase",
+      "description": "Match spans containing QUARTERLY REPORT PURSUANT..., indicating Form 10-Q.",
+      "file": "rules/llm/financebench_mix_doc/what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning_18_llm/rule_quarterly_report_phrase.py"
+    },
+    {
+      "rule_name": "rule_annual_report_phrase",
+      "description": "Match spans containing ANNUAL REPORT PURSUANT..., indicating Form 10-K.",
+      "file": "rules/llm/financebench_mix_doc/what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning_18_llm/rule_annual_report_phrase.py"
+    },
+    {
+      "rule_name": "rule_transition_report_phrase",
+      "description": "Match spans containing TRANSITION REPORT PURSUANT..., often adjacent to the true form type.",
+      "file": "rules/llm/financebench_mix_doc/what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning_18_llm/rule_transition_report_phrase.py"
+    },
+    {
+      "rule_name": "rule_checkbox_annual_report_selected",
+      "description": "Match selected/list/checkbox spans containing ANNUAL REPORT PURSUANT..., a strong 10-K cue.",
+      "file": "rules/llm/financebench_mix_doc/what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning_18_llm/rule_checkbox_annual_report_selected.py"
+    },
+    {
+      "rule_name": "rule_checkbox_quarterly_report_selected",
+      "description": "Match selected/list/text spans containing QUARTERLY REPORT PURSUANT..., a strong 10-Q cue.",
+      "file": "rules/llm/financebench_mix_doc/what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning_18_llm/rule_checkbox_quarterly_report_selected.py"
+    },
+    {
+      "rule_name": "rule_page1_form_or_report",
+      "description": "Match page-1 spans mentioning FORM 10-K/10-Q/8-K or CURRENT REPORT.",
+      "file": "rules/llm/financebench_mix_doc/what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning_18_llm/rule_page1_form_or_report.py"
+    },
+    {
+      "rule_name": "rule_large_bold_top_form",
+      "description": "Match large bold top-of-page form/report headings on page 1.",
+      "file": "rules/llm/financebench_mix_doc/what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning_18_llm/rule_large_bold_top_form.py"
+    },
+    {
+      "rule_name": "rule_path_text_form",
+      "description": "Match spans whose breadcrumb path_text contains a form name.",
+      "file": "rules/llm/financebench_mix_doc/what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning_18_llm/rule_path_text_form.py"
+    },
+    {
+      "rule_name": "rule_path_text_form_fixed",
+      "description": "Match spans whose breadcrumb path_text contains a form name.",
+      "file": "rules/llm/financebench_mix_doc/what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning_18_llm/rule_path_text_form_fixed.py"
+    },
+    {
+      "rule_name": "rule_company_header_with_form_in_text_span",
+      "description": "Match company-name headers whose text_span contains a form name, common in cover-page OCR merges.",
+      "file": "rules/llm/financebench_mix_doc/what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning_18_llm/rule_company_header_with_form_in_text_span.py"
+    },
+    {
+      "rule_name": "rule_company_header_with_form_in_text",
+      "description": "Match company-name cover headers whose merged text contains a form name.",
+      "file": "rules/llm/financebench_mix_doc/what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning_18_llm/rule_company_header_with_form_in_text.py"
+    },
+    {
+      "rule_name": "rule_annual_report_on_form_10k_phrase",
+      "description": "Match spans containing ANNUAL REPORT ON FORM 10-K.",
+      "file": "rules/llm/financebench_mix_doc/what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning_18_llm/rule_annual_report_on_form_10k_phrase.py"
+    },
+    {
+      "rule_name": "rule_quarterly_report_on_form_10q_phrase",
+      "description": "Match spans containing QUARTERLY REPORT ON FORM 10-Q.",
+      "file": "rules/llm/financebench_mix_doc/what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning_18_llm/rule_quarterly_report_on_form_10q_phrase.py"
+    },
+    {
+      "rule_name": "rule_cover_page_report_type_keywords",
+      "description": "Match page-1 cover-page spans with strong report-type keywords.",
+      "file": "rules/llm/financebench_mix_doc/what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning_18_llm/rule_cover_page_report_type_keywords.py"
+    },
+    {
+      "rule_name": "rule_form_8k_exact",
+      "description": "Match exact or near-exact FORM 8-K headings.",
+      "file": "rules/llm/financebench_mix_doc/what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning_18_llm/rule_form_8k_exact.py"
+    },
+    {
+      "rule_name": "rule_form_10k_exact",
+      "description": "Match exact or near-exact FORM 10-K headings.",
+      "file": "rules/llm/financebench_mix_doc/what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning_18_llm/rule_form_10k_exact.py"
+    },
+    {
+      "rule_name": "rule_form_10q_exact",
+      "description": "Match exact or near-exact FORM 10-Q headings.",
+      "file": "rules/llm/financebench_mix_doc/what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning_18_llm/rule_form_10q_exact.py"
+    },
+    {
+      "rule_name": "rule_form_heading_all_caps",
+      "description": "Match all-caps form headings, which are common on SEC cover pages.",
+      "file": "rules/llm/financebench_mix_doc/what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning_18_llm/rule_form_heading_all_caps.py"
+    },
+    {
+      "rule_name": "rule_form_heading_bold",
+      "description": "Match bold spans containing a form heading.",
+      "file": "rules/llm/financebench_mix_doc/what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning_18_llm/rule_form_heading_bold.py"
+    },
+    {
+      "rule_name": "rule_form_heading_large_font",
+      "description": "Match larger-font spans containing a form heading.",
+      "file": "rules/llm/financebench_mix_doc/what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning_18_llm/rule_form_heading_large_font.py"
+    },
+    {
+      "rule_name": "rule_page1_h1_form",
+      "description": "Match page-1 H1 section headers that are form names.",
+      "file": "rules/llm/financebench_mix_doc/what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning_18_llm/rule_page1_h1_form.py"
+    },
+    {
+      "rule_name": "rule_page1_current_report_h2_or_h1",
+      "description": "Match page-1 CURRENT REPORT headings at H1/H2/body level.",
+      "file": "rules/llm/financebench_mix_doc/what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning_18_llm/rule_page1_current_report_h2_or_h1.py"
+    },
+    {
+      "rule_name": "rule_cover_page_first_form_after_sec_header",
+      "description": "Match the first form heading appearing after the SEC commission header on page 1.",
+      "file": "rules/llm/financebench_mix_doc/what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning_18_llm/rule_cover_page_first_form_after_sec_header.py"
+    },
+    {
+      "rule_name": "rule_cover_page_report_phrase_after_form",
+      "description": "Match report-type phrases near the form heading on page 1.",
+      "file": "rules/llm/financebench_mix_doc/what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning_18_llm/rule_cover_page_report_phrase_after_form.py"
+    },
+    {
+      "rule_name": "rule_form_name_in_text_or_text_span",
+      "description": "Match spans where either text or text_span contains a form name.",
+      "file": "rules/llm/financebench_mix_doc/what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning_18_llm/rule_form_name_in_text_or_text_span.py"
+    },
+    {
+      "rule_name": "rule_report_type_in_first_page_first_40",
+      "description": "Match report-type spans in the first 40 spans on page 1.",
+      "file": "rules/llm/financebench_mix_doc/what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning_18_llm/rule_report_type_in_first_page_first_40.py"
+    },
+    {
+      "rule_name": "rule_form_heading_near_mark_one",
+      "description": "Match form headings or report phrases near '(Mark One)' on the cover page.",
+      "file": "rules/llm/financebench_mix_doc/what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning_18_llm/rule_form_heading_near_mark_one.py"
+    },
+    {
+      "rule_name": "rule_form_type_from_path_or_text_page1",
+      "description": "Match page-1 spans where either path_text or text indicates the document type.",
+      "file": "rules/llm/financebench_mix_doc/what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning_18_llm/rule_form_type_from_path_or_text_page1.py"
+    },
+    {
+      "rule_name": "rule_8k_current_report_combo",
+      "description": "Match both FORM 8-K and CURRENT REPORT cues, useful for 8-K filings.",
+      "file": "rules/llm/financebench_mix_doc/what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning_18_llm/rule_8k_current_report_combo.py"
+    },
+    {
+      "rule_name": "rule_10q_quarterly_combo",
+      "description": "Match both FORM 10-Q and QUARTERLY REPORT cues, useful for 10-Q filings.",
+      "file": "rules/llm/financebench_mix_doc/what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning_18_llm/rule_10q_quarterly_combo.py"
+    },
+    {
+      "rule_name": "rule_10k_annual_combo",
+      "description": "Match both FORM 10-K and ANNUAL REPORT cues, useful for 10-K filings.",
+      "file": "rules/llm/financebench_mix_doc/what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning_18_llm/rule_10k_annual_combo.py"
+    },
+    {
+      "rule_name": "rule_form_heading_before_company_name",
+      "description": "Match form headings that appear before the first large company-name cover header.",
+      "file": "rules/llm/financebench_mix_doc/what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning_18_llm/rule_form_heading_before_company_name.py"
+    },
+    {
+      "rule_name": "rule_form_heading_with_commission_file_nearby",
+      "description": "Match form/report spans that occur near 'Commission File Number/No.' on the cover page.",
+      "file": "rules/llm/financebench_mix_doc/what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning_18_llm/rule_form_heading_with_commission_file_nearby.py"
+    },
+    {
+      "rule_name": "rule_form_heading_with_sec_header_context",
+      "description": "Match form/report spans on pages that also contain the SEC commission header.",
+      "file": "rules/llm/financebench_mix_doc/what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning_18_llm/rule_form_heading_with_sec_header_context.py"
+    },
+    {
+      "rule_name": "rule_form_heading_or_report_in_section_header_text_span",
+      "description": "Match section headers whose text_span contains report-type language.",
+      "file": "rules/llm/financebench_mix_doc/what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning_18_llm/rule_form_heading_or_report_in_section_header_text_span.py"
+    },
+    {
+      "rule_name": "rule_page1_first_large_formish_header",
+      "description": "Match the first large bold page-1 header that looks like a form/report type.",
+      "file": "rules/llm/financebench_mix_doc/what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning_18_llm/rule_page1_first_large_formish_header.py"
+    },
+    {
+      "rule_name": "rule_cover_page_form_family",
+      "description": "Match all cover-page spans belonging to the form family: form heading plus annual/quarterly/current report phrases.",
+      "file": "rules/llm/financebench_mix_doc/what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning_18_llm/rule_cover_page_form_family.py"
+    },
+    {
+      "rule_name": "rule_form_type_keywords_in_path_text",
+      "description": "Match spans whose path_text contains CURRENT REPORT or a form name.",
+      "file": "rules/llm/financebench_mix_doc/what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning_18_llm/rule_form_type_keywords_in_path_text.py"
+    },
+    {
+      "rule_name": "rule_form_type_cover_page_section_headers",
+      "description": "Match page-1 section headers that are likely the document type answer.",
+      "file": "rules/llm/financebench_mix_doc/what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning_18_llm/rule_form_type_cover_page_section_headers.py"
+    }
+  ]
+}

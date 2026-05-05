@@ -1,0 +1,127 @@
+{
+  "question": "What is the registrant's telephone number?",
+  "question_slug": "what_is_the_registrants_telephone_number_10",
+  "timestamp": "2026-04-29T22:30:24Z",
+  "model": "gpt54",
+  "num_documents": 10,
+  "target_accuracy": 1.0,
+  "all_rules_count": 78,
+  "selected_rules_count": 5,
+  "selected_rules": [
+    "rule_exact_phone_only_span",
+    "rule_registrant_phone_following_zip_parent",
+    "rule_page1_before_documents_incorporated",
+    "rule_cover_page_before_section_12b",
+    "rule_phone_with_address_and_zip"
+  ],
+  "merge_accuracy": 1.0,
+  "avg_cost_ratio": 0.000317,
+  "avg_cost_ratio_all_rules": 0.008728,
+  "cost_reduction_ratio": 0.963642,
+  "avg_latency_seconds": 168.01,
+  "total_llm_calls": 1420,
+  "exponential_search_steps": 7,
+  "pruning_steps": 63,
+  "per_doc": [
+    {
+      "doc_name": "AMCOR_2019_10K",
+      "predicted": "+44 117 9753200",
+      "ground_truth": "+44 117 9753200",
+      "correct": true,
+      "retrieved_tokens": 34,
+      "latency_seconds": 0.91,
+      "total_doc_tokens": 84134,
+      "cost_ratio": 0.000404
+    },
+    {
+      "doc_name": "COSTCO_2017_10K",
+      "predicted": "(425) 313-8100",
+      "ground_truth": "(425) 313-8100",
+      "correct": true,
+      "retrieved_tokens": 33,
+      "latency_seconds": 1.345,
+      "total_doc_tokens": 50565,
+      "cost_ratio": 0.000653
+    },
+    {
+      "doc_name": "BOEING_2018_10K",
+      "predicted": "(312) 544-2000",
+      "ground_truth": "(312) 544-2000",
+      "correct": true,
+      "retrieved_tokens": 36,
+      "latency_seconds": 0.74,
+      "total_doc_tokens": 88449,
+      "cost_ratio": 0.000407
+    },
+    {
+      "doc_name": "AMAZON_2018_10K",
+      "predicted": "(206) 266-1000",
+      "ground_truth": "(206) 266-1000",
+      "correct": true,
+      "retrieved_tokens": 28,
+      "latency_seconds": 0.836,
+      "total_doc_tokens": 67659,
+      "cost_ratio": 0.000414
+    },
+    {
+      "doc_name": "EBAY_2021_10K",
+      "predicted": "(408) 376-7108",
+      "ground_truth": "(408) 376-7108",
+      "correct": true,
+      "retrieved_tokens": 21,
+      "latency_seconds": 0.851,
+      "total_doc_tokens": 104188,
+      "cost_ratio": 0.000202
+    },
+    {
+      "doc_name": "AMAZON_2016_10K",
+      "predicted": "(206) 266-1000",
+      "ground_truth": "(206) 266-1000",
+      "correct": true,
+      "retrieved_tokens": 28,
+      "latency_seconds": 1.01,
+      "total_doc_tokens": 63358,
+      "cost_ratio": 0.000442
+    },
+    {
+      "doc_name": "CORNING_2022_10K",
+      "predicted": "607-974-9000",
+      "ground_truth": "607-974-9000",
+      "correct": true,
+      "retrieved_tokens": 6,
+      "latency_seconds": 0.862,
+      "total_doc_tokens": 107052,
+      "cost_ratio": 5.6e-05
+    },
+    {
+      "doc_name": "NIKE_2021_10K",
+      "predicted": "(503) 671-6453",
+      "ground_truth": "(503) 671-6453",
+      "correct": true,
+      "retrieved_tokens": 13,
+      "latency_seconds": 1.107,
+      "total_doc_tokens": 89991,
+      "cost_ratio": 0.000144
+    },
+    {
+      "doc_name": "LOCKHEEDMARTIN_2022_10K",
+      "predicted": "(301) 897-6000",
+      "ground_truth": "(301) 897-6000",
+      "correct": true,
+      "retrieved_tokens": 20,
+      "latency_seconds": 1.021,
+      "total_doc_tokens": 105703,
+      "cost_ratio": 0.000189
+    },
+    {
+      "doc_name": "JOHNSON_JOHNSON_2022_10K",
+      "predicted": "(732) 524-0400",
+      "ground_truth": "(732) 524-0400",
+      "correct": true,
+      "retrieved_tokens": 31,
+      "latency_seconds": 0.869,
+      "total_doc_tokens": 123226,
+      "cost_ratio": 0.000252
+    }
+  ]
+}

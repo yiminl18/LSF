@@ -1,0 +1,384 @@
+{
+  "question": "What is net income (loss) for the most recent fiscal year?",
+  "question_slug": "what_is_net_income_loss_for_the_most_recent_fiscal_year_10",
+  "split": "sampled",
+  "num_documents": 10,
+  "rules": [
+    {
+      "rule_name": "rule_years_ended_net_income_table",
+      "accuracy": 0.5,
+      "avg_cost_ratio": 0.020865,
+      "avg_rule_apply_latency_seconds": 1.754,
+      "avg_judge_latency_seconds": 1.074,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_recent_fiscal_year_column_income_table",
+      "accuracy": 0.5,
+      "avg_cost_ratio": 0.060733,
+      "avg_rule_apply_latency_seconds": 1.701,
+      "avg_judge_latency_seconds": 1.062,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_net_income_in_table_with_period_columns",
+      "accuracy": 0.5,
+      "avg_cost_ratio": 0.068153,
+      "avg_rule_apply_latency_seconds": 1.294,
+      "avg_judge_latency_seconds": 1.074,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_tables_on_pages_after_toc_with_net_income",
+      "accuracy": 0.5,
+      "avg_cost_ratio": 0.082094,
+      "avg_rule_apply_latency_seconds": 1.238,
+      "avg_judge_latency_seconds": 1.091,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_net_income_loss_row_any_table",
+      "accuracy": 0.5,
+      "avg_cost_ratio": 0.089924,
+      "avg_rule_apply_latency_seconds": 1.373,
+      "avg_judge_latency_seconds": 1.054,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page_around_income_statement",
+      "accuracy": 0.5,
+      "avg_cost_ratio": 0.098582,
+      "avg_rule_apply_latency_seconds": 1.406,
+      "avg_judge_latency_seconds": 1.083,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_most_recent_fiscal_year_annual_report_pages",
+      "accuracy": 0.5,
+      "avg_cost_ratio": 0.284883,
+      "avg_rule_apply_latency_seconds": 1.895,
+      "avg_judge_latency_seconds": 1.09,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_exclude_non_financial_forms_by_form_type",
+      "accuracy": 0.5,
+      "avg_cost_ratio": 0.89993,
+      "avg_rule_apply_latency_seconds": 3.26,
+      "avg_judge_latency_seconds": 1.019,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_tables_near_primary_financial_statement_heading",
+      "accuracy": 0.4,
+      "avg_cost_ratio": 0.011427,
+      "avg_rule_apply_latency_seconds": 1.179,
+      "avg_judge_latency_seconds": 1.052,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_net_income_row_in_operations_statement_table",
+      "accuracy": 0.4,
+      "avg_cost_ratio": 0.024148,
+      "avg_rule_apply_latency_seconds": 1.19,
+      "avg_judge_latency_seconds": 1.138,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_tables_with_net_income_and_operating_income_loss",
+      "accuracy": 0.4,
+      "avg_cost_ratio": 0.024148,
+      "avg_rule_apply_latency_seconds": 1.128,
+      "avg_judge_latency_seconds": 1.036,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_tables_with_net_income_and_revenue_rows",
+      "accuracy": 0.4,
+      "avg_cost_ratio": 0.047445,
+      "avg_rule_apply_latency_seconds": 1.158,
+      "avg_judge_latency_seconds": 1.15,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_net_income_row_in_consolidated_financials",
+      "accuracy": 0.4,
+      "avg_cost_ratio": 0.055818,
+      "avg_rule_apply_latency_seconds": 1.103,
+      "avg_judge_latency_seconds": 1.089,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_net_income_row_header_cell",
+      "accuracy": 0.4,
+      "avg_cost_ratio": 0.061864,
+      "avg_rule_apply_latency_seconds": 1.209,
+      "avg_judge_latency_seconds": 1.028,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_net_income_row_in_income_statement_table",
+      "accuracy": 0.3,
+      "avg_cost_ratio": 0.002859,
+      "avg_rule_apply_latency_seconds": 1.14,
+      "avg_judge_latency_seconds": 1.078,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_consolidated_statements_of_operations_section",
+      "accuracy": 0.3,
+      "avg_cost_ratio": 0.004818,
+      "avg_rule_apply_latency_seconds": 1.334,
+      "avg_judge_latency_seconds": 1.246,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_net_income_row_in_cash_flows_table",
+      "accuracy": 0.3,
+      "avg_cost_ratio": 0.019676,
+      "avg_rule_apply_latency_seconds": 1.121,
+      "avg_judge_latency_seconds": 1.062,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_tables_with_net_income_and_interest_other",
+      "accuracy": 0.3,
+      "avg_cost_ratio": 0.020844,
+      "avg_rule_apply_latency_seconds": 1.215,
+      "avg_judge_latency_seconds": 1.056,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_net_income_simple_row",
+      "accuracy": 0.3,
+      "avg_cost_ratio": 0.040184,
+      "avg_rule_apply_latency_seconds": 1.143,
+      "avg_judge_latency_seconds": 1.066,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_item_8_financial_statements_tables",
+      "accuracy": 0.3,
+      "avg_cost_ratio": 0.046559,
+      "avg_rule_apply_latency_seconds": 1.181,
+      "avg_judge_latency_seconds": 1.112,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_tables_with_recent_annual_columns_and_net_income",
+      "accuracy": 0.3,
+      "avg_cost_ratio": 0.074416,
+      "avg_rule_apply_latency_seconds": 1.386,
+      "avg_judge_latency_seconds": 1.108,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_path_contains_item_8_financial_statements",
+      "accuracy": 0.3,
+      "avg_cost_ratio": 0.123656,
+      "avg_rule_apply_latency_seconds": 1.162,
+      "avg_judge_latency_seconds": 1.084,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_income_before_taxes_then_net_income_table",
+      "accuracy": 0.2,
+      "avg_cost_ratio": 0.011707,
+      "avg_rule_apply_latency_seconds": 1.154,
+      "avg_judge_latency_seconds": 1.078,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_net_income_loss_parenthetical_row",
+      "accuracy": 0.2,
+      "avg_cost_ratio": 0.014063,
+      "avg_rule_apply_latency_seconds": 1.092,
+      "avg_judge_latency_seconds": 1.104,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_tables_with_net_income_and_tax_rows",
+      "accuracy": 0.2,
+      "avg_cost_ratio": 0.015666,
+      "avg_rule_apply_latency_seconds": 1.22,
+      "avg_judge_latency_seconds": 1.075,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_tables_with_net_income_and_gross_margin",
+      "accuracy": 0.2,
+      "avg_cost_ratio": 0.018947,
+      "avg_rule_apply_latency_seconds": 1.141,
+      "avg_judge_latency_seconds": 1.072,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_tables_with_net_income_and_eps",
+      "accuracy": 0.2,
+      "avg_cost_ratio": 0.028663,
+      "avg_rule_apply_latency_seconds": 1.247,
+      "avg_judge_latency_seconds": 1.044,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_consolidated_statements_of_income_section",
+      "accuracy": 0.1,
+      "avg_cost_ratio": 0.008886,
+      "avg_rule_apply_latency_seconds": 1.074,
+      "avg_judge_latency_seconds": 1.224,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_net_income_attributable_simple_row",
+      "accuracy": 0.1,
+      "avg_cost_ratio": 0.016335,
+      "avg_rule_apply_latency_seconds": 1.355,
+      "avg_judge_latency_seconds": 1.155,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_net_income_attributable_row_header_cell",
+      "accuracy": 0.1,
+      "avg_cost_ratio": 0.022134,
+      "avg_rule_apply_latency_seconds": 1.104,
+      "avg_judge_latency_seconds": 1.066,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_item_1_financial_statements_tables_10q",
+      "accuracy": 0.1,
+      "avg_cost_ratio": 0.045361,
+      "avg_rule_apply_latency_seconds": 1.174,
+      "avg_judge_latency_seconds": 1.074,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_full_year_results_heading",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.000158,
+      "avg_rule_apply_latency_seconds": 1.02,
+      "avg_judge_latency_seconds": 1.104,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_primary_financial_statement_heading_spans",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.000208,
+      "avg_rule_apply_latency_seconds": 1.046,
+      "avg_judge_latency_seconds": 1.107,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_full_year_net_income_bullet",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.000955,
+      "avg_rule_apply_latency_seconds": 1.028,
+      "avg_judge_latency_seconds": 1.097,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_news_summary_full_year_results",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.001521,
+      "avg_rule_apply_latency_seconds": 1.139,
+      "avg_judge_latency_seconds": 1.088,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_full_year_2022_or_recent_year_summary_text",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.001668,
+      "avg_rule_apply_latency_seconds": 1.078,
+      "avg_judge_latency_seconds": 1.111,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_annual_report_table_of_contents_income_statement_locator",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.00291,
+      "avg_rule_apply_latency_seconds": 1.082,
+      "avg_judge_latency_seconds": 1.146,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_net_income_in_earnings_release_statement_table",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.005799,
+      "avg_rule_apply_latency_seconds": 1.048,
+      "avg_judge_latency_seconds": 1.125,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_tables_with_recent_quarter_and_ytd_columns_and_net_income",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.008407,
+      "avg_rule_apply_latency_seconds": 1.141,
+      "avg_judge_latency_seconds": 1.181,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_twelve_months_ended_net_income_table",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.01771,
+      "avg_rule_apply_latency_seconds": 1.328,
+      "avg_judge_latency_seconds": 1.101,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_net_income_row_in_condensed_financials",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.01954,
+      "avg_rule_apply_latency_seconds": 1.224,
+      "avg_judge_latency_seconds": 1.05,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page_1_or_early_pages_earnings_release",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.019821,
+      "avg_rule_apply_latency_seconds": 1.026,
+      "avg_judge_latency_seconds": 1.078,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_net_income_in_press_release_financial_table",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.022931,
+      "avg_rule_apply_latency_seconds": 1.637,
+      "avg_judge_latency_seconds": 1.11,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_recent_year_net_income_in_press_release_statement",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.022931,
+      "avg_rule_apply_latency_seconds": 1.171,
+      "avg_judge_latency_seconds": 1.114,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_path_contains_item_1_financial_statements",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.040882,
+      "avg_rule_apply_latency_seconds": 1.405,
+      "avg_judge_latency_seconds": 1.1,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_path_contains_news_release",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.099857,
+      "avg_rule_apply_latency_seconds": 1.059,
+      "avg_judge_latency_seconds": 1.102,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_path_contains_financial_results",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.103537,
+      "avg_rule_apply_latency_seconds": 1.185,
+      "avg_judge_latency_seconds": 1.077,
+      "num_documents": 10
+    }
+  ]
+}

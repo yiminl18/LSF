@@ -1,0 +1,169 @@
+{
+  "rule_name": "rule_path_contains_company_topmatter",
+  "question_slug": "what_isare_the_trading_symbols_and_listing_exchanges_10_llm",
+  "question": "What is/are the trading symbol(s) and listing exchange(s)?",
+  "strategy": "individual",
+  "num_documents": 10,
+  "accuracy": 0.3,
+  "avg_cost_ratio": 0.005159,
+  "avg_retrieved_token_count": 436.0,
+  "total_eval_latency_seconds": 10.603,
+  "avg_rule_apply_latency_seconds": 0.974,
+  "avg_judge_latency_seconds": 1.005,
+  "total_judge_latency_seconds": 10.054,
+  "total_judge_input_tokens": 2133,
+  "total_judge_output_tokens": 67,
+  "per_document": [
+    {
+      "doc_name": "AMCOR_2019_10K",
+      "predicted_answer": "AMCR; The New York Stock Exchange",
+      "ground_truth": "AMCR, The New York Stock Exchange",
+      "correct": true,
+      "retrieved_token_count": 291,
+      "total_doc_tokens": 84134,
+      "cost_ratio": 0.003459,
+      "judge_input_tokens": 206,
+      "judge_output_tokens": 6,
+      "judge_latency_seconds": 1.041,
+      "rule_apply_latency_seconds": 0.93
+    },
+    {
+      "doc_name": "COSTCO_2017_10K",
+      "predicted_answer": "NOT FOUND",
+      "ground_truth": "COST, The NASDAQ Global Select Market",
+      "correct": false,
+      "retrieved_token_count": 349,
+      "total_doc_tokens": 50565,
+      "cost_ratio": 0.006902,
+      "judge_input_tokens": 200,
+      "judge_output_tokens": 7,
+      "judge_latency_seconds": 1.21,
+      "rule_apply_latency_seconds": 0.817
+    },
+    {
+      "doc_name": "BOEING_2018_10K",
+      "predicted_answer": "NOT FOUND",
+      "ground_truth": "BA, New York Stock Exchange",
+      "correct": false,
+      "retrieved_token_count": 473,
+      "total_doc_tokens": 88449,
+      "cost_ratio": 0.005348,
+      "judge_input_tokens": 198,
+      "judge_output_tokens": 7,
+      "judge_latency_seconds": 0.818,
+      "rule_apply_latency_seconds": 0.805
+    },
+    {
+      "doc_name": "AMAZON_2018_10K",
+      "predicted_answer": "NOT FOUND",
+      "ground_truth": "AMZN, Nasdaq Global Select Market",
+      "correct": false,
+      "retrieved_token_count": 474,
+      "total_doc_tokens": 67659,
+      "cost_ratio": 0.007006,
+      "judge_input_tokens": 199,
+      "judge_output_tokens": 7,
+      "judge_latency_seconds": 1.146,
+      "rule_apply_latency_seconds": 0.848
+    },
+    {
+      "doc_name": "EBAY_2021_10K",
+      "predicted_answer": "NOT FOUND",
+      "ground_truth": "EBAY, The Nasdaq Global Select Market",
+      "correct": false,
+      "retrieved_token_count": 362,
+      "total_doc_tokens": 104188,
+      "cost_ratio": 0.003474,
+      "judge_input_tokens": 200,
+      "judge_output_tokens": 7,
+      "judge_latency_seconds": 0.86,
+      "rule_apply_latency_seconds": 1.199
+    },
+    {
+      "doc_name": "AMAZON_2016_10K",
+      "predicted_answer": "NOT FOUND",
+      "ground_truth": "AMZN, NASDAQ Global Select Market",
+      "correct": false,
+      "retrieved_token_count": 415,
+      "total_doc_tokens": 63358,
+      "cost_ratio": 0.00655,
+      "judge_input_tokens": 200,
+      "judge_output_tokens": 7,
+      "judge_latency_seconds": 1.101,
+      "rule_apply_latency_seconds": 0.739
+    },
+    {
+      "doc_name": "CORNING_2022_10K",
+      "predicted_answer": "NOT FOUND",
+      "ground_truth": "GLW, New York Stock Exchange (NYSE)",
+      "correct": false,
+      "retrieved_token_count": 768,
+      "total_doc_tokens": 107052,
+      "cost_ratio": 0.007174,
+      "judge_input_tokens": 201,
+      "judge_output_tokens": 7,
+      "judge_latency_seconds": 0.804,
+      "rule_apply_latency_seconds": 0.83
+    },
+    {
+      "doc_name": "NIKE_2021_10K",
+      "predicted_answer": "NOT FOUND",
+      "ground_truth": "NKE, New York Stock Exchange",
+      "correct": false,
+      "retrieved_token_count": 349,
+      "total_doc_tokens": 89991,
+      "cost_ratio": 0.003878,
+      "judge_input_tokens": 199,
+      "judge_output_tokens": 7,
+      "judge_latency_seconds": 1.177,
+      "rule_apply_latency_seconds": 0.604
+    },
+    {
+      "doc_name": "LOCKHEEDMARTIN_2022_10K",
+      "predicted_answer": "LMT — New York Stock Exchange",
+      "ground_truth": "LMT, New York Stock Exchange",
+      "correct": true,
+      "retrieved_token_count": 497,
+      "total_doc_tokens": 105703,
+      "cost_ratio": 0.004702,
+      "judge_input_tokens": 204,
+      "judge_output_tokens": 6,
+      "judge_latency_seconds": 0.766,
+      "rule_apply_latency_seconds": 1.432
+    },
+    {
+      "doc_name": "JOHNSON_JOHNSON_2022_10K",
+      "predicted_answer": "JNJ — New York Stock Exchange; JNJ24C — New York Stock Exchange; JNJ24BP — New York Stock Exchange; JNJ28 — New York Stock Exchange; JNJ35 — New York Stock Exchange",
+      "ground_truth": [
+        {
+          "Trading Symbol": "JNJ",
+          "Exchange": "New York Stock Exchange"
+        },
+        {
+          "Trading Symbol": "JNJ24C",
+          "Exchange": "New York Stock Exchange"
+        },
+        {
+          "Trading Symbol": "JNJ24BP",
+          "Exchange": "New York Stock Exchange"
+        },
+        {
+          "Trading Symbol": "JNJ28",
+          "Exchange": "New York Stock Exchange"
+        },
+        {
+          "Trading Symbol": "JNJ35",
+          "Exchange": "New York Stock Exchange"
+        }
+      ],
+      "correct": true,
+      "retrieved_token_count": 382,
+      "total_doc_tokens": 123226,
+      "cost_ratio": 0.0031,
+      "judge_input_tokens": 326,
+      "judge_output_tokens": 6,
+      "judge_latency_seconds": 1.133,
+      "rule_apply_latency_seconds": 1.54
+    }
+  ]
+}

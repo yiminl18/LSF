@@ -1,0 +1,179 @@
+{
+  "question": "What principal markets/geographies are named in Item 1 (list regions/countries named)?",
+  "question_slug": "what_principal_marketsgeographies_are_named_in_item_1_list_r",
+  "timestamp": "2026-04-28T19:46:19Z",
+  "model": "gpt54",
+  "num_documents": 10,
+  "doc_names": [
+    "AMCOR_2019_10K",
+    "ADOBE_2022Q2_10Q",
+    "COSTCO_2017_10K",
+    "BOEING_2018_10K",
+    "INTEL_2022Q4_EARNINGS",
+    "AMAZON_2018_10K",
+    "EBAY_2021_10K",
+    "AMAZON_2016_10K",
+    "COSTCO_2023_8K_dated-2023-08-09",
+    "FOOTLOCKER_2023Q3_10Q"
+  ],
+  "latency_seconds": 184.424,
+  "input_tokens": 449822,
+  "output_tokens": 6396,
+  "rules": [
+    {
+      "rule_name": "rule_item1_business_geography_text",
+      "description": "Match Item 1 / Business body spans mentioning geography or region terms.",
+      "file": "rules/financebench/what_principal_marketsgeographies_are_named_in_item_1_list_r_10_llm/rule_item1_business_geography_text.py"
+    },
+    {
+      "rule_name": "rule_item1_business_section_headers_with_geography",
+      "description": "Match Item 1 / Business section headers whose text_span or text contains geography names.",
+      "file": "rules/financebench/what_principal_marketsgeographies_are_named_in_item_1_list_r_10_llm/rule_item1_business_section_headers_with_geography.py"
+    },
+    {
+      "rule_name": "rule_item1_business_markets_sentence",
+      "description": "Match Item 1 / Business spans mentioning markets/geographies/regions near the answer.",
+      "file": "rules/financebench/what_principal_marketsgeographies_are_named_in_item_1_list_r_10_llm/rule_item1_business_markets_sentence.py"
+    },
+    {
+      "rule_name": "rule_segment_information_geography",
+      "description": "Match Item 1 / Business spans under Segment Information that list regions.",
+      "file": "rules/financebench/what_principal_marketsgeographies_are_named_in_item_1_list_r_10_llm/rule_segment_information_geography.py"
+    },
+    {
+      "rule_name": "rule_marketing_distribution_competition_geography",
+      "description": "Match Item 1 / Business spans under Marketing/Distribution/Competition with region lists.",
+      "file": "rules/financebench/what_principal_marketsgeographies_are_named_in_item_1_list_r_10_llm/rule_marketing_distribution_competition_geography.py"
+    },
+    {
+      "rule_name": "rule_first_item1_business_intro_with_in_and_countries",
+      "description": "Match early Item 1 / Business intro spans that say the company operates in named countries/regions.",
+      "file": "rules/financebench/what_principal_marketsgeographies_are_named_in_item_1_list_r_10_llm/rule_first_item1_business_intro_with_in_and_countries.py"
+    },
+    {
+      "rule_name": "rule_note2_revenue_geographic_area_intro",
+      "description": "Match note text introducing revenue by geographic area tables.",
+      "file": "rules/financebench/what_principal_marketsgeographies_are_named_in_item_1_list_r_10_llm/rule_note2_revenue_geographic_area_intro.py"
+    },
+    {
+      "rule_name": "rule_note2_revenue_geographic_area_table",
+      "description": "Match tables in Note 2 / Revenue whose row headers are geographies.",
+      "file": "rules/financebench/what_principal_marketsgeographies_are_named_in_item_1_list_r_10_llm/rule_note2_revenue_geographic_area_table.py"
+    },
+    {
+      "rule_name": "rule_note2_revenue_geographic_area_table_with_header",
+      "description": "Match tables whose text contains 'Three Months'/'Six Months' and geography row names.",
+      "file": "rules/financebench/what_principal_marketsgeographies_are_named_in_item_1_list_r_10_llm/rule_note2_revenue_geographic_area_table_with_header.py"
+    },
+    {
+      "rule_name": "rule_segment_information_table_geographies",
+      "description": "Match segment/geography tables with country-region row headers.",
+      "file": "rules/financebench/what_principal_marketsgeographies_are_named_in_item_1_list_r_10_llm/rule_segment_information_table_geographies.py"
+    },
+    {
+      "rule_name": "rule_item1_business_page_range",
+      "description": "Match likely answer spans on early Item 1 / Business pages where geography lists usually appear.",
+      "file": "rules/financebench/what_principal_marketsgeographies_are_named_in_item_1_list_r_10_llm/rule_item1_business_page_range.py"
+    },
+    {
+      "rule_name": "rule_item1_business_h3_or_h4_intro",
+      "description": "Match H3/H4 Item 1 Business intro headers whose text_span contains the answer.",
+      "file": "rules/financebench/what_principal_marketsgeographies_are_named_in_item_1_list_r_10_llm/rule_item1_business_h3_or_h4_intro.py"
+    },
+    {
+      "rule_name": "rule_item1_business_operates_in_countries",
+      "description": "Match Item 1 / Business spans containing 'operates in' or similar plus country list.",
+      "file": "rules/financebench/what_principal_marketsgeographies_are_named_in_item_1_list_r_10_llm/rule_item1_business_operates_in_countries.py"
+    },
+    {
+      "rule_name": "rule_item1_business_worldwide_markets",
+      "description": "Match Item 1 / Business spans mentioning worldwide/global markets with named regions.",
+      "file": "rules/financebench/what_principal_marketsgeographies_are_named_in_item_1_list_r_10_llm/rule_item1_business_worldwide_markets.py"
+    },
+    {
+      "rule_name": "rule_item1_business_competition_regions",
+      "description": "Match Item 1 / Business competition spans that enumerate regions/geographies.",
+      "file": "rules/financebench/what_principal_marketsgeographies_are_named_in_item_1_list_r_10_llm/rule_item1_business_competition_regions.py"
+    },
+    {
+      "rule_name": "rule_item1_business_general_segment_reference",
+      "description": "Match Item 1 / Business general spans that point to segment information where geographies are often listed.",
+      "file": "rules/financebench/what_principal_marketsgeographies_are_named_in_item_1_list_r_10_llm/rule_item1_business_general_segment_reference.py"
+    },
+    {
+      "rule_name": "rule_geography_table_row_headers_anywhere",
+      "description": "Match any table containing common geography row headers used in these filings.",
+      "file": "rules/financebench/what_principal_marketsgeographies_are_named_in_item_1_list_r_10_llm/rule_geography_table_row_headers_anywhere.py"
+    },
+    {
+      "rule_name": "rule_item1_business_country_dense_span",
+      "description": "Match Item 1 / Business spans containing multiple country/region names separated by commas/and.",
+      "file": "rules/financebench/what_principal_marketsgeographies_are_named_in_item_1_list_r_10_llm/rule_item1_business_country_dense_span.py"
+    },
+    {
+      "rule_name": "rule_note10_segment_information_geography_table",
+      "description": "Match segment information tables with geography rows, often referenced from Item 1 business.",
+      "file": "rules/financebench/what_principal_marketsgeographies_are_named_in_item_1_list_r_10_llm/rule_note10_segment_information_geography_table.py"
+    },
+    {
+      "rule_name": "rule_footlocker_note_segment_us_international",
+      "description": "Match Foot Locker note/table spans that use United States and International geography split.",
+      "file": "rules/financebench/what_principal_marketsgeographies_are_named_in_item_1_list_r_10_llm/rule_footlocker_note_segment_us_international.py"
+    },
+    {
+      "rule_name": "rule_item1_business_exclude_non_10k_10q",
+      "description": "Return no matches for obvious non-Item-1 documents like 8-Ks and earnings releases.",
+      "file": "rules/financebench/what_principal_marketsgeographies_are_named_in_item_1_list_r_10_llm/rule_item1_business_exclude_non_10k_10q.py"
+    },
+    {
+      "rule_name": "rule_item1_business_header_anchor",
+      "description": "Match the Item 1 / Business header span itself as an anchor near the answer.",
+      "file": "rules/financebench/what_principal_marketsgeographies_are_named_in_item_1_list_r_10_llm/rule_item1_business_header_anchor.py"
+    },
+    {
+      "rule_name": "rule_item1_business_nearby_after_header",
+      "description": "Match a few spans immediately following the Item 1 / Business header, where intro geography often appears.",
+      "file": "rules/financebench/what_principal_marketsgeographies_are_named_in_item_1_list_r_10_llm/rule_item1_business_nearby_after_header.py"
+    },
+    {
+      "rule_name": "rule_item1_business_country_list_in_text_span",
+      "description": "Match section headers whose text_span carries the geography list rather than the text field.",
+      "file": "rules/financebench/what_principal_marketsgeographies_are_named_in_item_1_list_r_10_llm/rule_item1_business_country_list_in_text_span.py"
+    },
+    {
+      "rule_name": "rule_revenue_by_geographic_area_table_cells",
+      "description": "Match tables whose cells include a geographic-area header and geography row labels.",
+      "file": "rules/financebench/what_principal_marketsgeographies_are_named_in_item_1_list_r_10_llm/rule_revenue_by_geographic_area_table_cells.py"
+    },
+    {
+      "rule_name": "rule_item1_business_global_markets_phrase",
+      "description": "Match Item 1 / Business spans with phrases like 'markets around the world' or 'throughout' plus geographies.",
+      "file": "rules/financebench/what_principal_marketsgeographies_are_named_in_item_1_list_r_10_llm/rule_item1_business_global_markets_phrase.py"
+    },
+    {
+      "rule_name": "rule_item1_business_international_operations_sentence",
+      "description": "Match Item 1 / Business spans describing international operations with named geographies.",
+      "file": "rules/financebench/what_principal_marketsgeographies_are_named_in_item_1_list_r_10_llm/rule_item1_business_international_operations_sentence.py"
+    },
+    {
+      "rule_name": "rule_item1_business_note_reference_segments",
+      "description": "Match Item 1 / Business spans that explicitly refer readers to segment notes for geographic information.",
+      "file": "rules/financebench/what_principal_marketsgeographies_are_named_in_item_1_list_r_10_llm/rule_item1_business_note_reference_segments.py"
+    },
+    {
+      "rule_name": "rule_country_rows_in_table_first_column",
+      "description": "Match tables where first-column row headers are countries/regions from the answer set.",
+      "file": "rules/financebench/what_principal_marketsgeographies_are_named_in_item_1_list_r_10_llm/rule_country_rows_in_table_first_column.py"
+    },
+    {
+      "rule_name": "rule_item1_business_named_markets_list",
+      "description": "Match Item 1 / Business spans that enumerate named markets after a colon or comma list.",
+      "file": "rules/financebench/what_principal_marketsgeographies_are_named_in_item_1_list_r_10_llm/rule_item1_business_named_markets_list.py"
+    },
+    {
+      "rule_name": "rule_item1_business_page3_to7_intro",
+      "description": "Match early business-intro spans on pages 3-7 with geography names.",
+      "file": "rules/financebench/what_principal_marketsgeographies_are_named_in_item_1_list_r_10_llm/rule_item1_business_page3_to7_intro.py"
+    }
+  ]
+}

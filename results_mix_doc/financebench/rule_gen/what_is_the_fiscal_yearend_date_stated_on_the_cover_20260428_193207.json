@@ -1,0 +1,214 @@
+{
+  "question": "What is the fiscal year-end date stated on the cover?",
+  "question_slug": "what_is_the_fiscal_yearend_date_stated_on_the_cover",
+  "timestamp": "2026-04-28T19:32:07Z",
+  "model": "gpt54",
+  "num_documents": 10,
+  "doc_names": [
+    "AMCOR_2019_10K",
+    "ADOBE_2022Q2_10Q",
+    "COSTCO_2017_10K",
+    "BOEING_2018_10K",
+    "INTEL_2022Q4_EARNINGS",
+    "AMAZON_2018_10K",
+    "EBAY_2021_10K",
+    "AMAZON_2016_10K",
+    "COSTCO_2023_8K_dated-2023-08-09",
+    "FOOTLOCKER_2023Q3_10Q"
+  ],
+  "latency_seconds": 161.758,
+  "input_tokens": 449712,
+  "output_tokens": 5933,
+  "rules": [
+    {
+      "rule_name": "rule_cover_page_fiscal_year_ended_text",
+      "description": "Match page-1 spans containing 'For the fiscal year ended' or close variants on the cover.",
+      "file": "rules/financebench/what_is_the_fiscal_yearend_date_stated_on_the_cover_10_llm/rule_cover_page_fiscal_year_ended_text.py"
+    },
+    {
+      "rule_name": "rule_cover_page_fiscal_year_ended_text_or_header",
+      "description": "Match page-1 text/section_header spans with fiscal-year-ended phrasing on the cover.",
+      "file": "rules/financebench/what_is_the_fiscal_yearend_date_stated_on_the_cover_10_llm/rule_cover_page_fiscal_year_ended_text_or_header.py"
+    },
+    {
+      "rule_name": "rule_cover_page_fiscal_year_end_phrase",
+      "description": "Match page-1 spans mentioning 'fiscal year end' or 'fiscal year ended'.",
+      "file": "rules/financebench/what_is_the_fiscal_yearend_date_stated_on_the_cover_10_llm/rule_cover_page_fiscal_year_end_phrase.py"
+    },
+    {
+      "rule_name": "rule_cover_page_fiscal_year_ended_with_date_pattern",
+      "description": "Match page-1 spans containing fiscal-year-ended language followed by a month-day-year date.",
+      "file": "rules/financebench/what_is_the_fiscal_yearend_date_stated_on_the_cover_10_llm/rule_cover_page_fiscal_year_ended_with_date_pattern.py"
+    },
+    {
+      "rule_name": "rule_cover_page_fiscal_year_ended_bold",
+      "description": "Match bold page-1 spans containing fiscal-year-ended language.",
+      "file": "rules/financebench/what_is_the_fiscal_yearend_date_stated_on_the_cover_10_llm/rule_cover_page_fiscal_year_ended_bold.py"
+    },
+    {
+      "rule_name": "rule_form_10k_path_fiscal_year_ended",
+      "description": "Match spans under a FORM 10-K path that contain fiscal-year-ended language.",
+      "file": "rules/financebench/what_is_the_fiscal_yearend_date_stated_on_the_cover_10_llm/rule_form_10k_path_fiscal_year_ended.py"
+    },
+    {
+      "rule_name": "rule_form_10k_cover_annual_report_section",
+      "description": "Match spans in annual-report cover sections that contain fiscal-year-ended language.",
+      "file": "rules/financebench/what_is_the_fiscal_yearend_date_stated_on_the_cover_10_llm/rule_form_10k_cover_annual_report_section.py"
+    },
+    {
+      "rule_name": "rule_cover_page_for_the_fiscal_year_ended_or",
+      "description": "Match page-1 spans with the common cover wording 'For the fiscal year ended ... or'.",
+      "file": "rules/financebench/what_is_the_fiscal_yearend_date_stated_on_the_cover_10_llm/rule_cover_page_for_the_fiscal_year_ended_or.py"
+    },
+    {
+      "rule_name": "rule_cover_page_for_the_fiscal_year_ended_period",
+      "description": "Match page-1 spans with the wording 'For the fiscal year ended ... .'.",
+      "file": "rules/financebench/what_is_the_fiscal_yearend_date_stated_on_the_cover_10_llm/rule_cover_page_for_the_fiscal_year_ended_period.py"
+    },
+    {
+      "rule_name": "rule_cover_page_for_the_fiscal_year_ended_top_half",
+      "description": "Match early page-1 spans containing fiscal-year-ended language, favoring top-of-cover placement.",
+      "file": "rules/financebench/what_is_the_fiscal_yearend_date_stated_on_the_cover_10_llm/rule_cover_page_for_the_fiscal_year_ended_top_half.py"
+    },
+    {
+      "rule_name": "rule_cover_page_fiscal_year_ended_near_form_10k",
+      "description": "Match fiscal-year-ended spans appearing near a FORM 10-K span on page 1.",
+      "file": "rules/financebench/what_is_the_fiscal_yearend_date_stated_on_the_cover_10_llm/rule_cover_page_fiscal_year_ended_near_form_10k.py"
+    },
+    {
+      "rule_name": "rule_cover_page_fiscal_year_ended_in_section_header",
+      "description": "Match page-1 section headers containing fiscal-year-ended language.",
+      "file": "rules/financebench/what_is_the_fiscal_yearend_date_stated_on_the_cover_10_llm/rule_cover_page_fiscal_year_ended_in_section_header.py"
+    },
+    {
+      "rule_name": "rule_cover_page_fiscal_year_ended_in_body_text",
+      "description": "Match page-1 body text spans containing fiscal-year-ended language.",
+      "file": "rules/financebench/what_is_the_fiscal_yearend_date_stated_on_the_cover_10_llm/rule_cover_page_fiscal_year_ended_in_body_text.py"
+    },
+    {
+      "rule_name": "rule_cover_page_fiscal_year_ended_with_december_31",
+      "description": "Match page-1 spans explicitly containing 'For the fiscal year ended December 31'.",
+      "file": "rules/financebench/what_is_the_fiscal_yearend_date_stated_on_the_cover_10_llm/rule_cover_page_fiscal_year_ended_with_december_31.py"
+    },
+    {
+      "rule_name": "rule_cover_page_fiscal_year_ended_with_non_dec31_date",
+      "description": "Match page-1 spans with fiscal-year-ended language and any month-day-year date, useful for non-calendar filers.",
+      "file": "rules/financebench/what_is_the_fiscal_yearend_date_stated_on_the_cover_10_llm/rule_cover_page_fiscal_year_ended_with_non_dec31_date.py"
+    },
+    {
+      "rule_name": "rule_cover_page_for_the_fiscal_year_ended_form10k_company_combo",
+      "description": "Match page-1 fiscal-year-ended spans when the document also has both FORM 10-K and a company-name H1 on the cover.",
+      "file": "rules/financebench/what_is_the_fiscal_yearend_date_stated_on_the_cover_10_llm/rule_cover_page_for_the_fiscal_year_ended_form10k_company_combo.py"
+    },
+    {
+      "rule_name": "rule_cover_page_fiscal_year_ended_or_fiscal_year_end_header",
+      "description": "Match page-1 spans containing either 'For the fiscal year ended' or 'For the fiscal year end'.",
+      "file": "rules/financebench/what_is_the_fiscal_yearend_date_stated_on_the_cover_10_llm/rule_cover_page_fiscal_year_ended_or_fiscal_year_end_header.py"
+    },
+    {
+      "rule_name": "rule_cover_page_fiscal_year_ended_exact_line_like",
+      "description": "Match short page-1 spans that are mostly just the fiscal-year-ended line.",
+      "file": "rules/financebench/what_is_the_fiscal_yearend_date_stated_on_the_cover_10_llm/rule_cover_page_fiscal_year_ended_exact_line_like.py"
+    },
+    {
+      "rule_name": "rule_cover_page_fiscal_year_ended_under_form10k_hierarchy",
+      "description": "Match spans whose path_text starts with or includes FORM 10-K and whose text has fiscal-year-ended wording.",
+      "file": "rules/financebench/what_is_the_fiscal_yearend_date_stated_on_the_cover_10_llm/rule_cover_page_fiscal_year_ended_under_form10k_hierarchy.py"
+    },
+    {
+      "rule_name": "rule_cover_page_fiscal_year_ended_with_commission_file_nearby",
+      "description": "Match fiscal-year-ended spans on page 1 when a nearby span mentions commission file number.",
+      "file": "rules/financebench/what_is_the_fiscal_yearend_date_stated_on_the_cover_10_llm/rule_cover_page_fiscal_year_ended_with_commission_file_nearby.py"
+    },
+    {
+      "rule_name": "rule_cover_page_fiscal_year_ended_with_annual_report_nearby",
+      "description": "Match fiscal-year-ended spans on page 1 when nearby text says annual report pursuant to section 13 or 15(d).",
+      "file": "rules/financebench/what_is_the_fiscal_yearend_date_stated_on_the_cover_10_llm/rule_cover_page_fiscal_year_ended_with_annual_report_nearby.py"
+    },
+    {
+      "rule_name": "rule_cover_page_fiscal_year_ended_with_form10k_on_same_page",
+      "description": "Match page-1 fiscal-year-ended spans if page 1 contains FORM 10-K anywhere.",
+      "file": "rules/financebench/what_is_the_fiscal_yearend_date_stated_on_the_cover_10_llm/rule_cover_page_fiscal_year_ended_with_form10k_on_same_page.py"
+    },
+    {
+      "rule_name": "rule_cover_page_fiscal_year_ended_excluding_10q_8k",
+      "description": "Match fiscal-year-ended spans only when the document appears to be a 10-K, not a 10-Q or 8-K.",
+      "file": "rules/financebench/what_is_the_fiscal_yearend_date_stated_on_the_cover_10_llm/rule_cover_page_fiscal_year_ended_excluding_10q_8k.py"
+    },
+    {
+      "rule_name": "rule_cover_page_fiscal_year_ended_or_cover_title",
+      "description": "Match either the direct fiscal-year-ended line or page-2 cover title lines like 'For the Fiscal Year Ended ...'.",
+      "file": "rules/financebench/what_is_the_fiscal_yearend_date_stated_on_the_cover_10_llm/rule_cover_page_fiscal_year_ended_or_cover_title.py"
+    },
+    {
+      "rule_name": "rule_page2_cover_title_for_the_fiscal_year_ended",
+      "description": "Match page-2 title/header spans that restate 'For the Fiscal Year Ended ...'.",
+      "file": "rules/financebench/what_is_the_fiscal_yearend_date_stated_on_the_cover_10_llm/rule_page2_cover_title_for_the_fiscal_year_ended.py"
+    },
+    {
+      "rule_name": "rule_page2_company_form10k_title_with_fiscal_year_ended",
+      "description": "Match page-2 spans under company/form-10k title blocks that contain fiscal-year-ended wording.",
+      "file": "rules/financebench/what_is_the_fiscal_yearend_date_stated_on_the_cover_10_llm/rule_page2_company_form10k_title_with_fiscal_year_ended.py"
+    },
+    {
+      "rule_name": "rule_cover_page_fiscal_year_ended_with_company_name_same_span",
+      "description": "Match large cover spans that include both company information and fiscal-year-ended wording.",
+      "file": "rules/financebench/what_is_the_fiscal_yearend_date_stated_on_the_cover_10_llm/rule_cover_page_fiscal_year_ended_with_company_name_same_span.py"
+    },
+    {
+      "rule_name": "rule_cover_page_fiscal_year_ended_with_size_ge_7",
+      "description": "Match page-1 fiscal-year-ended spans with normal cover font sizes.",
+      "file": "rules/financebench/what_is_the_fiscal_yearend_date_stated_on_the_cover_10_llm/rule_cover_page_fiscal_year_ended_with_size_ge_7.py"
+    },
+    {
+      "rule_name": "rule_cover_page_fiscal_year_ended_h2_or_body",
+      "description": "Match page-1 fiscal-year-ended spans that are H2 descendants or body text under cover headings.",
+      "file": "rules/financebench/what_is_the_fiscal_yearend_date_stated_on_the_cover_10_llm/rule_cover_page_fiscal_year_ended_h2_or_body.py"
+    },
+    {
+      "rule_name": "rule_cover_page_fiscal_year_ended_not_quarterly_period",
+      "description": "Match fiscal-year-ended spans while excluding quarterly-period wording common to 10-Qs.",
+      "file": "rules/financebench/what_is_the_fiscal_yearend_date_stated_on_the_cover_10_llm/rule_cover_page_fiscal_year_ended_not_quarterly_period.py"
+    },
+    {
+      "rule_name": "rule_cover_page_fiscal_year_ended_not_date_of_report",
+      "description": "Match fiscal-year-ended spans while excluding 8-K 'Date of Report' style spans.",
+      "file": "rules/financebench/what_is_the_fiscal_yearend_date_stated_on_the_cover_10_llm/rule_cover_page_fiscal_year_ended_not_date_of_report.py"
+    },
+    {
+      "rule_name": "rule_cover_page_fiscal_year_ended_under_annual_report_header",
+      "description": "Match fiscal-year-ended spans whose path_text includes annual-report cover language.",
+      "file": "rules/financebench/what_is_the_fiscal_yearend_date_stated_on_the_cover_10_llm/rule_cover_page_fiscal_year_ended_under_annual_report_header.py"
+    },
+    {
+      "rule_name": "rule_cover_page_fiscal_year_ended_anywhere_in_first_2_pages",
+      "description": "High-recall rule for any first-two-page span containing fiscal-year-ended wording.",
+      "file": "rules/financebench/what_is_the_fiscal_yearend_date_stated_on_the_cover_10_llm/rule_cover_page_fiscal_year_ended_anywhere_in_first_2_pages.py"
+    },
+    {
+      "rule_name": "rule_cover_page_fiscal_year_ended_with_month_year_only",
+      "description": "Match fiscal-year-ended spans with a month-day-year date even if punctuation/spacing is irregular.",
+      "file": "rules/financebench/what_is_the_fiscal_yearend_date_stated_on_the_cover_10_llm/rule_cover_page_fiscal_year_ended_with_month_year_only.py"
+    },
+    {
+      "rule_name": "rule_cover_page_fiscal_year_ended_with_december_31_on_page2",
+      "description": "Match page-2 restatement lines like 'For the Fiscal Year Ended December 31, YYYY'.",
+      "file": "rules/financebench/what_is_the_fiscal_yearend_date_stated_on_the_cover_10_llm/rule_cover_page_fiscal_year_ended_with_december_31_on_page2.py"
+    },
+    {
+      "rule_name": "rule_cover_page_fiscal_year_ended_with_form10k_and_company_h1",
+      "description": "Match fiscal-year-ended spans when page 1 has both FORM 10-K and a company-name H1, a common SEC cover pattern.",
+      "file": "rules/financebench/what_is_the_fiscal_yearend_date_stated_on_the_cover_10_llm/rule_cover_page_fiscal_year_ended_with_form10k_and_company_h1.py"
+    },
+    {
+      "rule_name": "rule_cover_page_fiscal_year_ended_with_exact_cover_prefix",
+      "description": "Match spans beginning with the exact cover prefix 'For the fiscal year ended'.",
+      "file": "rules/financebench/what_is_the_fiscal_yearend_date_stated_on_the_cover_10_llm/rule_cover_page_fiscal_year_ended_with_exact_cover_prefix.py"
+    },
+    {
+      "rule_name": "rule_cover_page_fiscal_year_ended_with_ended_colon_variant",
+      "description": "Match 10-K cover lines with variants like 'For the fiscal year ended:'.",
+      "file": "rules/financebench/what_is_the_fiscal_yearend_date_stated_on_the_cover_10_llm/rule_cover_page_fiscal_year_ended_with_ended_colon_variant.py"
+    }
+  ]
+}

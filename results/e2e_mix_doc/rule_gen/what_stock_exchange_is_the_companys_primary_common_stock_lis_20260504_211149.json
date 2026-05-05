@@ -1,0 +1,57 @@
+{
+  "question": "What stock exchange is the company's primary common stock listed on?",
+  "question_slug": "what_stock_exchange_is_the_companys_primary_common_stock_lis",
+  "timestamp": "2026-05-04T21:11:49Z",
+  "model": "gpt54",
+  "num_documents": 18,
+  "doc_names": [
+    "BOEING_2019_10K",
+    "ADOBE_2020_10K",
+    "ACTIVISIONBLIZZARD_2020_10K",
+    "COSTCO_2018_10K",
+    "AMCOR_2019_10K",
+    "AMAZON_2020_10K",
+    "AMAZON_2019_10K",
+    "ADOBE_2021_10K",
+    "EBAY_2022_10K",
+    "ADOBE_2019_10K",
+    "AMCOR_2023Q2_10Q",
+    "ADOBE_2022Q2_10Q",
+    "ACTIVSIONBLIZZARD_2023Q2_10Q",
+    "3M_2023Q2_10Q",
+    "AMCOR_2022_8K_2022-07-01",
+    "COSTCO_2023_8K_dated-2023-08-09",
+    "COSTCO_2023_8K_dated-2023-08-16",
+    "FOOTLOCKER_2022_8K_dated-2022-05-20"
+  ],
+  "latency_seconds": 469.274,
+  "input_tokens": 624211,
+  "output_tokens": 16000,
+  "rules": [
+    {
+      "rule_name": "rule_page1_exchange_name_label",
+      "description": "Match page-1 spans containing the exchange-registration label text.",
+      "file": "rules/llm/financebench_mix_doc/what_stock_exchange_is_the_companys_primary_common_stock_lis_18_llm/rule_page1_exchange_name_label.py"
+    },
+    {
+      "rule_name": "rule_page1_exchange_name_or_exchange_registered",
+      "description": "Match page-1 spans mentioning exchange registration labels in varied wording.",
+      "file": "rules/llm/financebench_mix_doc/what_stock_exchange_is_the_companys_primary_common_stock_lis_18_llm/rule_page1_exchange_name_or_exchange_registered.py"
+    },
+    {
+      "rule_name": "rule_page1_securities_registered_12b_block",
+      "description": "Match spans on page 1 in the Section 12(b) securities-registration block.",
+      "file": "rules/llm/financebench_mix_doc/what_stock_exchange_is_the_companys_primary_common_stock_lis_18_llm/rule_page1_securities_registered_12b_block.py"
+    },
+    {
+      "rule_name": "rule_page1_exchange_value_keywords",
+      "description": "Match page-1 spans whose text looks like a stock exchange name.",
+      "file": "rules/llm/financebench_mix_doc/what_stock_exchange_is_the_companys_primary_common_stock_lis_18_llm/rule_page1_exchange_value_keywords.py"
+    },
+    {
+      "rule_name": "rule_page1_exact_exchange_names",
+      "description": "Match page-1 spans whose text is exactly or nearly exactly an exchange name.",
+      "file": "rules/llm/financebench_mix_doc/what_stock_exchange_is_the_companys_primary_common_stock_lis_18_llm/rule_page1_exact_exchange_names.py"
+    }
+  ]
+}

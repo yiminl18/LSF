@@ -1,0 +1,13 @@
+def rule_page1_phone_number_only_bold(doc: dict) -> list[dict]:
+    """Match standalone phone-number spans on page 1, often bold and adjacent to telephone label."""
+    try:
+        import re
+        out = []
+        phone_re = re.compile(r"^\s*(?:\+?\d{1,3}[\s-]?)?(?:\(\d{3}\)|\d{3})[\s\-)]*\d{3}[\s\-]?\d{4}\s*$")
+        for span in doc.get("texts", []):
+            text = (span.get("text", "") or "").strip()
+            if span.get("page_no") == 1 and phone_re.match(text):
+                out.append(span)
+        return out
+    except Exception:
+        return []

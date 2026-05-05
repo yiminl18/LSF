@@ -1,0 +1,86 @@
+Question: If Part III is incorporated by reference, what is the proxy filing deadline stated on the 10-K (date or "not stated")?
+Question slug: if_part_iii_is_incorporated_by_reference_what_is_the_proxy_f_10
+Accuracy (sampled, 10 docs): 0.10 (1/10)
+Accuracy (unsampled, 50 docs): 0.12 (6/50)
+
+Per-document results (sampled):
+  ✗ AMCOR_2019_10K           gt="not stated"                pred="within 120 days after June 30, 2019"
+  ✗ ADOBE_2022Q2_10Q         gt="Not stated"                pred="NOT FOUND"
+  ✗ COSTCO_2017_10K          gt="January 30, 2018"          pred="within 120 days of the end of our fiscal year"
+  ✗ BOEING_2018_10K          gt="Not stated"                pred="within 120 days after December 31, 2018"
+  ✗ INTEL_2022Q4_EARNINGS    gt="Not stated"                pred="NOT FOUND"
+  ✗ AMAZON_2018_10K          gt="Not stated"                pred="within 120 days after the end of the fiscal year"
+  ✗ EBAY_2021_10K            gt="Not stated"                pred="within 120 days after the end of the year ended December 31, 2021"
+  ✗ AMAZON_2016_10K          gt="Not stated"                pred="within 120 days after the end of the fiscal year"
+  ✓ COSTCO_2023_8K           gt="Not stated"                pred="not stated"
+  ✗ FOOTLOCKER_2023Q3_10Q    gt="Not stated"                pred="NOT FOUND"
+
+===========================================================================
+ROOT CAUSE 1 — Semantic misunderstanding of "not stated"
+===========================================================================
+The ground truth convention: a specific calendar date is "stated" only if an
+explicit date (e.g. "January 30, 2018") appears on the cover page. The phrase
+"within 120 days after the end of the fiscal year" is standard boilerplate
+present on virtually every 10-K cover page — it describes the SEC deadline for
+filing a proxy, NOT a specific proxy meeting date. The ground truth for 7 of 10
+sampled docs is "Not stated" because no explicit date was given.
+
+The rules retrieve this "within 120 days..." boilerplate text on 9/10 docs, and
+the LLM then returns it as the answer instead of "not stated". The LLM is
+correctly reading the retrieved text but incorrectly treating the deadline
+description as an answer.
+
+===========================================================================
+ROOT CAUSE 2 — rule_specific_date_answer_candidates fires broadly (hits=10/10)
+===========================================================================
+This rule looks for spans containing a month/day/year date pattern near proxy
+keywords. It retrieves 7.5 spans on average (1,670 tokens), more than any other
+rule. When specific date docs (COSTCO_2017_10K) exist, the rule should help —
+but the retrieved span still says "within 120 days of..." rather than the date,
+so the LLM returns the description. For the majority of docs where gt="Not
+stated", this rule adds irrelevant content and biases the LLM toward returning
+a deadline description.
+
+===========================================================================
+ROOT CAUSE 3 — Missing "not stated" detection logic
+===========================================================================
+None of the 53 rules explicitly detects absence-of-date. The correct behavior
+for "not stated" docs is: retrieve the cover page proxy reference, confirm it
+says only "within X days" with no specific date, and signal "not stated".
+No rule currently implements this logic.
+
+===========================================================================
+ROOT CAUSE 4 — Non-10-K docs silenced by retrieval failure
+===========================================================================
+ADOBE_2022Q2_10Q, INTEL_2022Q4_EARNINGS, and FOOTLOCKER_2023Q3_10Q return
+NOT FOUND. These are 10-Q or earnings release filings that do not contain a
+Part III proxy reference section. The rules find no matching spans, so the LLM
+has no context and returns NOT FOUND instead of "Not stated".
+
+===========================================================================
+BAD RULES
+===========================================================================
+1. rule_specific_date_answer_candidates
+   - Fires on all 10 docs, returns long spans containing "within 120 days..."
+     boilerplate that misleads the LLM into returning a deadline description
+     instead of "not stated".
+   - Fix: add a check that the span contains a SPECIFIC date; if the only
+     content is a relative-deadline phrase, do not include it.
+
+2. rule_within_120_days_phrase / rule_proxy_filed_within_120_days_after_year_end
+   - These explicitly retrieve "within 120 days" spans — the exact boilerplate
+     that confuses the LLM. They have legitimate signal (they confirm Part III
+     IS incorporated by reference) but cause the LLM to output the deadline
+     phrase as the answer.
+   - Fix: use these rules only as gating conditions ("is Part III incorporated?")
+     not as answer-bearing spans.
+
+===========================================================================
+FIX DIRECTION
+===========================================================================
+- Add a rule that scans the cover page for an explicit date near the proxy
+  reference. If found, return that span; otherwise return a "Not stated" marker.
+- Remove or gate rules that retrieve "within 120 days" boilerplate without an
+  associated specific date.
+- For non-10-K docs (10-Q, earnings), add a rule that explicitly returns an
+  empty list and relies on the system prompt fallback ("Not stated").

@@ -1,0 +1,352 @@
+{
+  "question": "What is total assets at year-end (from the audited balance sheet)?",
+  "question_slug": "what_is_total_assets_at_yearend_from_the_audited_balance_she_10",
+  "split": "sampled",
+  "num_documents": 10,
+  "rules": [
+    {
+      "rule_name": "rule_table_with_total_assets_and_two_or_more_date_columns",
+      "accuracy": 0.7,
+      "avg_cost_ratio": 0.016809,
+      "avg_rule_apply_latency_seconds": 1.166,
+      "avg_judge_latency_seconds": 1.018,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_table_with_total_assets_and_first_col_row_header",
+      "accuracy": 0.7,
+      "avg_cost_ratio": 0.02198,
+      "avg_rule_apply_latency_seconds": 1.582,
+      "avg_judge_latency_seconds": 1.049,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_table_with_total_assets_not_cash_flow",
+      "accuracy": 0.7,
+      "avg_cost_ratio": 0.02198,
+      "avg_rule_apply_latency_seconds": 1.161,
+      "avg_judge_latency_seconds": 0.966,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_total_assets_row_any_table",
+      "accuracy": 0.7,
+      "avg_cost_ratio": 0.02198,
+      "avg_rule_apply_latency_seconds": 1.175,
+      "avg_judge_latency_seconds": 0.989,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_table_with_total_assets_and_total_assets_text_only",
+      "accuracy": 0.7,
+      "avg_cost_ratio": 0.022437,
+      "avg_rule_apply_latency_seconds": 1.19,
+      "avg_judge_latency_seconds": 0.959,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_exclude_non_10k_10q_8k_by_balance_sheet_presence",
+      "accuracy": 0.7,
+      "avg_cost_ratio": 0.060966,
+      "avg_rule_apply_latency_seconds": 1.544,
+      "avg_judge_latency_seconds": 1.054,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_table_with_year_end_columns_and_total_assets",
+      "accuracy": 0.6,
+      "avg_cost_ratio": 0.009627,
+      "avg_rule_apply_latency_seconds": 1.162,
+      "avg_judge_latency_seconds": 1.125,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_table_with_total_assets_and_total_current_assets",
+      "accuracy": 0.5,
+      "avg_cost_ratio": 0.01317,
+      "avg_rule_apply_latency_seconds": 1.244,
+      "avg_judge_latency_seconds": 1.005,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_total_assets_row_in_balance_sheet_table",
+      "accuracy": 0.5,
+      "avg_cost_ratio": 0.013434,
+      "avg_rule_apply_latency_seconds": 1.321,
+      "avg_judge_latency_seconds": 1.015,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_table_with_total_assets_and_accounts_receivable",
+      "accuracy": 0.5,
+      "avg_cost_ratio": 0.013627,
+      "avg_rule_apply_latency_seconds": 1.19,
+      "avg_judge_latency_seconds": 1.021,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_table_with_total_assets_and_cash_and_equivalents",
+      "accuracy": 0.5,
+      "avg_cost_ratio": 0.014841,
+      "avg_rule_apply_latency_seconds": 1.229,
+      "avg_judge_latency_seconds": 1.022,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_table_with_total_assets_and_stockholders_equity",
+      "accuracy": 0.5,
+      "avg_cost_ratio": 0.014871,
+      "avg_rule_apply_latency_seconds": 1.189,
+      "avg_judge_latency_seconds": 1.016,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_assets_section_table_with_total_assets",
+      "accuracy": 0.5,
+      "avg_cost_ratio": 0.015204,
+      "avg_rule_apply_latency_seconds": 1.26,
+      "avg_judge_latency_seconds": 1.058,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_table_with_total_assets_and_assets_row_header",
+      "accuracy": 0.5,
+      "avg_cost_ratio": 0.015204,
+      "avg_rule_apply_latency_seconds": 1.245,
+      "avg_judge_latency_seconds": 1.011,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_table_with_total_assets_and_current_assets",
+      "accuracy": 0.5,
+      "avg_cost_ratio": 0.0154,
+      "avg_rule_apply_latency_seconds": 1.359,
+      "avg_judge_latency_seconds": 0.998,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_table_with_total_assets_and_total_liabilities",
+      "accuracy": 0.5,
+      "avg_cost_ratio": 0.015836,
+      "avg_rule_apply_latency_seconds": 1.257,
+      "avg_judge_latency_seconds": 1.016,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_path_contains_balance_sheet",
+      "accuracy": 0.5,
+      "avg_cost_ratio": 0.016138,
+      "avg_rule_apply_latency_seconds": 1.207,
+      "avg_judge_latency_seconds": 1.025,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_table_with_total_assets_and_property_plant_equipment",
+      "accuracy": 0.5,
+      "avg_cost_ratio": 0.016317,
+      "avg_rule_apply_latency_seconds": 1.172,
+      "avg_judge_latency_seconds": 1.001,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_balance_sheet_heading_page",
+      "accuracy": 0.5,
+      "avg_cost_ratio": 0.017921,
+      "avg_rule_apply_latency_seconds": 1.138,
+      "avg_judge_latency_seconds": 1.033,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_balance_sheet_heading_nearby_table",
+      "accuracy": 0.5,
+      "avg_cost_ratio": 0.031066,
+      "avg_rule_apply_latency_seconds": 1.267,
+      "avg_judge_latency_seconds": 1.014,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page_with_balance_sheet_and_total_assets",
+      "accuracy": 0.4,
+      "avg_cost_ratio": 0.006057,
+      "avg_rule_apply_latency_seconds": 1.182,
+      "avg_judge_latency_seconds": 1.069,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_table_with_total_assets_and_other_assets",
+      "accuracy": 0.4,
+      "avg_cost_ratio": 0.008884,
+      "avg_rule_apply_latency_seconds": 1.082,
+      "avg_judge_latency_seconds": 1.007,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_table_with_in_millions_and_total_assets",
+      "accuracy": 0.4,
+      "avg_cost_ratio": 0.011904,
+      "avg_rule_apply_latency_seconds": 1.913,
+      "avg_judge_latency_seconds": 1.149,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_table_with_total_assets_and_goodwill",
+      "accuracy": 0.4,
+      "avg_cost_ratio": 0.012312,
+      "avg_rule_apply_latency_seconds": 1.251,
+      "avg_judge_latency_seconds": 1.11,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_table_with_total_assets_and_audited_context",
+      "accuracy": 0.3,
+      "avg_cost_ratio": 0.006665,
+      "avg_rule_apply_latency_seconds": 1.219,
+      "avg_judge_latency_seconds": 1.115,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_table_with_total_assets_and_total_liabilities_equity",
+      "accuracy": 0.3,
+      "avg_cost_ratio": 0.010266,
+      "avg_rule_apply_latency_seconds": 1.229,
+      "avg_judge_latency_seconds": 1.028,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_table_with_total_assets_and_inventory",
+      "accuracy": 0.3,
+      "avg_cost_ratio": 0.011016,
+      "avg_rule_apply_latency_seconds": 1.531,
+      "avg_judge_latency_seconds": 1.095,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_table_with_assets_and_liabilities_and_equity",
+      "accuracy": 0.3,
+      "avg_cost_ratio": 0.01266,
+      "avg_rule_apply_latency_seconds": 1.076,
+      "avg_judge_latency_seconds": 1.029,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_table_with_assets_header_and_date_columns",
+      "accuracy": 0.3,
+      "avg_cost_ratio": 0.012687,
+      "avg_rule_apply_latency_seconds": 1.16,
+      "avg_judge_latency_seconds": 1.007,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_path_contains_item_8_financial_statements",
+      "accuracy": 0.3,
+      "avg_cost_ratio": 0.123656,
+      "avg_rule_apply_latency_seconds": 1.387,
+      "avg_judge_latency_seconds": 1.069,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_table_with_total_assets_and_unaudited",
+      "accuracy": 0.2,
+      "avg_cost_ratio": 0.007054,
+      "avg_rule_apply_latency_seconds": 1.269,
+      "avg_judge_latency_seconds": 1.036,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_consolidated_balance_sheet_table",
+      "accuracy": 0.1,
+      "avg_cost_ratio": 0.006741,
+      "avg_rule_apply_latency_seconds": 1.17,
+      "avg_judge_latency_seconds": 1.046,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_table_with_total_assets_near_top_of_doc",
+      "accuracy": 0.1,
+      "avg_cost_ratio": 0.008316,
+      "avg_rule_apply_latency_seconds": 1.457,
+      "avg_judge_latency_seconds": 1.039,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_balance_sheet_on_early_financial_pages",
+      "accuracy": 0.1,
+      "avg_cost_ratio": 0.009209,
+      "avg_rule_apply_latency_seconds": 1.237,
+      "avg_judge_latency_seconds": 1.034,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_path_contains_condensed_consolidated_financial_statements",
+      "accuracy": 0.1,
+      "avg_cost_ratio": 0.016143,
+      "avg_rule_apply_latency_seconds": 1.396,
+      "avg_judge_latency_seconds": 1.106,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_path_contains_item_1_financial_statements",
+      "accuracy": 0.1,
+      "avg_cost_ratio": 0.040882,
+      "avg_rule_apply_latency_seconds": 2.434,
+      "avg_judge_latency_seconds": 1.072,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_balance_sheet_section_header_with_total_assets",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.0,
+      "avg_rule_apply_latency_seconds": 1.152,
+      "avg_judge_latency_seconds": 1.219,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_total_assets_in_section_header_text",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.0,
+      "avg_rule_apply_latency_seconds": 1.365,
+      "avg_judge_latency_seconds": 1.114,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_balance_sheet_section_header",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.000228,
+      "avg_rule_apply_latency_seconds": 1.108,
+      "avg_judge_latency_seconds": 1.064,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_item_8_balance_sheet_table",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.001773,
+      "avg_rule_apply_latency_seconds": 1.029,
+      "avg_judge_latency_seconds": 1.066,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_condensed_consolidated_balance_sheet_table",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.002084,
+      "avg_rule_apply_latency_seconds": 1.052,
+      "avg_judge_latency_seconds": 1.097,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_earnings_release_balance_sheet_table",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.005068,
+      "avg_rule_apply_latency_seconds": 1.114,
+      "avg_judge_latency_seconds": 1.033,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_intel_consolidated_balance_sheets",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.005121,
+      "avg_rule_apply_latency_seconds": 1.151,
+      "avg_judge_latency_seconds": 1.038,
+      "num_documents": 10
+    }
+  ]
+}

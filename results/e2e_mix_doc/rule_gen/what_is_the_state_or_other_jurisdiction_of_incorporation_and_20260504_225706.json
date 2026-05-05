@@ -1,0 +1,227 @@
+{
+  "question": "What is the state (or other jurisdiction) of incorporation and the IRS Employer Identification Number?",
+  "question_slug": "what_is_the_state_or_other_jurisdiction_of_incorporation_and",
+  "timestamp": "2026-05-04T22:57:06Z",
+  "model": "gpt54",
+  "num_documents": 18,
+  "doc_names": [
+    "BOEING_2019_10K",
+    "ADOBE_2020_10K",
+    "ACTIVISIONBLIZZARD_2020_10K",
+    "COSTCO_2018_10K",
+    "AMCOR_2019_10K",
+    "AMAZON_2020_10K",
+    "AMAZON_2019_10K",
+    "ADOBE_2021_10K",
+    "EBAY_2022_10K",
+    "ADOBE_2019_10K",
+    "AMCOR_2023Q2_10Q",
+    "ADOBE_2022Q2_10Q",
+    "ACTIVSIONBLIZZARD_2023Q2_10Q",
+    "3M_2023Q2_10Q",
+    "AMCOR_2022_8K_2022-07-01",
+    "COSTCO_2023_8K_dated-2023-08-09",
+    "COSTCO_2023_8K_dated-2023-08-16",
+    "FOOTLOCKER_2022_8K_dated-2022-05-20"
+  ],
+  "latency_seconds": 183.9,
+  "input_tokens": 624299,
+  "output_tokens": 6398,
+  "rules": [
+    {
+      "rule_name": "rule_page1_incorporation_or_irs_label",
+      "description": "Match page-1 spans containing the incorporation or IRS identification labels.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_state_or_other_jurisdiction_of_incorporation_and_18_llm/rule_page1_incorporation_or_irs_label.py"
+    },
+    {
+      "rule_name": "rule_page1_company_header_block",
+      "description": "Match large page-1 company header blocks that often contain both state and EIN inline.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_state_or_other_jurisdiction_of_incorporation_and_18_llm/rule_page1_company_header_block.py"
+    },
+    {
+      "rule_name": "rule_page1_exact_name_section",
+      "description": "Match spans under or near the registrant exact-name section on page 1.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_state_or_other_jurisdiction_of_incorporation_and_18_llm/rule_page1_exact_name_section.py"
+    },
+    {
+      "rule_name": "rule_state_value_short_bold_page1",
+      "description": "Match short bold page-1 text spans immediately likely to be the state/jurisdiction value.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_state_or_other_jurisdiction_of_incorporation_and_18_llm/rule_state_value_short_bold_page1.py"
+    },
+    {
+      "rule_name": "rule_ein_value_pattern_page1",
+      "description": "Match page-1 spans containing an EIN-like number pattern.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_state_or_other_jurisdiction_of_incorporation_and_18_llm/rule_ein_value_pattern_page1.py"
+    },
+    {
+      "rule_name": "rule_ein_or_state_in_same_span",
+      "description": "Match spans containing both a state/jurisdiction label and an EIN or IRS label.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_state_or_other_jurisdiction_of_incorporation_and_18_llm/rule_ein_or_state_in_same_span.py"
+    },
+    {
+      "rule_name": "rule_inline_coverpage_pair_block",
+      "description": "Match page-1 cover-page spans that inline both state and EIN values in one long block.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_state_or_other_jurisdiction_of_incorporation_and_18_llm/rule_inline_coverpage_pair_block.py"
+    },
+    {
+      "rule_name": "rule_path_company_top_page1",
+      "description": "Match page-1 spans under the top-level company H1 where cover-page identifiers usually appear.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_state_or_other_jurisdiction_of_incorporation_and_18_llm/rule_path_company_top_page1.py"
+    },
+    {
+      "rule_name": "rule_label_text_near_irs_phrase",
+      "description": "Match text spans whose text itself contains the IRS phrase or EIN number.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_state_or_other_jurisdiction_of_incorporation_and_18_llm/rule_label_text_near_irs_phrase.py"
+    },
+    {
+      "rule_name": "rule_label_text_near_state_phrase",
+      "description": "Match text spans whose text itself contains the incorporation/jurisdiction phrase.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_state_or_other_jurisdiction_of_incorporation_and_18_llm/rule_label_text_near_state_phrase.py"
+    },
+    {
+      "rule_name": "rule_coverpage_sequence_after_exact_name",
+      "description": "Match a small window of spans following the exact-name label on page 1.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_state_or_other_jurisdiction_of_incorporation_and_18_llm/rule_coverpage_sequence_after_exact_name.py"
+    },
+    {
+      "rule_name": "rule_coverpage_sequence_before_irs_label",
+      "description": "Match a small window of spans immediately before the IRS label, often including the state value.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_state_or_other_jurisdiction_of_incorporation_and_18_llm/rule_coverpage_sequence_before_irs_label.py"
+    },
+    {
+      "rule_name": "rule_coverpage_sequence_before_state_label",
+      "description": "Match a small window of spans immediately before the state/jurisdiction label, often including the state value.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_state_or_other_jurisdiction_of_incorporation_and_18_llm/rule_coverpage_sequence_before_state_label.py"
+    },
+    {
+      "rule_name": "rule_page1_h2_short_identifier_headers",
+      "description": "Match short H2 page-1 headers that are often OCR-split state or EIN values.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_state_or_other_jurisdiction_of_incorporation_and_18_llm/rule_page1_h2_short_identifier_headers.py"
+    },
+    {
+      "rule_name": "rule_page1_h3_short_identifier_headers",
+      "description": "Match short H3 page-1 headers that are often OCR-split EIN or nearby cover-page identifiers.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_state_or_other_jurisdiction_of_incorporation_and_18_llm/rule_page1_h3_short_identifier_headers.py"
+    },
+    {
+      "rule_name": "rule_page1_top_quarter",
+      "description": "Match all spans on the first page in the top quarter of the document order.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_state_or_other_jurisdiction_of_incorporation_and_18_llm/rule_page1_top_quarter.py"
+    },
+    {
+      "rule_name": "rule_page1_top_half",
+      "description": "Match all spans on the first page in the top half of the document order.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_state_or_other_jurisdiction_of_incorporation_and_18_llm/rule_page1_top_half.py"
+    },
+    {
+      "rule_name": "rule_company_header_children_page1",
+      "description": "Match body children of the page-1 company-name H1 header.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_state_or_other_jurisdiction_of_incorporation_and_18_llm/rule_company_header_children_page1.py"
+    },
+    {
+      "rule_name": "rule_state_and_ein_adjacent_spans",
+      "description": "Match adjacent page-1 spans where one looks like a state and the next like an EIN or label.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_state_or_other_jurisdiction_of_incorporation_and_18_llm/rule_state_and_ein_adjacent_spans.py"
+    },
+    {
+      "rule_name": "rule_ein_and_state_adjacent_spans",
+      "description": "Match adjacent page-1 spans where one looks like an EIN and the other is a nearby state/jurisdiction label or value.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_state_or_other_jurisdiction_of_incorporation_and_18_llm/rule_ein_and_state_adjacent_spans.py"
+    },
+    {
+      "rule_name": "rule_table_cells_incorporation_or_irs",
+      "description": "Match table spans whose cells mention incorporation/jurisdiction or IRS identification.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_state_or_other_jurisdiction_of_incorporation_and_18_llm/rule_table_cells_incorporation_or_irs.py"
+    },
+    {
+      "rule_name": "rule_coverpage_table_like_text",
+      "description": "Match page-1 table or table-like spans near the company header that may contain the answer.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_state_or_other_jurisdiction_of_incorporation_and_18_llm/rule_coverpage_table_like_text.py"
+    },
+    {
+      "rule_name": "rule_10q_8k_company_identity_block",
+      "description": "Match company identity blocks in 10-Q/8-K covers that contain state, file number, or EIN nearby.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_state_or_other_jurisdiction_of_incorporation_and_18_llm/rule_10q_8k_company_identity_block.py"
+    },
+    {
+      "rule_name": "rule_page1_numeric_identifier_cluster",
+      "description": "Match page-1 spans with commission-file or EIN-like numeric identifiers near the cover header.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_state_or_other_jurisdiction_of_incorporation_and_18_llm/rule_page1_numeric_identifier_cluster.py"
+    },
+    {
+      "rule_name": "rule_page1_bold_small_text_identifiers",
+      "description": "Match small bold page-1 text spans that often hold split cover-page identifiers.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_state_or_other_jurisdiction_of_incorporation_and_18_llm/rule_page1_bold_small_text_identifiers.py"
+    },
+    {
+      "rule_name": "rule_page1_after_company_name_window",
+      "description": "Match a broad window of page-1 spans after the company-name header where state and EIN usually appear.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_state_or_other_jurisdiction_of_incorporation_and_18_llm/rule_page1_after_company_name_window.py"
+    },
+    {
+      "rule_name": "rule_state_value_known_jurisdictions",
+      "description": "Match spans containing common jurisdiction values seen in this filing family.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_state_or_other_jurisdiction_of_incorporation_and_18_llm/rule_state_value_known_jurisdictions.py"
+    },
+    {
+      "rule_name": "rule_state_or_ein_under_company_path",
+      "description": "Match spans under a non-FORM company path that contain either a jurisdiction value or EIN pattern.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_state_or_other_jurisdiction_of_incorporation_and_18_llm/rule_state_or_ein_under_company_path.py"
+    },
+    {
+      "rule_name": "rule_page1_first_ein_and_neighbors",
+      "description": "Match the first EIN-like span on page 1 plus nearby neighbors.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_state_or_other_jurisdiction_of_incorporation_and_18_llm/rule_page1_first_ein_and_neighbors.py"
+    },
+    {
+      "rule_name": "rule_page1_first_state_label_and_neighbors",
+      "description": "Match the first state/jurisdiction label span on page 1 plus nearby neighbors.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_state_or_other_jurisdiction_of_incorporation_and_18_llm/rule_page1_first_state_label_and_neighbors.py"
+    },
+    {
+      "rule_name": "rule_8k_company_header_with_inline_state_ein",
+      "description": "Match 8-K company H1 blocks that inline state and EIN on the same cover span.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_state_or_other_jurisdiction_of_incorporation_and_18_llm/rule_8k_company_header_with_inline_state_ein.py"
+    },
+    {
+      "rule_name": "rule_10q_split_state_and_ein_h2s",
+      "description": "Match page-1 H2/H3 split cover spans in 10-Qs where state and EIN are separated across headers.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_state_or_other_jurisdiction_of_incorporation_and_18_llm/rule_10q_split_state_and_ein_h2s.py"
+    },
+    {
+      "rule_name": "rule_coverpage_parent_child_identifier_groups",
+      "description": "Match parent-child groups on page 1 where parent is a short identifier header and child is a label.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_state_or_other_jurisdiction_of_incorporation_and_18_llm/rule_coverpage_parent_child_identifier_groups.py"
+    },
+    {
+      "rule_name": "rule_any_span_with_both_state_value_and_ein_value",
+      "description": "Match spans containing both a jurisdiction value and an EIN-like number.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_state_or_other_jurisdiction_of_incorporation_and_18_llm/rule_any_span_with_both_state_value_and_ein_value.py"
+    },
+    {
+      "rule_name": "rule_page1_company_identity_dense_region",
+      "description": "Match dense page-1 identity-region spans before the first business/part section starts.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_state_or_other_jurisdiction_of_incorporation_and_18_llm/rule_page1_company_identity_dense_region.py"
+    },
+    {
+      "rule_name": "rule_coverpage_text_with_exact_name_and_identifiers",
+      "description": "Match spans mentioning exact-name charter text together with nearby cover identifiers.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_state_or_other_jurisdiction_of_incorporation_and_18_llm/rule_coverpage_text_with_exact_name_and_identifiers.py"
+    },
+    {
+      "rule_name": "rule_page1_non_table_identifier_text",
+      "description": "Match non-table page-1 text/section_header spans likely to be identifier fields.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_state_or_other_jurisdiction_of_incorporation_and_18_llm/rule_page1_non_table_identifier_text.py"
+    },
+    {
+      "rule_name": "rule_page1_identifier_triplet_window",
+      "description": "Match windows of three consecutive page-1 spans containing state, label, and EIN patterns.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_state_or_other_jurisdiction_of_incorporation_and_18_llm/rule_page1_identifier_triplet_window.py"
+    },
+    {
+      "rule_name": "rule_page1_identifier_five_span_window",
+      "description": "Match broader five-span windows on page 1 containing the state/EIN answer cluster.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_state_or_other_jurisdiction_of_incorporation_and_18_llm/rule_page1_identifier_five_span_window.py"
+    }
+  ]
+}

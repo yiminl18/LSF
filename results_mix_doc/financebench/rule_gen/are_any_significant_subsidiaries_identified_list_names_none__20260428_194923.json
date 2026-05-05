@@ -1,0 +1,154 @@
+{
+  "question": "Are any \"significant subsidiaries\" identified (list names; \"none\" if not listed)?",
+  "question_slug": "are_any_significant_subsidiaries_identified_list_names_none_",
+  "timestamp": "2026-04-28T19:49:23Z",
+  "model": "gpt54",
+  "num_documents": 10,
+  "doc_names": [
+    "AMCOR_2019_10K",
+    "ADOBE_2022Q2_10Q",
+    "COSTCO_2017_10K",
+    "BOEING_2018_10K",
+    "INTEL_2022Q4_EARNINGS",
+    "AMAZON_2018_10K",
+    "EBAY_2021_10K",
+    "AMAZON_2016_10K",
+    "COSTCO_2023_8K_dated-2023-08-09",
+    "FOOTLOCKER_2023Q3_10Q"
+  ],
+  "latency_seconds": 129.831,
+  "input_tokens": 450023,
+  "output_tokens": 4606,
+  "rules": [
+    {
+      "rule_name": "rule_exhibit_21_section_header",
+      "description": "Match section headers that explicitly mention Exhibit 21 or significant subsidiaries.",
+      "file": "rules/financebench/are_any_significant_subsidiaries_identified_list_names_none__10_llm/rule_exhibit_21_section_header.py"
+    },
+    {
+      "rule_name": "rule_exhibit_21_any_span",
+      "description": "Match any span mentioning Exhibit 21 or significant subsidiaries.",
+      "file": "rules/financebench/are_any_significant_subsidiaries_identified_list_names_none__10_llm/rule_exhibit_21_any_span.py"
+    },
+    {
+      "rule_name": "rule_subsidiaries_keyword_anywhere",
+      "description": "Match spans containing subsidiary-related keywords likely near the answer.",
+      "file": "rules/financebench/are_any_significant_subsidiaries_identified_list_names_none__10_llm/rule_subsidiaries_keyword_anywhere.py"
+    },
+    {
+      "rule_name": "rule_exhibits_section_path",
+      "description": "Match spans under Exhibits / Exhibit Index / Item 15 paths where Exhibit 21 usually appears.",
+      "file": "rules/financebench/are_any_significant_subsidiaries_identified_list_names_none__10_llm/rule_exhibits_section_path.py"
+    },
+    {
+      "rule_name": "rule_item_15_exhibits_headers",
+      "description": "Match section headers for Item 15 / Exhibits / Exhibit Index.",
+      "file": "rules/financebench/are_any_significant_subsidiaries_identified_list_names_none__10_llm/rule_item_15_exhibits_headers.py"
+    },
+    {
+      "rule_name": "rule_exhibit_index_table",
+      "description": "Match tables likely to be exhibit index tables by exhibit-related keywords.",
+      "file": "rules/financebench/are_any_significant_subsidiaries_identified_list_names_none__10_llm/rule_exhibit_index_table.py"
+    },
+    {
+      "rule_name": "rule_table_row_exhibit_21",
+      "description": "Match table spans containing a row with Exhibit 21.",
+      "file": "rules/financebench/are_any_significant_subsidiaries_identified_list_names_none__10_llm/rule_table_row_exhibit_21.py"
+    },
+    {
+      "rule_name": "rule_table_row_significant_subsidiaries",
+      "description": "Match table spans containing a row mentioning significant subsidiaries.",
+      "file": "rules/financebench/are_any_significant_subsidiaries_identified_list_names_none__10_llm/rule_table_row_significant_subsidiaries.py"
+    },
+    {
+      "rule_name": "rule_exhibit_21_row_cells",
+      "description": "Return table spans whose cells include Exhibit 21 row text.",
+      "file": "rules/financebench/are_any_significant_subsidiaries_identified_list_names_none__10_llm/rule_exhibit_21_row_cells.py"
+    },
+    {
+      "rule_name": "rule_page_near_end_exhibit_mentions",
+      "description": "Match spans on the last 25% of pages that mention exhibits or subsidiaries.",
+      "file": "rules/financebench/are_any_significant_subsidiaries_identified_list_names_none__10_llm/rule_page_near_end_exhibit_mentions.py"
+    },
+    {
+      "rule_name": "rule_last_pages_item_15",
+      "description": "Match spans on later pages under Item 15 / Exhibits paths.",
+      "file": "rules/financebench/are_any_significant_subsidiaries_identified_list_names_none__10_llm/rule_last_pages_item_15.py"
+    },
+    {
+      "rule_name": "rule_exhibit_21_following_exhibit_index",
+      "description": "Match spans occurring shortly after an Exhibit Index / Item 15 header.",
+      "file": "rules/financebench/are_any_significant_subsidiaries_identified_list_names_none__10_llm/rule_exhibit_21_following_exhibit_index.py"
+    },
+    {
+      "rule_name": "rule_exhibit_21_on_exhibit_page",
+      "description": "Match all spans on pages where Exhibit 21 or significant subsidiaries is mentioned.",
+      "file": "rules/financebench/are_any_significant_subsidiaries_identified_list_names_none__10_llm/rule_exhibit_21_on_exhibit_page.py"
+    },
+    {
+      "rule_name": "rule_exhibit_21_name_list_text",
+      "description": "Match text/list spans that look like lists of company names near Exhibit 21.",
+      "file": "rules/financebench/are_any_significant_subsidiaries_identified_list_names_none__10_llm/rule_exhibit_21_name_list_text.py"
+    },
+    {
+      "rule_name": "rule_exhibit_21_table_with_many_entity_names",
+      "description": "Match tables under exhibit paths that contain many legal-entity suffixes.",
+      "file": "rules/financebench/are_any_significant_subsidiaries_identified_list_names_none__10_llm/rule_exhibit_21_table_with_many_entity_names.py"
+    },
+    {
+      "rule_name": "rule_exhibit_21_header_and_children",
+      "description": "Match a significant-subsidiaries / Exhibit 21 header and its nearby child spans.",
+      "file": "rules/financebench/are_any_significant_subsidiaries_identified_list_names_none__10_llm/rule_exhibit_21_header_and_children.py"
+    },
+    {
+      "rule_name": "rule_exhibit_21_schedule_21",
+      "description": "Match spans mentioning Schedule 21 / Subsidiaries style labels.",
+      "file": "rules/financebench/are_any_significant_subsidiaries_identified_list_names_none__10_llm/rule_exhibit_21_schedule_21.py"
+    },
+    {
+      "rule_name": "rule_none_if_no_exhibit_21_in_non_10kq",
+      "description": "For non-10-K filings, return spans indicating form type where significant subsidiaries are likely absent.",
+      "file": "rules/financebench/are_any_significant_subsidiaries_identified_list_names_none__10_llm/rule_none_if_no_exhibit_21_in_non_10kq.py"
+    },
+    {
+      "rule_name": "rule_10k_only_candidate_pages",
+      "description": "For 10-Ks, return later-page spans as likely exhibit-area candidates.",
+      "file": "rules/financebench/are_any_significant_subsidiaries_identified_list_names_none__10_llm/rule_10k_only_candidate_pages.py"
+    },
+    {
+      "rule_name": "rule_exhibit_21_or_subsidiaries_bold",
+      "description": "Match bold spans mentioning Exhibit 21 or subsidiaries.",
+      "file": "rules/financebench/are_any_significant_subsidiaries_identified_list_names_none__10_llm/rule_exhibit_21_or_subsidiaries_bold.py"
+    },
+    {
+      "rule_name": "rule_exhibit_21_path_or_text_with_21",
+      "description": "Match spans where 21 appears together with exhibit/subsidiary context in text or path.",
+      "file": "rules/financebench/are_any_significant_subsidiaries_identified_list_names_none__10_llm/rule_exhibit_21_path_or_text_with_21.py"
+    },
+    {
+      "rule_name": "rule_exhibit_index_toc_hint",
+      "description": "Match TOC rows/spans that mention Exhibit Index, useful as anchors to later answer location.",
+      "file": "rules/financebench/are_any_significant_subsidiaries_identified_list_names_none__10_llm/rule_exhibit_index_toc_hint.py"
+    },
+    {
+      "rule_name": "rule_item_15_toc_hint",
+      "description": "Match TOC rows/spans for Item 15 Exhibits and Financial Statement Schedules.",
+      "file": "rules/financebench/are_any_significant_subsidiaries_identified_list_names_none__10_llm/rule_item_15_toc_hint.py"
+    },
+    {
+      "rule_name": "rule_entity_name_spans_under_exhibit_context",
+      "description": "Match likely subsidiary-name spans under exhibit-related context.",
+      "file": "rules/financebench/are_any_significant_subsidiaries_identified_list_names_none__10_llm/rule_entity_name_spans_under_exhibit_context.py"
+    },
+    {
+      "rule_name": "rule_significant_subsidiaries_children_after_header",
+      "description": "Match spans immediately following a significant subsidiaries header.",
+      "file": "rules/financebench/are_any_significant_subsidiaries_identified_list_names_none__10_llm/rule_significant_subsidiaries_children_after_header.py"
+    },
+    {
+      "rule_name": "rule_exhibit_21_children_after_header",
+      "description": "Match spans immediately following an Exhibit 21 header.",
+      "file": "rules/financebench/are_any_significant_subsidiaries_identified_list_names_none__10_llm/rule_exhibit_21_children_after_header.py"
+    }
+  ]
+}

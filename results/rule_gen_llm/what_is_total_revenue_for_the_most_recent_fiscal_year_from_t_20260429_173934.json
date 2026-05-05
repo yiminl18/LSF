@@ -1,0 +1,209 @@
+{
+  "question": "What is total revenue for the most recent fiscal year (from the audited income statement)?",
+  "question_slug": "what_is_total_revenue_for_the_most_recent_fiscal_year_from_t",
+  "timestamp": "2026-04-29T17:39:34Z",
+  "model": "gpt54",
+  "num_documents": 10,
+  "doc_names": [
+    "AMCOR_2019_10K",
+    "COSTCO_2017_10K",
+    "BOEING_2018_10K",
+    "AMAZON_2018_10K",
+    "EBAY_2021_10K",
+    "AMAZON_2016_10K",
+    "CORNING_2022_10K",
+    "NIKE_2021_10K",
+    "LOCKHEEDMARTIN_2022_10K",
+    "JOHNSON_JOHNSON_2022_10K"
+  ],
+  "latency_seconds": 192.595,
+  "input_tokens": 268525,
+  "output_tokens": 6878,
+  "rules": [
+    {
+      "rule_name": "rule_item8_income_statement_tables",
+      "description": "Match tables under Item 8 / Financial Statements that look like audited income statements.",
+      "file": "rules/llm/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_item8_income_statement_tables.py"
+    },
+    {
+      "rule_name": "rule_item8_revenue_rows_in_tables",
+      "description": "Match Item 8 tables containing revenue-like row labels such as net sales, net revenues, or revenue.",
+      "file": "rules/llm/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_item8_revenue_rows_in_tables.py"
+    },
+    {
+      "rule_name": "rule_tables_with_recent_year_columns",
+      "description": "Match financial tables that contain recent year columns and a revenue row.",
+      "file": "rules/llm/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_tables_with_recent_year_columns.py"
+    },
+    {
+      "rule_name": "rule_row_header_total_revenue",
+      "description": "Match tables containing a row header exactly or nearly equal to total revenue / total revenues.",
+      "file": "rules/llm/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_row_header_total_revenue.py"
+    },
+    {
+      "rule_name": "rule_row_header_net_sales",
+      "description": "Match tables containing a row header for net sales.",
+      "file": "rules/llm/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_row_header_net_sales.py"
+    },
+    {
+      "rule_name": "rule_row_header_net_revenues",
+      "description": "Match tables containing a row header for net revenues.",
+      "file": "rules/llm/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_row_header_net_revenues.py"
+    },
+    {
+      "rule_name": "rule_row_header_revenue_generic",
+      "description": "Match tables with a first-column row mentioning revenue or sales near the top of the table.",
+      "file": "rules/llm/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_row_header_revenue_generic.py"
+    },
+    {
+      "rule_name": "rule_consolidated_statement_of_income_heading",
+      "description": "Match section headers naming Consolidated Statement(s) of Income.",
+      "file": "rules/llm/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_consolidated_statement_of_income_heading.py"
+    },
+    {
+      "rule_name": "rule_consolidated_statement_of_operations_heading",
+      "description": "Match section headers naming Consolidated Statement(s) of Operations.",
+      "file": "rules/llm/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_consolidated_statement_of_operations_heading.py"
+    },
+    {
+      "rule_name": "rule_consolidated_statement_of_earnings_heading",
+      "description": "Match section headers naming Consolidated Statement(s) of Earnings.",
+      "file": "rules/llm/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_consolidated_statement_of_earnings_heading.py"
+    },
+    {
+      "rule_name": "rule_income_statement_nearby_tables",
+      "description": "Match tables appearing shortly after an income-statement-like section header.",
+      "file": "rules/llm/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_income_statement_nearby_tables.py"
+    },
+    {
+      "rule_name": "rule_tables_on_item8_toc_pages",
+      "description": "Match tables on pages referenced by the table of contents for Item 8, if those pages are present in extracted spans.",
+      "file": "rules/llm/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_tables_on_item8_toc_pages.py"
+    },
+    {
+      "rule_name": "rule_page_range_financial_statement_tables",
+      "description": "Match tables on later pages where audited financial statements usually appear.",
+      "file": "rules/llm/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_page_range_financial_statement_tables.py"
+    },
+    {
+      "rule_name": "rule_tables_with_audited_financial_context",
+      "description": "Match tables whose path or nearby text mentions reports of independent auditors or financial statements.",
+      "file": "rules/llm/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_tables_with_audited_financial_context.py"
+    },
+    {
+      "rule_name": "rule_recent_fiscal_year_column_cells",
+      "description": "Match numeric cells in financial tables that sit under the most recent year column.",
+      "file": "rules/llm/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_recent_fiscal_year_column_cells.py"
+    },
+    {
+      "rule_name": "rule_top_row_revenue_in_income_tables",
+      "description": "Match income-statement tables where the revenue row appears in the first few rows.",
+      "file": "rules/llm/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_top_row_revenue_in_income_tables.py"
+    },
+    {
+      "rule_name": "rule_item8_section_headers",
+      "description": "Match section headers for Item 8 Financial Statements and Supplementary Data.",
+      "file": "rules/llm/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_item8_section_headers.py"
+    },
+    {
+      "rule_name": "rule_path_contains_item8",
+      "description": "Match any span under a path containing Item 8 and Financial Statements.",
+      "file": "rules/llm/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_path_contains_item8.py"
+    },
+    {
+      "rule_name": "rule_tables_with_million_units_and_revenue",
+      "description": "Match financial tables mentioning millions/billions and revenue-like rows.",
+      "file": "rules/llm/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_tables_with_million_units_and_revenue.py"
+    },
+    {
+      "rule_name": "rule_tables_with_three_year_comparison",
+      "description": "Match tables that compare three fiscal years and include revenue/sales rows.",
+      "file": "rules/llm/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_tables_with_three_year_comparison.py"
+    },
+    {
+      "rule_name": "rule_tables_after_reports_of_independent_auditors",
+      "description": "Match tables appearing after auditor-report headings, where audited statements usually begin.",
+      "file": "rules/llm/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_tables_after_reports_of_independent_auditors.py"
+    },
+    {
+      "rule_name": "rule_revenue_keyword_in_table_cells",
+      "description": "Match tables containing any cell with revenue/revenues text.",
+      "file": "rules/llm/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_revenue_keyword_in_table_cells.py"
+    },
+    {
+      "rule_name": "rule_sales_keyword_in_table_cells",
+      "description": "Match tables containing any cell with sales/net sales text.",
+      "file": "rules/llm/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_sales_keyword_in_table_cells.py"
+    },
+    {
+      "rule_name": "rule_statement_heading_and_following_numeric_table",
+      "description": "Match numeric tables immediately following statement headings for income/operations/earnings.",
+      "file": "rules/llm/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_statement_heading_and_following_numeric_table.py"
+    },
+    {
+      "rule_name": "rule_item8_or_financial_statements_pages",
+      "description": "Match spans on pages whose path indicates Item 8 or Financial Statements, favoring tables and nearby headers.",
+      "file": "rules/llm/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_item8_or_financial_statements_pages.py"
+    },
+    {
+      "rule_name": "rule_first_financial_table_after_item8",
+      "description": "Match the first table after an Item 8 Financial Statements header.",
+      "file": "rules/llm/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_first_financial_table_after_item8.py"
+    },
+    {
+      "rule_name": "rule_income_statement_page_from_toc",
+      "description": "Match spans on the page named in the TOC for Consolidated Statement of Income / Operations / Earnings.",
+      "file": "rules/llm/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_income_statement_page_from_toc.py"
+    },
+    {
+      "rule_name": "rule_numeric_cells_in_revenue_rows",
+      "description": "Match tables where a revenue/sales row has numeric values in later columns.",
+      "file": "rules/llm/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_numeric_cells_in_revenue_rows.py"
+    },
+    {
+      "rule_name": "rule_audited_income_statement_context_any_label",
+      "description": "Match any span in audited income-statement context, not just tables, for high recall.",
+      "file": "rules/llm/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_audited_income_statement_context_any_label.py"
+    },
+    {
+      "rule_name": "rule_revenue_row_top_of_table_under_item8",
+      "description": "Match Item 8 tables where the first or second data row is revenue/sales.",
+      "file": "rules/llm/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_revenue_row_top_of_table_under_item8.py"
+    },
+    {
+      "rule_name": "rule_tables_with_consolidated_keyword_and_revenue",
+      "description": "Match tables mentioning consolidated plus revenue/sales keywords.",
+      "file": "rules/llm/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_tables_with_consolidated_keyword_and_revenue.py"
+    },
+    {
+      "rule_name": "rule_tables_with_parenthetical_units_and_years",
+      "description": "Match financial statement tables that include year columns and unit notes like millions/billions.",
+      "file": "rules/llm/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_tables_with_parenthetical_units_and_years.py"
+    },
+    {
+      "rule_name": "rule_item8_tables_excluding_toc",
+      "description": "Match Item 8 tables while excluding table-of-contents/index tables.",
+      "file": "rules/llm/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_item8_tables_excluding_toc.py"
+    },
+    {
+      "rule_name": "rule_pages_after_item8_start",
+      "description": "Match spans on or after the first page where Item 8 begins.",
+      "file": "rules/llm/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_pages_after_item8_start.py"
+    },
+    {
+      "rule_name": "rule_income_statement_named_in_toc_row",
+      "description": "Match TOC/index tables that explicitly name the income statement page.",
+      "file": "rules/llm/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_income_statement_named_in_toc_row.py"
+    },
+    {
+      "rule_name": "rule_business_section_net_sales_reference",
+      "description": "Match business-section spans that explicitly refer to net sales being in Item 8/segment note.",
+      "file": "rules/llm/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_business_section_net_sales_reference.py"
+    },
+    {
+      "rule_name": "rule_segment_note_revenue_tables",
+      "description": "Match tables in segment/geographic note contexts that may also contain total revenue for the latest year.",
+      "file": "rules/llm/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_segment_note_revenue_tables.py"
+    }
+  ]
+}

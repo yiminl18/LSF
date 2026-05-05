@@ -1,0 +1,234 @@
+{
+  "question": "What are the reportable operating segments (list names; if none, record \"single segment\")?",
+  "question_slug": "what_are_the_reportable_operating_segments_list_names_if_non",
+  "timestamp": "2026-04-28T19:40:24Z",
+  "model": "gpt54",
+  "num_documents": 10,
+  "doc_names": [
+    "AMCOR_2019_10K",
+    "ADOBE_2022Q2_10Q",
+    "COSTCO_2017_10K",
+    "BOEING_2018_10K",
+    "INTEL_2022Q4_EARNINGS",
+    "AMAZON_2018_10K",
+    "EBAY_2021_10K",
+    "AMAZON_2016_10K",
+    "COSTCO_2023_8K_dated-2023-08-09",
+    "FOOTLOCKER_2023Q3_10Q"
+  ],
+  "latency_seconds": 198.167,
+  "input_tokens": 449818,
+  "output_tokens": 7029,
+  "rules": [
+    {
+      "rule_name": "rule_item1_business_segment_information_header",
+      "description": "Match section headers under Item 1/Business that explicitly mention segment information.",
+      "file": "rules/financebench/what_are_the_reportable_operating_segments_list_names_if_non_10_llm/rule_item1_business_segment_information_header.py"
+    },
+    {
+      "rule_name": "rule_item1_business_segment_information_body",
+      "description": "Match body/text spans under Item 1/Business that discuss reportable/reporting segments.",
+      "file": "rules/financebench/what_are_the_reportable_operating_segments_list_names_if_non_10_llm/rule_item1_business_segment_information_body.py"
+    },
+    {
+      "rule_name": "rule_item1_business_we_operate_in_reportable_segments",
+      "description": "Match Item 1/Business spans stating 'we operate in X reportable segments'.",
+      "file": "rules/financebench/what_are_the_reportable_operating_segments_list_names_if_non_10_llm/rule_item1_business_we_operate_in_reportable_segments.py"
+    },
+    {
+      "rule_name": "rule_item1_business_organized_into_segments",
+      "description": "Match Item 1/Business spans saying the company is organized into segments.",
+      "file": "rules/financebench/what_are_the_reportable_operating_segments_list_names_if_non_10_llm/rule_item1_business_organized_into_segments.py"
+    },
+    {
+      "rule_name": "rule_item1_business_segment_list_items",
+      "description": "Match list items under Item 1/Business that enumerate segment names after a segment-intro sentence.",
+      "file": "rules/financebench/what_are_the_reportable_operating_segments_list_names_if_non_10_llm/rule_item1_business_segment_list_items.py"
+    },
+    {
+      "rule_name": "rule_item1_business_segment_named_subheaders",
+      "description": "Match H4/H5 section headers under Item 1/Business whose titles are individual segment names.",
+      "file": "rules/financebench/what_are_the_reportable_operating_segments_list_names_if_non_10_llm/rule_item1_business_segment_named_subheaders.py"
+    },
+    {
+      "rule_name": "rule_note_segments_header",
+      "description": "Match note headers explicitly titled Segments/Segment Information in financial statement notes.",
+      "file": "rules/financebench/what_are_the_reportable_operating_segments_list_names_if_non_10_llm/rule_note_segments_header.py"
+    },
+    {
+      "rule_name": "rule_note_segments_body_reportable",
+      "description": "Match note/body spans in financial notes that mention reportable/reporting segments.",
+      "file": "rules/financebench/what_are_the_reportable_operating_segments_list_names_if_non_10_llm/rule_note_segments_body_reportable.py"
+    },
+    {
+      "rule_name": "rule_note_revenue_segment_information_subheader",
+      "description": "Match 'Segment Information' subheaders inside revenue notes.",
+      "file": "rules/financebench/what_are_the_reportable_operating_segments_list_names_if_non_10_llm/rule_note_revenue_segment_information_subheader.py"
+    },
+    {
+      "rule_name": "rule_segment_table_column_headers",
+      "description": "Match tables whose column headers are segment names in a segment results table.",
+      "file": "rules/financebench/what_are_the_reportable_operating_segments_list_names_if_non_10_llm/rule_segment_table_column_headers.py"
+    },
+    {
+      "rule_name": "rule_segment_table_with_revenue_row",
+      "description": "Match tables that contain a Revenue row and segment-name columns.",
+      "file": "rules/financebench/what_are_the_reportable_operating_segments_list_names_if_non_10_llm/rule_segment_table_with_revenue_row.py"
+    },
+    {
+      "rule_name": "rule_business_unit_summary_table",
+      "description": "Match business unit summary tables used as segment-equivalent disclosures in earnings releases.",
+      "file": "rules/financebench/what_are_the_reportable_operating_segments_list_names_if_non_10_llm/rule_business_unit_summary_table.py"
+    },
+    {
+      "rule_name": "rule_supplemental_operating_segment_results_table",
+      "description": "Match supplemental operating segment results tables in earnings releases.",
+      "file": "rules/financebench/what_are_the_reportable_operating_segments_list_names_if_non_10_llm/rule_supplemental_operating_segment_results_table.py"
+    },
+    {
+      "rule_name": "rule_single_segment_statement",
+      "description": "Match spans explicitly stating the company operates as a single segment or one reportable segment.",
+      "file": "rules/financebench/what_are_the_reportable_operating_segments_list_names_if_non_10_llm/rule_single_segment_statement.py"
+    },
+    {
+      "rule_name": "rule_no_segment_in_8k",
+      "description": "Return no matches for Form 8-K documents, which generally do not contain operating segment answers in this collection.",
+      "file": "rules/financebench/what_are_the_reportable_operating_segments_list_names_if_non_10_llm/rule_no_segment_in_8k.py"
+    },
+    {
+      "rule_name": "rule_item1_business_general_segments_sentence",
+      "description": "Match Item 1/Business 'General' section text that states the company has organized operations into segments.",
+      "file": "rules/financebench/what_are_the_reportable_operating_segments_list_names_if_non_10_llm/rule_item1_business_general_segments_sentence.py"
+    },
+    {
+      "rule_name": "rule_item1_business_intro_with_segment_bullets",
+      "description": "Match the intro sentence before segment bullet lists in Item 1/Business.",
+      "file": "rules/financebench/what_are_the_reportable_operating_segments_list_names_if_non_10_llm/rule_item1_business_intro_with_segment_bullets.py"
+    },
+    {
+      "rule_name": "rule_item1_business_segment_header_and_following_body",
+      "description": "Match segment-related section headers in Item 1/Business and their immediate following body spans.",
+      "file": "rules/financebench/what_are_the_reportable_operating_segments_list_names_if_non_10_llm/rule_item1_business_segment_header_and_following_body.py"
+    },
+    {
+      "rule_name": "rule_note_revenue_segment_results_text_before_table",
+      "description": "Match text immediately preceding segment result tables in revenue notes.",
+      "file": "rules/financebench/what_are_the_reportable_operating_segments_list_names_if_non_10_llm/rule_note_revenue_segment_results_text_before_table.py"
+    },
+    {
+      "rule_name": "rule_table_cells_segment_names",
+      "description": "Match tables containing known segment-name-like cells and return the table span.",
+      "file": "rules/financebench/what_are_the_reportable_operating_segments_list_names_if_non_10_llm/rule_table_cells_segment_names.py"
+    },
+    {
+      "rule_name": "rule_item1_business_page_3_to_8_segment_spans",
+      "description": "Match likely segment disclosure spans on early Item 1/Business pages 3-8.",
+      "file": "rules/financebench/what_are_the_reportable_operating_segments_list_names_if_non_10_llm/rule_item1_business_page_3_to_8_segment_spans.py"
+    },
+    {
+      "rule_name": "rule_note_pages_9_to_20_segment_spans",
+      "description": "Match likely segment disclosure spans in notes pages 9-20.",
+      "file": "rules/financebench/what_are_the_reportable_operating_segments_list_names_if_non_10_llm/rule_note_pages_9_to_20_segment_spans.py"
+    },
+    {
+      "rule_name": "rule_earnings_release_business_unit_pages_2_12",
+      "description": "Match business-unit/segment disclosures in earnings releases on pages 2-12.",
+      "file": "rules/financebench/what_are_the_reportable_operating_segments_list_names_if_non_10_llm/rule_earnings_release_business_unit_pages_2_12.py"
+    },
+    {
+      "rule_name": "rule_item1_business_general_header",
+      "description": "Match the 'General' section header under Item 1/Business, where segment names often appear nearby.",
+      "file": "rules/financebench/what_are_the_reportable_operating_segments_list_names_if_non_10_llm/rule_item1_business_general_header.py"
+    },
+    {
+      "rule_name": "rule_segment_note_reference_sentence",
+      "description": "Match business-section sentences that refer readers to a segment note.",
+      "file": "rules/financebench/what_are_the_reportable_operating_segments_list_names_if_non_10_llm/rule_segment_note_reference_sentence.py"
+    },
+    {
+      "rule_name": "rule_single_segment_footlocker_or_ebay_context",
+      "description": "Match single-segment disclosures in retail/marketplace filings where no multiple segment list is given.",
+      "file": "rules/financebench/what_are_the_reportable_operating_segments_list_names_if_non_10_llm/rule_single_segment_footlocker_or_ebay_context.py"
+    },
+    {
+      "rule_name": "rule_segment_table_row_headers_only",
+      "description": "Match tables where segment names appear as row headers rather than column headers.",
+      "file": "rules/financebench/what_are_the_reportable_operating_segments_list_names_if_non_10_llm/rule_segment_table_row_headers_only.py"
+    },
+    {
+      "rule_name": "rule_segment_intro_followed_by_named_h4s",
+      "description": "Match a segment intro span and subsequent H4 segment-name headers in the same business section.",
+      "file": "rules/financebench/what_are_the_reportable_operating_segments_list_names_if_non_10_llm/rule_segment_intro_followed_by_named_h4s.py"
+    },
+    {
+      "rule_name": "rule_revenue_note_segment_tables_all",
+      "description": "Match all tables in revenue notes that likely contain segment names or segment metrics.",
+      "file": "rules/financebench/what_are_the_reportable_operating_segments_list_names_if_non_10_llm/rule_revenue_note_segment_tables_all.py"
+    },
+    {
+      "rule_name": "rule_business_section_segment_sentence_anywhere",
+      "description": "Match any business-section sentence containing both a segment keyword and a naming pattern.",
+      "file": "rules/financebench/what_are_the_reportable_operating_segments_list_names_if_non_10_llm/rule_business_section_segment_sentence_anywhere.py"
+    },
+    {
+      "rule_name": "rule_segment_disclosure_near_note20_reference",
+      "description": "Match business-section segment disclosures that reference a specific segment note number.",
+      "file": "rules/financebench/what_are_the_reportable_operating_segments_list_names_if_non_10_llm/rule_segment_disclosure_near_note20_reference.py"
+    },
+    {
+      "rule_name": "rule_first_segment_table_after_segment_information",
+      "description": "Match the first table following a 'Segment Information' text/header span.",
+      "file": "rules/financebench/what_are_the_reportable_operating_segments_list_names_if_non_10_llm/rule_first_segment_table_after_segment_information.py"
+    },
+    {
+      "rule_name": "rule_item1_business_segment_names_in_same_span",
+      "description": "Match Item 1/Business spans where multiple segment names are listed in one sentence.",
+      "file": "rules/financebench/what_are_the_reportable_operating_segments_list_names_if_non_10_llm/rule_item1_business_segment_names_in_same_span.py"
+    },
+    {
+      "rule_name": "rule_segment_disclosure_top_of_business_section",
+      "description": "Match early spans within Item 1/Business where segment disclosures usually appear.",
+      "file": "rules/financebench/what_are_the_reportable_operating_segments_list_names_if_non_10_llm/rule_segment_disclosure_top_of_business_section.py"
+    },
+    {
+      "rule_name": "rule_known_single_segment_phrase",
+      "description": "Match exact/near-exact single-segment phrasing across filings.",
+      "file": "rules/financebench/what_are_the_reportable_operating_segments_list_names_if_non_10_llm/rule_known_single_segment_phrase.py"
+    },
+    {
+      "rule_name": "rule_segment_table_intel_operating_segment_revenue",
+      "description": "Match Intel-style operating segment revenue tables.",
+      "file": "rules/financebench/what_are_the_reportable_operating_segments_list_names_if_non_10_llm/rule_segment_table_intel_operating_segment_revenue.py"
+    },
+    {
+      "rule_name": "rule_segment_table_adobe_digital_media",
+      "description": "Match Adobe-style segment tables with Digital Media / Digital Experience / Publishing and Advertising.",
+      "file": "rules/financebench/what_are_the_reportable_operating_segments_list_names_if_non_10_llm/rule_segment_table_adobe_digital_media.py"
+    },
+    {
+      "rule_name": "rule_segment_table_amazon_three_segments",
+      "description": "Match Amazon business-section text naming North America, International, and AWS.",
+      "file": "rules/financebench/what_are_the_reportable_operating_segments_list_names_if_non_10_llm/rule_segment_table_amazon_three_segments.py"
+    },
+    {
+      "rule_name": "rule_segment_table_boeing_four_segments",
+      "description": "Match Boeing business-section intro and list items naming four reportable segments.",
+      "file": "rules/financebench/what_are_the_reportable_operating_segments_list_names_if_non_10_llm/rule_segment_table_boeing_four_segments.py"
+    },
+    {
+      "rule_name": "rule_segment_table_costco_three_operations",
+      "description": "Match Costco segment disclosures naming U.S./Canada/Other International operations.",
+      "file": "rules/financebench/what_are_the_reportable_operating_segments_list_names_if_non_10_llm/rule_segment_table_costco_three_operations.py"
+    },
+    {
+      "rule_name": "rule_segment_table_amcor_two_segments",
+      "description": "Match Amcor business-section text naming Flexibles and Rigid Packaging as reporting segments.",
+      "file": "rules/financebench/what_are_the_reportable_operating_segments_list_names_if_non_10_llm/rule_segment_table_amcor_two_segments.py"
+    },
+    {
+      "rule_name": "rule_segment_table_intel_business_unit_summary_header",
+      "description": "Match the Business Unit Summary header and nearby table in Intel earnings releases.",
+      "file": "rules/financebench/what_are_the_reportable_operating_segments_list_names_if_non_10_llm/rule_segment_table_intel_business_unit_summary_header.py"
+    }
+  ]
+}

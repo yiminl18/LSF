@@ -1,0 +1,105 @@
+{
+  "question": "What is the registrant's exact name?",
+  "question_slug": "what_is_the_registrants_exact_name",
+  "timestamp": "2026-04-30T19:30:02Z",
+  "model": "gpt54",
+  "num_documents": 10,
+  "doc_names": [
+    "AMCOR_2019_10K",
+    "COSTCO_2017_10K",
+    "BOEING_2018_10K",
+    "AMAZON_2018_10K",
+    "EBAY_2021_10K",
+    "AMAZON_2016_10K",
+    "CORNING_2022_10K",
+    "NIKE_2021_10K",
+    "LOCKHEEDMARTIN_2022_10K",
+    "JOHNSON_JOHNSON_2022_10K"
+  ],
+  "max_iterations": 12,
+  "agent_turns": 5,
+  "latency_seconds": 72.204,
+  "agent_input_tokens": 1623921,
+  "agent_output_tokens": 1155,
+  "judge_input_tokens": 5372,
+  "judge_output_tokens": 308,
+  "total_input_tokens": 1629293,
+  "total_output_tokens": 1463,
+  "total_llm_calls": 40,
+  "merge_accuracy": 1.0,
+  "merge_num_correct": 10,
+  "avg_cost_ratio": 0.00044,
+  "merge_per_doc": {
+    "AMCOR_2019_10K": {
+      "predicted": "AMCOR PLC",
+      "ground_truth": "Amcor plc",
+      "correct": true,
+      "cost_ratio": 0.00064
+    },
+    "COSTCO_2017_10K": {
+      "predicted": "Costco Wholesale Corporation",
+      "ground_truth": "Costco Wholesale Corporation",
+      "correct": true,
+      "cost_ratio": 0.00083
+    },
+    "BOEING_2018_10K": {
+      "predicted": "THE BOEING COMPANY",
+      "ground_truth": "THE BOEING COMPANY",
+      "correct": true,
+      "cost_ratio": 0.00031
+    },
+    "AMAZON_2018_10K": {
+      "predicted": "AMAZON.COM, INC.",
+      "ground_truth": "Amazon.com, Inc.",
+      "correct": true,
+      "cost_ratio": 0.0005
+    },
+    "EBAY_2021_10K": {
+      "predicted": "eBay Inc.",
+      "ground_truth": "eBay Inc.",
+      "correct": true,
+      "cost_ratio": 0.00023
+    },
+    "AMAZON_2016_10K": {
+      "predicted": "AMAZON.COM, INC.",
+      "ground_truth": "AMAZON.COM, INC.",
+      "correct": true,
+      "cost_ratio": 0.00054
+    },
+    "CORNING_2022_10K": {
+      "predicted": "CORNING INCORPORATED",
+      "ground_truth": "Corning Incorporated",
+      "correct": true,
+      "cost_ratio": 0.00064
+    },
+    "NIKE_2021_10K": {
+      "predicted": "NIKE, Inc.",
+      "ground_truth": "NIKE, Inc.",
+      "correct": true,
+      "cost_ratio": 0.0003
+    },
+    "LOCKHEEDMARTIN_2022_10K": {
+      "predicted": "LOCKHEED MARTIN CORPORATION",
+      "ground_truth": "LOCKHEED MARTIN CORPORATION",
+      "correct": true,
+      "cost_ratio": 0.00015
+    },
+    "JOHNSON_JOHNSON_2022_10K": {
+      "predicted": "JOHNSON & JOHNSON",
+      "ground_truth": "JOHNSON & JOHNSON",
+      "correct": true,
+      "cost_ratio": 0.00026
+    }
+  },
+  "rules": [
+    {
+      "rule_name": "rule_cover_exact_name_bold",
+      "description": "Retrieve bold cover-page company-name spans near the exact-name-of-registrant cue.",
+      "hit_rate": 1.0,
+      "avg_cost_ratio": 0.00044,
+      "file": "rules/llm/financebench_agent/what_is_the_registrants_exact_name_10_llm/rule_cover_exact_name_bold.py"
+    }
+  ],
+  "rule_dir": "rules/llm/financebench_agent/what_is_the_registrants_exact_name_10_llm",
+  "log_file": "logs/financebench/agent/what_is_the_registrants_exact_name_10docs_20260430_193002.txt"
+}

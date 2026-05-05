@@ -1,0 +1,177 @@
+{
+  "question": "List one material agreement or other exhibit number explicitly identified in the Exhibit Index (e.g., \"Exhibit 10.1: Credit Agreement\")—or record \"none listed\" if no material agreements are identified.",
+  "question_slug": "list_one_material_agreement_or_other_exhibit_number_explicit",
+  "timestamp": "2026-05-04T21:51:07Z",
+  "model": "gpt54",
+  "num_documents": 18,
+  "doc_names": [
+    "BOEING_2019_10K",
+    "ADOBE_2020_10K",
+    "ACTIVISIONBLIZZARD_2020_10K",
+    "COSTCO_2018_10K",
+    "AMCOR_2019_10K",
+    "AMAZON_2020_10K",
+    "AMAZON_2019_10K",
+    "ADOBE_2021_10K",
+    "EBAY_2022_10K",
+    "ADOBE_2019_10K",
+    "AMCOR_2023Q2_10Q",
+    "ADOBE_2022Q2_10Q",
+    "ACTIVSIONBLIZZARD_2023Q2_10Q",
+    "3M_2023Q2_10Q",
+    "AMCOR_2022_8K_2022-07-01",
+    "COSTCO_2023_8K_dated-2023-08-09",
+    "COSTCO_2023_8K_dated-2023-08-16",
+    "FOOTLOCKER_2022_8K_dated-2022-05-20"
+  ],
+  "latency_seconds": 148.755,
+  "input_tokens": 624348,
+  "output_tokens": 5004,
+  "rules": [
+    {
+      "rule_name": "rule_exhibit_index_header_spans",
+      "description": "Match section headers or text spans explicitly labeled 'Exhibit Index'.",
+      "file": "rules/llm/financebench_mix_doc/list_one_material_agreement_or_other_exhibit_number_explicit_18_llm/rule_exhibit_index_header_spans.py"
+    },
+    {
+      "rule_name": "rule_exhibit_index_path_text",
+      "description": "Match spans whose structural path contains 'Exhibit Index'.",
+      "file": "rules/llm/financebench_mix_doc/list_one_material_agreement_or_other_exhibit_number_explicit_18_llm/rule_exhibit_index_path_text.py"
+    },
+    {
+      "rule_name": "rule_item_15_exhibits_headers",
+      "description": "Match headers mentioning Item 15 and Exhibits/Exhibit Index.",
+      "file": "rules/llm/financebench_mix_doc/list_one_material_agreement_or_other_exhibit_number_explicit_18_llm/rule_item_15_exhibits_headers.py"
+    },
+    {
+      "rule_name": "rule_item_15_exhibits_path",
+      "description": "Match spans under a path mentioning Item 15 and Exhibits.",
+      "file": "rules/llm/financebench_mix_doc/list_one_material_agreement_or_other_exhibit_number_explicit_18_llm/rule_item_15_exhibits_path.py"
+    },
+    {
+      "rule_name": "rule_part_iv_exhibits_path",
+      "description": "Match spans under Part IV paths that mention exhibits.",
+      "file": "rules/llm/financebench_mix_doc/list_one_material_agreement_or_other_exhibit_number_explicit_18_llm/rule_part_iv_exhibits_path.py"
+    },
+    {
+      "rule_name": "rule_exhibit_number_lines",
+      "description": "Match spans containing exhibit-number patterns like 'Exhibit 10.1' or '10.1' with exhibit context.",
+      "file": "rules/llm/financebench_mix_doc/list_one_material_agreement_or_other_exhibit_number_explicit_18_llm/rule_exhibit_number_lines.py"
+    },
+    {
+      "rule_name": "rule_material_agreement_keywords",
+      "description": "Match spans containing common material-agreement exhibit titles like credit agreement, stock plan, indenture, settlement agreement, bylaws, award.",
+      "file": "rules/llm/financebench_mix_doc/list_one_material_agreement_or_other_exhibit_number_explicit_18_llm/rule_material_agreement_keywords.py"
+    },
+    {
+      "rule_name": "rule_exhibit_table_spans",
+      "description": "Match table spans whose markdown text contains exhibit-number patterns.",
+      "file": "rules/llm/financebench_mix_doc/list_one_material_agreement_or_other_exhibit_number_explicit_18_llm/rule_exhibit_table_spans.py"
+    },
+    {
+      "rule_name": "rule_exhibit_table_cells",
+      "description": "Match table spans having cells with exhibit numbers or exhibit descriptions.",
+      "file": "rules/llm/financebench_mix_doc/list_one_material_agreement_or_other_exhibit_number_explicit_18_llm/rule_exhibit_table_cells.py"
+    },
+    {
+      "rule_name": "rule_toc_item_15_page_locator_tables",
+      "description": "Match TOC tables that contain Item 15 Exhibits rows, useful as page locators for the real Exhibit Index.",
+      "file": "rules/llm/financebench_mix_doc/list_one_material_agreement_or_other_exhibit_number_explicit_18_llm/rule_toc_item_15_page_locator_tables.py"
+    },
+    {
+      "rule_name": "rule_late_document_exhibit_mentions",
+      "description": "Match exhibit-related spans appearing in the last quarter of the document, where Exhibit Index usually lives.",
+      "file": "rules/llm/financebench_mix_doc/list_one_material_agreement_or_other_exhibit_number_explicit_18_llm/rule_late_document_exhibit_mentions.py"
+    },
+    {
+      "rule_name": "rule_page_near_item_15_from_toc",
+      "description": "Use TOC Item 15 page number to return spans on or near the referenced exhibits page.",
+      "file": "rules/llm/financebench_mix_doc/list_one_material_agreement_or_other_exhibit_number_explicit_18_llm/rule_page_near_item_15_from_toc.py"
+    },
+    {
+      "rule_name": "rule_exhibit_index_after_item_15_page",
+      "description": "Use TOC Item 15 page number and return exhibit-related spans on pages at or after that page.",
+      "file": "rules/llm/financebench_mix_doc/list_one_material_agreement_or_other_exhibit_number_explicit_18_llm/rule_exhibit_index_after_item_15_page.py"
+    },
+    {
+      "rule_name": "rule_8k_exhibit_table_rows",
+      "description": "Match 8-K exhibit tables listing Exhibit No. and Description.",
+      "file": "rules/llm/financebench_mix_doc/list_one_material_agreement_or_other_exhibit_number_explicit_18_llm/rule_8k_exhibit_table_rows.py"
+    },
+    {
+      "rule_name": "rule_8k_item_901_exhibits",
+      "description": "Match spans under Item 9.01 Financial Statements and Exhibits.",
+      "file": "rules/llm/financebench_mix_doc/list_one_material_agreement_or_other_exhibit_number_explicit_18_llm/rule_8k_item_901_exhibits.py"
+    },
+    {
+      "rule_name": "rule_8k_exhibit_line_items",
+      "description": "Match 8-K body text lines that start with exhibit numbers like 3.2, 4.6, 99.1, or 104.",
+      "file": "rules/llm/financebench_mix_doc/list_one_material_agreement_or_other_exhibit_number_explicit_18_llm/rule_8k_exhibit_line_items.py"
+    },
+    {
+      "rule_name": "rule_8k_exhibit_104_cover_page",
+      "description": "Match spans mentioning Exhibit 104 / Cover Page Interactive Data File.",
+      "file": "rules/llm/financebench_mix_doc/list_one_material_agreement_or_other_exhibit_number_explicit_18_llm/rule_8k_exhibit_104_cover_page.py"
+    },
+    {
+      "rule_name": "rule_8k_exhibit_99_press_release",
+      "description": "Match spans mentioning Exhibit 99.1 press release.",
+      "file": "rules/llm/financebench_mix_doc/list_one_material_agreement_or_other_exhibit_number_explicit_18_llm/rule_8k_exhibit_99_press_release.py"
+    },
+    {
+      "rule_name": "rule_8k_exhibit_bylaws",
+      "description": "Match spans mentioning bylaws exhibits, especially Exhibit 3.2.",
+      "file": "rules/llm/financebench_mix_doc/list_one_material_agreement_or_other_exhibit_number_explicit_18_llm/rule_8k_exhibit_bylaws.py"
+    },
+    {
+      "rule_name": "rule_8k_exhibit_indenture",
+      "description": "Match spans mentioning supplemental indenture exhibits, especially 4.6/4.7.",
+      "file": "rules/llm/financebench_mix_doc/list_one_material_agreement_or_other_exhibit_number_explicit_18_llm/rule_8k_exhibit_indenture.py"
+    },
+    {
+      "rule_name": "rule_10q_item_6_exhibits",
+      "description": "Match 10-Q TOC or headers for Item 6 Exhibits.",
+      "file": "rules/llm/financebench_mix_doc/list_one_material_agreement_or_other_exhibit_number_explicit_18_llm/rule_10q_item_6_exhibits.py"
+    },
+    {
+      "rule_name": "rule_10q_exhibit_page_from_toc",
+      "description": "Use 10-Q TOC Item 6 Exhibits page number to return spans on or near that page.",
+      "file": "rules/llm/financebench_mix_doc/list_one_material_agreement_or_other_exhibit_number_explicit_18_llm/rule_10q_exhibit_page_from_toc.py"
+    },
+    {
+      "rule_name": "rule_exhibit_pages_high_page_numbers",
+      "description": "Match spans on the highest-numbered pages that mention exhibits, where exhibit indexes often appear.",
+      "file": "rules/llm/financebench_mix_doc/list_one_material_agreement_or_other_exhibit_number_explicit_18_llm/rule_exhibit_pages_high_page_numbers.py"
+    },
+    {
+      "rule_name": "rule_exhibit_description_same_span",
+      "description": "Match spans that contain both an exhibit number and a likely exhibit title in the same span.",
+      "file": "rules/llm/financebench_mix_doc/list_one_material_agreement_or_other_exhibit_number_explicit_18_llm/rule_exhibit_description_same_span.py"
+    },
+    {
+      "rule_name": "rule_exhibit_index_neighbor_window",
+      "description": "Return spans within a small window around any Exhibit Index header.",
+      "file": "rules/llm/financebench_mix_doc/list_one_material_agreement_or_other_exhibit_number_explicit_18_llm/rule_exhibit_index_neighbor_window.py"
+    },
+    {
+      "rule_name": "rule_exhibit_item_neighbor_window",
+      "description": "Return spans within a small window around Item 15/Item 6 exhibit headers.",
+      "file": "rules/llm/financebench_mix_doc/list_one_material_agreement_or_other_exhibit_number_explicit_18_llm/rule_exhibit_item_neighbor_window.py"
+    },
+    {
+      "rule_name": "rule_exhibit_table_header_cells",
+      "description": "Match tables whose header cells include exhibit-related columns like Exhibit No. or Description.",
+      "file": "rules/llm/financebench_mix_doc/list_one_material_agreement_or_other_exhibit_number_explicit_18_llm/rule_exhibit_table_header_cells.py"
+    },
+    {
+      "rule_name": "rule_exhibit_related_on_page_one_8k",
+      "description": "Match page-1 8-K spans mentioning exhibit references, common in short 8-Ks.",
+      "file": "rules/llm/financebench_mix_doc/list_one_material_agreement_or_other_exhibit_number_explicit_18_llm/rule_exhibit_related_on_page_one_8k.py"
+    },
+    {
+      "rule_name": "rule_none_listed_when_no_exhibit_index",
+      "description": "Heuristic: return spans indicating no exhibit index context in documents like 10-Qs where no material agreement is listed.",
+      "file": "rules/llm/financebench_mix_doc/list_one_material_agreement_or_other_exhibit_number_explicit_18_llm/rule_none_listed_when_no_exhibit_index.py"
+    }
+  ]
+}

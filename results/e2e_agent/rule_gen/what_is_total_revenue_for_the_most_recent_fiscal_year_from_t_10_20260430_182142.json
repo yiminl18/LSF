@@ -1,0 +1,118 @@
+{
+  "question": "What is total revenue for the most recent fiscal year (from the audited income statement)?",
+  "question_slug": "what_is_total_revenue_for_the_most_recent_fiscal_year_from_t",
+  "timestamp": "2026-04-30T18:21:42Z",
+  "model": "gpt54",
+  "num_documents": 10,
+  "doc_names": [
+    "AMCOR_2019_10K",
+    "COSTCO_2017_10K",
+    "BOEING_2018_10K",
+    "AMAZON_2018_10K",
+    "EBAY_2021_10K",
+    "AMAZON_2016_10K",
+    "CORNING_2022_10K",
+    "NIKE_2021_10K",
+    "LOCKHEEDMARTIN_2022_10K",
+    "JOHNSON_JOHNSON_2022_10K"
+  ],
+  "max_iterations": 12,
+  "agent_turns": 27,
+  "latency_seconds": 182.469,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "merge_accuracy": 0.9,
+  "merge_num_correct": 9,
+  "avg_cost_ratio": 0.43229,
+  "total_llm_calls": 40,
+  "merge_per_doc": {
+    "AMCOR_2019_10K": {
+      "predicted": "9,458.2",
+      "ground_truth": "9,458.2 million",
+      "correct": true,
+      "cost_ratio": 0.20724
+    },
+    "COSTCO_2017_10K": {
+      "predicted": "129,025",
+      "ground_truth": "126,172",
+      "correct": false,
+      "cost_ratio": 0.61179
+    },
+    "BOEING_2018_10K": {
+      "predicted": "$101,127",
+      "ground_truth": "$101,127 million",
+      "correct": true,
+      "cost_ratio": 0.53711
+    },
+    "AMAZON_2018_10K": {
+      "predicted": "$232,887 million",
+      "ground_truth": "$232,887 million",
+      "correct": true,
+      "cost_ratio": 0.53724
+    },
+    "EBAY_2021_10K": {
+      "predicted": "$10,420 million",
+      "ground_truth": "$10,420 million",
+      "correct": true,
+      "cost_ratio": 0.40052
+    },
+    "AMAZON_2016_10K": {
+      "predicted": "$135,987 million",
+      "ground_truth": "$135,987 million",
+      "correct": true,
+      "cost_ratio": 0.57128
+    },
+    "CORNING_2022_10K": {
+      "predicted": "$14,189 million",
+      "ground_truth": "14,189 million",
+      "correct": true,
+      "cost_ratio": 0.16017
+    },
+    "NIKE_2021_10K": {
+      "predicted": "$44,538 million",
+      "ground_truth": "$44,538 million",
+      "correct": true,
+      "cost_ratio": 0.55282
+    },
+    "LOCKHEEDMARTIN_2022_10K": {
+      "predicted": "65,984",
+      "ground_truth": "$65,984 million",
+      "correct": true,
+      "cost_ratio": 0.5054
+    },
+    "JOHNSON_JOHNSON_2022_10K": {
+      "predicted": "94,943",
+      "ground_truth": "$94.9 billion",
+      "correct": true,
+      "cost_ratio": 0.2393
+    }
+  },
+  "rules": [
+    {
+      "rule_name": "rule_item8_financial_statements_income_statement",
+      "description": "Retrieve spans in Item 8 / financial statements areas, especially income statement and revenue tables.",
+      "hit_rate": 0.1,
+      "file": "rules/llm/financebench_agent/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_item8_financial_statements_income_statement.py"
+    },
+    {
+      "rule_name": "rule_partii_sales_revenue_tables_text",
+      "description": "Retrieve Part II financial/MD&A spans mentioning sales or revenue, favoring substantive pages over TOCs.",
+      "hit_rate": 0.2,
+      "file": "rules/llm/financebench_agent/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_partii_sales_revenue_tables_text.py"
+    },
+    {
+      "rule_name": "rule_selected_financial_data_tables",
+      "description": "Retrieve selected financial data tables and adjacent headers in Part II.",
+      "hit_rate": 0.1,
+      "file": "rules/llm/financebench_agent/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_selected_financial_data_tables.py"
+    },
+    {
+      "rule_name": "rule_substantive_partii_sales_revenue_text",
+      "description": "Retrieve substantive Part II text spans discussing sales or revenue totals.",
+      "hit_rate": 0.2,
+      "file": "rules/llm/financebench_agent/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_substantive_partii_sales_revenue_text.py"
+    }
+  ],
+  "rule_dir": "rules/llm/financebench_agent/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm",
+  "log_file": "logs/financebench/agent/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10docs_20260430_182142.txt"
+}

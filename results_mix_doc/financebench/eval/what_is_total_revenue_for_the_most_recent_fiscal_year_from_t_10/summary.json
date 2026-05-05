@@ -1,0 +1,328 @@
+{
+  "question": "What is total revenue for the most recent fiscal year (from the audited income statement)?",
+  "question_slug": "what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10",
+  "split": "sampled",
+  "num_documents": 10,
+  "rules": [
+    {
+      "rule_name": "rule_page_around_statement_of_income",
+      "accuracy": 0.6,
+      "avg_cost_ratio": 0.030236,
+      "avg_rule_apply_latency_seconds": 1.604,
+      "avg_judge_latency_seconds": 1.048,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_statement_of_income_heading",
+      "accuracy": 0.6,
+      "avg_cost_ratio": 0.044118,
+      "avg_rule_apply_latency_seconds": 1.311,
+      "avg_judge_latency_seconds": 1.081,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_income_statement_markdown_table",
+      "accuracy": 0.6,
+      "avg_cost_ratio": 0.062776,
+      "avg_rule_apply_latency_seconds": 1.23,
+      "avg_judge_latency_seconds": 1.034,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_any_table_with_revenue_and_large_numeric_values",
+      "accuracy": 0.6,
+      "avg_cost_ratio": 0.077626,
+      "avg_rule_apply_latency_seconds": 1.31,
+      "avg_judge_latency_seconds": 1.09,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_recent_fiscal_year_column_headers",
+      "accuracy": 0.6,
+      "avg_cost_ratio": 0.084879,
+      "avg_rule_apply_latency_seconds": 1.193,
+      "avg_judge_latency_seconds": 1.203,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_table_row_total_revenue_recent_period",
+      "accuracy": 0.6,
+      "avg_cost_ratio": 0.08574,
+      "avg_rule_apply_latency_seconds": 1.221,
+      "avg_judge_latency_seconds": 1.096,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_income_statement_total_revenue_row",
+      "accuracy": 0.6,
+      "avg_cost_ratio": 0.09108,
+      "avg_rule_apply_latency_seconds": 1.305,
+      "avg_judge_latency_seconds": 1.022,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_sales_or_revenue_first_numeric_row",
+      "accuracy": 0.6,
+      "avg_cost_ratio": 0.094053,
+      "avg_rule_apply_latency_seconds": 1.256,
+      "avg_judge_latency_seconds": 1.055,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_table_with_most_recent_year_and_total_row",
+      "accuracy": 0.6,
+      "avg_cost_ratio": 0.140526,
+      "avg_rule_apply_latency_seconds": 1.379,
+      "avg_judge_latency_seconds": 1.019,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_audited_income_statement_page_from_toc",
+      "accuracy": 0.5,
+      "avg_cost_ratio": 0.013537,
+      "avg_rule_apply_latency_seconds": 1.263,
+      "avg_judge_latency_seconds": 1.101,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_table_with_revenue_and_period_headers",
+      "accuracy": 0.5,
+      "avg_cost_ratio": 0.053872,
+      "avg_rule_apply_latency_seconds": 1.17,
+      "avg_judge_latency_seconds": 1.022,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_table_with_row_net_sales_and_years",
+      "accuracy": 0.4,
+      "avg_cost_ratio": 0.024014,
+      "avg_rule_apply_latency_seconds": 1.536,
+      "avg_judge_latency_seconds": 1.092,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_item_8_financial_statements_tables",
+      "accuracy": 0.4,
+      "avg_cost_ratio": 0.027006,
+      "avg_rule_apply_latency_seconds": 1.112,
+      "avg_judge_latency_seconds": 1.042,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_net_sales_row",
+      "accuracy": 0.4,
+      "avg_cost_ratio": 0.042301,
+      "avg_rule_apply_latency_seconds": 1.529,
+      "avg_judge_latency_seconds": 1.061,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_path_contains_financial_statements_and_revenue",
+      "accuracy": 0.4,
+      "avg_cost_ratio": 0.05187,
+      "avg_rule_apply_latency_seconds": 1.238,
+      "avg_judge_latency_seconds": 1.144,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_path_item_business_note_segment_information",
+      "accuracy": 0.3,
+      "avg_cost_ratio": 0.009162,
+      "avg_rule_apply_latency_seconds": 1.177,
+      "avg_judge_latency_seconds": 1.111,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_consolidated_statement_of_income_heading",
+      "accuracy": 0.3,
+      "avg_cost_ratio": 0.037431,
+      "avg_rule_apply_latency_seconds": 1.265,
+      "avg_judge_latency_seconds": 1.085,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_segment_results_total_revenue_table",
+      "accuracy": 0.2,
+      "avg_cost_ratio": 0.008624,
+      "avg_rule_apply_latency_seconds": 1.088,
+      "avg_judge_latency_seconds": 1.14,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_table_with_row_total_revenue_and_periods",
+      "accuracy": 0.2,
+      "avg_cost_ratio": 0.013771,
+      "avg_rule_apply_latency_seconds": 1.099,
+      "avg_judge_latency_seconds": 1.199,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_total_revenue_row",
+      "accuracy": 0.2,
+      "avg_cost_ratio": 0.014671,
+      "avg_rule_apply_latency_seconds": 1.131,
+      "avg_judge_latency_seconds": 1.186,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_table_with_total_net_revenue_under_segment_results",
+      "accuracy": 0.1,
+      "avg_cost_ratio": 0.001044,
+      "avg_rule_apply_latency_seconds": 1.211,
+      "avg_judge_latency_seconds": 1.078,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_press_release_consolidated_statements_income",
+      "accuracy": 0.1,
+      "avg_cost_ratio": 0.006833,
+      "avg_rule_apply_latency_seconds": 1.081,
+      "avg_judge_latency_seconds": 1.074,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_table_near_item_8_or_item_1_heading",
+      "accuracy": 0.1,
+      "avg_cost_ratio": 0.010671,
+      "avg_rule_apply_latency_seconds": 1.044,
+      "avg_judge_latency_seconds": 1.124,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_consolidated_statements_income_net_revenue",
+      "accuracy": 0.1,
+      "avg_cost_ratio": 0.01741,
+      "avg_rule_apply_latency_seconds": 1.056,
+      "avg_judge_latency_seconds": 1.112,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_net_revenue_row",
+      "accuracy": 0.1,
+      "avg_cost_ratio": 0.018022,
+      "avg_rule_apply_latency_seconds": 1.338,
+      "avg_judge_latency_seconds": 1.064,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_exclude_non_10k_10q_8k_like",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.0,
+      "avg_rule_apply_latency_seconds": 1.02,
+      "avg_judge_latency_seconds": 1.111,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_revenue_in_business_overview_text",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.000228,
+      "avg_rule_apply_latency_seconds": 1.264,
+      "avg_judge_latency_seconds": 1.102,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_annual_report_news_summary_full_year_revenue",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.000512,
+      "avg_rule_apply_latency_seconds": 1.084,
+      "avg_judge_latency_seconds": 1.089,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page_1_summary_revenue_bullet",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.000512,
+      "avg_rule_apply_latency_seconds": 1.123,
+      "avg_judge_latency_seconds": 1.104,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_press_release_business_unit_summary_annual_revenue",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.000512,
+      "avg_rule_apply_latency_seconds": 1.418,
+      "avg_judge_latency_seconds": 1.09,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_sales_row_in_operations_statement",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.001687,
+      "avg_rule_apply_latency_seconds": 1.124,
+      "avg_judge_latency_seconds": 1.079,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_table_with_sales_row_under_condensed_operations",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.001687,
+      "avg_rule_apply_latency_seconds": 1.079,
+      "avg_judge_latency_seconds": 1.094,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_revenue_note_table_total",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.002173,
+      "avg_rule_apply_latency_seconds": 1.04,
+      "avg_judge_latency_seconds": 1.112,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_item_1_financial_statements_tables",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.003203,
+      "avg_rule_apply_latency_seconds": 1.041,
+      "avg_judge_latency_seconds": 1.135,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_revenue_summary_text_anywhere",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.004342,
+      "avg_rule_apply_latency_seconds": 1.631,
+      "avg_judge_latency_seconds": 1.114,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_table_with_row_sales_and_multiple_periods",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.004745,
+      "avg_rule_apply_latency_seconds": 1.457,
+      "avg_judge_latency_seconds": 1.111,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page_1_or_2_toc_financial_statement_locator",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.005588,
+      "avg_rule_apply_latency_seconds": 1.597,
+      "avg_judge_latency_seconds": 1.194,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_condensed_statements_of_income_heading",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.005745,
+      "avg_rule_apply_latency_seconds": 1.072,
+      "avg_judge_latency_seconds": 1.207,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_table_with_net_revenue_under_consolidated_income",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.005799,
+      "avg_rule_apply_latency_seconds": 1.156,
+      "avg_judge_latency_seconds": 1.09,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page_range_financial_statement_core",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.020761,
+      "avg_rule_apply_latency_seconds": 1.184,
+      "avg_judge_latency_seconds": 1.135,
+      "num_documents": 10
+    }
+  ]
+}

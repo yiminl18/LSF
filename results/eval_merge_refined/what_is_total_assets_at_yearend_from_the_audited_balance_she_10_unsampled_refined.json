@@ -1,0 +1,465 @@
+{
+  "question": "What is total assets at year-end (from the audited balance sheet)?",
+  "question_slug": "what_is_total_assets_at_yearend_from_the_audited_balance_she_10",
+  "rule_slug": "what_is_total_assets_at_yearend_from_the_audited_balance_she_10_refined",
+  "split": "unsampled_refined",
+  "n": 50,
+  "n_correct": 39,
+  "accuracy": 0.78,
+  "avg_latency": 1.309,
+  "avg_retrieved": 2853.7,
+  "avg_input_tok": 2935.9,
+  "avg_cost_ratio": 0.045356,
+  "per_doc": [
+    {
+      "doc_name": "AMCOR_2023_10K",
+      "predicted": "17,003",
+      "ground_truth": "$17,003 million",
+      "correct": true,
+      "latency_seconds": 0.983,
+      "retrieved_tokens": 6488,
+      "input_tokens": 6554
+    },
+    {
+      "doc_name": "APPLE_2016_10K",
+      "predicted": "$321,686",
+      "ground_truth": "321,686 million",
+      "correct": false,
+      "latency_seconds": 0.989,
+      "retrieved_tokens": 2775,
+      "input_tokens": 2863
+    },
+    {
+      "doc_name": "BESTBUY_2020_10K",
+      "predicted": "$15,591",
+      "ground_truth": "15,591 million",
+      "correct": false,
+      "latency_seconds": 1.081,
+      "retrieved_tokens": 4269,
+      "input_tokens": 4342
+    },
+    {
+      "doc_name": "INTEL_2016_10K",
+      "predicted": "$113,327 million",
+      "ground_truth": "$113,327 million",
+      "correct": true,
+      "latency_seconds": 1.046,
+      "retrieved_tokens": 4156,
+      "input_tokens": 4246
+    },
+    {
+      "doc_name": "ACTIVISIONBLIZZARD_2017_10K",
+      "predicted": "$18,668",
+      "ground_truth": "$18,668 million",
+      "correct": true,
+      "latency_seconds": 1.006,
+      "retrieved_tokens": 2333,
+      "input_tokens": 2431
+    },
+    {
+      "doc_name": "ACTIVISIONBLIZZARD_2020_10K",
+      "predicted": "$23,109",
+      "ground_truth": "$23.109 billion",
+      "correct": false,
+      "latency_seconds": 1.067,
+      "retrieved_tokens": 1754,
+      "input_tokens": 1851
+    },
+    {
+      "doc_name": "ADOBE_2015_10K",
+      "predicted": "$ 11,726,472",
+      "ground_truth": "11,726,472,000",
+      "correct": false,
+      "latency_seconds": 1.678,
+      "retrieved_tokens": 2794,
+      "input_tokens": 2881
+    },
+    {
+      "doc_name": "ADOBE_2016_10K",
+      "predicted": "$12,707,114",
+      "ground_truth": "$12,707,114,000",
+      "correct": false,
+      "latency_seconds": 0.852,
+      "retrieved_tokens": 2654,
+      "input_tokens": 2744
+    },
+    {
+      "doc_name": "ADOBE_2017_10K",
+      "predicted": "$14,535,556",
+      "ground_truth": "$14,535,556,000",
+      "correct": false,
+      "latency_seconds": 0.798,
+      "retrieved_tokens": 2522,
+      "input_tokens": 2612
+    },
+    {
+      "doc_name": "ADOBE_2018_10K",
+      "predicted": "$18,768,682",
+      "ground_truth": "18,768,682,000",
+      "correct": false,
+      "latency_seconds": 1.319,
+      "retrieved_tokens": 2422,
+      "input_tokens": 2512
+    },
+    {
+      "doc_name": "ADOBE_2019_10K",
+      "predicted": "$20,762,400",
+      "ground_truth": "$20,762,400,000",
+      "correct": false,
+      "latency_seconds": 3.584,
+      "retrieved_tokens": 2490,
+      "input_tokens": 2581
+    },
+    {
+      "doc_name": "ADOBE_2020_10K",
+      "predicted": "$24,284 million",
+      "ground_truth": "$24,284 million",
+      "correct": true,
+      "latency_seconds": 0.969,
+      "retrieved_tokens": 2145,
+      "input_tokens": 2236
+    },
+    {
+      "doc_name": "ADOBE_2021_10K",
+      "predicted": "$27,241",
+      "ground_truth": "$27,241 million",
+      "correct": true,
+      "latency_seconds": 1.358,
+      "retrieved_tokens": 1470,
+      "input_tokens": 1563
+    },
+    {
+      "doc_name": "ADOBE_2022_10K",
+      "predicted": "$27,165",
+      "ground_truth": "$27.165 billion",
+      "correct": false,
+      "latency_seconds": 0.878,
+      "retrieved_tokens": 1496,
+      "input_tokens": 1589
+    },
+    {
+      "doc_name": "AMAZON_2015_10K",
+      "predicted": "$65,444",
+      "ground_truth": "$65,444 million",
+      "correct": true,
+      "latency_seconds": 0.91,
+      "retrieved_tokens": 1634,
+      "input_tokens": 1715
+    },
+    {
+      "doc_name": "AMAZON_2017_10K",
+      "predicted": "$131,310",
+      "ground_truth": "$131,310 million",
+      "correct": true,
+      "latency_seconds": 0.945,
+      "retrieved_tokens": 2350,
+      "input_tokens": 2420
+    },
+    {
+      "doc_name": "AMAZON_2019_10K",
+      "predicted": "$225,248",
+      "ground_truth": "$225,248 million",
+      "correct": true,
+      "latency_seconds": 1.038,
+      "retrieved_tokens": 2480,
+      "input_tokens": 2550
+    },
+    {
+      "doc_name": "AMAZON_2020_10K",
+      "predicted": "$321,195",
+      "ground_truth": "$321,195 million",
+      "correct": true,
+      "latency_seconds": 1.025,
+      "retrieved_tokens": 1895,
+      "input_tokens": 1978
+    },
+    {
+      "doc_name": "AMAZON_2022_10K",
+      "predicted": "$462,675",
+      "ground_truth": "$462,675 million",
+      "correct": true,
+      "latency_seconds": 0.942,
+      "retrieved_tokens": 2465,
+      "input_tokens": 2552
+    },
+    {
+      "doc_name": "AMCOR_2021_10K",
+      "predicted": "17,188",
+      "ground_truth": "$17,188 million",
+      "correct": true,
+      "latency_seconds": 1.018,
+      "retrieved_tokens": 6167,
+      "input_tokens": 6234
+    },
+    {
+      "doc_name": "AMCOR_2022_10K",
+      "predicted": "17,426",
+      "ground_truth": "$17,426 million",
+      "correct": true,
+      "latency_seconds": 1.008,
+      "retrieved_tokens": 6445,
+      "input_tokens": 6510
+    },
+    {
+      "doc_name": "AMD_2019_10K",
+      "predicted": "6,028",
+      "ground_truth": "$6,028 million",
+      "correct": true,
+      "latency_seconds": 0.898,
+      "retrieved_tokens": 1015,
+      "input_tokens": 1108
+    },
+    {
+      "doc_name": "AMD_2020_10K",
+      "predicted": "$8,962 million",
+      "ground_truth": "$8,962 million",
+      "correct": true,
+      "latency_seconds": 0.882,
+      "retrieved_tokens": 1566,
+      "input_tokens": 1654
+    },
+    {
+      "doc_name": "AMD_2021_10K",
+      "predicted": "$12,419 million",
+      "ground_truth": "$12,419 million",
+      "correct": true,
+      "latency_seconds": 2.13,
+      "retrieved_tokens": 1026,
+      "input_tokens": 1119
+    },
+    {
+      "doc_name": "AMD_2022_10K",
+      "predicted": "$67,580 million",
+      "ground_truth": "$67,580 million",
+      "correct": true,
+      "latency_seconds": 0.98,
+      "retrieved_tokens": 1850,
+      "input_tokens": 1938
+    },
+    {
+      "doc_name": "APPLE_2015_10K",
+      "predicted": "$290,479",
+      "ground_truth": "$290,479 million",
+      "correct": true,
+      "latency_seconds": 4.728,
+      "retrieved_tokens": 1683,
+      "input_tokens": 1775
+    },
+    {
+      "doc_name": "APPLE_2017_10K",
+      "predicted": "$375,319",
+      "ground_truth": "$375,319 million",
+      "correct": true,
+      "latency_seconds": 0.915,
+      "retrieved_tokens": 2623,
+      "input_tokens": 2711
+    },
+    {
+      "doc_name": "APPLE_2018_10K",
+      "predicted": "$365,725",
+      "ground_truth": "$365,725 million",
+      "correct": true,
+      "latency_seconds": 0.887,
+      "retrieved_tokens": 1085,
+      "input_tokens": 1183
+    },
+    {
+      "doc_name": "APPLE_2019_10K",
+      "predicted": "$338,516",
+      "ground_truth": "$338,516 million",
+      "correct": true,
+      "latency_seconds": 0.995,
+      "retrieved_tokens": 2606,
+      "input_tokens": 2698
+    },
+    {
+      "doc_name": "APPLE_2020_10K",
+      "predicted": "$323,888",
+      "ground_truth": "$323,888 million",
+      "correct": true,
+      "latency_seconds": 1.176,
+      "retrieved_tokens": 2587,
+      "input_tokens": 2680
+    },
+    {
+      "doc_name": "APPLE_2021_10K",
+      "predicted": "$351,002",
+      "ground_truth": "$351,002 million",
+      "correct": true,
+      "latency_seconds": 1.292,
+      "retrieved_tokens": 2284,
+      "input_tokens": 2381
+    },
+    {
+      "doc_name": "APPLE_2022_10K",
+      "predicted": "$352,755",
+      "ground_truth": "$352,755 million",
+      "correct": true,
+      "latency_seconds": 1.167,
+      "retrieved_tokens": 2380,
+      "input_tokens": 2475
+    },
+    {
+      "doc_name": "BESTBUY_2015_10K",
+      "predicted": "$15,256",
+      "ground_truth": "15,256 million",
+      "correct": true,
+      "latency_seconds": 7.216,
+      "retrieved_tokens": 3446,
+      "input_tokens": 3524
+    },
+    {
+      "doc_name": "BESTBUY_2021_10K",
+      "predicted": "19,067",
+      "ground_truth": "19,067 million",
+      "correct": true,
+      "latency_seconds": 1.078,
+      "retrieved_tokens": 4474,
+      "input_tokens": 4521
+    },
+    {
+      "doc_name": "BESTBUY_2022_10K",
+      "predicted": "$17,504",
+      "ground_truth": "17,504 million",
+      "correct": false,
+      "latency_seconds": 1.045,
+      "retrieved_tokens": 4433,
+      "input_tokens": 4465
+    },
+    {
+      "doc_name": "BESTBUY_2023_10K",
+      "predicted": "$15,803",
+      "ground_truth": "15,803 million",
+      "correct": true,
+      "latency_seconds": 1.131,
+      "retrieved_tokens": 4535,
+      "input_tokens": 4562
+    },
+    {
+      "doc_name": "BOEING_2017_10K",
+      "predicted": "$92,333 million",
+      "ground_truth": "$92,333 million",
+      "correct": true,
+      "latency_seconds": 1.357,
+      "retrieved_tokens": 2387,
+      "input_tokens": 2471
+    },
+    {
+      "doc_name": "BOEING_2019_10K",
+      "predicted": "$133,625",
+      "ground_truth": "$133,625 million",
+      "correct": true,
+      "latency_seconds": 1.123,
+      "retrieved_tokens": 2634,
+      "input_tokens": 2719
+    },
+    {
+      "doc_name": "BOEING_2020_10K",
+      "predicted": "$152,136",
+      "ground_truth": "152,136 million",
+      "correct": false,
+      "latency_seconds": 1.057,
+      "retrieved_tokens": 2609,
+      "input_tokens": 2693
+    },
+    {
+      "doc_name": "BOEING_2022_10K",
+      "predicted": "$137,100 million",
+      "ground_truth": "$137,100 million",
+      "correct": true,
+      "latency_seconds": 1.214,
+      "retrieved_tokens": 2436,
+      "input_tokens": 2521
+    },
+    {
+      "doc_name": "CORNING_2022_10K",
+      "predicted": "$29,499 million",
+      "ground_truth": "29,499 million",
+      "correct": true,
+      "latency_seconds": 0.854,
+      "retrieved_tokens": 3762,
+      "input_tokens": 3850
+    },
+    {
+      "doc_name": "COSTCO_2015_10K",
+      "predicted": "$33,440",
+      "ground_truth": "33,440",
+      "correct": true,
+      "latency_seconds": 0.916,
+      "retrieved_tokens": 3239,
+      "input_tokens": 3307
+    },
+    {
+      "doc_name": "COSTCO_2016_10K",
+      "predicted": "$33,163",
+      "ground_truth": "$33,163 million",
+      "correct": true,
+      "latency_seconds": 0.93,
+      "retrieved_tokens": 2278,
+      "input_tokens": 2369
+    },
+    {
+      "doc_name": "COSTCO_2018_10K",
+      "predicted": "$ 40,830",
+      "ground_truth": "$40,830 million",
+      "correct": true,
+      "latency_seconds": 0.983,
+      "retrieved_tokens": 2993,
+      "input_tokens": 3062
+    },
+    {
+      "doc_name": "GENERALMILLS_2022_10K",
+      "predicted": "$31,090.1",
+      "ground_truth": "31,090.1 million",
+      "correct": true,
+      "latency_seconds": 0.806,
+      "retrieved_tokens": 3704,
+      "input_tokens": 3788
+    },
+    {
+      "doc_name": "INTEL_2022_10K",
+      "predicted": "$182,103 million",
+      "ground_truth": "$182,103 million",
+      "correct": true,
+      "latency_seconds": 0.798,
+      "retrieved_tokens": 3093,
+      "input_tokens": 3186
+    },
+    {
+      "doc_name": "KRAFTHEINZ_2021_10K",
+      "predicted": "$93,394",
+      "ground_truth": "$93,394 million",
+      "correct": true,
+      "latency_seconds": 1.007,
+      "retrieved_tokens": 5745,
+      "input_tokens": 5817
+    },
+    {
+      "doc_name": "FOOTLOCKER_2023_10K",
+      "predicted": "$7,907 million",
+      "ground_truth": "7,907 million",
+      "correct": true,
+      "latency_seconds": 0.939,
+      "retrieved_tokens": 2282,
+      "input_tokens": 2371
+    },
+    {
+      "doc_name": "NIKE_2019_10K",
+      "predicted": "$23,717 million",
+      "ground_truth": "$23,717 million",
+      "correct": true,
+      "latency_seconds": 1.342,
+      "retrieved_tokens": 2830,
+      "input_tokens": 2899
+    },
+    {
+      "doc_name": "LOCKHEEDMARTIN_2021_10K",
+      "predicted": "$50,873 million",
+      "ground_truth": "$50,873 million",
+      "correct": true,
+      "latency_seconds": 1.13,
+      "retrieved_tokens": 1896,
+      "input_tokens": 1985
+    }
+  ]
+}

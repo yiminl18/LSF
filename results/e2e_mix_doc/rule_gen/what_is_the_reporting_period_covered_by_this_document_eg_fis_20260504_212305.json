@@ -1,0 +1,207 @@
+{
+  "question": "What is the reporting period covered by this document (e.g. fiscal year ended, quarter ended, or event date)?",
+  "question_slug": "what_is_the_reporting_period_covered_by_this_document_eg_fis",
+  "timestamp": "2026-05-04T21:23:05Z",
+  "model": "gpt54",
+  "num_documents": 18,
+  "doc_names": [
+    "BOEING_2019_10K",
+    "ADOBE_2020_10K",
+    "ACTIVISIONBLIZZARD_2020_10K",
+    "COSTCO_2018_10K",
+    "AMCOR_2019_10K",
+    "AMAZON_2020_10K",
+    "AMAZON_2019_10K",
+    "ADOBE_2021_10K",
+    "EBAY_2022_10K",
+    "ADOBE_2019_10K",
+    "AMCOR_2023Q2_10Q",
+    "ADOBE_2022Q2_10Q",
+    "ACTIVSIONBLIZZARD_2023Q2_10Q",
+    "3M_2023Q2_10Q",
+    "AMCOR_2022_8K_2022-07-01",
+    "COSTCO_2023_8K_dated-2023-08-09",
+    "COSTCO_2023_8K_dated-2023-08-16",
+    "FOOTLOCKER_2022_8K_dated-2022-05-20"
+  ],
+  "latency_seconds": 147.266,
+  "input_tokens": 624325,
+  "output_tokens": 5132,
+  "rules": [
+    {
+      "rule_name": "rule_page1_period_phrases",
+      "description": "Match page-1 spans containing common reporting-period lead phrases.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_reporting_period_covered_by_this_document_eg_fis_18_llm/rule_page1_period_phrases.py"
+    },
+    {
+      "rule_name": "rule_page1_text_span_period_phrases",
+      "description": "Match page-1 section headers whose text_span contains the reporting period phrase.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_reporting_period_covered_by_this_document_eg_fis_18_llm/rule_page1_text_span_period_phrases.py"
+    },
+    {
+      "rule_name": "rule_form_header_page1",
+      "description": "Match top-of-document FORM 10-K/10-Q/8-K headers on page 1.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_reporting_period_covered_by_this_document_eg_fis_18_llm/rule_form_header_page1.py"
+    },
+    {
+      "rule_name": "rule_form_path_period_children",
+      "description": "Match spans under FORM 10-K/10-Q/8-K whose text contains the period phrase.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_reporting_period_covered_by_this_document_eg_fis_18_llm/rule_form_path_period_children.py"
+    },
+    {
+      "rule_name": "rule_exact_for_the_fiscal_year_ended",
+      "description": "Match spans containing the exact phrase 'For the fiscal year ended'.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_reporting_period_covered_by_this_document_eg_fis_18_llm/rule_exact_for_the_fiscal_year_ended.py"
+    },
+    {
+      "rule_name": "rule_exact_for_the_quarterly_period_ended",
+      "description": "Match spans containing the exact phrase 'For the quarterly period ended'.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_reporting_period_covered_by_this_document_eg_fis_18_llm/rule_exact_for_the_quarterly_period_ended.py"
+    },
+    {
+      "rule_name": "rule_exact_date_of_report",
+      "description": "Match spans containing the 8-K event-date lead phrase.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_reporting_period_covered_by_this_document_eg_fis_18_llm/rule_exact_date_of_report.py"
+    },
+    {
+      "rule_name": "rule_page1_bold_small_period_lines",
+      "description": "Match likely period lines on page 1 that are bold and relatively small body text.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_reporting_period_covered_by_this_document_eg_fis_18_llm/rule_page1_bold_small_period_lines.py"
+    },
+    {
+      "rule_name": "rule_page1_first_20_spans_period",
+      "description": "Match reporting-period phrases appearing very early in the document.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_reporting_period_covered_by_this_document_eg_fis_18_llm/rule_page1_first_20_spans_period.py"
+    },
+    {
+      "rule_name": "rule_page1_header_with_commission_file_and_period",
+      "description": "Match page-1 headers that mention both a period phrase and commission file number.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_reporting_period_covered_by_this_document_eg_fis_18_llm/rule_page1_header_with_commission_file_and_period.py"
+    },
+    {
+      "rule_name": "rule_page1_form10k_annual_report_block",
+      "description": "Match annual-report blocks on page 1 that usually contain the fiscal year end date.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_reporting_period_covered_by_this_document_eg_fis_18_llm/rule_page1_form10k_annual_report_block.py"
+    },
+    {
+      "rule_name": "rule_page1_form10q_quarterly_report_block",
+      "description": "Match quarterly-report blocks on page 1 that usually contain the quarter end date.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_reporting_period_covered_by_this_document_eg_fis_18_llm/rule_page1_form10q_quarterly_report_block.py"
+    },
+    {
+      "rule_name": "rule_page1_current_report_block",
+      "description": "Match 8-K current-report blocks on page 1 that usually contain the event date.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_reporting_period_covered_by_this_document_eg_fis_18_llm/rule_page1_current_report_block.py"
+    },
+    {
+      "rule_name": "rule_page1_parenthetical_event_date",
+      "description": "Match 8-K spans with parenthetical earliest-event date on page 1.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_reporting_period_covered_by_this_document_eg_fis_18_llm/rule_page1_parenthetical_event_date.py"
+    },
+    {
+      "rule_name": "rule_page1_period_ended_date_pattern",
+      "description": "Match page-1 spans with 'ended' followed by a month-day-year date.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_reporting_period_covered_by_this_document_eg_fis_18_llm/rule_page1_period_ended_date_pattern.py"
+    },
+    {
+      "rule_name": "rule_page1_event_report_date_pattern",
+      "description": "Match page-1 8-K spans with a report date followed by a parenthetical event date.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_reporting_period_covered_by_this_document_eg_fis_18_llm/rule_page1_event_report_date_pattern.py"
+    },
+    {
+      "rule_name": "rule_page1_company_header_with_period_reference",
+      "description": "Match company-name headers on page 1 whose text_span references the reporting period.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_reporting_period_covered_by_this_document_eg_fis_18_llm/rule_page1_company_header_with_period_reference.py"
+    },
+    {
+      "rule_name": "rule_page2_repeated_form_period_line",
+      "description": "Match repeated cover/header period lines on page 2.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_reporting_period_covered_by_this_document_eg_fis_18_llm/rule_page2_repeated_form_period_line.py"
+    },
+    {
+      "rule_name": "rule_path_contains_form_and_period",
+      "description": "Match spans whose path_text contains FORM and whose text contains a period phrase.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_reporting_period_covered_by_this_document_eg_fis_18_llm/rule_path_contains_form_and_period.py"
+    },
+    {
+      "rule_name": "rule_section_header_period_text",
+      "description": "Match section_header spans whose own text is the period line.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_reporting_period_covered_by_this_document_eg_fis_18_llm/rule_section_header_period_text.py"
+    },
+    {
+      "rule_name": "rule_body_text_period_text",
+      "description": "Match body text spans whose own text is the period line.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_reporting_period_covered_by_this_document_eg_fis_18_llm/rule_body_text_period_text.py"
+    },
+    {
+      "rule_name": "rule_annual_report_on_form_10k_for_fiscal_year",
+      "description": "Match spans containing the long annual-report phrase used by some 10-Ks.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_reporting_period_covered_by_this_document_eg_fis_18_llm/rule_annual_report_on_form_10k_for_fiscal_year.py"
+    },
+    {
+      "rule_name": "rule_for_the_fiscal_year_end_capitalized",
+      "description": "Match spans using capitalized 'For the Fiscal Year Ended' wording.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_reporting_period_covered_by_this_document_eg_fis_18_llm/rule_for_the_fiscal_year_end_capitalized.py"
+    },
+    {
+      "rule_name": "rule_for_the_quarterly_period_end_capitalized",
+      "description": "Match spans using capitalized 'For the Quarterly Period Ended' wording.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_reporting_period_covered_by_this_document_eg_fis_18_llm/rule_for_the_quarterly_period_end_capitalized.py"
+    },
+    {
+      "rule_name": "rule_8k_date_of_earliest_event_page1",
+      "description": "Match page-1 spans with earliest-event date wording for 8-Ks.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_reporting_period_covered_by_this_document_eg_fis_18_llm/rule_8k_date_of_earliest_event_page1.py"
+    },
+    {
+      "rule_name": "rule_page1_near_form_header_next_spans",
+      "description": "Return spans immediately following a FORM 10-K/10-Q/8-K header if they contain period cues.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_reporting_period_covered_by_this_document_eg_fis_18_llm/rule_page1_near_form_header_next_spans.py"
+    },
+    {
+      "rule_name": "rule_page1_company_header_next_spans",
+      "description": "Return nearby page-1 spans after the company header if they contain period cues.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_reporting_period_covered_by_this_document_eg_fis_18_llm/rule_page1_company_header_next_spans.py"
+    },
+    {
+      "rule_name": "rule_page1_contains_month_year_and_ended",
+      "description": "Match page-1 spans containing both 'ended' and a month name.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_reporting_period_covered_by_this_document_eg_fis_18_llm/rule_page1_contains_month_year_and_ended.py"
+    },
+    {
+      "rule_name": "rule_page1_contains_quarterly_or_fiscal_and_date",
+      "description": "Match page-1 spans containing fiscal/quarterly wording plus a date-like month-day-year.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_reporting_period_covered_by_this_document_eg_fis_18_llm/rule_page1_contains_quarterly_or_fiscal_and_date.py"
+    },
+    {
+      "rule_name": "rule_page1_top_headers_with_period_in_text_or_span",
+      "description": "Match top page-1 headers where either text or text_span contains the reporting period.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_reporting_period_covered_by_this_document_eg_fis_18_llm/rule_page1_top_headers_with_period_in_text_or_span.py"
+    },
+    {
+      "rule_name": "rule_10k_or_10q_cover_period_body_lines",
+      "description": "Match body lines on the cover page that are children of FORM 10-K/10-Q and contain the answer.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_reporting_period_covered_by_this_document_eg_fis_18_llm/rule_10k_or_10q_cover_period_body_lines.py"
+    },
+    {
+      "rule_name": "rule_8k_cover_date_body_lines",
+      "description": "Match body lines on the 8-K cover page containing the event date.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_reporting_period_covered_by_this_document_eg_fis_18_llm/rule_8k_cover_date_body_lines.py"
+    },
+    {
+      "rule_name": "rule_page1_period_line_without_transition",
+      "description": "Match page-1 period lines and avoid generic transition-period placeholders when possible.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_reporting_period_covered_by_this_document_eg_fis_18_llm/rule_page1_period_line_without_transition.py"
+    },
+    {
+      "rule_name": "rule_page1_period_in_large_bold_headers",
+      "description": "Match large bold page-1 headers that embed the reporting period in text_span.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_reporting_period_covered_by_this_document_eg_fis_18_llm/rule_page1_period_in_large_bold_headers.py"
+    },
+    {
+      "rule_name": "rule_page1_period_in_any_label",
+      "description": "Broad high-recall rule for any page-1 span mentioning the reporting period.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_reporting_period_covered_by_this_document_eg_fis_18_llm/rule_page1_period_in_any_label.py"
+    }
+  ]
+}

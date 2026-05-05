@@ -1,0 +1,102 @@
+[
+  {
+    "question": "What is long-term debt at year-end (0 if none)?",
+    "question_slug": "what_is_longterm_debt_at_yearend_0_if_none_10",
+    "sampled": {
+      "best_rule": "rule_table_row_label_long_term_debt",
+      "best_accuracy": 0.6,
+      "best_cost_ratio": 0.025518,
+      "num_rules": 37
+    }
+  },
+  {
+    "question": "What is net income (loss) for the most recent fiscal year?",
+    "question_slug": "what_is_net_income_loss_for_the_most_recent_fiscal_year_10",
+    "sampled": {
+      "best_rule": "rule_years_ended_net_income_table",
+      "best_accuracy": 0.5,
+      "best_cost_ratio": 0.020865,
+      "num_rules": 47
+    }
+  },
+  {
+    "question": "What is total revenue for the most recent fiscal year (from the audited income statement)?",
+    "question_slug": "what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10",
+    "sampled": {
+      "best_rule": "rule_page_around_statement_of_income",
+      "best_accuracy": 0.6,
+      "best_cost_ratio": 0.030236,
+      "num_rules": 40
+    }
+  },
+  {
+    "question": "What is total assets at year-end (from the audited balance sheet)?",
+    "question_slug": "what_is_total_assets_at_yearend_from_the_audited_balance_she_10",
+    "sampled": {
+      "best_rule": "rule_table_with_total_assets_and_two_or_more_date_columns",
+      "best_accuracy": 0.7,
+      "best_cost_ratio": 0.016809,
+      "num_rules": 43
+    }
+  },
+  {
+    "question": "What is the registrant's telephone number?",
+    "question_slug": "what_is_the_registrants_telephone_number_10",
+    "sampled": {
+      "best_rule": "rule_phone_in_company_header_block",
+      "best_accuracy": 0.7,
+      "best_cost_ratio": 0.000282,
+      "num_rules": 47
+    }
+  },
+  {
+    "question": "How many shares of common stock were outstanding as of the cover-page reference date?",
+    "question_slug": "how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10",
+    "sampled": {
+      "best_rule": "rule_any_span_outstanding_share_count",
+      "best_accuracy": 0.5,
+      "best_cost_ratio": 0.03432,
+      "num_rules": 42
+    }
+  },
+  {
+    "question": "What is the registrant's exact name?",
+    "question_slug": "what_is_the_registrants_exact_name_10",
+    "sampled": {
+      "best_rule": "rule_cover_page_first_company_like_header_after_form",
+      "best_accuracy": 0.7,
+      "best_cost_ratio": 8.5e-05,
+      "num_rules": 23
+    }
+  },
+  {
+    "question": "What is the state (or other jurisdiction) of incorporation and the IRS Employer Identification Number?",
+    "question_slug": "what_is_the_state_or_other_jurisdiction_of_incorporation_and_10",
+    "sampled": {
+      "best_rule": "rule_page1_cover_metadata_font_small",
+      "best_accuracy": 0.7,
+      "best_cost_ratio": 0.000466,
+      "num_rules": 35
+    }
+  },
+  {
+    "question": "What is the address of principal executive offices and ZIP code?",
+    "question_slug": "what_is_the_address_of_principal_executive_offices_and_zip_c_10",
+    "sampled": {
+      "best_rule": "rule_page1_top_half_address_like",
+      "best_accuracy": 0.7,
+      "best_cost_ratio": 0.001542,
+      "num_rules": 38
+    }
+  },
+  {
+    "question": "What is/are the trading symbol(s) and listing exchange(s)?",
+    "question_slug": "what_isare_the_trading_symbols_and_listing_exchanges_10",
+    "sampled": {
+      "best_rule": "rule_business_sentence_with_trades_on_exchange",
+      "best_accuracy": 0.3,
+      "best_cost_ratio": 0.000491,
+      "num_rules": 38
+    }
+  }
+]

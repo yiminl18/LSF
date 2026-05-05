@@ -1,0 +1,179 @@
+{
+  "question": "How many distinct risk factor captions are presented in Item 1A (count captions; \"not disclosed\" if not counted)?",
+  "question_slug": "how_many_distinct_risk_factor_captions_are_presented_in_item",
+  "timestamp": "2026-04-28T20:00:31Z",
+  "model": "gpt54",
+  "num_documents": 10,
+  "doc_names": [
+    "AMCOR_2019_10K",
+    "ADOBE_2022Q2_10Q",
+    "COSTCO_2017_10K",
+    "BOEING_2018_10K",
+    "INTEL_2022Q4_EARNINGS",
+    "AMAZON_2018_10K",
+    "EBAY_2021_10K",
+    "AMAZON_2016_10K",
+    "COSTCO_2023_8K_dated-2023-08-09",
+    "FOOTLOCKER_2023Q3_10Q"
+  ],
+  "latency_seconds": 158.488,
+  "input_tokens": 449699,
+  "output_tokens": 5523,
+  "rules": [
+    {
+      "rule_name": "rule_item_1a_section_header",
+      "description": "Match section headers that explicitly name Item 1A / Risk Factors.",
+      "file": "rules/financebench/how_many_distinct_risk_factor_captions_are_presented_in_item_10_llm/rule_item_1a_section_header.py"
+    },
+    {
+      "rule_name": "rule_item_1a_path_any_span",
+      "description": "Match any span whose structural path is under Item 1A / Risk Factors.",
+      "file": "rules/financebench/how_many_distinct_risk_factor_captions_are_presented_in_item_10_llm/rule_item_1a_path_any_span.py"
+    },
+    {
+      "rule_name": "rule_item_1a_page_from_toc",
+      "description": "Use table of contents row for Item 1A Risk Factors to return spans on that page.",
+      "file": "rules/financebench/how_many_distinct_risk_factor_captions_are_presented_in_item_10_llm/rule_item_1a_page_from_toc.py"
+    },
+    {
+      "rule_name": "rule_item_1a_page_from_toc_markdown_header",
+      "description": "Use section_header/table markdown text containing Item 1A Risk Factors to infer target page.",
+      "file": "rules/financebench/how_many_distinct_risk_factor_captions_are_presented_in_item_10_llm/rule_item_1a_page_from_toc_markdown_header.py"
+    },
+    {
+      "rule_name": "rule_risk_factor_category_bold_text",
+      "description": "Match bold body text category labels inside Item 1A such as Strategic Risks or Business and Operating Risks.",
+      "file": "rules/financebench/how_many_distinct_risk_factor_captions_are_presented_in_item_10_llm/rule_risk_factor_category_bold_text.py"
+    },
+    {
+      "rule_name": "rule_risk_factor_caption_h4_under_item_1a",
+      "description": "Match H4 section headers under Item 1A, which are often individual risk factor captions.",
+      "file": "rules/financebench/how_many_distinct_risk_factor_captions_are_presented_in_item_10_llm/rule_risk_factor_caption_h4_under_item_1a.py"
+    },
+    {
+      "rule_name": "rule_risk_factor_caption_bolditalic_under_item_1a",
+      "description": "Match bold section headers under Item 1A that look like individual risk factor captions.",
+      "file": "rules/financebench/how_many_distinct_risk_factor_captions_are_presented_in_item_10_llm/rule_risk_factor_caption_bolditalic_under_item_1a.py"
+    },
+    {
+      "rule_name": "rule_risk_factor_caption_with_dash_or_emdash",
+      "description": "Match Item 1A section headers whose text contains a dash/em dash separating caption and description.",
+      "file": "rules/financebench/how_many_distinct_risk_factor_captions_are_presented_in_item_10_llm/rule_risk_factor_caption_with_dash_or_emdash.py"
+    },
+    {
+      "rule_name": "rule_risk_factor_caption_question_like_under_item_1a",
+      "description": "Match bold Item 1A spans ending with a period that read like full-sentence risk captions.",
+      "file": "rules/financebench/how_many_distinct_risk_factor_captions_are_presented_in_item_10_llm/rule_risk_factor_caption_question_like_under_item_1a.py"
+    },
+    {
+      "rule_name": "rule_item_1a_intro_paragraph",
+      "description": "Match the introductory paragraph immediately under Item 1A Risk Factors.",
+      "file": "rules/financebench/how_many_distinct_risk_factor_captions_are_presented_in_item_10_llm/rule_item_1a_intro_paragraph.py"
+    },
+    {
+      "rule_name": "rule_item_1a_first_page_window",
+      "description": "Return spans on the first page where Item 1A Risk Factors begins.",
+      "file": "rules/financebench/how_many_distinct_risk_factor_captions_are_presented_in_item_10_llm/rule_item_1a_first_page_window.py"
+    },
+    {
+      "rule_name": "rule_item_1a_and_next_five_pages",
+      "description": "Return spans from the Item 1A start page through the next five pages for high-recall risk-factor coverage.",
+      "file": "rules/financebench/how_many_distinct_risk_factor_captions_are_presented_in_item_10_llm/rule_item_1a_and_next_five_pages.py"
+    },
+    {
+      "rule_name": "rule_risk_factors_heading_any_case",
+      "description": "Match any span explicitly containing the phrase Risk Factors.",
+      "file": "rules/financebench/how_many_distinct_risk_factor_captions_are_presented_in_item_10_llm/rule_risk_factors_heading_any_case.py"
+    },
+    {
+      "rule_name": "rule_item_1a_any_case",
+      "description": "Match any span explicitly containing Item 1A.",
+      "file": "rules/financebench/how_many_distinct_risk_factor_captions_are_presented_in_item_10_llm/rule_item_1a_any_case.py"
+    },
+    {
+      "rule_name": "rule_toc_row_item_1a_risk_factors",
+      "description": "Match the table row/cells in TOC that mention Item 1A Risk Factors.",
+      "file": "rules/financebench/how_many_distinct_risk_factor_captions_are_presented_in_item_10_llm/rule_toc_row_item_1a_risk_factors.py"
+    },
+    {
+      "rule_name": "rule_toc_section_header_with_item_1a",
+      "description": "Match TOC section headers that include Item 1A Risk Factors in embedded markdown.",
+      "file": "rules/financebench/how_many_distinct_risk_factor_captions_are_presented_in_item_10_llm/rule_toc_section_header_with_item_1a.py"
+    },
+    {
+      "rule_name": "rule_risk_factor_group_labels",
+      "description": "Match common risk-group labels under Item 1A such as Strategic Risks, Legal and Regulatory Risks, etc.",
+      "file": "rules/financebench/how_many_distinct_risk_factor_captions_are_presented_in_item_10_llm/rule_risk_factor_group_labels.py"
+    },
+    {
+      "rule_name": "rule_risk_factor_caption_after_group_label",
+      "description": "Match bold spans under Item 1A that follow group labels and likely represent individual captions.",
+      "file": "rules/financebench/how_many_distinct_risk_factor_captions_are_presented_in_item_10_llm/rule_risk_factor_caption_after_group_label.py"
+    },
+    {
+      "rule_name": "rule_not_disclosed_forms_without_item_1a",
+      "description": "Return top-level filing/title spans when the document likely has no Item 1A risk-factor section.",
+      "file": "rules/financebench/how_many_distinct_risk_factor_captions_are_presented_in_item_10_llm/rule_not_disclosed_forms_without_item_1a.py"
+    },
+    {
+      "rule_name": "rule_part_ii_item_1a_10q",
+      "description": "Match Part II / Item 1A Risk Factors spans common in 10-Q filings.",
+      "file": "rules/financebench/how_many_distinct_risk_factor_captions_are_presented_in_item_10_llm/rule_part_ii_item_1a_10q.py"
+    },
+    {
+      "rule_name": "rule_part_i_item_1a_10k",
+      "description": "Match Part I / Item 1A Risk Factors spans common in 10-K filings.",
+      "file": "rules/financebench/how_many_distinct_risk_factor_captions_are_presented_in_item_10_llm/rule_part_i_item_1a_10k.py"
+    },
+    {
+      "rule_name": "rule_forward_looking_refers_to_item_1a",
+      "description": "Match forward-looking statement spans that reference Item 1A Risk Factors.",
+      "file": "rules/financebench/how_many_distinct_risk_factor_captions_are_presented_in_item_10_llm/rule_forward_looking_refers_to_item_1a.py"
+    },
+    {
+      "rule_name": "rule_item_1a_neighbor_spans",
+      "description": "Return a small window around explicit Item 1A Risk Factors headers.",
+      "file": "rules/financebench/how_many_distinct_risk_factor_captions_are_presented_in_item_10_llm/rule_item_1a_neighbor_spans.py"
+    },
+    {
+      "rule_name": "rule_item_1a_bold_body_text",
+      "description": "Match bold body text under Item 1A, which often includes category labels and captions.",
+      "file": "rules/financebench/how_many_distinct_risk_factor_captions_are_presented_in_item_10_llm/rule_item_1a_bold_body_text.py"
+    },
+    {
+      "rule_name": "rule_item_1a_section_header_or_text_same_page",
+      "description": "Return all bold/text spans on pages where Item 1A Risk Factors appears.",
+      "file": "rules/financebench/how_many_distinct_risk_factor_captions_are_presented_in_item_10_llm/rule_item_1a_section_header_or_text_same_page.py"
+    },
+    {
+      "rule_name": "rule_risk_factor_caption_long_bold_under_item_1a",
+      "description": "Match long bold spans under Item 1A that likely correspond to countable captions.",
+      "file": "rules/financebench/how_many_distinct_risk_factor_captions_are_presented_in_item_10_llm/rule_risk_factor_caption_long_bold_under_item_1a.py"
+    },
+    {
+      "rule_name": "rule_risk_factor_caption_sentence_case_under_item_1a",
+      "description": "Match sentence-case section headers under Item 1A, common for individual risk factor captions.",
+      "file": "rules/financebench/how_many_distinct_risk_factor_captions_are_presented_in_item_10_llm/rule_risk_factor_caption_sentence_case_under_item_1a.py"
+    },
+    {
+      "rule_name": "rule_risk_factor_caption_excluding_item_header",
+      "description": "Match Item 1A descendants that are bold but not the Item 1A header itself.",
+      "file": "rules/financebench/how_many_distinct_risk_factor_captions_are_presented_in_item_10_llm/rule_risk_factor_caption_excluding_item_header.py"
+    },
+    {
+      "rule_name": "rule_risk_factor_pages_from_path",
+      "description": "Return all spans on pages that contain any Item 1A path_text span.",
+      "file": "rules/financebench/how_many_distinct_risk_factor_captions_are_presented_in_item_10_llm/rule_risk_factor_pages_from_path.py"
+    },
+    {
+      "rule_name": "rule_risk_factor_count_not_disclosed_indicator",
+      "description": "Match spans indicating only references to risk factors elsewhere, useful for not-disclosed cases.",
+      "file": "rules/financebench/how_many_distinct_risk_factor_captions_are_presented_in_item_10_llm/rule_risk_factor_count_not_disclosed_indicator.py"
+    },
+    {
+      "rule_name": "rule_no_item_1a_return_empty",
+      "description": "Return empty when no Item 1A / Risk Factors evidence exists.",
+      "file": "rules/financebench/how_many_distinct_risk_factor_captions_are_presented_in_item_10_llm/rule_no_item_1a_return_empty.py"
+    }
+  ]
+}

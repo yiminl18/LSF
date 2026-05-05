@@ -1,0 +1,229 @@
+{
+  "question": "What principal products/services are named in Item 1 (list top categories named)?",
+  "question_slug": "what_principal_productsservices_are_named_in_item_1_list_top",
+  "timestamp": "2026-04-28T19:43:43Z",
+  "model": "gpt54",
+  "num_documents": 10,
+  "doc_names": [
+    "AMCOR_2019_10K",
+    "ADOBE_2022Q2_10Q",
+    "COSTCO_2017_10K",
+    "BOEING_2018_10K",
+    "INTEL_2022Q4_EARNINGS",
+    "AMAZON_2018_10K",
+    "EBAY_2021_10K",
+    "AMAZON_2016_10K",
+    "COSTCO_2023_8K_dated-2023-08-09",
+    "FOOTLOCKER_2023Q3_10Q"
+  ],
+  "latency_seconds": 156.291,
+  "input_tokens": 449825,
+  "output_tokens": 5492,
+  "rules": [
+    {
+      "rule_name": "rule_item1_business_path",
+      "description": "Match spans under Item 1 / Business sections, excluding obvious TOC and non-business forms.",
+      "file": "rules/financebench/what_principal_productsservices_are_named_in_item_1_list_top_10_llm/rule_item1_business_path.py"
+    },
+    {
+      "rule_name": "rule_item1_business_header_text",
+      "description": "Match Item 1 Business section headers themselves.",
+      "file": "rules/financebench/what_principal_productsservices_are_named_in_item_1_list_top_10_llm/rule_item1_business_header_text.py"
+    },
+    {
+      "rule_name": "rule_item1_business_first_pages",
+      "description": "Match spans on early pages under Item 1 Business, where product/service descriptions usually appear.",
+      "file": "rules/financebench/what_principal_productsservices_are_named_in_item_1_list_top_10_llm/rule_item1_business_first_pages.py"
+    },
+    {
+      "rule_name": "rule_business_overview_keywords",
+      "description": "Match business overview spans mentioning products, services, offerings, segments, or categories.",
+      "file": "rules/financebench/what_principal_productsservices_are_named_in_item_1_list_top_10_llm/rule_business_overview_keywords.py"
+    },
+    {
+      "rule_name": "rule_focused_portfolio_amcor",
+      "description": "Match Amcor's Focused portfolio subsection where product categories are named.",
+      "file": "rules/financebench/what_principal_productsservices_are_named_in_item_1_list_top_10_llm/rule_focused_portfolio_amcor.py"
+    },
+    {
+      "rule_name": "rule_amcor_packaging_categories_sentence",
+      "description": "Match Amcor spans naming flexible/rigid packaging, specialty cartons, and closures.",
+      "file": "rules/financebench/what_principal_productsservices_are_named_in_item_1_list_top_10_llm/rule_amcor_packaging_categories_sentence.py"
+    },
+    {
+      "rule_name": "rule_segment_information_products",
+      "description": "Match Segment Information spans that explicitly say the reporting segments produce named products.",
+      "file": "rules/financebench/what_principal_productsservices_are_named_in_item_1_list_top_10_llm/rule_segment_information_products.py"
+    },
+    {
+      "rule_name": "rule_note_revenue_major_offerings_header",
+      "description": "Match revenue-note text introducing major offerings tables.",
+      "file": "rules/financebench/what_principal_productsservices_are_named_in_item_1_list_top_10_llm/rule_note_revenue_major_offerings_header.py"
+    },
+    {
+      "rule_name": "rule_note_revenue_major_offerings_table",
+      "description": "Match tables about revenue by major offerings, often containing product/service categories.",
+      "file": "rules/financebench/what_principal_productsservices_are_named_in_item_1_list_top_10_llm/rule_note_revenue_major_offerings_table.py"
+    },
+    {
+      "rule_name": "rule_adobe_revenue_note",
+      "description": "Match Adobe NOTE 2 REVENUE section spans, where product/service categories are disclosed.",
+      "file": "rules/financebench/what_principal_productsservices_are_named_in_item_1_list_top_10_llm/rule_adobe_revenue_note.py"
+    },
+    {
+      "rule_name": "rule_adobe_creative_document_cloud_rows",
+      "description": "Match Adobe table rows/spans mentioning Creative Cloud or Document Cloud.",
+      "file": "rules/financebench/what_principal_productsservices_are_named_in_item_1_list_top_10_llm/rule_adobe_creative_document_cloud_rows.py"
+    },
+    {
+      "rule_name": "rule_adobe_segment_results_digital_experience",
+      "description": "Match Adobe segment result tables/spans containing Digital Media and Digital Experience categories.",
+      "file": "rules/financebench/what_principal_productsservices_are_named_in_item_1_list_top_10_llm/rule_adobe_segment_results_digital_experience.py"
+    },
+    {
+      "rule_name": "rule_revenue_by_segment_table",
+      "description": "Match tables that break revenue out by segment/business unit, often naming top product/service categories.",
+      "file": "rules/financebench/what_principal_productsservices_are_named_in_item_1_list_top_10_llm/rule_revenue_by_segment_table.py"
+    },
+    {
+      "rule_name": "rule_intel_principal_products_sentence",
+      "description": "Match Intel sentence explicitly describing principal products as microprocessor/chipset/system-on-chip/multichip package.",
+      "file": "rules/financebench/what_principal_productsservices_are_named_in_item_1_list_top_10_llm/rule_intel_principal_products_sentence.py"
+    },
+    {
+      "rule_name": "rule_intel_supplemental_operating_segment_results",
+      "description": "Match Intel Supplemental Operating Segment Results section where principal products are described.",
+      "file": "rules/financebench/what_principal_productsservices_are_named_in_item_1_list_top_10_llm/rule_intel_supplemental_operating_segment_results.py"
+    },
+    {
+      "rule_name": "rule_intel_product_lines_intro",
+      "description": "Match Intel spans introducing product lines for reportable and non-reportable operating segments.",
+      "file": "rules/financebench/what_principal_productsservices_are_named_in_item_1_list_top_10_llm/rule_intel_product_lines_intro.py"
+    },
+    {
+      "rule_name": "rule_costco_item1_business_early_pages",
+      "description": "Match Costco Item 1 Business spans on pages 3-7 where merchandise categories are usually described.",
+      "file": "rules/financebench/what_principal_productsservices_are_named_in_item_1_list_top_10_llm/rule_costco_item1_business_early_pages.py"
+    },
+    {
+      "rule_name": "rule_costco_category_keywords",
+      "description": "Match Costco spans mentioning Foods, Sundries, Hardlines, Fresh Foods, Softlines, or Ancillary.",
+      "file": "rules/financebench/what_principal_productsservices_are_named_in_item_1_list_top_10_llm/rule_costco_category_keywords.py"
+    },
+    {
+      "rule_name": "rule_costco_merchandising_food_sundries",
+      "description": "Match Costco spans mentioning merchandising food and sundries, a clue to category lists.",
+      "file": "rules/financebench/what_principal_productsservices_are_named_in_item_1_list_top_10_llm/rule_costco_merchandising_food_sundries.py"
+    },
+    {
+      "rule_name": "rule_boeing_item1_business",
+      "description": "Match Boeing Item 1 Business spans, especially segment descriptions.",
+      "file": "rules/financebench/what_principal_productsservices_are_named_in_item_1_list_top_10_llm/rule_boeing_item1_business.py"
+    },
+    {
+      "rule_name": "rule_boeing_segment_headers",
+      "description": "Match Boeing segment headers where products/services are enumerated.",
+      "file": "rules/financebench/what_principal_productsservices_are_named_in_item_1_list_top_10_llm/rule_boeing_segment_headers.py"
+    },
+    {
+      "rule_name": "rule_boeing_commercial_aircraft_services",
+      "description": "Match Boeing spans mentioning commercial jet aircraft and fleet support services.",
+      "file": "rules/financebench/what_principal_productsservices_are_named_in_item_1_list_top_10_llm/rule_boeing_commercial_aircraft_services.py"
+    },
+    {
+      "rule_name": "rule_boeing_defense_space_products",
+      "description": "Match Boeing spans mentioning military aircraft, weapons systems, satellite systems, or space exploration.",
+      "file": "rules/financebench/what_principal_productsservices_are_named_in_item_1_list_top_10_llm/rule_boeing_defense_space_products.py"
+    },
+    {
+      "rule_name": "rule_boeing_global_services_parts_maintenance",
+      "description": "Match Boeing Global Services spans mentioning spare parts, maintenance, modifications, or training services.",
+      "file": "rules/financebench/what_principal_productsservices_are_named_in_item_1_list_top_10_llm/rule_boeing_global_services_parts_maintenance.py"
+    },
+    {
+      "rule_name": "rule_amazon_item1_business",
+      "description": "Match Amazon Item 1 Business spans.",
+      "file": "rules/financebench/what_principal_productsservices_are_named_in_item_1_list_top_10_llm/rule_amazon_item1_business.py"
+    },
+    {
+      "rule_name": "rule_amazon_general_section",
+      "description": "Match Amazon General subsection where customer sets and services are summarized.",
+      "file": "rules/financebench/what_principal_productsservices_are_named_in_item_1_list_top_10_llm/rule_amazon_general_section.py"
+    },
+    {
+      "rule_name": "rule_amazon_sellers_section",
+      "description": "Match Amazon Sellers subsection describing third-party seller services.",
+      "file": "rules/financebench/what_principal_productsservices_are_named_in_item_1_list_top_10_llm/rule_amazon_sellers_section.py"
+    },
+    {
+      "rule_name": "rule_amazon_developers_enterprises_section",
+      "description": "Match Amazon Developers and Enterprises subsection describing AWS services.",
+      "file": "rules/financebench/what_principal_productsservices_are_named_in_item_1_list_top_10_llm/rule_amazon_developers_enterprises_section.py"
+    },
+    {
+      "rule_name": "rule_amazon_customer_sets_and_services",
+      "description": "Match Amazon spans listing consumers, sellers, developers, enterprises, content creators, and services like advertising.",
+      "file": "rules/financebench/what_principal_productsservices_are_named_in_item_1_list_top_10_llm/rule_amazon_customer_sets_and_services.py"
+    },
+    {
+      "rule_name": "rule_amazon_segment_information_reference",
+      "description": "Match Amazon General spans that reference segment information and net sales categories.",
+      "file": "rules/financebench/what_principal_productsservices_are_named_in_item_1_list_top_10_llm/rule_amazon_segment_information_reference.py"
+    },
+    {
+      "rule_name": "rule_ebay_item1_business",
+      "description": "Match eBay ITEM 1 BUSINESS spans.",
+      "file": "rules/financebench/what_principal_productsservices_are_named_in_item_1_list_top_10_llm/rule_ebay_item1_business.py"
+    },
+    {
+      "rule_name": "rule_ebay_overview_marketplace_platforms",
+      "description": "Match eBay Overview spans describing marketplace platforms.",
+      "file": "rules/financebench/what_principal_productsservices_are_named_in_item_1_list_top_10_llm/rule_ebay_overview_marketplace_platforms.py"
+    },
+    {
+      "rule_name": "rule_ebay_strategy_managed_payments_advertising",
+      "description": "Match eBay strategy spans mentioning managed payments and advertising initiatives.",
+      "file": "rules/financebench/what_principal_productsservices_are_named_in_item_1_list_top_10_llm/rule_ebay_strategy_managed_payments_advertising.py"
+    },
+    {
+      "rule_name": "rule_ebay_revenue_primarily_fees_payments_advertising",
+      "description": "Match eBay spans saying revenue comes from paid sales, payment processing, and first-party advertising.",
+      "file": "rules/financebench/what_principal_productsservices_are_named_in_item_1_list_top_10_llm/rule_ebay_revenue_primarily_fees_payments_advertising.py"
+    },
+    {
+      "rule_name": "rule_ebay_customer_offerings",
+      "description": "Match eBay customer offerings/strategy sections where service categories are described.",
+      "file": "rules/financebench/what_principal_productsservices_are_named_in_item_1_list_top_10_llm/rule_ebay_customer_offerings.py"
+    },
+    {
+      "rule_name": "rule_segment_or_business_unit_tables",
+      "description": "Match tables with segment/business unit names that may contain top categories.",
+      "file": "rules/financebench/what_principal_productsservices_are_named_in_item_1_list_top_10_llm/rule_segment_or_business_unit_tables.py"
+    },
+    {
+      "rule_name": "rule_product_service_noun_list_spans",
+      "description": "Match spans with comma-separated noun lists near product/service cue words.",
+      "file": "rules/financebench/what_principal_productsservices_are_named_in_item_1_list_top_10_llm/rule_product_service_noun_list_spans.py"
+    },
+    {
+      "rule_name": "rule_early_business_section_headers",
+      "description": "Match early H3/H4 section headers under business sections, where category answers often sit or are introduced.",
+      "file": "rules/financebench/what_principal_productsservices_are_named_in_item_1_list_top_10_llm/rule_early_business_section_headers.py"
+    },
+    {
+      "rule_name": "rule_exclude_non_10k_10q_item1_absent",
+      "description": "Return empty for documents that are not 10-K/10-Q business filings or lack Item 1 Business structure.",
+      "file": "rules/financebench/what_principal_productsservices_are_named_in_item_1_list_top_10_llm/rule_exclude_non_10k_10q_item1_absent.py"
+    },
+    {
+      "rule_name": "rule_news_release_revenue_or_segment_sections",
+      "description": "Match news release sections about revenue, business units, or operating segments for non-10K/10Q cases like Intel.",
+      "file": "rules/financebench/what_principal_productsservices_are_named_in_item_1_list_top_10_llm/rule_news_release_revenue_or_segment_sections.py"
+    },
+    {
+      "rule_name": "rule_tables_with_named_category_rows",
+      "description": "Match tables whose row headers are likely category names rather than financial line items.",
+      "file": "rules/financebench/what_principal_productsservices_are_named_in_item_1_list_top_10_llm/rule_tables_with_named_category_rows.py"
+    }
+  ]
+}

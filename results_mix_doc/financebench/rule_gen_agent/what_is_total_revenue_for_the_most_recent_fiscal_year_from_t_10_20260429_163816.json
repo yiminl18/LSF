@@ -1,0 +1,122 @@
+{
+  "question": "What is total revenue for the most recent fiscal year (from the audited income statement)?",
+  "question_slug": "what_is_total_revenue_for_the_most_recent_fiscal_year_from_t",
+  "timestamp": "2026-04-29T16:38:16Z",
+  "model": "gpt54",
+  "num_documents": 10,
+  "doc_names": [
+    "AMCOR_2019_10K",
+    "ADOBE_2022Q2_10Q",
+    "COSTCO_2017_10K",
+    "BOEING_2018_10K",
+    "INTEL_2022Q4_EARNINGS",
+    "AMAZON_2018_10K",
+    "EBAY_2021_10K",
+    "AMAZON_2016_10K",
+    "COSTCO_2023_8K_dated-2023-08-09",
+    "FOOTLOCKER_2023Q3_10Q"
+  ],
+  "max_iterations": 15,
+  "target_accuracy": 0.9,
+  "agent_turns": 11,
+  "latency_seconds": 209.217,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "merge_accuracy": 0.6,
+  "merge_num_correct": 6,
+  "avg_cost_ratio": 0.03547,
+  "merge_per_doc": {
+    "AMCOR_2019_10K": {
+      "predicted": "9,458.2",
+      "ground_truth": "9,458.2 million",
+      "correct": true,
+      "cost_ratio": 0.02811
+    },
+    "ADOBE_2022Q2_10Q": {
+      "predicted": "NOT FOUND",
+      "ground_truth": "$9,471 million",
+      "correct": false,
+      "cost_ratio": 0.04727
+    },
+    "COSTCO_2017_10K": {
+      "predicted": "129,025",
+      "ground_truth": "126,172",
+      "correct": false,
+      "cost_ratio": 0.0267
+    },
+    "BOEING_2018_10K": {
+      "predicted": "$101,127 million",
+      "ground_truth": "$101,127 million",
+      "correct": true,
+      "cost_ratio": 0.01972
+    },
+    "INTEL_2022Q4_EARNINGS": {
+      "predicted": "$63,054 million",
+      "ground_truth": "$63,054,000,000",
+      "correct": true,
+      "cost_ratio": 0.10204
+    },
+    "AMAZON_2018_10K": {
+      "predicted": "$232,887 million",
+      "ground_truth": "$232,887 million",
+      "correct": true,
+      "cost_ratio": 0.02889
+    },
+    "EBAY_2021_10K": {
+      "predicted": "$10,420",
+      "ground_truth": "$10,420 million",
+      "correct": true,
+      "cost_ratio": 0.01504
+    },
+    "AMAZON_2016_10K": {
+      "predicted": "$135,987 million",
+      "ground_truth": "$135,987 million",
+      "correct": true,
+      "cost_ratio": 0.03356
+    },
+    "COSTCO_2023_8K_dated-2023-08-09": {
+      "predicted": "NOT FOUND",
+      "ground_truth": "None",
+      "correct": false,
+      "cost_ratio": 4e-05
+    },
+    "FOOTLOCKER_2023Q3_10Q": {
+      "predicted": "NOT FOUND",
+      "ground_truth": "6,413 million",
+      "correct": false,
+      "cost_ratio": 0.0533
+    }
+  },
+  "rules": [
+    {
+      "rule_name": "rule_revenue_income_statement",
+      "description": "Find audited/financial-statement revenue row in statements of operations/income, else 0 for 8-K without financials.",
+      "individual_accuracy": 0.6,
+      "individual_num_correct": 6,
+      "file": "rules/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_agent_claude/rule_revenue_income_statement.py"
+    },
+    {
+      "rule_name": "rule_selected_financial_data_fallback",
+      "description": "Fallback to selected financial data / results tables with net sales or total revenue for latest year.",
+      "individual_accuracy": 0.4,
+      "individual_num_correct": 4,
+      "file": "rules/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_agent_claude/rule_selected_financial_data_fallback.py"
+    },
+    {
+      "rule_name": "rule_precise_revenue_tables",
+      "description": "Return the most relevant statements-of-operations / selected-data tables containing the top-line revenue row.",
+      "individual_accuracy": 0.6,
+      "individual_num_correct": 6,
+      "file": "rules/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_agent_claude/rule_precise_revenue_tables.py"
+    },
+    {
+      "rule_name": "rule_single_best_statement",
+      "description": "Return only the single best audited income statement style table to reduce ambiguity.",
+      "individual_accuracy": 0.0,
+      "individual_num_correct": 0,
+      "file": "rules/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_agent_claude/rule_single_best_statement.py"
+    }
+  ],
+  "rule_dir": "rules/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_agent_claude",
+  "log_file": "logs/financebench/agent/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10docs_20260429_163816.txt"
+}

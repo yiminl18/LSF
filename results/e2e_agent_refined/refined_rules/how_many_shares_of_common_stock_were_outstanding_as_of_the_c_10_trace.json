@@ -1,0 +1,119 @@
+{
+  "question": "How many shares of common stock were outstanding as of the cover-page reference date?",
+  "question_slug": "how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10",
+  "timestamp": "2026-04-30T21:51:10Z",
+  "target_accuracy": 0.9,
+  "all_rules_count": 3,
+  "sorted_rules": [
+    "rule_nike_adjacent_share_numbers",
+    "rule_cover_page_shares_outstanding",
+    "rule_cover_page_numeric_share_spans"
+  ],
+  "rule_costs": {
+    "rule_nike_adjacent_share_numbers": 0.000109,
+    "rule_cover_page_shares_outstanding": 0.000275,
+    "rule_cover_page_numeric_share_spans": 0.000334
+  },
+  "total_latency_seconds": 164.799,
+  "total_input_tokens": 19659,
+  "total_output_tokens": 906,
+  "iterations": [
+    {
+      "phase": "exp_search",
+      "step": 1,
+      "k": 1,
+      "rules": [
+        "rule_nike_adjacent_share_numbers"
+      ],
+      "rules_count": 1,
+      "accuracy": 0.1,
+      "avg_cost_ratio": 0.000109,
+      "latency_seconds": 25.153,
+      "input_tokens": 3065,
+      "output_tokens": 137,
+      "action": "continue"
+    },
+    {
+      "phase": "exp_search",
+      "step": 2,
+      "k": 2,
+      "rules": [
+        "rule_nike_adjacent_share_numbers",
+        "rule_cover_page_shares_outstanding"
+      ],
+      "rules_count": 2,
+      "accuracy": 0.5,
+      "avg_cost_ratio": 0.000352,
+      "latency_seconds": 27.719,
+      "input_tokens": 3282,
+      "output_tokens": 148,
+      "action": "continue"
+    },
+    {
+      "phase": "exp_search",
+      "step": 3,
+      "k": 3,
+      "rules": [
+        "rule_nike_adjacent_share_numbers",
+        "rule_cover_page_shares_outstanding",
+        "rule_cover_page_numeric_share_spans"
+      ],
+      "rules_count": 3,
+      "accuracy": 0.9,
+      "avg_cost_ratio": 0.000457,
+      "latency_seconds": 26.287,
+      "input_tokens": 3386,
+      "output_tokens": 157,
+      "action": "candidate_found"
+    },
+    {
+      "phase": "pruning",
+      "step": 1,
+      "i": 2,
+      "rule_tested": "rule_cover_page_numeric_share_spans",
+      "rules": [
+        "rule_nike_adjacent_share_numbers",
+        "rule_cover_page_shares_outstanding"
+      ],
+      "rules_count": 2,
+      "accuracy": 0.5,
+      "avg_cost_ratio": 0.000352,
+      "latency_seconds": 26.555,
+      "input_tokens": 3281,
+      "output_tokens": 147,
+      "action": "kept"
+    },
+    {
+      "phase": "pruning",
+      "step": 2,
+      "i": 1,
+      "rule_tested": "rule_cover_page_shares_outstanding",
+      "rules": [
+        "rule_nike_adjacent_share_numbers",
+        "rule_cover_page_numeric_share_spans"
+      ],
+      "rules_count": 2,
+      "accuracy": 0.9,
+      "avg_cost_ratio": 0.000384,
+      "latency_seconds": 26.23,
+      "input_tokens": 3322,
+      "output_tokens": 158,
+      "action": "removed"
+    },
+    {
+      "phase": "final",
+      "step": 1,
+      "rules": [
+        "rule_nike_adjacent_share_numbers",
+        "rule_cover_page_numeric_share_spans"
+      ],
+      "rules_count": 2,
+      "accuracy": 0.9,
+      "avg_cost_ratio": 0.000384,
+      "latency_seconds": 28.368,
+      "input_tokens": 3323,
+      "output_tokens": 159,
+      "action": "final_eval"
+    }
+  ]
+}

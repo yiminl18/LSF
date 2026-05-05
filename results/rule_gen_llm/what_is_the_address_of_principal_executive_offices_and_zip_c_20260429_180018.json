@@ -1,0 +1,189 @@
+{
+  "question": "What is the address of principal executive offices and ZIP code?",
+  "question_slug": "what_is_the_address_of_principal_executive_offices_and_zip_c",
+  "timestamp": "2026-04-29T18:00:18Z",
+  "model": "gpt54",
+  "num_documents": 10,
+  "doc_names": [
+    "AMCOR_2019_10K",
+    "COSTCO_2017_10K",
+    "BOEING_2018_10K",
+    "AMAZON_2018_10K",
+    "EBAY_2021_10K",
+    "AMAZON_2016_10K",
+    "CORNING_2022_10K",
+    "NIKE_2021_10K",
+    "LOCKHEEDMARTIN_2022_10K",
+    "JOHNSON_JOHNSON_2022_10K"
+  ],
+  "latency_seconds": 209.373,
+  "input_tokens": 268615,
+  "output_tokens": 7405,
+  "rules": [
+    {
+      "rule_name": "rule_page1_address_label_spans",
+      "description": "Match page-1 spans containing the principal executive office address label.",
+      "file": "rules/llm/financebench/what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm/rule_page1_address_label_spans.py"
+    },
+    {
+      "rule_name": "rule_page1_zip_code_label_spans",
+      "description": "Match page-1 spans containing ZIP code labels near the address.",
+      "file": "rules/llm/financebench/what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm/rule_page1_zip_code_label_spans.py"
+    },
+    {
+      "rule_name": "rule_page1_address_or_zip_neighbors",
+      "description": "Return spans adjacent to page-1 address/ZIP label spans.",
+      "file": "rules/llm/financebench/what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm/rule_page1_address_or_zip_neighbors.py"
+    },
+    {
+      "rule_name": "rule_page1_bold_address_like_text",
+      "description": "Match bold page-1 text spans that look like street addresses with city/state/ZIP.",
+      "file": "rules/llm/financebench/what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm/rule_page1_bold_address_like_text.py"
+    },
+    {
+      "rule_name": "rule_page1_any_address_like_text",
+      "description": "Match any page-1 span whose text looks like a mailing/street address.",
+      "file": "rules/llm/financebench/what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm/rule_page1_any_address_like_text.py"
+    },
+    {
+      "rule_name": "rule_page1_spans_before_telephone",
+      "description": "Return page-1 spans immediately preceding the registrant telephone number.",
+      "file": "rules/llm/financebench/what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm/rule_page1_spans_before_telephone.py"
+    },
+    {
+      "rule_name": "rule_page1_under_company_header",
+      "description": "Match page-1 body spans under the main registrant/company header block.",
+      "file": "rules/llm/financebench/what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm/rule_page1_under_company_header.py"
+    },
+    {
+      "rule_name": "rule_combined_address_and_zip_same_span",
+      "description": "Match spans where address and ZIP appear together in one span.",
+      "file": "rules/llm/financebench/what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm/rule_combined_address_and_zip_same_span.py"
+    },
+    {
+      "rule_name": "rule_split_address_then_zip_consecutive",
+      "description": "Match consecutive page-1 spans where one looks like address and the next is ZIP or vice versa.",
+      "file": "rules/llm/financebench/what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm/rule_split_address_then_zip_consecutive.py"
+    },
+    {
+      "rule_name": "rule_address_header_text_itself",
+      "description": "Match section headers whose own text is the address.",
+      "file": "rules/llm/financebench/what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm/rule_address_header_text_itself.py"
+    },
+    {
+      "rule_name": "rule_address_in_text_span_followed_by_address_label",
+      "description": "Match a text span immediately followed by an address label span.",
+      "file": "rules/llm/financebench/what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm/rule_address_in_text_span_followed_by_address_label.py"
+    },
+    {
+      "rule_name": "rule_address_in_span_preceding_zip_label",
+      "description": "Match the span immediately before a ZIP code label span on page 1.",
+      "file": "rules/llm/financebench/what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm/rule_address_in_span_preceding_zip_label.py"
+    },
+    {
+      "rule_name": "rule_main_header_block_first_40_spans",
+      "description": "Match address-like spans in the first 40 spans, where SEC cover-page metadata usually appears.",
+      "file": "rules/llm/financebench/what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm/rule_main_header_block_first_40_spans.py"
+    },
+    {
+      "rule_name": "rule_company_cover_block_with_ein_and_zip",
+      "description": "Match spans in the cover block near both EIN and ZIP references.",
+      "file": "rules/llm/financebench/what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm/rule_company_cover_block_with_ein_and_zip.py"
+    },
+    {
+      "rule_name": "rule_page1_city_state_zip_only",
+      "description": "Match page-1 spans that are just ZIP or city/state/ZIP fragments used in split layouts.",
+      "file": "rules/llm/financebench/what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm/rule_page1_city_state_zip_only.py"
+    },
+    {
+      "rule_name": "rule_page1_contains_principal_executive_offices_phrase",
+      "description": "Match any page-1 span containing the phrase principal executive offices.",
+      "file": "rules/llm/financebench/what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm/rule_page1_contains_principal_executive_offices_phrase.py"
+    },
+    {
+      "rule_name": "rule_page1_contains_address_and_telephone_phrase",
+      "description": "Match any page-1 span containing the phrase address and telephone number of registrant’s principal executive offices.",
+      "file": "rules/llm/financebench/what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm/rule_page1_contains_address_and_telephone_phrase.py"
+    },
+    {
+      "rule_name": "rule_page1_before_securities_registered",
+      "description": "Return address-like spans appearing before the first securities-registered line on page 1.",
+      "file": "rules/llm/financebench/what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm/rule_page1_before_securities_registered.py"
+    },
+    {
+      "rule_name": "rule_page1_after_company_name_before_phone",
+      "description": "Match spans between the company name block and the telephone line on page 1.",
+      "file": "rules/llm/financebench/what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm/rule_page1_after_company_name_before_phone.py"
+    },
+    {
+      "rule_name": "rule_page1_h2_address_headers",
+      "description": "Match H2 page-1 section headers that are address fragments or ZIP fragments.",
+      "file": "rules/llm/financebench/what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm/rule_page1_h2_address_headers.py"
+    },
+    {
+      "rule_name": "rule_page1_bold_short_address_fragments",
+      "description": "Match short bold page-1 spans that are likely split address fragments.",
+      "file": "rules/llm/financebench/what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm/rule_page1_bold_short_address_fragments.py"
+    },
+    {
+      "rule_name": "rule_page1_cover_page_metadata_cluster",
+      "description": "Return the cluster of page-1 spans around state/EIN/address/ZIP metadata.",
+      "file": "rules/llm/financebench/what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm/rule_page1_cover_page_metadata_cluster.py"
+    },
+    {
+      "rule_name": "rule_page1_main_company_path_text",
+      "description": "Match page-1 spans whose path_text is the main company name and that mention address/ZIP/phone.",
+      "file": "rules/llm/financebench/what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm/rule_page1_main_company_path_text.py"
+    },
+    {
+      "rule_name": "rule_page1_address_like_with_known_cover_labels",
+      "description": "Match spans where address-like text co-occurs with cover-page labels in text_span.",
+      "file": "rules/llm/financebench/what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm/rule_page1_address_like_with_known_cover_labels.py"
+    },
+    {
+      "rule_name": "rule_page1_address_like_excluding_long_narrative",
+      "description": "Match concise page-1 address-like spans while excluding long narrative cover text.",
+      "file": "rules/llm/financebench/what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm/rule_page1_address_like_excluding_long_narrative.py"
+    },
+    {
+      "rule_name": "rule_page1_address_block_from_split_lines",
+      "description": "Match split-line address blocks where street, city/state, and ZIP are separate nearby spans.",
+      "file": "rules/llm/financebench/what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm/rule_page1_address_block_from_split_lines.py"
+    },
+    {
+      "rule_name": "rule_page1_address_near_exact_name_of_registrant",
+      "description": "Return spans near the exact-name-of-registrant label, where cover-page address metadata usually begins.",
+      "file": "rules/llm/financebench/what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm/rule_page1_address_near_exact_name_of_registrant.py"
+    },
+    {
+      "rule_name": "rule_page1_address_near_state_and_ein",
+      "description": "Return spans between state-of-incorporation and EIN labels, which often include the address.",
+      "file": "rules/llm/financebench/what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm/rule_page1_address_near_state_and_ein.py"
+    },
+    {
+      "rule_name": "rule_page1_address_near_zip",
+      "description": "Return spans near a page-1 ZIP-only span or ZIP label.",
+      "file": "rules/llm/financebench/what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm/rule_page1_address_near_zip.py"
+    },
+    {
+      "rule_name": "rule_page1_address_before_phone_number_pattern",
+      "description": "Match spans immediately before a page-1 phone-number-looking span.",
+      "file": "rules/llm/financebench/what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm/rule_page1_address_before_phone_number_pattern.py"
+    },
+    {
+      "rule_name": "rule_page1_address_with_city_state_no_zip",
+      "description": "Match page-1 spans containing street plus city/state but no ZIP, for split ZIP layouts.",
+      "file": "rules/llm/financebench/what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm/rule_page1_address_with_city_state_no_zip.py"
+    },
+    {
+      "rule_name": "rule_page1_address_with_zip_no_label",
+      "description": "Match page-1 spans containing full address and ZIP even when no explicit address label is present.",
+      "file": "rules/llm/financebench/what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm/rule_page1_address_with_zip_no_label.py"
+    },
+    {
+      "rule_name": "rule_page1_cover_address_cluster_broad",
+      "description": "Broadly match the page-1 cover cluster containing company name, address, ZIP, and phone.",
+      "file": "rules/llm/financebench/what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm/rule_page1_cover_address_cluster_broad.py"
+    }
+  ]
+}

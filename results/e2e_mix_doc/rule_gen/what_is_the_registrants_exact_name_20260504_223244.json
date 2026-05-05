@@ -1,0 +1,227 @@
+{
+  "question": "What is the registrant's exact name?",
+  "question_slug": "what_is_the_registrants_exact_name",
+  "timestamp": "2026-05-04T22:32:44Z",
+  "model": "gpt54",
+  "num_documents": 18,
+  "doc_names": [
+    "BOEING_2019_10K",
+    "ADOBE_2020_10K",
+    "ACTIVISIONBLIZZARD_2020_10K",
+    "COSTCO_2018_10K",
+    "AMCOR_2019_10K",
+    "AMAZON_2020_10K",
+    "AMAZON_2019_10K",
+    "ADOBE_2021_10K",
+    "EBAY_2022_10K",
+    "ADOBE_2019_10K",
+    "AMCOR_2023Q2_10Q",
+    "ADOBE_2022Q2_10Q",
+    "ACTIVSIONBLIZZARD_2023Q2_10Q",
+    "3M_2023Q2_10Q",
+    "AMCOR_2022_8K_2022-07-01",
+    "COSTCO_2023_8K_dated-2023-08-09",
+    "COSTCO_2023_8K_dated-2023-08-16",
+    "FOOTLOCKER_2022_8K_dated-2022-05-20"
+  ],
+  "latency_seconds": 240.101,
+  "input_tokens": 624206,
+  "output_tokens": 8239,
+  "rules": [
+    {
+      "rule_name": "rule_exact_name_caption_next_h1",
+      "description": "Match H1/section_header spans immediately followed by the '(Exact name of registrant...)' caption.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_registrants_exact_name_18_llm/rule_exact_name_caption_next_h1.py"
+    },
+    {
+      "rule_name": "rule_page1_h1_with_exact_name_in_text_span",
+      "description": "Match page-1 H1/section_header spans whose text_span contains the exact-name caption.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_registrants_exact_name_18_llm/rule_page1_h1_with_exact_name_in_text_span.py"
+    },
+    {
+      "rule_name": "rule_page1_h1_named_by_path_with_exact_name_child",
+      "description": "Match page-1 H1 spans whose path_text equals their text and that have a child caption about exact name.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_registrants_exact_name_18_llm/rule_page1_h1_named_by_path_with_exact_name_child.py"
+    },
+    {
+      "rule_name": "rule_page1_large_bold_h1_after_form_header",
+      "description": "Match large bold H1 company-name headers on page 1 appearing after FORM 10-K/10-Q/8-K.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_registrants_exact_name_18_llm/rule_page1_large_bold_h1_after_form_header.py"
+    },
+    {
+      "rule_name": "rule_page1_first_company_h1_after_commission_file_number",
+      "description": "Match the first page-1 H1 company header appearing after a commission file number mention.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_registrants_exact_name_18_llm/rule_page1_first_company_h1_after_commission_file_number.py"
+    },
+    {
+      "rule_name": "rule_parent_of_exact_name_caption",
+      "description": "Match the parent span of any caption '(Exact name of registrant as specified in its charter)'.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_registrants_exact_name_18_llm/rule_parent_of_exact_name_caption.py"
+    },
+    {
+      "rule_name": "rule_path_text_equals_answer_candidate",
+      "description": "Match page-1 H1 spans where path_text equals the span text, a common company-name header pattern.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_registrants_exact_name_18_llm/rule_path_text_equals_answer_candidate.py"
+    },
+    {
+      "rule_name": "rule_page1_h1_all_caps_company_like",
+      "description": "Match page-1 all-caps H1 section headers that look like company names.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_registrants_exact_name_18_llm/rule_page1_h1_all_caps_company_like.py"
+    },
+    {
+      "rule_name": "rule_page1_h1_title_case_company_like",
+      "description": "Match page-1 H1 section headers in title case that precede the exact-name caption.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_registrants_exact_name_18_llm/rule_page1_h1_title_case_company_like.py"
+    },
+    {
+      "rule_name": "rule_page1_text_before_exact_name_caption",
+      "description": "Match page-1 text spans immediately preceding the exact-name caption, for split-header layouts.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_registrants_exact_name_18_llm/rule_page1_text_before_exact_name_caption.py"
+    },
+    {
+      "rule_name": "rule_page1_near_exact_name_caption_window",
+      "description": "Match spans within a short backward window from the exact-name caption on page 1.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_registrants_exact_name_18_llm/rule_page1_near_exact_name_caption_window.py"
+    },
+    {
+      "rule_name": "rule_page1_top_large_bold_non_form_header",
+      "description": "Match top-of-page large bold non-form headers on page 1 that are likely the registrant name.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_registrants_exact_name_18_llm/rule_page1_top_large_bold_non_form_header.py"
+    },
+    {
+      "rule_name": "rule_page1_before_state_of_incorporation",
+      "description": "Match the span immediately before a state-of-incorporation caption on page 1.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_registrants_exact_name_18_llm/rule_page1_before_state_of_incorporation.py"
+    },
+    {
+      "rule_name": "rule_page1_h1_before_state_and_ein_block",
+      "description": "Match page-1 H1 company headers that are followed by state and EIN information block.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_registrants_exact_name_18_llm/rule_page1_h1_before_state_and_ein_block.py"
+    },
+    {
+      "rule_name": "rule_page1_h1_before_address_block",
+      "description": "Match page-1 H1 company headers followed by principal executive office address block.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_registrants_exact_name_18_llm/rule_page1_h1_before_address_block.py"
+    },
+    {
+      "rule_name": "rule_page1_h1_before_telephone_block",
+      "description": "Match page-1 H1 company headers followed by registrant telephone caption.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_registrants_exact_name_18_llm/rule_page1_h1_before_telephone_block.py"
+    },
+    {
+      "rule_name": "rule_page1_h1_before_securities_registered_block",
+      "description": "Match page-1 H1 company headers followed by 'Securities registered pursuant to Section 12(b)'.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_registrants_exact_name_18_llm/rule_page1_h1_before_securities_registered_block.py"
+    },
+    {
+      "rule_name": "rule_page1_h1_before_documents_incorporated_by_reference",
+      "description": "Match page-1 H1 company headers whose section extends down to documents incorporated by reference.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_registrants_exact_name_18_llm/rule_page1_h1_before_documents_incorporated_by_reference.py"
+    },
+    {
+      "rule_name": "rule_page1_company_name_in_path_of_later_sections",
+      "description": "Match page-1 spans whose text becomes the root path_text prefix of later sections.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_registrants_exact_name_18_llm/rule_page1_company_name_in_path_of_later_sections.py"
+    },
+    {
+      "rule_name": "rule_page1_h1_not_form_or_sec",
+      "description": "Match all page-1 H1 section headers excluding SEC/form boilerplate.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_registrants_exact_name_18_llm/rule_page1_h1_not_form_or_sec.py"
+    },
+    {
+      "rule_name": "rule_page1_bold_text_before_state_caption",
+      "description": "Match bold page-1 text spans immediately before the state-of-incorporation caption.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_registrants_exact_name_18_llm/rule_page1_bold_text_before_state_caption.py"
+    },
+    {
+      "rule_name": "rule_page1_bold_text_before_exact_name_caption",
+      "description": "Match bold page-1 text/section_header spans immediately before the exact-name caption.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_registrants_exact_name_18_llm/rule_page1_bold_text_before_exact_name_caption.py"
+    },
+    {
+      "rule_name": "rule_page1_first_large_bold_after_form",
+      "description": "Match the first large bold span on page 1 after a form header, excluding boilerplate.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_registrants_exact_name_18_llm/rule_page1_first_large_bold_after_form.py"
+    },
+    {
+      "rule_name": "rule_page1_section_header_with_company_like_tokens",
+      "description": "Match page-1 section headers containing company suffixes like inc, company, corporation, plc.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_registrants_exact_name_18_llm/rule_page1_section_header_with_company_like_tokens.py"
+    },
+    {
+      "rule_name": "rule_page1_text_with_company_like_tokens_near_top",
+      "description": "Match page-1 text or section_header spans with company suffixes near the top of the filing.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_registrants_exact_name_18_llm/rule_page1_text_with_company_like_tokens_near_top.py"
+    },
+    {
+      "rule_name": "rule_page1_parent_path_of_part_i",
+      "description": "Match the page-1 company root span whose text appears as the first segment of later PART I path_texts.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_registrants_exact_name_18_llm/rule_page1_parent_path_of_part_i.py"
+    },
+    {
+      "rule_name": "rule_page1_h1_with_following_small_caption",
+      "description": "Match page-1 H1 spans followed by a smaller-font caption line, typical of registrant name blocks.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_registrants_exact_name_18_llm/rule_page1_h1_with_following_small_caption.py"
+    },
+    {
+      "rule_name": "rule_page1_h1_with_exact_name_in_next_five",
+      "description": "Match page-1 H1 spans with the exact-name caption appearing within the next five spans.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_registrants_exact_name_18_llm/rule_page1_h1_with_exact_name_in_next_five.py"
+    },
+    {
+      "rule_name": "rule_page1_h1_with_state_following_in_next_ten",
+      "description": "Match page-1 H1 spans with a state-of-incorporation caption within the next ten spans.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_registrants_exact_name_18_llm/rule_page1_h1_with_state_following_in_next_ten.py"
+    },
+    {
+      "rule_name": "rule_page1_h1_with_ein_following_in_next_ten",
+      "description": "Match page-1 H1 spans with an IRS employer identification caption within the next ten spans.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_registrants_exact_name_18_llm/rule_page1_h1_with_ein_following_in_next_ten.py"
+    },
+    {
+      "rule_name": "rule_page1_h1_with_address_following_in_next_twenty",
+      "description": "Match page-1 H1 spans with an address caption within the next twenty spans.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_registrants_exact_name_18_llm/rule_page1_h1_with_address_following_in_next_twenty.py"
+    },
+    {
+      "rule_name": "rule_page1_h1_with_12b_following_in_next_thirty",
+      "description": "Match page-1 H1 spans with a Section 12(b) securities-registration block nearby.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_registrants_exact_name_18_llm/rule_page1_h1_with_12b_following_in_next_thirty.py"
+    },
+    {
+      "rule_name": "rule_page1_h1_with_documents_reference_following",
+      "description": "Match page-1 H1 spans with 'documents incorporated by reference' later in the same front-matter block.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_registrants_exact_name_18_llm/rule_page1_h1_with_documents_reference_following.py"
+    },
+    {
+      "rule_name": "rule_page1_company_header_any_label",
+      "description": "Match any page-1 bold large span that looks like the registrant name, regardless of label.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_registrants_exact_name_18_llm/rule_page1_company_header_any_label.py"
+    },
+    {
+      "rule_name": "rule_page1_first_h1_after_form_and_before_part_i",
+      "description": "Match the first H1 on page 1 after a form header and before any PART I section.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_registrants_exact_name_18_llm/rule_page1_first_h1_after_form_and_before_part_i.py"
+    },
+    {
+      "rule_name": "rule_page1_h1_with_company_root_path",
+      "description": "Match page-1 H1 spans whose text is reused as a root in descendant path_text values.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_registrants_exact_name_18_llm/rule_page1_h1_with_company_root_path.py"
+    },
+    {
+      "rule_name": "rule_page1_h1_excluding_known_boilerplate",
+      "description": "Match page-1 H1 spans excluding common boilerplate headers and captions.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_registrants_exact_name_18_llm/rule_page1_h1_excluding_known_boilerplate.py"
+    },
+    {
+      "rule_name": "rule_page1_before_exact_name_textspan",
+      "description": "Match page-1 section headers whose text_span itself starts with the exact-name caption, returning the header.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_registrants_exact_name_18_llm/rule_page1_before_exact_name_textspan.py"
+    },
+    {
+      "rule_name": "rule_page1_company_name_text_before_state_file_ein",
+      "description": "Match page-1 spans that precede a cluster of state, file number, and EIN identifiers.",
+      "file": "rules/llm/financebench_mix_doc/what_is_the_registrants_exact_name_18_llm/rule_page1_company_name_text_before_state_file_ein.py"
+    }
+  ]
+}

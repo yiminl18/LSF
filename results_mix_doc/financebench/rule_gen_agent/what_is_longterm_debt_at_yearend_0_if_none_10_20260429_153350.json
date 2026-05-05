@@ -1,0 +1,129 @@
+{
+  "question": "What is long-term debt at year-end (0 if none)?",
+  "question_slug": "what_is_longterm_debt_at_yearend_0_if_none",
+  "timestamp": "2026-04-29T15:33:50Z",
+  "model": "gpt54",
+  "num_documents": 10,
+  "doc_names": [
+    "AMCOR_2019_10K",
+    "ADOBE_2022Q2_10Q",
+    "COSTCO_2017_10K",
+    "BOEING_2018_10K",
+    "INTEL_2022Q4_EARNINGS",
+    "AMAZON_2018_10K",
+    "EBAY_2021_10K",
+    "AMAZON_2016_10K",
+    "COSTCO_2023_8K_dated-2023-08-09",
+    "FOOTLOCKER_2023Q3_10Q"
+  ],
+  "max_iterations": 15,
+  "target_accuracy": 0.9,
+  "agent_turns": 19,
+  "latency_seconds": 308.054,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "merge_accuracy": 0.7,
+  "merge_num_correct": 7,
+  "avg_cost_ratio": 0.01679,
+  "merge_per_doc": {
+    "AMCOR_2019_10K": {
+      "predicted": "5309.0",
+      "ground_truth": "5,314.4 million",
+      "correct": false,
+      "cost_ratio": 0.00568
+    },
+    "ADOBE_2022Q2_10Q": {
+      "predicted": "3,631",
+      "ground_truth": "$3,631 million",
+      "correct": true,
+      "cost_ratio": 0.00816
+    },
+    "COSTCO_2017_10K": {
+      "predicted": "6573",
+      "ground_truth": "6,573",
+      "correct": true,
+      "cost_ratio": 0.02084
+    },
+    "BOEING_2018_10K": {
+      "predicted": "10,657",
+      "ground_truth": "$10,657 million",
+      "correct": true,
+      "cost_ratio": 0.0159
+    },
+    "INTEL_2022Q4_EARNINGS": {
+      "predicted": "37,684",
+      "ground_truth": "$37,684,000,000",
+      "correct": true,
+      "cost_ratio": 0.05068
+    },
+    "AMAZON_2018_10K": {
+      "predicted": "23,495",
+      "ground_truth": "$50,708 million",
+      "correct": false,
+      "cost_ratio": 0.01565
+    },
+    "EBAY_2021_10K": {
+      "predicted": "7,727",
+      "ground_truth": "$7,727 million",
+      "correct": true,
+      "cost_ratio": 0.01366
+    },
+    "AMAZON_2016_10K": {
+      "predicted": "7,694",
+      "ground_truth": "$7,694 million",
+      "correct": true,
+      "cost_ratio": 0.01335
+    },
+    "COSTCO_2023_8K_dated-2023-08-09": {
+      "predicted": "NOT FOUND",
+      "ground_truth": "0",
+      "correct": false,
+      "cost_ratio": 0.0
+    },
+    "FOOTLOCKER_2023Q3_10Q": {
+      "predicted": "448",
+      "ground_truth": "448 million",
+      "correct": true,
+      "cost_ratio": 0.02394
+    }
+  },
+  "rules": [
+    {
+      "rule_name": "rule_long_term_debt_balance_or_debt_tables",
+      "description": "Find long-term debt in balance sheet / debt tables, else return 0 for 8-K without financials.",
+      "individual_accuracy": 0.7,
+      "individual_num_correct": 7,
+      "file": "rules/financebench/what_is_longterm_debt_at_yearend_0_if_none_10_agent_claude/rule_long_term_debt_balance_or_debt_tables.py"
+    },
+    {
+      "rule_name": "rule_amcor_net_debt_reconciliation",
+      "description": "Capture Amcor-style reconciliation table with long-term debt less current portion.",
+      "individual_accuracy": 0.0,
+      "individual_num_correct": 0,
+      "file": "rules/financebench/what_is_longterm_debt_at_yearend_0_if_none_10_agent_claude/rule_amcor_net_debt_reconciliation.py"
+    },
+    {
+      "rule_name": "rule_precise_long_term_debt",
+      "description": "Locate long-term debt in debt note or balance sheet tables, with 8-K fallback to 0.",
+      "individual_accuracy": 0.7,
+      "individual_num_correct": 7,
+      "file": "rules/financebench/what_is_longterm_debt_at_yearend_0_if_none_10_agent_claude/rule_precise_long_term_debt.py"
+    },
+    {
+      "rule_name": "rule_amcor_total_long_term_debt",
+      "description": "Capture Amcor long-term debt table listing total long-term debt amount.",
+      "individual_accuracy": 0.0,
+      "individual_num_correct": 0,
+      "file": "rules/financebench/what_is_longterm_debt_at_yearend_0_if_none_10_agent_claude/rule_amcor_total_long_term_debt.py"
+    },
+    {
+      "rule_name": "rule_amazon_debt_note",
+      "description": "Capture Amazon debt note table with note-level debt balances.",
+      "individual_accuracy": 0.0,
+      "individual_num_correct": 0,
+      "file": "rules/financebench/what_is_longterm_debt_at_yearend_0_if_none_10_agent_claude/rule_amazon_debt_note.py"
+    }
+  ],
+  "rule_dir": "rules/financebench/what_is_longterm_debt_at_yearend_0_if_none_10_agent_claude",
+  "log_file": "logs/financebench/agent/what_is_longterm_debt_at_yearend_0_if_none_10docs_20260429_153350.txt"
+}

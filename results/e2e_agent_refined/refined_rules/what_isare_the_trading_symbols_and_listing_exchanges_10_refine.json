@@ -1,0 +1,154 @@
+{
+  "question": "What is/are the trading symbol(s) and listing exchange(s)?",
+  "question_slug": "what_isare_the_trading_symbols_and_listing_exchanges_10",
+  "timestamp": "2026-04-30T22:11:33Z",
+  "model": "gpt54",
+  "num_documents": 10,
+  "target_accuracy": 0.8,
+  "all_rules_count": 6,
+  "selected_rules_count": 4,
+  "selected_rules": [
+    "rule_page1_registrant_block_exchange_symbol",
+    "rule_page1_frontpage_trading_cluster",
+    "rule_item1_business_listed_under_symbol",
+    "rule_jnj_page1_trading_symbols_exchange"
+  ],
+  "merge_accuracy": 0.8,
+  "avg_cost_ratio": 0.002325,
+  "avg_cost_ratio_all_rules": 0.002687,
+  "cost_reduction_ratio": 0.134461,
+  "avg_latency_seconds": 26.242,
+  "total_latency_seconds": 262.424,
+  "total_llm_calls": 200,
+  "exponential_search_steps": 4,
+  "pruning_steps": 5,
+  "qa_input_tokens": 23932,
+  "qa_output_tokens": 1325,
+  "judge_input_tokens": 21508,
+  "judge_output_tokens": 644,
+  "total_input_tokens": 45440,
+  "total_output_tokens": 1969,
+  "per_doc": [
+    {
+      "doc_name": "AMCOR_2019_10K",
+      "predicted": "AMCR — New York Stock Exchange; AMC — Australian Securities Exchange",
+      "ground_truth": "AMCR, The New York Stock Exchange",
+      "correct": false,
+      "retrieved_tokens": 431,
+      "latency_seconds": 1.119,
+      "total_doc_tokens": 84134,
+      "cost_ratio": 0.005123
+    },
+    {
+      "doc_name": "COSTCO_2017_10K",
+      "predicted": "COST — NASDAQ Global Select Market",
+      "ground_truth": "COST, The NASDAQ Global Select Market",
+      "correct": true,
+      "retrieved_tokens": 166,
+      "latency_seconds": 1.214,
+      "total_doc_tokens": 50565,
+      "cost_ratio": 0.003283
+    },
+    {
+      "doc_name": "BOEING_2018_10K",
+      "predicted": "NOT FOUND",
+      "ground_truth": "BA, New York Stock Exchange",
+      "correct": false,
+      "retrieved_tokens": 108,
+      "latency_seconds": 1.063,
+      "total_doc_tokens": 88449,
+      "cost_ratio": 0.001221
+    },
+    {
+      "doc_name": "AMAZON_2018_10K",
+      "predicted": "AMZN — Nasdaq Global Select Market",
+      "ground_truth": "AMZN, Nasdaq Global Select Market",
+      "correct": true,
+      "retrieved_tokens": 101,
+      "latency_seconds": 1.89,
+      "total_doc_tokens": 67659,
+      "cost_ratio": 0.001493
+    },
+    {
+      "doc_name": "EBAY_2021_10K",
+      "predicted": "eBay — The Nasdaq Global Select Market",
+      "ground_truth": "EBAY, The Nasdaq Global Select Market",
+      "correct": true,
+      "retrieved_tokens": 33,
+      "latency_seconds": 1.22,
+      "total_doc_tokens": 104188,
+      "cost_ratio": 0.000317
+    },
+    {
+      "doc_name": "AMAZON_2016_10K",
+      "predicted": "AMZN — NASDAQ Global Select Market",
+      "ground_truth": "AMZN, NASDAQ Global Select Market",
+      "correct": true,
+      "retrieved_tokens": 99,
+      "latency_seconds": 1.319,
+      "total_doc_tokens": 63358,
+      "cost_ratio": 0.001563
+    },
+    {
+      "doc_name": "CORNING_2022_10K",
+      "predicted": "GLW — New York Stock Exchange (NYSE)",
+      "ground_truth": "GLW, New York Stock Exchange (NYSE)",
+      "correct": true,
+      "retrieved_tokens": 671,
+      "latency_seconds": 1.132,
+      "total_doc_tokens": 107052,
+      "cost_ratio": 0.006268
+    },
+    {
+      "doc_name": "NIKE_2021_10K",
+      "predicted": "NKE — New York Stock Exchange",
+      "ground_truth": "NKE, New York Stock Exchange",
+      "correct": true,
+      "retrieved_tokens": 56,
+      "latency_seconds": 1.224,
+      "total_doc_tokens": 89991,
+      "cost_ratio": 0.000622
+    },
+    {
+      "doc_name": "LOCKHEEDMARTIN_2022_10K",
+      "predicted": "LMT — New York Stock Exchange",
+      "ground_truth": "LMT, New York Stock Exchange",
+      "correct": true,
+      "retrieved_tokens": 31,
+      "latency_seconds": 0.929,
+      "total_doc_tokens": 105703,
+      "cost_ratio": 0.000293
+    },
+    {
+      "doc_name": "JOHNSON_JOHNSON_2022_10K",
+      "predicted": "JNJ — New York Stock Exchange; JNJ24C — New York Stock Exchange; JNJ24BP — New York Stock Exchange; JNJ28 — New York Stock Exchange; JNJ35 — New York Stock Exchange",
+      "ground_truth": [
+        {
+          "Trading Symbol": "JNJ",
+          "Exchange": "New York Stock Exchange"
+        },
+        {
+          "Trading Symbol": "JNJ24C",
+          "Exchange": "New York Stock Exchange"
+        },
+        {
+          "Trading Symbol": "JNJ24BP",
+          "Exchange": "New York Stock Exchange"
+        },
+        {
+          "Trading Symbol": "JNJ28",
+          "Exchange": "New York Stock Exchange"
+        },
+        {
+          "Trading Symbol": "JNJ35",
+          "Exchange": "New York Stock Exchange"
+        }
+      ],
+      "correct": true,
+      "retrieved_tokens": 380,
+      "latency_seconds": 1.797,
+      "total_doc_tokens": 123226,
+      "cost_ratio": 0.003084
+    }
+  ]
+}

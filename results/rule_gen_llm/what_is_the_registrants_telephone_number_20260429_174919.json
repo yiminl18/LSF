@@ -1,0 +1,249 @@
+{
+  "question": "What is the registrant's telephone number?",
+  "question_slug": "what_is_the_registrants_telephone_number",
+  "timestamp": "2026-04-29T17:49:19Z",
+  "model": "gpt54",
+  "num_documents": 10,
+  "doc_names": [
+    "AMCOR_2019_10K",
+    "COSTCO_2017_10K",
+    "BOEING_2018_10K",
+    "AMAZON_2018_10K",
+    "EBAY_2021_10K",
+    "AMAZON_2016_10K",
+    "CORNING_2022_10K",
+    "NIKE_2021_10K",
+    "LOCKHEEDMARTIN_2022_10K",
+    "JOHNSON_JOHNSON_2022_10K"
+  ],
+  "latency_seconds": 238.872,
+  "input_tokens": 268545,
+  "output_tokens": 9347,
+  "rules": [
+    {
+      "rule_name": "rule_page1_telephone_keyword",
+      "description": "Match page-1 spans containing the registrant telephone phrase.",
+      "file": "rules/llm/financebench/what_is_the_registrants_telephone_number_10_llm/rule_page1_telephone_keyword.py"
+    },
+    {
+      "rule_name": "rule_page1_area_code_keyword",
+      "description": "Match page-1 spans mentioning area code near registrant telephone text.",
+      "file": "rules/llm/financebench/what_is_the_registrants_telephone_number_10_llm/rule_page1_area_code_keyword.py"
+    },
+    {
+      "rule_name": "rule_page1_phone_number_pattern",
+      "description": "Match page-1 spans containing phone-number-like patterns.",
+      "file": "rules/llm/financebench/what_is_the_registrants_telephone_number_10_llm/rule_page1_phone_number_pattern.py"
+    },
+    {
+      "rule_name": "rule_page1_phone_number_pattern_with_text_span",
+      "description": "Match page-1 spans whose text or text_span contains a phone-number-like pattern.",
+      "file": "rules/llm/financebench/what_is_the_registrants_telephone_number_10_llm/rule_page1_phone_number_pattern_with_text_span.py"
+    },
+    {
+      "rule_name": "rule_page1_h1_company_header",
+      "description": "Match the main company H1/header block on page 1, which often embeds the phone number.",
+      "file": "rules/llm/financebench/what_is_the_registrants_telephone_number_10_llm/rule_page1_h1_company_header.py"
+    },
+    {
+      "rule_name": "rule_exact_name_registrant_block",
+      "description": "Match spans near the 'Exact name of registrant' cover-page identity block.",
+      "file": "rules/llm/financebench/what_is_the_registrants_telephone_number_10_llm/rule_exact_name_registrant_block.py"
+    },
+    {
+      "rule_name": "rule_page1_address_and_phone_combined",
+      "description": "Match page-1 spans combining address and telephone information.",
+      "file": "rules/llm/financebench/what_is_the_registrants_telephone_number_10_llm/rule_page1_address_and_phone_combined.py"
+    },
+    {
+      "rule_name": "rule_principal_executive_offices_and_phone",
+      "description": "Match spans mentioning principal executive offices together with a phone number.",
+      "file": "rules/llm/financebench/what_is_the_registrants_telephone_number_10_llm/rule_principal_executive_offices_and_phone.py"
+    },
+    {
+      "rule_name": "rule_address_and_telephone_number_of_registrant",
+      "description": "Match spans using the phrase 'address and telephone number ... principal executive offices'.",
+      "file": "rules/llm/financebench/what_is_the_registrants_telephone_number_10_llm/rule_address_and_telephone_number_of_registrant.py"
+    },
+    {
+      "rule_name": "rule_registrant_telephone_parenthetical_label",
+      "description": "Match label spans that explicitly say '(Registrant’s telephone number, including area code)'.",
+      "file": "rules/llm/financebench/what_is_the_registrants_telephone_number_10_llm/rule_registrant_telephone_parenthetical_label.py"
+    },
+    {
+      "rule_name": "rule_cover_page_before_securities_registered",
+      "description": "Match page-1 spans where phone text appears immediately before 'Securities registered'.",
+      "file": "rules/llm/financebench/what_is_the_registrants_telephone_number_10_llm/rule_cover_page_before_securities_registered.py"
+    },
+    {
+      "rule_name": "rule_cover_page_before_section_12b",
+      "description": "Match page-1 spans where a phone number appears near the Section 12(b) registration text.",
+      "file": "rules/llm/financebench/what_is_the_registrants_telephone_number_10_llm/rule_cover_page_before_section_12b.py"
+    },
+    {
+      "rule_name": "rule_path_contains_company_name_page1",
+      "description": "Match page-1 body spans under the main company path that contain phone-like text.",
+      "file": "rules/llm/financebench/what_is_the_registrants_telephone_number_10_llm/rule_path_contains_company_name_page1.py"
+    },
+    {
+      "rule_name": "rule_page1_small_body_phone",
+      "description": "Match small-font page-1 body spans containing phone numbers on the cover page.",
+      "file": "rules/llm/financebench/what_is_the_registrants_telephone_number_10_llm/rule_page1_small_body_phone.py"
+    },
+    {
+      "rule_name": "rule_page1_section_header_phone",
+      "description": "Match page-1 section headers that themselves contain the phone number.",
+      "file": "rules/llm/financebench/what_is_the_registrants_telephone_number_10_llm/rule_page1_section_header_phone.py"
+    },
+    {
+      "rule_name": "rule_page1_text_phone",
+      "description": "Match page-1 text spans that themselves contain the phone number.",
+      "file": "rules/llm/financebench/what_is_the_registrants_telephone_number_10_llm/rule_page1_text_phone.py"
+    },
+    {
+      "rule_name": "rule_page1_top_quarter_phone",
+      "description": "Match phone-like spans in the first quarter of page-1 span order.",
+      "file": "rules/llm/financebench/what_is_the_registrants_telephone_number_10_llm/rule_page1_top_quarter_phone.py"
+    },
+    {
+      "rule_name": "rule_page1_near_exact_name_and_address",
+      "description": "Match page-1 spans in the cover identity block near exact-name/address labels.",
+      "file": "rules/llm/financebench/what_is_the_registrants_telephone_number_10_llm/rule_page1_near_exact_name_and_address.py"
+    },
+    {
+      "rule_name": "rule_page1_after_zip_code",
+      "description": "Match page-1 spans where phone text appears near a zip-code label.",
+      "file": "rules/llm/financebench/what_is_the_registrants_telephone_number_10_llm/rule_page1_after_zip_code.py"
+    },
+    {
+      "rule_name": "rule_page1_after_address_label",
+      "description": "Match page-1 spans where phone text appears near an address label.",
+      "file": "rules/llm/financebench/what_is_the_registrants_telephone_number_10_llm/rule_page1_after_address_label.py"
+    },
+    {
+      "rule_name": "rule_page1_h2_phone_header",
+      "description": "Match page-1 H2 spans whose header text is or contains the phone number.",
+      "file": "rules/llm/financebench/what_is_the_registrants_telephone_number_10_llm/rule_page1_h2_phone_header.py"
+    },
+    {
+      "rule_name": "rule_page1_h1_or_h2_with_phone_and_securities",
+      "description": "Match page-1 H1/H2 cover headers containing both phone and securities-registration text.",
+      "file": "rules/llm/financebench/what_is_the_registrants_telephone_number_10_llm/rule_page1_h1_or_h2_with_phone_and_securities.py"
+    },
+    {
+      "rule_name": "rule_page1_company_block_with_phone_in_text_span",
+      "description": "Match company-name cover headers whose text_span embeds the phone number.",
+      "file": "rules/llm/financebench/what_is_the_registrants_telephone_number_10_llm/rule_page1_company_block_with_phone_in_text_span.py"
+    },
+    {
+      "rule_name": "rule_page1_body_under_phone_path",
+      "description": "Match body spans whose path_text itself is a phone number or contains one.",
+      "file": "rules/llm/financebench/what_is_the_registrants_telephone_number_10_llm/rule_page1_body_under_phone_path.py"
+    },
+    {
+      "rule_name": "rule_page1_cover_identity_cluster",
+      "description": "Match spans in the dense page-1 identity cluster containing company/address/EIN/phone details.",
+      "file": "rules/llm/financebench/what_is_the_registrants_telephone_number_10_llm/rule_page1_cover_identity_cluster.py"
+    },
+    {
+      "rule_name": "rule_page1_phone_followed_by_section12b_neighbor",
+      "description": "Match spans with phone numbers whose nearby neighbors mention Section 12(b).",
+      "file": "rules/llm/financebench/what_is_the_registrants_telephone_number_10_llm/rule_page1_phone_followed_by_section12b_neighbor.py"
+    },
+    {
+      "rule_name": "rule_page1_phone_preceded_by_address_neighbor",
+      "description": "Match phone spans preceded by address/zip/EIN cover-page neighbors.",
+      "file": "rules/llm/financebench/what_is_the_registrants_telephone_number_10_llm/rule_page1_phone_preceded_by_address_neighbor.py"
+    },
+    {
+      "rule_name": "rule_item1_overview_phone_fallback",
+      "description": "Match Item 1/Overview spans that mention the company's telephone number as a fallback pattern.",
+      "file": "rules/llm/financebench/what_is_the_registrants_telephone_number_10_llm/rule_item1_overview_phone_fallback.py"
+    },
+    {
+      "rule_name": "rule_item1_overview_phone_number",
+      "description": "Match Item 1/Overview spans containing a phone-number-like pattern.",
+      "file": "rules/llm/financebench/what_is_the_registrants_telephone_number_10_llm/rule_item1_overview_phone_number.py"
+    },
+    {
+      "rule_name": "rule_cover_page_first_two_pages_phone",
+      "description": "Match phone-like spans on the first two pages, favoring high recall for cover-page variants.",
+      "file": "rules/llm/financebench/what_is_the_registrants_telephone_number_10_llm/rule_cover_page_first_two_pages_phone.py"
+    },
+    {
+      "rule_name": "rule_cover_page_company_identity_keywords",
+      "description": "Match cover-page spans containing multiple company identity keywords often surrounding the phone.",
+      "file": "rules/llm/financebench/what_is_the_registrants_telephone_number_10_llm/rule_cover_page_company_identity_keywords.py"
+    },
+    {
+      "rule_name": "rule_phone_only_or_phone_header",
+      "description": "Match spans whose text is just a phone number or whose header text is just a phone number.",
+      "file": "rules/llm/financebench/what_is_the_registrants_telephone_number_10_llm/rule_phone_only_or_phone_header.py"
+    },
+    {
+      "rule_name": "rule_phone_in_text_span_only",
+      "description": "Match spans where the phone number appears only in text_span, common in merged cover headers.",
+      "file": "rules/llm/financebench/what_is_the_registrants_telephone_number_10_llm/rule_phone_in_text_span_only.py"
+    },
+    {
+      "rule_name": "rule_cover_page_phone_with_registrant_or_company",
+      "description": "Match cover-page spans containing a phone number plus registrant/company wording.",
+      "file": "rules/llm/financebench/what_is_the_registrants_telephone_number_10_llm/rule_cover_page_phone_with_registrant_or_company.py"
+    },
+    {
+      "rule_name": "rule_cover_page_phone_with_address",
+      "description": "Match cover-page spans containing both an address-like phrase and a phone number.",
+      "file": "rules/llm/financebench/what_is_the_registrants_telephone_number_10_llm/rule_cover_page_phone_with_address.py"
+    },
+    {
+      "rule_name": "rule_cover_page_phone_with_zip",
+      "description": "Match cover-page spans containing both zip-code wording and a phone number.",
+      "file": "rules/llm/financebench/what_is_the_registrants_telephone_number_10_llm/rule_cover_page_phone_with_zip.py"
+    },
+    {
+      "rule_name": "rule_cover_page_phone_with_ein",
+      "description": "Match cover-page spans containing both EIN wording and a phone number.",
+      "file": "rules/llm/financebench/what_is_the_registrants_telephone_number_10_llm/rule_cover_page_phone_with_ein.py"
+    },
+    {
+      "rule_name": "rule_cover_page_phone_with_exact_name",
+      "description": "Match cover-page spans containing both exact-name wording and a phone number.",
+      "file": "rules/llm/financebench/what_is_the_registrants_telephone_number_10_llm/rule_cover_page_phone_with_exact_name.py"
+    },
+    {
+      "rule_name": "rule_page1_non_table_phone",
+      "description": "Match non-table page-1 spans with phone-like patterns.",
+      "file": "rules/llm/financebench/what_is_the_registrants_telephone_number_10_llm/rule_page1_non_table_phone.py"
+    },
+    {
+      "rule_name": "rule_page1_before_documents_incorporated",
+      "description": "Match phone-like spans occurring before the 'DOCUMENTS INCORPORATED BY REFERENCE' area.",
+      "file": "rules/llm/financebench/what_is_the_registrants_telephone_number_10_llm/rule_page1_before_documents_incorporated.py"
+    },
+    {
+      "rule_name": "rule_page1_cover_block_dense_keywords",
+      "description": "Match spans in a dense cover block with multiple cover-page metadata keywords.",
+      "file": "rules/llm/financebench/what_is_the_registrants_telephone_number_10_llm/rule_page1_cover_block_dense_keywords.py"
+    },
+    {
+      "rule_name": "rule_page1_phone_in_main_cover_path",
+      "description": "Match phone-like spans whose path_text is the main company cover path on page 1.",
+      "file": "rules/llm/financebench/what_is_the_registrants_telephone_number_10_llm/rule_page1_phone_in_main_cover_path.py"
+    },
+    {
+      "rule_name": "rule_page1_phone_and_company_name_header",
+      "description": "Match page-1 spans where a company-name header block also contains a phone number.",
+      "file": "rules/llm/financebench/what_is_the_registrants_telephone_number_10_llm/rule_page1_phone_and_company_name_header.py"
+    },
+    {
+      "rule_name": "rule_page1_phone_with_registrant_label_neighbor",
+      "description": "Match phone spans adjacent to a separate registrant-telephone label span.",
+      "file": "rules/llm/financebench/what_is_the_registrants_telephone_number_10_llm/rule_page1_phone_with_registrant_label_neighbor.py"
+    },
+    {
+      "rule_name": "rule_page1_phone_with_parenthetical_area_code_label",
+      "description": "Match phone spans adjacent to '(Registrant's telephone number, including area code)' labels.",
+      "file": "rules/llm/financebench/what_is_the_registrants_telephone_number_10_llm/rule_page1_phone_with_parenthetical_area_code_label.py"
+    }
+  ]
+}

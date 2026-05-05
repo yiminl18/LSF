@@ -1,0 +1,118 @@
+{
+  "question": "What is net income (loss) for the most recent fiscal year?",
+  "question_slug": "what_is_net_income_loss_for_the_most_recent_fiscal_year",
+  "timestamp": "2026-04-30T18:09:01Z",
+  "model": "gpt54",
+  "num_documents": 10,
+  "doc_names": [
+    "AMCOR_2019_10K",
+    "COSTCO_2017_10K",
+    "BOEING_2018_10K",
+    "AMAZON_2018_10K",
+    "EBAY_2021_10K",
+    "AMAZON_2016_10K",
+    "CORNING_2022_10K",
+    "NIKE_2021_10K",
+    "LOCKHEEDMARTIN_2022_10K",
+    "JOHNSON_JOHNSON_2022_10K"
+  ],
+  "max_iterations": 12,
+  "agent_turns": 24,
+  "latency_seconds": 180.962,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "merge_accuracy": 0.8,
+  "merge_num_correct": 8,
+  "avg_cost_ratio": 0.60798,
+  "total_llm_calls": 40,
+  "merge_per_doc": {
+    "AMCOR_2019_10K": {
+      "predicted": "437.4",
+      "ground_truth": "430.2 million",
+      "correct": false,
+      "cost_ratio": 0.70252
+    },
+    "COSTCO_2017_10K": {
+      "predicted": "$2,679 million",
+      "ground_truth": "2,679",
+      "correct": true,
+      "cost_ratio": 0.75803
+    },
+    "BOEING_2018_10K": {
+      "predicted": "$10,460 million",
+      "ground_truth": "$10,460 million",
+      "correct": true,
+      "cost_ratio": 0.62422
+    },
+    "AMAZON_2018_10K": {
+      "predicted": "$10,073 million",
+      "ground_truth": "$10,073 million",
+      "correct": true,
+      "cost_ratio": 0.67101
+    },
+    "EBAY_2021_10K": {
+      "predicted": "$13,608 million",
+      "ground_truth": "$13,608 million",
+      "correct": true,
+      "cost_ratio": 0.51246
+    },
+    "AMAZON_2016_10K": {
+      "predicted": "$2,371 million",
+      "ground_truth": "$2,371 million",
+      "correct": true,
+      "cost_ratio": 0.69071
+    },
+    "CORNING_2022_10K": {
+      "predicted": "$2,254 million",
+      "ground_truth": "1,316 million",
+      "correct": false,
+      "cost_ratio": 0.28719
+    },
+    "NIKE_2021_10K": {
+      "predicted": "$5,727 million",
+      "ground_truth": "$5,727 million",
+      "correct": true,
+      "cost_ratio": 0.76272
+    },
+    "LOCKHEEDMARTIN_2022_10K": {
+      "predicted": "$5,732 million",
+      "ground_truth": "$5,732 million",
+      "correct": true,
+      "cost_ratio": 0.73304
+    },
+    "JOHNSON_JOHNSON_2022_10K": {
+      "predicted": "$17,941 million",
+      "ground_truth": "$17.9 billion",
+      "correct": true,
+      "cost_ratio": 0.33792
+    }
+  },
+  "rules": [
+    {
+      "rule_name": "rule_financial_statements_net_income",
+      "description": "Retrieve financial statement or MD&A spans likely containing net income for the latest fiscal year.",
+      "hit_rate": 0.3,
+      "file": "rules/llm/financebench_agent/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm/rule_financial_statements_net_income.py"
+    },
+    {
+      "rule_name": "rule_item7_item8_financial_sections",
+      "description": "Retrieve broad Item 7/Item 8 financial sections and nearby statement-of-income content.",
+      "hit_rate": 0.3,
+      "file": "rules/llm/financebench_agent/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm/rule_item7_item8_financial_sections.py"
+    },
+    {
+      "rule_name": "rule_late_page_item7_item8_sections",
+      "description": "Retrieve later-page Item 7/8 financial sections while excluding front-matter tables of contents.",
+      "hit_rate": 0.3,
+      "file": "rules/llm/financebench_agent/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm/rule_late_page_item7_item8_sections.py"
+    },
+    {
+      "rule_name": "rule_precise_net_income_rows",
+      "description": "Retrieve precise net income rows/text in results-of-operations or selected-financial-data sections.",
+      "hit_rate": 0.3,
+      "file": "rules/llm/financebench_agent/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm/rule_precise_net_income_rows.py"
+    }
+  ],
+  "rule_dir": "rules/llm/financebench_agent/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm",
+  "log_file": "logs/financebench/agent/what_is_net_income_loss_for_the_most_recent_fiscal_year_10docs_20260430_180901.txt"
+}

@@ -1,0 +1,288 @@
+{
+  "question": "What is the state (or other jurisdiction) of incorporation and the IRS Employer Identification Number?",
+  "question_slug": "what_is_the_state_or_other_jurisdiction_of_incorporation_and_10",
+  "split": "sampled",
+  "num_documents": 10,
+  "rules": [
+    {
+      "rule_name": "rule_page1_cover_metadata_font_small",
+      "accuracy": 0.7,
+      "avg_cost_ratio": 0.000466,
+      "avg_rule_apply_latency_seconds": 1.306,
+      "avg_judge_latency_seconds": 1.062,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_cover_metadata_after_exact_name",
+      "accuracy": 0.7,
+      "avg_cost_ratio": 0.00128,
+      "avg_rule_apply_latency_seconds": 1.158,
+      "avg_judge_latency_seconds": 1.022,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_state_ein_and_address_triplet",
+      "accuracy": 0.7,
+      "avg_cost_ratio": 0.006782,
+      "avg_rule_apply_latency_seconds": 1.65,
+      "avg_judge_latency_seconds": 1.059,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_exclude_non_sec_templates",
+      "accuracy": 0.7,
+      "avg_cost_ratio": 0.010635,
+      "avg_rule_apply_latency_seconds": 1.134,
+      "avg_judge_latency_seconds": 1.094,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_after_form_before_table_of_contents",
+      "accuracy": 0.7,
+      "avg_cost_ratio": 0.017588,
+      "avg_rule_apply_latency_seconds": 1.223,
+      "avg_judge_latency_seconds": 1.089,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_bold_state_name_or_ein",
+      "accuracy": 0.6,
+      "avg_cost_ratio": 0.000784,
+      "avg_rule_apply_latency_seconds": 1.142,
+      "avg_judge_latency_seconds": 1.223,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_company_header_children",
+      "accuracy": 0.6,
+      "avg_cost_ratio": 0.006077,
+      "avg_rule_apply_latency_seconds": 1.089,
+      "avg_judge_latency_seconds": 1.972,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_path_contains_company_name_page1",
+      "accuracy": 0.6,
+      "avg_cost_ratio": 0.009871,
+      "avg_rule_apply_latency_seconds": 1.244,
+      "avg_judge_latency_seconds": 1.023,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_body_sequence_state_then_ein",
+      "accuracy": 0.5,
+      "avg_cost_ratio": 0.001578,
+      "avg_rule_apply_latency_seconds": 1.186,
+      "avg_judge_latency_seconds": 1.041,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_company_cover_block_all_page1",
+      "accuracy": 0.5,
+      "avg_cost_ratio": 0.007086,
+      "avg_rule_apply_latency_seconds": 1.068,
+      "avg_judge_latency_seconds": 1.088,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_text_after_company_name",
+      "accuracy": 0.5,
+      "avg_cost_ratio": 0.008917,
+      "avg_rule_apply_latency_seconds": 1.248,
+      "avg_judge_latency_seconds": 1.047,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_body_metadata_values",
+      "accuracy": 0.4,
+      "avg_cost_ratio": 0.000105,
+      "avg_rule_apply_latency_seconds": 1.094,
+      "avg_judge_latency_seconds": 1.043,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_cover_metadata_breadcrumb",
+      "accuracy": 0.4,
+      "avg_cost_ratio": 0.000428,
+      "avg_rule_apply_latency_seconds": 1.203,
+      "avg_judge_latency_seconds": 1.134,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_jurisdiction_or_ein_keywords",
+      "accuracy": 0.3,
+      "avg_cost_ratio": 0.000442,
+      "avg_rule_apply_latency_seconds": 1.171,
+      "avg_judge_latency_seconds": 8.698,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_first_20_spans_with_cover_signals",
+      "accuracy": 0.3,
+      "avg_cost_ratio": 0.001264,
+      "avg_rule_apply_latency_seconds": 1.288,
+      "avg_judge_latency_seconds": 1.166,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_non_table_non_list_cover_metadata",
+      "accuracy": 0.3,
+      "avg_cost_ratio": 0.00175,
+      "avg_rule_apply_latency_seconds": 1.059,
+      "avg_judge_latency_seconds": 1.088,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_h2_cover_headers_with_jurisdiction_or_ein",
+      "accuracy": 0.2,
+      "avg_cost_ratio": 4.4e-05,
+      "avg_rule_apply_latency_seconds": 1.179,
+      "avg_judge_latency_seconds": 1.127,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_h1_h2_cover_metadata",
+      "accuracy": 0.2,
+      "avg_cost_ratio": 0.000144,
+      "avg_rule_apply_latency_seconds": 1.052,
+      "avg_judge_latency_seconds": 1.089,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_state_or_ein_in_text_span",
+      "accuracy": 0.2,
+      "avg_cost_ratio": 0.000152,
+      "avg_rule_apply_latency_seconds": 1.115,
+      "avg_judge_latency_seconds": 1.081,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_cover_metadata_before_address",
+      "accuracy": 0.2,
+      "avg_cost_ratio": 0.000201,
+      "avg_rule_apply_latency_seconds": 1.129,
+      "avg_judge_latency_seconds": 1.104,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_cover_cluster_between_exact_name_and_address",
+      "accuracy": 0.2,
+      "avg_cost_ratio": 0.000332,
+      "avg_rule_apply_latency_seconds": 1.076,
+      "avg_judge_latency_seconds": 1.171,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_cover_answer_window",
+      "accuracy": 0.2,
+      "avg_cost_ratio": 0.00121,
+      "avg_rule_apply_latency_seconds": 2.457,
+      "avg_judge_latency_seconds": 1.205,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_section_header_values",
+      "accuracy": 0.1,
+      "avg_cost_ratio": 2.1e-05,
+      "avg_rule_apply_latency_seconds": 1.101,
+      "avg_judge_latency_seconds": 1.075,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_cover_block_with_state_and_file_and_ein",
+      "accuracy": 0.1,
+      "avg_cost_ratio": 9.7e-05,
+      "avg_rule_apply_latency_seconds": 1.023,
+      "avg_judge_latency_seconds": 1.079,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_combined_state_and_ein_same_span",
+      "accuracy": 0.1,
+      "avg_cost_ratio": 0.00011,
+      "avg_rule_apply_latency_seconds": 1.091,
+      "avg_judge_latency_seconds": 1.186,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_cover_path_form_10q_or_10k",
+      "accuracy": 0.1,
+      "avg_cost_ratio": 0.000146,
+      "avg_rule_apply_latency_seconds": 1.027,
+      "avg_judge_latency_seconds": 1.163,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_state_value_near_ein_page1",
+      "accuracy": 0.1,
+      "avg_cost_ratio": 0.000158,
+      "avg_rule_apply_latency_seconds": 1.157,
+      "avg_judge_latency_seconds": 1.073,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_ein_pattern_anywhere",
+      "accuracy": 0.1,
+      "avg_cost_ratio": 0.000212,
+      "avg_rule_apply_latency_seconds": 1.127,
+      "avg_judge_latency_seconds": 1.111,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_separate_state_and_ein_adjacent_page1",
+      "accuracy": 0.1,
+      "avg_cost_ratio": 0.000298,
+      "avg_rule_apply_latency_seconds": 1.773,
+      "avg_judge_latency_seconds": 1.084,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_h2_sequence_state_then_ein",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.0,
+      "avg_rule_apply_latency_seconds": 0.915,
+      "avg_judge_latency_seconds": 1.155,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_state_names_common",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 2.8e-05,
+      "avg_rule_apply_latency_seconds": 1.031,
+      "avg_judge_latency_seconds": 1.089,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_body_text_with_ein_label",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.000153,
+      "avg_rule_apply_latency_seconds": 1.04,
+      "avg_judge_latency_seconds": 1.139,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_body_text_with_jurisdiction_label",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.000167,
+      "avg_rule_apply_latency_seconds": 1.219,
+      "avg_judge_latency_seconds": 1.145,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_exact_name_block",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.000333,
+      "avg_rule_apply_latency_seconds": 0.962,
+      "avg_judge_latency_seconds": 1.116,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_top_quarter",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.002098,
+      "avg_rule_apply_latency_seconds": 1.013,
+      "avg_judge_latency_seconds": 1.11,
+      "num_documents": 10
+    }
+  ]
+}

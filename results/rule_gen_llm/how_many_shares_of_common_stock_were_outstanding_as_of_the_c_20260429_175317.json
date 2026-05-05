@@ -1,0 +1,324 @@
+{
+  "question": "How many shares of common stock were outstanding as of the cover-page reference date?",
+  "question_slug": "how_many_shares_of_common_stock_were_outstanding_as_of_the_c",
+  "timestamp": "2026-04-29T17:53:17Z",
+  "model": "gpt54",
+  "num_documents": 10,
+  "doc_names": [
+    "AMCOR_2019_10K",
+    "COSTCO_2017_10K",
+    "BOEING_2018_10K",
+    "AMAZON_2018_10K",
+    "EBAY_2021_10K",
+    "AMAZON_2016_10K",
+    "CORNING_2022_10K",
+    "NIKE_2021_10K",
+    "LOCKHEEDMARTIN_2022_10K",
+    "JOHNSON_JOHNSON_2022_10K"
+  ],
+  "latency_seconds": 282.993,
+  "input_tokens": 268539,
+  "output_tokens": 9145,
+  "rules": [
+    {
+      "rule_name": "rule_page1_outstanding_sentence",
+      "description": "Match page-1 spans containing both 'outstanding' and 'common stock/shares' language.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_outstanding_sentence.py"
+    },
+    {
+      "rule_name": "rule_page1_number_of_shares_outstanding",
+      "description": "Match page-1 spans with the phrase 'number of shares' and 'outstanding'.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_number_of_shares_outstanding.py"
+    },
+    {
+      "rule_name": "rule_page1_common_stock_outstanding_as_of",
+      "description": "Match page-1 spans stating common stock was outstanding 'as of' a date.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_common_stock_outstanding_as_of.py"
+    },
+    {
+      "rule_name": "rule_page1_shares_outstanding_as_of",
+      "description": "Match page-1 spans stating shares were outstanding 'as of' a date.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_shares_outstanding_as_of.py"
+    },
+    {
+      "rule_name": "rule_page1_registrant_common_stock_outstanding",
+      "description": "Match page-1 spans mentioning registrant's common stock outstanding.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_registrant_common_stock_outstanding.py"
+    },
+    {
+      "rule_name": "rule_page1_cover_page_stock_sentence",
+      "description": "Match likely cover-page stock-count sentences on page 1 with 'as of' and 'outstanding'.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_cover_page_stock_sentence.py"
+    },
+    {
+      "rule_name": "rule_page1_outstanding_near_documents_incorporated",
+      "description": "Match page-1 spans with outstanding-share language that often appear just before 'DOCUMENTS INCORPORATED BY REFERENCE'.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_outstanding_near_documents_incorporated.py"
+    },
+    {
+      "rule_name": "rule_page1_after_market_value_before_documents",
+      "description": "Match page-1 spans with outstanding-share language occurring after market-value disclosure and before documents-incorporated text.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_after_market_value_before_documents.py"
+    },
+    {
+      "rule_name": "rule_page1_standalone_large_number_after_outstanding_label",
+      "description": "Match standalone numeric spans on page 1 that follow a label like 'Number of shares of common stock outstanding as of ...'.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_standalone_large_number_after_outstanding_label.py"
+    },
+    {
+      "rule_name": "rule_page1_standalone_number_after_market_value_and_outstanding_label",
+      "description": "Match page-1 standalone numeric spans in two-column cover-page layouts where market value and outstanding count are listed separately.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_standalone_number_after_market_value_and_outstanding_label.py"
+    },
+    {
+      "rule_name": "rule_page1_two_class_total_outstanding_number",
+      "description": "Match page-1 standalone total-share number in dual-class layouts after Class A/Class B counts.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_two_class_total_outstanding_number.py"
+    },
+    {
+      "rule_name": "rule_page1_issued_and_outstanding_sentence",
+      "description": "Match page-1 spans using the phrase 'issued and outstanding'.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_issued_and_outstanding_sentence.py"
+    },
+    {
+      "rule_name": "rule_page2_issued_and_outstanding_sentence",
+      "description": "Match page-2 spans using the phrase 'issued and outstanding' for filings where the cover page spills to page 2.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page2_issued_and_outstanding_sentence.py"
+    },
+    {
+      "rule_name": "rule_page1_there_were_shares_outstanding",
+      "description": "Match page-1 spans beginning with 'There were ... shares ... outstanding'.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_there_were_shares_outstanding.py"
+    },
+    {
+      "rule_name": "rule_page1_common_stock_issued_and_outstanding",
+      "description": "Match page-1 spans mentioning 'shares of common stock issued and outstanding'.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_common_stock_issued_and_outstanding.py"
+    },
+    {
+      "rule_name": "rule_page1_outstanding_as_of_january_or_february",
+      "description": "Match page-1 spans with outstanding-share language and a cover-page reference date in January/February.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_outstanding_as_of_january_or_february.py"
+    },
+    {
+      "rule_name": "rule_page1_cover_h1_company_block_with_outstanding",
+      "description": "Match large company-name cover-page section_header spans that inline the outstanding-share disclosure.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_cover_h1_company_block_with_outstanding.py"
+    },
+    {
+      "rule_name": "rule_page1_cover_h2_block_with_outstanding",
+      "description": "Match page-1 H2/H3 cover blocks that inline the outstanding-share disclosure.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_cover_h2_block_with_outstanding.py"
+    },
+    {
+      "rule_name": "rule_page1_path_company_name_and_outstanding",
+      "description": "Match page-1 spans under the company cover-page path that mention outstanding shares.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_path_company_name_and_outstanding.py"
+    },
+    {
+      "rule_name": "rule_page1_market_value_and_number_of_shares_labels",
+      "description": "Match page-1 spans that are labels for market value and number of shares in side-by-side cover layouts.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_market_value_and_number_of_shares_labels.py"
+    },
+    {
+      "rule_name": "rule_page1_numeric_span_after_number_of_shares_label",
+      "description": "Match the numeric span immediately following a 'number of shares of common stock outstanding' label on page 1.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_numeric_span_after_number_of_shares_label.py"
+    },
+    {
+      "rule_name": "rule_page1_after_nonaffiliate_market_value",
+      "description": "Match page-1 spans with outstanding-share language that follow a non-affiliate market value sentence.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_after_nonaffiliate_market_value.py"
+    },
+    {
+      "rule_name": "rule_page1_before_documents_incorporated",
+      "description": "Match page-1 outstanding-share spans that occur shortly before documents-incorporated text.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_before_documents_incorporated.py"
+    },
+    {
+      "rule_name": "rule_page1_cover_page_numeric_sentence",
+      "description": "Match page-1 text spans with a long comma-formatted number and outstanding-share keywords.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_cover_page_numeric_sentence.py"
+    },
+    {
+      "rule_name": "rule_page2_cover_page_numeric_sentence",
+      "description": "Match page-2 text spans with a long comma-formatted number and outstanding-share keywords for spillover cover pages.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page2_cover_page_numeric_sentence.py"
+    },
+    {
+      "rule_name": "rule_page1_common_stock_outstanding_text_only",
+      "description": "Match page-1 text-label spans that mention common stock outstanding even if the number is in a separate span.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_common_stock_outstanding_text_only.py"
+    },
+    {
+      "rule_name": "rule_page1_shares_outstanding_text_only",
+      "description": "Match page-1 text-label spans that mention shares outstanding even if the number is separate.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_shares_outstanding_text_only.py"
+    },
+    {
+      "rule_name": "rule_page1_cover_page_top_half_outstanding",
+      "description": "Match early page-1 spans with outstanding-share language, reflecting cover-page top-half placement.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_cover_page_top_half_outstanding.py"
+    },
+    {
+      "rule_name": "rule_page1_or_2_cover_page_outstanding",
+      "description": "Match page 1 or 2 spans with cover-page outstanding-share language.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_or_2_cover_page_outstanding.py"
+    },
+    {
+      "rule_name": "rule_page1_or_2_cover_page_numeric_only_after_label",
+      "description": "Match standalone numeric spans on page 1 or 2 that are near outstanding-share labels.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_or_2_cover_page_numeric_only_after_label.py"
+    },
+    {
+      "rule_name": "rule_page1_phrase_number_of_shares_of_common_stock_outstanding",
+      "description": "Match exact-style phrase 'number of shares of common stock outstanding' on page 1.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_phrase_number_of_shares_of_common_stock_outstanding.py"
+    },
+    {
+      "rule_name": "rule_page1_phrase_shares_of_common_stock_issued_and_outstanding",
+      "description": "Match exact-style phrase 'shares of common stock issued and outstanding' on page 1.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_phrase_shares_of_common_stock_issued_and_outstanding.py"
+    },
+    {
+      "rule_name": "rule_page1_phrase_common_stock_issued_and_outstanding_as_of",
+      "description": "Match page-1 spans with 'common stock issued and outstanding as of' phrasing.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_phrase_common_stock_issued_and_outstanding_as_of.py"
+    },
+    {
+      "rule_name": "rule_page1_phrase_common_stock_outstanding_as_of",
+      "description": "Match page-1 spans with 'common stock outstanding as of' phrasing.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_phrase_common_stock_outstanding_as_of.py"
+    },
+    {
+      "rule_name": "rule_page1_phrase_shares_of_common_stock_outstanding_as_of",
+      "description": "Match page-1 spans with 'shares of common stock outstanding as of' phrasing.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_phrase_shares_of_common_stock_outstanding_as_of.py"
+    },
+    {
+      "rule_name": "rule_page1_phrase_common_shares_outstanding",
+      "description": "Match page-1 spans with 'common shares outstanding' phrasing.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_phrase_common_shares_outstanding.py"
+    },
+    {
+      "rule_name": "rule_page1_phrase_number_of_shares_outstanding_of_registrant",
+      "description": "Match page-1 spans with 'number of shares outstanding of the registrant' style phrasing.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_phrase_number_of_shares_outstanding_of_registrant.py"
+    },
+    {
+      "rule_name": "rule_page1_cover_page_company_block_text_span_outstanding",
+      "description": "Match company cover-page section headers whose text_span contains the outstanding-share disclosure.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_cover_page_company_block_text_span_outstanding.py"
+    },
+    {
+      "rule_name": "rule_page1_text_span_contains_outstanding",
+      "description": "Match any page-1 span whose text or text_span contains outstanding-share language.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_text_span_contains_outstanding.py"
+    },
+    {
+      "rule_name": "rule_page2_text_span_contains_outstanding",
+      "description": "Match any page-2 span whose text or text_span contains outstanding-share language.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page2_text_span_contains_outstanding.py"
+    },
+    {
+      "rule_name": "rule_page1_numeric_near_as_of_date_and_outstanding",
+      "description": "Match numeric spans on page 1 near an 'as of' date and outstanding-share wording.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_numeric_near_as_of_date_and_outstanding.py"
+    },
+    {
+      "rule_name": "rule_page1_numeric_near_january_february_date",
+      "description": "Match numeric spans on page 1 near January/February cover-page reference dates and outstanding-share wording.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_numeric_near_january_february_date.py"
+    },
+    {
+      "rule_name": "rule_page1_total_shares_after_class_a_class_b",
+      "description": "Match the final total-share numeric span after Class A and Class B counts on page 1.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_total_shares_after_class_a_class_b.py"
+    },
+    {
+      "rule_name": "rule_page1_total_shares_after_class_a_class_b_without_outstanding",
+      "description": "Match the final total-share numeric span after Class A and Class B counts in dual-class cover layouts even if 'outstanding' is only in a nearby label.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_total_shares_after_class_a_class_b_without_outstanding.py"
+    },
+    {
+      "rule_name": "rule_page1_cover_page_small_font_outstanding",
+      "description": "Match small-font page-1 spans with outstanding-share language, common on SEC cover pages.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_cover_page_small_font_outstanding.py"
+    },
+    {
+      "rule_name": "rule_page1_cover_page_body_depth2_or_3_outstanding",
+      "description": "Match page-1 body-depth 2/3 spans with outstanding-share language.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_cover_page_body_depth2_or_3_outstanding.py"
+    },
+    {
+      "rule_name": "rule_page1_near_company_name_cover_block",
+      "description": "Match page-1 outstanding-share spans occurring under a company-name cover block rather than Item sections.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_near_company_name_cover_block.py"
+    },
+    {
+      "rule_name": "rule_page1_sentence_with_registrant_and_outstanding",
+      "description": "Match page-1 spans containing both 'registrant' and outstanding-share wording.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_sentence_with_registrant_and_outstanding.py"
+    },
+    {
+      "rule_name": "rule_page1_sentence_with_common_stock_and_date",
+      "description": "Match page-1 spans containing common stock plus a date phrase likely tied to the cover-page reference date.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_sentence_with_common_stock_and_date.py"
+    },
+    {
+      "rule_name": "rule_page1_sentence_with_shares_and_date",
+      "description": "Match page-1 spans containing shares plus a date phrase likely tied to the cover-page reference date.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_sentence_with_shares_and_date.py"
+    },
+    {
+      "rule_name": "rule_page1_numeric_after_phrase_as_of_january",
+      "description": "Match numeric spans on page 1 after labels ending with 'as of January ...'.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_numeric_after_phrase_as_of_january.py"
+    },
+    {
+      "rule_name": "rule_page1_numeric_after_phrase_as_of_february",
+      "description": "Match numeric spans on page 1 after labels ending with 'as of February ...'.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_numeric_after_phrase_as_of_february.py"
+    },
+    {
+      "rule_name": "rule_page1_numeric_after_phrase_as_of_october",
+      "description": "Match numeric spans on page 1 after labels ending with 'as of October ...'.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_numeric_after_phrase_as_of_october.py"
+    },
+    {
+      "rule_name": "rule_page1_sentence_with_there_were_and_common_stock",
+      "description": "Match page-1 spans using 'There were ... common stock ... outstanding' style wording.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_sentence_with_there_were_and_common_stock.py"
+    },
+    {
+      "rule_name": "rule_page1_sentence_with_number_of_shares_of_registrants_common_stock",
+      "description": "Match page-1 spans using 'The number of shares of the registrant's common stock...' wording.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_sentence_with_number_of_shares_of_registrants_common_stock.py"
+    },
+    {
+      "rule_name": "rule_page1_sentence_with_number_of_shares_of_common_stock",
+      "description": "Match page-1 spans using 'Number of shares of common stock outstanding...' wording.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_sentence_with_number_of_shares_of_common_stock.py"
+    },
+    {
+      "rule_name": "rule_page1_sentence_with_shares_of_common_stock_issued_and_outstanding",
+      "description": "Match page-1 spans using 'shares of common stock issued and outstanding...' wording.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_sentence_with_shares_of_common_stock_issued_and_outstanding.py"
+    },
+    {
+      "rule_name": "rule_page1_sentence_with_common_stock_outstanding_and_documents_reference",
+      "description": "Match page-1 spans with common-stock-outstanding language in the same large cover block as documents-incorporated text.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_sentence_with_common_stock_outstanding_and_documents_reference.py"
+    },
+    {
+      "rule_name": "rule_page1_sentence_with_market_value_and_outstanding_same_block",
+      "description": "Match page-1 cover blocks containing both market-value and outstanding-share disclosures.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_sentence_with_market_value_and_outstanding_same_block.py"
+    },
+    {
+      "rule_name": "rule_page1_numeric_in_company_cover_block",
+      "description": "Match large numeric spans on page 1 under company-name cover paths, useful for split-label layouts.",
+      "file": "rules/llm/financebench/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_page1_numeric_in_company_cover_block.py"
+    }
+  ]
+}

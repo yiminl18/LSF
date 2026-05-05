@@ -1,0 +1,119 @@
+{
+  "question": "What is long-term debt at year-end (0 if none)?",
+  "question_slug": "what_is_longterm_debt_at_yearend_0_if_none",
+  "strategy": "claude",
+  "num_documents": 10,
+  "merge_accuracy": 0.9,
+  "merge_num_correct": 9,
+  "avg_cost_ratio": 0.01726,
+  "latency_seconds": 23.8,
+  "rules": [
+    "rule_item6_longterm",
+    "rule_note_debt_carrying_value",
+    "rule_balance_sheet_consolidated",
+    "rule_8k_zero_hint"
+  ],
+  "rule_dir": "rules/financebench/what_is_longterm_debt_at_yearend_0_if_none_10_claude",
+  "per_doc": [
+    {
+      "doc_name": "AMCOR_2019_10K.pdf",
+      "pred": "5,314.4",
+      "gt": "5,314.4 million",
+      "correct": true,
+      "num_spans": 1,
+      "retrieved_tokens": 591,
+      "doc_tokens": 83786,
+      "cost_ratio": 0.00705
+    },
+    {
+      "doc_name": "ADOBE_2022Q2_10Q.pdf",
+      "pred": "3631",
+      "gt": "$3,631 million",
+      "correct": true,
+      "num_spans": 2,
+      "retrieved_tokens": 974,
+      "doc_tokens": 42363,
+      "cost_ratio": 0.02299
+    },
+    {
+      "doc_name": "COSTCO_2017_10K.pdf",
+      "pred": "6,573",
+      "gt": "6,573",
+      "correct": true,
+      "num_spans": 2,
+      "retrieved_tokens": 1139,
+      "doc_tokens": 50330,
+      "cost_ratio": 0.02263
+    },
+    {
+      "doc_name": "BOEING_2018_10K.pdf",
+      "pred": "10,657",
+      "gt": "$10,657 million",
+      "correct": true,
+      "num_spans": 2,
+      "retrieved_tokens": 1406,
+      "doc_tokens": 88075,
+      "cost_ratio": 0.01596
+    },
+    {
+      "doc_name": "INTEL_2022Q4_EARNINGS.pdf",
+      "pred": "37,684",
+      "gt": "$37,684,000,000",
+      "correct": true,
+      "num_spans": 1,
+      "retrieved_tokens": 673,
+      "doc_tokens": 13237,
+      "cost_ratio": 0.05084
+    },
+    {
+      "doc_name": "AMAZON_2018_10K.pdf",
+      "pred": "23,495",
+      "gt": "$50,708 million",
+      "correct": false,
+      "num_spans": 2,
+      "retrieved_tokens": 689,
+      "doc_tokens": 67306,
+      "cost_ratio": 0.01024
+    },
+    {
+      "doc_name": "EBAY_2021_10K.pdf",
+      "pred": "7,727",
+      "gt": "$7,727 million",
+      "correct": true,
+      "num_spans": 1,
+      "retrieved_tokens": 708,
+      "doc_tokens": 103821,
+      "cost_ratio": 0.00682
+    },
+    {
+      "doc_name": "AMAZON_2016_10K.pdf",
+      "pred": "7,694",
+      "gt": "$7,694 million",
+      "correct": true,
+      "num_spans": 2,
+      "retrieved_tokens": 687,
+      "doc_tokens": 63021,
+      "cost_ratio": 0.0109
+    },
+    {
+      "doc_name": "COSTCO_2023_8K_dated-2023-08-09.pdf",
+      "pred": "0",
+      "gt": "0",
+      "correct": true,
+      "num_spans": 1,
+      "retrieved_tokens": 27,
+      "doc_tokens": 23786,
+      "cost_ratio": 0.00114
+    },
+    {
+      "doc_name": "FOOTLOCKER_2023Q3_10Q.pdf",
+      "pred": "448",
+      "gt": "448 million",
+      "correct": true,
+      "num_spans": 1,
+      "retrieved_tokens": 663,
+      "doc_tokens": 27550,
+      "cost_ratio": 0.02407
+    }
+  ]
+}

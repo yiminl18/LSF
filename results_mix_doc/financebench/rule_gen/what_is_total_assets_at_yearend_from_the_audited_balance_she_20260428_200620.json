@@ -1,0 +1,239 @@
+{
+  "question": "What is total assets at year-end (from the audited balance sheet)?",
+  "question_slug": "what_is_total_assets_at_yearend_from_the_audited_balance_she",
+  "timestamp": "2026-04-28T20:06:20Z",
+  "model": "gpt54",
+  "num_documents": 10,
+  "doc_names": [
+    "AMCOR_2019_10K",
+    "ADOBE_2022Q2_10Q",
+    "COSTCO_2017_10K",
+    "BOEING_2018_10K",
+    "INTEL_2022Q4_EARNINGS",
+    "AMAZON_2018_10K",
+    "EBAY_2021_10K",
+    "AMAZON_2016_10K",
+    "COSTCO_2023_8K_dated-2023-08-09",
+    "FOOTLOCKER_2023Q3_10Q"
+  ],
+  "latency_seconds": 170.893,
+  "input_tokens": 449718,
+  "output_tokens": 6051,
+  "rules": [
+    {
+      "rule_name": "rule_total_assets_row_in_balance_sheet_table",
+      "description": "Match table spans containing a balance sheet and a row labeled 'Total assets'.",
+      "file": "rules/financebench/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm/rule_total_assets_row_in_balance_sheet_table.py"
+    },
+    {
+      "rule_name": "rule_total_assets_row_any_table",
+      "description": "Match any table span that contains a row labeled 'Total assets'.",
+      "file": "rules/financebench/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm/rule_total_assets_row_any_table.py"
+    },
+    {
+      "rule_name": "rule_assets_section_table_with_total_assets",
+      "description": "Match tables that contain an 'ASSETS' section and a 'Total assets' row.",
+      "file": "rules/financebench/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm/rule_assets_section_table_with_total_assets.py"
+    },
+    {
+      "rule_name": "rule_item_8_balance_sheet_table",
+      "description": "Match balance sheet tables under Item 8 / financial statements sections.",
+      "file": "rules/financebench/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm/rule_item_8_balance_sheet_table.py"
+    },
+    {
+      "rule_name": "rule_consolidated_balance_sheet_table",
+      "description": "Match tables whose text mentions 'Consolidated Balance Sheet' or 'Consolidated Balance Sheets'.",
+      "file": "rules/financebench/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm/rule_consolidated_balance_sheet_table.py"
+    },
+    {
+      "rule_name": "rule_condensed_consolidated_balance_sheet_table",
+      "description": "Match tables whose text mentions 'Condensed Consolidated Balance Sheets'.",
+      "file": "rules/financebench/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm/rule_condensed_consolidated_balance_sheet_table.py"
+    },
+    {
+      "rule_name": "rule_balance_sheet_heading_nearby_table",
+      "description": "Match tables immediately following a heading/span mentioning balance sheets.",
+      "file": "rules/financebench/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm/rule_balance_sheet_heading_nearby_table.py"
+    },
+    {
+      "rule_name": "rule_page_with_balance_sheet_and_total_assets",
+      "description": "Match spans on pages where a balance sheet table with 'Total assets' appears.",
+      "file": "rules/financebench/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm/rule_page_with_balance_sheet_and_total_assets.py"
+    },
+    {
+      "rule_name": "rule_total_assets_in_section_header_text",
+      "description": "Match section headers that inline a balance sheet table containing 'Total assets'.",
+      "file": "rules/financebench/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm/rule_total_assets_in_section_header_text.py"
+    },
+    {
+      "rule_name": "rule_balance_sheet_section_header_with_total_assets",
+      "description": "Match section headers mentioning balance sheets whose text also includes 'Total assets'.",
+      "file": "rules/financebench/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm/rule_balance_sheet_section_header_with_total_assets.py"
+    },
+    {
+      "rule_name": "rule_path_contains_balance_sheet",
+      "description": "Match spans whose structural path contains 'Balance Sheet' or 'Balance Sheets'.",
+      "file": "rules/financebench/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm/rule_path_contains_balance_sheet.py"
+    },
+    {
+      "rule_name": "rule_path_contains_condensed_consolidated_financial_statements",
+      "description": "Match spans under condensed consolidated financial statements sections.",
+      "file": "rules/financebench/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm/rule_path_contains_condensed_consolidated_financial_statements.py"
+    },
+    {
+      "rule_name": "rule_path_contains_item_1_financial_statements",
+      "description": "Match spans under Item 1 financial statements sections, common in 10-Qs.",
+      "file": "rules/financebench/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm/rule_path_contains_item_1_financial_statements.py"
+    },
+    {
+      "rule_name": "rule_path_contains_item_8_financial_statements",
+      "description": "Match spans under Item 8 financial statements sections, common in 10-Ks.",
+      "file": "rules/financebench/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm/rule_path_contains_item_8_financial_statements.py"
+    },
+    {
+      "rule_name": "rule_table_with_assets_and_liabilities_and_equity",
+      "description": "Match balance-sheet-like tables containing assets and liabilities/equity sections.",
+      "file": "rules/financebench/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm/rule_table_with_assets_and_liabilities_and_equity.py"
+    },
+    {
+      "rule_name": "rule_table_with_total_assets_and_total_liabilities_equity",
+      "description": "Match tables containing both 'Total assets' and total liabilities/equity rows.",
+      "file": "rules/financebench/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm/rule_table_with_total_assets_and_total_liabilities_equity.py"
+    },
+    {
+      "rule_name": "rule_table_with_in_millions_and_total_assets",
+      "description": "Match tables with unit headers like '(In millions...)' and a 'Total assets' row.",
+      "file": "rules/financebench/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm/rule_table_with_in_millions_and_total_assets.py"
+    },
+    {
+      "rule_name": "rule_table_with_year_end_columns_and_total_assets",
+      "description": "Match tables with date columns and a 'Total assets' row.",
+      "file": "rules/financebench/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm/rule_table_with_year_end_columns_and_total_assets.py"
+    },
+    {
+      "rule_name": "rule_table_with_assets_header_and_date_columns",
+      "description": "Match balance-sheet-like tables with an 'Assets' section and date column headers.",
+      "file": "rules/financebench/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm/rule_table_with_assets_header_and_date_columns.py"
+    },
+    {
+      "rule_name": "rule_earnings_release_balance_sheet_table",
+      "description": "Match balance sheet tables in earnings releases, especially Intel-style documents.",
+      "file": "rules/financebench/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm/rule_earnings_release_balance_sheet_table.py"
+    },
+    {
+      "rule_name": "rule_intel_consolidated_balance_sheets",
+      "description": "Match Intel-style 'Consolidated Balance Sheets' section/table.",
+      "file": "rules/financebench/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm/rule_intel_consolidated_balance_sheets.py"
+    },
+    {
+      "rule_name": "rule_balance_sheet_on_early_financial_pages",
+      "description": "Match likely balance sheet tables on early financial statement pages (1-10).",
+      "file": "rules/financebench/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm/rule_balance_sheet_on_early_financial_pages.py"
+    },
+    {
+      "rule_name": "rule_table_with_total_assets_near_top_of_doc",
+      "description": "Match total-assets tables appearing in the first 15 pages, where audited/interim balance sheets usually appear.",
+      "file": "rules/financebench/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm/rule_table_with_total_assets_near_top_of_doc.py"
+    },
+    {
+      "rule_name": "rule_table_with_total_assets_and_current_assets",
+      "description": "Match tables containing both 'Current assets' and 'Total assets' rows.",
+      "file": "rules/financebench/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm/rule_table_with_total_assets_and_current_assets.py"
+    },
+    {
+      "rule_name": "rule_table_with_total_assets_and_goodwill",
+      "description": "Match asset tables containing both 'Goodwill' and 'Total assets'.",
+      "file": "rules/financebench/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm/rule_table_with_total_assets_and_goodwill.py"
+    },
+    {
+      "rule_name": "rule_table_with_total_assets_and_cash_and_equivalents",
+      "description": "Match balance-sheet tables containing cash and total assets.",
+      "file": "rules/financebench/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm/rule_table_with_total_assets_and_cash_and_equivalents.py"
+    },
+    {
+      "rule_name": "rule_table_with_total_assets_and_inventory",
+      "description": "Match balance-sheet tables containing inventory and total assets.",
+      "file": "rules/financebench/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm/rule_table_with_total_assets_and_inventory.py"
+    },
+    {
+      "rule_name": "rule_table_with_total_assets_and_property_plant_equipment",
+      "description": "Match balance-sheet tables containing PP&E and total assets.",
+      "file": "rules/financebench/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm/rule_table_with_total_assets_and_property_plant_equipment.py"
+    },
+    {
+      "rule_name": "rule_table_with_total_assets_and_accounts_receivable",
+      "description": "Match balance-sheet tables containing receivables and total assets.",
+      "file": "rules/financebench/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm/rule_table_with_total_assets_and_accounts_receivable.py"
+    },
+    {
+      "rule_name": "rule_table_with_total_assets_and_other_assets",
+      "description": "Match balance-sheet tables containing 'Other assets' and 'Total assets'.",
+      "file": "rules/financebench/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm/rule_table_with_total_assets_and_other_assets.py"
+    },
+    {
+      "rule_name": "rule_table_with_total_assets_and_total_current_assets",
+      "description": "Match tables containing both 'Total current assets' and 'Total assets'.",
+      "file": "rules/financebench/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm/rule_table_with_total_assets_and_total_current_assets.py"
+    },
+    {
+      "rule_name": "rule_table_with_total_assets_and_stockholders_equity",
+      "description": "Match balance-sheet tables containing stockholders/shareholders' equity and total assets.",
+      "file": "rules/financebench/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm/rule_table_with_total_assets_and_stockholders_equity.py"
+    },
+    {
+      "rule_name": "rule_table_with_total_assets_and_total_liabilities",
+      "description": "Match balance-sheet tables containing total liabilities and total assets.",
+      "file": "rules/financebench/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm/rule_table_with_total_assets_and_total_liabilities.py"
+    },
+    {
+      "rule_name": "rule_table_with_total_assets_and_unaudited",
+      "description": "Match interim balance-sheet tables marked unaudited and containing total assets.",
+      "file": "rules/financebench/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm/rule_table_with_total_assets_and_unaudited.py"
+    },
+    {
+      "rule_name": "rule_table_with_total_assets_and_audited_context",
+      "description": "Match balance-sheet tables in annual-report contexts likely tied to audited statements.",
+      "file": "rules/financebench/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm/rule_table_with_total_assets_and_audited_context.py"
+    },
+    {
+      "rule_name": "rule_table_with_total_assets_not_cash_flow",
+      "description": "Match tables with total assets while excluding obvious cash flow/income statement tables.",
+      "file": "rules/financebench/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm/rule_table_with_total_assets_not_cash_flow.py"
+    },
+    {
+      "rule_name": "rule_balance_sheet_section_header",
+      "description": "Match section headers explicitly naming a balance sheet/balance sheets section.",
+      "file": "rules/financebench/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm/rule_balance_sheet_section_header.py"
+    },
+    {
+      "rule_name": "rule_balance_sheet_heading_page",
+      "description": "Match all spans on pages containing a balance sheet heading.",
+      "file": "rules/financebench/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm/rule_balance_sheet_heading_page.py"
+    },
+    {
+      "rule_name": "rule_table_with_total_assets_and_two_or_more_date_columns",
+      "description": "Match total-assets tables with at least two date-like column headers.",
+      "file": "rules/financebench/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm/rule_table_with_total_assets_and_two_or_more_date_columns.py"
+    },
+    {
+      "rule_name": "rule_table_with_total_assets_and_first_col_row_header",
+      "description": "Match tables where 'Total assets' appears as a row header cell.",
+      "file": "rules/financebench/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm/rule_table_with_total_assets_and_first_col_row_header.py"
+    },
+    {
+      "rule_name": "rule_table_with_total_assets_and_assets_row_header",
+      "description": "Match tables where both 'Assets' and 'Total assets' appear in first-column cells.",
+      "file": "rules/financebench/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm/rule_table_with_total_assets_and_assets_row_header.py"
+    },
+    {
+      "rule_name": "rule_table_with_total_assets_and_total_assets_text_only",
+      "description": "Match any span whose text literally contains 'Total assets'.",
+      "file": "rules/financebench/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm/rule_table_with_total_assets_and_total_assets_text_only.py"
+    },
+    {
+      "rule_name": "rule_exclude_non_10k_10q_8k_by_balance_sheet_presence",
+      "description": "Return balance-sheet-related spans only when the document actually contains a balance sheet, avoiding non-financial 8-Ks.",
+      "file": "rules/financebench/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm/rule_exclude_non_10k_10q_8k_by_balance_sheet_presence.py"
+    }
+  ]
+}

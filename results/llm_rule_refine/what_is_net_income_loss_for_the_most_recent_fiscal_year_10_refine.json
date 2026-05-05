@@ -1,0 +1,136 @@
+{
+  "question": "What is net income (loss) for the most recent fiscal year?",
+  "question_slug": "what_is_net_income_loss_for_the_most_recent_fiscal_year_10",
+  "timestamp": "2026-04-29T21:31:32Z",
+  "model": "gpt54",
+  "num_documents": 10,
+  "target_accuracy": 0.9,
+  "all_rules_count": 33,
+  "selected_rules_count": 14,
+  "selected_rules": [
+    "rule_tables_with_recent_year_columns",
+    "rule_net_income_in_bold_summary_text",
+    "rule_selected_financial_data_section",
+    "rule_item8_or_selected_data_headers",
+    "rule_first_financial_table_after_item8",
+    "rule_financial_tables_on_pages_from_toc_income_or_item8",
+    "rule_mda_results_of_operations_net_income_text",
+    "rule_selected_financial_data_net_income_table",
+    "rule_first_table_after_statement_of_income_header",
+    "rule_pages_near_item8_from_toc_and_net_income",
+    "rule_mda_item7_net_income_text",
+    "rule_tables_with_row_net_and_column_years",
+    "rule_consolidated_results_table",
+    "rule_nearby_after_anchor_headers"
+  ],
+  "merge_accuracy": 0.9,
+  "avg_cost_ratio": 0.112683,
+  "avg_cost_ratio_all_rules": 0.155844,
+  "cost_reduction_ratio": 0.27695,
+  "avg_latency_seconds": 119.822,
+  "total_llm_calls": 760,
+  "exponential_search_steps": 6,
+  "pruning_steps": 31,
+  "per_doc": [
+    {
+      "doc_name": "AMCOR_2019_10K",
+      "predicted": "$437.4 million",
+      "ground_truth": "430.2 million",
+      "correct": false,
+      "retrieved_tokens": 12550,
+      "latency_seconds": 1.244,
+      "total_doc_tokens": 84134,
+      "cost_ratio": 0.149167
+    },
+    {
+      "doc_name": "COSTCO_2017_10K",
+      "predicted": "$2,679 million",
+      "ground_truth": "2,679",
+      "correct": true,
+      "retrieved_tokens": 11758,
+      "latency_seconds": 2.575,
+      "total_doc_tokens": 50565,
+      "cost_ratio": 0.232532
+    },
+    {
+      "doc_name": "BOEING_2018_10K",
+      "predicted": "$10,460 million",
+      "ground_truth": "$10,460 million",
+      "correct": true,
+      "retrieved_tokens": 11664,
+      "latency_seconds": 1.622,
+      "total_doc_tokens": 88449,
+      "cost_ratio": 0.131873
+    },
+    {
+      "doc_name": "AMAZON_2018_10K",
+      "predicted": "$10,073 million",
+      "ground_truth": "$10,073 million",
+      "correct": true,
+      "retrieved_tokens": 6570,
+      "latency_seconds": 1.237,
+      "total_doc_tokens": 67659,
+      "cost_ratio": 0.097105
+    },
+    {
+      "doc_name": "EBAY_2021_10K",
+      "predicted": "$13,608 million",
+      "ground_truth": "$13,608 million",
+      "correct": true,
+      "retrieved_tokens": 6137,
+      "latency_seconds": 1.105,
+      "total_doc_tokens": 104188,
+      "cost_ratio": 0.058903
+    },
+    {
+      "doc_name": "AMAZON_2016_10K",
+      "predicted": "$2,371 million",
+      "ground_truth": "$2,371 million",
+      "correct": true,
+      "retrieved_tokens": 6545,
+      "latency_seconds": 1.802,
+      "total_doc_tokens": 63358,
+      "cost_ratio": 0.103302
+    },
+    {
+      "doc_name": "CORNING_2022_10K",
+      "predicted": "$1,316 million",
+      "ground_truth": "1,316 million",
+      "correct": true,
+      "retrieved_tokens": 10578,
+      "latency_seconds": 2.451,
+      "total_doc_tokens": 107052,
+      "cost_ratio": 0.098812
+    },
+    {
+      "doc_name": "NIKE_2021_10K",
+      "predicted": "$5,727 million",
+      "ground_truth": "$5,727 million",
+      "correct": true,
+      "retrieved_tokens": 9743,
+      "latency_seconds": 1.627,
+      "total_doc_tokens": 89991,
+      "cost_ratio": 0.108266
+    },
+    {
+      "doc_name": "LOCKHEEDMARTIN_2022_10K",
+      "predicted": "$5,732 million",
+      "ground_truth": "$5,732 million",
+      "correct": true,
+      "retrieved_tokens": 9533,
+      "latency_seconds": 1.927,
+      "total_doc_tokens": 105703,
+      "cost_ratio": 0.090187
+    },
+    {
+      "doc_name": "JOHNSON_JOHNSON_2022_10K",
+      "predicted": "$17,941 million",
+      "ground_truth": "$17.9 billion",
+      "correct": true,
+      "retrieved_tokens": 6987,
+      "latency_seconds": 1.51,
+      "total_doc_tokens": 123226,
+      "cost_ratio": 0.056701
+    }
+  ]
+}

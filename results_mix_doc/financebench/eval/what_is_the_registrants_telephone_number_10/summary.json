@@ -1,0 +1,384 @@
+{
+  "question": "What is the registrant's telephone number?",
+  "question_slug": "what_is_the_registrants_telephone_number_10",
+  "split": "sampled",
+  "num_documents": 10,
+  "rules": [
+    {
+      "rule_name": "rule_phone_in_company_header_block",
+      "accuracy": 0.7,
+      "avg_cost_ratio": 0.000282,
+      "avg_rule_apply_latency_seconds": 1.581,
+      "avg_judge_latency_seconds": 1.038,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_cover_page_phone_after_company_name",
+      "accuracy": 0.7,
+      "avg_cost_ratio": 0.000311,
+      "avg_rule_apply_latency_seconds": 1.262,
+      "avg_judge_latency_seconds": 1.061,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_phone_number_pattern",
+      "accuracy": 0.7,
+      "avg_cost_ratio": 0.000311,
+      "avg_rule_apply_latency_seconds": 1.116,
+      "avg_judge_latency_seconds": 1.041,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_phone_number_pattern_excluding_non_sec",
+      "accuracy": 0.7,
+      "avg_cost_ratio": 0.000311,
+      "avg_rule_apply_latency_seconds": 1.069,
+      "avg_judge_latency_seconds": 1.011,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_phone_in_body_depth_2_or_3",
+      "accuracy": 0.7,
+      "avg_cost_ratio": 0.000311,
+      "avg_rule_apply_latency_seconds": 1.268,
+      "avg_judge_latency_seconds": 1.049,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_phone_in_cover_page_with_form_type",
+      "accuracy": 0.7,
+      "avg_cost_ratio": 0.000311,
+      "avg_rule_apply_latency_seconds": 1.162,
+      "avg_judge_latency_seconds": 1.074,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_phone_in_first_25_spans",
+      "accuracy": 0.7,
+      "avg_cost_ratio": 0.000311,
+      "avg_rule_apply_latency_seconds": 1.289,
+      "avg_judge_latency_seconds": 1.027,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_phone_in_first_page_first_30_spans",
+      "accuracy": 0.7,
+      "avg_cost_ratio": 0.000311,
+      "avg_rule_apply_latency_seconds": 1.147,
+      "avg_judge_latency_seconds": 1.023,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_phone_in_non_table_non_list_cover",
+      "accuracy": 0.7,
+      "avg_cost_ratio": 0.000311,
+      "avg_rule_apply_latency_seconds": 1.121,
+      "avg_judge_latency_seconds": 1.107,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_phone_in_page1_section_header_or_text",
+      "accuracy": 0.7,
+      "avg_cost_ratio": 0.000311,
+      "avg_rule_apply_latency_seconds": 1.081,
+      "avg_judge_latency_seconds": 1.082,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_phone_in_cover_page_excluding_press_release",
+      "accuracy": 0.7,
+      "avg_cost_ratio": 0.000427,
+      "avg_rule_apply_latency_seconds": 1.162,
+      "avg_judge_latency_seconds": 1.103,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_phone_in_cover_page_metadata_band",
+      "accuracy": 0.7,
+      "avg_cost_ratio": 0.000427,
+      "avg_rule_apply_latency_seconds": 1.134,
+      "avg_judge_latency_seconds": 0.987,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_cover_page_phone_before_table_of_contents",
+      "accuracy": 0.7,
+      "avg_cost_ratio": 0.000769,
+      "avg_rule_apply_latency_seconds": 1.315,
+      "avg_judge_latency_seconds": 1.007,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_phone_in_cover_metadata_cluster",
+      "accuracy": 0.7,
+      "avg_cost_ratio": 0.000788,
+      "avg_rule_apply_latency_seconds": 1.068,
+      "avg_judge_latency_seconds": 1.078,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_cover_page_phone_not_in_risk_or_business_sections",
+      "accuracy": 0.7,
+      "avg_cost_ratio": 0.000851,
+      "avg_rule_apply_latency_seconds": 1.323,
+      "avg_judge_latency_seconds": 1.019,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_phone_in_text_or_textspan_anywhere",
+      "accuracy": 0.7,
+      "avg_cost_ratio": 0.001263,
+      "avg_rule_apply_latency_seconds": 1.138,
+      "avg_judge_latency_seconds": 1.086,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_phone_in_same_path_as_company_name",
+      "accuracy": 0.6,
+      "avg_cost_ratio": 0.000265,
+      "avg_rule_apply_latency_seconds": 1.055,
+      "avg_judge_latency_seconds": 1.021,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_phone_in_company_cover_block_before_securities_registered",
+      "accuracy": 0.6,
+      "avg_cost_ratio": 0.000277,
+      "avg_rule_apply_latency_seconds": 1.087,
+      "avg_judge_latency_seconds": 1.482,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_phone_in_cover_page_with_company_h1_present",
+      "accuracy": 0.6,
+      "avg_cost_ratio": 0.00036,
+      "avg_rule_apply_latency_seconds": 1.116,
+      "avg_judge_latency_seconds": 1.103,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_10q_cover_phone_parenthetical",
+      "accuracy": 0.5,
+      "avg_cost_ratio": 0.000309,
+      "avg_rule_apply_latency_seconds": 1.132,
+      "avg_judge_latency_seconds": 1.043,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_phone_in_cover_header_or_body_with_area_code",
+      "accuracy": 0.5,
+      "avg_cost_ratio": 0.00033,
+      "avg_rule_apply_latency_seconds": 1.499,
+      "avg_judge_latency_seconds": 1.097,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_phone_in_cover_header_or_body_with_telephone_word",
+      "accuracy": 0.5,
+      "avg_cost_ratio": 0.00033,
+      "avg_rule_apply_latency_seconds": 1.759,
+      "avg_judge_latency_seconds": 1.052,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_phone_in_same_or_next_span_after_address",
+      "accuracy": 0.5,
+      "avg_cost_ratio": 0.000451,
+      "avg_rule_apply_latency_seconds": 1.317,
+      "avg_judge_latency_seconds": 1.02,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_phone_in_text_with_registrant_phrase",
+      "accuracy": 0.4,
+      "avg_cost_ratio": 0.000199,
+      "avg_rule_apply_latency_seconds": 1.049,
+      "avg_judge_latency_seconds": 1.093,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_phone_in_bold_small_cover_text",
+      "accuracy": 0.4,
+      "avg_cost_ratio": 0.000217,
+      "avg_rule_apply_latency_seconds": 1.226,
+      "avg_judge_latency_seconds": 1.029,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_8k_cover_phone_phrase",
+      "accuracy": 0.4,
+      "avg_cost_ratio": 0.000265,
+      "avg_rule_apply_latency_seconds": 1.075,
+      "avg_judge_latency_seconds": 1.041,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_telephone_phrase",
+      "accuracy": 0.4,
+      "avg_cost_ratio": 0.000265,
+      "avg_rule_apply_latency_seconds": 1.034,
+      "avg_judge_latency_seconds": 1.03,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_page1_area_code_phrase",
+      "accuracy": 0.4,
+      "avg_cost_ratio": 0.000317,
+      "avg_rule_apply_latency_seconds": 1.05,
+      "avg_judge_latency_seconds": 1.067,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_phone_in_company_cover_text_only",
+      "accuracy": 0.3,
+      "avg_cost_ratio": 0.000158,
+      "avg_rule_apply_latency_seconds": 1.087,
+      "avg_judge_latency_seconds": 8.879,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_10k_cover_phone_after_zip",
+      "accuracy": 0.2,
+      "avg_cost_ratio": 6.4e-05,
+      "avg_rule_apply_latency_seconds": 1.023,
+      "avg_judge_latency_seconds": 1.056,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_phone_near_address_keywords",
+      "accuracy": 0.2,
+      "avg_cost_ratio": 6.4e-05,
+      "avg_rule_apply_latency_seconds": 1.2,
+      "avg_judge_latency_seconds": 1.152,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_phone_near_zip_code",
+      "accuracy": 0.2,
+      "avg_cost_ratio": 6.4e-05,
+      "avg_rule_apply_latency_seconds": 1.793,
+      "avg_judge_latency_seconds": 1.069,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_phone_in_h2_header",
+      "accuracy": 0.1,
+      "avg_cost_ratio": 1.9e-05,
+      "avg_rule_apply_latency_seconds": 1.033,
+      "avg_judge_latency_seconds": 1.151,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_phone_in_parenthetical_registrant_line",
+      "accuracy": 0.1,
+      "avg_cost_ratio": 4.8e-05,
+      "avg_rule_apply_latency_seconds": 1.285,
+      "avg_judge_latency_seconds": 1.044,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_phone_after_principal_executive_offices",
+      "accuracy": 0.1,
+      "avg_cost_ratio": 5.5e-05,
+      "avg_rule_apply_latency_seconds": 1.114,
+      "avg_judge_latency_seconds": 1.041,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_phone_in_span_with_principal_executive_or_zip",
+      "accuracy": 0.1,
+      "avg_cost_ratio": 5.5e-05,
+      "avg_rule_apply_latency_seconds": 1.035,
+      "avg_judge_latency_seconds": 1.086,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_phone_in_h2_with_registrant_label_below",
+      "accuracy": 0.1,
+      "avg_cost_ratio": 7.4e-05,
+      "avg_rule_apply_latency_seconds": 1.083,
+      "avg_judge_latency_seconds": 1.155,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_phone_in_cover_company_h1_or_h2",
+      "accuracy": 0.1,
+      "avg_cost_ratio": 0.000121,
+      "avg_rule_apply_latency_seconds": 1.577,
+      "avg_judge_latency_seconds": 1.195,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_cover_page_phone_with_company_metadata_keywords",
+      "accuracy": 0.1,
+      "avg_cost_ratio": 0.00016,
+      "avg_rule_apply_latency_seconds": 1.214,
+      "avg_judge_latency_seconds": 1.064,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_phone_in_section_header_with_registrant_phrase",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.0,
+      "avg_rule_apply_latency_seconds": 1.003,
+      "avg_judge_latency_seconds": 1.175,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_phone_under_exact_name_registrant",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.0,
+      "avg_rule_apply_latency_seconds": 0.999,
+      "avg_judge_latency_seconds": 1.052,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_phone_in_address_and_telephone_line",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 5.2e-05,
+      "avg_rule_apply_latency_seconds": 1.071,
+      "avg_judge_latency_seconds": 1.556,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_cover_page_company_block_with_phone_and_ein",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 8.3e-05,
+      "avg_rule_apply_latency_seconds": 1.392,
+      "avg_judge_latency_seconds": 1.051,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_cover_page_company_block_with_phone_and_exact_name",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 8.3e-05,
+      "avg_rule_apply_latency_seconds": 1.134,
+      "avg_judge_latency_seconds": 1.043,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_phone_in_cover_company_h1_textspan",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 8.3e-05,
+      "avg_rule_apply_latency_seconds": 1.187,
+      "avg_judge_latency_seconds": 1.122,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_phone_in_h1_company_textspan_cover",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 8.3e-05,
+      "avg_rule_apply_latency_seconds": 1.386,
+      "avg_judge_latency_seconds": 1.037,
+      "num_documents": 10
+    },
+    {
+      "rule_name": "rule_phone_in_textspan_anywhere",
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.000121,
+      "avg_rule_apply_latency_seconds": 1.037,
+      "avg_judge_latency_seconds": 1.1,
+      "num_documents": 10
+    }
+  ]
+}

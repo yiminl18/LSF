@@ -1,0 +1,168 @@
+{
+  "question": "What is the reporting period covered by this document (e.g. fiscal year ended, quarter ended, or event date)?",
+  "question_slug": "what_is_the_reporting_period_covered_by_this_document_eg_fis",
+  "timestamp": "2026-05-04T23:08:25Z",
+  "model": "gpt54",
+  "num_documents": 18,
+  "doc_names": [
+    "BOEING_2019_10K",
+    "ADOBE_2020_10K",
+    "ACTIVISIONBLIZZARD_2020_10K",
+    "COSTCO_2018_10K",
+    "AMCOR_2019_10K",
+    "AMAZON_2020_10K",
+    "AMAZON_2019_10K",
+    "ADOBE_2021_10K",
+    "EBAY_2022_10K",
+    "ADOBE_2019_10K",
+    "AMCOR_2023Q2_10Q",
+    "ADOBE_2022Q2_10Q",
+    "ACTIVSIONBLIZZARD_2023Q2_10Q",
+    "3M_2023Q2_10Q",
+    "AMCOR_2022_8K_2022-07-01",
+    "COSTCO_2023_8K_dated-2023-08-09",
+    "COSTCO_2023_8K_dated-2023-08-16",
+    "FOOTLOCKER_2022_8K_dated-2022-05-20"
+  ],
+  "max_iterations": 12,
+  "agent_turns": 7,
+  "latency_seconds": 261.078,
+  "agent_input_tokens": 5021315,
+  "agent_output_tokens": 1641,
+  "judge_input_tokens": 15841,
+  "judge_output_tokens": 1052,
+  "total_input_tokens": 5037156,
+  "total_output_tokens": 2693,
+  "total_llm_calls": 108,
+  "merge_accuracy": 0.9444,
+  "merge_num_correct": 17,
+  "avg_cost_ratio": 0.00226,
+  "merge_per_doc": {
+    "BOEING_2019_10K": {
+      "predicted": "fiscal year ended December 31, 2019",
+      "ground_truth": "Fiscal year ended December 31, 2019",
+      "correct": true,
+      "cost_ratio": 0.00014
+    },
+    "ADOBE_2020_10K": {
+      "predicted": "fiscal year ended November 27, 2020",
+      "ground_truth": "Fiscal year ended November 27, 2020",
+      "correct": true,
+      "cost_ratio": 0.00013
+    },
+    "ACTIVISIONBLIZZARD_2020_10K": {
+      "predicted": "Fiscal Year Ended December 31, 2020",
+      "ground_truth": "Fiscal year ended December 31, 2020",
+      "correct": true,
+      "cost_ratio": 0.00012
+    },
+    "COSTCO_2018_10K": {
+      "predicted": "fiscal year ended September 2, 2018",
+      "ground_truth": "Fiscal year ended September 2, 2018",
+      "correct": true,
+      "cost_ratio": 0.00027
+    },
+    "AMCOR_2019_10K": {
+      "predicted": "Fiscal Year Ended June 30, 2019",
+      "ground_truth": "Fiscal year ended June 30, 2019",
+      "correct": true,
+      "cost_ratio": 0.00014
+    },
+    "AMAZON_2020_10K": {
+      "predicted": "fiscal year ended December 31, 2020",
+      "ground_truth": "Fiscal year ended December 31, 2020",
+      "correct": true,
+      "cost_ratio": 0.0002
+    },
+    "AMAZON_2019_10K": {
+      "predicted": "fiscal year ended December 31, 2019",
+      "ground_truth": "Fiscal year ended December 31, 2019",
+      "correct": true,
+      "cost_ratio": 0.00019
+    },
+    "ADOBE_2021_10K": {
+      "predicted": "fiscal year ended December 3, 2021",
+      "ground_truth": "Fiscal year ended December 3, 2021",
+      "correct": true,
+      "cost_ratio": 0.00016
+    },
+    "EBAY_2022_10K": {
+      "predicted": "fiscal year ended December 31, 2022",
+      "ground_truth": "Fiscal year ended December 31, 2022",
+      "correct": true,
+      "cost_ratio": 0.00047
+    },
+    "ADOBE_2019_10K": {
+      "predicted": "fiscal year ended November 29, 2019",
+      "ground_truth": "Fiscal year ended November 29, 2019",
+      "correct": true,
+      "cost_ratio": 0.00014
+    },
+    "AMCOR_2023Q2_10Q": {
+      "predicted": "December 31, 2022",
+      "ground_truth": "Quarterly period ended December 31, 2022",
+      "correct": false,
+      "cost_ratio": 0.0015
+    },
+    "ADOBE_2022Q2_10Q": {
+      "predicted": "quarter ended June 2, 2023",
+      "ground_truth": "Quarterly period ended June 2, 2023",
+      "correct": true,
+      "cost_ratio": 0.00028
+    },
+    "ACTIVSIONBLIZZARD_2023Q2_10Q": {
+      "predicted": "June 30, 2023",
+      "ground_truth": "Quarterly period ended June 30, 2023",
+      "correct": true,
+      "cost_ratio": 0.00086
+    },
+    "3M_2023Q2_10Q": {
+      "predicted": "June 30, 2023",
+      "ground_truth": "Quarterly period ended June 30, 2023",
+      "correct": true,
+      "cost_ratio": 0.00058
+    },
+    "AMCOR_2022_8K_2022-07-01": {
+      "predicted": "June 30, 2022",
+      "ground_truth": "June 30, 2022",
+      "correct": true,
+      "cost_ratio": 0.00467
+    },
+    "COSTCO_2023_8K_dated-2023-08-09": {
+      "predicted": "August 9, 2023",
+      "ground_truth": "August 9, 2023",
+      "correct": true,
+      "cost_ratio": 0.00071
+    },
+    "COSTCO_2023_8K_dated-2023-08-16": {
+      "predicted": "August 16, 2023",
+      "ground_truth": "August 16, 2023",
+      "correct": true,
+      "cost_ratio": 0.01564
+    },
+    "FOOTLOCKER_2022_8K_dated-2022-05-20": {
+      "predicted": "May 18, 2022",
+      "ground_truth": "May 18, 2022",
+      "correct": true,
+      "cost_ratio": 0.01441
+    }
+  },
+  "rules": [
+    {
+      "rule_name": "rule_reporting_period_cover_header",
+      "description": "Retrieve page-1 cover-header spans stating the fiscal/quarterly period or event date.",
+      "hit_rate": 1.0,
+      "avg_cost_ratio": 0.00221,
+      "file": "rules/agent/financebench_mix_doc/what_is_the_reporting_period_covered_by_this_document_eg_fis_18_llm/rule_reporting_period_cover_header.py"
+    },
+    {
+      "rule_name": "rule_reporting_period_10q_header_textspan",
+      "description": "Retrieve page-1 FORM 10-Q cover section headers whose text_span contains the quarterly period ended phrase.",
+      "hit_rate": 0.0,
+      "avg_cost_ratio": 4e-05,
+      "file": "rules/agent/financebench_mix_doc/what_is_the_reporting_period_covered_by_this_document_eg_fis_18_llm/rule_reporting_period_10q_header_textspan.py"
+    }
+  ],
+  "rule_dir": "rules/agent/financebench_mix_doc/what_is_the_reporting_period_covered_by_this_document_eg_fis_18_llm",
+  "log_file": "logs/financebench/agent/what_is_the_reporting_period_covered_by_this_document_eg_fis_18docs_20260504_230825.txt"
+}

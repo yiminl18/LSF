@@ -1,0 +1,168 @@
+{
+  "question": "What is the exact name of the company (registrant) this document relates to?",
+  "question_slug": "what_is_the_exact_name_of_the_company_registrant_this_docume",
+  "timestamp": "2026-05-04T23:16:45Z",
+  "model": "gpt54",
+  "num_documents": 18,
+  "doc_names": [
+    "BOEING_2019_10K",
+    "ADOBE_2020_10K",
+    "ACTIVISIONBLIZZARD_2020_10K",
+    "COSTCO_2018_10K",
+    "AMCOR_2019_10K",
+    "AMAZON_2020_10K",
+    "AMAZON_2019_10K",
+    "ADOBE_2021_10K",
+    "EBAY_2022_10K",
+    "ADOBE_2019_10K",
+    "AMCOR_2023Q2_10Q",
+    "ADOBE_2022Q2_10Q",
+    "ACTIVSIONBLIZZARD_2023Q2_10Q",
+    "3M_2023Q2_10Q",
+    "AMCOR_2022_8K_2022-07-01",
+    "COSTCO_2023_8K_dated-2023-08-09",
+    "COSTCO_2023_8K_dated-2023-08-16",
+    "FOOTLOCKER_2022_8K_dated-2022-05-20"
+  ],
+  "max_iterations": 12,
+  "agent_turns": 9,
+  "latency_seconds": 328.345,
+  "agent_input_tokens": 6277599,
+  "agent_output_tokens": 1445,
+  "judge_input_tokens": 9424,
+  "judge_output_tokens": 556,
+  "total_input_tokens": 6287023,
+  "total_output_tokens": 2001,
+  "total_llm_calls": 72,
+  "merge_accuracy": 1.0,
+  "merge_num_correct": 18,
+  "avg_cost_ratio": 0.00077,
+  "merge_per_doc": {
+    "BOEING_2019_10K": {
+      "predicted": "THE BOEING COMPANY",
+      "ground_truth": "The Boeing Company",
+      "correct": true,
+      "cost_ratio": 5e-05
+    },
+    "ADOBE_2020_10K": {
+      "predicted": "ADOBE INC.",
+      "ground_truth": "Adobe Inc.",
+      "correct": true,
+      "cost_ratio": 4e-05
+    },
+    "ACTIVISIONBLIZZARD_2020_10K": {
+      "predicted": "ACTIVISION BLIZZARD, INC.",
+      "ground_truth": "ACTIVISION BLIZZARD, INC.",
+      "correct": true,
+      "cost_ratio": 0.0001
+    },
+    "COSTCO_2018_10K": {
+      "predicted": "Costco Wholesale Corporation",
+      "ground_truth": "Costco Wholesale Corporation",
+      "correct": true,
+      "cost_ratio": 8e-05
+    },
+    "AMCOR_2019_10K": {
+      "predicted": "AMCOR PLC",
+      "ground_truth": "AMCOR PLC",
+      "correct": true,
+      "cost_ratio": 4e-05
+    },
+    "AMAZON_2020_10K": {
+      "predicted": "AMAZON.COM, INC.",
+      "ground_truth": "Amazon.com, Inc.",
+      "correct": true,
+      "cost_ratio": 0.00012
+    },
+    "AMAZON_2019_10K": {
+      "predicted": "AMAZON.COM, INC.",
+      "ground_truth": "Amazon.com, Inc.",
+      "correct": true,
+      "cost_ratio": 0.00011
+    },
+    "ADOBE_2021_10K": {
+      "predicted": "ADOBE INC.",
+      "ground_truth": "Adobe Inc.",
+      "correct": true,
+      "cost_ratio": 5e-05
+    },
+    "EBAY_2022_10K": {
+      "predicted": "eBay Inc.",
+      "ground_truth": "eBay Inc.",
+      "correct": true,
+      "cost_ratio": 0.00155
+    },
+    "ADOBE_2019_10K": {
+      "predicted": "ADOBE INC.",
+      "ground_truth": "Adobe Inc.",
+      "correct": true,
+      "cost_ratio": 4e-05
+    },
+    "AMCOR_2023Q2_10Q": {
+      "predicted": "AMCOR PLC",
+      "ground_truth": "Amcor plc",
+      "correct": true,
+      "cost_ratio": 9e-05
+    },
+    "ADOBE_2022Q2_10Q": {
+      "predicted": "ADOBE INC.",
+      "ground_truth": "Adobe Inc.",
+      "correct": true,
+      "cost_ratio": 0.00031
+    },
+    "ACTIVSIONBLIZZARD_2023Q2_10Q": {
+      "predicted": "ACTIVISION BLIZZARD, INC.",
+      "ground_truth": "ACTIVISION BLIZZARD, INC.",
+      "correct": true,
+      "cost_ratio": 0.00019
+    },
+    "3M_2023Q2_10Q": {
+      "predicted": "3M COMPANY",
+      "ground_truth": "3M COMPANY",
+      "correct": true,
+      "cost_ratio": 4e-05
+    },
+    "AMCOR_2022_8K_2022-07-01": {
+      "predicted": "AMCOR PLC",
+      "ground_truth": "AMCOR PLC",
+      "correct": true,
+      "cost_ratio": 0.00054
+    },
+    "COSTCO_2023_8K_dated-2023-08-09": {
+      "predicted": "COSTCO WHOLESALE CORPORATION",
+      "ground_truth": "Costco Wholesale Corporation",
+      "correct": true,
+      "cost_ratio": 0.00034
+    },
+    "COSTCO_2023_8K_dated-2023-08-16": {
+      "predicted": "COSTCO WHOLESALE CORPORATION",
+      "ground_truth": "COSTCO WHOLESALE CORPORATION",
+      "correct": true,
+      "cost_ratio": 0.00736
+    },
+    "FOOTLOCKER_2022_8K_dated-2022-05-20": {
+      "predicted": "Foot Locker, Inc.",
+      "ground_truth": "Foot Locker, Inc.",
+      "correct": true,
+      "cost_ratio": 0.00277
+    }
+  },
+  "rules": [
+    {
+      "rule_name": "rule_page1_registrant_h1",
+      "description": "Retrieve the page-1 H1 registrant name header while excluding generic filing headers.",
+      "hit_rate": 0.9444,
+      "avg_cost_ratio": 0.00068,
+      "file": "rules/agent/financebench_mix_doc/what_is_the_exact_name_of_the_company_registrant_this_docume_18_llm/rule_page1_registrant_h1.py"
+    },
+    {
+      "rule_name": "rule_ebay_item1_overview_body",
+      "description": "Retrieve the company-identifying overview paragraph under Item 1 Business for eBay-style filings.",
+      "hit_rate": 0.0556,
+      "avg_cost_ratio": 9e-05,
+      "file": "rules/agent/financebench_mix_doc/what_is_the_exact_name_of_the_company_registrant_this_docume_18_llm/rule_ebay_item1_overview_body.py"
+    }
+  ],
+  "rule_dir": "rules/agent/financebench_mix_doc/what_is_the_exact_name_of_the_company_registrant_this_docume_18_llm",
+  "log_file": "logs/financebench/agent/what_is_the_exact_name_of_the_company_registrant_this_docume_18docs_20260504_231645.txt"
+}

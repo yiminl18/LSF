@@ -1,0 +1,84 @@
+{
+  "question": "What is long-term debt at year-end (0 if none)?",
+  "question_slug": "what_is_longterm_debt_at_yearend_0_if_none_10",
+  "timestamp": "2026-04-30T21:18:17Z",
+  "target_accuracy": 0.7,
+  "all_rules_count": 3,
+  "sorted_rules": [
+    "rule_selected_financial_data_tables",
+    "rule_balance_sheet_tables",
+    "rule_financial_statement_tables_long_term_debt"
+  ],
+  "rule_costs": {
+    "rule_selected_financial_data_tables": 0.011761,
+    "rule_balance_sheet_tables": 0.025396,
+    "rule_financial_statement_tables_long_term_debt": 0.065976
+  },
+  "total_latency_seconds": 108.459,
+  "total_input_tokens": 80280,
+  "total_output_tokens": 554,
+  "iterations": [
+    {
+      "phase": "exp_search",
+      "step": 1,
+      "k": 1,
+      "rules": [
+        "rule_selected_financial_data_tables"
+      ],
+      "rules_count": 1,
+      "accuracy": 0.2,
+      "avg_cost_ratio": 0.011761,
+      "latency_seconds": 26.463,
+      "input_tokens": 10940,
+      "output_tokens": 135,
+      "action": "continue"
+    },
+    {
+      "phase": "exp_search",
+      "step": 2,
+      "k": 2,
+      "rules": [
+        "rule_selected_financial_data_tables",
+        "rule_balance_sheet_tables"
+      ],
+      "rules_count": 2,
+      "accuracy": 0.7,
+      "avg_cost_ratio": 0.032743,
+      "latency_seconds": 26.65,
+      "input_tokens": 29201,
+      "output_tokens": 143,
+      "action": "candidate_found"
+    },
+    {
+      "phase": "pruning",
+      "step": 1,
+      "i": 1,
+      "rule_tested": "rule_balance_sheet_tables",
+      "rules": [
+        "rule_selected_financial_data_tables"
+      ],
+      "rules_count": 1,
+      "accuracy": 0.2,
+      "avg_cost_ratio": 0.011761,
+      "latency_seconds": 26.175,
+      "input_tokens": 10939,
+      "output_tokens": 134,
+      "action": "kept"
+    },
+    {
+      "phase": "final",
+      "step": 1,
+      "rules": [
+        "rule_selected_financial_data_tables",
+        "rule_balance_sheet_tables"
+      ],
+      "rules_count": 2,
+      "accuracy": 0.7,
+      "avg_cost_ratio": 0.032743,
+      "latency_seconds": 25.393,
+      "input_tokens": 29200,
+      "output_tokens": 142,
+      "action": "final_eval"
+    }
+  ]
+}

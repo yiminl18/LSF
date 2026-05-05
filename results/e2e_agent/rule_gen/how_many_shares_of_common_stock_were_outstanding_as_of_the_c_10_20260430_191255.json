@@ -1,0 +1,119 @@
+{
+  "question": "How many shares of common stock were outstanding as of the cover-page reference date?",
+  "question_slug": "how_many_shares_of_common_stock_were_outstanding_as_of_the_c",
+  "timestamp": "2026-04-30T19:12:55Z",
+  "model": "gpt54",
+  "num_documents": 10,
+  "doc_names": [
+    "AMCOR_2019_10K",
+    "COSTCO_2017_10K",
+    "BOEING_2018_10K",
+    "AMAZON_2018_10K",
+    "EBAY_2021_10K",
+    "AMAZON_2016_10K",
+    "CORNING_2022_10K",
+    "NIKE_2021_10K",
+    "LOCKHEEDMARTIN_2022_10K",
+    "JOHNSON_JOHNSON_2022_10K"
+  ],
+  "max_iterations": 12,
+  "agent_turns": 16,
+  "latency_seconds": 852.565,
+  "agent_input_tokens": 3290513,
+  "agent_output_tokens": 2328,
+  "judge_input_tokens": 2886,
+  "judge_output_tokens": 157,
+  "total_input_tokens": 3293399,
+  "total_output_tokens": 2485,
+  "total_llm_calls": 20,
+  "merge_accuracy": 0.9,
+  "merge_num_correct": 9,
+  "avg_cost_ratio": 0.00045,
+  "merge_per_doc": {
+    "AMCOR_2019_10K": {
+      "predicted": "1,625,907,855",
+      "ground_truth": "1,625,907,855",
+      "correct": true,
+      "cost_ratio": 0.00032
+    },
+    "COSTCO_2017_10K": {
+      "predicted": "436,989,606",
+      "ground_truth": "436,989,606",
+      "correct": true,
+      "cost_ratio": 0.00057
+    },
+    "BOEING_2018_10K": {
+      "predicted": "564,985,109",
+      "ground_truth": "564,985,109",
+      "correct": true,
+      "cost_ratio": 0.00106
+    },
+    "AMAZON_2018_10K": {
+      "predicted": "491,202,890",
+      "ground_truth": "491,202,890",
+      "correct": true,
+      "cost_ratio": 0.00044
+    },
+    "EBAY_2021_10K": {
+      "predicted": "587,528,915",
+      "ground_truth": "587,528,915",
+      "correct": true,
+      "cost_ratio": 0.00021
+    },
+    "AMAZON_2016_10K": {
+      "predicted": "477,170,618",
+      "ground_truth": "477,170,618",
+      "correct": true,
+      "cost_ratio": 0.00047
+    },
+    "CORNING_2022_10K": {
+      "predicted": "846,563,422",
+      "ground_truth": "846,563,422",
+      "correct": true,
+      "cost_ratio": 0.00021
+    },
+    "NIKE_2021_10K": {
+      "predicted": "180,448,113,046",
+      "ground_truth": "1,581,801,224",
+      "correct": false,
+      "cost_ratio": 0.00077
+    },
+    "LOCKHEEDMARTIN_2022_10K": {
+      "predicted": "255,297,298",
+      "ground_truth": "255,297,298",
+      "correct": true,
+      "cost_ratio": 0.0003
+    },
+    "JOHNSON_JOHNSON_2022_10K": {
+      "predicted": "2,604,286,303",
+      "ground_truth": "2,604,286,303",
+      "correct": true,
+      "cost_ratio": 0.0002
+    }
+  },
+  "rules": [
+    {
+      "rule_name": "rule_cover_page_shares_outstanding",
+      "description": "Retrieve cover-page body text on pages 1-2 mentioning shares/common stock outstanding.",
+      "hit_rate": 0.5,
+      "avg_cost_ratio": 0.00028,
+      "file": "rules/llm/financebench_agent/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_cover_page_shares_outstanding.py"
+    },
+    {
+      "rule_name": "rule_cover_page_numeric_share_spans",
+      "description": "Retrieve page 1-2 cover-page body spans tied to common-stock outstanding disclosures, including adjacent numeric-only spans.",
+      "hit_rate": 0.9,
+      "avg_cost_ratio": 0.00033,
+      "file": "rules/llm/financebench_agent/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_cover_page_numeric_share_spans.py"
+    },
+    {
+      "rule_name": "rule_nike_adjacent_share_numbers",
+      "description": "Retrieve split numeric cover-page spans after a registrant common-stock outstanding lead-in.",
+      "hit_rate": 0.2,
+      "avg_cost_ratio": 0.00011,
+      "file": "rules/llm/financebench_agent/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_nike_adjacent_share_numbers.py"
+    }
+  ],
+  "rule_dir": "rules/llm/financebench_agent/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm",
+  "log_file": "logs/financebench/agent/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10docs_20260430_191255.txt"
+}

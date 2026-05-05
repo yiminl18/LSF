@@ -1,0 +1,224 @@
+{
+  "question": "What is total revenue for the most recent fiscal year (from the audited income statement)?",
+  "question_slug": "what_is_total_revenue_for_the_most_recent_fiscal_year_from_t",
+  "timestamp": "2026-04-28T20:03:10Z",
+  "model": "gpt54",
+  "num_documents": 10,
+  "doc_names": [
+    "AMCOR_2019_10K",
+    "ADOBE_2022Q2_10Q",
+    "COSTCO_2017_10K",
+    "BOEING_2018_10K",
+    "INTEL_2022Q4_EARNINGS",
+    "AMAZON_2018_10K",
+    "EBAY_2021_10K",
+    "AMAZON_2016_10K",
+    "COSTCO_2023_8K_dated-2023-08-09",
+    "FOOTLOCKER_2023Q3_10Q"
+  ],
+  "latency_seconds": 189.972,
+  "input_tokens": 449721,
+  "output_tokens": 6677,
+  "rules": [
+    {
+      "rule_name": "rule_income_statement_total_revenue_row",
+      "description": "Match tables containing an income statement row labeled Total revenue / Revenue / Net sales.",
+      "file": "rules/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_income_statement_total_revenue_row.py"
+    },
+    {
+      "rule_name": "rule_audited_income_statement_page_from_toc",
+      "description": "Use table of contents rows for Statement of Income / Statements of Operations to return nearby tables on referenced pages.",
+      "file": "rules/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_audited_income_statement_page_from_toc.py"
+    },
+    {
+      "rule_name": "rule_statement_of_income_heading",
+      "description": "Match headings for Statement of Income / Statements of Operations and nearby tables.",
+      "file": "rules/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_statement_of_income_heading.py"
+    },
+    {
+      "rule_name": "rule_condensed_statements_of_income_heading",
+      "description": "Match condensed consolidated statements of income headings and adjacent tables.",
+      "file": "rules/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_condensed_statements_of_income_heading.py"
+    },
+    {
+      "rule_name": "rule_consolidated_statement_of_income_heading",
+      "description": "Match consolidated statement of income headings and adjacent tables.",
+      "file": "rules/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_consolidated_statement_of_income_heading.py"
+    },
+    {
+      "rule_name": "rule_item_8_financial_statements_tables",
+      "description": "Match tables under Item 8 / Item 1 financial statements sections that mention revenue or net sales.",
+      "file": "rules/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_item_8_financial_statements_tables.py"
+    },
+    {
+      "rule_name": "rule_path_contains_financial_statements_and_revenue",
+      "description": "Match spans under financial statements paths whose text mentions revenue or net sales.",
+      "file": "rules/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_path_contains_financial_statements_and_revenue.py"
+    },
+    {
+      "rule_name": "rule_table_row_total_revenue_recent_period",
+      "description": "Match tables where a Total revenue / Net sales row has multiple period columns, implying most recent fiscal period is present.",
+      "file": "rules/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_table_row_total_revenue_recent_period.py"
+    },
+    {
+      "rule_name": "rule_table_with_revenue_and_period_headers",
+      "description": "Match tables with revenue rows and date/period column headers.",
+      "file": "rules/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_table_with_revenue_and_period_headers.py"
+    },
+    {
+      "rule_name": "rule_annual_report_news_summary_full_year_revenue",
+      "description": "Match list/text spans on page 1 that explicitly state full-year revenue.",
+      "file": "rules/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_annual_report_news_summary_full_year_revenue.py"
+    },
+    {
+      "rule_name": "rule_press_release_consolidated_statements_income",
+      "description": "Match press-release style consolidated statements of income tables containing Net revenue.",
+      "file": "rules/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_press_release_consolidated_statements_income.py"
+    },
+    {
+      "rule_name": "rule_press_release_business_unit_summary_annual_revenue",
+      "description": "Match press release summary spans that state full-year revenue in bullets or summary text.",
+      "file": "rules/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_press_release_business_unit_summary_annual_revenue.py"
+    },
+    {
+      "rule_name": "rule_revenue_note_table_total",
+      "description": "Match Note Revenue tables where a Total row contains the answer for the most recent period.",
+      "file": "rules/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_revenue_note_table_total.py"
+    },
+    {
+      "rule_name": "rule_net_revenue_row",
+      "description": "Match tables containing a Net revenue row.",
+      "file": "rules/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_net_revenue_row.py"
+    },
+    {
+      "rule_name": "rule_net_sales_row",
+      "description": "Match tables or text spans containing Net sales.",
+      "file": "rules/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_net_sales_row.py"
+    },
+    {
+      "rule_name": "rule_total_revenue_row",
+      "description": "Match tables or text spans containing Total revenue.",
+      "file": "rules/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_total_revenue_row.py"
+    },
+    {
+      "rule_name": "rule_sales_row_in_operations_statement",
+      "description": "Match statements of operations tables containing a Sales row.",
+      "file": "rules/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_sales_row_in_operations_statement.py"
+    },
+    {
+      "rule_name": "rule_page_around_statement_of_income",
+      "description": "Return tables on the same page as headings mentioning statement of income or operations.",
+      "file": "rules/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_page_around_statement_of_income.py"
+    },
+    {
+      "rule_name": "rule_recent_fiscal_year_column_headers",
+      "description": "Match tables with year/date headers and revenue-like rows, likely containing the most recent fiscal year value.",
+      "file": "rules/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_recent_fiscal_year_column_headers.py"
+    },
+    {
+      "rule_name": "rule_item_1_financial_statements_tables",
+      "description": "Match Item 1 financial statements tables in 10-Qs that contain revenue or sales.",
+      "file": "rules/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_item_1_financial_statements_tables.py"
+    },
+    {
+      "rule_name": "rule_page_1_summary_revenue_bullet",
+      "description": "Match page-1 bullet/list items summarizing revenue for quarter/full year.",
+      "file": "rules/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_page_1_summary_revenue_bullet.py"
+    },
+    {
+      "rule_name": "rule_segment_results_total_revenue_table",
+      "description": "Match segment result tables with a Total revenue / Total row in Note Revenue sections.",
+      "file": "rules/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_segment_results_total_revenue_table.py"
+    },
+    {
+      "rule_name": "rule_consolidated_statements_income_net_revenue",
+      "description": "Match consolidated statements of income tables where the first row is Net revenue.",
+      "file": "rules/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_consolidated_statements_income_net_revenue.py"
+    },
+    {
+      "rule_name": "rule_sales_or_revenue_first_numeric_row",
+      "description": "Match tables where the first meaningful row is Sales / Revenue / Net revenue / Net sales.",
+      "file": "rules/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_sales_or_revenue_first_numeric_row.py"
+    },
+    {
+      "rule_name": "rule_page_range_financial_statement_core",
+      "description": "Match tables on early financial statement pages (roughly pages 3-10) containing revenue/sales rows.",
+      "file": "rules/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_page_range_financial_statement_core.py"
+    },
+    {
+      "rule_name": "rule_exclude_non_10k_10q_8k_like",
+      "description": "Return empty for obvious 8-K documents, since audited income statement revenue is typically absent.",
+      "file": "rules/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_exclude_non_10k_10q_8k_like.py"
+    },
+    {
+      "rule_name": "rule_table_with_row_sales_and_multiple_periods",
+      "description": "Match tables with a Sales row and at least four columns, indicating multiple periods including most recent fiscal year.",
+      "file": "rules/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_table_with_row_sales_and_multiple_periods.py"
+    },
+    {
+      "rule_name": "rule_table_with_row_net_sales_and_years",
+      "description": "Match tables with Net sales row and year/date headers.",
+      "file": "rules/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_table_with_row_net_sales_and_years.py"
+    },
+    {
+      "rule_name": "rule_table_with_row_total_revenue_and_periods",
+      "description": "Match tables with Total revenue row and period headers.",
+      "file": "rules/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_table_with_row_total_revenue_and_periods.py"
+    },
+    {
+      "rule_name": "rule_revenue_summary_text_anywhere",
+      "description": "Match non-table spans explicitly stating annual/full-year revenue in prose.",
+      "file": "rules/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_revenue_summary_text_anywhere.py"
+    },
+    {
+      "rule_name": "rule_path_item_business_note_segment_information",
+      "description": "Match spans under Item Business or Note Segment Information paths that mention net sales/revenue totals.",
+      "file": "rules/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_path_item_business_note_segment_information.py"
+    },
+    {
+      "rule_name": "rule_table_near_item_8_or_item_1_heading",
+      "description": "Match tables within a few spans after Item 8 / Item 1 financial statement headings.",
+      "file": "rules/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_table_near_item_8_or_item_1_heading.py"
+    },
+    {
+      "rule_name": "rule_table_with_most_recent_year_and_total_row",
+      "description": "Match tables that have a recent year/date header and a Total/Revenue row, likely containing the answer.",
+      "file": "rules/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_table_with_most_recent_year_and_total_row.py"
+    },
+    {
+      "rule_name": "rule_income_statement_markdown_table",
+      "description": "Match markdown-style tables whose text includes statement-of-income keywords and revenue rows.",
+      "file": "rules/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_income_statement_markdown_table.py"
+    },
+    {
+      "rule_name": "rule_page_1_or_2_toc_financial_statement_locator",
+      "description": "Match TOC tables on pages 1-3 that reference the income statement location.",
+      "file": "rules/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_page_1_or_2_toc_financial_statement_locator.py"
+    },
+    {
+      "rule_name": "rule_revenue_in_business_overview_text",
+      "description": "Match business overview text spans that explicitly state annual revenue or net sales percentages/amounts.",
+      "file": "rules/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_revenue_in_business_overview_text.py"
+    },
+    {
+      "rule_name": "rule_table_with_sales_row_under_condensed_operations",
+      "description": "Match condensed consolidated statements of operations tables with a Sales row.",
+      "file": "rules/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_table_with_sales_row_under_condensed_operations.py"
+    },
+    {
+      "rule_name": "rule_table_with_net_revenue_under_consolidated_income",
+      "description": "Match consolidated income tables with Net revenue row, common in earnings releases.",
+      "file": "rules/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_table_with_net_revenue_under_consolidated_income.py"
+    },
+    {
+      "rule_name": "rule_table_with_total_net_revenue_under_segment_results",
+      "description": "Match segment result tables containing Total net revenue rows.",
+      "file": "rules/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_table_with_total_net_revenue_under_segment_results.py"
+    },
+    {
+      "rule_name": "rule_any_table_with_revenue_and_large_numeric_values",
+      "description": "Match tables containing revenue/sales rows with large numeric values, favoring recall.",
+      "file": "rules/financebench/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_any_table_with_revenue_and_large_numeric_values.py"
+    }
+  ]
+}

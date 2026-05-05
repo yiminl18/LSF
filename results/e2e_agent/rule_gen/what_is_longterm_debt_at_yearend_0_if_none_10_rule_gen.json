@@ -1,0 +1,112 @@
+{
+  "question": "What is long-term debt at year-end (0 if none)?",
+  "question_slug": "what_is_longterm_debt_at_yearend_0_if_none",
+  "timestamp": "2026-04-30T18:04:24Z",
+  "model": "gpt54",
+  "num_documents": 10,
+  "doc_names": [
+    "AMCOR_2019_10K",
+    "COSTCO_2017_10K",
+    "BOEING_2018_10K",
+    "AMAZON_2018_10K",
+    "EBAY_2021_10K",
+    "AMAZON_2016_10K",
+    "CORNING_2022_10K",
+    "NIKE_2021_10K",
+    "LOCKHEEDMARTIN_2022_10K",
+    "JOHNSON_JOHNSON_2022_10K"
+  ],
+  "max_iterations": 12,
+  "agent_turns": 25,
+  "latency_seconds": 147.396,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "merge_accuracy": 0.7,
+  "merge_num_correct": 7,
+  "avg_cost_ratio": 0.07277,
+  "total_llm_calls": 40,
+  "merge_per_doc": {
+    "AMCOR_2019_10K": {
+      "predicted": "5,309.0",
+      "ground_truth": "5,314.4 million",
+      "correct": false,
+      "cost_ratio": 0.07118
+    },
+    "COSTCO_2017_10K": {
+      "predicted": "6,573",
+      "ground_truth": "6,573",
+      "correct": true,
+      "cost_ratio": 0.10509
+    },
+    "BOEING_2018_10K": {
+      "predicted": "$10,657",
+      "ground_truth": "$10,657 million",
+      "correct": true,
+      "cost_ratio": 0.10509
+    },
+    "AMAZON_2018_10K": {
+      "predicted": "23,495",
+      "ground_truth": "$50,708 million",
+      "correct": false,
+      "cost_ratio": 0.08779
+    },
+    "EBAY_2021_10K": {
+      "predicted": "7,727",
+      "ground_truth": "$7,727 million",
+      "correct": true,
+      "cost_ratio": 0.05382
+    },
+    "AMAZON_2016_10K": {
+      "predicted": "7,694",
+      "ground_truth": "$7,694 million",
+      "correct": true,
+      "cost_ratio": 0.07394
+    },
+    "CORNING_2022_10K": {
+      "predicted": "6687",
+      "ground_truth": "6,687 million",
+      "correct": true,
+      "cost_ratio": 0.06479
+    },
+    "NIKE_2021_10K": {
+      "predicted": "9413",
+      "ground_truth": "$9,413 million",
+      "correct": true,
+      "cost_ratio": 0.06014
+    },
+    "LOCKHEEDMARTIN_2022_10K": {
+      "predicted": "15,429",
+      "ground_truth": "$15,547 million",
+      "correct": false,
+      "cost_ratio": 0.04254
+    },
+    "JOHNSON_JOHNSON_2022_10K": {
+      "predicted": "26,888",
+      "ground_truth": "$26.9 billion",
+      "correct": true,
+      "cost_ratio": 0.06332
+    }
+  },
+  "rules": [
+    {
+      "rule_name": "rule_financial_statement_tables_long_term_debt",
+      "description": "Retrieve financial statement tables likely containing long-term debt year-end values.",
+      "hit_rate": 0.1,
+      "file": "rules/llm/financebench_agent/what_is_longterm_debt_at_yearend_0_if_none_10_llm/rule_financial_statement_tables_long_term_debt.py"
+    },
+    {
+      "rule_name": "rule_balance_sheet_tables",
+      "description": "Retrieve tables that are balance sheets or statements of financial position.",
+      "hit_rate": 0.1,
+      "file": "rules/llm/financebench_agent/what_is_longterm_debt_at_yearend_0_if_none_10_llm/rule_balance_sheet_tables.py"
+    },
+    {
+      "rule_name": "rule_selected_financial_data_tables",
+      "description": "Retrieve selected financial data tables that often include long-term debt year-end values.",
+      "hit_rate": 0.1,
+      "file": "rules/llm/financebench_agent/what_is_longterm_debt_at_yearend_0_if_none_10_llm/rule_selected_financial_data_tables.py"
+    }
+  ],
+  "rule_dir": "rules/llm/financebench_agent/what_is_longterm_debt_at_yearend_0_if_none_10_llm",
+  "log_file": "logs/financebench/agent/what_is_longterm_debt_at_yearend_0_if_none_10docs_20260430_180424.txt"
+}
