@@ -12,20 +12,25 @@ sys.path.insert(0, str(ROOT / "test"))
 
 from task_prompt_rule_gen import run
 
-QUERIES_FILE  = ROOT / "data/financebench/sample_queries.txt"
-LABELS_FILE   = "data/financebench/sample_doc_labels.json"
+QUERIES_FILE   = ROOT / "data/financebench/sample_queries.txt"
+LABELS_FILE    = "data/financebench/sample_doc_labels.json"
 PROCESSING_DIR = "data/financebench/processing"
-RULES_DIR     = "rules/agent/financebench_agent"
-MODEL         = "opus"
-LOG_DIR       = ROOT / "logs" / "claude_agent"
+RULES_DIR      = "rules/agent/financebench_agent"
+MODEL          = "opus"
+LOG_DIR        = ROOT / "logs" / "claude_agent"
 
 LOG_DIR.mkdir(parents=True, exist_ok=True)
+
+# Derive doc names from labels file
+import json as _json
+_labels = _json.loads((ROOT / LABELS_FILE).read_text())
+DOCS = [k.replace(".pdf", "").replace(".PDF", "") for k in _labels.keys()]
 
 def slug(q: str) -> str:
     return re.sub(r"[^\w]", "_", q.lower())[:60].rstrip("_")
 
 questions = [l.strip() for l in QUERIES_FILE.read_text().splitlines() if l.strip()]
-print(f"Questions: {len(questions)}", flush=True)
+print(f"Questions: {len(questions)}, Docs: {len(DOCS)}", flush=True)
 
 for i, question in enumerate(questions, 1):
     q_slug = slug(question)
@@ -42,6 +47,7 @@ for i, question in enumerate(questions, 1):
     try:
         output = run(
             question=question,
+            docs=DOCS,
             labels_file=LABELS_FILE,
             processing_dir=PROCESSING_DIR,
             rules_dir=RULES_DIR,
