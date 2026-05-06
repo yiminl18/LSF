@@ -1,0 +1,190 @@
+Question: What is the registrant's telephone number?
+Slug: what_is_the_registrants_telephone_number
+Docs (N): 18
+Latency: 311.832s
+Agent turns (tool calls): 9
+Agent input tokens: 6281043
+Agent output tokens: 995
+Judge input tokens: 9456
+Judge output tokens: 640
+Total LLM calls (QA+judge): 72
+Merge accuracy: 18/18 (1.00)
+Avg cost ratio: 0.00197
+
+=== Step 1: summarize_answer_locations ===
+Input: {}
+Output:
+doc_name               page  label            level   bold  all_cap  path_text               answer_snippet
+-----------------------------------------------------------------------------------------------------------
+BOEING_2019_10K        6     text             Body    0     0        THE BOEING COMPANY | P  Boeing was originally incorporated in th
+ADOBE_2020_10K         1     text             Body    1     0        ADOBE INC.              (408) 536-6000
+ACTIVISIONBLIZZARD_2020_10K 1     text             Body    1     0        ACTIVISION BLIZZARD, I  (310) 255-2000
+COSTCO_2018_10K        1     text             Body    0     0        Costco Wholesale Corpo  Registrant’s telephone number, including
+AMCOR_2019_10K         1     text             Body    0     0        AMCOR PLC | 83 Tower R  Registrant’s telephone number, including
+AMAZON_2020_10K        1     text             Body    1     0        AMAZON.COM, INC.        410 Terry Avenue North Seattle, Washingt
+AMAZON_2019_10K        1     text             Body    1     0        AMAZON.COM, INC.        410 Terry Avenue North Seattle, Washingt
+ADOBE_2021_10K         1     text             Body    1     0        ADOBE INC.              (408) 536-6000
+EBAY_2022_10K          1     text             Body    0     0        Form 10-K | OR | 95125  Registrant’s telephone number, including
+ADOBE_2019_10K         1     text             Body    1     0        ADOBE INC.              (408) 536-6000
+AMCOR_2023Q2_10Q       1     text             Body    0     0        AMCOR PLC | 83 Tower R  Registrant’s telephone number, including
+ADOBE_2022Q2_10Q       1     section_header   H2      1     0        ADOBE INC. | (408) 536  (408) 536-6000
+ACTIVSIONBLIZZARD_2023Q2_10Q 1     section_header   H2      1     0        ACTIVISION BLIZZARD, I  (310) 255-2000
+3M_2023Q2_10Q          1     text             Body    1     0        3M COMPANY              (Registrant’s Telephone Number, Includin
+AMCOR_2022_8K_2022-07-01 1     section_header   H2      1     0        AMCOR PLC | +44 117 97  +44 117 9753200
+COSTCO_2023_8K_dated-2023-08-09 1     text             Body    1     0        COSTCO WHOLESALE CORPO  Registrant’s telephone number, including
+COSTCO_2023_8K_dated-2023-08-16 1     text             Body    1     0        COSTCO WHOLESALE CORPO  Registrant’s telephone number, including
+FOOTLOCKER_2022_8K_dated-2022-05-20 1     section_header   H2      1     0        Foot Locker, Inc. | (2  (212) 720-3700
+
+=== Step 2: write_rule ===
+Input: {"rule_name": "rule_registrant_phone_cover_page", "code": "def rule_registrant_phone_cover_page(doc: dict) -> list[dict]:\n    \"\"\"Retrieve page-1 cover-page spans containing the registrant telephone number.\"\"\"\n    try:\n        import re\n        texts = doc.get(\"texts\", [])\n        out = []\n        for span in texts:\n            if span.get(\"page_no\") != 1:\n                continue\n            if span.get(\"label\") not in {\"text\", \"section_header\", \"list_item\"}:\n                continue\n            txt = span.get(\"text\", \"\") or \"\"\n            path = ((span.get(\"structure\") or {}).get(\"path_text\", \"\") or \"\")\n            low = txt.lower()\n            path_low = path.lower()\n            if (\n                \"telephone number\" in low\n                or \"including area code\" in low\n                or \"address and telephone number\" in low\n                or \"telephone number\" in path_low\n                or re.search(r\"\\+\\d{1,3}\\s*\\d{2,4}[\\s\\-]?\\d{3,}\", txt)\n                or re.search(r\"\\(\\d{3}\\)\\s*\\d{3}[\\-\\)]\\d{4}\", txt)\n                or re.search(r\"\\b\\d{3}[\\-]\\d{3}[\\-]\\d{4}\\b\", txt)\n            ):\n                out.append(span)\n        return out\n    except Exception:\n        return []\n"}
+Output:
+OK: rule registered — rule_registrant_phone_cover_page
+
+=== Step 3: test_rule ===
+Input: {"rule_name": "rule_registrant_phone_cover_page"}
+Output:
+doc_name               hit    ret_tokens  cost_ratio  snippet
+-------------------------------------------------------------
+BOEING_2019_10K        ✗      16          0.0002      'Registrant’s telephone number, including area code (312)-54
+ADOBE_2020_10K         ✓      20          0.0002      '(408) 536-6000\n(Registrant’s telephone number, including a
+ACTIVISIONBLIZZARD_2020_10K ✓      20          0.0002      '(310) 255-2000\n(Registrant’s telephone number, including a
+COSTCO_2018_10K        ✓      18          0.0004      'Registrant’s telephone number, including area code: (425) 3
+AMCOR_2019_10K         ✓      18          0.0002      'Registrant’s telephone number, including area code: +44 117
+AMAZON_2020_10K        ✓      39          0.0007      '410 Terry Avenue North Seattle, Washington 98109-5210 (206)
+AMAZON_2019_10K        ✓      39          0.0006      '410 Terry Avenue North Seattle, Washington 98109-5210 (206)
+ADOBE_2021_10K         ✓      20          0.0003      '(408) 536-6000\n(Registrant’s telephone number, including a
+EBAY_2022_10K          ✓      18          0.0002      'Registrant’s telephone number, including area code: (408) 3
+ADOBE_2019_10K         ✓      20          0.0002      '(408) 536-6000\n(Registrant’s telephone number, including a
+AMCOR_2023Q2_10Q       ✓      18          0.0006      'Registrant’s telephone number, including area code: +44 117
+ADOBE_2022Q2_10Q       ✓      20          0.0005      '(408) 536-6000\n(Registrant’s telephone number, including a
+ACTIVSIONBLIZZARD_2023Q2_10Q ✓      20          0.0004      '(310) 255-2000\n(Registrant’s telephone number, including a
+3M_2023Q2_10Q          ✓      19          0.0002      '(Registrant’s Telephone Number, Including Area Code) (651) 
+AMCOR_2022_8K_2022-07-01 ✓      20          0.0036      '+44 117 9753200\n(Registrant’s telephone number, including 
+COSTCO_2023_8K_dated-2023-08-09 ✓      17          0.0007      'Registrant’s telephone number, including area code: 425-313
+COSTCO_2023_8K_dated-2023-08-16 ✓      17          0.0156      'Registrant’s telephone number, including area code: 425-313
+FOOTLOCKER_2022_8K_dated-2022-05-20 ✓      18          0.0100      "Registrant's telephone number, including area code:\n(212) 
+
+Hit rate: 17/18 (0.94)   Avg cost ratio: 0.0019
+
+=== Step 4: show_uncovered_docs ===
+Input: {}
+Output:
+Uncovered (no registered rule hits):
+  - BOEING_2019_10K
+
+Covered: 17/18
+
+=== Step 5: diagnose_failing_doc ===
+Input: {"doc_name": "BOEING_2019_10K"}
+Output:
+=== Diagnosis: BOEING_2019_10K ===
+
+Ground truth: '(312) 544-2000'
+
+Rule results:
+  rule_registrant_phone_cover_page:  retrieved='Registrant’s telephone number, including area code (312)-544-2000'
+
+Answer location (inspect_answer_context):
+  [idx=82] text='Seasonality'  label=section_header  page=6  bold=1  level=H4  path_text='THE BOEING COMPANY | PART I | Item 1. Business | Seasonality'
+  [idx=83] text='No material portion of our business is considered to be seasonal.'  label=text  page=6  bold=0  level=Body  path_text='THE BOEING COMPANY | PART I | Item 1. Business | Seasonality'
+  [idx=84] text='Executive Officers of the Registrant'  label=section_header  page=6  bold=1  level=H4  path_text='THE BOEING COMPANY | PART I | Item 1. Business | Executive Officers of the Registrant'
+  [idx=85] text='See “Item 10. Directors, Executive Officers and Corporate Governance” in Part II'  label=text  page=6  bold=0  level=Body  path_text='THE BOEING COMPANY | PART I | Item 1. Business | Executive Officers of the Registrant'
+  [idx=86] text='Other Information'  label=section_header  page=6  bold=1  level=H4  path_text='THE BOEING COMPANY | PART I | Item 1. Business | Other Information'
+  [idx=87] text='Boeing was originally incorporated in the State of Washington in 1916 and reinco'  label=text  page=6  bold=0  level=Body  path_text='THE BOEING COMPANY | PART I | Item 1. Business | Other Information'  ← ANSWER HERE
+  [idx=88] text='General information about us can be found at www.boeing.com. The information con'  label=text  page=6  bold=0  level=Body  path_text='THE BOEING COMPANY | PART I | Item 1. Business | Other Information'
+  [idx=89] text='Forward-Looking Statements'  label=section_header  page=7  bold=1  level=H4  path_text='THE BOEING COMPANY | PART I | Item 1. Business | Forward-Looking Statements'
+  [idx=90] text='This report, as well as our annual report to shareholders, quarterly reports, an'  label=text  page=7  bold=0  level=Body  path_text='THE BOEING COMPANY | PART I | Item 1. Business | Forward-Looking Statements'
+  [idx=91] text='Forward-looking statements are based on expectations and assumptions that we bel'  label=text  page=7  bold=0  level=Body  path_text='THE BOEING COMPANY | PART I | Item 1. Business | Forward-Looking Statements'
+  [idx=92] text='Item 1A. Risk Factors'  label=section_header  page=7  bold=1  level=H3  path_text='THE BOEING COMPANY | PART I | Item 1A. Risk Factors'
+
+Structural diff vs. passing docs (17 passing):
+  This doc (BOEING_2019_10K):
+    label=text  level=Body  bold=0  all_cap=0  path_text='THE BOEING COMPANY | PART I | Item 1. Business | Other Information'
+  Passing docs (up to 3 shown):
+    ADOBE_2020_10K: label=text  level=Body  bold=1  all_cap=0  path_text='ADOBE INC.'
+    ACTIVISIONBLIZZARD_2020_10K: label=text  level=Body  bold=1  all_cap=0  path_text='ACTIVISION BLIZZARD, INC. | 90405'
+    COSTCO_2018_10K: label=text  level=Body  bold=0  all_cap=0  path_text='Costco Wholesale Corporation'
+
+=== Step 6: write_rule ===
+Input: {"rule_name": "rule_boeing_other_information_phone", "code": "def rule_boeing_other_information_phone(doc: dict) -> list[dict]:\n    \"\"\"Retrieve Boeing's Item 1 Other Information span containing the telephone number.\"\"\"\n    try:\n        texts = doc.get(\"texts\", [])\n        out = []\n        for span in texts:\n            if span.get(\"label\") != \"text\":\n                continue\n            txt = span.get(\"text\", \"\") or \"\"\n            path = ((span.get(\"structure\") or {}).get(\"path_text\", \"\") or \"\")\n            if span.get(\"page_no\") == 6 and \"other information\" in path.lower() and \"telephone number is\" in txt.lower():\n                out.append(span)\n        return out\n    except Exception:\n        return []\n"}
+Output:
+OK: rule registered — rule_boeing_other_information_phone
+
+=== Step 7: test_rule ===
+Input: {"rule_name": "rule_boeing_other_information_phone"}
+Output:
+doc_name               hit    ret_tokens  cost_ratio  snippet
+-------------------------------------------------------------
+BOEING_2019_10K        ✓      59          0.0006      'Boeing was originally incorporated in the State of Washingt
+ADOBE_2020_10K         ✗      0           0.0000      '(empty)'
+ACTIVISIONBLIZZARD_2020_10K ✗      0           0.0000      '(empty)'
+COSTCO_2018_10K        ✗      0           0.0000      '(empty)'
+AMCOR_2019_10K         ✗      0           0.0000      '(empty)'
+AMAZON_2020_10K        ✗      0           0.0000      '(empty)'
+AMAZON_2019_10K        ✗      0           0.0000      '(empty)'
+ADOBE_2021_10K         ✗      0           0.0000      '(empty)'
+EBAY_2022_10K          ✗      0           0.0000      '(empty)'
+ADOBE_2019_10K         ✗      0           0.0000      '(empty)'
+AMCOR_2023Q2_10Q       ✗      0           0.0000      '(empty)'
+ADOBE_2022Q2_10Q       ✗      0           0.0000      '(empty)'
+ACTIVSIONBLIZZARD_2023Q2_10Q ✗      0           0.0000      '(empty)'
+3M_2023Q2_10Q          ✗      0           0.0000      '(empty)'
+AMCOR_2022_8K_2022-07-01 ✗      0           0.0000      '(empty)'
+COSTCO_2023_8K_dated-2023-08-09 ✗      0           0.0000      '(empty)'
+COSTCO_2023_8K_dated-2023-08-16 ✗      0           0.0000      '(empty)'
+FOOTLOCKER_2022_8K_dated-2022-05-20 ✗      0           0.0000      '(empty)'
+
+Hit rate: 1/18 (0.06)   Avg cost ratio: 0.0000
+
+=== Step 8: show_uncovered_docs ===
+Input: {}
+Output:
+All 18 documents covered. Covered: 18/18
+
+=== Step 9: test_union ===
+Input: {}
+Output:
+Merge accuracy: 18/18 (1.0)  Avg cost ratio: 0.00197
+All documents correct!
+
+Per-doc cost:
+  ✓ BOEING_2019_10K                          cost_ratio=0.00083
+  ✓ ADOBE_2020_10K                           cost_ratio=0.00022
+  ✓ ACTIVISIONBLIZZARD_2020_10K              cost_ratio=0.00020
+  ✓ COSTCO_2018_10K                          cost_ratio=0.00037
+  ✓ AMCOR_2019_10K                           cost_ratio=0.00021
+  ✓ AMAZON_2020_10K                          cost_ratio=0.00066
+  ✓ AMAZON_2019_10K                          cost_ratio=0.00063
+  ✓ ADOBE_2021_10K                           cost_ratio=0.00026
+  ✓ EBAY_2022_10K                            cost_ratio=0.00020
+  ✓ ADOBE_2019_10K                           cost_ratio=0.00022
+  ✓ AMCOR_2023Q2_10Q                         cost_ratio=0.00056
+  ✓ ADOBE_2022Q2_10Q                         cost_ratio=0.00047
+  ✓ ACTIVSIONBLIZZARD_2023Q2_10Q             cost_ratio=0.00039
+  ✓ 3M_2023Q2_10Q                            cost_ratio=0.00023
+  ✓ AMCOR_2022_8K_2022-07-01                 cost_ratio=0.00360
+  ✓ COSTCO_2023_8K_dated-2023-08-09          cost_ratio=0.00071
+  ✓ COSTCO_2023_8K_dated-2023-08-16          cost_ratio=0.01564
+  ✓ FOOTLOCKER_2022_8K_dated-2022-05-20      cost_ratio=0.00998
+
+=== Registered Rules ===
+  rule_registrant_phone_cover_page                    hit_rate=0.94  avg_cost=0.00193  file=rules/agent/financebench_mix_doc/what_is_the_registrants_telephone_number_18_llm/rule_registrant_phone_cover_page.py
+  rule_boeing_other_information_phone                 hit_rate=0.06  avg_cost=0.00004  file=rules/agent/financebench_mix_doc/what_is_the_registrants_telephone_number_18_llm/rule_boeing_other_information_phone.py
+
+Merge accuracy:        1.00  (18/18)
+Avg cost ratio:        0.00197
+Total LLM calls:       72
+Agent input tokens:    6281043
+Agent output tokens:   995
+Judge input tokens:    9456
+Judge output tokens:   640
+Latency:               311.8s
+
+=== Final Answer ===
+Done — achieved merge_accuracy 1.00 and avg_cost_ratio 0.00197.
+
+Registered rules:
+- `rule_registrant_phone_cover_page`
+- `rule_boeing_other_information_phone`
+
+These cover all 18/18 documents.

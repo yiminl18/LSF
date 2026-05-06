@@ -1,0 +1,168 @@
+{
+  "question": "What is the registrant's telephone number?",
+  "question_slug": "what_is_the_registrants_telephone_number",
+  "timestamp": "2026-05-05T21:36:07Z",
+  "model": "gpt54",
+  "num_documents": 18,
+  "doc_names": [
+    "BOEING_2019_10K",
+    "ADOBE_2020_10K",
+    "ACTIVISIONBLIZZARD_2020_10K",
+    "COSTCO_2018_10K",
+    "AMCOR_2019_10K",
+    "AMAZON_2020_10K",
+    "AMAZON_2019_10K",
+    "ADOBE_2021_10K",
+    "EBAY_2022_10K",
+    "ADOBE_2019_10K",
+    "AMCOR_2023Q2_10Q",
+    "ADOBE_2022Q2_10Q",
+    "ACTIVSIONBLIZZARD_2023Q2_10Q",
+    "3M_2023Q2_10Q",
+    "AMCOR_2022_8K_2022-07-01",
+    "COSTCO_2023_8K_dated-2023-08-09",
+    "COSTCO_2023_8K_dated-2023-08-16",
+    "FOOTLOCKER_2022_8K_dated-2022-05-20"
+  ],
+  "max_iterations": 12,
+  "agent_turns": 9,
+  "latency_seconds": 311.832,
+  "agent_input_tokens": 6281043,
+  "agent_output_tokens": 995,
+  "judge_input_tokens": 9456,
+  "judge_output_tokens": 640,
+  "total_input_tokens": 6290499,
+  "total_output_tokens": 1635,
+  "total_llm_calls": 72,
+  "merge_accuracy": 1.0,
+  "merge_num_correct": 18,
+  "avg_cost_ratio": 0.00197,
+  "merge_per_doc": {
+    "BOEING_2019_10K": {
+      "predicted": "(312) 544-2000",
+      "ground_truth": "(312) 544-2000",
+      "correct": true,
+      "cost_ratio": 0.00083
+    },
+    "ADOBE_2020_10K": {
+      "predicted": "(408) 536-6000",
+      "ground_truth": "(408) 536-6000",
+      "correct": true,
+      "cost_ratio": 0.00022
+    },
+    "ACTIVISIONBLIZZARD_2020_10K": {
+      "predicted": "(310) 255-2000",
+      "ground_truth": "(310) 255-2000",
+      "correct": true,
+      "cost_ratio": 0.0002
+    },
+    "COSTCO_2018_10K": {
+      "predicted": "(425) 313-8100",
+      "ground_truth": "(425) 313-8100",
+      "correct": true,
+      "cost_ratio": 0.00037
+    },
+    "AMCOR_2019_10K": {
+      "predicted": "+44 117 9753200",
+      "ground_truth": "+44 117 9753200",
+      "correct": true,
+      "cost_ratio": 0.00021
+    },
+    "AMAZON_2020_10K": {
+      "predicted": "(206) 266-1000",
+      "ground_truth": "(206) 266-1000",
+      "correct": true,
+      "cost_ratio": 0.00066
+    },
+    "AMAZON_2019_10K": {
+      "predicted": "(206) 266-1000",
+      "ground_truth": "(206) 266-1000",
+      "correct": true,
+      "cost_ratio": 0.00063
+    },
+    "ADOBE_2021_10K": {
+      "predicted": "(408) 536-6000",
+      "ground_truth": "(408) 536-6000",
+      "correct": true,
+      "cost_ratio": 0.00026
+    },
+    "EBAY_2022_10K": {
+      "predicted": "(408) 376-7108",
+      "ground_truth": "(408) 376-7108",
+      "correct": true,
+      "cost_ratio": 0.0002
+    },
+    "ADOBE_2019_10K": {
+      "predicted": "(408) 536-6000",
+      "ground_truth": "(408) 536-6000",
+      "correct": true,
+      "cost_ratio": 0.00022
+    },
+    "AMCOR_2023Q2_10Q": {
+      "predicted": "+44 117 9753200",
+      "ground_truth": "+44 117 9753200",
+      "correct": true,
+      "cost_ratio": 0.00056
+    },
+    "ADOBE_2022Q2_10Q": {
+      "predicted": "(408) 536-6000",
+      "ground_truth": "(408) 536-6000",
+      "correct": true,
+      "cost_ratio": 0.00047
+    },
+    "ACTIVSIONBLIZZARD_2023Q2_10Q": {
+      "predicted": "(310) 255-2000",
+      "ground_truth": "(310) 255-2000",
+      "correct": true,
+      "cost_ratio": 0.00039
+    },
+    "3M_2023Q2_10Q": {
+      "predicted": "(651) 733-1110",
+      "ground_truth": "(651) 733-1110",
+      "correct": true,
+      "cost_ratio": 0.00023
+    },
+    "AMCOR_2022_8K_2022-07-01": {
+      "predicted": "+44 117 9753200",
+      "ground_truth": "+44 117 9753200",
+      "correct": true,
+      "cost_ratio": 0.0036
+    },
+    "COSTCO_2023_8K_dated-2023-08-09": {
+      "predicted": "425-313-8100",
+      "ground_truth": "425-313-8100",
+      "correct": true,
+      "cost_ratio": 0.00071
+    },
+    "COSTCO_2023_8K_dated-2023-08-16": {
+      "predicted": "425-313-8100",
+      "ground_truth": "425-313-8100",
+      "correct": true,
+      "cost_ratio": 0.01564
+    },
+    "FOOTLOCKER_2022_8K_dated-2022-05-20": {
+      "predicted": "(212) 720-3700",
+      "ground_truth": "(212) 720-3700",
+      "correct": true,
+      "cost_ratio": 0.00998
+    }
+  },
+  "rules": [
+    {
+      "rule_name": "rule_registrant_phone_cover_page",
+      "description": "Retrieve page-1 cover-page spans containing the registrant telephone number.",
+      "hit_rate": 0.9444,
+      "avg_cost_ratio": 0.00193,
+      "file": "rules/agent/financebench_mix_doc/what_is_the_registrants_telephone_number_18_llm/rule_registrant_phone_cover_page.py"
+    },
+    {
+      "rule_name": "rule_boeing_other_information_phone",
+      "description": "Retrieve Boeing's Item 1 Other Information span containing the telephone number.",
+      "hit_rate": 0.0556,
+      "avg_cost_ratio": 4e-05,
+      "file": "rules/agent/financebench_mix_doc/what_is_the_registrants_telephone_number_18_llm/rule_boeing_other_information_phone.py"
+    }
+  ],
+  "rule_dir": "rules/agent/financebench_mix_doc/what_is_the_registrants_telephone_number_18_llm",
+  "log_file": "logs/financebench/agent/what_is_the_registrants_telephone_number_18docs_20260505_213607.txt"
+}

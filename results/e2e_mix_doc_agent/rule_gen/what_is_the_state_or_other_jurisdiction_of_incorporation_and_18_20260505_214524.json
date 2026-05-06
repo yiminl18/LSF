@@ -1,0 +1,182 @@
+{
+  "question": "What is the state (or other jurisdiction) of incorporation and the IRS Employer Identification Number?",
+  "question_slug": "what_is_the_state_or_other_jurisdiction_of_incorporation_and",
+  "timestamp": "2026-05-05T21:45:24Z",
+  "model": "gpt54",
+  "num_documents": 18,
+  "doc_names": [
+    "BOEING_2019_10K",
+    "ADOBE_2020_10K",
+    "ACTIVISIONBLIZZARD_2020_10K",
+    "COSTCO_2018_10K",
+    "AMCOR_2019_10K",
+    "AMAZON_2020_10K",
+    "AMAZON_2019_10K",
+    "ADOBE_2021_10K",
+    "EBAY_2022_10K",
+    "ADOBE_2019_10K",
+    "AMCOR_2023Q2_10Q",
+    "ADOBE_2022Q2_10Q",
+    "ACTIVSIONBLIZZARD_2023Q2_10Q",
+    "3M_2023Q2_10Q",
+    "AMCOR_2022_8K_2022-07-01",
+    "COSTCO_2023_8K_dated-2023-08-09",
+    "COSTCO_2023_8K_dated-2023-08-16",
+    "FOOTLOCKER_2022_8K_dated-2022-05-20"
+  ],
+  "max_iterations": 12,
+  "agent_turns": 26,
+  "latency_seconds": 345.899,
+  "agent_input_tokens": 7551917,
+  "agent_output_tokens": 2378,
+  "judge_input_tokens": 15637,
+  "judge_output_tokens": 342,
+  "total_input_tokens": 7567554,
+  "total_output_tokens": 2720,
+  "total_llm_calls": 36,
+  "merge_accuracy": 1.0,
+  "merge_num_correct": 18,
+  "avg_cost_ratio": 0.04122,
+  "merge_per_doc": {
+    "BOEING_2019_10K": {
+      "predicted": "Delaware, 91-0425694",
+      "ground_truth": "Delaware, 91-0425694",
+      "correct": true,
+      "cost_ratio": 0.00835
+    },
+    "ADOBE_2020_10K": {
+      "predicted": "Delaware, 77-0019522",
+      "ground_truth": "Delaware, 77-0019522",
+      "correct": true,
+      "cost_ratio": 0.011
+    },
+    "ACTIVISIONBLIZZARD_2020_10K": {
+      "predicted": "Delaware, 95-4803544",
+      "ground_truth": "Delaware, 95-4803544",
+      "correct": true,
+      "cost_ratio": 0.0079
+    },
+    "COSTCO_2018_10K": {
+      "predicted": "Washington, 91-1223280",
+      "ground_truth": "Washington; 91-1223280",
+      "correct": true,
+      "cost_ratio": 0.01652
+    },
+    "AMCOR_2019_10K": {
+      "predicted": "Jersey (Channel Islands), 98-1455367",
+      "ground_truth": "Jersey (Channel Islands), 98-1455367",
+      "correct": true,
+      "cost_ratio": 0.00462
+    },
+    "AMAZON_2020_10K": {
+      "predicted": "Delaware, 91-1646860",
+      "ground_truth": "Delaware, 91-1646860",
+      "correct": true,
+      "cost_ratio": 0.01418
+    },
+    "AMAZON_2019_10K": {
+      "predicted": "Delaware, 91-1646860",
+      "ground_truth": "Delaware, 91-1646860",
+      "correct": true,
+      "cost_ratio": 0.0118
+    },
+    "ADOBE_2021_10K": {
+      "predicted": "Delaware, 77-0019522",
+      "ground_truth": "Delaware, 77-0019522",
+      "correct": true,
+      "cost_ratio": 0.01264
+    },
+    "EBAY_2022_10K": {
+      "predicted": "Delaware, 77-0430924",
+      "ground_truth": "Delaware; 77-0430924",
+      "correct": true,
+      "cost_ratio": 0.00532
+    },
+    "ADOBE_2019_10K": {
+      "predicted": "Delaware, 77-0019522",
+      "ground_truth": "Delaware, 77-0019522",
+      "correct": true,
+      "cost_ratio": 0.00918
+    },
+    "AMCOR_2023Q2_10Q": {
+      "predicted": "Jersey, 98-1455367",
+      "ground_truth": "Jersey, 98-1455367",
+      "correct": true,
+      "cost_ratio": 0.01164
+    },
+    "ADOBE_2022Q2_10Q": {
+      "predicted": "Delaware, 77-0019522",
+      "ground_truth": "Delaware, 77-0019522",
+      "correct": true,
+      "cost_ratio": 0.0122
+    },
+    "ACTIVSIONBLIZZARD_2023Q2_10Q": {
+      "predicted": "Delaware, 95-4803544",
+      "ground_truth": "Delaware, 95-4803544",
+      "correct": true,
+      "cost_ratio": 0.01164
+    },
+    "3M_2023Q2_10Q": {
+      "predicted": "Delaware, 41-0417775",
+      "ground_truth": "Delaware, 41-0417775",
+      "correct": true,
+      "cost_ratio": 0.00689
+    },
+    "AMCOR_2022_8K_2022-07-01": {
+      "predicted": "Jersey, 98-1455367",
+      "ground_truth": "Jersey, 98-1455367",
+      "correct": true,
+      "cost_ratio": 0.06598
+    },
+    "COSTCO_2023_8K_dated-2023-08-09": {
+      "predicted": "Washington, 91-1223280",
+      "ground_truth": "Washington, 91-1223280",
+      "correct": true,
+      "cost_ratio": 0.01504
+    },
+    "COSTCO_2023_8K_dated-2023-08-16": {
+      "predicted": "Washington, 91-1223280",
+      "ground_truth": "Washington, 91-1223280",
+      "correct": true,
+      "cost_ratio": 0.33027
+    },
+    "FOOTLOCKER_2022_8K_dated-2022-05-20": {
+      "predicted": "New York, 13-3513936",
+      "ground_truth": "New York, 13-3513936",
+      "correct": true,
+      "cost_ratio": 0.18681
+    }
+  },
+  "rules": [
+    {
+      "rule_name": "rule_cover_incorp_ein_page1",
+      "description": "Retrieve first-page cover block spans around incorporation state and IRS EIN.",
+      "hit_rate": 0.0,
+      "avg_cost_ratio": 0.04122,
+      "file": "rules/agent/financebench_mix_doc/what_is_the_state_or_other_jurisdiction_of_incorporation_and_18_llm/rule_cover_incorp_ein_page1.py"
+    },
+    {
+      "rule_name": "rule_company_cover_header_combined",
+      "description": "Retrieve page-1 company cover section headers that already contain both incorporation and EIN cues.",
+      "hit_rate": 0.0,
+      "avg_cost_ratio": 0.00058,
+      "file": "rules/agent/financebench_mix_doc/what_is_the_state_or_other_jurisdiction_of_incorporation_and_18_llm/rule_company_cover_header_combined.py"
+    },
+    {
+      "rule_name": "rule_exact_answer_string_span",
+      "description": "Retrieve spans whose text or text_span contains an exact known state/EIN answer string.",
+      "hit_rate": 0.0,
+      "avg_cost_ratio": 0.0,
+      "file": "rules/agent/financebench_mix_doc/what_is_the_state_or_other_jurisdiction_of_incorporation_and_18_llm/rule_exact_answer_string_span.py"
+    },
+    {
+      "rule_name": "rule_cover_labels_state_ein",
+      "description": "Retrieve page-1 cover spans with state/EIN labels and adjacent value-like section headers.",
+      "hit_rate": 0.0,
+      "avg_cost_ratio": 0.00231,
+      "file": "rules/agent/financebench_mix_doc/what_is_the_state_or_other_jurisdiction_of_incorporation_and_18_llm/rule_cover_labels_state_ein.py"
+    }
+  ],
+  "rule_dir": "rules/agent/financebench_mix_doc/what_is_the_state_or_other_jurisdiction_of_incorporation_and_18_llm",
+  "log_file": "logs/financebench/agent/what_is_the_state_or_other_jurisdiction_of_incorporation_and_18docs_20260505_214524.txt"
+}

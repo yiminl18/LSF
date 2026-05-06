@@ -1,0 +1,406 @@
+Question: List one material agreement or other exhibit number explicitly identified in the Exhibit Index (e.g., "Exhibit 10.1: Credit Agreement")—or record "none listed" if no material agreements are identified.
+Slug: list_one_material_agreement_or_other_exhibit_number_explicit
+Docs (N): 18
+Latency: 414.327s
+Agent turns (tool calls): 25
+Agent input tokens: 7567554
+Agent output tokens: 2881
+Judge input tokens: 132764
+Judge output tokens: 1168
+Total LLM calls (QA+judge): 108
+Merge accuracy: 6/18 (0.33)
+Avg cost ratio: 0.04315
+
+=== Step 1: summarize_answer_locations ===
+Input: {}
+Output:
+doc_name               page  label            level   bold  all_cap  path_text               answer_snippet
+-----------------------------------------------------------------------------------------------------------
+BOEING_2019_10K        N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: Exhibit 10.1: 364-Day Credit A)
+ADOBE_2020_10K         N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: Exhibit 10.1: Credit Agreement)
+ACTIVISIONBLIZZARD_2020_10K N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: Exhibit 10.24: Notice of Stock)
+COSTCO_2018_10K        N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: none listed)
+AMCOR_2019_10K         N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: Exhibit 10.1: Transaction Agre)
+AMAZON_2020_10K        N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: Exhibit 10.1: 1997 Stock Incen)
+AMAZON_2019_10K        N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: Exhibit 10.1: 1997 Stock Incen)
+ADOBE_2021_10K         N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: Exhibit 10.1: 2020 Employee St)
+EBAY_2022_10K          53    text             Body    0     0        Form 10-K | PART II |   None.
+ADOBE_2019_10K         N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: Exhibit 10.1: Credit Agreement)
+AMCOR_2023Q2_10Q       N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: None listed)
+ADOBE_2022Q2_10Q       N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: Exhibit 10.1: 2019 Equity Ince)
+ACTIVSIONBLIZZARD_2023Q2_10Q N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: Exhibit 10.1: Credit Agreement)
+3M_2023Q2_10Q          N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: Exhibit 10.1: Settlement Agree)
+AMCOR_2022_8K_2022-07-01 N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: Exhibit 4.6: Second Supplement)
+COSTCO_2023_8K_dated-2023-08-09 N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: Exhibit 3.2: Bylaws as amended)
+COSTCO_2023_8K_dated-2023-08-16 N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: Exhibit 99.1: Press release da)
+FOOTLOCKER_2022_8K_dated-2022-05-20 N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: Exhibit 104: Cover Page Intera)
+
+=== Step 2: write_rule ===
+Input: {"rule_name": "rule_exhibit_index_broad", "code": "def rule_exhibit_index_broad(doc: dict) -> list[dict]:\n    \"\"\"Retrieve exhibit index rows/spans and nearby exhibit-related headers.\"\"\"\n    try:\n        import re\n        texts = doc.get(\"texts\", [])\n        out = []\n        for span in texts:\n            text = (span.get(\"text\") or \"\")\n            label = span.get(\"label\")\n            path = ((span.get(\"structure\") or {}).get(\"path_text\") or \"\")\n            level = ((span.get(\"structure\") or {}).get(\"level\") or \"\")\n            low = text.lower()\n            path_low = path.lower()\n\n            exhibit_path = (\n                \"exhibit\" in path_low\n                or \"item 15\" in path_low\n                or \"item 6.\" in path_low\n                or \"item 6 | exhibits\" in path_low\n                or \"financial statements and exhibits\" in path_low\n                or \"financial statements and schedules\" in path_low\n            )\n\n            exhibit_text = (\n                re.search(r'\\bexhibit\\s+\\d+(?:\\.\\d+)?\\b', low) is not None\n                or re.search(r'\\b\\d+(?:\\.\\d+)?\\s*\\|', text) is not None and 'exhibit' in low\n                or 'exhibit index' in low\n                or low.strip().startswith('item 15') and 'exhibit' in low\n            )\n\n            if label == 'table':\n                cells = (((span.get('table_data') or {}).get('cells')) or [])\n                cell_text = ' '.join((c.get('text') or '') for c in cells).lower()\n                if exhibit_path or 'exhibit index' in cell_text or re.search(r'\\bexhibit\\s+\\d+(?:\\.\\d+)?\\b', cell_text):\n                    out.append(span)\n                    continue\n\n            if exhibit_path and label in {'section_header', 'text', 'list_item'}:\n                if level in {'H2', 'H3', 'H4'} or exhibit_text or 'exhibit' in low:\n                    out.append(span)\n                    continue\n\n            if exhibit_text and label in {'text', 'section_header', 'list_item'}:\n                out.append(span)\n        return out\n    except Exception:\n        return []"}
+Output:
+OK: rule registered — rule_exhibit_index_broad
+
+=== Step 3: test_rule ===
+Input: {"rule_name": "rule_exhibit_index_broad"}
+Output:
+doc_name               hit    ret_tokens  cost_ratio  snippet
+-------------------------------------------------------------
+BOEING_2019_10K        ✗      1922        0.0209      'Item 15. Exhibits, Financial Statement Schedules\n3. Exhibi
+ADOBE_2020_10K         ✗      3267        0.0359      'ITEM 6. SELECTED FINANCIAL DATA\n| (in millions, except per
+ACTIVISIONBLIZZARD_2020_10K ✗      6090        0.0601      'Item 6. SELECTED FINANCIAL DATA\nItem 15. EXHIBITS, FINANCI
+COSTCO_2018_10K        ✗      1503        0.0308      'Item 15—Exhibits, Financial Statement Schedules\n(b) Exhibi
+AMCOR_2019_10K         ✗      5783        0.0687      '| Item 1. | Business | 6 |\n| --- | --- | --- |\n| Item 1A.
+AMAZON_2020_10K        ✗      2009        0.0341      'Item 6. Selected Consolidated Financial Data\n|  | Year End
+AMAZON_2019_10K        ✗      2102        0.0338      'Item 6. Selected Consolidated Financial Data\n|  | Year End
+ADOBE_2021_10K         ✗      2267        0.0294      'ITEM 15. EXHIBITS, FINANCIAL STATEMENT SCHEDULES\n|  |  | I
+EBAY_2022_10K          ✓      4125        0.0451      'ITEM 15: EXHIBITS AND FINANCIAL STATEMENT SCHEDULE\n|  | Pa
+ADOBE_2019_10K         ✗      3344        0.0364      'ITEM 6. SELECTED FINANCIAL DATA\n| (in thousands, except pe
+AMCOR_2023Q2_10Q       ✗      442         0.0138      'Item 6. Exhibits\nThe documents in the accompanying Exhibit
+ADOBE_2022Q2_10Q       ✗      607         0.0143      'ITEM 6. EXHIBITS\nINDEX TO EXHIBITS\n|  |  | Incorporated b
+ACTIVSIONBLIZZARD_2023Q2_10Q ✗      698         0.0136      'Item 6. Exhibits\nEXHIBIT INDEX\n| Exhibit Number | Exhibit
+3M_2023Q2_10Q          ✗      568         0.0069      'Pursuant to Section 1503 of the Dodd-Frank Wall Street Refo
+AMCOR_2022_8K_2022-07-01 ✗      872         0.1568      'The foregoing description of the Supplemental Indentures do
+COSTCO_2023_8K_dated-2023-08-09 ✗      1458        0.0611      'The foregoing description of the amendments is not complete
+COSTCO_2023_8K_dated-2023-08-16 ✗      38          0.0350      'Item 9.01. Financial Statements and Exhibits\n(d) Exhibits.
+FOOTLOCKER_2022_8K_dated-2022-05-20 ✗      0           0.0000      '(empty)'
+
+Hit rate: 1/18 (0.06)   Avg cost ratio: 0.0387
+
+=== Step 4: show_uncovered_docs ===
+Input: {}
+Output:
+Uncovered (no registered rule hits):
+  - BOEING_2019_10K
+  - ADOBE_2020_10K
+  - ACTIVISIONBLIZZARD_2020_10K
+  - COSTCO_2018_10K
+  - AMCOR_2019_10K
+  - AMAZON_2020_10K
+  - AMAZON_2019_10K
+  - ADOBE_2021_10K
+  - ADOBE_2019_10K
+  - AMCOR_2023Q2_10Q
+  - ADOBE_2022Q2_10Q
+  - ACTIVSIONBLIZZARD_2023Q2_10Q
+  - 3M_2023Q2_10Q
+  - AMCOR_2022_8K_2022-07-01
+  - COSTCO_2023_8K_dated-2023-08-09
+  - COSTCO_2023_8K_dated-2023-08-16
+  - FOOTLOCKER_2022_8K_dated-2022-05-20
+
+Covered: 1/18
+
+=== Step 5: diagnose_failing_doc ===
+Input: {"doc_name": "ADOBE_2020_10K"}
+Output:
+
+
+=== Step 6: diagnose_failing_doc ===
+Input: {"doc_name": "AMAZON_2020_10K"}
+Output:
+
+
+=== Step 7: diagnose_failing_doc ===
+Input: {"doc_name": "ACTIVSIONBLIZZARD_2023Q2_10Q"}
+Output:
+
+
+=== Step 8: diagnose_failing_doc ===
+Input: {"doc_name": "AMCOR_2022_8K_2022-07-01"}
+Output:
+
+
+=== Step 9: diagnose_failing_doc ===
+Input: {"doc_name": "COSTCO_2023_8K_dated-2023-08-16"}
+Output:
+
+
+=== Step 10: diagnose_failing_doc ===
+Input: {"doc_name": "COSTCO_2018_10K"}
+Output:
+
+
+=== Step 11: diagnose_failing_doc ===
+Input: {"doc_name": "AMCOR_2023Q2_10Q"}
+Output:
+
+
+=== Step 12: diagnose_failing_doc ===
+Input: {"doc_name": "3M_2023Q2_10Q"}
+Output:
+
+
+=== Step 13: diagnose_failing_doc ===
+Input: {"doc_name": "FOOTLOCKER_2022_8K_dated-2022-05-20"}
+Output:
+=== Diagnosis: FOOTLOCKER_2022_8K_dated-2022-05-20 ===
+
+Ground truth: 'Exhibit 104: Cover Page Interactive Data File'
+
+Rule results:
+  rule_exhibit_index_broad:  retrieved=[]  (empty)
+
+Answer location (inspect_answer_context):
+  Answer not found by substring match in FOOTLOCKER_2022_8K_dated-2022-05-20. GT: 'Exhibit 104: Cover Page Interactive Data File'
+
+Structural diff vs. passing docs (1 passing):
+  This doc (FOOTLOCKER_2022_8K_dated-2022-05-20): answer span NOT LOCATED by substring match
+  Passing docs (up to 3 shown):
+    EBAY_2022_10K: label=text  level=Body  bold=0  all_cap=0  path_text='Form 10-K | PART II | ITEM 9: CHANGES IN AND DISAGREEMENTS WITH ACCOUNTANTS ON ACCOUNTING AND FINANCIAL DISCLOSURE'
+
+=== Step 14: write_rule ===
+Input: {"rule_name": "rule_exhibit_rows_and_lists", "code": "def rule_exhibit_rows_and_lists(doc: dict) -> list[dict]:\n    \"\"\"Retrieve exhibit index tables and exhibit list lines under Item 6/Item 9.01 exhibit sections.\"\"\"\n    try:\n        import re\n        out = []\n        for span in doc.get('texts', []):\n            text = (span.get('text') or '')\n            low = text.lower()\n            label = span.get('label')\n            path = ((span.get('structure') or {}).get('path_text') or '').lower()\n\n            in_exhibit_section = (\n                'item 6. exhibits' in path\n                or 'item 6 | exhibits' in path\n                or 'item 9.01. financial statements and exhibits' in path\n                or 'item 15' in path\n                or 'exhibit index' in path\n            )\n\n            if label == 'table':\n                cells = (((span.get('table_data') or {}).get('cells')) or [])\n                cell_text = ' '.join((c.get('text') or '') for c in cells).lower()\n                if (\n                    'exhibit index' in cell_text\n                    or 'exhibit number' in cell_text\n                    or 'exhibit no.' in cell_text\n                    or ('description' in cell_text and re.search(r'\\b(?:10|99|104|4)\\.?\\d*\\b', cell_text))\n                    or (in_exhibit_section and ('exhibit' in cell_text or 'cover page interactive data file' in cell_text))\n                ):\n                    out.append(span)\n                    continue\n\n            if label in {'text', 'section_header', 'list_item'} and in_exhibit_section:\n                if (\n                    'exhibit index' in low\n                    or re.search(r'^\\s*(?:\\(?d\\)?\\s*)?exhibits?\\.?$', low) is not None\n                    or re.search(r'^\\s*\\d+(?:\\.\\d+)?\\.\\s+', text) is not None\n                    or re.search(r'^\\s*exhibit\\s+\\d+(?:\\.\\d+)?', low) is not None\n                    or 'cover page interactive data file' in low\n                    or 'press release dated' in low\n                    or 'bylaws as amended' in low\n                    or 'supplemental indenture' in low\n                    or 'settlement agreement' in low\n                    or 'credit agreement' in low\n                    or 'stock incentive plan' in low\n                    or 'employee stock purchase plan' in low\n                    or 'equity incentive plan' in low\n                    or low.strip() in {'none', 'none listed', 'none.'}\n                ):\n                    out.append(span)\n        return out\n    except Exception:\n        return []"}
+Output:
+OK: rule registered — rule_exhibit_rows_and_lists
+
+=== Step 15: test_rule ===
+Input: {"rule_name": "rule_exhibit_rows_and_lists"}
+Output:
+doc_name               hit    ret_tokens  cost_ratio  snippet
+-------------------------------------------------------------
+BOEING_2019_10K        ✗      790         0.0086      '| 3.1 | Amended and Restated Certificate of Incorporation o
+ADOBE_2020_10K         ✗      2651        0.0291      '1. Financial Statements. See Index to Consolidated Financia
+ACTIVISIONBLIZZARD_2020_10K ✗      5436        0.0536      '| Col. A Description | Col. B Balance at Beginning of Perio
+COSTCO_2018_10K        ✗      1447        0.0296      '1. Financial Statements:\n2. Financial Statement Schedules:
+AMCOR_2019_10K         ✗      5134        0.0610      '| Item 1. | Business | 6 |\n| --- | --- | --- |\n| Item 1A.
+AMAZON_2020_10K        ✗      1529        0.0260      '| Description of Use | Leased Square Footage (1) | Owned Sq
+AMAZON_2019_10K        ✗      1619        0.0260      '| Description of Use | Leased Square Footage (1) | Owned Sq
+ADOBE_2021_10K         ✗      2256        0.0292      '1. Financial Statements. See Index to Consolidated Financia
+EBAY_2022_10K          ✓      4017        0.0439      '|  | Page Number |\n| --- | --- |\n| 1. Consolidated Financ
+ADOBE_2019_10K         ✗      2616        0.0285      '1. Financial Statements. See Index to Consolidated Financia
+AMCOR_2023Q2_10Q       ✗      576         0.0180      '| Exhibit | Description |\n| --- | --- |\n| 22 | Subsidiary
+ADOBE_2022Q2_10Q       ✗      591         0.0139      '|  |  | Incorporated by Reference |  |  |  |  |\n| Exhibit 
+ACTIVSIONBLIZZARD_2023Q2_10Q ✗      1137        0.0221      'EXHIBIT INDEX\n| Exhibit Number | Exhibit |\n| --- | --- |\
+3M_2023Q2_10Q          ✗      961         0.0116      '| 10.1 | Settlement Agreement, dated as of June 22, 2023, o
+AMCOR_2022_8K_2022-07-01 ✗      532         0.0956      '| Exhibit No. | Description |\n| --- | --- |\n| 4.1 | Inden
+COSTCO_2023_8K_dated-2023-08-09 ✗      54          0.0023      '(d) Exhibits.\n3.2. Bylaws as amended of Costco Wholesale C
+COSTCO_2023_8K_dated-2023-08-16 ✗      20          0.0184      '(d) Exhibits.\n99.1. Press release dated August 16, 2023.'
+FOOTLOCKER_2022_8K_dated-2022-05-20 ✗      55          0.0305      '| Item 9.01. | Financial Statements and Exhibits. |\n| --- 
+
+Hit rate: 1/18 (0.06)   Avg cost ratio: 0.0304
+
+=== Step 16: show_uncovered_docs ===
+Input: {}
+Output:
+Uncovered (no registered rule hits):
+  - BOEING_2019_10K
+  - ADOBE_2020_10K
+  - ACTIVISIONBLIZZARD_2020_10K
+  - COSTCO_2018_10K
+  - AMCOR_2019_10K
+  - AMAZON_2020_10K
+  - AMAZON_2019_10K
+  - ADOBE_2021_10K
+  - ADOBE_2019_10K
+  - AMCOR_2023Q2_10Q
+  - ADOBE_2022Q2_10Q
+  - ACTIVSIONBLIZZARD_2023Q2_10Q
+  - 3M_2023Q2_10Q
+  - AMCOR_2022_8K_2022-07-01
+  - COSTCO_2023_8K_dated-2023-08-09
+  - COSTCO_2023_8K_dated-2023-08-16
+  - FOOTLOCKER_2022_8K_dated-2022-05-20
+
+Covered: 1/18
+
+=== Step 17: test_union ===
+Input: {}
+Output:
+Merge accuracy: 6/18 (0.3333)  Avg cost ratio: 0.04315
+
+Failing docs:
+  ADOBE_2020_10K:
+    retrieved: 'ITEM 6. SELECTED FINANCIAL DATA\n\n| (in millions, except per share amounts and employee data) | Fiscal Years |  |  |  
+    predicted: 'Exhibit 10.7: Credit Agreement'
+    ground_truth: 'Exhibit 10.1: Credit Agreement'
+  ACTIVISIONBLIZZARD_2020_10K:
+    retrieved: '|  |  | Page No. |\n| --- | --- | --- |\n| PART I. |  | 3 3 |\n| Item 1. | Cautionary Statement Business | 4 |\n| Item 
+    predicted: 'Exhibit 10.37: Credit Agreement'
+    ground_truth: 'Exhibit 10.24: Notice of Stock Option Award'
+  COSTCO_2018_10K:
+    retrieved: 'Item 15—Exhibits, Financial Statement Schedules\n\n1. Financial Statements:\n\n2. Financial Statement Schedules:\n\n(b)
+    predicted: '10.6.1**: Citibank, N.A. Co-Branded Credit Card Agreement'
+    ground_truth: 'none listed'
+  AMCOR_2019_10K:
+    retrieved: '| Item 1. | Business | 6 |\n| --- | --- | --- |\n| Item 1A. | Risk Factors | 9 |\n| Item 1B. | Unresolved Staff Comment
+    predicted: 'Exhibit 10.14: Original Three-Year Credit Agreement'
+    ground_truth: 'Exhibit 10.1: Transaction Agreement'
+  AMAZON_2020_10K:
+    retrieved: '| Description of Use | Leased Square Footage (1) | Owned Square Footage | Location |\n| --- | --- | --- | --- |\n| Offi
+    predicted: '10.8: Amended and Restated Credit Agreement'
+    ground_truth: 'Exhibit 10.1: 1997 Stock Incentive Plan'
+  AMAZON_2019_10K:
+    retrieved: '| Description of Use | Leased Square Footage (1) | Owned Square Footage | Location |\n| --- | --- | --- | --- |\n| Offi
+    predicted: '4.1'
+    ground_truth: 'Exhibit 10.1: 1997 Stock Incentive Plan'
+  ADOBE_2021_10K:
+    retrieved: 'ITEM 15. EXHIBITS, FINANCIAL STATEMENT SCHEDULES\n\n1. Financial Statements. See Index to Consolidated Financial Statem
+    predicted: 'Exhibit 10.7: Credit Agreement'
+    ground_truth: 'Exhibit 10.1: 2020 Employee Stock Purchase Plan'
+  EBAY_2022_10K:
+    retrieved: 'ITEM 15: EXHIBITS AND FINANCIAL STATEMENT SCHEDULE\n\n|  | Page Number |\n| --- | --- |\n| 1. Consolidated Financial St
+    predicted: '10.30: Credit Agreement'
+    ground_truth: 'None'
+  ADOBE_2019_10K:
+    retrieved: 'ITEM 6. SELECTED FINANCIAL DATA\n\n| (in thousands, except per share amounts and employee data) | Fiscal Years |  |  | 
+    predicted: 'Exhibit 10.7: Credit Agreement'
+    ground_truth: 'Exhibit 10.1: Credit Agreement'
+  AMCOR_2023Q2_10Q:
+    retrieved: 'Item 6. Exhibits\n\nThe documents in the accompanying Exhibits Index are filed, furnished, or incorporated by reference
+    predicted: 'Exhibit 22: Subsidiary Guarantors and Issuers of Guaranteed Securities.'
+    ground_truth: 'None listed'
+  ACTIVSIONBLIZZARD_2023Q2_10Q:
+    retrieved: 'Item 6. Exhibits\n\nEXHIBIT INDEX\n\n| Exhibit Number | Exhibit |\n| --- | --- |\n| 3.1 | Third Amended and Restated Ce
+    predicted: '10.2: Merger Letter Agreement'
+    ground_truth: 'Exhibit 10.1: Credit Agreement'
+  FOOTLOCKER_2022_8K_dated-2022-05-20:
+    retrieved: '| Item 9.01. | Financial Statements and Exhibits. |\n| --- | --- |\n| (d) | Exhibits. |\n| Exhibit No. | Description |\
+    predicted: 'none listed'
+    ground_truth: 'Exhibit 104: Cover Page Interactive Data File'
+
+Per-doc cost:
+  ✓ BOEING_2019_10K                          cost_ratio=0.02092
+  ✗ ADOBE_2020_10K                           cost_ratio=0.03615
+  ✗ ACTIVISIONBLIZZARD_2020_10K              cost_ratio=0.06277
+  ✗ COSTCO_2018_10K                          cost_ratio=0.03101
+  ✗ AMCOR_2019_10K                           cost_ratio=0.06874
+  ✗ AMAZON_2020_10K                          cost_ratio=0.03682
+  ✗ AMAZON_2019_10K                          cost_ratio=0.03631
+  ✗ ADOBE_2021_10K                           cost_ratio=0.02972
+  ✗ EBAY_2022_10K                            cost_ratio=0.04507
+  ✗ ADOBE_2019_10K                           cost_ratio=0.03671
+  ✗ AMCOR_2023Q2_10Q                         cost_ratio=0.02218
+  ✓ ADOBE_2022Q2_10Q                         cost_ratio=0.01427
+  ✗ ACTIVSIONBLIZZARD_2023Q2_10Q             cost_ratio=0.02392
+  ✓ 3M_2023Q2_10Q                            cost_ratio=0.01320
+  ✓ AMCOR_2022_8K_2022-07-01                 cost_ratio=0.15678
+  ✓ COSTCO_2023_8K_dated-2023-08-09          cost_ratio=0.06288
+  ✓ COSTCO_2023_8K_dated-2023-08-16          cost_ratio=0.04876
+  ✗ FOOTLOCKER_2022_8K_dated-2022-05-20      cost_ratio=0.03049
+
+=== Step 18: inspect_answer_context ===
+Input: {"doc_name": "AMAZON_2020_10K"}
+Output:
+
+
+=== Step 19: inspect_answer_context ===
+Input: {"doc_name": "ADOBE_2020_10K"}
+Output:
+
+
+=== Step 20: inspect_answer_context ===
+Input: {"doc_name": "ACTIVISIONBLIZZARD_2020_10K"}
+Output:
+
+
+=== Step 21: inspect_answer_context ===
+Input: {"doc_name": "AMCOR_2019_10K"}
+Output:
+
+
+=== Step 22: inspect_answer_context ===
+Input: {"doc_name": "AMCOR_2023Q2_10Q"}
+Output:
+
+
+=== Step 23: inspect_answer_context ===
+Input: {"doc_name": "FOOTLOCKER_2022_8K_dated-2022-05-20"}
+Output:
+Answer not found by substring match in FOOTLOCKER_2022_8K_dated-2022-05-20. GT: 'Exhibit 104: Cover Page Interactive Data File'
+
+=== Step 24: write_rule ===
+Input: {"rule_name": "rule_exhibit_section_precise_8k_10q", "code": "def rule_exhibit_section_precise_8k_10q(doc: dict) -> list[dict]:\n    \"\"\"Retrieve only exhibit list/table spans in 8-K and 10-Q exhibit sections.\"\"\"\n    try:\n        import re\n        out = []\n        for span in doc.get('texts', []):\n            text = (span.get('text') or '')\n            low = text.lower()\n            label = span.get('label')\n            path = ((span.get('structure') or {}).get('path_text') or '').lower()\n\n            is_8k_10q_exhibit_area = (\n                'form 8-k' in path\n                or 'form 10-q' in path\n                or 'item 6. exhibits' in path\n                or 'item 9.01. financial statements and exhibits' in path\n            )\n            if not is_8k_10q_exhibit_area:\n                continue\n\n            if label == 'table':\n                cells = (((span.get('table_data') or {}).get('cells')) or [])\n                cell_text = ' '.join((c.get('text') or '') for c in cells).lower()\n                if (\n                    'exhibit no.' in cell_text\n                    or 'exhibit number' in cell_text\n                    or 'description' in cell_text\n                    or 'cover page interactive data file' in cell_text\n                ):\n                    out.append(span)\n                continue\n\n            if label in {'text', 'section_header'}:\n                if (\n                    low.strip() == '(d) exhibits.'\n                    or low.strip() == 'exhibit index'\n                    or re.search(r'^\\s*(?:\\d+\\.?\\d*|104)\\.\\s+', text) is not None\n                    or 'cover page interactive data file' in low\n                    or 'press release dated' in low\n                    or 'bylaws as amended' in low\n                    or 'none listed' in low\n                    or low.strip() in {'none', 'none.'}\n                ):\n                    out.append(span)\n        return out\n    except Exception:\n        return []"}
+Output:
+OK: rule registered — rule_exhibit_section_precise_8k_10q
+
+=== Step 25: test_union ===
+Input: {}
+Output:
+Merge accuracy: 6/18 (0.3333)  Avg cost ratio: 0.04315
+
+Failing docs:
+  ADOBE_2020_10K:
+    retrieved: 'ITEM 6. SELECTED FINANCIAL DATA\n\n| (in millions, except per share amounts and employee data) | Fiscal Years |  |  |  
+    predicted: 'Exhibit 10.7: Credit Agreement'
+    ground_truth: 'Exhibit 10.1: Credit Agreement'
+  ACTIVISIONBLIZZARD_2020_10K:
+    retrieved: '|  |  | Page No. |\n| --- | --- | --- |\n| PART I. |  | 3 3 |\n| Item 1. | Cautionary Statement Business | 4 |\n| Item 
+    predicted: '10.37'
+    ground_truth: 'Exhibit 10.24: Notice of Stock Option Award'
+  COSTCO_2018_10K:
+    retrieved: 'Item 15—Exhibits, Financial Statement Schedules\n\n1. Financial Statements:\n\n2. Financial Statement Schedules:\n\n(b)
+    predicted: '10.6.1**: Citibank, N.A. Co-Branded Credit Card Agreement'
+    ground_truth: 'none listed'
+  AMCOR_2019_10K:
+    retrieved: '| Item 1. | Business | 6 |\n| --- | --- | --- |\n| Item 1A. | Risk Factors | 9 |\n| Item 1B. | Unresolved Staff Comment
+    predicted: 'Exhibit 10.14: Original Three-Year Credit Agreement'
+    ground_truth: 'Exhibit 10.1: Transaction Agreement'
+  AMAZON_2020_10K:
+    retrieved: '| Description of Use | Leased Square Footage (1) | Owned Square Footage | Location |\n| --- | --- | --- | --- |\n| Offi
+    predicted: '10.8'
+    ground_truth: 'Exhibit 10.1: 1997 Stock Incentive Plan'
+  AMAZON_2019_10K:
+    retrieved: '| Description of Use | Leased Square Footage (1) | Owned Square Footage | Location |\n| --- | --- | --- | --- |\n| Offi
+    predicted: '4.1 | Indenture, dated as of November 29, 2012, between Amazon.com, Inc. and Wells Fargo Bank, National Association, as trustee, and Form of 0.650% Note due 2015, Form of 1.200% Note due 2017, and Form of 2.500% Note due 2022'
+    ground_truth: 'Exhibit 10.1: 1997 Stock Incentive Plan'
+  ADOBE_2021_10K:
+    retrieved: 'ITEM 15. EXHIBITS, FINANCIAL STATEMENT SCHEDULES\n\n1. Financial Statements. See Index to Consolidated Financial Statem
+    predicted: 'Exhibit 10.7: Credit Agreement'
+    ground_truth: 'Exhibit 10.1: 2020 Employee Stock Purchase Plan'
+  EBAY_2022_10K:
+    retrieved: 'ITEM 15: EXHIBITS AND FINANCIAL STATEMENT SCHEDULE\n\n|  | Page Number |\n| --- | --- |\n| 1. Consolidated Financial St
+    predicted: '10.30: Credit Agreement'
+    ground_truth: 'None'
+  ADOBE_2019_10K:
+    retrieved: 'ITEM 6. SELECTED FINANCIAL DATA\n\n| (in thousands, except per share amounts and employee data) | Fiscal Years |  |  | 
+    predicted: 'Exhibit 10.7: Credit Agreement'
+    ground_truth: 'Exhibit 10.1: Credit Agreement'
+  AMCOR_2023Q2_10Q:
+    retrieved: 'Item 6. Exhibits\n\nThe documents in the accompanying Exhibits Index are filed, furnished, or incorporated by reference
+    predicted: 'Exhibit 22: Subsidiary Guarantors and Issuers of Guaranteed Securities.'
+    ground_truth: 'None listed'
+  ACTIVSIONBLIZZARD_2023Q2_10Q:
+    retrieved: 'Item 6. Exhibits\n\nEXHIBIT INDEX\n\n| Exhibit Number | Exhibit |\n| --- | --- |\n| 3.1 | Third Amended and Restated Ce
+    predicted: '10.2: Merger Letter Agreement'
+    ground_truth: 'Exhibit 10.1: Credit Agreement'
+  FOOTLOCKER_2022_8K_dated-2022-05-20:
+    retrieved: '| Item 9.01. | Financial Statements and Exhibits. |\n| --- | --- |\n| (d) | Exhibits. |\n| Exhibit No. | Description |\
+    predicted: 'none listed'
+    ground_truth: 'Exhibit 104: Cover Page Interactive Data File'
+
+Per-doc cost:
+  ✓ BOEING_2019_10K                          cost_ratio=0.02092
+  ✗ ADOBE_2020_10K                           cost_ratio=0.03615
+  ✗ ACTIVISIONBLIZZARD_2020_10K              cost_ratio=0.06277
+  ✗ COSTCO_2018_10K                          cost_ratio=0.03101
+  ✗ AMCOR_2019_10K                           cost_ratio=0.06874
+  ✗ AMAZON_2020_10K                          cost_ratio=0.03682
+  ✗ AMAZON_2019_10K                          cost_ratio=0.03631
+  ✗ ADOBE_2021_10K                           cost_ratio=0.02972
+  ✗ EBAY_2022_10K                            cost_ratio=0.04507
+  ✗ ADOBE_2019_10K                           cost_ratio=0.03671
+  ✗ AMCOR_2023Q2_10Q                         cost_ratio=0.02218
+  ✓ ADOBE_2022Q2_10Q                         cost_ratio=0.01427
+  ✗ ACTIVSIONBLIZZARD_2023Q2_10Q             cost_ratio=0.02392
+  ✓ 3M_2023Q2_10Q                            cost_ratio=0.01320
+  ✓ AMCOR_2022_8K_2022-07-01                 cost_ratio=0.15678
+  ✓ COSTCO_2023_8K_dated-2023-08-09          cost_ratio=0.06288
+  ✓ COSTCO_2023_8K_dated-2023-08-16          cost_ratio=0.04876
+  ✗ FOOTLOCKER_2022_8K_dated-2022-05-20      cost_ratio=0.03049
+
+=== Registered Rules ===
+  rule_exhibit_index_broad                            hit_rate=0.06  avg_cost=0.03870  file=rules/agent/financebench_mix_doc/list_one_material_agreement_or_other_exhibit_number_explicit_18_llm/rule_exhibit_index_broad.py
+  rule_exhibit_rows_and_lists                         hit_rate=0.06  avg_cost=0.03045  file=rules/agent/financebench_mix_doc/list_one_material_agreement_or_other_exhibit_number_explicit_18_llm/rule_exhibit_rows_and_lists.py
+  rule_exhibit_section_precise_8k_10q                 hit_rate=0.00  avg_cost=0.00339  file=rules/agent/financebench_mix_doc/list_one_material_agreement_or_other_exhibit_number_explicit_18_llm/rule_exhibit_section_precise_8k_10q.py
+
+Merge accuracy:        0.33  (6/18)
+Avg cost ratio:        0.04315
+Total LLM calls:       108
+Agent input tokens:    7567554
+Agent output tokens:   2881
+Judge input tokens:    132764
+Judge output tokens:   1168
+Latency:               414.3s
+
+=== Final Answer ===
+Agent stopped due to max iterations.

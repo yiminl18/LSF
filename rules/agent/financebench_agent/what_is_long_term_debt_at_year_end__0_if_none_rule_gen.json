@@ -1,0 +1,117 @@
+{
+  "question": "What is long-term debt at year-end (0 if none)?",
+  "question_slug": "what_is_long_term_debt_at_year_end__0_if_none",
+  "timestamp": "2026-05-06T00:55:44Z",
+  "latency_seconds": 143.38,
+  "agent_input_tokens": 74329,
+  "agent_output_tokens": 1123,
+  "total_llm_calls": 80,
+  "num_rules": 3,
+  "merge_accuracy": 0.7,
+  "avg_cost_ratio": 0.021559,
+  "rules": [
+    {
+      "rule_name": "rule_balance_sheet_table",
+      "description": "Tables under a Balance Sheet / Statements of Financial Position section.",
+      "coverage": 6,
+      "avg_cost_ratio": 0.009146,
+      "file": "rules/agent/financebench_agent/what_is_long_term_debt_at_year_end__0_if_none/rule_balance_sheet_table.py"
+    },
+    {
+      "rule_name": "rule_debt_or_borrowings_note_table",
+      "description": "Tables under a Debt / Borrowings / Long-Term Debt note section.",
+      "coverage": 6,
+      "avg_cost_ratio": 0.006869,
+      "file": "rules/agent/financebench_agent/what_is_long_term_debt_at_year_end__0_if_none/rule_debt_or_borrowings_note_table.py"
+    },
+    {
+      "rule_name": "rule_selected_financial_data_table",
+      "description": "Tables whose immediate parent section is a Selected Financial Data heading.",
+      "coverage": 4,
+      "avg_cost_ratio": 0.005544,
+      "file": "rules/agent/financebench_agent/what_is_long_term_debt_at_year_end__0_if_none/rule_selected_financial_data_table.py"
+    }
+  ],
+  "per_document": [
+    {
+      "doc": "AMCOR_2019_10K",
+      "gt": "5,314.4 million",
+      "pred": "5,309.0",
+      "correct": false,
+      "cost_ratio": 0.021525,
+      "n_spans": 4
+    },
+    {
+      "doc": "COSTCO_2017_10K",
+      "gt": "6,573",
+      "pred": "$ 6,573",
+      "correct": true,
+      "cost_ratio": 0.04958,
+      "n_spans": 5
+    },
+    {
+      "doc": "BOEING_2018_10K",
+      "gt": "$10,657 million",
+      "pred": "$10,657",
+      "correct": true,
+      "cost_ratio": 0.025676,
+      "n_spans": 7
+    },
+    {
+      "doc": "AMAZON_2018_10K",
+      "gt": "$50,708 million",
+      "pred": "23,495",
+      "correct": false,
+      "cost_ratio": 0.025052,
+      "n_spans": 5
+    },
+    {
+      "doc": "EBAY_2021_10K",
+      "gt": "$7,727 million",
+      "pred": "7,727",
+      "correct": true,
+      "cost_ratio": 0.013658,
+      "n_spans": 2
+    },
+    {
+      "doc": "AMAZON_2016_10K",
+      "gt": "$7,694 million",
+      "pred": "$ 7,694",
+      "correct": true,
+      "cost_ratio": 0.023154,
+      "n_spans": 5
+    },
+    {
+      "doc": "CORNING_2022_10K",
+      "gt": "6,687 million",
+      "pred": "$ 6,687",
+      "correct": true,
+      "cost_ratio": 0.007697,
+      "n_spans": 3
+    },
+    {
+      "doc": "NIKE_2021_10K",
+      "gt": "$9,413 million",
+      "pred": "9,413",
+      "correct": true,
+      "cost_ratio": 0.013068,
+      "n_spans": 2
+    },
+    {
+      "doc": "LOCKHEEDMARTIN_2022_10K",
+      "gt": "$15,547 million",
+      "pred": "15,429",
+      "correct": false,
+      "cost_ratio": 0.018997,
+      "n_spans": 3
+    },
+    {
+      "doc": "JOHNSON_JOHNSON_2022_10K",
+      "gt": "$26.9 billion",
+      "pred": "26,888",
+      "correct": true,
+      "cost_ratio": 0.017188,
+      "n_spans": 3
+    }
+  ]
+}

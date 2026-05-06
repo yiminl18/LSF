@@ -1,0 +1,175 @@
+{
+  "question": "List one material agreement or other exhibit number explicitly identified in the Exhibit Index (e.g., \"Exhibit 10.1: Credit Agreement\")—or record \"none listed\" if no material agreements are identified.",
+  "question_slug": "list_one_material_agreement_or_other_exhibit_number_explicit",
+  "timestamp": "2026-05-05T20:44:22Z",
+  "model": "gpt54",
+  "num_documents": 18,
+  "doc_names": [
+    "BOEING_2019_10K",
+    "ADOBE_2020_10K",
+    "ACTIVISIONBLIZZARD_2020_10K",
+    "COSTCO_2018_10K",
+    "AMCOR_2019_10K",
+    "AMAZON_2020_10K",
+    "AMAZON_2019_10K",
+    "ADOBE_2021_10K",
+    "EBAY_2022_10K",
+    "ADOBE_2019_10K",
+    "AMCOR_2023Q2_10Q",
+    "ADOBE_2022Q2_10Q",
+    "ACTIVSIONBLIZZARD_2023Q2_10Q",
+    "3M_2023Q2_10Q",
+    "AMCOR_2022_8K_2022-07-01",
+    "COSTCO_2023_8K_dated-2023-08-09",
+    "COSTCO_2023_8K_dated-2023-08-16",
+    "FOOTLOCKER_2022_8K_dated-2022-05-20"
+  ],
+  "max_iterations": 12,
+  "agent_turns": 25,
+  "latency_seconds": 414.327,
+  "agent_input_tokens": 7567554,
+  "agent_output_tokens": 2881,
+  "judge_input_tokens": 132764,
+  "judge_output_tokens": 1168,
+  "total_input_tokens": 7700318,
+  "total_output_tokens": 4049,
+  "total_llm_calls": 108,
+  "merge_accuracy": 0.3333,
+  "merge_num_correct": 6,
+  "avg_cost_ratio": 0.04315,
+  "merge_per_doc": {
+    "BOEING_2019_10K": {
+      "predicted": "10.1: 364-Day Credit Agreement",
+      "ground_truth": "Exhibit 10.1: 364-Day Credit Agreement",
+      "correct": true,
+      "cost_ratio": 0.02092
+    },
+    "ADOBE_2020_10K": {
+      "predicted": "Exhibit 10.7: Credit Agreement",
+      "ground_truth": "Exhibit 10.1: Credit Agreement",
+      "correct": false,
+      "cost_ratio": 0.03615
+    },
+    "ACTIVISIONBLIZZARD_2020_10K": {
+      "predicted": "10.37",
+      "ground_truth": "Exhibit 10.24: Notice of Stock Option Award",
+      "correct": false,
+      "cost_ratio": 0.06277
+    },
+    "COSTCO_2018_10K": {
+      "predicted": "10.6.1**: Citibank, N.A. Co-Branded Credit Card Agreement",
+      "ground_truth": "none listed",
+      "correct": false,
+      "cost_ratio": 0.03101
+    },
+    "AMCOR_2019_10K": {
+      "predicted": "Exhibit 10.14: Original Three-Year Credit Agreement",
+      "ground_truth": "Exhibit 10.1: Transaction Agreement",
+      "correct": false,
+      "cost_ratio": 0.06874
+    },
+    "AMAZON_2020_10K": {
+      "predicted": "10.8",
+      "ground_truth": "Exhibit 10.1: 1997 Stock Incentive Plan",
+      "correct": false,
+      "cost_ratio": 0.03682
+    },
+    "AMAZON_2019_10K": {
+      "predicted": "4.1",
+      "ground_truth": "Exhibit 10.1: 1997 Stock Incentive Plan",
+      "correct": false,
+      "cost_ratio": 0.03631
+    },
+    "ADOBE_2021_10K": {
+      "predicted": "Exhibit 10.7: Credit Agreement",
+      "ground_truth": "Exhibit 10.1: 2020 Employee Stock Purchase Plan",
+      "correct": false,
+      "cost_ratio": 0.02972
+    },
+    "EBAY_2022_10K": {
+      "predicted": "10.30: Credit Agreement",
+      "ground_truth": "None",
+      "correct": false,
+      "cost_ratio": 0.04507
+    },
+    "ADOBE_2019_10K": {
+      "predicted": "Exhibit 10.7: Credit Agreement",
+      "ground_truth": "Exhibit 10.1: Credit Agreement",
+      "correct": false,
+      "cost_ratio": 0.03671
+    },
+    "AMCOR_2023Q2_10Q": {
+      "predicted": "Exhibit 22: Subsidiary Guarantors and Issuers of Guaranteed Securities.",
+      "ground_truth": "None listed",
+      "correct": false,
+      "cost_ratio": 0.02218
+    },
+    "ADOBE_2022Q2_10Q": {
+      "predicted": "10.1: 2019 Equity Incentive Plan, as amended*",
+      "ground_truth": "Exhibit 10.1: 2019 Equity Incentive Plan, as amended",
+      "correct": true,
+      "cost_ratio": 0.01427
+    },
+    "ACTIVSIONBLIZZARD_2023Q2_10Q": {
+      "predicted": "10.2: Merger Letter Agreement",
+      "ground_truth": "Exhibit 10.1: Credit Agreement",
+      "correct": false,
+      "cost_ratio": 0.02392
+    },
+    "3M_2023Q2_10Q": {
+      "predicted": "10.1: Settlement Agreement",
+      "ground_truth": "Exhibit 10.1: Settlement Agreement",
+      "correct": true,
+      "cost_ratio": 0.0132
+    },
+    "AMCOR_2022_8K_2022-07-01": {
+      "predicted": "4.6: Second Supplemental Indenture, dated as of June 30, 2022, among Amcor Finance (USA), Inc., Amcor Flexibles North America, Inc. and Deutsche Bank Trust Company Americas.",
+      "ground_truth": "Exhibit 4.6: Second Supplemental Indenture",
+      "correct": true,
+      "cost_ratio": 0.15678
+    },
+    "COSTCO_2023_8K_dated-2023-08-09": {
+      "predicted": "3.2",
+      "ground_truth": "Exhibit 3.2: Bylaws as amended of Costco Wholesale Corporation",
+      "correct": true,
+      "cost_ratio": 0.06288
+    },
+    "COSTCO_2023_8K_dated-2023-08-16": {
+      "predicted": "99.1: Press release dated August 16, 2023.",
+      "ground_truth": "Exhibit 99.1: Press release dated August 16, 2023",
+      "correct": true,
+      "cost_ratio": 0.04876
+    },
+    "FOOTLOCKER_2022_8K_dated-2022-05-20": {
+      "predicted": "none listed",
+      "ground_truth": "Exhibit 104: Cover Page Interactive Data File",
+      "correct": false,
+      "cost_ratio": 0.03049
+    }
+  },
+  "rules": [
+    {
+      "rule_name": "rule_exhibit_index_broad",
+      "description": "Retrieve exhibit index rows/spans and nearby exhibit-related headers.",
+      "hit_rate": 0.0556,
+      "avg_cost_ratio": 0.0387,
+      "file": "rules/agent/financebench_mix_doc/list_one_material_agreement_or_other_exhibit_number_explicit_18_llm/rule_exhibit_index_broad.py"
+    },
+    {
+      "rule_name": "rule_exhibit_rows_and_lists",
+      "description": "Retrieve exhibit index tables and exhibit list lines under Item 6/Item 9.01 exhibit sections.",
+      "hit_rate": 0.0556,
+      "avg_cost_ratio": 0.03045,
+      "file": "rules/agent/financebench_mix_doc/list_one_material_agreement_or_other_exhibit_number_explicit_18_llm/rule_exhibit_rows_and_lists.py"
+    },
+    {
+      "rule_name": "rule_exhibit_section_precise_8k_10q",
+      "description": "Retrieve only exhibit list/table spans in 8-K and 10-Q exhibit sections.",
+      "hit_rate": 0.0,
+      "avg_cost_ratio": 0.00339,
+      "file": "rules/agent/financebench_mix_doc/list_one_material_agreement_or_other_exhibit_number_explicit_18_llm/rule_exhibit_section_precise_8k_10q.py"
+    }
+  ],
+  "rule_dir": "rules/agent/financebench_mix_doc/list_one_material_agreement_or_other_exhibit_number_explicit_18_llm",
+  "log_file": "logs/financebench/agent/list_one_material_agreement_or_other_exhibit_number_explicit_18docs_20260505_204422.txt"
+}

@@ -1,0 +1,310 @@
+Question: What is/are the trading symbol(s) and listing exchange(s)?
+Slug: what_isare_the_trading_symbols_and_listing_exchanges
+Docs (N): 18
+Latency: 345.567s
+Agent turns (tool calls): 23
+Agent input tokens: 7558429
+Agent output tokens: 2311
+Judge input tokens: 12984
+Judge output tokens: 628
+Total LLM calls (QA+judge): 72
+Merge accuracy: 15/18 (0.83)
+Avg cost ratio: 0.00627
+
+=== Step 1: summarize_answer_locations ===
+Input: {}
+Output:
+doc_name               page  label            level   bold  all_cap  path_text               answer_snippet
+-----------------------------------------------------------------------------------------------------------
+BOEING_2019_10K        N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: BA, New York Stock Exchange)
+ADOBE_2020_10K         N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: ADBE, NASDAQ)
+ACTIVISIONBLIZZARD_2020_10K N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: ATVI, The Nasdaq Global Select)
+COSTCO_2018_10K        N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: COST — The NASDAQ Global Selec)
+AMCOR_2019_10K         N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: AMCR, The New York Stock Excha)
+AMAZON_2020_10K        N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: AMZN, Nasdaq Global Select Mar)
+AMAZON_2019_10K        N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: AMZN, Nasdaq Global Select Mar)
+ADOBE_2021_10K         N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: ADBE, NASDAQ)
+EBAY_2022_10K          N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: EBAY — The Nasdaq Global Selec)
+ADOBE_2019_10K         N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: ADBE, NASDAQ)
+AMCOR_2023Q2_10Q       N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: [{'symbol': 'AMCR', 'exchange')
+ADOBE_2022Q2_10Q       N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: ADBE, NASDAQ)
+ACTIVSIONBLIZZARD_2023Q2_10Q N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: ATVI, The Nasdaq Global Select)
+3M_2023Q2_10Q          N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: [{'symbol': 'MMM', 'exchange':)
+AMCOR_2022_8K_2022-07-01 N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: [{'Trading Symbol': 'AMCR', 'E)
+COSTCO_2023_8K_dated-2023-08-09 N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: COST, NASDAQ)
+COSTCO_2023_8K_dated-2023-08-16 N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: COST, NASDAQ)
+FOOTLOCKER_2022_8K_dated-2022-05-20 N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: FL, New York Stock Exchange)
+
+=== Step 2: write_rule ===
+Input: {"rule_name": "rule_cover_page_trading_symbols", "code": "def rule_cover_page_trading_symbols(doc: dict) -> list[dict]:\n    \"\"\"Retrieve page-1 cover-page spans around Section 12(b) trading symbol and exchange disclosures.\"\"\"\n    try:\n        import re\n        texts = doc.get(\"texts\", [])\n        out = []\n        for span in texts:\n            try:\n                if span.get(\"page_no\") != 1:\n                    continue\n                label = span.get(\"label\")\n                if label not in {\"text\", \"section_header\", \"table\"}:\n                    continue\n                txt = (span.get(\"text\") or \"\")\n                path = ((span.get(\"structure\") or {}).get(\"path_text\") or \"\")\n                hay = f\"{path} {txt}\".lower()\n                if (\n                    \"securities registered pursuant to section 12(b)\" in hay\n                    or \"trading symbol\" in hay\n                    or \"trading symbol(s)\" in hay\n                    or \"name of each exchange\" in hay\n                    or \"name of each exchange on which registered\" in hay\n                    or \"exchange on which registered\" in hay\n                ):\n                    out.append(span)\n                    continue\n                if label == \"table\":\n                    cells = (((span.get(\"table_data\") or {}).get(\"cells\")) or [])\n                    cell_text = \" \".join((c.get(\"text\") or \"\") for c in cells).lower()\n                    if (\n                        \"trading symbol\" in cell_text\n                        or \"trading symbol(s)\" in cell_text\n                        or \"name of each exchange\" in cell_text\n                        or \"exchange on which registered\" in cell_text\n                    ):\n                        out.append(span)\n            except Exception:\n                continue\n        return out\n    except Exception:\n        return []\n"}
+Output:
+OK: rule registered — rule_cover_page_trading_symbols
+
+=== Step 3: test_rule ===
+Input: {"rule_name": "rule_cover_page_trading_symbols"}
+Output:
+doc_name               hit    ret_tokens  cost_ratio  snippet
+-------------------------------------------------------------
+BOEING_2019_10K        ✗      26          0.0003      'Securities registered pursuant to Section 12(b) of the Act:
+ADOBE_2020_10K         ✗      24          0.0003      'Securities registered pursuant to Section 12(b) of the Act:
+ACTIVISIONBLIZZARD_2020_10K ✗      676         0.0067      'Securities registered pursuant to Section 12(b) of the Act:
+COSTCO_2018_10K        ✗      21          0.0004      'Securities registered pursuant to Section 12(b) of the Act:
+AMCOR_2019_10K         ✗      219         0.0026      'Securities registered pursuant to Section 12(b) of the Act:
+AMAZON_2020_10K        ✗      25          0.0004      'Securities registered pursuant to Section 12(b) of the Act:
+AMAZON_2019_10K        ✗      33          0.0005      'Securities registered pursuant to Section 12(b) of the Act:
+ADOBE_2021_10K         ✗      24          0.0003      'Securities registered pursuant to Section 12(b) of the Act:
+EBAY_2022_10K          ✗      23          0.0003      'Securities registered pursuant to Section 12(b) of the Act:
+ADOBE_2019_10K         ✗      24          0.0003      'Securities registered pursuant to Section 12(b) of the Act:
+AMCOR_2023Q2_10Q       ✗      86          0.0027      'Securities registered pursuant to Section 12(b) of the Act:
+ADOBE_2022Q2_10Q       ✗      379         0.0089      'Securities registered pursuant to Section 12(b) of the Act:
+ACTIVSIONBLIZZARD_2023Q2_10Q ✗      402         0.0078      'Securities registered pursuant to Section 12(b) of the Act:
+3M_2023Q2_10Q          ✗      130         0.0016      'Securities registered pursuant to Section 12(b) of the Act:
+AMCOR_2022_8K_2022-07-01 ✗      182         0.0327      'Name of each exchange on which registered\nSecurities regis
+COSTCO_2023_8K_dated-2023-08-09 ✗      25          0.0010      'Securities registered pursuant to Section 12(b) of the Act:
+COSTCO_2023_8K_dated-2023-08-16 ✗      25          0.0230      'Securities registered pursuant to Section 12(b) of the Act:
+FOOTLOCKER_2022_8K_dated-2022-05-20 ✗      26          0.0144      'Securities registered pursuant to Section 12(b) of the Act:
+
+Hit rate: 0/18 (0.00)   Avg cost ratio: 0.0058
+
+=== Step 4: show_uncovered_docs ===
+Input: {}
+Output:
+Uncovered (no registered rule hits):
+  - BOEING_2019_10K
+  - ADOBE_2020_10K
+  - ACTIVISIONBLIZZARD_2020_10K
+  - COSTCO_2018_10K
+  - AMCOR_2019_10K
+  - AMAZON_2020_10K
+  - AMAZON_2019_10K
+  - ADOBE_2021_10K
+  - EBAY_2022_10K
+  - ADOBE_2019_10K
+  - AMCOR_2023Q2_10Q
+  - ADOBE_2022Q2_10Q
+  - ACTIVSIONBLIZZARD_2023Q2_10Q
+  - 3M_2023Q2_10Q
+  - AMCOR_2022_8K_2022-07-01
+  - COSTCO_2023_8K_dated-2023-08-09
+  - COSTCO_2023_8K_dated-2023-08-16
+  - FOOTLOCKER_2022_8K_dated-2022-05-20
+
+Covered: 0/18
+
+=== Step 5: diagnose_failing_doc ===
+Input: {"doc_name": "ADOBE_2020_10K"}
+Output:
+
+
+=== Step 6: diagnose_failing_doc ===
+Input: {"doc_name": "AMAZON_2020_10K"}
+Output:
+
+
+=== Step 7: diagnose_failing_doc ===
+Input: {"doc_name": "COSTCO_2018_10K"}
+Output:
+
+
+=== Step 8: diagnose_failing_doc ===
+Input: {"doc_name": "BOEING_2019_10K"}
+Output:
+
+
+=== Step 9: diagnose_failing_doc ===
+Input: {"doc_name": "ACTIVISIONBLIZZARD_2020_10K"}
+Output:
+
+
+=== Step 10: diagnose_failing_doc ===
+Input: {"doc_name": "EBAY_2022_10K"}
+Output:
+
+
+=== Step 11: diagnose_failing_doc ===
+Input: {"doc_name": "AMCOR_2023Q2_10Q"}
+Output:
+
+
+=== Step 12: diagnose_failing_doc ===
+Input: {"doc_name": "3M_2023Q2_10Q"}
+Output:
+
+
+=== Step 13: diagnose_failing_doc ===
+Input: {"doc_name": "AMCOR_2022_8K_2022-07-01"}
+Output:
+
+
+=== Step 14: diagnose_failing_doc ===
+Input: {"doc_name": "FOOTLOCKER_2022_8K_dated-2022-05-20"}
+Output:
+=== Diagnosis: 3M_2023Q2_10Q ===
+
+Ground truth: "[{'symbol': 'MMM', 'exchange': 'New York Stock Exchange'}, {'symbol': 'MMM', 'exchange': 'Chicago Stock Exchange, Inc.'}, {'symbol': 'MMM26', 'exchange': 'New York Stock Exchange'}, {'symbol': 'MMM30', 'exchange': 'New York Stock Exchange'}, {'symbol': 'MMM31', 'exchange': 'New York Stock Exchange'}]"
+
+Rule results:
+  rule_cover_page_trading_symbols:  retrieved='Securities registered pursuant to Section 12(b) of the Act:\n| Title of each class | Trading Symbol(s'
+
+Answer location (inspect_answer_context):
+  Answer not found by substring match in 3M_2023Q2_10Q. GT: "[{'symbol': 'MMM', 'exchange': 'New York Stock Exchange'}, {'symbol': 'MMM', 'exchange': 'Chicago Stock Exchange, Inc.'}, {'symbol': 'MMM26', 'exchange': 'New York Stock Exchange'}, {'symbol': 'MMM30', 'exchange': 'New York Stock Exchange'}, {'symbol': 'MMM31', 'exchange': 'New York Stock Exchange'}]"
+
+No passing docs found yet — no rule covers any document.
+
+=== Step 15: write_rule ===
+Input: {"rule_name": "rule_page1_cover_value_spans", "code": "def rule_page1_cover_value_spans(doc: dict) -> list[dict]:\n    \"\"\"Retrieve page-1 cover-page body/table spans containing trading symbol and exchange values.\"\"\"\n    try:\n        import re\n        texts = doc.get(\"texts\", [])\n        out = []\n        for span in texts:\n            try:\n                if span.get(\"page_no\") != 1:\n                    continue\n                label = span.get(\"label\")\n                txt = (span.get(\"text\") or \"\")\n                path = ((span.get(\"structure\") or {}).get(\"path_text\") or \"\")\n                low = txt.lower()\n                path_low = path.lower()\n                if label == \"table\":\n                    cells = (((span.get(\"table_data\") or {}).get(\"cells\")) or [])\n                    cell_text = \" \".join((c.get(\"text\") or \"\") for c in cells).lower()\n                    if (\n                        \"trading symbol\" in cell_text\n                        or \"trading symbol(s)\" in cell_text\n                        or \"name of each exchange\" in cell_text\n                        or \"exchange on which registered\" in cell_text\n                    ):\n                        out.append(span)\n                    continue\n                if label != \"text\":\n                    continue\n                if not path:\n                    continue\n                if len(txt.split()) > 12:\n                    continue\n                if (\n                    \"securities registered pursuant to section 12(b)\" in path_low\n                    or \"trading symbol\" in path_low\n                    or \"name of each exchange\" in path_low\n                    or \"exchange on which registered\" in path_low\n                    or any(k in low for k in [\n                        \"nasdaq\", \"new york stock exchange\", \"chicago stock exchange\",\n                        \"global select market\", \"nyse\"\n                    ])\n                    or re.fullmatch(r\"[A-Z]{1,5}(?:\\d{2}|/\\d{2})?\", txt.strip()) is not None\n                ):\n                    out.append(span)\n            except Exception:\n                continue\n        return out\n    except Exception:\n        return []\n"}
+Output:
+OK: rule registered — rule_page1_cover_value_spans
+
+=== Step 16: test_rule ===
+Input: {"rule_name": "rule_page1_cover_value_spans"}
+Output:
+doc_name               hit    ret_tokens  cost_ratio  snippet
+-------------------------------------------------------------
+BOEING_2019_10K        ✗      4           0.0000      'New York Stock Exchange'
+ADOBE_2020_10K         ✗      4           0.0000      'ADBE\nNASDAQ'
+ACTIVISIONBLIZZARD_2020_10K ✗      38          0.0004      'Common Stock, par value $0.000001 per share\nATVI\nThe Nasd
+COSTCO_2018_10K        ✗      6           0.0001      'The NASDAQ Global Select Market'
+AMCOR_2019_10K         ✗      37          0.0004      'Ordinary Shares, par value $0.01 per share\nAMCR\nSecuritie
+AMAZON_2020_10K        ✗      9           0.0002      'AMZN\nNasdaq Global Select Market'
+AMAZON_2019_10K        ✗      12          0.0002      'Name of Each Exchange on Which Registered Nasdaq Global Sel
+ADOBE_2021_10K         ✗      4           0.0001      'ADBE\nNASDAQ'
+EBAY_2022_10K          ✗      0           0.0000      '(empty)'
+ADOBE_2019_10K         ✗      4           0.0000      'ADBE\nNASDAQ'
+AMCOR_2023Q2_10Q       ✗      72          0.0023      '| Title of each class | Trading symbol(s) | Name of each ex
+ADOBE_2022Q2_10Q       ✗      43          0.0010      'Title of each class\nTrading Symbol\nCommon Stock, $0.0001 
+ACTIVSIONBLIZZARD_2023Q2_10Q ✗      33          0.0006      'OR\nCommon Stock, par value $0.000001 per share\nATVI\nThe 
+3M_2023Q2_10Q          ✗      116         0.0014      '| Title of each class | Trading Symbol(s) | Name of each ex
+AMCOR_2022_8K_2022-07-01 ✗      42          0.0076      'Ordinary Shares, par value $0.01 per share\nAMCR\n1.125% Gu
+COSTCO_2023_8K_dated-2023-08-09 ✗      4           0.0002      'COST\nNASDAQ'
+COSTCO_2023_8K_dated-2023-08-16 ✗      4           0.0037      'COST\nNASDAQ'
+FOOTLOCKER_2022_8K_dated-2022-05-20 ✗      6           0.0033      'FL\nNew York Stock Exchange'
+
+Hit rate: 0/18 (0.00)   Avg cost ratio: 0.0012
+
+=== Step 17: show_uncovered_docs ===
+Input: {}
+Output:
+Uncovered (no registered rule hits):
+  - BOEING_2019_10K
+  - ADOBE_2020_10K
+  - ACTIVISIONBLIZZARD_2020_10K
+  - COSTCO_2018_10K
+  - AMCOR_2019_10K
+  - AMAZON_2020_10K
+  - AMAZON_2019_10K
+  - ADOBE_2021_10K
+  - EBAY_2022_10K
+  - ADOBE_2019_10K
+  - AMCOR_2023Q2_10Q
+  - ADOBE_2022Q2_10Q
+  - ACTIVSIONBLIZZARD_2023Q2_10Q
+  - 3M_2023Q2_10Q
+  - AMCOR_2022_8K_2022-07-01
+  - COSTCO_2023_8K_dated-2023-08-09
+  - COSTCO_2023_8K_dated-2023-08-16
+  - FOOTLOCKER_2022_8K_dated-2022-05-20
+
+Covered: 0/18
+
+=== Step 18: test_union ===
+Input: {}
+Output:
+Merge accuracy: 15/18 (0.8333)  Avg cost ratio: 0.00627
+
+Failing docs:
+  BOEING_2019_10K:
+    retrieved: 'Securities registered pursuant to Section 12(b) of the Act:\n\nNew York Stock Exchange\n\n(Trading Symbol)\n\n(Name of 
+    predicted: 'NOT FOUND'
+    ground_truth: 'BA, New York Stock Exchange'
+  COSTCO_2018_10K:
+    retrieved: 'Securities registered pursuant to Section 12(b) of the Act:\n\nName of each exchange on which registered\n\nThe NASDAQ 
+    predicted: 'NOT FOUND'
+    ground_truth: 'COST — The NASDAQ Global Select Market'
+  EBAY_2022_10K:
+    retrieved: 'Securities registered pursuant to Section 12(b) of the Act:\n\nTrading symbol\n\nName of exchange on which registered'
+    predicted: 'NOT FOUND'
+    ground_truth: 'EBAY — The Nasdaq Global Select Market'
+
+Per-doc cost:
+  ✗ BOEING_2019_10K                          cost_ratio=0.00034
+  ✓ ADOBE_2020_10K                           cost_ratio=0.00032
+  ✓ ACTIVISIONBLIZZARD_2020_10K              cost_ratio=0.00667
+  ✗ COSTCO_2018_10K                          cost_ratio=0.00057
+  ✓ AMCOR_2019_10K                           cost_ratio=0.00260
+  ✓ AMAZON_2020_10K                          cost_ratio=0.00059
+  ✓ AMAZON_2019_10K                          cost_ratio=0.00053
+  ✓ ADOBE_2021_10K                           cost_ratio=0.00038
+  ✗ EBAY_2022_10K                            cost_ratio=0.00025
+  ✓ ADOBE_2019_10K                           cost_ratio=0.00032
+  ✓ AMCOR_2023Q2_10Q                         cost_ratio=0.00269
+  ✓ ADOBE_2022Q2_10Q                         cost_ratio=0.00891
+  ✓ ACTIVSIONBLIZZARD_2023Q2_10Q             cost_ratio=0.00786
+  ✓ 3M_2023Q2_10Q                            cost_ratio=0.00157
+  ✓ AMCOR_2022_8K_2022-07-01                 cost_ratio=0.03272
+  ✓ COSTCO_2023_8K_dated-2023-08-09          cost_ratio=0.00126
+  ✓ COSTCO_2023_8K_dated-2023-08-16          cost_ratio=0.02760
+  ✓ FOOTLOCKER_2022_8K_dated-2022-05-20      cost_ratio=0.01774
+
+=== Step 19: inspect_answer_context ===
+Input: {"doc_name": "BOEING_2019_10K"}
+Output:
+
+
+=== Step 20: inspect_answer_context ===
+Input: {"doc_name": "COSTCO_2018_10K"}
+Output:
+
+
+=== Step 21: inspect_answer_context ===
+Input: {"doc_name": "EBAY_2022_10K"}
+Output:
+Answer not found by substring match in EBAY_2022_10K. GT: 'EBAY — The Nasdaq Global Select Market'
+
+=== Step 22: write_rule ===
+Input: {"rule_name": "rule_page1_short_symbol_values", "code": "def rule_page1_short_symbol_values(doc: dict) -> list[dict]:\n    \"\"\"Retrieve short page-1 uppercase symbol value spans from the cover-page registrant block.\"\"\"\n    try:\n        import re\n        texts = doc.get(\"texts\", [])\n        out = []\n        for span in texts:\n            try:\n                if span.get(\"page_no\") != 1 or span.get(\"label\") != \"text\":\n                    continue\n                txt = (span.get(\"text\") or \"\").strip()\n                path = ((span.get(\"structure\") or {}).get(\"path_text\") or \"\")\n                if not path:\n                    continue\n                if re.fullmatch(r\"[A-Z]{2,5}\", txt) is None:\n                    continue\n                if txt in {\"FORM\", \"ITEM\", \"PART\", \"YES\", \"NO\", \"OR\"}:\n                    continue\n                if any(k in path for k in [\"INC.\", \"PLC\", \"Corporation\", \"COMPANY\", \"Company\"]):\n                    out.append(span)\n            except Exception:\n                continue\n        return out\n    except Exception:\n        return []\n"}
+Output:
+OK: rule registered — rule_page1_short_symbol_values
+
+=== Step 23: test_rule ===
+Input: {"rule_name": "rule_page1_short_symbol_values"}
+Output:
+doc_name               hit    ret_tokens  cost_ratio  snippet
+-------------------------------------------------------------
+BOEING_2019_10K        ✗      0           0.0000      '(empty)'
+ADOBE_2020_10K         ✗      2           0.0000      'ADBE'
+ACTIVISIONBLIZZARD_2020_10K ✗      2           0.0000      'ATVI'
+COSTCO_2018_10K        ✗      0           0.0000      '(empty)'
+AMCOR_2019_10K         ✗      2           0.0000      'AMCR'
+AMAZON_2020_10K        ✗      2           0.0000      'AMZN'
+AMAZON_2019_10K        ✗      0           0.0000      '(empty)'
+ADOBE_2021_10K         ✗      2           0.0000      'ADBE'
+EBAY_2022_10K          ✗      0           0.0000      '(empty)'
+ADOBE_2019_10K         ✗      2           0.0000      'ADBE'
+AMCOR_2023Q2_10Q       ✗      0           0.0000      '(empty)'
+ADOBE_2022Q2_10Q       ✗      2           0.0000      'ADBE'
+ACTIVSIONBLIZZARD_2023Q2_10Q ✗      2           0.0000      'ATVI'
+3M_2023Q2_10Q          ✗      0           0.0000      '(empty)'
+AMCOR_2022_8K_2022-07-01 ✗      2           0.0004      'AMCR'
+COSTCO_2023_8K_dated-2023-08-09 ✗      0           0.0000      '(empty)'
+COSTCO_2023_8K_dated-2023-08-16 ✗      0           0.0000      '(empty)'
+FOOTLOCKER_2022_8K_dated-2022-05-20 ✗      0           0.0000      '(empty)'
+
+Hit rate: 0/18 (0.00)   Avg cost ratio: 0.0000
+
+=== Registered Rules ===
+  rule_cover_page_trading_symbols                     hit_rate=0.00  avg_cost=0.00579  file=rules/agent/financebench_mix_doc/what_isare_the_trading_symbols_and_listing_exchanges_18_llm/rule_cover_page_trading_symbols.py
+  rule_page1_cover_value_spans                        hit_rate=0.00  avg_cost=0.00119  file=rules/agent/financebench_mix_doc/what_isare_the_trading_symbols_and_listing_exchanges_18_llm/rule_page1_cover_value_spans.py
+  rule_page1_short_symbol_values                      hit_rate=0.00  avg_cost=0.00003  file=rules/agent/financebench_mix_doc/what_isare_the_trading_symbols_and_listing_exchanges_18_llm/rule_page1_short_symbol_values.py
+
+Merge accuracy:        0.83  (15/18)
+Avg cost ratio:        0.00627
+Total LLM calls:       72
+Agent input tokens:    7558429
+Agent output tokens:   2311
+Judge input tokens:    12984
+Judge output tokens:   628
+Latency:               345.6s
+
+=== Final Answer ===
+Agent stopped due to max iterations.

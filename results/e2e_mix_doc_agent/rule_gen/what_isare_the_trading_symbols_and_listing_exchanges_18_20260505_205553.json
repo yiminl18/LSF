@@ -1,0 +1,175 @@
+{
+  "question": "What is/are the trading symbol(s) and listing exchange(s)?",
+  "question_slug": "what_isare_the_trading_symbols_and_listing_exchanges",
+  "timestamp": "2026-05-05T20:55:53Z",
+  "model": "gpt54",
+  "num_documents": 18,
+  "doc_names": [
+    "BOEING_2019_10K",
+    "ADOBE_2020_10K",
+    "ACTIVISIONBLIZZARD_2020_10K",
+    "COSTCO_2018_10K",
+    "AMCOR_2019_10K",
+    "AMAZON_2020_10K",
+    "AMAZON_2019_10K",
+    "ADOBE_2021_10K",
+    "EBAY_2022_10K",
+    "ADOBE_2019_10K",
+    "AMCOR_2023Q2_10Q",
+    "ADOBE_2022Q2_10Q",
+    "ACTIVSIONBLIZZARD_2023Q2_10Q",
+    "3M_2023Q2_10Q",
+    "AMCOR_2022_8K_2022-07-01",
+    "COSTCO_2023_8K_dated-2023-08-09",
+    "COSTCO_2023_8K_dated-2023-08-16",
+    "FOOTLOCKER_2022_8K_dated-2022-05-20"
+  ],
+  "max_iterations": 12,
+  "agent_turns": 23,
+  "latency_seconds": 345.567,
+  "agent_input_tokens": 7558429,
+  "agent_output_tokens": 2311,
+  "judge_input_tokens": 12984,
+  "judge_output_tokens": 628,
+  "total_input_tokens": 7571413,
+  "total_output_tokens": 2939,
+  "total_llm_calls": 72,
+  "merge_accuracy": 0.8333,
+  "merge_num_correct": 15,
+  "avg_cost_ratio": 0.00627,
+  "merge_per_doc": {
+    "BOEING_2019_10K": {
+      "predicted": "NOT FOUND",
+      "ground_truth": "BA, New York Stock Exchange",
+      "correct": false,
+      "cost_ratio": 0.00034
+    },
+    "ADOBE_2020_10K": {
+      "predicted": "ADBE — NASDAQ",
+      "ground_truth": "ADBE, NASDAQ",
+      "correct": true,
+      "cost_ratio": 0.00032
+    },
+    "ACTIVISIONBLIZZARD_2020_10K": {
+      "predicted": "ATVI — The Nasdaq Global Select Market",
+      "ground_truth": "ATVI, The Nasdaq Global Select Market",
+      "correct": true,
+      "cost_ratio": 0.00667
+    },
+    "COSTCO_2018_10K": {
+      "predicted": "NOT FOUND",
+      "ground_truth": "COST — The NASDAQ Global Select Market",
+      "correct": false,
+      "cost_ratio": 0.00057
+    },
+    "AMCOR_2019_10K": {
+      "predicted": "AMCR — The New York Stock Exchange",
+      "ground_truth": "AMCR, The New York Stock Exchange",
+      "correct": true,
+      "cost_ratio": 0.0026
+    },
+    "AMAZON_2020_10K": {
+      "predicted": "AMZN — Nasdaq Global Select Market",
+      "ground_truth": "AMZN, Nasdaq Global Select Market",
+      "correct": true,
+      "cost_ratio": 0.00059
+    },
+    "AMAZON_2019_10K": {
+      "predicted": "AMZN — Nasdaq Global Select Market",
+      "ground_truth": "AMZN, Nasdaq Global Select Market",
+      "correct": true,
+      "cost_ratio": 0.00053
+    },
+    "ADOBE_2021_10K": {
+      "predicted": "ADBE — NASDAQ",
+      "ground_truth": "ADBE, NASDAQ",
+      "correct": true,
+      "cost_ratio": 0.00038
+    },
+    "EBAY_2022_10K": {
+      "predicted": "NOT FOUND",
+      "ground_truth": "EBAY — The Nasdaq Global Select Market",
+      "correct": false,
+      "cost_ratio": 0.00025
+    },
+    "ADOBE_2019_10K": {
+      "predicted": "ADBE — NASDAQ",
+      "ground_truth": "ADBE, NASDAQ",
+      "correct": true,
+      "cost_ratio": 0.00032
+    },
+    "AMCOR_2023Q2_10Q": {
+      "predicted": "AMCR — New York Stock Exchange; AUKF/27 — New York Stock Exchange",
+      "ground_truth": "[{'symbol': 'AMCR', 'exchange': 'New York Stock Exchange'}, {'symbol': 'AUKF/27', 'exchange': 'New York Stock Exchange'}]",
+      "correct": true,
+      "cost_ratio": 0.00269
+    },
+    "ADOBE_2022Q2_10Q": {
+      "predicted": "ADBE — NASDAQ",
+      "ground_truth": "ADBE, NASDAQ",
+      "correct": true,
+      "cost_ratio": 0.00891
+    },
+    "ACTIVSIONBLIZZARD_2023Q2_10Q": {
+      "predicted": "ATVI — The Nasdaq Global Select Market",
+      "ground_truth": "ATVI, The Nasdaq Global Select Market",
+      "correct": true,
+      "cost_ratio": 0.00786
+    },
+    "3M_2023Q2_10Q": {
+      "predicted": "MMM — New York Stock Exchange; Chicago Stock Exchange, Inc.; MMM26 — New York Stock Exchange; MMM30 — New York Stock Exchange; MMM31 — New York Stock Exchange",
+      "ground_truth": "[{'symbol': 'MMM', 'exchange': 'New York Stock Exchange'}, {'symbol': 'MMM', 'exchange': 'Chicago Stock Exchange, Inc.'}, {'symbol': 'MMM26', 'exchange': 'New York Stock Exchange'}, {'symbol': 'MMM30', 'exchange': 'New York Stock Exchange'}, {'symbol': 'MMM31', 'exchange': 'New York Stock Exchange'}]",
+      "correct": true,
+      "cost_ratio": 0.00157
+    },
+    "AMCOR_2022_8K_2022-07-01": {
+      "predicted": "AMCR — New York Stock Exchange; AUKF/27 — New York Stock Exchange",
+      "ground_truth": "[{'Trading Symbol': 'AMCR', 'Exchange': 'New York Stock Exchange'}, {'Trading Symbol': 'AUKF/27', 'Exchange': 'New York Stock Exchange'}]",
+      "correct": true,
+      "cost_ratio": 0.03272
+    },
+    "COSTCO_2023_8K_dated-2023-08-09": {
+      "predicted": "COST — NASDAQ",
+      "ground_truth": "COST, NASDAQ",
+      "correct": true,
+      "cost_ratio": 0.00126
+    },
+    "COSTCO_2023_8K_dated-2023-08-16": {
+      "predicted": "COST — NASDAQ",
+      "ground_truth": "COST, NASDAQ",
+      "correct": true,
+      "cost_ratio": 0.0276
+    },
+    "FOOTLOCKER_2022_8K_dated-2022-05-20": {
+      "predicted": "FL — New York Stock Exchange",
+      "ground_truth": "FL, New York Stock Exchange",
+      "correct": true,
+      "cost_ratio": 0.01774
+    }
+  },
+  "rules": [
+    {
+      "rule_name": "rule_cover_page_trading_symbols",
+      "description": "Retrieve page-1 cover-page spans around Section 12(b) trading symbol and exchange disclosures.",
+      "hit_rate": 0.0,
+      "avg_cost_ratio": 0.00579,
+      "file": "rules/agent/financebench_mix_doc/what_isare_the_trading_symbols_and_listing_exchanges_18_llm/rule_cover_page_trading_symbols.py"
+    },
+    {
+      "rule_name": "rule_page1_cover_value_spans",
+      "description": "Retrieve page-1 cover-page body/table spans containing trading symbol and exchange values.",
+      "hit_rate": 0.0,
+      "avg_cost_ratio": 0.00119,
+      "file": "rules/agent/financebench_mix_doc/what_isare_the_trading_symbols_and_listing_exchanges_18_llm/rule_page1_cover_value_spans.py"
+    },
+    {
+      "rule_name": "rule_page1_short_symbol_values",
+      "description": "Retrieve short page-1 uppercase symbol value spans from the cover-page registrant block.",
+      "hit_rate": 0.0,
+      "avg_cost_ratio": 3e-05,
+      "file": "rules/agent/financebench_mix_doc/what_isare_the_trading_symbols_and_listing_exchanges_18_llm/rule_page1_short_symbol_values.py"
+    }
+  ],
+  "rule_dir": "rules/agent/financebench_mix_doc/what_isare_the_trading_symbols_and_listing_exchanges_18_llm",
+  "log_file": "logs/financebench/agent/what_isare_the_trading_symbols_and_listing_exchanges_18docs_20260505_205553.txt"
+}

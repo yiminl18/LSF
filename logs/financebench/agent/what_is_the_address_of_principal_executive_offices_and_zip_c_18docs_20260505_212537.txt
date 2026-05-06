@@ -1,0 +1,271 @@
+Question: What is the address of principal executive offices and ZIP code?
+Slug: what_is_the_address_of_principal_executive_offices_and_zip_c
+Docs (N): 18
+Latency: 365.458s
+Agent turns (tool calls): 21
+Agent input tokens: 6939017
+Agent output tokens: 2387
+Judge input tokens: 33404
+Judge output tokens: 1246
+Total LLM calls (QA+judge): 108
+Merge accuracy: 17/18 (0.94)
+Avg cost ratio: 0.02174
+
+=== Step 1: summarize_answer_locations ===
+Input: {}
+Output:
+doc_name               page  label            level   bold  all_cap  path_text               answer_snippet
+-----------------------------------------------------------------------------------------------------------
+BOEING_2019_10K        N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: 100 N. Riverside Plaza, Chicag)
+ADOBE_2020_10K         1     text             Body    1     0        ADOBE INC.              345 Park Avenue, San Jose, California 95
+ACTIVISIONBLIZZARD_2020_10K N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: 3100 Ocean Park Boulevard, San)
+COSTCO_2018_10K        1     text             Body    1     0        Costco Wholesale Corpo  999 Lake Drive, Issaquah, WA 98027
+AMCOR_2019_10K         N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: 83 Tower Road North, Warmley, )
+AMAZON_2020_10K        N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: 410 Terry Avenue North, Seattl)
+AMAZON_2019_10K        N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: 410 Terry Avenue North, Seattl)
+ADOBE_2021_10K         1     text             Body    1     0        ADOBE INC.              345 Park Avenue, San Jose, California 95
+EBAY_2022_10K          N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: 2025 Hamilton Avenue, San Jose)
+ADOBE_2019_10K         1     text             Body    1     0        ADOBE INC.              345 Park Avenue, San Jose, California 95
+AMCOR_2023Q2_10Q       N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: 83 Tower Road North, Warmley, )
+ADOBE_2022Q2_10Q       1     section_header   H2      1     0        ADOBE INC. | 345 Park   345 Park Avenue, San Jose, California 95
+ACTIVSIONBLIZZARD_2023Q2_10Q N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: 2701 Olympic Boulevard, Buildi)
+3M_2023Q2_10Q          N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: 3M Center, St. Paul, Minnesota)
+AMCOR_2022_8K_2022-07-01 N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: 83 Tower Road North, Warmley, )
+COSTCO_2023_8K_dated-2023-08-09 N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: 999 Lake Drive, Issaquah, WA 9)
+COSTCO_2023_8K_dated-2023-08-16 N/A   NOT_LOCATED      N/A     N/A   N/A                              (GT: 999 Lake Drive, Issaquah, WA 9)
+FOOTLOCKER_2022_8K_dated-2022-05-20 1     section_header   H2      1     0        Foot Locker, Inc. | 33  330 West 34th Street, New York, New York
+
+=== Step 2: write_rule ===
+Input: {"rule_name": "rule_cover_page_address_block", "code": "def rule_cover_page_address_block(doc: dict) -> list[dict]:\n    \"\"\"Retrieve page-1 cover-page company block spans containing principal office address/zip cues.\"\"\"\n    try:\n        import re\n        texts = doc.get(\"texts\", [])\n        out = []\n        for span in texts:\n            if span.get(\"page_no\") != 1:\n                continue\n            label = span.get(\"label\", \"\")\n            path = ((span.get(\"structure\") or {}).get(\"path_text\") or \"\")\n            level = ((span.get(\"structure\") or {}).get(\"level\") or \"\")\n            txt = (span.get(\"text\") or \"\")\n            txt_span = span.get(\"text_span\") or \"\"\n            blob = (txt + \" \" + txt_span).lower()\n            # Strong direct cues\n            if any(k in blob for k in [\n                'address of principal executive offices',\n                'address and telephone number, including area code, of registrant',\n                'address of principal executive offices and zip code',\n                '(zip code)',\n                'zip code'\n            ]):\n                out.append(span)\n                continue\n            # Top-level company block on page 1 with address-like content\n            if path and 'form 10-' not in path.lower() and level in ('H1', 'H2', 'Body'):\n                if re.search(r'\\b\\d{3,5}\\b', txt) and (',' in txt or re.search(r'\\b(?:street|st\\.?|avenue|ave\\.?|boulevard|blvd\\.?|drive|dr\\.?|plaza|road|rd\\.?|center|hamilton|terry|park|lake|olympic|tower)\\b', blob)):\n                    out.append(span)\n                    continue\n                if re.search(r'\\b\\d{5}(?:-\\d{4})?\\b', blob) and path.count('|') <= 1:\n                    out.append(span)\n                    continue\n        return out\n    except Exception:\n        return []\n"}
+Output:
+OK: rule registered — rule_cover_page_address_block
+
+=== Step 3: test_rule ===
+Input: {"rule_name": "rule_cover_page_address_block"}
+Output:
+doc_name               hit    ret_tokens  cost_ratio  snippet
+-------------------------------------------------------------
+BOEING_2019_10K        ✗      452         0.0049      '100 N. Riverside Plaza,\n(Address of principal executive of
+ADOBE_2020_10K         ✓      446         0.0049      'SECURITIES AND EXCHANGE COMMISSION\nWashington, D.C. 20549\
+ACTIVISIONBLIZZARD_2020_10K ✗      297         0.0029      '3100 Ocean Park Boulevard\n95-4803544\n(Address of principa
+COSTCO_2018_10K        ✓      373         0.0076      'UNITED STATES SECURITIES AND EXCHANGE COMMISSION\nWashingto
+AMCOR_2019_10K         ✗      182         0.0022      'UNITED STATES SECURITIES AND EXCHANGE COMMISSION\nWashingto
+AMAZON_2020_10K        ✗      308         0.0052      'Washington, D.C. 20549\nAMAZON.COM, INC.\n410 Terry Avenue 
+AMAZON_2019_10K        ✗      304         0.0049      'Washington, D.C. 20549\nAMAZON.COM, INC.\n410 Terry Avenue 
+ADOBE_2021_10K         ✓      449         0.0058      'UNITED STATES SECURITIES AND EXCHANGE COMMISSION\nWashingto
+EBAY_2022_10K          ✗      40          0.0004      'SECURITIES AND EXCHANGE COMMISSION\nWashington, D.C. 20549\
+ADOBE_2019_10K         ✓      450         0.0049      'UNITED STATES SECURITIES AND EXCHANGE COMMISSION\nWashingto
+AMCOR_2023Q2_10Q       ✗      220         0.0069      'UNITED STATES SECURITIES AND EXCHANGE COMMISSION\nWashingto
+ADOBE_2022Q2_10Q       ✓      171         0.0040      'Washington, D.C. 20549\n345 Park Avenue, San Jose, Californ
+ACTIVSIONBLIZZARD_2023Q2_10Q ✗      158         0.0031      'UNITED STATES SECURITIES AND EXCHANGE COMMISSION\nWashingto
+3M_2023Q2_10Q          ✗      305         0.0037      'SECURITIES AND EXCHANGE COMMISSION\nWASHINGTON, D.C. 20549\
+AMCOR_2022_8K_2022-07-01 ✗      78          0.0140      'UNITED STATES SECURITIES AND EXCHANGE COMMISSION\nWashingto
+COSTCO_2023_8K_dated-2023-08-09 ✗      101         0.0042      'SECURITIES AND EXCHANGE COMMISSION\nWashington, D.C. 20549\
+COSTCO_2023_8K_dated-2023-08-16 ✗      101         0.0929      'SECURITIES AND EXCHANGE COMMISSION\nWashington, D.C. 20549\
+FOOTLOCKER_2022_8K_dated-2022-05-20 ✓      57          0.0316      'Date of report (Date of earliest event reported): May 20, 2
+
+Hit rate: 6/18 (0.33)   Avg cost ratio: 0.0113
+
+=== Step 4: show_uncovered_docs ===
+Input: {}
+Output:
+Uncovered (no registered rule hits):
+  - BOEING_2019_10K
+  - ACTIVISIONBLIZZARD_2020_10K
+  - AMCOR_2019_10K
+  - AMAZON_2020_10K
+  - AMAZON_2019_10K
+  - EBAY_2022_10K
+  - AMCOR_2023Q2_10Q
+  - ACTIVSIONBLIZZARD_2023Q2_10Q
+  - 3M_2023Q2_10Q
+  - AMCOR_2022_8K_2022-07-01
+  - COSTCO_2023_8K_dated-2023-08-09
+  - COSTCO_2023_8K_dated-2023-08-16
+
+Covered: 6/18
+
+=== Step 5: diagnose_failing_doc ===
+Input: {"doc_name": "BOEING_2019_10K"}
+Output:
+
+
+=== Step 6: diagnose_failing_doc ===
+Input: {"doc_name": "AMCOR_2019_10K"}
+Output:
+
+
+=== Step 7: diagnose_failing_doc ===
+Input: {"doc_name": "ACTIVISIONBLIZZARD_2020_10K"}
+Output:
+
+
+=== Step 8: diagnose_failing_doc ===
+Input: {"doc_name": "AMAZON_2020_10K"}
+Output:
+
+
+=== Step 9: diagnose_failing_doc ===
+Input: {"doc_name": "AMAZON_2019_10K"}
+Output:
+
+
+=== Step 10: diagnose_failing_doc ===
+Input: {"doc_name": "EBAY_2022_10K"}
+Output:
+
+
+=== Step 11: diagnose_failing_doc ===
+Input: {"doc_name": "AMCOR_2023Q2_10Q"}
+Output:
+
+
+=== Step 12: diagnose_failing_doc ===
+Input: {"doc_name": "ACTIVSIONBLIZZARD_2023Q2_10Q"}
+Output:
+
+
+=== Step 13: diagnose_failing_doc ===
+Input: {"doc_name": "3M_2023Q2_10Q"}
+Output:
+
+
+=== Step 14: diagnose_failing_doc ===
+Input: {"doc_name": "AMCOR_2022_8K_2022-07-01"}
+Output:
+
+
+=== Step 15: diagnose_failing_doc ===
+Input: {"doc_name": "COSTCO_2023_8K_dated-2023-08-09"}
+Output:
+
+
+=== Step 16: diagnose_failing_doc ===
+Input: {"doc_name": "COSTCO_2023_8K_dated-2023-08-16"}
+Output:
+=== Diagnosis: COSTCO_2023_8K_dated-2023-08-16 ===
+
+Ground truth: '999 Lake Drive, Issaquah, WA 98027'
+
+Rule results:
+  rule_cover_page_address_block:  retrieved='SECURITIES AND EXCHANGE COMMISSION\nWashington, D.C. 20549\nDate of Report (Date of earliest event rep'
+
+Answer location (inspect_answer_context):
+  Answer not found by substring match in COSTCO_2023_8K_dated-2023-08-16. GT: '999 Lake Drive, Issaquah, WA 98027'
+
+Structural diff vs. passing docs (6 passing):
+  This doc (COSTCO_2023_8K_dated-2023-08-16): answer span NOT LOCATED by substring match
+  Passing docs (up to 3 shown):
+    ADOBE_2020_10K: label=text  level=Body  bold=1  all_cap=0  path_text='ADOBE INC.'
+    COSTCO_2018_10K: label=text  level=Body  bold=1  all_cap=0  path_text='Costco Wholesale Corporation'
+    ADOBE_2021_10K: label=text  level=Body  bold=1  all_cap=0  path_text='ADOBE INC.'
+
+=== Step 17: write_rule ===
+Input: {"rule_name": "rule_page1_company_header_and_children", "code": "def rule_page1_company_header_and_children(doc: dict) -> list[dict]:\n    \"\"\"Retrieve page-1 company cover header and its immediate child spans, excluding SEC/FORM headers.\"\"\"\n    try:\n        texts = doc.get('texts', [])\n        out = []\n        for span in texts:\n            if span.get('page_no') != 1:\n                continue\n            label = span.get('label', '')\n            st = span.get('structure') or {}\n            path = st.get('path_text') or ''\n            level = st.get('level') or ''\n            txt = (span.get('text') or '').lower()\n            # Exclude generic filing headers\n            if any(bad in txt for bad in ['securities and exchange commission', 'form 10-k', 'form 10-q', 'form 8-k', 'current report']):\n                continue\n            if any(bad in path.lower() for bad in ['securities and exchange commission', 'form 10-k', 'form 10-q', 'form 8-k', 'current report']):\n                continue\n            # Top company header or its descendants on page 1\n            if label == 'section_header' and level in ('H1', 'H2', 'H3') and path:\n                out.append(span)\n                continue\n            if path and '|' not in path and level == 'Body':\n                out.append(span)\n                continue\n            if path.count('|') <= 1 and level == 'Body' and any(k in txt for k in ['address', 'zip code', 'telephone number', 'principal executive offices']):\n                out.append(span)\n                continue\n        return out\n    except Exception:\n        return []\n"}
+Output:
+OK: rule registered — rule_page1_company_header_and_children
+
+=== Step 18: test_rule ===
+Input: {"rule_name": "rule_page1_company_header_and_children"}
+Output:
+doc_name               hit    ret_tokens  cost_ratio  snippet
+-------------------------------------------------------------
+BOEING_2019_10K        ✗      92          0.0010      'THE BOEING COMPANY\n(Exact name of registrant as specified 
+ADOBE_2020_10K         ✓      849         0.0093      'ADOBE INC.\n(Exact name of registrant as specified in its c
+ACTIVISIONBLIZZARD_2020_10K ✗      72          0.0007      'ACTIVISION BLIZZARD, INC.\n(Exact name of registrant as spe
+COSTCO_2018_10K        ✓      654         0.0134      'Costco Wholesale Corporation\n(Exact name of registrant as 
+AMCOR_2019_10K         ✗      74          0.0009      'AMCOR PLC\n(Exact name of Registrant as specified in its ch
+AMAZON_2020_10K        ✗      735         0.0125      'AMAZON.COM, INC.\n(Exact name of registrant as specified in
+AMAZON_2019_10K        ✗      651         0.0105      'AMAZON.COM, INC.\n(Exact name of registrant as specified in
+ADOBE_2021_10K         ✓      850         0.0110      'ADOBE INC.\n(Exact name of registrant as specified in its c
+EBAY_2022_10K          ✗      0           0.0000      '(empty)'
+ADOBE_2019_10K         ✓      726         0.0079      'ADOBE INC.\n(Exact name of registrant as specified in its c
+AMCOR_2023Q2_10Q       ✗      65          0.0020      'AMCOR PLC\n(Exact name of Registrant as specified in its ch
+ADOBE_2022Q2_10Q       ✓      96          0.0023      'Washington, D.C. 20549\n________________________________\nA
+ACTIVSIONBLIZZARD_2023Q2_10Q ✗      78          0.0015      'ACTIVISION BLIZZARD, INC.\n(Exact name of registrant as spe
+3M_2023Q2_10Q          ✗      88          0.0011      '3M COMPANY\n(Exact name of registrant as specified in its c
+AMCOR_2022_8K_2022-07-01 ✗      80          0.0144      'AMCOR PLC\n(Exact name of registrant as specified in its ch
+COSTCO_2023_8K_dated-2023-08-09 ✗      375         0.0157      'COSTCO WHOLESALE CORPORATION\n(Exact name of registrant as 
+COSTCO_2023_8K_dated-2023-08-16 ✗      375         0.3450      'COSTCO WHOLESALE CORPORATION\n(Exact name of registrant as 
+FOOTLOCKER_2022_8K_dated-2022-05-20 ✓      68          0.0377      'Foot Locker, Inc.\n(Exact name of registrant as specified i
+
+Hit rate: 6/18 (0.33)   Avg cost ratio: 0.0270
+
+=== Step 19: test_union ===
+Input: {}
+Output:
+Merge accuracy: 18/18 (1.0)  Avg cost ratio: 0.03212
+All documents correct!
+
+Per-doc cost:
+  ✓ BOEING_2019_10K                          cost_ratio=0.00556
+  ✓ ADOBE_2020_10K                           cost_ratio=0.01050
+  ✓ ACTIVISIONBLIZZARD_2020_10K              cost_ratio=0.00340
+  ✓ COSTCO_2018_10K                          cost_ratio=0.01638
+  ✓ AMCOR_2019_10K                           cost_ratio=0.00256
+  ✓ AMAZON_2020_10K                          cost_ratio=0.01397
+  ✓ AMAZON_2019_10K                          cost_ratio=0.01186
+  ✓ ADOBE_2021_10K                           cost_ratio=0.01244
+  ✓ EBAY_2022_10K                            cost_ratio=0.00044
+  ✓ ADOBE_2019_10K                           cost_ratio=0.00911
+  ✓ AMCOR_2023Q2_10Q                         cost_ratio=0.00766
+  ✓ ADOBE_2022Q2_10Q                         cost_ratio=0.00550
+  ✓ ACTIVSIONBLIZZARD_2023Q2_10Q             cost_ratio=0.00430
+  ✓ 3M_2023Q2_10Q                            cost_ratio=0.00419
+  ✓ AMCOR_2022_8K_2022-07-01                 cost_ratio=0.02283
+  ✓ COSTCO_2023_8K_dated-2023-08-09          cost_ratio=0.01722
+  ✓ COSTCO_2023_8K_dated-2023-08-16          cost_ratio=0.37810
+  ✓ FOOTLOCKER_2022_8K_dated-2022-05-20      cost_ratio=0.05211
+
+=== Step 20: write_rule ===
+Input: {"rule_name": "rule_page1_company_header_and_children", "code": "def rule_page1_company_header_and_children(doc: dict) -> list[dict]:\n    \"\"\"Retrieve compact page-1 company cover spans around the registrant identity/address block.\"\"\"\n    try:\n        texts = doc.get('texts', [])\n        out = []\n        for span in texts:\n            if span.get('page_no') != 1:\n                continue\n            label = span.get('label', '')\n            st = span.get('structure') or {}\n            path = st.get('path_text') or ''\n            level = st.get('level') or ''\n            txt = span.get('text') or ''\n            low = txt.lower()\n            # Exclude generic filing headers and long narrative/exhibit sections\n            if any(bad in low for bad in ['securities and exchange commission', 'form 10-k', 'form 10-q', 'form 8-k', 'current report']):\n                continue\n            if any(bad in path.lower() for bad in ['securities and exchange commission', 'form 10-k', 'form 10-q', 'form 8-k', 'current report']):\n                continue\n            if len(txt.split()) > 80:\n                continue\n            # Keep concise company header and immediate body children only\n            if label == 'section_header' and level == 'H1' and path and '|' not in path:\n                out.append(span)\n                continue\n            if level == 'Body' and path and '|' not in path:\n                if any(k in low for k in [\n                    'exact name of registrant', 'state or other jurisdiction', 'i.r.s. employer',\n                    'address of principal executive offices', 'address of principal executive offices and zip code',\n                    'address and telephone number, including area code, of registrant',\n                    'zip code', 'telephone number', 'principal executive offices'\n                ]):\n                    out.append(span)\n                    continue\n                # concise address-like body span in company block\n                if any(ch.isdigit() for ch in txt) and len(txt.split()) <= 20:\n                    out.append(span)\n                    continue\n            # Some docs encode address as H2/H3 under company H1; keep only concise ones\n            if label == 'section_header' and level in ('H2', 'H3') and path.count('|') <= 1 and len(txt.split()) <= 20:\n                out.append(span)\n                continue\n        return out\n    except Exception:\n        return []\n"}
+Output:
+OK: rule registered — rule_page1_company_header_and_children
+
+=== Step 21: test_union ===
+Input: {}
+Output:
+Merge accuracy: 18/18 (1.0)  Avg cost ratio: 0.02174
+All documents correct!
+
+Per-doc cost:
+  ✓ BOEING_2019_10K                          cost_ratio=0.00538
+  ✓ ADOBE_2020_10K                           cost_ratio=0.00583
+  ✓ ACTIVISIONBLIZZARD_2020_10K              cost_ratio=0.00318
+  ✓ COSTCO_2018_10K                          cost_ratio=0.00972
+  ✓ AMCOR_2019_10K                           cost_ratio=0.00256
+  ✓ AMAZON_2020_10K                          cost_ratio=0.00654
+  ✓ AMAZON_2019_10K                          cost_ratio=0.00606
+  ✓ ADOBE_2021_10K                           cost_ratio=0.00692
+  ✓ EBAY_2022_10K                            cost_ratio=0.00044
+  ✓ ADOBE_2019_10K                           cost_ratio=0.00583
+  ✓ AMCOR_2023Q2_10Q                         cost_ratio=0.00766
+  ✓ ADOBE_2022Q2_10Q                         cost_ratio=0.00515
+  ✓ ACTIVSIONBLIZZARD_2023Q2_10Q             cost_ratio=0.00385
+  ✓ 3M_2023Q2_10Q                            cost_ratio=0.00403
+  ✓ AMCOR_2022_8K_2022-07-01                 cost_ratio=0.02032
+  ✓ COSTCO_2023_8K_dated-2023-08-09          cost_ratio=0.01102
+  ✓ COSTCO_2023_8K_dated-2023-08-16          cost_ratio=0.24195
+  ✓ FOOTLOCKER_2022_8K_dated-2022-05-20      cost_ratio=0.04490
+
+=== Registered Rules ===
+  rule_cover_page_address_block                       hit_rate=0.33  avg_cost=0.01135  file=rules/agent/financebench_mix_doc/what_is_the_address_of_principal_executive_offices_and_zip_c_18_llm/rule_cover_page_address_block.py
+  rule_page1_company_header_and_children              hit_rate=0.33  avg_cost=0.01513  file=rules/agent/financebench_mix_doc/what_is_the_address_of_principal_executive_offices_and_zip_c_18_llm/rule_page1_company_header_and_children.py
+
+Merge accuracy:        0.94  (17/18)
+Avg cost ratio:        0.02174
+Total LLM calls:       108
+Agent input tokens:    6939017
+Agent output tokens:   2387
+Judge input tokens:    33404
+Judge output tokens:   1246
+Latency:               365.5s
+
+=== Final Answer ===
+Done: 1.00 merge_accuracy, 0.02174 avg_cost_ratio.
+
+Registered rules:
+- `rule_cover_page_address_block`
+- `rule_page1_company_header_and_children`
+
+These achieve full union accuracy while keeping retrieval focused on page-1 cover/address blocks.

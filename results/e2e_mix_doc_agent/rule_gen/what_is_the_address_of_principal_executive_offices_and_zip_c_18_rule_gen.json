@@ -1,0 +1,168 @@
+{
+  "question": "What is the address of principal executive offices and ZIP code?",
+  "question_slug": "what_is_the_address_of_principal_executive_offices_and_zip_c",
+  "timestamp": "2026-05-05T21:25:37Z",
+  "model": "gpt54",
+  "num_documents": 18,
+  "doc_names": [
+    "BOEING_2019_10K",
+    "ADOBE_2020_10K",
+    "ACTIVISIONBLIZZARD_2020_10K",
+    "COSTCO_2018_10K",
+    "AMCOR_2019_10K",
+    "AMAZON_2020_10K",
+    "AMAZON_2019_10K",
+    "ADOBE_2021_10K",
+    "EBAY_2022_10K",
+    "ADOBE_2019_10K",
+    "AMCOR_2023Q2_10Q",
+    "ADOBE_2022Q2_10Q",
+    "ACTIVSIONBLIZZARD_2023Q2_10Q",
+    "3M_2023Q2_10Q",
+    "AMCOR_2022_8K_2022-07-01",
+    "COSTCO_2023_8K_dated-2023-08-09",
+    "COSTCO_2023_8K_dated-2023-08-16",
+    "FOOTLOCKER_2022_8K_dated-2022-05-20"
+  ],
+  "max_iterations": 12,
+  "agent_turns": 21,
+  "latency_seconds": 365.458,
+  "agent_input_tokens": 6939017,
+  "agent_output_tokens": 2387,
+  "judge_input_tokens": 33404,
+  "judge_output_tokens": 1246,
+  "total_input_tokens": 6972421,
+  "total_output_tokens": 3633,
+  "total_llm_calls": 108,
+  "merge_accuracy": 0.9444,
+  "merge_num_correct": 17,
+  "avg_cost_ratio": 0.02174,
+  "merge_per_doc": {
+    "BOEING_2019_10K": {
+      "predicted": "100 N. Riverside Plaza, 60606-1596",
+      "ground_truth": "100 N. Riverside Plaza, Chicago, IL 60606-1596",
+      "correct": true,
+      "cost_ratio": 0.00538
+    },
+    "ADOBE_2020_10K": {
+      "predicted": "345 Park Avenue, San Jose, California 95110-2704",
+      "ground_truth": "345 Park Avenue, San Jose, California 95110-2704",
+      "correct": true,
+      "cost_ratio": 0.00583
+    },
+    "ACTIVISIONBLIZZARD_2020_10K": {
+      "predicted": "3100 Ocean Park Boulevard, 90405",
+      "ground_truth": "3100 Ocean Park Boulevard, Santa Monica, CA 90405",
+      "correct": false,
+      "cost_ratio": 0.00318
+    },
+    "COSTCO_2018_10K": {
+      "predicted": "999 Lake Drive, Issaquah, WA 98027",
+      "ground_truth": "999 Lake Drive, Issaquah, WA 98027",
+      "correct": true,
+      "cost_ratio": 0.00972
+    },
+    "AMCOR_2019_10K": {
+      "predicted": "83 Tower Road North Warmley, Bristol BS30 8XP United Kingdom",
+      "ground_truth": "83 Tower Road North, Warmley, Bristol BS30 8XP, United Kingdom",
+      "correct": true,
+      "cost_ratio": 0.00256
+    },
+    "AMAZON_2020_10K": {
+      "predicted": "410 Terry Avenue North Seattle, Washington 98109-5210",
+      "ground_truth": "410 Terry Avenue North, Seattle, Washington 98109-5210",
+      "correct": true,
+      "cost_ratio": 0.00654
+    },
+    "AMAZON_2019_10K": {
+      "predicted": "410 Terry Avenue North Seattle, Washington 98109-5210",
+      "ground_truth": "410 Terry Avenue North, Seattle, Washington 98109-5210",
+      "correct": true,
+      "cost_ratio": 0.00606
+    },
+    "ADOBE_2021_10K": {
+      "predicted": "345 Park Avenue, San Jose, California 95110-2704",
+      "ground_truth": "345 Park Avenue, San Jose, California 95110-2704",
+      "correct": true,
+      "cost_ratio": 0.00692
+    },
+    "EBAY_2022_10K": {
+      "predicted": "2025 Hamilton Avenue San Jose, California 95125",
+      "ground_truth": "2025 Hamilton Avenue, San Jose, California 95125",
+      "correct": true,
+      "cost_ratio": 0.00044
+    },
+    "ADOBE_2019_10K": {
+      "predicted": "345 Park Avenue, San Jose, California 95110-2704",
+      "ground_truth": "345 Park Avenue, San Jose, California 95110-2704",
+      "correct": true,
+      "cost_ratio": 0.00583
+    },
+    "AMCOR_2023Q2_10Q": {
+      "predicted": "83 Tower Road North Warmley, Bristol BS30 8XP United Kingdom",
+      "ground_truth": "83 Tower Road North, Warmley, Bristol BS30 8XP, United Kingdom",
+      "correct": true,
+      "cost_ratio": 0.00766
+    },
+    "ADOBE_2022Q2_10Q": {
+      "predicted": "345 Park Avenue, San Jose, California 95110-2704",
+      "ground_truth": "345 Park Avenue, San Jose, California 95110-2704",
+      "correct": true,
+      "cost_ratio": 0.00515
+    },
+    "ACTIVSIONBLIZZARD_2023Q2_10Q": {
+      "predicted": "2701 Olympic Boulevard Building B, 90404",
+      "ground_truth": "2701 Olympic Boulevard, Building B, Santa Monica, CA 90404",
+      "correct": true,
+      "cost_ratio": 0.00385
+    },
+    "3M_2023Q2_10Q": {
+      "predicted": "3M Center, St. Paul, Minnesota 55144-1000",
+      "ground_truth": "3M Center, St. Paul, Minnesota 55144-1000",
+      "correct": true,
+      "cost_ratio": 0.00403
+    },
+    "AMCOR_2022_8K_2022-07-01": {
+      "predicted": "83 Tower Road North Warmley, Bristol United Kingdom, BS30 8XP",
+      "ground_truth": "83 Tower Road North, Warmley, Bristol, United Kingdom BS30 8XP",
+      "correct": true,
+      "cost_ratio": 0.02032
+    },
+    "COSTCO_2023_8K_dated-2023-08-09": {
+      "predicted": "999 Lake Drive Issaquah, WA 98027",
+      "ground_truth": "999 Lake Drive, Issaquah, WA 98027",
+      "correct": true,
+      "cost_ratio": 0.01102
+    },
+    "COSTCO_2023_8K_dated-2023-08-16": {
+      "predicted": "999 Lake Drive Issaquah, WA 98027",
+      "ground_truth": "999 Lake Drive, Issaquah, WA 98027",
+      "correct": true,
+      "cost_ratio": 0.24195
+    },
+    "FOOTLOCKER_2022_8K_dated-2022-05-20": {
+      "predicted": "330 West 34th Street, New York, New York 10001",
+      "ground_truth": "330 West 34th Street, New York, New York 10001",
+      "correct": true,
+      "cost_ratio": 0.0449
+    }
+  },
+  "rules": [
+    {
+      "rule_name": "rule_cover_page_address_block",
+      "description": "Retrieve page-1 cover-page company block spans containing principal office address/zip cues.",
+      "hit_rate": 0.3333,
+      "avg_cost_ratio": 0.01135,
+      "file": "rules/agent/financebench_mix_doc/what_is_the_address_of_principal_executive_offices_and_zip_c_18_llm/rule_cover_page_address_block.py"
+    },
+    {
+      "rule_name": "rule_page1_company_header_and_children",
+      "description": "Retrieve compact page-1 company cover spans around the registrant identity/address block.",
+      "hit_rate": 0.3333,
+      "avg_cost_ratio": 0.01513,
+      "file": "rules/agent/financebench_mix_doc/what_is_the_address_of_principal_executive_offices_and_zip_c_18_llm/rule_page1_company_header_and_children.py"
+    }
+  ],
+  "rule_dir": "rules/agent/financebench_mix_doc/what_is_the_address_of_principal_executive_offices_and_zip_c_18_llm",
+  "log_file": "logs/financebench/agent/what_is_the_address_of_principal_executive_offices_and_zip_c_18docs_20260505_212537.txt"
+}
