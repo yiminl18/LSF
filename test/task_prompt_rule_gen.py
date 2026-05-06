@@ -55,7 +55,8 @@ OBJECTIVES (in priority order)
 1. merge_accuracy >= 0.95 on the sampled documents.
 2. avg_cost as small as possible. Target avg_cost < 0.05 (retrieved tokens are \
 less than 5% of the full document). After hitting the accuracy threshold, tighten \
-high-cost rules without dropping accuracy.
+high-cost rules without dropping accuracy. If meeting the cost target would require \
+sacrificing accuracy, keep accuracy and accept higher cost — accuracy always wins.
 3. Fewest rules possible. Prefer one broad rule that covers 8 of 10 documents \
 over three narrow rules that each cover 3. A rule covering fewer than 2 documents \
 should be merged into a broader rule or dropped.
@@ -121,8 +122,21 @@ WORKFLOW
 
 6. Repeat steps 4–5 until substring-match coverage is >= 0.95.
 
-7. Run the final LLM-judge evaluation using src/rule_apply_merge.py and \
-   src/eval_rule.py (or equivalent) to confirm merge_accuracy >= 0.95.
+7. Run the LLM-judge evaluation using src/rule_apply_merge.py and \
+   src/eval_rule.py (or equivalent) to measure merge_accuracy. \
+   If merge_accuracy < 0.95: \
+   (a) Identify every document the judge marked as wrong. \
+   (b) For each failing document, inspect the retrieved spans and compare \
+       them against the ground truth answer — determine whether the issue is \
+       that the answer span is not retrieved at all, or that it is retrieved \
+       but the LLM answers incorrectly (e.g. unit mismatch, wrong row). \
+   (c) Fix existing rules or write new targeted rules to address the \
+       root cause. Prefer fixing over adding rules; only add a new rule if \
+       it covers at least 2 failing documents. \
+   (d) Re-run the LLM judge. \
+   Repeat (a)–(d) until merge_accuracy >= 0.95 or you have exhausted all \
+   diagnosable patterns (document why it is not achievable if so). \
+   Only proceed to step 8 once the LLM judge confirms merge_accuracy >= 0.95.
 
 8. If any rule has avg_cost > 0.05, tighten it (narrower page range, stricter \
    label or path_text filter) and re-verify accuracy is preserved.
