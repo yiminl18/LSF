@@ -1,0 +1,25 @@
+{
+  "question": "List one material agreement or other exhibit number explicitly identified in the Exhibit Index (e.g., \"Exhibit 10.1: Credit Agreement\")\u2014or record \"none listed\" if no material agreements are identified.",
+  "question_slug": "list_one_material_agreement_or_other_exhibit_number_explicit",
+  "timestamp": "2026-05-06T04:02:38.779713+00:00",
+  "latency_seconds": 36.69,
+  "agent_input_tokens": 40684,
+  "agent_output_tokens": 664,
+  "total_llm_calls": 35,
+  "num_rules": 1,
+  "merge_accuracy": 0.9412,
+  "avg_cost_ratio": 0.029528,
+  "rules": [
+    {
+      "rule_name": "rule_exhibit_index",
+      "description": "Match exhibit index tables and text for 10-K, 10-Q, and 8-K documents.",
+      "coverage": 18,
+      "avg_cost_ratio": 0.029528,
+      "file": "rules/agent/financebench_mix_doc_claude/list_one_material_agreement_or_other_exhibit_number_explicit/rule_exhibit_index.py"
+    }
+  ],
+  "notes": [
+    "COSTCO_2018_10K has 18 Exhibit 10.x items but ground truth says 'none listed' - labeling inconsistency",
+    "Pfizer_2023Q2_10Q and MGMRESORTS_2023_8K_dated-2023-03-01 files not found - excluded from evaluation"
+  ]
+}

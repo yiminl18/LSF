@@ -1,0 +1,21 @@
+{
+  "question": "What stock exchange is the company's primary common stock listed on?",
+  "question_slug": "what_stock_exchange_is_the_company_s_primary_common_stock_li",
+  "timestamp": "2026-05-06T03:13:08.180045+00:00",
+  "latency_seconds": 270.19,
+  "agent_input_tokens": 5300,
+  "agent_output_tokens": 240,
+  "total_llm_calls": 36,
+  "num_rules": 1,
+  "merge_accuracy": 1.0,
+  "avg_cost_ratio": 0.000576,
+  "rules": [
+    {
+      "rule_name": "rule_page1_exchange_keywords",
+      "description": "Match page 1 spans containing stock exchange keywords (nasdaq, new york stock exchange).",
+      "coverage": 18,
+      "avg_cost_ratio": 0.000576,
+      "file": "rules/agent/financebench_mix_doc_claude/what_stock_exchange_is_the_company_s_primary_common_stock_li/rule_page1_exchange_keywords.py"
+    }
+  ]
+}

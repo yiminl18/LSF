@@ -1,0 +1,21 @@
+{
+  "question": "What is the company's principal executive offices address (city and state/country) as stated in this document?",
+  "question_slug": "what_is_the_company_s_principal_executive_offices_address__c",
+  "timestamp": "2026-05-06T03:33:53.685654Z",
+  "latency_seconds": 180.0,
+  "agent_input_tokens": 25000,
+  "agent_output_tokens": 5000,
+  "total_llm_calls": 72,
+  "num_rules": 1,
+  "merge_accuracy": 1.0,
+  "avg_cost_ratio": 0.00492540071388173,
+  "rules": [
+    {
+      "rule_name": "rule_address_before_label",
+      "description": "Return spans near the Address of principal executive offices label on page 1.",
+      "coverage": 18,
+      "avg_cost_ratio": 0.00492540071388173,
+      "file": "rules/agent/financebench_mix_doc_claude/what_is_the_company_s_principal_executive_offices_address__c/rule_address_before_label.py"
+    }
+  ]
+}

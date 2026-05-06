@@ -1,0 +1,149 @@
+{
+  "question": "What is the state (or other jurisdiction) of incorporation and the IRS Employer Identification Number?",
+  "question_slug": "what_is_the_state__or_other_jurisdiction__of_incorporation_a",
+  "timestamp": "2026-05-06T04:51:01.125389+00:00",
+  "latency_seconds": 40.788386821746826,
+  "agent_input_tokens": 3891,
+  "agent_output_tokens": 364,
+  "total_llm_calls": 36,
+  "num_rules": 1,
+  "merge_accuracy": 1.0,
+  "avg_cost_ratio": 0.0028826611952684164,
+  "rules": [
+    {
+      "rule_name": "rule_page1_state_ein",
+      "description": "Match page 1 spans containing state of incorporation and EIN information.",
+      "coverage": 18,
+      "avg_cost_ratio": 0.0028826611952684164,
+      "file": "rules/agent/financebench_mix_doc_claude/what_is_the_state__or_other_jurisdiction__of_incorporation_a/rule_page1_state_ein.py"
+    }
+  ],
+  "per_document_results": [
+    {
+      "doc_name": "BOEING_2019_10K",
+      "ground_truth": "Delaware, 91-0425694",
+      "predicted": "State of incorporation: Delaware  \nIRS Employer Identification Number: 91-0425694",
+      "correct": true,
+      "cost_ratio": 0.00029509164234892946
+    },
+    {
+      "doc_name": "ADOBE_2020_10K",
+      "ground_truth": "Delaware, 77-0019522",
+      "predicted": "State of incorporation: Delaware  \nIRS Employer Identification Number: 77-0019522",
+      "correct": true,
+      "cost_ratio": 0.00029785872670910237
+    },
+    {
+      "doc_name": "ACTIVISIONBLIZZARD_2020_10K",
+      "ground_truth": "Delaware, 95-4803544",
+      "predicted": "State of incorporation: Delaware  \nIRS Employer Identification Number: 95-4803544",
+      "correct": true,
+      "cost_ratio": 0.0002672976210511726
+    },
+    {
+      "doc_name": "COSTCO_2018_10K",
+      "ground_truth": "Washington; 91-1223280",
+      "predicted": "State of incorporation: Washington  \nIRS Employer Identification Number: 91-1223280",
+      "correct": true,
+      "cost_ratio": 0.0005354311250231677
+    },
+    {
+      "doc_name": "AMCOR_2019_10K",
+      "ground_truth": "Jersey (Channel Islands), 98-1455367",
+      "predicted": "State (or other jurisdiction) of incorporation: Jersey (Channel Islands)  \nIRS Employer Identification Number: 98-1455367",
+      "correct": true,
+      "cost_ratio": 0.0003702022976426473
+    },
+    {
+      "doc_name": "AMAZON_2020_10K",
+      "ground_truth": "Delaware, 91-1646860",
+      "predicted": "State of incorporation: Delaware  \nIRS Employer Identification Number: 91-1646860",
+      "correct": true,
+      "cost_ratio": 0.00046164894162705605
+    },
+    {
+      "doc_name": "AMAZON_2019_10K",
+      "ground_truth": "Delaware, 91-1646860",
+      "predicted": "State of incorporation: Delaware  \nIRS Employer Identification Number: 91-1646860",
+      "correct": true,
+      "cost_ratio": 0.00043656119132698434
+    },
+    {
+      "doc_name": "ADOBE_2021_10K",
+      "ground_truth": "Delaware, 77-0019522",
+      "predicted": "State of incorporation: Delaware  \nIRS Employer Identification Number: 77-0019522",
+      "correct": true,
+      "cost_ratio": 0.0003519245056764119
+    },
+    {
+      "doc_name": "EBAY_2022_10K",
+      "ground_truth": "Delaware; 77-0430924",
+      "predicted": "State of incorporation: Delaware  \nIRS Employer Identification Number: 77-0430924",
+      "correct": true,
+      "cost_ratio": 0.00027446588937926793
+    },
+    {
+      "doc_name": "ADOBE_2019_10K",
+      "ground_truth": "Delaware, 77-0019522",
+      "predicted": "State of incorporation: Delaware  \nIRS Employer Identification Number: 77-0019522",
+      "correct": true,
+      "cost_ratio": 0.00029531757577083354
+    },
+    {
+      "doc_name": "AMCOR_2023Q2_10Q",
+      "ground_truth": "Jersey, 98-1455367",
+      "predicted": "State (or other jurisdiction) of incorporation: Jersey  \nIRS Employer Identification Number: 98-1455367",
+      "correct": true,
+      "cost_ratio": 0.0008487363259147492
+    },
+    {
+      "doc_name": "ADOBE_2022Q2_10Q",
+      "ground_truth": "Delaware, 77-0019522",
+      "predicted": "State of incorporation: Delaware  \nIRS Employer Identification Number: 77-0019522",
+      "correct": true,
+      "cost_ratio": 0.000637333585119441
+    },
+    {
+      "doc_name": "ACTIVSIONBLIZZARD_2023Q2_10Q",
+      "ground_truth": "Delaware, 95-4803544",
+      "predicted": "State of incorporation: Delaware  \nIRS Employer Identification Number: 95-4803544",
+      "correct": true,
+      "cost_ratio": 0.0005276116778051355
+    },
+    {
+      "doc_name": "3M_2023Q2_10Q",
+      "ground_truth": "Delaware, 41-0417775",
+      "predicted": "State of incorporation: Delaware  \nIRS Employer Identification Number: 41-0417775",
+      "correct": true,
+      "cost_ratio": 0.0002658642400512393
+    },
+    {
+      "doc_name": "AMCOR_2022_8K_2022-07-01",
+      "ground_truth": "Jersey, 98-1455367",
+      "predicted": "The jurisdiction of incorporation is **Jersey**, and the IRS Employer Identification Number is **98-1455367**.",
+      "correct": true,
+      "cost_ratio": 0.00510204081632653
+    },
+    {
+      "doc_name": "COSTCO_2023_8K_dated-2023-08-09",
+      "ground_truth": "Washington, 91-1223280",
+      "predicted": "State of incorporation: Washington  \nIRS Employer Identification Number: 91-1223280",
+      "correct": true,
+      "cost_ratio": 0.001211260546320274
+    },
+    {
+      "doc_name": "COSTCO_2023_8K_dated-2023-08-16",
+      "ground_truth": "Washington, 91-1223280",
+      "predicted": "State of incorporation: Washington  \nIRS Employer Identification Number: 91-1223280",
+      "correct": true,
+      "cost_ratio": 0.027384324834749764
+    },
+    {
+      "doc_name": "FOOTLOCKER_2022_8K_dated-2022-05-20",
+      "ground_truth": "New York, 13-3513936",
+      "predicted": "State of incorporation: New York  \nIRS Employer Identification Number: 13-3513936",
+      "correct": true,
+      "cost_ratio": 0.012324929971988795
+    }
+  ]
+}

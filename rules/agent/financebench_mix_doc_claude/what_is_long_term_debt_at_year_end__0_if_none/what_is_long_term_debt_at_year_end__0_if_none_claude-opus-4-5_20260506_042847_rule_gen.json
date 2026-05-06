@@ -1,0 +1,28 @@
+{
+  "question": "What is long-term debt at year-end (0 if none)?",
+  "question_slug": "what_is_long_term_debt_at_year_end__0_if_none",
+  "timestamp": "2026-05-06T04:28:47Z",
+  "latency_seconds": 747.0,
+  "agent_input_tokens": 15000,
+  "agent_output_tokens": 1200,
+  "total_llm_calls": 40,
+  "num_rules": 2,
+  "merge_accuracy": 1.0,
+  "avg_cost_ratio": 0.0205,
+  "rules": [
+    {
+      "rule_name": "rule_long_term_debt_tables",
+      "description": "Match tables containing 'long-term debt' or 'long term debt' keyword.",
+      "coverage": 14,
+      "avg_cost_ratio": 0.0202,
+      "file": "rules/agent/financebench_mix_doc_claude/what_is_long_term_debt_at_year_end__0_if_none/rule_long_term_debt_tables.py"
+    },
+    {
+      "rule_name": "rule_total_obligations_tables",
+      "description": "Match tables containing 'total long-term obligations' keyword.",
+      "coverage": 2,
+      "avg_cost_ratio": 0.0003,
+      "file": "rules/agent/financebench_mix_doc_claude/what_is_long_term_debt_at_year_end__0_if_none/rule_total_obligations_tables.py"
+    }
+  ]
+}

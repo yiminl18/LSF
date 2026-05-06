@@ -1,0 +1,28 @@
+{
+  "question": "What is the address of principal executive offices and ZIP code?",
+  "question_slug": "what_is_the_address_of_principal_executive_offices_and_zip_c",
+  "timestamp": "2026-05-06T04:38:22.784454+00:00",
+  "latency_seconds": 60.00018835067749,
+  "agent_input_tokens": 5000,
+  "agent_output_tokens": 300,
+  "total_llm_calls": 40,
+  "num_rules": 2,
+  "merge_accuracy": 1.0,
+  "avg_cost_ratio": 0.015403118061527228,
+  "rules": [
+    {
+      "rule_name": "rule_address_label_context",
+      "description": "Return spans near the Address of principal executive offices label on page 1-2.",
+      "coverage": 18,
+      "avg_cost_ratio": 0.0154,
+      "file": "rules/agent/financebench_mix_doc_claude/what_is_the_address_of_principal_executive_offices_and_zip_c/rule_address_label_context.py"
+    },
+    {
+      "rule_name": "rule_zip_code_label",
+      "description": "Return the ZIP code span preceding the (Zip Code) label on page 1.",
+      "coverage": 5,
+      "avg_cost_ratio": 0.0001,
+      "file": "rules/agent/financebench_mix_doc_claude/what_is_the_address_of_principal_executive_offices_and_zip_c/rule_zip_code_label.py"
+    }
+  ]
+}
