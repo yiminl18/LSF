@@ -98,6 +98,10 @@ def _make_slug(q: str) -> str:
     return s[:60]
 
 
+def _make_slug_agent(q: str) -> str:
+    return re.sub(r"[^\w]", "_", q.lower())[:60].rstrip("_")
+
+
 # ── Helpers ────────────────────────────────────────────────────────────────────
 
 def _load_rule_names(folder: Path) -> list[str]:
@@ -152,6 +156,8 @@ def main():
     parser.add_argument("--output-dir",       default="results/e2e")
     parser.add_argument("--use-refine",        action="store_true")
     parser.add_argument("--skip-existing",     action="store_true")
+    parser.add_argument("--agent-rules",       action="store_true",
+                        help="Skip rule gen; load rules from agent-style slug folders (no _llm suffix).")
     parser.add_argument("--rule-gen-timeout",  type=int, default=0,
                         help="Timeout in seconds for rule gen per query (0 = no limit)")
     args = parser.parse_args()
@@ -194,27 +200,32 @@ def main():
 
         try:
             # ── Stage 1: Rule Generation ───────────────────────────────────────
-            rule_folder_gen = Path(args.rules_dir) / f"{question_slug}_llm"
-            rule_gen_out    = out / "rule_gen" / f"{question_slug}_rule_gen.json"
-
-            if args.skip_existing and rule_folder_gen.is_dir():
-                print(f"  [gen] SKIP {question_slug}", flush=True)
+            if args.agent_rules:
+                agent_slug      = _make_slug_agent(question)
+                rule_folder_gen = Path(args.rules_dir) / agent_slug
+                print(f"  [gen] SKIP (--agent-rules) using folder: {agent_slug}", flush=True)
             else:
-                ground_truth = {
-                    k: sample_labels[k][question]
-                    for k in sample_labels if question in sample_labels[k]
-                }
-                gen_result = _run_with_timeout(
-                    rule_gen_fn,
-                    args.rule_gen_timeout,
-                    documents=sample_docs,
-                    question=question,
-                    ground_truth=ground_truth,
-                    rules_dir=args.rules_dir,
-                    output_dir=str(out / "rule_gen"),
-                )
-                rule_gen_out.write_text(json.dumps(gen_result, indent=2, ensure_ascii=False), encoding="utf-8")
-                print(f"  [gen] {question_slug}: {len(gen_result['rules'])} rules", flush=True)
+                rule_folder_gen = Path(args.rules_dir) / f"{question_slug}_llm"
+                rule_gen_out    = out / "rule_gen" / f"{question_slug}_rule_gen.json"
+
+                if args.skip_existing and rule_folder_gen.is_dir():
+                    print(f"  [gen] SKIP {question_slug}", flush=True)
+                else:
+                    ground_truth = {
+                        k: sample_labels[k][question]
+                        for k in sample_labels if question in sample_labels[k]
+                    }
+                    gen_result = _run_with_timeout(
+                        rule_gen_fn,
+                        args.rule_gen_timeout,
+                        documents=sample_docs,
+                        question=question,
+                        ground_truth=ground_truth,
+                        rules_dir=args.rules_dir,
+                        output_dir=str(out / "rule_gen"),
+                    )
+                    rule_gen_out.write_text(json.dumps(gen_result, indent=2, ensure_ascii=False), encoding="utf-8")
+                    print(f"  [gen] {question_slug}: {len(gen_result['rules'])} rules", flush=True)
 
             if not rule_folder_gen.is_dir():
                 print(f"  WARNING: no rule folder {rule_folder_gen}, skipping", flush=True)
@@ -271,6 +282,9 @@ def main():
 
                 effective_rules_dir = refined_rules_dir
                 apply_slug          = question_slug            # {slug}_10
+            elif args.agent_rules:
+                effective_rules_dir = args.rules_dir
+                apply_slug          = _make_slug_agent(question)
             else:
                 effective_rules_dir = args.rules_dir
                 apply_slug          = f"{question_slug}_llm"  # {slug}_10_llm
