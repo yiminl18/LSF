@@ -1,0 +1,116 @@
+{
+  "timestamp": "2026-05-06T23:51:10Z",
+  "rule_gen_module": "src/rule_gen_llm_coarse.py",
+  "use_refine": false,
+  "queries_file": "data/financebench/sample_queries.txt",
+  "num_questions": 10,
+  "num_sampled_docs": 10,
+  "num_unsampled_docs": 50,
+  "questions": [
+    {
+      "question": "What is long-term debt at year-end (0 if none)?",
+      "question_slug": "what_is_longterm_debt_at_yearend_0_if_none_10",
+      "num_rules_generated": 3,
+      "num_rules_after_refine": null,
+      "sampled_accuracy": 0.7,
+      "unsampled_accuracy": 0.66,
+      "avg_cost_ratio_sampled": 0.072772,
+      "avg_cost_ratio_unsampled": 0.064553
+    },
+    {
+      "question": "What is net income (loss) for the most recent fiscal year?",
+      "question_slug": "what_is_net_income_loss_for_the_most_recent_fiscal_year_10",
+      "num_rules_generated": 4,
+      "num_rules_after_refine": null,
+      "sampled_accuracy": 0.9,
+      "unsampled_accuracy": 0.8,
+      "avg_cost_ratio_sampled": 0.607984,
+      "avg_cost_ratio_unsampled": 0.540048
+    },
+    {
+      "question": "What is total revenue for the most recent fiscal year (from the audited income statement)?",
+      "question_slug": "what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10",
+      "num_rules_generated": 4,
+      "num_rules_after_refine": null,
+      "sampled_accuracy": 0.9,
+      "unsampled_accuracy": 0.82,
+      "avg_cost_ratio_sampled": 0.432287,
+      "avg_cost_ratio_unsampled": 0.409758
+    },
+    {
+      "question": "What is total assets at year-end (from the audited balance sheet)?",
+      "question_slug": "what_is_total_assets_at_yearend_from_the_audited_balance_she_10",
+      "num_rules_generated": 4,
+      "num_rules_after_refine": null,
+      "sampled_accuracy": 0.6,
+      "unsampled_accuracy": 0.78,
+      "avg_cost_ratio_sampled": 0.029318,
+      "avg_cost_ratio_unsampled": 0.033124
+    },
+    {
+      "question": "What is the registrant's telephone number?",
+      "question_slug": "what_is_the_registrants_telephone_number_10",
+      "num_rules_generated": 1,
+      "num_rules_after_refine": null,
+      "sampled_accuracy": 1.0,
+      "unsampled_accuracy": 0.48,
+      "avg_cost_ratio_sampled": 0.000434,
+      "avg_cost_ratio_unsampled": 0.00038
+    },
+    {
+      "question": "How many shares of common stock were outstanding as of the cover-page reference date?",
+      "question_slug": "how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10",
+      "num_rules_generated": 3,
+      "num_rules_after_refine": null,
+      "sampled_accuracy": 0.9,
+      "unsampled_accuracy": 0.96,
+      "avg_cost_ratio_sampled": 0.000457,
+      "avg_cost_ratio_unsampled": 0.001
+    },
+    {
+      "question": "What is the registrant's exact name?",
+      "question_slug": "what_is_the_registrants_exact_name_10",
+      "num_rules_generated": 1,
+      "num_rules_after_refine": null,
+      "sampled_accuracy": 1.0,
+      "unsampled_accuracy": 0.94,
+      "avg_cost_ratio_sampled": 0.000439,
+      "avg_cost_ratio_unsampled": 0.000334
+    },
+    {
+      "question": "What is the state (or other jurisdiction) of incorporation and the IRS Employer Identification Number?",
+      "question_slug": "what_is_the_state_or_other_jurisdiction_of_incorporation_and_10",
+      "num_rules_generated": 2,
+      "num_rules_after_refine": null,
+      "sampled_accuracy": 1.0,
+      "unsampled_accuracy": 0.98,
+      "avg_cost_ratio_sampled": 0.007988,
+      "avg_cost_ratio_unsampled": 0.008973
+    },
+    {
+      "question": "What is the address of principal executive offices and ZIP code?",
+      "question_slug": "what_is_the_address_of_principal_executive_offices_and_zip_c_10",
+      "num_rules_generated": 3,
+      "num_rules_after_refine": null,
+      "sampled_accuracy": 0.9,
+      "unsampled_accuracy": 0.66,
+      "avg_cost_ratio_sampled": 0.000633,
+      "avg_cost_ratio_unsampled": 0.000474
+    },
+    {
+      "question": "What is/are the trading symbol(s) and listing exchange(s)?",
+      "question_slug": "what_isare_the_trading_symbols_and_listing_exchanges_10",
+      "num_rules_generated": 6,
+      "num_rules_after_refine": null,
+      "sampled_accuracy": 0.7,
+      "unsampled_accuracy": 0.46,
+      "avg_cost_ratio_sampled": 0.002687,
+      "avg_cost_ratio_unsampled": 0.00174
+    }
+  ],
+  "overall": {
+    "avg_sampled_accuracy": 0.86,
+    "avg_unsampled_accuracy": 0.754,
+    "avg_cost_ratio": 0.1155
+  }
+}
