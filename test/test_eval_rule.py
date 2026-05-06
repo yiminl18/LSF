@@ -16,7 +16,7 @@ from rule_apply_individual import rule_apply_individual
 
 QUESTION = "What is the registrant's exact name?"
 QUESTION_SLUG = "what_is_the_registrants_exact_name_10"
-RULES_DIR = _ROOT / "rules/financebench/what_is_the_registrants_exact_name_10"
+RULES_DIR = _ROOT / "rules/financebench_single_cluster/llm/gpt54/one_shot/what_is_the_registrants_exact_name_10_llm"
 LABELS_FILE = "data/financebench/correct_labels.json"
 
 # ---------------------------------------------------------------------------
@@ -24,7 +24,7 @@ LABELS_FILE = "data/financebench/correct_labels.json"
 # ---------------------------------------------------------------------------
 import glob as _glob
 
-gen_files = sorted(_glob.glob("results/financebench/rule_gen/*what_is_the_registrants_exact_name*.json"))
+gen_files = sorted(_glob.glob("results/financebench_single_cluster/llm/gpt54/one_shot/rule_gen/*what_is_the_registrants_exact_name*.json"))
 if not gen_files:
     print("ERROR: no rule_gen result files found")
     sys.exit(1)
@@ -43,7 +43,7 @@ print()
 
 for rule_file in rule_files:
     rule_name = Path(rule_file).stem
-    pred_file = _ROOT / f"results/financebench/rule_run/individual/{QUESTION_SLUG}/{rule_name}_individual.json"
+    pred_file = _ROOT / f"results/financebench_single_cluster/llm/gpt54/one_shot/rule_run_individual/{QUESTION_SLUG}/{rule_name}_individual.json"
 
     existing_docs: set[str] = set()
     if pred_file.exists():
@@ -67,8 +67,8 @@ for rule_file in rule_files:
                 rule_name=rule_name,
                 question_slug=QUESTION_SLUG,
                 question=QUESTION,
-                rules_dir="rules/financebench",
-                output_dir="results/financebench/rule_run/individual",
+                rules_dir="rules/financebench_single_cluster/llm/gpt54/one_shot",
+                output_dir="results/financebench_single_cluster/llm/gpt54/one_shot/rule_run_individual",
             )
         except Exception as exc:
             print(f"    error on {doc_name}: {exc}")

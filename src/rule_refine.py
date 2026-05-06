@@ -210,8 +210,8 @@ def rule_refine(
     question_slug: str,
     documents: list[dict],
     ground_truth: dict,
-    rules_dir: str = "rules/gpt54/financebench",
-    output_dir: str = "results/llm_rule_refine",
+    rules_dir: str = "rules/financebench_single_cluster/llm/gpt54/one_shot",
+    output_dir: str = "rules/financebench_single_cluster/llm/gpt54/refine",
     model_name: str = "gpt54",
 ) -> dict:
     """Select a minimal-cost subset of rules whose merge accuracy matches target_accuracy."""

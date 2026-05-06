@@ -76,10 +76,10 @@ def eval_rule(
     question: str,
     question_slug: str,
     model_name: str = "gpt54",
-    rule_run_dir: str = "results/financebench/rule_run/individual",
+    rule_run_dir: str = "results/financebench_single_cluster/llm/gpt54/one_shot/rule_run_individual",
     processing_dir: str = "data/financebench/processing",
     labels_file: str = "data/financebench/sample_labels.json",
-    output_dir: str = "results/financebench/eval",
+    output_dir: str = "results/financebench_single_cluster/llm/gpt54/one_shot/eval_individual",
 ) -> dict:
     """Evaluate a rule against ground truth using LLM-as-a-judge.
 

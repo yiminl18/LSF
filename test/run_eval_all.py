@@ -21,10 +21,10 @@ os.chdir(_ROOT)
 QUERIES_FILE      = "data/financebench/sample_queries.txt"
 SAMPLE_LABELS     = "data/financebench/sample_doc_labels.json"
 UNSAMPLED_LABELS  = "data/financebench/unsampled_doc_labels.json"
-RULES_DIR         = "rules/financebench"
-SAMPLED_RUN_DIR   = "results/financebench/rule_run/merge"
-UNSAMPLED_RUN_DIR = "results/financebench/rule_run/merge_unsampled"
-EVAL_OUT_DIR      = "results/financebench/eval_merge_all"
+RULES_DIR         = "rules/financebench_single_cluster/llm/gpt54/one_shot"
+SAMPLED_RUN_DIR   = "results/financebench_single_cluster/llm/gpt54/one_shot/rule_run_merge"
+UNSAMPLED_RUN_DIR = "results/financebench_single_cluster/llm/gpt54/one_shot/rule_run_merge_unsampled"
+EVAL_OUT_DIR      = "results/financebench_single_cluster/llm/gpt54/one_shot/eval_merge"
 
 Path(EVAL_OUT_DIR).mkdir(parents=True, exist_ok=True)
 

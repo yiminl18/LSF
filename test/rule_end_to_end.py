@@ -152,8 +152,8 @@ def main():
     parser.add_argument("--sample-labels",    default="data/financebench/sample_doc_labels.json")
     parser.add_argument("--unsampled-labels", default="data/financebench/unsampled_doc_labels.json")
     parser.add_argument("--processing-dir",   default="data/financebench/processing")
-    parser.add_argument("--rules-dir",        default="rules/gpt54/financebench")
-    parser.add_argument("--output-dir",       default="results/e2e")
+    parser.add_argument("--rules-dir",        default="rules/financebench_single_cluster/llm/gpt54/one_shot")
+    parser.add_argument("--output-dir",       default="results/financebench_single_cluster/agent/gpt54/raw")
     parser.add_argument("--use-refine",        action="store_true")
     parser.add_argument("--skip-existing",     action="store_true")
     parser.add_argument("--agent-rules",       action="store_true",
@@ -186,7 +186,7 @@ def main():
 
     # ── Create output directories ─────────────────────────────────────────────
     out = Path(args.output_dir)
-    for d in ["rule_gen", "rule_run/merge", "rule_run_unsampled/merge", "eval"]:
+    for d in ["rule_gen", "rule_run_merge", "rule_run_merge_unsampled", "eval_merge"]:
         (out / d).mkdir(parents=True, exist_ok=True)
     if args.use_refine:
         (out / "refined_rules").mkdir(parents=True, exist_ok=True)
@@ -305,8 +305,8 @@ def main():
 
             # ── Stage 3: Rule Application ──────────────────────────────────────
             for split, labels_dict, doc_map, run_subdir in [
-                ("sampled",   sample_labels,   sample_doc_map,   "rule_run/merge"),
-                ("unsampled", unsampled_labels, unsampled_doc_map, "rule_run_unsampled/merge"),
+                ("sampled",   sample_labels,   sample_doc_map,   "rule_run_merge"),
+                ("unsampled", unsampled_labels, unsampled_doc_map, "rule_run_merge_unsampled"),
             ]:
                 run_out_dir = str(out / run_subdir)
                 run_file    = out / run_subdir / apply_slug / f"{rule_set_slug}_merge.json"
@@ -341,10 +341,10 @@ def main():
             eval_splits: dict[str, dict] = {}
 
             for split, labels_dict, doc_map, run_subdir in [
-                ("sampled",   sample_labels,   sample_doc_map,   "rule_run/merge"),
-                ("unsampled", unsampled_labels, unsampled_doc_map, "rule_run_unsampled/merge"),
+                ("sampled",   sample_labels,   sample_doc_map,   "rule_run_merge"),
+                ("unsampled", unsampled_labels, unsampled_doc_map, "rule_run_merge_unsampled"),
             ]:
-                eval_out = out / "eval" / f"{question_slug}_{split}.json"
+                eval_out = out / "eval_merge" / f"{question_slug}_{split}.json"
 
                 if args.skip_existing and eval_out.exists():
                     print(f"  [eval:{split}] SKIP", flush=True)
@@ -412,7 +412,7 @@ def main():
 
             # update eval/summary.json
             _update_summary(
-                out / "eval" / "summary.json",
+                out / "eval_merge" / "summary.json",
                 question_slug, question,
                 {k: eval_splits[k] for k in eval_splits},
             )

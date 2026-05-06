@@ -169,8 +169,8 @@ def rule_gen_llm_coarse(
     question: str,
     ground_truth: dict,
     model_name: str = "gpt54",
-    output_dir: str = "data/financebench/results/rule_gen",
-    rules_dir: str = "data/financebench/rules",
+    output_dir: str = "results/financebench_single_cluster/llm/gpt54/one_shot/rule_gen",
+    rules_dir: str = "rules/financebench_single_cluster/llm/gpt54/one_shot",
 ) -> dict:
     """
     Given a collection of similar documents, a question, and ground truth answers,

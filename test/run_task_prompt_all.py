@@ -21,9 +21,9 @@ parser.add_argument("--labels-file",    default="data/financebench/sample_doc_la
 parser.add_argument("--queries-file",   default=None,
                     help="Path to queries txt. If omitted, questions are derived from labels-file.")
 parser.add_argument("--processing-dir", default="data/financebench/processing")
-parser.add_argument("--rules-dir",      default="rules/claude_opus/financebench")
+parser.add_argument("--rules-dir",      default="rules/financebench_single_cluster/agent/opus47/raw")
 parser.add_argument("--model",          default="opus")
-parser.add_argument("--log-dir",        default="logs/claude_agent")
+parser.add_argument("--log-dir",        default="results/financebench_single_cluster/agent/opus47/raw/log")
 args = parser.parse_args()
 
 LABELS_FILE    = args.labels_file

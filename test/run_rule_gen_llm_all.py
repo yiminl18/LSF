@@ -17,8 +17,8 @@ from rule_gen_llm_coarse import rule_gen_llm_coarse
 QUERIES_FILE   = "data/financebench/sample_queries.txt"
 LABELS_FILE    = "data/financebench/sample_doc_labels.json"
 PROCESSING_DIR = "data/financebench/processing"
-RULES_DIR      = "rules/gpt54/financebench"
-OUTPUT_DIR     = "results/rule_gen_llm"
+RULES_DIR      = "rules/financebench_single_cluster/llm/gpt54/one_shot"
+OUTPUT_DIR     = "results/financebench_single_cluster/llm/gpt54/one_shot/rule_gen"
 
 
 def make_slug(q: str) -> str:

@@ -1130,9 +1130,9 @@ def rule_gen_agent(
     question: str,
     ground_truth: dict,
     model_name: str = "gpt54",
-    rules_dir: str = "rules/gpt54/financebench",
-    output_dir: str = "results/financebench/rule_gen",
-    logs_dir: str = "logs/financebench/agent",
+    rules_dir: str = "rules/financebench_single_cluster/agent/gpt54/raw",
+    output_dir: str = "results/financebench_single_cluster/agent/gpt54/raw/rule_gen",
+    logs_dir: str = "results/financebench_single_cluster/agent/gpt54/raw/log",
     max_iterations: int = 12,
 ) -> dict:
     """Use a LangChain agent with a structured tool set to iteratively generate,

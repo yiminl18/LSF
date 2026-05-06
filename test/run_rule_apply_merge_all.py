@@ -18,9 +18,9 @@ QUERIES_FILE     = "data/financebench/sample_queries.txt"
 SAMPLE_LABELS    = "data/financebench/sample_doc_labels.json"
 UNSAMPLED_LABELS = "data/financebench/unsampled_doc_labels.json"
 PROCESSING_DIR   = "data/financebench/processing"
-RULES_DIR        = "rules/financebench"
-SAMPLED_OUT_DIR  = "results/financebench/rule_run/merge"
-UNSAMPLED_OUT_DIR= "results/financebench/rule_run/merge_unsampled"
+RULES_DIR        = "rules/financebench_single_cluster/llm/gpt54/one_shot"
+SAMPLED_OUT_DIR  = "results/financebench_single_cluster/llm/gpt54/one_shot/rule_run_merge"
+UNSAMPLED_OUT_DIR= "results/financebench_single_cluster/llm/gpt54/one_shot/rule_run_merge_unsampled"
 
 
 def make_slug(question: str) -> str:

@@ -47,8 +47,8 @@ def rule_apply_individual(
     question_slug: str,
     question: str,
     model_name: str = "gpt54",
-    rules_dir: str = "rules/financebench",
-    output_dir: str = "results/financebench/rule_run/individual",
+    rules_dir: str = "rules/financebench_single_cluster/llm/gpt54/one_shot",
+    output_dir: str = "results/financebench_single_cluster/llm/gpt54/one_shot/rule_run_individual",
 ) -> dict:
     """Apply a named rule to a document, retrieve matching spans, and call the LLM to answer."""
 
@@ -151,9 +151,9 @@ if __name__ == "__main__":
     question_slug = slug[:60]
 
     # Folder names include a doc-count suffix: {question_slug}_{n}
-    rule_dirs = sorted(_glob.glob(str(_ROOT / "rules/financebench" / f"{question_slug}*")))
+    rule_dirs = sorted(_glob.glob(str(_ROOT / "rules/financebench_single_cluster/llm/gpt54/one_shot" / f"{question_slug}*")))
     if not rule_dirs:
-        print(f"No rule folders found matching rules/financebench/{question_slug}*/")
+        print(f"No rule folders found matching rules/financebench_single_cluster/llm/gpt54/one_shot/{question_slug}*/")
         print("Run rule_gen_llm_coarse first to generate rules.")
         sys.exit(1)
     # Pick the folder with the most docs (largest suffix number); use its name as the slug
