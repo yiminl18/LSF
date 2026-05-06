@@ -10,9 +10,9 @@ import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(ROOT / "test"))
+sys.path.insert(0, str(ROOT / "src"))
 
-from task_prompt_rule_gen import run
+from rule_gen_agent_claude import run
 
 # ── CLI args ──────────────────────────────────────────────────────────────────
 
