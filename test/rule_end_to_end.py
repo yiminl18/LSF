@@ -162,11 +162,13 @@ def main():
                         help="Timeout in seconds for rule gen per query (0 = no limit)")
     args = parser.parse_args()
 
-    # ── Dynamic import of rule_gen function ───────────────────────────────────
-    spec = importlib.util.spec_from_file_location("rule_gen_mod", args.rule_gen_module)
-    mod  = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(mod)
-    rule_gen_fn = next(v for k, v in vars(mod).items() if k.startswith("rule_gen_") and callable(v))
+    # ── Dynamic import of rule_gen function (skipped when --agent-rules) ─────
+    rule_gen_fn = None
+    if not args.agent_rules:
+        spec = importlib.util.spec_from_file_location("rule_gen_mod", args.rule_gen_module)
+        mod  = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        rule_gen_fn = next(v for k, v in vars(mod).items() if k.startswith("rule_gen_") and callable(v))
 
     model_mod = importlib.import_module("models.gpt54")
 
