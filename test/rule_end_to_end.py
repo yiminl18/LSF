@@ -152,7 +152,7 @@ def main():
     parser.add_argument("--sample-labels",    default="data/financebench/sample_doc_labels.json")
     parser.add_argument("--unsampled-labels", default="data/financebench/unsampled_doc_labels.json")
     parser.add_argument("--processing-dir",   default="data/financebench/processing")
-    parser.add_argument("--rules-dir",        default="rules/llm/financebench")
+    parser.add_argument("--rules-dir",        default="rules/gpt54/financebench")
     parser.add_argument("--output-dir",       default="results/e2e")
     parser.add_argument("--use-refine",        action="store_true")
     parser.add_argument("--skip-existing",     action="store_true")

@@ -1,0 +1,94 @@
+{
+  "question": "What is net income (loss) for the most recent fiscal year?",
+  "question_slug": "what_is_net_income__loss__for_the_most_recent_fiscal_year",
+  "timestamp": "2026-05-06T01:32:28.899220Z",
+  "latency_seconds": 452.9,
+  "agent_input_tokens": 0,
+  "agent_output_tokens": 0,
+  "total_llm_calls": 0,
+  "num_rules": 1,
+  "merge_accuracy": 1.0,
+  "avg_cost_ratio": 0.016795,
+  "notes": "merge_accuracy based on substring hit detection; LLM judge unavailable due to missing API credentials. Rule retrieves first 3 matching tables to minimize cost while ensuring answer coverage.",
+  "rules": [
+    {
+      "rule_name": "rule_table_net_income_financial_sections",
+      "description": "Match first 3 tables with net income/earnings headers in financial sections (Item 6, 7, 8).",
+      "coverage": 10,
+      "avg_cost_ratio": 0.016795,
+      "file": "/home/yiminglin/LSF/rules/agent/financebench_agent/what_is_net_income__loss__for_the_most_recent_fiscal_year/rule_table_net_income_financial_sections.py"
+    }
+  ],
+  "per_document": [
+    {
+      "doc_name": "AMCOR_2019_10K",
+      "ground_truth": "430.2 million",
+      "hit": true,
+      "cost": 0.018797,
+      "num_spans": 3
+    },
+    {
+      "doc_name": "COSTCO_2017_10K",
+      "ground_truth": "2,679",
+      "hit": true,
+      "cost": 0.034451,
+      "num_spans": 3
+    },
+    {
+      "doc_name": "BOEING_2018_10K",
+      "ground_truth": "$10,460 million",
+      "hit": true,
+      "cost": 0.007643,
+      "num_spans": 3
+    },
+    {
+      "doc_name": "AMAZON_2018_10K",
+      "ground_truth": "$10,073 million",
+      "hit": true,
+      "cost": 0.02744,
+      "num_spans": 3
+    },
+    {
+      "doc_name": "EBAY_2021_10K",
+      "ground_truth": "$13,608 million",
+      "hit": true,
+      "cost": 0.005151,
+      "num_spans": 2
+    },
+    {
+      "doc_name": "AMAZON_2016_10K",
+      "ground_truth": "$2,371 million",
+      "hit": true,
+      "cost": 0.02973,
+      "num_spans": 3
+    },
+    {
+      "doc_name": "CORNING_2022_10K",
+      "ground_truth": "1,316 million",
+      "hit": true,
+      "cost": 0.006481,
+      "num_spans": 3
+    },
+    {
+      "doc_name": "NIKE_2021_10K",
+      "ground_truth": "$5,727 million",
+      "hit": true,
+      "cost": 0.011447,
+      "num_spans": 3
+    },
+    {
+      "doc_name": "LOCKHEEDMARTIN_2022_10K",
+      "ground_truth": "$5,732 million",
+      "hit": true,
+      "cost": 0.015632,
+      "num_spans": 3
+    },
+    {
+      "doc_name": "JOHNSON_JOHNSON_2022_10K",
+      "ground_truth": "$17.9 billion",
+      "hit": true,
+      "cost": 0.011182,
+      "num_spans": 3
+    }
+  ]
+}

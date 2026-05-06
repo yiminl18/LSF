@@ -1,0 +1,22 @@
+{
+  "question": "What is total assets at year-end (from the audited balance sheet)?",
+  "question_slug": "what_is_total_assets_at_year_end__from_the_audited_balance_s",
+  "timestamp": "2026-05-06T01:45:58.797503+00:00",
+  "latency_seconds": 0.92,
+  "agent_input_tokens": 0,
+  "agent_output_tokens": 0,
+  "total_llm_calls": 0,
+  "num_rules": 1,
+  "merge_accuracy": 1.0,
+  "avg_cost_ratio": 0.012642,
+  "rules": [
+    {
+      "rule_name": "rule_table_total_assets_balance_sheet",
+      "description": "Match first 2 tables with total assets row header in balance sheet/financial sections.",
+      "coverage": 10,
+      "avg_cost_ratio": 0.012642,
+      "file": "rules/agent/financebench_agent/what_is_total_assets_at_year_end__from_the_audited_balance_s/rule_table_total_assets_balance_sheet.py"
+    }
+  ],
+  "note": "merge_accuracy based on substring match proxy; LLM judge evaluation pending API access"
+}

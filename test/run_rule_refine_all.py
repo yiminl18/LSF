@@ -17,8 +17,8 @@ from rule_refine import rule_refine
 QUERIES_FILE   = "data/financebench/sample_queries.txt"
 LABELS_FILE    = "data/financebench/sample_doc_labels.json"
 PROCESSING_DIR = "data/financebench/processing"
-RULES_BASE_DIR = "rules/llm/financebench"
-EVAL_DIR       = "results/eval_merge_all"
+RULES_BASE_DIR = "rules/gpt54/financebench"
+EVAL_DIR       = "results/e2e_gpt54"
 OUTPUT_DIR     = "results/llm_rule_refine"
 
 

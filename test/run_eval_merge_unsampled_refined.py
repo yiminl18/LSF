@@ -21,7 +21,7 @@ model_mod = importlib.import_module("models.gpt54")
 QUERIES_FILE   = "data/financebench/sample_queries.txt"
 LABELS_FILE    = "data/financebench/unsampled_doc_labels.json"
 PROCESSING_DIR = "data/financebench/processing"
-RULES_BASE_DIR = "rules/llm/financebench"
+RULES_BASE_DIR = "rules/gpt54/financebench"
 MERGE_RUN_DIR  = "results/rule_run_llm/merge_unsampled_refined"
 OUTPUT_DIR     = "results/eval_merge_refined"
 

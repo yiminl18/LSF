@@ -321,7 +321,7 @@ def build_prompt(
     docs: list[str],                    # list of DOC_NAMEs (no .pdf suffix)
     labels_file: str = "data/financebench/sample_doc_labels.json",
     processing_dir: str = "data/financebench/processing",
-    rules_dir: str = "rules/agent/financebench_agent",
+    rules_dir: str = "rules/claude_opus/financebench",
     model: str = "opus",
 ) -> str:
     import re
@@ -346,7 +346,7 @@ def run(
     docs: list[str],                    # list of DOC_NAMEs (no .pdf suffix)
     labels_file: str = "data/financebench/sample_doc_labels.json",
     processing_dir: str = "data/financebench/processing",
-    rules_dir: str = "rules/agent/financebench_agent",
+    rules_dir: str = "rules/claude_opus/financebench",
     model: str = "opus",
     cwd: str | None = None,
 ) -> str:
@@ -387,7 +387,7 @@ if __name__ == "__main__":
                              "Example: --docs AMCOR_2019_10K BOEING_2018_10K")
     parser.add_argument("--labels-file",    default="data/financebench/sample_doc_labels.json")
     parser.add_argument("--processing-dir", default="data/financebench/processing")
-    parser.add_argument("--rules-dir",      default="rules/agent/financebench_agent")
+    parser.add_argument("--rules-dir",      default="rules/claude_opus/financebench")
     parser.add_argument("--model",          default="opus",
                         help="Model alias (opus/sonnet/haiku) or full model string.")
     parser.add_argument("--cwd",            default=None)

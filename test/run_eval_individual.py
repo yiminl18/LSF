@@ -18,7 +18,7 @@ from eval_rule import eval_rule
 QUERIES_FILE   = "data/financebench/sample_queries.txt"
 LABELS_FILE    = "data/financebench/sample_doc_labels.json"
 PROCESSING_DIR = "data/financebench/processing"
-RULES_BASE_DIR = "rules/llm/financebench"
+RULES_BASE_DIR = "rules/gpt54/financebench"
 RULE_RUN_DIR   = "results/rule_run_llm/individual"
 OUTPUT_DIR     = "results/eval_individual"
 

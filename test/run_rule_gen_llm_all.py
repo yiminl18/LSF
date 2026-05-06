@@ -17,7 +17,7 @@ from rule_gen_llm_coarse import rule_gen_llm_coarse
 QUERIES_FILE   = "data/financebench/sample_queries.txt"
 LABELS_FILE    = "data/financebench/sample_doc_labels.json"
 PROCESSING_DIR = "data/financebench/processing"
-RULES_DIR      = "rules/llm/financebench"
+RULES_DIR      = "rules/gpt54/financebench"
 OUTPUT_DIR     = "results/rule_gen_llm"
 
 

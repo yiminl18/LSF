@@ -210,7 +210,7 @@ def rule_refine(
     question_slug: str,
     documents: list[dict],
     ground_truth: dict,
-    rules_dir: str = "rules/llm/financebench",
+    rules_dir: str = "rules/gpt54/financebench",
     output_dir: str = "results/llm_rule_refine",
     model_name: str = "gpt54",
 ) -> dict:

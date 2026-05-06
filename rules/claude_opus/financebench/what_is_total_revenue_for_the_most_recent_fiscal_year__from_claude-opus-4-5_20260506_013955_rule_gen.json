@@ -1,0 +1,22 @@
+{
+  "question": "What is total revenue for the most recent fiscal year (from the audited income statement)?",
+  "question_slug": "what_is_total_revenue_for_the_most_recent_fiscal_year__from",
+  "timestamp": "2026-05-06T01:39:55Z",
+  "latency_seconds": 415.72,
+  "agent_input_tokens": 0,
+  "agent_output_tokens": 0,
+  "total_llm_calls": 0,
+  "num_rules": 1,
+  "merge_accuracy": 1.0,
+  "avg_cost_ratio": 0.0101,
+  "rules": [
+    {
+      "rule_name": "rule_table_revenue_financial_sections",
+      "description": "Match first 2 tables with revenue/sales row headers in financial sections (Item 6, 7, 8).",
+      "coverage": 10,
+      "avg_cost_ratio": 0.0101,
+      "file": "rules/agent/financebench_agent/what_is_total_revenue_for_the_most_recent_fiscal_year__from/rule_table_revenue_financial_sections.py"
+    }
+  ],
+  "notes": "LLM judge evaluation not available due to Azure API key configuration. Results based on substring match proxy which achieved 100% hit rate. The retrieved spans contain the ground truth values in all cases."
+}

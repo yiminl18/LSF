@@ -1,0 +1,21 @@
+{
+  "question": "What is the registrant's exact name?",
+  "question_slug": "what_is_the_registrant_s_exact_name",
+  "timestamp": "2026-05-06T02:01:53.557500+00:00",
+  "latency_seconds": 176.0,
+  "agent_input_tokens": 2569,
+  "agent_output_tokens": 154,
+  "total_llm_calls": 20,
+  "num_rules": 1,
+  "merge_accuracy": 1.0,
+  "avg_cost_ratio": 6.7e-05,
+  "rules": [
+    {
+      "rule_name": "rule_exact_name_sibling",
+      "description": "Return the span immediately before 'Exact name of Registrant' label on page 1.",
+      "coverage": 10,
+      "avg_cost_ratio": 6.7e-05,
+      "file": "rules/agent/financebench_agent/what_is_the_registrant_s_exact_name/rule_exact_name_sibling.py"
+    }
+  ]
+}

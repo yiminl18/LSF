@@ -1,0 +1,28 @@
+{
+  "question": "What is/are the trading symbol(s) and listing exchange(s)?",
+  "question_slug": "what_is_are_the_trading_symbol_s__and_listing_exchange_s",
+  "timestamp": "2026-05-06T02:17:16.176909+00:00",
+  "latency_seconds": 121.54,
+  "agent_input_tokens": 4731,
+  "agent_output_tokens": 213,
+  "total_llm_calls": 20,
+  "num_rules": 2,
+  "merge_accuracy": 1.0,
+  "avg_cost_ratio": 0.0016,
+  "rules": [
+    {
+      "rule_name": "rule_item5_market_trading_symbol",
+      "description": "Match spans in Item 5 (Market for Registrant's Common Stock) mentioning trading symbol.",
+      "coverage": 9,
+      "avg_cost_ratio": 0.000718,
+      "file": "rules/agent/financebench_agent/what_is_are_the_trading_symbol_s__and_listing_exchange_s/rule_item5_market_trading_symbol.py"
+    },
+    {
+      "rule_name": "rule_page1_section12b_block",
+      "description": "Match page 1 spans in the Section 12(b) securities registration block.",
+      "coverage": 10,
+      "avg_cost_ratio": 0.000829,
+      "file": "rules/agent/financebench_agent/what_is_are_the_trading_symbol_s__and_listing_exchange_s/rule_page1_section12b_block.py"
+    }
+  ]
+}
