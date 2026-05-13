@@ -15,6 +15,7 @@ from __future__ import annotations
 import argparse
 import base64
 import json
+import logging
 import re
 from pathlib import Path
 from typing import Any
@@ -35,7 +36,9 @@ _MAX_OCR_TOKENS = 2000
 _RENDER_DPI = 100  # lower DPI to reduce token cost; sufficient for text extraction
 
 
-def _cache_path(doc_id: str) -> Path:
+def _cache_path(doc_id: str, max_pages: int | None = None) -> Path:
+    if max_pages is not None:
+        return _CACHE_DIR / f"{doc_id}_maxpages{max_pages}.json"
     return _CACHE_DIR / f"{doc_id}.json"
 
 
@@ -142,6 +145,9 @@ def _parse_page_ocr(page_no: int, raw: str, global_section_counter: list[int]) -
     return sections_out
 
 
+_ocr_logger = logging.getLogger(__name__)
+
+
 class LLMOCR:
     """LLM-based OCR that converts PDF pages to a structured ParagraphIndex."""
 
@@ -150,14 +156,20 @@ class LLMOCR:
         cached_caller: CachedLLMCaller,
         ocr_model: str = _DEFAULT_OCR_MODEL,
         ocr_provider: str = _DEFAULT_OCR_PROVIDER,
+        max_pages: int | None = None,
     ) -> None:
         self._caller = cached_caller
         self._ocr_model = ocr_model
         self._ocr_provider = ocr_provider
+        self._max_pages = max_pages
 
     def parse_pdf(self, pdf_path: Path, doc_id: str) -> ParagraphIndex:
-        """Parse all pages of pdf_path; uses disk cache when available."""
-        cache = _cache_path(doc_id)
+        """Parse pages of pdf_path; uses disk cache when available.
+
+        Cache key is doc_id-specific; max_pages is included in the filename to
+        avoid poisoning the full-run cache with a capped partial result.
+        """
+        cache = _cache_path(doc_id, self._max_pages)
         if cache.exists():
             with cache.open("r", encoding="utf-8") as f:
                 data = json.load(f)
@@ -178,11 +190,17 @@ class LLMOCR:
         prompt_template = _load_ocr_prompt()
         doc = pdfium.PdfDocument(str(pdf_path))
         n_pages = len(doc)
+        effective_pages = min(n_pages, self._max_pages) if self._max_pages is not None else n_pages
+        if self._max_pages is not None and n_pages > self._max_pages:
+            _ocr_logger.info(
+                "max_pages=%d: capping OCR from %d to %d pages for %s",
+                self._max_pages, n_pages, effective_pages, pdf_path.name,
+            )
 
         global_section_counter = [0]  # mutable reference for page-local -> global mapping
         all_sections: list[dict[str, Any]] = []
 
-        for page_no in range(n_pages):
+        for page_no in range(effective_pages):
             page = doc[page_no]
             png_bytes = _render_page_png(page)
             b64 = base64.b64encode(png_bytes).decode("ascii")
@@ -216,6 +234,7 @@ def main(argv: list[str] | None = None) -> None:
     parser.add_argument("--doc-id", required=True)
     parser.add_argument("--ocr-model", default=_DEFAULT_OCR_MODEL)
     parser.add_argument("--ocr-provider", default=_DEFAULT_OCR_PROVIDER)
+    parser.add_argument("--max-pages", type=int, default=None, help="Cap OCR to this many pages")
     args = parser.parse_args(argv)
 
     with args.config.open("r", encoding="utf-8") as f:
@@ -227,7 +246,12 @@ def main(argv: list[str] | None = None) -> None:
         raise FileNotFoundError(f"PDF not found: {pdf_path}")
 
     cached_caller = CachedLLMCaller(DEFAULT_CACHE_DB_PATH)
-    ocr = LLMOCR(cached_caller, ocr_model=args.ocr_model, ocr_provider=args.ocr_provider)
+    ocr = LLMOCR(
+        cached_caller,
+        ocr_model=args.ocr_model,
+        ocr_provider=args.ocr_provider,
+        max_pages=args.max_pages,
+    )
     idx = ocr.parse_pdf(pdf_path, doc_id=args.doc_id)
     print(f"OCR complete: {len(idx.paragraphs)} paragraphs, {len(idx.sections)} sections")
     cache = _cache_path(args.doc_id)

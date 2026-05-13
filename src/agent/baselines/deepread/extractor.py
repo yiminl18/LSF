@@ -76,9 +76,11 @@ class DeepReadExtractor:
         self,
         ocr_model: str = _DEFAULT_OCR_MODEL,
         ocr_provider: str = _DEFAULT_OCR_PROVIDER,
+        max_pages: int | None = None,
     ) -> None:
         self._ocr_model = ocr_model
         self._ocr_provider = ocr_provider
+        self._max_pages = max_pages
 
     def extract(
         self,
@@ -99,6 +101,7 @@ class DeepReadExtractor:
             cached_caller,
             ocr_model=self._ocr_model,
             ocr_provider=self._ocr_provider,
+            max_pages=self._max_pages,
         )
         index = ocr.parse_pdf(doc_inputs.pdf_path, doc_id=doc_id)
 
