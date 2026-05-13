@@ -275,13 +275,19 @@ class TestMDocAgentExtractorSubprocess(unittest.TestCase):
         self.assertTrue(len(captured_cmd) > 0, "subprocess.run not called")
         cmd = captured_cmd[0]
         cmd_str = " ".join(cmd)
-        # Must contain dataset=lsf
-        self.assertIn("dataset=lsf", cmd_str)
+        # Bug 2: Must use Hydra append syntax (+dataset=lsf), NOT plain dataset=lsf
+        self.assertIn("+dataset=lsf", cmd_str)
+        self.assertNotIn(" dataset=lsf", cmd_str)
         # Must contain all 4 agent model overrides
         self.assertIn("mdoc_agent.agents.0.model=openai", cmd_str)
         self.assertIn("mdoc_agent.agents.1.model=openai", cmd_str)
         self.assertIn("mdoc_agent.agents.2.model=openai", cmd_str)
         self.assertIn("mdoc_agent.sum_agent.model=openai", cmd_str)
+        # Bug 3: Must contain api_key=null overrides so OpenAI SDK reads env var
+        self.assertIn("mdoc_agent.agents.0.model.api_key=null", cmd_str)
+        self.assertIn("mdoc_agent.agents.1.model.api_key=null", cmd_str)
+        self.assertIn("mdoc_agent.agents.2.model.api_key=null", cmd_str)
+        self.assertIn("mdoc_agent.sum_agent.model.api_key=null", cmd_str)
         # Must contain scripts/predict.py
         self.assertIn("predict.py", cmd_str)
 
