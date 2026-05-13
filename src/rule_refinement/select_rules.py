@@ -75,15 +75,19 @@ def _greedy_cover(
         for d in list(U):
             gt = labels.get(d + ".pdf", {}).get(question)
 
-            res = rule_apply_merge(
-                document=documents[d],
-                rule_names=working_S + [r],
-                question_slug=question_slug,
-                question=question,
-                model_name=model_name,
-                rules_dir=rules_dir,
-                output_dir=output_dir,
-            )
+            try:
+                res = rule_apply_merge(
+                    document=documents[d],
+                    rule_names=working_S + [r],
+                    question_slug=question_slug,
+                    question=question,
+                    model_name=model_name,
+                    rules_dir=rules_dir,
+                    output_dir=output_dir,
+                )
+            except Exception as exc:
+                print(f"    SKIP {d} (rule_apply_merge error: {exc})")
+                continue
             qa_calls += 1
 
             retrieved_text = res.get("retrieved_text", "")
@@ -92,9 +96,12 @@ def _greedy_cover(
             if use_proxy and not proxy_judge(gt, retrieved_text):
                 continue
 
-            if judge(question, gt, res["predicted_answer"], model_name=model_name):
-                gained.add(d)
-            judge_calls += 1
+            try:
+                if judge(question, gt, res["predicted_answer"], model_name=model_name):
+                    gained.add(d)
+                judge_calls += 1
+            except Exception as exc:
+                print(f"    SKIP judge {d} (error: {exc})")
 
         if gained:
             working_S.append(r)
