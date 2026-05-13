@@ -8,6 +8,7 @@ the result, and writes baseline_rows.jsonl + baseline_summary.json.
 from __future__ import annotations
 
 import json
+import logging
 import time
 import traceback
 from pathlib import Path
@@ -23,6 +24,8 @@ from core.pipeline.e2e_utils.cache import CachedLLMCaller, DEFAULT_CACHE_DB_PATH
 
 _DEFAULT_BASELINE_OUTPUT_ROOT = Path("output/agent/baselines")
 
+logger = logging.getLogger(__name__)
+
 
 def _query_doc_ids(config: dict[str, Any], query_idx: int) -> list[str]:
     for qc in config.get("queries", []):
@@ -31,13 +34,25 @@ def _query_doc_ids(config: dict[str, Any], query_idx: int) -> list[str]:
     return []
 
 
-def _get_extractor(experiment: str) -> BaselineExtractor:
+def _get_extractor(
+    experiment: str,
+    deepread_max_pages: int | None = None,
+    deepread_ocr_model: str | None = None,
+    deepread_ocr_provider: str | None = None,
+) -> BaselineExtractor:
     if experiment == "exit":
         from agent.baselines.exit.extractor import ExitExtractor
         return ExitExtractor()
     if experiment == "deepread":
         from agent.baselines.deepread.extractor import DeepReadExtractor
-        return DeepReadExtractor()
+        kwargs: dict[str, Any] = {}
+        if deepread_max_pages is not None:
+            kwargs["max_pages"] = deepread_max_pages
+        if deepread_ocr_model is not None:
+            kwargs["ocr_model"] = deepread_ocr_model
+        if deepread_ocr_provider is not None:
+            kwargs["ocr_provider"] = deepread_ocr_provider
+        return DeepReadExtractor(**kwargs)
     if experiment == "mdocagent":
         from agent.baselines.mdocagent.extractor import MDocAgentExtractor
         return MDocAgentExtractor()
@@ -54,13 +69,22 @@ def run_baseline_sweep(
     eval_provider: str | None = None,
     eval_model: str | None = None,
     dry_run: bool = False,
+    max_docs: int | None = None,
+    deepread_max_pages: int | None = None,
+    deepread_ocr_model: str | None = None,
+    deepread_ocr_provider: str | None = None,
 ) -> None:
     """Run the baseline sweep and write results to output_root/<experiment>/q<idx>/."""
     config = load_config(config_path)
     eval_provider = eval_provider or llm_provider
     eval_model = eval_model or llm_model
 
-    extractor = _get_extractor(experiment)
+    extractor = _get_extractor(
+        experiment,
+        deepread_max_pages=deepread_max_pages,
+        deepread_ocr_model=deepread_ocr_model,
+        deepread_ocr_provider=deepread_ocr_provider,
+    )
     cached_caller = CachedLLMCaller(DEFAULT_CACHE_DB_PATH)
     dataset_root = config.get("dataset_root", "datasets/pdfs/latest")
 
@@ -70,6 +94,10 @@ def run_baseline_sweep(
         if not doc_ids:
             print(f"[baseline-{experiment}] q{query_idx}: no docs configured, skipping")
             continue
+
+        if max_docs is not None:
+            doc_ids = doc_ids[:max_docs]
+            logger.info("Capped doc set to %d docs (--max-docs)", max_docs)
 
         out_dir = output_root / experiment / f"q{query_idx}"
         out_dir.mkdir(parents=True, exist_ok=True)

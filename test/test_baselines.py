@@ -231,9 +231,89 @@ class TestRunnerDryRun(unittest.TestCase):
                 )
                 # _get_extractor should still be called to validate the experiment name
                 # but no actual extraction should happen.
-                mock_get.assert_called_once_with("exit")
+                mock_get.assert_called_once_with(
+                    "exit",
+                    deepread_max_pages=None,
+                    deepread_ocr_model=None,
+                    deepread_ocr_provider=None,
+                )
         finally:
             config_path.unlink(missing_ok=True)
+
+
+class TestRunnerMaxDocs(unittest.TestCase):
+    """max_docs param caps the doc list passed to the extractor."""
+
+    def test_max_docs_caps_row_count(self) -> None:
+        from agent.baselines import runner
+
+        # Config with 5 docs
+        with tempfile.NamedTemporaryFile(
+            mode="w", suffix=".yaml", delete=False, encoding="utf-8"
+        ) as f:
+            import yaml
+            yaml.dump(
+                {
+                    "dataset": "pdfs",
+                    "dataset_root": "datasets/pdfs/latest",
+                    "parser": "docling",
+                    "queries": [
+                        {
+                            "query_idx": 0,
+                            "documents": [
+                                "DOC_A", "DOC_B", "DOC_C", "DOC_D", "DOC_E"
+                            ],
+                        }
+                    ],
+                },
+                f,
+            )
+            config_path = Path(f.name)
+
+        processed: list[str] = []
+
+        class _NoOpExtractor:
+            name = "exit"
+
+            def extract(self, *, doc_id: str, **kwargs):
+                processed.append(doc_id)
+                from agent.baselines.base import ExtractionResult
+                return ExtractionResult(
+                    generated_answer="x",
+                    trace={},
+                    cost_usd=0.0,
+                    latency_ms=0.0,
+                )
+
+        from agent.rule_runtime.deploy import DeployedRow
+        stub_row: dict = {k: None for k in DeployedRow.__annotations__}
+        stub_row["actual_cost_usd"] = 0.0
+        stub_row["judge_result"] = True
+
+        try:
+            with tempfile.TemporaryDirectory() as out_dir, \
+                 patch("agent.baselines.runner._get_extractor",
+                       return_value=_NoOpExtractor()), \
+                 patch("agent.baselines.runner.get_query_text",
+                       return_value="What is the company?"), \
+                 patch("agent.baselines.runner.build_doc_inputs",
+                       return_value=_STUB_DOC_INPUTS), \
+                 patch("agent.baselines.runner.score_and_build_row",
+                       return_value=stub_row), \
+                 patch("agent.baselines.runner.summarize_rows",
+                       return_value={"deployed_acc": 1.0, "total_cost_usd": 0.0}):
+                runner.run_baseline_sweep(
+                    experiment="exit",
+                    query_indices=[0],
+                    config_path=config_path,
+                    output_root=Path(out_dir),
+                    max_docs=2,
+                )
+        finally:
+            config_path.unlink(missing_ok=True)
+
+        self.assertEqual(len(processed), 2, f"Expected 2 docs processed, got {processed}")
+        self.assertEqual(processed, ["DOC_A", "DOC_B"])
 
 
 class TestRunPipelineParseArgs(unittest.TestCase):

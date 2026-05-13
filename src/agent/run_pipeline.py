@@ -133,6 +133,18 @@ def _build_parser() -> argparse.ArgumentParser:
         help="Run bundle cascade/deploy after bundle Phase B.",
     )
     parser.add_argument("--dry-run", action="store_true", help="Print planned work without LLM calls")
+    parser.add_argument(
+        "--deepread-max-pages", type=int, default=None,
+        help="Cap DeepRead OCR to this many pages per document",
+    )
+    parser.add_argument(
+        "--ocr-model", default=None,
+        help="Override DeepRead OCR vision model (default: gpt-4o)",
+    )
+    parser.add_argument(
+        "--ocr-provider", default=None,
+        help="Override DeepRead OCR provider (default: azure)",
+    )
     return parser
 
 
@@ -353,6 +365,10 @@ def _run_baseline(args: argparse.Namespace, experiment_key: str) -> None:
         eval_provider=eval_provider,
         eval_model=eval_model,
         dry_run=args.dry_run,
+        max_docs=args.max_docs,
+        deepread_max_pages=args.deepread_max_pages,
+        deepread_ocr_model=args.ocr_model,
+        deepread_ocr_provider=args.ocr_provider,
     )
 
 
