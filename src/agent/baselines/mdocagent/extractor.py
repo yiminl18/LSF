@@ -70,11 +70,17 @@ _LOG_DIR = Path(".cache") / "mdocagent" / "logs"
 # Hydra override list for OpenAI model on all agents
 # Syntax: Hydra 1.2 CLI overrides use key=value (no leading '~')
 # Agents list indexing: 0=image_agent, 1=text_agent, 2=general_agent (from base.yaml)
+# api_key=null: Hydra null → Python None → OpenAI SDK reads OPENAI_API_KEY env var
+# (Option A: override api_key to null so SDK env-var fallback is used)
 _AGENT_MODEL_OVERRIDES = [
     "mdoc_agent.agents.0.model=openai",
     "mdoc_agent.agents.1.model=openai",
     "mdoc_agent.agents.2.model=openai",
     "mdoc_agent.sum_agent.model=openai",
+    "mdoc_agent.agents.0.model.api_key=null",
+    "mdoc_agent.agents.1.model.api_key=null",
+    "mdoc_agent.agents.2.model.api_key=null",
+    "mdoc_agent.sum_agent.model.api_key=null",
 ]
 
 
@@ -174,7 +180,7 @@ def _run_predict_subprocess(run_name: str) -> tuple[str, str, int]:
     # Hydra overrides: dataset=lsf swaps in our dataset config; model overrides
     # swap all three actors + sum_agent to use OpenAI API.
     overrides = [
-        "dataset=lsf",
+        "+dataset=lsf",
         f"run-name={run_name}",
     ] + _AGENT_MODEL_OVERRIDES
 
