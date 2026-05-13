@@ -31,16 +31,20 @@ from agent.baselines.base import BaselineExtractor, DocInputs, ExtractionResult
 from agent.baselines.mdocagent.adapter import prepare_inputs, _DEFAULT_TMP_ROOT
 from core.pipeline.e2e_utils.cache import CachedLLMCaller
 
-_UPSTREAM_DIR = Path(__file__).parent / "upstream"
+# Submodule is at upstream/MDocAgent (one level deeper than the original stub assumed).
+# Entry point: scripts/predict.py (hydra-based); agent classes in agents/mdoc_agent.py.
+# Option A (direct import) requires torch/transformers — see install.sh.
+# Option B (subprocess) is the active fallback; cwd set to upstream/MDocAgent.
+_UPSTREAM_DIR = Path(__file__).parent / "upstream" / "MDocAgent"
 _DEFAULT_DATASET_NAME = "pdfs"
 
 
 def _upstream_is_present() -> bool:
     """Check if the upstream submodule has been initialised."""
     main_candidates = [
-        _UPSTREAM_DIR / "main.py",
-        _UPSTREAM_DIR / "src" / "main.py",
-        _UPSTREAM_DIR / "run.py",
+        _UPSTREAM_DIR / "scripts" / "predict.py",
+        _UPSTREAM_DIR / "agents" / "mdoc_agent.py",
+        _UPSTREAM_DIR / "README.md",
     ]
     return any(p.exists() for p in main_candidates)
 
@@ -113,25 +117,22 @@ def _try_option_a(
     doc_id: str,
     doc_dir: Path,
 ) -> dict[str, Any] | None:
-    """Attempt to import and call the MDocAgent pipeline directly.
+    """Attempt to import agents.mdoc_agent directly (Option A).
 
-    Returns result dict with at least {"answer": str, "agent_traces": ...},
-    or None if import fails.
+    Requires torch/transformers/hydra from upstream install.sh.
+    Returns result dict or None if imports fail (e.g., missing deps).
     """
     try:
-        # The exact import path depends on the upstream repository structure.
-        # This will be confirmed once the submodule is present.
+        # upstream/MDocAgent is on sys.path; agents/ is a package inside it.
         sys.path.insert(0, str(_UPSTREAM_DIR))
-        # Attempt import — will raise ImportError if submodule not pulled or
-        # if the structure differs from expectation.
-        import importlib
-        pipeline_mod = importlib.import_module("mdocagent.pipeline")
-        result = pipeline_mod.run(
-            query=query_text,
-            doc_id=doc_id,
-            doc_dir=str(doc_dir),
-        )
-        return result  # type: ignore[return-value]
+        from agents.mdoc_agent import MDocAgent  # type: ignore[import]
+        import hydra  # type: ignore[import]
+        with hydra.initialize(config_path=str(_UPSTREAM_DIR / "config"), version_base="1.2"):
+            cfg = hydra.compose(config_name="base")
+        mdoc = MDocAgent(cfg.mdoc_agent)
+        # MDocAgent.predict_dataset expects a BaseDataset; single-doc inference is not
+        # directly supported — fall through to Option B.
+        return None
     except (ImportError, ModuleNotFoundError, AttributeError):
         return None
 
@@ -141,20 +142,19 @@ def _try_option_b(
     doc_id: str,
     doc_dir: Path,
 ) -> dict[str, Any] | None:
-    """Invoke MDocAgent as a subprocess.
+    """Invoke MDocAgent's scripts/predict.py as a subprocess (Option B, active fallback).
 
+    cwd is set to upstream/MDocAgent so hydra config resolution works.
     Returns result dict parsed from subprocess stdout, or None on failure.
     """
     import json
-
-    main_script = _UPSTREAM_DIR / "main.py"
-    if not main_script.exists():
-        main_script = _UPSTREAM_DIR / "run.py"
-    if not main_script.exists():
-        return None
-
-    import tempfile
     import os
+    import tempfile
+
+    # MDocAgent entry point is scripts/predict.py (hydra-based)
+    predict_script = _UPSTREAM_DIR / "scripts" / "predict.py"
+    if not predict_script.exists():
+        return None
 
     with tempfile.NamedTemporaryFile(
         mode="w", suffix=".json", delete=False, encoding="utf-8"
@@ -165,20 +165,18 @@ def _try_option_b(
         completed = subprocess.run(
             [
                 sys.executable,
-                str(main_script),
-                "--query",
-                query_text,
-                "--doc-id",
-                doc_id,
-                "--doc-dir",
-                str(doc_dir),
-                "--output",
-                tmp_out,
+                str(predict_script),
+                "--config-name",
+                "base",
+                f"run-name={doc_id}",
+                f"+query_override={query_text}",
+                f"+output_path={tmp_out}",
             ],
             capture_output=True,
             text=True,
             timeout=300,
             check=False,
+            cwd=str(_UPSTREAM_DIR),  # hydra config_path is relative to cwd
         )
         if completed.returncode != 0:
             print(f"[mdocagent] subprocess stderr: {completed.stderr[:500]}")
