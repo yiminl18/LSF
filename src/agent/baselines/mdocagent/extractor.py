@@ -20,12 +20,18 @@ Hydra overrides passed to predict.py:
     mdoc_agent.sum_agent.model=openai
 
 The ``openai`` model config (config/model/openai.yaml) uses the standard
-``openai.OpenAI`` client. We route it to Azure by setting OPENAI_API_BASE
-and OPENAI_API_KEY in the subprocess environment.
+``openai.OpenAI`` client.  The openai SDK reads ``OPENAI_API_KEY`` and
+``OPENAI_BASE_URL`` from the environment (NOT ``OPENAI_API_BASE``).
+We set both in the subprocess environment so Azure traffic routes correctly:
+    OPENAI_API_KEY  = $AZURE_OPENAI_KEY  (or $OPENAI_API_KEY, whichever is set)
+    OPENAI_BASE_URL = $AZURE_OPENAI_ENDPOINT (e.g. https://<name>.openai.azure.com/)
+No patching of the upstream code is required; the SDK env-var contract is
+stable across openai>=1.0.
 
-DEVIATION from paper (trivial retrieval): we pre-supply all page indices as
-the retrieved set in sample-with-retrieval-results.json, bypassing ColBERT.
-The 5-agent reasoning pipeline is unchanged.
+DEVIATION from paper (capped retrieval): we pre-supply the first 10 page
+indices as the retrieved set in sample-with-retrieval-results.json, bypassing
+ColBERT.  The 10-page cap matches the "top-10" key name and prevents context
+overflow on long 10-K filings.  The 5-agent reasoning pipeline is unchanged.
 
 Result file location:
     upstream/MDocAgent/results/lsf/<run-name>/<timestamp>.json
@@ -172,10 +178,15 @@ def _run_predict_subprocess(run_name: str) -> tuple[str, str, int]:
         f"run-name={run_name}",
     ] + _AGENT_MODEL_OVERRIDES
 
-    # Build env: pass through current env, add/override API credentials
+    # Build env: pass through current env, then wire Azure credentials.
+    # The openai SDK reads OPENAI_API_KEY and OPENAI_BASE_URL (not OPENAI_API_BASE).
+    # If OPENAI_API_KEY is not set, fall back to AZURE_OPENAI_KEY.
+    # If OPENAI_BASE_URL is not set, fall back to AZURE_OPENAI_ENDPOINT.
     env = os.environ.copy()
-    # OPENAI_API_KEY and OPENAI_API_BASE should already be set; we don't override
-    # them here so the caller controls which Azure endpoint is used.
+    if not env.get("OPENAI_API_KEY") and env.get("AZURE_OPENAI_KEY"):
+        env["OPENAI_API_KEY"] = env["AZURE_OPENAI_KEY"]
+    if not env.get("OPENAI_BASE_URL") and env.get("AZURE_OPENAI_ENDPOINT"):
+        env["OPENAI_BASE_URL"] = env["AZURE_OPENAI_ENDPOINT"]
 
     # Disable CUDA (we're using OpenAI API — no local GPU needed)
     env["CUDA_VISIBLE_DEVICES"] = ""

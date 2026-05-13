@@ -15,12 +15,18 @@ Retrieval keys (from config/retrieval/base.yaml, text retrieval):
   r_image_key = "image-top-10-question"
 
 Values are lists of INTEGER page indices (0-indexed), matching the page
-files. We use *trivial retrieval*: supply ALL page indices as the retrieved
-set so the 5 MDocAgent agents see the full document.
+files.
 
-DEVIATION from paper: the paper uses ColBERT-style retrieval to select top-k
-pages. We bypass this by pre-supplying all pages, which avoids the ColBERT
-model dependency. The 5-agent reasoning pipeline is unchanged.
+RETRIEVAL STRATEGY (trivial, capped at 10 pages):
+The paper uses ColBERT-style retrieval. We bypass ColBERT by pre-supplying
+page indices directly. To match the key names ("top-10") and avoid context
+overflow in the 5-agent pipeline (10-K filings can be 80-200 pages), we cap
+the supplied set at the first 10 pages. This is a conservative but safe
+default; callers can override via ``_R_MAX_PAGES``. The key names use "10"
+because they mirror the top_k=10 config in config/retrieval/base.yaml.
+
+DEVIATION from paper: ColBERT retrieval is replaced by first-N-pages
+selection. The 5-agent reasoning pipeline is otherwise unchanged.
 
 Usage as standalone prep step:
     PYTHONPATH=src python -m agent.baselines.mdocagent.adapter \
@@ -50,6 +56,11 @@ _RENDER_DPI = 144
 # Retrieval key names (must match config/retrieval/base.yaml + text.yaml)
 _R_TEXT_KEY = "text-top-10-question"
 _R_IMAGE_KEY = "image-top-10-question"
+
+# Hard cap on pages supplied to MDocAgent's text+image agents.
+# Keys are named "top-10" matching config/retrieval/base.yaml top_k=10.
+# Without a cap, 10-K filings (80-200 pages) would exhaust LLM context windows.
+_R_MAX_PAGES = 10
 
 
 def _upstream_data_dir(dataset_name: str) -> Path:
@@ -245,16 +256,17 @@ def _build_retrieval_record(
     query_text: str,
     n_pages: int,
 ) -> dict[str, Any]:
-    """Build sample record with trivial-retrieval keys (all page indices).
+    """Build sample record with trivial-retrieval keys (first N pages, capped).
 
-    Trivial retrieval: all page indices [0, 1, ..., n_pages-1] are supplied
-    as both text and image retrieved pages. This bypasses ColBERT/ColPali
-    and hands the full document to MDocAgent.
+    We supply the first min(n_pages, _R_MAX_PAGES) page indices as both the
+    text and image retrieved sets.  The cap matches the "top-10" key name and
+    avoids overflowing LLM context windows on long documents (10-K filings
+    can be 80-200 pages).  ColBERT/ColPali retrieval is bypassed entirely.
     """
-    all_page_indices = list(range(n_pages))
+    capped_page_indices = list(range(min(n_pages, _R_MAX_PAGES)))
     record = _build_sample_record(sample_id, doc_id, query_text)
-    record[_R_TEXT_KEY] = all_page_indices
-    record[_R_IMAGE_KEY] = all_page_indices
+    record[_R_TEXT_KEY] = capped_page_indices
+    record[_R_IMAGE_KEY] = capped_page_indices
     return record
 
 
