@@ -40,6 +40,12 @@ def _load_relevance_prompt() -> str:
     return _RELEVANCE_PROMPT_PATH.read_text(encoding="utf-8")
 
 
+try:
+    from huggingface_hub import try_to_load_from_cache as _hf_try_to_load_from_cache  # type: ignore[import]
+except ImportError:
+    _hf_try_to_load_from_cache = None  # type: ignore[assignment]
+
+
 def _gemma_checkpoint_available() -> bool:
     """Return True when adapter_config.json is present in the local HF cache.
 
@@ -47,9 +53,10 @@ def _gemma_checkpoint_available() -> bool:
     cache hit, or a sentinel (LIBRARY_NOT_FOUND / None) on miss.  Never
     triggers a download.
     """
+    if _hf_try_to_load_from_cache is None:
+        return False
     try:
-        from huggingface_hub import try_to_load_from_cache  # type: ignore[import]
-        result = try_to_load_from_cache(
+        result = _hf_try_to_load_from_cache(
             repo_id=_GEMMA_HF_REPO,
             filename="adapter_config.json",
         )
@@ -67,19 +74,20 @@ def classify_sentences(
     llm_model: str,
     batch_size: int = 30,
     threshold: float = 0.5,
-) -> list[float]:
+) -> tuple[list[float], float]:
     """Score each sentence in *sentences* for relevance to *query*.
 
-    Returns a list of floats in [0.0, 1.0] parallel to *sentences*.
-    Score > threshold means "keep".
+    Returns (scores, cost_usd) where:
+      - scores: list of floats in [0.0, 1.0] parallel to *sentences*; score > threshold means "keep".
+      - cost_usd: total LLM cost incurred during classification (0.0 for Gemma path).
 
     Uses the Gemma checkpoint if available, otherwise LLM zero-shot fallback.
     """
     if not sentences:
-        return []
+        return [], 0.0
 
     if _gemma_checkpoint_available():
-        return _classify_with_gemma(query, sentences)
+        return _classify_with_gemma(query, sentences), 0.0
 
     return _classify_with_llm(
         query=query,
@@ -163,10 +171,16 @@ def _classify_with_llm(
     llm_provider: str,
     llm_model: str,
     batch_size: int,
-) -> list[float]:
-    """LLM zero-shot fallback: classify sentences in batches preserving neighbor context."""
+) -> tuple[list[float], float]:
+    """LLM zero-shot fallback: classify sentences in batches preserving neighbor context.
+
+    Returns (scores, cost_usd) where cost_usd is the sum of LLM costs across all batches.
+    """
+    from core.llm.cost import compute_cost
+
     template = _load_relevance_prompt()
     scores: list[float] = []
+    total_cost = 0.0
 
     n = len(sentences)
     for start in range(0, n, batch_size):
@@ -191,10 +205,17 @@ def _classify_with_llm(
             max_tokens=_MAX_CLASSIFY_TOKENS * len(batch),
             model=llm_model,
         )
+        batch_cost = compute_cost(
+            result.input_tokens,
+            result.output_tokens,
+            llm_provider,
+            model=llm_model,
+        )
+        total_cost += batch_cost
         batch_scores = _parse_scores(result.response, len(batch))
         scores.extend(batch_scores)
 
-    return scores
+    return scores, total_cost
 
 
 def _parse_scores(response: str, expected_n: int) -> list[float]:

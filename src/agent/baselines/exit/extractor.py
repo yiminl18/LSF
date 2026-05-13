@@ -63,7 +63,7 @@ class ExitExtractor:
         all_sentences = _sentences.split_sentences(doc_inputs.normalized_text)
 
         # Step 2: classify each sentence for relevance (context-aware, in batches)
-        scores = _classifier.classify_sentences(
+        scores, classifier_cost = _classifier.classify_sentences(
             query=query_text,
             sentences=all_sentences,
             cached_caller=cached_caller,
@@ -72,6 +72,7 @@ class ExitExtractor:
             batch_size=batch_size,
             threshold=threshold,
         )
+        total_cost += classifier_cost
 
         # Step 3: select relevant sentences, preserve document order, cap length
         selected: list[str] = []
