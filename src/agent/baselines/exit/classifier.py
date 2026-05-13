@@ -1,84 +1,62 @@
 """Sentence relevance classifier for EXIT.
 
 Strategy (in priority order):
-  1. Attempt to load the upstream Gemma-2B PEFT checkpoint from
-     upstream/EXIT/checkpoints/ (follows EXIT paper's doubleyyh/exit-gemma-2b).
-     Requires PyTorch + transformers + peft + GPU — will almost always be absent
-     in test/CI environments.
+  1. Attempt to load the Gemma-2B PEFT checkpoint via HuggingFace hub
+     (repo "doubleyyh/exit-gemma-2b"). Uses huggingface_hub.try_to_load_from_cache
+     to detect a local cache hit without downloading. Requires PyTorch +
+     transformers + peft — will be absent in test/CI environments unless the
+     model has been explicitly downloaded.
   2. LLM zero-shot fallback via CachedLLMCaller using exit_sentence_relevance.txt.
      This preserves EXIT's "context-aware" property by passing neighbor sentences
      as context in each batch prompt.
 
-The caller decides the threshold; default 0.5 maps "Yes" -> 1.0, "No" -> 0.0.
+The caller decides the threshold; default 0.5.  Gemma path returns softmax
+probability of the "Yes" token; LLM path maps "yes" → 1.0, "no" → 0.0.
 """
 
 from __future__ import annotations
 
-import os
 import re
 from pathlib import Path
-from typing import Sequence
+from typing import Any
 
 from core.pipeline.e2e_utils.cache import CachedLLMCaller
 
-# Primary: local checkout under upstream/EXIT/checkpoints/
-_CHECKPOINT_DIR = Path(__file__).parent / "upstream" / "EXIT" / "checkpoints"
-
-# Secondary: HuggingFace hub cache (set EXIT_CHECKPOINT_DIR env var to override both)
-_HF_CACHE_MODEL_ID = "doubleyyh/exit-gemma-2b"
-_HF_CACHE_DIR = (
-    Path(os.environ.get("HF_HOME", Path.home() / ".cache" / "huggingface"))
-    / "hub"
-    / ("models--" + _HF_CACHE_MODEL_ID.replace("/", "--"))
-)
+# HuggingFace repo ID for the EXIT PEFT adapter (base + adapter loaded separately)
+_GEMMA_HF_REPO: str = "doubleyyh/exit-gemma-2b"
+# Base model declared in adapter_config.json → base_model_name_or_path
+_GEMMA_BASE_MODEL: str = "google/gemma-2b-it"
 
 _RELEVANCE_PROMPT_PATH = (
     Path(__file__).parent.parent.parent / "prompts" / "baselines" / "exit_sentence_relevance.txt"
 )
 _MAX_CLASSIFY_TOKENS = 10
 
+# Class-scope cache so we don't reload the model on every classify_sentences call
+_GEMMA_MODEL_CACHE: dict[str, Any] = {}
+
 
 def _load_relevance_prompt() -> str:
     return _RELEVANCE_PROMPT_PATH.read_text(encoding="utf-8")
 
 
-def _find_gemma_checkpoint() -> Path | None:
-    """Return the PEFT adapter directory, or None if not found.
-
-    Search order:
-    1. EXIT_CHECKPOINT_DIR env var (explicit override).
-    2. upstream/EXIT/checkpoints/ (local copy in repo).
-    3. HuggingFace hub cache at ~/.cache/huggingface/hub/models--doubleyyh--exit-gemma-2b/.
-    """
-    # 1. Explicit env-var override
-    env_dir = os.environ.get("EXIT_CHECKPOINT_DIR")
-    if env_dir:
-        p = Path(env_dir)
-        if (p / "adapter_config.json").exists():
-            return p
-        # Accept a parent dir containing adapter_config.json
-        hits = list(p.rglob("adapter_config.json"))
-        if hits:
-            return hits[0].parent
-
-    # 2. Local checkout
-    if _CHECKPOINT_DIR.exists():
-        hits = list(_CHECKPOINT_DIR.rglob("adapter_config.json"))
-        if hits:
-            return hits[0].parent
-
-    # 3. HuggingFace hub cache (snapshots/<sha>/)
-    if _HF_CACHE_DIR.exists():
-        hits = list(_HF_CACHE_DIR.rglob("adapter_config.json"))
-        if hits:
-            return hits[0].parent
-
-    return None
-
-
 def _gemma_checkpoint_available() -> bool:
-    """Return True only when a Gemma PEFT checkpoint directory is present."""
-    return _find_gemma_checkpoint() is not None
+    """Return True when adapter_config.json is present in the local HF cache.
+
+    Uses huggingface_hub.try_to_load_from_cache — returns a path string on
+    cache hit, or a sentinel (LIBRARY_NOT_FOUND / None) on miss.  Never
+    triggers a download.
+    """
+    try:
+        from huggingface_hub import try_to_load_from_cache  # type: ignore[import]
+        result = try_to_load_from_cache(
+            repo_id=_GEMMA_HF_REPO,
+            filename="adapter_config.json",
+        )
+        # Returns a str path on hit; returns None or _LIBRARY_NOT_FOUND sentinel on miss
+        return result is not None and isinstance(result, str)
+    except Exception:
+        return False
 
 
 def classify_sentences(
@@ -101,7 +79,7 @@ def classify_sentences(
         return []
 
     if _gemma_checkpoint_available():
-        return _classify_with_gemma(query, sentences, threshold)
+        return _classify_with_gemma(query, sentences)
 
     return _classify_with_llm(
         query=query,
@@ -113,33 +91,51 @@ def classify_sentences(
     )
 
 
+def _get_gemma_model_and_tokenizer() -> tuple[Any, Any]:
+    """Lazy-load and cache the Gemma base model + PEFT adapter at class scope."""
+    if "model" not in _GEMMA_MODEL_CACHE:
+        import torch  # type: ignore[import]
+        from transformers import AutoModelForCausalLM, AutoTokenizer  # type: ignore[import]
+        from peft import PeftModel  # type: ignore[import]
+
+        tokenizer = AutoTokenizer.from_pretrained(_GEMMA_BASE_MODEL)
+        base = AutoModelForCausalLM.from_pretrained(
+            _GEMMA_BASE_MODEL,
+            device_map="auto",
+            torch_dtype=torch.float16,
+        )
+        model = PeftModel.from_pretrained(base, _GEMMA_HF_REPO)
+        model.eval()
+
+        _GEMMA_MODEL_CACHE["model"] = model
+        _GEMMA_MODEL_CACHE["tokenizer"] = tokenizer
+
+    return _GEMMA_MODEL_CACHE["model"], _GEMMA_MODEL_CACHE["tokenizer"]
+
+
 def _classify_with_gemma(
     query: str,
     sentences: list[str],
-    threshold: float,
 ) -> list[float]:
-    """Load PEFT Gemma checkpoint and score sentences locally."""
-    import torch  # type: ignore[import]
-    from transformers import AutoModelForCausalLM, AutoTokenizer  # type: ignore[import]
-    from peft import PeftModel  # type: ignore[import]
+    """Load PEFT Gemma checkpoint from HF cache and score sentences locally.
 
-    # Find checkpoint via the unified search (local → HF cache → env override)
-    checkpoint_path = _find_gemma_checkpoint()
-    if checkpoint_path is None:
-        raise RuntimeError(
-            "Gemma PEFT checkpoint not found. "
-            "Set EXIT_CHECKPOINT_DIR to the adapter directory, or ensure "
-            f"the checkpoint is in {_CHECKPOINT_DIR} or {_HF_CACHE_DIR}."
-        )
-    base_model_id = "google/gemma-2b-it"
-    base = AutoModelForCausalLM.from_pretrained(
-        base_model_id, device_map="auto", torch_dtype=torch.float16
-    )
-    model = PeftModel.from_pretrained(base, str(checkpoint_path))
-    tokenizer = AutoTokenizer.from_pretrained(base_model_id)
+    Prompt format matches upstream exit_rag.py exactly.  Uses logit-level
+    softmax over ("Yes", "No") token IDs — returns probability of "Yes" as
+    a float in [0, 1] per sentence.
+    """
+    import torch  # type: ignore[import]
+
+    model, tokenizer = _get_gemma_model_and_tokenizer()
+
+    # Encode Yes/No token IDs once
+    yes_ids = tokenizer.encode("Yes", add_special_tokens=False)
+    no_ids = tokenizer.encode("No", add_special_tokens=False)
+    yes_id = yes_ids[0]
+    no_id = no_ids[0]
 
     full_context = " ".join(sentences)
     scores: list[float] = []
+
     for sentence in sentences:
         prompt = (
             f"<start_of_turn>user\n"
@@ -151,11 +147,11 @@ def _classify_with_gemma(
         )
         inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
         with torch.no_grad():
-            outputs = model.generate(
-                **inputs, max_new_tokens=3, do_sample=False, temperature=1.0
-            )
-        decoded = tokenizer.decode(outputs[0][inputs["input_ids"].shape[1]:], skip_special_tokens=True)
-        scores.append(1.0 if decoded.strip().lower().startswith("yes") else 0.0)
+            outputs = model(**inputs)
+            # Logits at final position for Yes/No tokens → softmax probability
+            logits = outputs.logits[0, -1, [yes_id, no_id]]
+            prob = torch.softmax(logits, dim=0)[0].item()
+        scores.append(prob)
 
     return scores
 

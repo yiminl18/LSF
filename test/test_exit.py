@@ -279,5 +279,113 @@ class TestExitExtractorEndToEnd(unittest.TestCase):
         self.assertIsInstance(result, ExtractionResult)
 
 
+class TestGemmaCheckpointPath(unittest.TestCase):
+    """Test the HuggingFace-cache-based checkpoint detection."""
+
+    def test_checkpoint_available_when_hf_cache_hit(self) -> None:
+        """_gemma_checkpoint_available returns True when try_to_load_from_cache gives a path."""
+        from agent.baselines.exit import classifier as cls_mod
+
+        fake_path = "/fake/hf/cache/adapter_config.json"
+        with patch("agent.baselines.exit.classifier.try_to_load_from_cache", return_value=fake_path, create=True):
+            with patch("huggingface_hub.try_to_load_from_cache", return_value=fake_path):
+                result = cls_mod._gemma_checkpoint_available()
+        self.assertTrue(result)
+
+    def test_checkpoint_unavailable_when_hf_cache_miss(self) -> None:
+        """_gemma_checkpoint_available returns False when try_to_load_from_cache returns None."""
+        from agent.baselines.exit import classifier as cls_mod
+
+        with patch("huggingface_hub.try_to_load_from_cache", return_value=None):
+            result = cls_mod._gemma_checkpoint_available()
+        self.assertFalse(result)
+
+
+class TestGemmaCodePath(unittest.TestCase):
+    """Test _classify_with_gemma with fully mocked model — no real GPU inference.
+
+    torch is not installed in the test environment; we mock the entire torch
+    module so that classifier.py's ``import torch`` succeeds and all tensor
+    operations are intercepted.
+    """
+
+    def _make_mock_torch(self, yes_prob: float = 0.9) -> MagicMock:
+        """Return a mock torch module whose softmax returns a controlled probability."""
+        mock_torch = MagicMock(name="torch")
+
+        # softmax(logits, dim=0)[0].item() → yes_prob
+        mock_prob_tensor = MagicMock()
+        mock_prob_tensor.__getitem__ = MagicMock(return_value=MagicMock(
+            item=MagicMock(return_value=yes_prob)
+        ))
+        mock_torch.softmax.return_value = mock_prob_tensor
+
+        # torch.no_grad() context manager
+        mock_torch.no_grad.return_value.__enter__ = MagicMock(return_value=None)
+        mock_torch.no_grad.return_value.__exit__ = MagicMock(return_value=False)
+
+        # torch.float16 sentinel
+        mock_torch.float16 = "float16"
+
+        return mock_torch
+
+    def test_gemma_path_taken_and_scores_extracted(self) -> None:
+        """When _gemma_checkpoint_available() is True, classify_sentences uses Gemma."""
+        import sys
+        from agent.baselines.exit import classifier as cls_mod
+
+        sentences = ["AWS is a cloud platform.", "Amazon sells books.", "Jeff Bezos founded it."]
+        query = "What is AWS?"
+
+        # Clear any cached model so lazy-load runs fresh
+        cls_mod._GEMMA_MODEL_CACHE.clear()
+
+        mock_torch = self._make_mock_torch(yes_prob=0.9)
+
+        # model(**inputs) → outputs; outputs.logits[0, -1, [yes_id, no_id]] → tensor
+        mock_logits = MagicMock()
+        mock_outputs = MagicMock()
+        mock_outputs.logits = mock_logits
+        # logits[0, -1, [yes_id, no_id]] — chained indexing → the same tensor
+        mock_logits.__getitem__ = MagicMock(return_value=MagicMock())
+
+        mock_model = MagicMock()
+        mock_model.device = "cpu"
+        mock_model.return_value = mock_outputs  # model(**inputs) call
+
+        mock_tokenizer = MagicMock()
+        mock_tokenizer.encode.side_effect = lambda text, **kw: (
+            [1000] if "Yes" in text else [2000]
+        )
+        # tokenizer(prompt, return_tensors="pt") → object with .to(device) method
+        mock_inputs = MagicMock()
+        mock_inputs.to.return_value = mock_inputs  # inputs.to(device) → inputs
+        mock_tokenizer.return_value = mock_inputs
+
+        # Patch _get_gemma_model_and_tokenizer so no actual loading occurs
+        with patch.object(cls_mod, "_gemma_checkpoint_available", return_value=True), \
+             patch.object(cls_mod, "_get_gemma_model_and_tokenizer",
+                          return_value=(mock_model, mock_tokenizer)), \
+             patch.dict(sys.modules, {"torch": mock_torch}):
+            scores = cls_mod.classify_sentences(
+                query=query,
+                sentences=sentences,
+                cached_caller=MagicMock(),
+                llm_provider="azure",
+                llm_model="gpt-5.4-mini",
+            )
+
+        self.assertEqual(len(scores), len(sentences))
+        for s in scores:
+            self.assertIsInstance(s, float)
+            self.assertEqual(s, 0.9)  # matches mock yes_prob
+
+    def test_gemma_constants(self) -> None:
+        """Verify HF repo ID and base model match adapter_config.json."""
+        from agent.baselines.exit import classifier as cls_mod
+        self.assertEqual(cls_mod._GEMMA_HF_REPO, "doubleyyh/exit-gemma-2b")
+        self.assertEqual(cls_mod._GEMMA_BASE_MODEL, "google/gemma-2b-it")
+
+
 if __name__ == "__main__":
     unittest.main()
