@@ -70,17 +70,17 @@ _LOG_DIR = Path(".cache") / "mdocagent" / "logs"
 # Hydra override list for OpenAI model on all agents
 # Syntax: Hydra 1.2 CLI overrides use key=value (no leading '~')
 # Agents list indexing: 0=image_agent, 1=text_agent, 2=general_agent (from base.yaml)
-# api_key=null: Hydra null → Python None → OpenAI SDK reads OPENAI_API_KEY env var
-# (Option A: override api_key to null so SDK env-var fallback is used)
+# model field is a string (config-group name) used in predict.py as:
+#   hydra.compose(config_name="model/"+model_name)
+# Setting api_key via override would be a type conflict (can't set subkey on string).
+# The openai SDK reads OPENAI_API_KEY from the environment — set by _run_predict_subprocess.
+# api_key in config/model/openai.yaml is already empty, so no override needed.
 _AGENT_MODEL_OVERRIDES = [
     "mdoc_agent.agents.0.model=openai",
     "mdoc_agent.agents.1.model=openai",
     "mdoc_agent.agents.2.model=openai",
     "mdoc_agent.sum_agent.model=openai",
-    "mdoc_agent.agents.0.model.api_key=null",
-    "mdoc_agent.agents.1.model.api_key=null",
-    "mdoc_agent.agents.2.model.api_key=null",
-    "mdoc_agent.sum_agent.model.api_key=null",
+    "mdoc_agent.save_message=true",
 ]
 
 
@@ -269,11 +269,12 @@ def _parse_result(
         "ans_key": ans_key,
         "raw_sample": sample,
     }
-    # Include per-agent messages if save_message=true was set
-    for agent_key in ("general", "critical", "text", "image", "summary"):
-        full_key = f"{ans_key}_message"
-        if full_key in sample:
-            trace[f"{agent_key}_messages"] = sample.get(full_key)
+    # Include combined agent messages when save_message=true was set.
+    # Upstream writes a single combined message key (ans_key + "_message") containing
+    # all agents' responses concatenated — not per-agent decomposition.
+    combined_key = f"{ans_key}_message"
+    if combined_key in sample:
+        trace["combined_messages"] = sample[combined_key]
 
     return answer, trace
 
