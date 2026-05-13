@@ -14,13 +14,24 @@ The caller decides the threshold; default 0.5 maps "Yes" -> 1.0, "No" -> 0.0.
 
 from __future__ import annotations
 
+import os
 import re
 from pathlib import Path
 from typing import Sequence
 
 from core.pipeline.e2e_utils.cache import CachedLLMCaller
 
+# Primary: local checkout under upstream/EXIT/checkpoints/
 _CHECKPOINT_DIR = Path(__file__).parent / "upstream" / "EXIT" / "checkpoints"
+
+# Secondary: HuggingFace hub cache (set EXIT_CHECKPOINT_DIR env var to override both)
+_HF_CACHE_MODEL_ID = "doubleyyh/exit-gemma-2b"
+_HF_CACHE_DIR = (
+    Path(os.environ.get("HF_HOME", Path.home() / ".cache" / "huggingface"))
+    / "hub"
+    / ("models--" + _HF_CACHE_MODEL_ID.replace("/", "--"))
+)
+
 _RELEVANCE_PROMPT_PATH = (
     Path(__file__).parent.parent.parent / "prompts" / "baselines" / "exit_sentence_relevance.txt"
 )
@@ -31,12 +42,43 @@ def _load_relevance_prompt() -> str:
     return _RELEVANCE_PROMPT_PATH.read_text(encoding="utf-8")
 
 
+def _find_gemma_checkpoint() -> Path | None:
+    """Return the PEFT adapter directory, or None if not found.
+
+    Search order:
+    1. EXIT_CHECKPOINT_DIR env var (explicit override).
+    2. upstream/EXIT/checkpoints/ (local copy in repo).
+    3. HuggingFace hub cache at ~/.cache/huggingface/hub/models--doubleyyh--exit-gemma-2b/.
+    """
+    # 1. Explicit env-var override
+    env_dir = os.environ.get("EXIT_CHECKPOINT_DIR")
+    if env_dir:
+        p = Path(env_dir)
+        if (p / "adapter_config.json").exists():
+            return p
+        # Accept a parent dir containing adapter_config.json
+        hits = list(p.rglob("adapter_config.json"))
+        if hits:
+            return hits[0].parent
+
+    # 2. Local checkout
+    if _CHECKPOINT_DIR.exists():
+        hits = list(_CHECKPOINT_DIR.rglob("adapter_config.json"))
+        if hits:
+            return hits[0].parent
+
+    # 3. HuggingFace hub cache (snapshots/<sha>/)
+    if _HF_CACHE_DIR.exists():
+        hits = list(_HF_CACHE_DIR.rglob("adapter_config.json"))
+        if hits:
+            return hits[0].parent
+
+    return None
+
+
 def _gemma_checkpoint_available() -> bool:
     """Return True only when a Gemma PEFT checkpoint directory is present."""
-    if not _CHECKPOINT_DIR.exists():
-        return False
-    # Accept any subdirectory with an adapter_config.json (PEFT marker)
-    return any(_CHECKPOINT_DIR.rglob("adapter_config.json"))
+    return _find_gemma_checkpoint() is not None
 
 
 def classify_sentences(
@@ -81,8 +123,14 @@ def _classify_with_gemma(
     from transformers import AutoModelForCausalLM, AutoTokenizer  # type: ignore[import]
     from peft import PeftModel  # type: ignore[import]
 
-    # Find the first checkpoint subdir
-    checkpoint_path = next(_CHECKPOINT_DIR.rglob("adapter_config.json")).parent
+    # Find checkpoint via the unified search (local → HF cache → env override)
+    checkpoint_path = _find_gemma_checkpoint()
+    if checkpoint_path is None:
+        raise RuntimeError(
+            "Gemma PEFT checkpoint not found. "
+            "Set EXIT_CHECKPOINT_DIR to the adapter directory, or ensure "
+            f"the checkpoint is in {_CHECKPOINT_DIR} or {_HF_CACHE_DIR}."
+        )
     base_model_id = "google/gemma-2b-it"
     base = AutoModelForCausalLM.from_pretrained(
         base_model_id, device_map="auto", torch_dtype=torch.float16
