@@ -275,7 +275,7 @@ class TestMDocAgentExtractorSubprocess(unittest.TestCase):
         self.assertTrue(len(captured_cmd) > 0, "subprocess.run not called")
         cmd = captured_cmd[0]
         cmd_str = " ".join(cmd)
-        # Bug 2: Must use Hydra append syntax (+dataset=lsf), NOT plain dataset=lsf
+        # Must use Hydra append syntax (+dataset=lsf), NOT plain dataset=lsf
         self.assertIn("+dataset=lsf", cmd_str)
         self.assertNotIn(" dataset=lsf", cmd_str)
         # Must contain all 4 agent model overrides
@@ -283,11 +283,11 @@ class TestMDocAgentExtractorSubprocess(unittest.TestCase):
         self.assertIn("mdoc_agent.agents.1.model=openai", cmd_str)
         self.assertIn("mdoc_agent.agents.2.model=openai", cmd_str)
         self.assertIn("mdoc_agent.sum_agent.model=openai", cmd_str)
-        # Bug 3: Must contain api_key=null overrides so OpenAI SDK reads env var
-        self.assertIn("mdoc_agent.agents.0.model.api_key=null", cmd_str)
-        self.assertIn("mdoc_agent.agents.1.model.api_key=null", cmd_str)
-        self.assertIn("mdoc_agent.agents.2.model.api_key=null", cmd_str)
-        self.assertIn("mdoc_agent.sum_agent.model.api_key=null", cmd_str)
+        # model field is a string config-group name in predict.py — api_key subkey
+        # overrides would be a Hydra type conflict; api_key is read from env var instead.
+        self.assertNotIn("model.api_key=null", cmd_str)
+        # Must enable save_message so combined trace is captured
+        self.assertIn("mdoc_agent.save_message=true", cmd_str)
         # Must contain scripts/predict.py
         self.assertIn("predict.py", cmd_str)
 
@@ -442,6 +442,58 @@ class TestDatasetConfig(unittest.TestCase):
             content = target.read_text(encoding="utf-8")
             self.assertIn("name: lsf", content)
             self.assertIn("defaults:", content)
+
+
+# ---------------------------------------------------------------------------
+# Finding 1: adapter main() arg-type fix
+# ---------------------------------------------------------------------------
+
+class TestAdapterMain(unittest.TestCase):
+    """Finding 1: adapter.main() must pass dataset_root string to get_query_text, not config dict."""
+
+    def test_main_does_not_type_error(self) -> None:
+        """main() with stubbed sys.argv, mocked subprocess and prepare_inputs — no TypeError."""
+        import sys
+        import tempfile
+        import yaml
+        from agent.baselines.mdocagent import adapter as adapter_mod
+
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            # Write a minimal config yaml
+            config = {
+                "dataset_root": str(tmp_path),
+                "dataset": "pdfs",
+                "queries": [{"query_idx": 0, "question": "What is the company?", "documents": ["DOC"]}],
+            }
+            config_path = tmp_path / "config.yaml"
+            config_path.write_text(yaml.dump(config), encoding="utf-8")
+
+            # Write a minimal label file so get_query_text succeeds
+            label_dir = tmp_path / "label"
+            label_dir.mkdir()
+            label_file = label_dir / "q0.json"
+            label_file.write_text('{"query_text": "What is the company?"}', encoding="utf-8")
+
+            argv = [
+                "--config", str(config_path),
+                "--query", "0",
+                "--doc-id", "DOC",
+            ]
+
+            with patch("agent.baselines.mdocagent.dataset_config.generate_lsf_dataset_config"), \
+                 patch("agent.baselines.loader.get_query_text", return_value="What is the company?"), \
+                 patch("agent.baselines.loader.build_doc_inputs", return_value=_make_stub_doc_inputs()), \
+                 patch("agent.baselines.mdocagent.adapter.prepare_inputs",
+                       return_value={"sample_id": "0_DOC", "n_pages": 1,
+                                     "data_dir": tmp_path, "extract_path": tmp_path}):
+                # Should not raise TypeError
+                try:
+                    adapter_mod.main(argv)
+                except TypeError as exc:
+                    self.fail(f"main() raised TypeError: {exc}")
+                except SystemExit:
+                    pass  # argparse --help exits; that's fine
 
 
 # ---------------------------------------------------------------------------

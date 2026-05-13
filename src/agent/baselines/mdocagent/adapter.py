@@ -316,7 +316,7 @@ def main(argv: list[str] | None = None) -> None:
     print(f"Dataset config: {cfg_path}")
 
     from agent.baselines.loader import build_doc_inputs, get_query_text
-    query_text = get_query_text(config, args.query)
+    query_text = get_query_text(config["dataset_root"], args.query)
     doc_inputs = build_doc_inputs(config, args.query, args.doc_id)
 
     info = prepare_inputs(
