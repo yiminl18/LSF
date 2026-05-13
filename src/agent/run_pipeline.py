@@ -26,6 +26,7 @@ from agent.tool_agent import cli as tool_agent_cli
 _DEFAULT_CONFIG = Path("src/agent/config_pdfs_10doc.yaml")
 _DEFAULT_BUNDLE_OUTPUT_ROOT = Path("output/agent/financial_baseline_runner")
 _DEFAULT_TOOL_OUTPUT_ROOT = Path("output/agent/tool_agent")
+_DEFAULT_BASELINE_OUTPUT_ROOT = Path("output/agent/baselines")
 
 _BUNDLE_EXPERIMENTS = {
     "bundle-full": ("full_bundle_reference", "json_spec"),
@@ -44,7 +45,17 @@ _TOOL_AGENT_EXPERIMENTS = {
     "tool-agent-code": "code",
 }
 
-_EXPERIMENT_CHOICES = tuple(_BUNDLE_EXPERIMENTS) + tuple(_TOOL_AGENT_EXPERIMENTS)
+_BASELINE_EXPERIMENTS = {
+    "baseline-dcs": "dcs",
+    "baseline-deepread": "deepread",
+    "baseline-mdocagent": "mdocagent",
+}
+
+_EXPERIMENT_CHOICES = (
+    tuple(_BUNDLE_EXPERIMENTS)
+    + tuple(_TOOL_AGENT_EXPERIMENTS)
+    + tuple(_BASELINE_EXPERIMENTS)
+)
 
 
 @contextlib.contextmanager
@@ -109,6 +120,9 @@ def _build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--holdout-seed", type=int, default=42)
     parser.add_argument("--bundle-output-root", type=Path, default=_DEFAULT_BUNDLE_OUTPUT_ROOT)
     parser.add_argument("--tool-output-root", type=Path, default=_DEFAULT_TOOL_OUTPUT_ROOT)
+    parser.add_argument(
+        "--baseline-output-root", type=Path, default=_DEFAULT_BASELINE_OUTPUT_ROOT
+    )
     parser.add_argument("--max-turns", type=int, default=15)
     parser.add_argument("--budget", type=float, default=2.0)
     parser.add_argument("--multipath-n", type=int, default=2)
@@ -128,12 +142,18 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     _parse_query_indices(args.queries)
 
     is_bundle = args.experiment in _BUNDLE_EXPERIMENTS
+    is_baseline = args.experiment in _BASELINE_EXPERIMENTS
     if args.bundle_deploy and not is_bundle:
         parser.error("--bundle-deploy is only valid for bundle experiments")
     if args.bundle_deploy and args.phase == "a":
         parser.error("--bundle-deploy requires --phase b or --phase both")
     if args.experiment == "tool-agent-hybrid" and args.multipath_n < 2:
         parser.error("--experiment tool-agent-hybrid requires --multipath-n >= 2")
+    if is_baseline and args.phase == "a":
+        parser.error(
+            f"--experiment {args.experiment} does not support --phase a; "
+            "baselines have no Phase A rule-discovery step. Use --phase b."
+        )
     return args
 
 
@@ -317,6 +337,25 @@ def _run_tool_agent(args: argparse.Namespace, mode: str) -> None:
         tool_agent_cli.main()
 
 
+def _run_baseline(args: argparse.Namespace, experiment_key: str) -> None:
+    from agent.baselines.runner import run_baseline_sweep as _baseline_sweep
+
+    query_indices = _parse_query_indices(args.queries)
+    eval_provider = args.eval_provider or args.agent_provider
+    eval_model = args.eval_model or args.agent_model
+    _baseline_sweep(
+        experiment=experiment_key,
+        query_indices=query_indices,
+        config_path=args.config,
+        output_root=args.baseline_output_root,
+        llm_provider=args.agent_provider,
+        llm_model=args.agent_model,
+        eval_provider=eval_provider,
+        eval_model=eval_model,
+        dry_run=args.dry_run,
+    )
+
+
 def main(argv: Sequence[str] | None = None) -> None:
     args = parse_args(argv)
 
@@ -328,6 +367,11 @@ def main(argv: Sequence[str] | None = None) -> None:
             _run_bundle_phase_b(args, packaging_mode)
             if args.bundle_deploy:
                 _run_bundle_deploy(args, packaging_mode)
+        return
+
+    if args.experiment in _BASELINE_EXPERIMENTS:
+        experiment_key = _BASELINE_EXPERIMENTS[args.experiment]
+        _run_baseline(args, experiment_key)
         return
 
     mode = _TOOL_AGENT_EXPERIMENTS[args.experiment]
