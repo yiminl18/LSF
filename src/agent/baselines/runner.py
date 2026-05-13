@@ -32,9 +32,9 @@ def _query_doc_ids(config: dict[str, Any], query_idx: int) -> list[str]:
 
 
 def _get_extractor(experiment: str) -> BaselineExtractor:
-    if experiment == "dcs":
-        from agent.baselines.dcs.extractor import DCSExtractor
-        return DCSExtractor()
+    if experiment == "exit":
+        from agent.baselines.exit.extractor import ExitExtractor
+        return ExitExtractor()
     if experiment == "deepread":
         from agent.baselines.deepread.extractor import DeepReadExtractor
         return DeepReadExtractor()

@@ -1,4 +1,4 @@
-"""Smoke and protocol-conformance tests for all three paper baselines.
+"""Smoke and protocol-conformance tests for all paper baselines.
 
 All LLM calls are stubbed — no real API calls are made.
 Tests verify:
@@ -8,6 +8,7 @@ Tests verify:
   4. runner.run_baseline_sweep dry_run path.
   5. parse_args rejects --phase a for baseline experiments.
   6. MDocAgent raises NotImplementedError when submodule is absent.
+  7. MDocAgent upstream path wired at upstream/MDocAgent/.
 """
 
 from __future__ import annotations
@@ -58,9 +59,9 @@ class TestProtocolConformance(unittest.TestCase):
         self.assertIsInstance(extractor.name, str)
         self.assertTrue(callable(getattr(extractor, "extract", None)), "missing .extract method")
 
-    def test_dcs_extractor_protocol(self) -> None:
-        from agent.baselines.dcs.extractor import DCSExtractor
-        self._assert_extractor_protocol(DCSExtractor())
+    def test_exit_extractor_protocol(self) -> None:
+        from agent.baselines.exit.extractor import ExitExtractor
+        self._assert_extractor_protocol(ExitExtractor())
 
     def test_deepread_extractor_protocol(self) -> None:
         from agent.baselines.deepread.extractor import DeepReadExtractor
@@ -69,48 +70,6 @@ class TestProtocolConformance(unittest.TestCase):
     def test_mdocagent_extractor_protocol(self) -> None:
         from agent.baselines.mdocagent.extractor import MDocAgentExtractor
         self._assert_extractor_protocol(MDocAgentExtractor())
-
-
-class TestDCSExtractor(unittest.TestCase):
-    def test_extract_returns_extraction_result(self) -> None:
-        from agent.baselines.dcs.extractor import DCSExtractor
-        import numpy as np
-
-        class FakeModel:
-            def encode(self, sentences: list[str], **kwargs: object) -> np.ndarray:
-                rng = np.random.default_rng(0)
-                emb = rng.standard_normal((len(sentences), 8)).astype(np.float32)
-                norms = np.linalg.norm(emb, axis=1, keepdims=True)
-                return emb / (norms + 1e-9)
-
-        cached_caller = _make_stub_cached_caller("Amazon.com Inc.")
-        extractor = DCSExtractor()
-
-        with patch("agent.baselines.dcs.chunker._load_model", return_value=FakeModel()), \
-             patch("agent.baselines.dcs.chunker._embed") as mock_embed:
-
-            mock_embed.side_effect = lambda sents, doc_id, model: model.encode(sents)
-
-            result = extractor.extract(
-                query_idx=_STUB_QUERY_IDX,
-                query_text=_STUB_QUERY_TEXT,
-                doc_id=_STUB_DOC_ID,
-                doc_inputs=_STUB_DOC_INPUTS,
-                cached_caller=cached_caller,
-                llm_provider="azure",
-                llm_model="gpt-5.4-mini",
-            )
-
-        self.assertIsInstance(result, ExtractionResult)
-        self.assertIsInstance(result.generated_answer, str)
-        self.assertIsInstance(result.trace, dict)
-        self.assertIsInstance(result.cost_usd, float)
-        self.assertIsInstance(result.latency_ms, float)
-        self.assertIn("n_chunks", result.trace)
-
-    def test_dcs_extractor_name(self) -> None:
-        from agent.baselines.dcs.extractor import DCSExtractor
-        self.assertEqual(DCSExtractor.name, "dcs")
 
 
 class TestDeepReadExtractor(unittest.TestCase):
@@ -180,12 +139,20 @@ class TestMDocAgentExtractor(unittest.TestCase):
         from agent.baselines.mdocagent.extractor import MDocAgentExtractor
         self.assertEqual(MDocAgentExtractor.name, "mdocagent")
 
+    def test_upstream_path_points_at_mdocagent_subdir(self) -> None:
+        """_UPSTREAM_DIR must resolve to upstream/MDocAgent, not upstream/."""
+        from agent.baselines.mdocagent import extractor as mdoc_ext
+        upstream_dir = mdoc_ext._UPSTREAM_DIR
+        # The actual submodule is at upstream/MDocAgent
+        self.assertTrue(
+            str(upstream_dir).endswith("upstream/MDocAgent"),
+            f"_UPSTREAM_DIR should end with 'upstream/MDocAgent', got: {upstream_dir}",
+        )
+
 
 class TestScorerAdapter(unittest.TestCase):
     def test_score_and_build_row_key_set_matches_deployed_row(self) -> None:
         """The output of score_and_build_row must have exactly the same keys as DeployedRow."""
-        from agent.baselines.dcs.extractor import DCSExtractor
-
         stub_result = ExtractionResult(
             generated_answer="Amazon",
             trace={},
@@ -208,7 +175,7 @@ class TestScorerAdapter(unittest.TestCase):
             row = score_and_build_row(
                 query_idx=_STUB_QUERY_IDX,
                 doc_id=_STUB_DOC_ID,
-                policy="baseline-dcs",
+                policy="baseline-exit",
                 result=stub_result,
                 ground_truth="Amazon",
                 query_text=_STUB_QUERY_TEXT,
@@ -225,7 +192,7 @@ class TestScorerAdapter(unittest.TestCase):
         row = error_row(
             query_idx=0,
             doc_id="DOC",
-            policy="baseline-dcs",
+            policy="baseline-exit",
             blocker="test_error",
         )
         expected_keys = set(DeployedRow.__annotations__.keys())
@@ -257,15 +224,14 @@ class TestRunnerDryRun(unittest.TestCase):
             with patch("agent.baselines.runner._get_extractor") as mock_get, \
                  patch("agent.baselines.runner.get_query_text", return_value="What is the company?"):
                 runner.run_baseline_sweep(
-                    experiment="dcs",
+                    experiment="exit",
                     query_indices=[0],
                     config_path=config_path,
                     dry_run=True,
                 )
                 # _get_extractor should still be called to validate the experiment name
                 # but no actual extraction should happen.
-                # In dry_run we call _get_extractor and print, then return early.
-                mock_get.assert_called_once_with("dcs")
+                mock_get.assert_called_once_with("exit")
         finally:
             config_path.unlink(missing_ok=True)
 
@@ -274,7 +240,7 @@ class TestRunPipelineParseArgs(unittest.TestCase):
     def test_baseline_phase_a_errors(self) -> None:
         from agent.run_pipeline import parse_args
 
-        experiments = ["baseline-dcs", "baseline-deepread", "baseline-mdocagent"]
+        experiments = ["baseline-exit", "baseline-deepread", "baseline-mdocagent"]
         for exp in experiments:
             with self.subTest(exp=exp):
                 with self.assertRaises(SystemExit):
@@ -283,16 +249,16 @@ class TestRunPipelineParseArgs(unittest.TestCase):
     def test_baseline_phase_b_accepted(self) -> None:
         from agent.run_pipeline import parse_args
 
-        args = parse_args(["--experiment", "baseline-dcs", "--phase", "b"])
-        self.assertEqual(args.experiment, "baseline-dcs")
+        args = parse_args(["--experiment", "baseline-exit", "--phase", "b"])
+        self.assertEqual(args.experiment, "baseline-exit")
         self.assertEqual(args.phase, "b")
 
     def test_baseline_phase_both_accepted(self) -> None:
         from agent.run_pipeline import parse_args
 
         # --phase both is accepted (main() ignores the phase for baselines and just runs the sweep)
-        args = parse_args(["--experiment", "baseline-dcs", "--phase", "both"])
-        self.assertEqual(args.experiment, "baseline-dcs")
+        args = parse_args(["--experiment", "baseline-exit", "--phase", "both"])
+        self.assertEqual(args.experiment, "baseline-exit")
 
     def test_unknown_experiment_errors(self) -> None:
         from agent.run_pipeline import parse_args

@@ -46,9 +46,9 @@ _TOOL_AGENT_EXPERIMENTS = {
 }
 
 _BASELINE_EXPERIMENTS = {
-    "baseline-dcs": "dcs",
-    "baseline-deepread": "deepread",
-    "baseline-mdocagent": "mdocagent",
+    "baseline-exit":       "exit",
+    "baseline-deepread":   "deepread",
+    "baseline-mdocagent":  "mdocagent",
 }
 
 _EXPERIMENT_CHOICES = (
