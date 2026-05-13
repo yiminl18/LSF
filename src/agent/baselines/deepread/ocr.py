@@ -23,7 +23,8 @@ from typing import Any
 from agent.baselines.deepread.index import ParagraphIndex
 from core.pipeline.e2e_utils.cache import CachedLLMCaller, DEFAULT_CACHE_DB_PATH
 
-_CACHE_DIR = Path(".cache/deepread_ocr")
+_REPO_ROOT = Path(__file__).resolve().parents[4]
+_CACHE_DIR = _REPO_ROOT / ".cache" / "deepread_ocr"
 _OCR_PROMPT_PATH = (
     Path(__file__).parent.parent.parent / "prompts" / "baselines" / "deepread_ocr_page.txt"
 )

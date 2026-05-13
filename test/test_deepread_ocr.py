@@ -282,5 +282,36 @@ class TestRunPipelineNewFlags(unittest.TestCase):
         self.assertIsNone(args.ocr_model)
 
 
+class TestOCRCacheDirAnchor(unittest.TestCase):
+    """Finding 3: _CACHE_DIR must be anchored to the repo root, not cwd."""
+
+    def test_cache_dir_is_under_repo_not_cwd(self) -> None:
+        """Even when cwd is changed to a tmpdir, _CACHE_DIR resolves under the repo."""
+        import os
+        import tempfile
+        from agent.baselines.deepread import ocr as ocr_mod
+
+        with tempfile.TemporaryDirectory() as tmp:
+            orig_cwd = os.getcwd()
+            try:
+                os.chdir(tmp)
+                cache_dir = ocr_mod._CACHE_DIR
+                # Must NOT be under the tmpdir
+                self.assertFalse(
+                    str(cache_dir).startswith(tmp),
+                    f"_CACHE_DIR {cache_dir} is under tmpdir {tmp}; should be under repo root",
+                )
+                # Must be under the LSF repo root (contains src/agent/baselines)
+                self.assertTrue(
+                    (Path(str(cache_dir)).parents[1] / "src" / "agent" / "baselines").exists()
+                    or str(cache_dir).endswith(".cache/deepread_ocr"),
+                    f"_CACHE_DIR {cache_dir} does not look like a repo-relative path",
+                )
+                # Confirm it's an absolute path
+                self.assertTrue(cache_dir.is_absolute(), f"_CACHE_DIR should be absolute: {cache_dir}")
+            finally:
+                os.chdir(orig_cwd)
+
+
 if __name__ == "__main__":
     unittest.main()
