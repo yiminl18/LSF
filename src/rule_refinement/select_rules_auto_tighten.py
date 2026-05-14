@@ -95,7 +95,12 @@ def _backward_prune(
 
         if not failed and target_docs <= covered:
             current = candidate
-            per_rule_gained.pop(r, None)
+            removed_docs = per_rule_gained.pop(r, set())
+            # Redistribute docs that were uniquely credited to removed rule.
+            still_credited = set().union(*per_rule_gained.values()) if per_rule_gained else set()
+            orphaned = removed_docs - still_credited
+            if orphaned and current:
+                per_rule_gained.setdefault(current[-1], set()).update(orphaned)
             print(f"  PRUNE removed {r:<55}  D* still covered")
         else:
             print(f"  PRUNE kept    {r:<55}  losing {len(target_docs - covered)} doc(s)")
