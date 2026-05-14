@@ -1,11 +1,11 @@
-"""Unit tests for the EXIT baseline extractor.
+"""Unit tests for the EXIT baseline extractor (upstream ExitRAG wrapper).
 
-All LLM calls are stubbed — no real API calls are made.
-Tests verify:
-  1. Sentence splitter on a fixture paragraph.
-  2. Classifier falls back to LLM stub when Gemma checkpoint is absent.
-  3. Extractor end-to-end with stubbed LLM produces an ExtractionResult matching
-     DeployedRow keys when passed through scorer_adapter.
+Tests cover:
+  1. Gemma checkpoint detection (_gemma_checkpoint_available).
+  2. ExitExtractor Gemma path — patches _get_compressor; verifies compress_documents called.
+  3. ExitExtractor LLM fallback path — verifies LLM calls and cost accumulation.
+  4. _llm_compress sentence splitting and score parsing.
+  5. ExtractionResult trace keys and DeployedRow key conformance.
 """
 
 from __future__ import annotations
@@ -14,20 +14,18 @@ import unittest
 from pathlib import Path
 from unittest.mock import MagicMock, patch
 
-
-_FIXTURE_PARAGRAPH = (
+_FIXTURE_TEXT = (
     "Amazon was incorporated in 1994 by Jeff Bezos. "
     "The company started as an online bookstore. "
     "Over the years it expanded into cloud computing. "
     "AWS is now a major revenue driver for Amazon. "
     "The company is headquartered in Seattle, Washington."
 )
-
 _STUB_QUERY = "What is the company name?"
 _STUB_DOC_ID = "TEST_DOC"
 
 
-def _make_stub_cached_caller(response: str = "Amazon") -> MagicMock:
+def _make_cached_caller(response: str = "Amazon") -> MagicMock:
     from core.pipeline.e2e_utils.cache import CacheResult
     mock = MagicMock()
     mock.call.return_value = CacheResult(
@@ -40,178 +38,233 @@ def _make_stub_cached_caller(response: str = "Amazon") -> MagicMock:
     return mock
 
 
-class TestSentenceSplitter(unittest.TestCase):
-    def test_splits_fixture_paragraph_into_multiple_sentences(self) -> None:
-        from agent.baselines.exit.sentences import split_sentences
-        sents = split_sentences(_FIXTURE_PARAGRAPH)
-        self.assertGreaterEqual(len(sents), 3, "expected at least 3 sentences")
-        for s in sents:
-            self.assertTrue(s.strip(), "empty sentence in output")
-
-    def test_empty_string_returns_empty_list(self) -> None:
-        from agent.baselines.exit.sentences import split_sentences
-        self.assertEqual(split_sentences(""), [])
-
-    def test_single_sentence_returns_one_element(self) -> None:
-        from agent.baselines.exit.sentences import split_sentences
-        result = split_sentences("Just one sentence")
-        self.assertEqual(len(result), 1)
-
-    def test_preserves_order(self) -> None:
-        from agent.baselines.exit.sentences import split_sentences
-        sents = split_sentences(_FIXTURE_PARAGRAPH)
-        # Reconstruct the paragraph by joining sentences and check it is a
-        # subsequence of the original (order preserved).
-        joined = " ".join(sents)
-        # Every sentence must appear somewhere in the source paragraph
-        for s in sents:
-            self.assertIn(s[:20], _FIXTURE_PARAGRAPH, f"sentence not in source: {s!r}")
+def _make_doc_inputs(text: str = _FIXTURE_TEXT):
+    from agent.baselines.base import DocInputs
+    return DocInputs(
+        normalized_text=text,
+        entries=[],
+        section_index={},
+        pdf_path=Path("/nonexistent/doc.pdf"),
+        ground_truth="Amazon",
+    )
 
 
-class TestClassifierFallback(unittest.TestCase):
-    def test_falls_back_to_llm_when_checkpoint_absent(self) -> None:
-        """classify_sentences should use LLM zero-shot when Gemma checkpoint is missing."""
-        from agent.baselines.exit import classifier as cls_mod
+class TestGemmaCheckpointDetection(unittest.TestCase):
+    def test_available_when_hf_cache_hit(self) -> None:
+        from agent.baselines.exit.extractor import _gemma_checkpoint_available
+        with patch("agent.baselines.exit.extractor.try_to_load_from_cache" if False else
+                   "huggingface_hub.try_to_load_from_cache",
+                   return_value="/fake/path/adapter_config.json"):
+            # Patch the import inside the function
+            with patch("builtins.__import__", wraps=__import__) as mock_import:
+                pass  # just checking the function exists
+        # Direct functional test: mock the huggingface_hub import inside the function
+        import agent.baselines.exit.extractor as mod
+        with patch.object(mod, "_gemma_checkpoint_available", wraps=mod._gemma_checkpoint_available):
+            # Simulate cache hit by patching the internal import
+            import sys
+            fake_hf = MagicMock()
+            fake_hf.try_to_load_from_cache.return_value = "/fake/adapter_config.json"
+            with patch.dict(sys.modules, {"huggingface_hub": fake_hf}):
+                result = mod._gemma_checkpoint_available()
+        self.assertTrue(result)
 
-        sentences = ["Amazon is a company.", "AWS is a cloud platform.", "Jeff Bezos founded it."]
-        cached_caller = _make_stub_cached_caller("yes\nno\nyes")
+    def test_unavailable_when_hf_cache_miss(self) -> None:
+        import agent.baselines.exit.extractor as mod
+        import sys
+        fake_hf = MagicMock()
+        fake_hf.try_to_load_from_cache.return_value = None
+        with patch.dict(sys.modules, {"huggingface_hub": fake_hf}):
+            result = mod._gemma_checkpoint_available()
+        self.assertFalse(result)
 
-        with patch.object(cls_mod, "_gemma_checkpoint_available", return_value=False):
-            scores, cost = cls_mod.classify_sentences(
-                query=_STUB_QUERY,
-                sentences=sentences,
-                cached_caller=cached_caller,
-                llm_provider="azure",
-                llm_model="gpt-5.4-mini",
-                batch_size=30,
-            )
-
-        self.assertEqual(len(scores), len(sentences))
-        for s in scores:
-            self.assertIn(s, (0.0, 1.0), f"score {s!r} not in {{0.0, 1.0}}")
-        # cost is a float
-        self.assertIsInstance(cost, float)
-        # At least one LLM call was made
-        cached_caller.call.assert_called()
-
-    def test_scores_length_matches_input(self) -> None:
-        """Output length must equal input sentence count regardless of batch size."""
-        from agent.baselines.exit import classifier as cls_mod
-
-        sentences = [f"Sentence number {i}." for i in range(7)]
-        cached_caller = _make_stub_cached_caller("yes\nno\nyes\nno\nyes")
-
-        with patch.object(cls_mod, "_gemma_checkpoint_available", return_value=False):
-            scores, _cost = cls_mod.classify_sentences(
-                query=_STUB_QUERY,
-                sentences=sentences,
-                cached_caller=cached_caller,
-                llm_provider="azure",
-                llm_model="gpt-5.4-mini",
-                batch_size=3,  # deliberately small to exercise multi-batch path
-            )
-
-        self.assertEqual(len(scores), len(sentences))
-
-    def test_empty_sentences_returns_empty(self) -> None:
-        from agent.baselines.exit import classifier as cls_mod
-        cached_caller = _make_stub_cached_caller()
-        with patch.object(cls_mod, "_gemma_checkpoint_available", return_value=False):
-            scores, cost = cls_mod.classify_sentences(
-                query=_STUB_QUERY,
-                sentences=[],
-                cached_caller=cached_caller,
-                llm_provider="azure",
-                llm_model="gpt-5.4-mini",
-            )
-        self.assertEqual(scores, [])
-        self.assertEqual(cost, 0.0)
+    def test_unavailable_when_import_fails(self) -> None:
+        import agent.baselines.exit.extractor as mod
+        import sys
+        with patch.dict(sys.modules, {"huggingface_hub": None}):
+            result = mod._gemma_checkpoint_available()
+        self.assertFalse(result)
 
 
-class TestExitExtractorEndToEnd(unittest.TestCase):
-    def _make_doc_inputs(self) -> object:
-        from agent.baselines.base import DocInputs
-        return DocInputs(
-            normalized_text=_FIXTURE_PARAGRAPH,
-            entries=[],
-            section_index={},
-            pdf_path=Path("/nonexistent/doc.pdf"),
-            ground_truth="Amazon",
-        )
+class TestExitExtractorGemmaPath(unittest.TestCase):
+    """Gemma path: upstream compress_documents called; API reader called once."""
 
-    def test_extract_returns_extraction_result(self) -> None:
+    def _make_mock_compressor(self, compressed: str = "Amazon is a company."):
+        mock_rag = MagicMock()
+        # compress_documents returns (compressed_text, selections, scores)
+        selections = [True, False, True, False, True]
+        mock_rag.compress_documents.return_value = (compressed, selections, [0.9, 0.1, 0.8, 0.2, 0.7])
+        return mock_rag
+
+    def test_compress_documents_called(self) -> None:
         from agent.baselines.exit.extractor import ExitExtractor
-        from agent.baselines.base import ExtractionResult
-        from agent.baselines.exit import classifier as cls_mod
-        from core.pipeline.e2e_utils.cache import CacheResult
+        import agent.baselines.exit.extractor as mod
+        import sys
 
-        extractor = ExitExtractor()
+        mock_rag = self._make_mock_compressor()
 
-        # Stub: classify_sentences returns scripted scores (all 1.0) + zero cost
-        scripted_scores = [1.0, 1.0, 1.0, 1.0, 1.0]
-        classify_call_order: list[str] = []
+        # Fake exit_rag module in sys.modules so the import inside extract() works
+        fake_exit_rag = MagicMock()
+        fake_exit_rag.Document = MagicMock(side_effect=lambda title, text: MagicMock(title=title, text=text))
 
-        def fake_classify(query, sentences, cached_caller, llm_provider, llm_model,
-                          batch_size=30, threshold=0.5):
-            classify_call_order.append("classify")
-            return scripted_scores[:len(sentences)], 0.0
+        cached_caller = _make_cached_caller("Amazon.com Inc.")
 
-        reader_call_order: list[str] = []
-        reader_result = CacheResult(
-            response="Amazon.com Inc.",
-            input_tokens=200,
-            output_tokens=20,
-            latency_ms=50.0,
-            cache_hit=True,
-        )
-
-        cached_caller = MagicMock()
-
-        def reader_call(prompt, **kwargs):
-            reader_call_order.append("reader")
-            return reader_result
-
-        cached_caller.call.side_effect = reader_call
-
-        with patch.object(cls_mod, "_gemma_checkpoint_available", return_value=False), \
-             patch.object(cls_mod, "classify_sentences", side_effect=fake_classify):
-            result = extractor.extract(
+        with patch.object(mod, "_gemma_checkpoint_available", return_value=True), \
+             patch.object(mod, "_UPSTREAM_DIR", mod._UPSTREAM_DIR), \
+             patch.object(mod, "_get_compressor", return_value=mock_rag), \
+             patch.dict(sys.modules, {"exit_rag": fake_exit_rag}):
+            result = ExitExtractor().extract(
                 query_idx=0,
                 query_text=_STUB_QUERY,
                 doc_id=_STUB_DOC_ID,
-                doc_inputs=self._make_doc_inputs(),
+                doc_inputs=_make_doc_inputs(),
                 cached_caller=cached_caller,
                 llm_provider="azure",
                 llm_model="gpt-5.4-mini",
             )
 
-        self.assertIsInstance(result, ExtractionResult)
-        self.assertIsInstance(result.generated_answer, str)
-        self.assertIsInstance(result.trace, dict)
-        self.assertIn("n_sentences_total", result.trace)
-        self.assertIn("n_sentences_selected", result.trace)
-        self.assertIn("classifier_method", result.trace)
-        self.assertEqual(result.trace["classifier_method"], "llm_zeroshot")
-        # Assert call sequence: classifier first, then reader
-        self.assertEqual(classify_call_order, ["classify"], "classify_sentences should be called once")
-        self.assertEqual(reader_call_order, ["reader"], "cached_caller.call should be called once for reader")
+        mock_rag.compress_documents.assert_called_once()
+        self.assertEqual(result.trace["classifier_method"], "gemma_checkpoint")
+        self.assertEqual(result.trace["n_sentences_selected"], 3)  # 3 True in selections
+        cached_caller.call.assert_called_once()  # reader called exactly once
 
-    def test_extract_result_builds_deployed_row(self) -> None:
-        """ExtractionResult from ExitExtractor must produce correct DeployedRow keys."""
+    def test_empty_compression_falls_back_to_first_n_chars(self) -> None:
+        from agent.baselines.exit.extractor import ExitExtractor
+        import agent.baselines.exit.extractor as mod
+        import sys
+
+        mock_rag = MagicMock()
+        mock_rag.compress_documents.return_value = ("", [], [])
+
+        fake_exit_rag = MagicMock()
+        fake_exit_rag.Document = MagicMock(side_effect=lambda title, text: MagicMock())
+
+        cached_caller = _make_cached_caller("Amazon")
+
+        with patch.object(mod, "_gemma_checkpoint_available", return_value=True), \
+             patch.object(mod, "_get_compressor", return_value=mock_rag), \
+             patch.dict(sys.modules, {"exit_rag": fake_exit_rag}):
+            result = ExitExtractor().extract(
+                query_idx=0,
+                query_text=_STUB_QUERY,
+                doc_id=_STUB_DOC_ID,
+                doc_inputs=_make_doc_inputs(),
+                cached_caller=cached_caller,
+            )
+
+        # Should still produce an answer (fell back to first N chars)
+        self.assertIsInstance(result.generated_answer, str)
+        self.assertGreater(result.trace["context_chars"], 0)
+
+
+class TestExitExtractorLLMFallback(unittest.TestCase):
+    """LLM fallback path: called when Gemma checkpoint absent."""
+
+    def test_llm_calls_made_when_no_checkpoint(self) -> None:
+        from agent.baselines.exit.extractor import ExitExtractor
+        import agent.baselines.exit.extractor as mod
+
+        # cached_caller returns "yes\nno\nyes\nno\nyes" for classifier, "Amazon" for reader
+        from core.pipeline.e2e_utils.cache import CacheResult
+        call_count = {"n": 0}
+
+        def side_effect(prompt, **kwargs):
+            call_count["n"] += 1
+            if call_count["n"] == 1:  # classifier call
+                return CacheResult("yes\nno\nyes\nno\nyes", 100, 5, 10.0, False)
+            return CacheResult("Amazon", 100, 20, 50.0, True)  # reader call
+
+        cached_caller = MagicMock()
+        cached_caller.call.side_effect = side_effect
+
+        with patch.object(mod, "_gemma_checkpoint_available", return_value=False), \
+             patch.object(mod, "compute_cost", return_value=0.01):
+            result = ExitExtractor().extract(
+                query_idx=0,
+                query_text=_STUB_QUERY,
+                doc_id=_STUB_DOC_ID,
+                doc_inputs=_make_doc_inputs(),
+                cached_caller=cached_caller,
+                llm_provider="azure",
+                llm_model="gpt-5.4-mini",
+            )
+
+        self.assertEqual(result.trace["classifier_method"], "llm_zeroshot")
+        self.assertGreaterEqual(cached_caller.call.call_count, 2)  # classifier + reader
+        self.assertIsInstance(result.generated_answer, str)
+
+    def test_classifier_cost_accumulates(self) -> None:
+        from agent.baselines.exit.extractor import ExitExtractor, _llm_compress
+        import agent.baselines.exit.extractor as mod
+
+        from core.pipeline.e2e_utils.cache import CacheResult
+        cached_caller = MagicMock()
+        cached_caller.call.return_value = CacheResult("yes\nno\nyes", 50, 5, 10.0, False)
+
+        with patch.object(mod, "compute_cost", return_value=0.05):
+            _text, _nt, _ns, cost = _llm_compress(
+                query=_STUB_QUERY,
+                text=_FIXTURE_TEXT,
+                threshold=0.5,
+                cached_caller=cached_caller,
+                llm_provider="azure",
+                llm_model="gpt-5.4-mini",
+            )
+
+        # cost = n_batches * 0.05
+        self.assertGreater(cost, 0.0)
+        self.assertAlmostEqual(cost, 0.05 * cached_caller.call.call_count, places=6)
+
+
+class TestLLMCompress(unittest.TestCase):
+    """Unit tests for _llm_compress helper."""
+
+    def test_empty_text_returns_empty(self) -> None:
+        from agent.baselines.exit.extractor import _llm_compress
+        compressed, n_total, n_selected, cost = _llm_compress(
+            query="q", text="", threshold=0.5,
+            cached_caller=MagicMock(), llm_provider="azure", llm_model="m",
+        )
+        self.assertEqual(n_total, 0)
+        self.assertEqual(cost, 0.0)
+
+    def test_all_no_returns_fallback(self) -> None:
+        from agent.baselines.exit.extractor import _llm_compress
+        import agent.baselines.exit.extractor as mod
+        from core.pipeline.e2e_utils.cache import CacheResult
+
+        cached_caller = MagicMock()
+        cached_caller.call.return_value = CacheResult("no\nno\nno\nno\nno", 50, 5, 10.0, False)
+
+        with patch.object(mod, "compute_cost", return_value=0.0):
+            compressed, n_total, n_selected, _cost = _llm_compress(
+                query=_STUB_QUERY,
+                text=_FIXTURE_TEXT,
+                threshold=0.5,
+                cached_caller=cached_caller,
+                llm_provider="azure",
+                llm_model="gpt-5.4-mini",
+            )
+
+        self.assertGreater(len(compressed), 0, "fallback should return non-empty text")
+        self.assertEqual(n_selected, 0)
+
+
+class TestExtractionResultKeys(unittest.TestCase):
+    def test_deployed_row_key_conformance(self) -> None:
         from agent.baselines.exit.extractor import ExitExtractor
         from agent.baselines.base import ExtractionResult
         from agent.baselines.scorer_adapter import score_and_build_row
         from agent.rule_runtime.deploy import DeployedRow
-        from agent.baselines.exit import classifier as cls_mod
         from agent.rules.range_rule_scorer import RangeRuleScore
 
         stub_result = ExtractionResult(
             generated_answer="Amazon",
-            trace={"n_sentences_total": 5, "n_sentences_selected": 3, "classifier_method": "llm_zeroshot", "context_chars": 200, "threshold": 0.5},
+            trace={"n_sentences_total": 5, "n_sentences_selected": 3,
+                   "classifier_method": "llm_zeroshot", "context_chars": 200, "threshold": 0.5},
             cost_usd=0.001,
             latency_ms=80.0,
         )
-        cached_caller = _make_stub_cached_caller("yes")
         stub_score = RangeRuleScore(
             generated_answer="Amazon",
             judge_method="llm_generate_then_llm_judge",
@@ -219,7 +272,6 @@ class TestExitExtractorEndToEnd(unittest.TestCase):
             accuracy=1.0,
             metadata={"judge": {"cost_usd": 0.001}},
         )
-
         with patch("agent.baselines.scorer_adapter.score_generated_answer", return_value=stub_score):
             row = score_and_build_row(
                 query_idx=0,
@@ -228,235 +280,40 @@ class TestExitExtractorEndToEnd(unittest.TestCase):
                 result=stub_result,
                 ground_truth="Amazon",
                 query_text=_STUB_QUERY,
-                cached_caller=cached_caller,
+                cached_caller=_make_cached_caller(),
                 llm_provider="azure",
                 llm_model="gpt-5.4-mini",
             )
-
-        expected_keys = set(DeployedRow.__annotations__.keys())
-        actual_keys = set(row.keys())
-        self.assertEqual(actual_keys, expected_keys, f"key mismatch: {actual_keys ^ expected_keys}")
+        self.assertEqual(set(row.keys()), set(DeployedRow.__annotations__.keys()))
 
     def test_extractor_name(self) -> None:
         from agent.baselines.exit.extractor import ExitExtractor
         self.assertEqual(ExitExtractor.name, "exit")
 
-    def test_fallback_when_all_scores_zero(self) -> None:
-        """If classifier returns all zeros, extractor falls back to first N chars."""
+    def test_trace_has_required_keys(self) -> None:
         from agent.baselines.exit.extractor import ExitExtractor
-        from agent.baselines.base import ExtractionResult
-        from agent.baselines.exit import classifier as cls_mod
+        import agent.baselines.exit.extractor as mod
+        import sys
 
-        # Classifier returns all zeros (no\n...)
-        from core.pipeline.e2e_utils.cache import CacheResult
-        cached_caller = MagicMock()
-        cached_caller.call.return_value = CacheResult(
-            response="no\nno\nno\nno\nno",
-            input_tokens=50,
-            output_tokens=5,
-            latency_ms=10.0,
-            cache_hit=False,
-        )
+        mock_rag = MagicMock()
+        mock_rag.compress_documents.return_value = ("context text", [True, False], [0.9, 0.1])
+        fake_exit_rag = MagicMock()
+        fake_exit_rag.Document = MagicMock(side_effect=lambda title, text: MagicMock())
 
-        with patch.object(cls_mod, "_gemma_checkpoint_available", return_value=False):
+        with patch.object(mod, "_gemma_checkpoint_available", return_value=True), \
+             patch.object(mod, "_get_compressor", return_value=mock_rag), \
+             patch.dict(sys.modules, {"exit_rag": fake_exit_rag}):
             result = ExitExtractor().extract(
                 query_idx=0,
                 query_text=_STUB_QUERY,
                 doc_id=_STUB_DOC_ID,
-                doc_inputs=self._make_doc_inputs(),
-                cached_caller=cached_caller,
-                llm_provider="azure",
-                llm_model="gpt-5.4-mini",
+                doc_inputs=_make_doc_inputs(),
+                cached_caller=_make_cached_caller(),
             )
 
-        # Should not be empty — fallback kicks in
-        self.assertNotEqual(result.generated_answer, "")
-        self.assertIsInstance(result, ExtractionResult)
-
-
-class TestClassifierLLMCostTracked(unittest.TestCase):
-    """Finding 2: LLM-fallback classifier costs must be reflected in ExtractionResult.cost_usd."""
-
-    def test_classifier_cost_accumulates_into_result(self) -> None:
-        """3 batches × 0.01 per call + reader cost should appear in result.cost_usd."""
-        from agent.baselines.exit.extractor import ExitExtractor
-        from agent.baselines.exit import classifier as cls_mod
-        from core.pipeline.e2e_utils.cache import CacheResult
-        from agent.baselines.base import DocInputs
-
-        # Build a doc with 3 sentences to produce 1 batch (batch_size=10), but
-        # we control costs via a mocked classify_sentences returning a fixed cost.
-        doc_inputs = DocInputs(
-            normalized_text=(
-                "Amazon is a company. "
-                "AWS is cloud computing. "
-                "Jeff Bezos founded it."
-            ),
-            entries=[],
-            section_index={},
-            pdf_path=Path("/nonexistent/doc.pdf"),
-            ground_truth="Amazon",
-        )
-
-        reader_result = CacheResult(
-            response="Amazon",
-            input_tokens=100,
-            output_tokens=10,
-            latency_ms=20.0,
-            cache_hit=False,
-        )
-
-        cached_caller = MagicMock()
-        cached_caller.call.return_value = reader_result
-
-        # classify_sentences returns scores + 0.03 cost (3 batches × 0.01)
-        def fake_classify(query, sentences, cached_caller, llm_provider, llm_model,
-                          batch_size=30, threshold=0.5):
-            return [1.0] * len(sentences), 0.03
-
-        with patch.object(cls_mod, "_gemma_checkpoint_available", return_value=False), \
-             patch.object(cls_mod, "classify_sentences", side_effect=fake_classify), \
-             patch("agent.baselines.exit.extractor.compute_cost", return_value=0.005):
-            result = ExitExtractor().extract(
-                query_idx=0,
-                query_text="What is the company name?",
-                doc_id="TEST",
-                doc_inputs=doc_inputs,
-                cached_caller=cached_caller,
-                llm_provider="azure",
-                llm_model="gpt-5.4-mini",
-            )
-
-        # classifier cost (0.03) + reader cost (0.005 mocked) = 0.035
-        self.assertAlmostEqual(result.cost_usd, 0.035, places=6)
-
-    def test_gemma_path_returns_zero_classifier_cost(self) -> None:
-        """When Gemma path is taken, classify_sentences returns cost_usd=0.0."""
-        from agent.baselines.exit import classifier as cls_mod
-
-        sentences = ["Amazon is a company.", "AWS is cloud."]
-        with patch.object(cls_mod, "_gemma_checkpoint_available", return_value=True), \
-             patch.object(cls_mod, "_classify_with_gemma", return_value=[0.9, 0.1]):
-            scores, cost = cls_mod.classify_sentences(
-                query="What is the company?",
-                sentences=sentences,
-                cached_caller=MagicMock(),
-                llm_provider="azure",
-                llm_model="gpt-5.4-mini",
-            )
-
-        self.assertEqual(cost, 0.0)
-        self.assertEqual(scores, [0.9, 0.1])
-
-
-class TestGemmaCheckpointPath(unittest.TestCase):
-    """Test the HuggingFace-cache-based checkpoint detection."""
-
-    def test_checkpoint_available_when_hf_cache_hit(self) -> None:
-        """_gemma_checkpoint_available returns True when _hf_try_to_load_from_cache gives a path."""
-        from agent.baselines.exit import classifier as cls_mod
-
-        fake_path = "/fake/hf/cache/adapter_config.json"
-        # Patch the module-level name directly — the import is at module level so this works.
-        with patch.object(cls_mod, "_hf_try_to_load_from_cache", return_value=fake_path):
-            result = cls_mod._gemma_checkpoint_available()
-        self.assertTrue(result)
-
-    def test_checkpoint_unavailable_when_hf_cache_miss(self) -> None:
-        """_gemma_checkpoint_available returns False when _hf_try_to_load_from_cache returns None."""
-        from agent.baselines.exit import classifier as cls_mod
-
-        with patch.object(cls_mod, "_hf_try_to_load_from_cache", return_value=None):
-            result = cls_mod._gemma_checkpoint_available()
-        self.assertFalse(result)
-
-
-class TestGemmaCodePath(unittest.TestCase):
-    """Test _classify_with_gemma with fully mocked model — no real GPU inference.
-
-    torch is not installed in the test environment; we mock the entire torch
-    module so that classifier.py's ``import torch`` succeeds and all tensor
-    operations are intercepted.
-    """
-
-    def _make_mock_torch(self, yes_prob: float = 0.9) -> MagicMock:
-        """Return a mock torch module whose softmax returns a controlled probability."""
-        mock_torch = MagicMock(name="torch")
-
-        # softmax(logits, dim=0)[0].item() → yes_prob
-        mock_prob_tensor = MagicMock()
-        mock_prob_tensor.__getitem__ = MagicMock(return_value=MagicMock(
-            item=MagicMock(return_value=yes_prob)
-        ))
-        mock_torch.softmax.return_value = mock_prob_tensor
-
-        # torch.no_grad() context manager
-        mock_torch.no_grad.return_value.__enter__ = MagicMock(return_value=None)
-        mock_torch.no_grad.return_value.__exit__ = MagicMock(return_value=False)
-
-        # torch.float16 sentinel
-        mock_torch.float16 = "float16"
-
-        return mock_torch
-
-    def test_gemma_path_taken_and_scores_extracted(self) -> None:
-        """When _gemma_checkpoint_available() is True, classify_sentences uses Gemma."""
-        import sys
-        from agent.baselines.exit import classifier as cls_mod
-
-        sentences = ["AWS is a cloud platform.", "Amazon sells books.", "Jeff Bezos founded it."]
-        query = "What is AWS?"
-
-        # Clear any cached model so lazy-load runs fresh
-        cls_mod._GEMMA_MODEL_CACHE.clear()
-
-        mock_torch = self._make_mock_torch(yes_prob=0.9)
-
-        # model(**inputs) → outputs; outputs.logits[0, -1, [yes_id, no_id]] → tensor
-        mock_logits = MagicMock()
-        mock_outputs = MagicMock()
-        mock_outputs.logits = mock_logits
-        # logits[0, -1, [yes_id, no_id]] — chained indexing → the same tensor
-        mock_logits.__getitem__ = MagicMock(return_value=MagicMock())
-
-        mock_model = MagicMock()
-        mock_model.device = "cpu"
-        mock_model.return_value = mock_outputs  # model(**inputs) call
-
-        mock_tokenizer = MagicMock()
-        mock_tokenizer.encode.side_effect = lambda text, **kw: (
-            [1000] if "Yes" in text else [2000]
-        )
-        # tokenizer(prompt, return_tensors="pt") → object with .to(device) method
-        mock_inputs = MagicMock()
-        mock_inputs.to.return_value = mock_inputs  # inputs.to(device) → inputs
-        mock_tokenizer.return_value = mock_inputs
-
-        # Patch _get_gemma_model_and_tokenizer so no actual loading occurs
-        with patch.object(cls_mod, "_gemma_checkpoint_available", return_value=True), \
-             patch.object(cls_mod, "_get_gemma_model_and_tokenizer",
-                          return_value=(mock_model, mock_tokenizer)), \
-             patch.dict(sys.modules, {"torch": mock_torch}):
-            scores, cost = cls_mod.classify_sentences(
-                query=query,
-                sentences=sentences,
-                cached_caller=MagicMock(),
-                llm_provider="azure",
-                llm_model="gpt-5.4-mini",
-            )
-
-        self.assertEqual(len(scores), len(sentences))
-        for s in scores:
-            self.assertIsInstance(s, float)
-            self.assertEqual(s, 0.9)  # matches mock yes_prob
-        # Gemma path has no LLM cost
-        self.assertEqual(cost, 0.0)
-
-    def test_gemma_constants(self) -> None:
-        """Verify HF repo ID and base model match adapter_config.json."""
-        from agent.baselines.exit import classifier as cls_mod
-        self.assertEqual(cls_mod._GEMMA_HF_REPO, "doubleyyh/exit-gemma-2b")
-        self.assertEqual(cls_mod._GEMMA_BASE_MODEL, "google/gemma-2b-it")
+        for key in ("n_sentences_total", "n_sentences_selected", "classifier_method",
+                    "context_chars", "threshold"):
+            self.assertIn(key, result.trace, f"missing trace key: {key}")
 
 
 if __name__ == "__main__":
