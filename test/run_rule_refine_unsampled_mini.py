@@ -88,7 +88,7 @@ for question in questions:
         continue
 
     unsampled_eval = json.loads(eval_path.read_text(encoding="utf-8"))
-    target_accuracy = unsampled_eval.get("unsampled", {}).get("accuracy", 0.0)
+    target_accuracy = unsampled_eval.get("accuracy", 0.0)
 
     print(f"\n{'='*70}")
     print(f"Question : {question}")
