@@ -129,8 +129,11 @@ class MDocAgentExtractor:
             query_text=query_text,
         )
 
-        # Unique run name so parallel runs don't clobber each other
-        run_name = f"lsf-q{query_idx}-{_doc_name_from_doc_id(doc_id)}-{uuid.uuid4().hex[:6]}"
+        # Unique run name so parallel runs don't clobber each other.
+        # Sanitize to [a-zA-Z0-9_-] — Hydra's override grammar rejects parens and dots.
+        import re as _re
+        _safe = _re.sub(r"[^a-zA-Z0-9_-]", "_", _doc_name_from_doc_id(doc_id))
+        run_name = f"lsf-q{query_idx}-{_safe}-{uuid.uuid4().hex[:6]}"
 
         # Run subprocess
         stdout, stderr, returncode = _run_predict_subprocess(run_name)
@@ -184,17 +187,21 @@ def _run_predict_subprocess(run_name: str) -> tuple[str, str, int]:
         f"run-name={run_name}",
     ] + _AGENT_MODEL_OVERRIDES
 
-    # Build env: pass through current env, then wire Azure credentials.
-    # The openai SDK reads OPENAI_API_KEY and OPENAI_BASE_URL (not OPENAI_API_BASE).
-    # If OPENAI_API_KEY is not set, fall back to AZURE_OPENAI_KEY.
-    # If OPENAI_BASE_URL is not set, fall back to AZURE_OPENAI_ENDPOINT.
+    # Build env: route MDocAgent through OpenRouter so the standard openai.OpenAI()
+    # client works without Azure-specific wiring. The SDK reads OPENAI_BASE_URL and
+    # OPENAI_API_KEY from env when not explicitly passed to OpenAI().
     env = os.environ.copy()
-    if not env.get("OPENAI_API_KEY") and env.get("AZURE_OPENAI_KEY"):
-        env["OPENAI_API_KEY"] = env["AZURE_OPENAI_KEY"]
-    if not env.get("OPENAI_BASE_URL") and env.get("AZURE_OPENAI_ENDPOINT"):
-        env["OPENAI_BASE_URL"] = env["AZURE_OPENAI_ENDPOINT"]
+    openrouter_key = env.get("OPENROUTER_API_KEY", "")
+    if openrouter_key:
+        env["OPENAI_API_KEY"] = openrouter_key
+        env["OPENAI_BASE_URL"] = "https://openrouter.ai/api/v1"
+    elif env.get("OPENAI_API_KEY"):
+        pass  # caller set it explicitly; leave as-is
+    elif env.get("AZURE_54MINI_API_KEY"):
+        # Fallback: Azure key won't work against api.openai.com, but let it fail visibly
+        env["OPENAI_API_KEY"] = env["AZURE_54MINI_API_KEY"]
 
-    # Disable CUDA (we're using OpenAI API — no local GPU needed)
+    # Disable CUDA (we're using API calls — no local GPU needed)
     env["CUDA_VISIBLE_DEVICES"] = ""
 
     cmd = [sys.executable, str(predict_script)] + overrides
