@@ -110,10 +110,13 @@ class DeepReadExtractor:
             index = _build_fallback_index(doc_inputs.normalized_text)
 
         # Step 2: ReAct loop
+        # Seed evidence with a free Retrieve call so the model always has something
+        # to reason over on turn 1 — small models skip tool use when evidence is empty.
         system_prompt = _load_locate_read_prompt()
         conversation: list[dict[str, str]] = []
-        evidence_parts: list[str] = []
-        tool_calls: list[dict[str, Any]] = []
+        initial_hits = retrieve(index, query_text, k=5)
+        evidence_parts: list[str] = [f"[Retrieve]\n{_format_hits(initial_hits)}"]
+        tool_calls: list[dict[str, Any]] = [{"turn": -1, "tool": "Retrieve", "args": {"query": query_text, "k": 5}}]
 
         for turn in range(_MAX_TURNS):
             obs_str = "\n\n".join(evidence_parts) if evidence_parts else "No evidence collected yet."
