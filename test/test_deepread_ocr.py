@@ -172,38 +172,15 @@ class TestLLMOCRMaxPages(unittest.TestCase):
         pages_processed: list[int] = []
 
         mock_caller = MagicMock()
-        def fake_call(prompt, *, llm_provider, max_tokens, model):
-            # Count via page_no in prompt (we inject page number into the prompt)
-            pages_processed.append(1)
-            return CacheResult(
-                response='<p sid="1" pid="1">Content.</p>',
-                input_tokens=10,
-                output_tokens=5,
-                latency_ms=1.0,
-                cache_hit=False,
-            )
-        mock_caller.call.side_effect = fake_call
 
         # Build a fake 5-page PDF document
         mock_pdf_doc = MagicMock()
         mock_pdf_doc.__len__ = lambda self: 5
         mock_pdf_doc.__getitem__ = lambda self, i: MagicMock()
 
-        # Mock the page rendering to return minimal PNG bytes
-        import io
-        try:
-            from PIL import Image
-            buf = io.BytesIO()
-            Image.new("RGB", (1, 1)).save(buf, format="PNG")
-            fake_png = buf.getvalue()
-        except ImportError:
-            # Minimal valid PNG header
-            fake_png = (
-                b"\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x01"
-                b"\x00\x00\x00\x01\x08\x02\x00\x00\x00\x90wS\xde\x00\x00"
-                b"\x00\x0cIDATx\x9cc\xf8\x0f\x00\x00\x01\x01\x00\x05\x18"
-                b"\xd8N\x00\x00\x00\x00IEND\xaeB`\x82"
-            )
+        def fake_ocr_call(prompt_text, jpeg_b64, provider, model, max_tokens):
+            pages_processed.append(1)
+            return '<p sid="1" pid="1">Content.</p>', 10, 5
 
         with tempfile.TemporaryDirectory() as tmp:
             tmp_path = Path(tmp)
@@ -211,9 +188,10 @@ class TestLLMOCRMaxPages(unittest.TestCase):
             fake_pdf.write_bytes(b"fake")
 
             with patch("agent.baselines.deepread.ocr._CACHE_DIR", tmp_path), \
-                 patch("agent.baselines.deepread.ocr._load_ocr_prompt", return_value="page {page_no} {image_b64}"), \
+                 patch("agent.baselines.deepread.ocr._load_ocr_prompt", return_value="page {page_no}"), \
                  patch("pypdfium2.PdfDocument", return_value=mock_pdf_doc), \
-                 patch("agent.baselines.deepread.ocr._render_page_png", return_value=fake_png):
+                 patch("agent.baselines.deepread.ocr._render_page_jpeg", return_value=b"fakejpeg"), \
+                 patch("agent.baselines.deepread.ocr._ocr_page_call", side_effect=fake_ocr_call):
 
                 ocr = LLMOCR(mock_caller, max_pages=3)
                 ocr.parse_pdf(fake_pdf, doc_id="TEST_DOC_5P")

@@ -47,15 +47,79 @@ def _load_ocr_prompt() -> str:
     return _OCR_PROMPT_PATH.read_text(encoding="utf-8")
 
 
-def _render_page_png(page: Any, dpi: int = _RENDER_DPI) -> bytes:
-    """Render a pypdfium2 page to PNG bytes at the specified DPI."""
+def _render_page_jpeg(page: Any, dpi: int = _RENDER_DPI, quality: int = 85) -> bytes:
+    """Render a pypdfium2 page to JPEG bytes.
+
+    JPEG is dramatically smaller than PNG for document pages (10-20× compression),
+    which avoids exceeding 128K-token context limits when base64-encoded images
+    are sent via the multimodal API.
+    """
+    import io
     scale = dpi / 72.0
     bitmap = page.render(scale=scale)
-    pil_image = bitmap.to_pil()
-    import io
+    pil_image = bitmap.to_pil().convert("RGB")
     buf = io.BytesIO()
-    pil_image.save(buf, format="PNG")
+    pil_image.save(buf, format="JPEG", quality=quality, optimize=True)
     return buf.getvalue()
+
+
+def _ocr_page_call(
+    prompt_text: str,
+    jpeg_b64: str,
+    provider: str,
+    model: str,
+    max_tokens: int,
+) -> tuple[str, int, int]:
+    """Make a vision API call for one page. Returns (response_text, in_tokens, out_tokens).
+
+    Sends the image as a proper multimodal content block (not embedded in prompt text)
+    so the model receives it as visual tokens (~1K) rather than base64 text (~150K+).
+    """
+    import os
+    from openai import OpenAI, AzureOpenAI
+
+    messages = [
+        {
+            "role": "user",
+            "content": [
+                {"type": "text", "text": prompt_text},
+                {
+                    "type": "image_url",
+                    "image_url": {"url": f"data:image/jpeg;base64,{jpeg_b64}"},
+                },
+            ],
+        }
+    ]
+
+    if provider == "openrouter":
+        client = OpenAI(
+            base_url="https://openrouter.ai/api/v1",
+            api_key=os.environ["OPENROUTER_API_KEY"],
+        )
+        resp = client.chat.completions.create(
+            model=model,
+            messages=messages,  # type: ignore[arg-type]
+            max_tokens=max_tokens,
+            temperature=0,
+        )
+    else:  # azure
+        client = AzureOpenAI(  # type: ignore[assignment]
+            azure_endpoint=os.environ["AZURE_54MINI_API_BASE"],
+            api_key=os.environ["AZURE_54MINI_API_KEY"],
+            api_version=os.environ.get("AZURE_54MINI_API_VERSION", "2024-12-01-preview"),
+        )
+        resp = client.chat.completions.create(
+            model=os.environ.get("AZURE_54MINI_DEPLOYMENT", model),
+            messages=messages,  # type: ignore[arg-type]
+            max_tokens=max_tokens,
+            temperature=0,
+        )
+
+    text = resp.choices[0].message.content or ""
+    usage = resp.usage
+    in_tok = usage.prompt_tokens if usage else 0
+    out_tok = usage.completion_tokens if usage else 0
+    return text, in_tok, out_tok
 
 
 def _parse_page_ocr(page_no: int, raw: str, global_section_counter: list[int]) -> list[dict[str, Any]]:
@@ -203,20 +267,19 @@ class LLMOCR:
 
         for page_no in range(effective_pages):
             page = doc[page_no]
-            png_bytes = _render_page_png(page)
-            b64 = base64.b64encode(png_bytes).decode("ascii")
-            prompt = prompt_template.replace("{page_no}", str(page_no + 1)).replace(
-                "{image_b64}", b64
-            )
-            result = self._caller.call(
-                prompt,
-                llm_provider=self._ocr_provider,
-                max_tokens=_MAX_OCR_TOKENS,
+            jpeg_bytes = _render_page_jpeg(page)
+            b64 = base64.b64encode(jpeg_bytes).decode("ascii")
+            prompt_text = prompt_template.replace("{page_no}", str(page_no + 1))
+            response_text, in_tok, out_tok = _ocr_page_call(
+                prompt_text=prompt_text,
+                jpeg_b64=b64,
+                provider=self._ocr_provider,
                 model=self._ocr_model,
+                max_tokens=_MAX_OCR_TOKENS,
             )
             page_sections = _parse_page_ocr(
                 page_no=page_no + 1,
-                raw=result.response,
+                raw=response_text,
                 global_section_counter=global_section_counter,
             )
             all_sections.extend(page_sections)
