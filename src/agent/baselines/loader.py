@@ -1,7 +1,8 @@
 """Build DocInputs for a (query_idx, doc_id) pair.
 
-Reuses the reconstructed.json loading from agent.rule_runtime.data
-and resolves the PDF path from the dataset layout.
+Falls back gracefully when a dataset lacks pipeline-processed files:
+- No reconstructed.json → text extracted directly from PDF via PyMuPDF.
+- No label file → ground_truth returned as "".
 """
 
 from __future__ import annotations
@@ -19,6 +20,17 @@ from agent.rule_runtime.data import (
     reconstruct_to_normalized_text,
 )
 from agent.baselines.base import DocInputs
+
+
+def _pdf_text_fallback(pdf_path: Path) -> str:
+    """Extract plain text from a PDF via PyMuPDF when no reconstructed.json exists."""
+    import fitz  # PyMuPDF
+
+    pages = []
+    with fitz.open(str(pdf_path)) as doc:
+        for page in doc:
+            pages.append(page.get_text())
+    return "\n\n".join(pages)
 
 
 def _processing_dir(config: dict[str, Any]) -> Path:
@@ -71,15 +83,22 @@ def build_doc_inputs(
     label_dir = _label_dir(config)
     truncate_before = config.get("truncate_before")
 
-    reconstruct_path = proc_dir / f"{doc_id}_reconstructed.json"
-    normalized_text = reconstruct_to_normalized_text(reconstruct_path, truncate_before=truncate_before)
-    entries, section_index = _load_entries(reconstruct_path)
-
-    label_filename = get_label_filename({"dataset": config.get("dataset", "pdfs")}, query_idx)
-    label_path = label_dir / label_filename
-    ground_truth = extract_ground_truth(label_path, doc_id, query_idx)
-
     pdf = _pdf_path(config, doc_id)
+
+    reconstruct_path = proc_dir / f"{doc_id}_reconstructed.json"
+    if reconstruct_path.exists():
+        normalized_text = reconstruct_to_normalized_text(reconstruct_path, truncate_before=truncate_before)
+        entries, section_index = _load_entries(reconstruct_path)
+    else:
+        normalized_text = _pdf_text_fallback(pdf)
+        entries, section_index = [], {}
+
+    try:
+        label_filename = get_label_filename({"dataset": config.get("dataset", "pdfs")}, query_idx)
+        label_path = label_dir / label_filename
+        ground_truth = extract_ground_truth(label_path, doc_id, query_idx)
+    except Exception:
+        ground_truth = ""
 
     return DocInputs(
         normalized_text=normalized_text,
