@@ -25,6 +25,7 @@ _DECODER = json.JSONDecoder()
 
 from agent.rule_runtime.context import _ensure_request_within_model_context
 from agent.rules.range_rule_json import RangeRule, RetrievalSpec
+from agent.tool_agent.diversity import _max_chars_bucket, _rule_diversity_signature
 from agent.tool_agent.core import (
     AgentConfig,
     AgentResult,
@@ -84,30 +85,6 @@ def _build_diverse_action_schema() -> dict[str, Any]:
             "required": ["action", "reasoning", "tool", "args", "rule"],
         },
     }
-
-
-def _max_chars_bucket(max_chars: int) -> str:
-    """3-bucket coarse categorisation for diversity hashing."""
-    if max_chars <= 200:
-        return "small"
-    if max_chars <= 800:
-        return "medium"
-    return "large"
-
-
-def _rule_diversity_signature(rule: RangeRule) -> tuple[str, str, str]:
-    """Hash a rule into (mode, max_chars_bucket, anchor[:50] casefold) for diversity check.
-
-    Two rules with the same signature are considered "duplicates" and the second is
-    rejected. anchor[:50] balances substring overlap detection vs over-aggressive
-    family merging ([:30] let near-dup anchors pass on q3).
-    """
-    spec = rule.retrieval_spec
-    return (
-        spec.mode,
-        _max_chars_bucket(spec.max_chars),
-        ((spec.anchor or "")[:50].casefold()),
-    )
 
 
 def _format_generated_summary(rules: list[RangeRule]) -> str:

@@ -209,6 +209,34 @@ def test_seq_cover_min_coverage_threshold_stops_immediately(tmp_path: Path) -> N
     assert len(trajectory["iterations"]) == 1
 
 
+def test_seq_cover_signature_gate_rejects_duplicate(tmp_path: Path) -> None:
+    docs = [_doc("doc_a", "alpha", "alpha"), _doc("doc_b", "beta", "beta")]
+    caller = _FakeCaller(["alpha", "alpha", "beta"])
+    logger = TrajectoryLogger(tmp_path / "trajectory.jsonl")
+
+    result = run_seq_cover_agent_on_query(
+        query_text="find token",
+        query_idx=3,
+        doc_contexts=docs,
+        cached_caller=caller,
+        agent_config=_config(seq_cover_max_iterations=5),
+        logger=logger,
+        max_turns=3,
+    )
+    logger.close()
+
+    assert [rule.retrieval_spec.anchor for rule in result.rules] == ["alpha", "beta"]
+    assert result.termination_reason == "full_coverage"
+    trajectory_lines = [
+        json.loads(line)
+        for line in (tmp_path / "trajectory.jsonl").read_text().splitlines()
+        if line.strip()
+    ]
+    rejections = [t for t in trajectory_lines if t.get("tool_name") == "generate_rejected_duplicate"]
+    assert len(rejections) == 1, f"expected exactly one duplicate rejection, got {len(rejections)}"
+    assert rejections[0]["tool_args"]["signature"] == ["regex", "small", "alpha"]
+
+
 def test_seq_cover_uncovered_window_respected(tmp_path: Path) -> None:
     docs = [
         _doc(f"doc_{idx}", f"token_{idx}", f"token_{idx}")

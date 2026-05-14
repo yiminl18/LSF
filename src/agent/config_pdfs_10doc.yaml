@@ -74,6 +74,8 @@ queries:
 #   seq_cover_min_marginal_coverage: 1
 #   seq_cover_uncovered_doc_window: 4
 #   seq_cover_action_schema: tool_agent_seq_cover_action_schema (Python builder)
+#   seq_cover_force_distinct_signature: true   # reject (mode, max_chars-bucket, anchor[:50]) duplicates
+#   seq_cover_max_signature_retries: 2         # max in-episode re-prompts before consuming the iteration
 
   - query_idx: 3
     # "What is the registrant's telephone number?"

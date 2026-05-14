@@ -28,6 +28,20 @@ Each section line: `pN [id=K] Hn [Nc] [Section] <heading>` (indented by level).
 ## Already-Selected Rules (from earlier iterations)
 {frozen_summary}
 
+## DIVERSITY GATE
+
+Your `generate` will be REJECTED if the new rule duplicates an Already-Selected
+rule's signature `(mode, max_chars-bucket, anchor[:50] casefold)`. On rejection,
+you will be re-prompted in the same iteration with the colliding signature
+surfaced. Vary at least one of:
+- mode: after / before / around / between / page / regex
+- max_chars bucket: small (≤200), medium (≤800), large (>800)
+- anchor first-50 chars (case-insensitive)
+
+If every "natural" candidate collides with an Already-Selected rule, switch to a
+different anchor family (cover-page label vs body section heading vs page-mode
+fallback vs regex value-match) before calling `generate`.
+
 ## Available Actions
 
 ### action="generate"

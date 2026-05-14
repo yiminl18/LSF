@@ -25,6 +25,7 @@ from agent.tool_agent.core import (
     _truncate_observation,
 )
 from agent.tool_agent.diverse_core import _parse_rule_payload
+from agent.tool_agent.diversity import _max_chars_bucket, _rule_diversity_signature
 from agent.tool_agent.document import DocumentContext
 from agent.tool_agent.logger import TrajectoryLogger
 from agent.tool_agent.tools import ToolRegistry
@@ -71,8 +72,8 @@ def _format_frozen_summary(rules: list[RangeRule]) -> str:
     for idx, rule in enumerate(rules):
         spec = rule.retrieval_spec
         lines.append(
-            f"  F{idx}: mode={spec.mode} max_chars={spec.max_chars} "
-            f"anchor={(spec.anchor or '')[:60]!r}"
+            f"  F{idx}: mode={spec.mode} bucket={_max_chars_bucket(spec.max_chars)} "
+            f"max_chars={spec.max_chars} anchor={(spec.anchor or '')[:60]!r}"
         )
     return "\n".join(lines)
 
@@ -85,6 +86,7 @@ def _run_single_rule_episode(
     window_contexts: list[DocumentContext],
     frozen_rules: list[RangeRule],
     uncovered_doc_ids: list[str],
+    existing_signatures: set[tuple[str, str, str]],
     cached_caller: CachedLLMCaller,
     agent_config: AgentConfig,
     logger: TrajectoryLogger,
@@ -96,6 +98,9 @@ def _run_single_rule_episode(
     registry = ToolRegistry(window_contexts[0], peer_docs=window_contexts[1:])
     corpus_id_label = f"corpus[{len(window_contexts)}](seq_cover:i{iteration_idx})"
     nav_turn_counter = 0
+    dup_rejects_this_episode = 0
+    force_distinct = bool(getattr(agent_config, "seq_cover_force_distinct_signature", True))
+    max_signature_retries = int(getattr(agent_config, "seq_cover_max_signature_retries", 2))
 
     for turn_index in range(agent_config.max_turns_per_query):
         if total_cost >= agent_config.budget_usd:
@@ -241,6 +246,45 @@ def _run_single_rule_episode(
                     prompt_text=prompt,
                     raw_response=cache_result.response,
                 )
+                continue
+
+            sig = _rule_diversity_signature(new_rule)
+            if force_distinct and sig in existing_signatures:
+                dup_rejects_this_episode += 1
+                obs = (
+                    f"REJECTED: rule duplicates an Already-Selected rule on diversity "
+                    f"signature {sig!r}. Vary `mode` (after/before/around/between/page/regex) "
+                    f"or `max_chars` bucket (small ≤200, medium ≤800, large >800) or "
+                    f"`anchor` (first 50 chars). Already-selected signatures: "
+                    f"{sorted(existing_signatures)!r}."
+                )
+                history.append(
+                    _ConversationTurn(
+                        turn_index=turn_index,
+                        action_json=json.dumps(action, ensure_ascii=False),
+                        tool_name="generate",
+                        observation=obs,
+                    )
+                )
+                logger.log_turn(
+                    query_idx=query_idx,
+                    doc_id=corpus_id_label,
+                    turn_index=turn_index,
+                    agent_reasoning=reasoning,
+                    tool_name="generate_rejected_duplicate",
+                    tool_args={"signature": list(sig), "iteration_idx": iteration_idx},
+                    tool_result_preview=obs,
+                    cost_usd=agent_call_cost,
+                    latency_ms=agent_latency,
+                    input_tokens=cache_result.input_tokens,
+                    output_tokens=cache_result.output_tokens,
+                    path_idx=iteration_idx,
+                    tool_result_full={"rejected": True, "signature": list(sig)},
+                    prompt_text=prompt,
+                    raw_response=cache_result.response,
+                )
+                if dup_rejects_this_episode > max_signature_retries:
+                    break
                 continue
 
             obs = f"Rule accepted for sequential-cover iteration {iteration_idx}."
@@ -432,6 +476,7 @@ def run_seq_cover_agent_on_query(
 
         window_ids = uncovered_doc_ids[: max(1, uncovered_window)]
         window_contexts = [id_to_ctx[doc_id] for doc_id in window_ids]
+        existing_signatures = {_rule_diversity_signature(r) for r in frozen_rules}
         episode = _run_single_rule_episode(
             query_text=query_text,
             query_idx=query_idx,
@@ -439,6 +484,7 @@ def run_seq_cover_agent_on_query(
             window_contexts=window_contexts,
             frozen_rules=frozen_rules,
             uncovered_doc_ids=window_ids,
+            existing_signatures=existing_signatures,
             cached_caller=cached_caller,
             agent_config=iteration_config,
             logger=logger,
