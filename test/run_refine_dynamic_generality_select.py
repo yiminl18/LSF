@@ -43,7 +43,7 @@ COST_PROFILE_DIR     = f"{REFDYN_RESULTS_BASE}/cost_profile"
 SELECTOR_RUN_DIR     = f"{REFDYN_RESULTS_BASE}/selector_run_auto"
 RULE_SELECT_DIR      = f"{REFDYN_RESULTS_BASE}/rule_select"
 
-TAU_FLOOR            = 0.20
+TAU_FLOOR            = 0.0
 EPSILON              = 1e-6
 MAX_ITERS            = 10
 MODEL_NAME           = "gpt54"
