@@ -46,17 +46,15 @@ def _greedy_cover(
     output_dir: str = _DEFAULT_OUTPUT_DIR,
     use_proxy: bool = False,
     initial_S: list[str] | None = None,
-) -> tuple[list[str], dict[str, set[str]], int, int]:
+) -> tuple[list[str], dict[str, set[str]], int, int, int, int]:
     """One greedy cover pass over rules_sorted.
 
     initial_S is the set of already-committed rules used as merge context; they
     are NOT returned in the output — only the newly selected rules are.
 
     Returns:
-        newly_selected: rules added in this pass (excluding initial_S).
-        per_rule_gained: {rule_name: set of doc_names first covered by that rule}.
-        qa_calls: number of rule_apply_merge (QA LLM) calls made.
-        judge_calls: number of LLM judge calls made.
+        newly_selected, per_rule_gained, qa_calls, judge_calls,
+        total_input_tokens, total_output_tokens.
     """
     context_S: list[str] = list(initial_S or [])
     working_S: list[str] = list(context_S)
@@ -65,6 +63,8 @@ def _greedy_cover(
     per_rule_gained: dict[str, set[str]] = {}
     qa_calls = 0
     judge_calls = 0
+    total_input_tokens = 0
+    total_output_tokens = 0
 
     for r in rules_sorted:
         if not U:
@@ -89,6 +89,8 @@ def _greedy_cover(
                 print(f"    SKIP {d} (rule_apply_merge error: {exc})")
                 continue
             qa_calls += 1
+            total_input_tokens += res.get("input_tokens", 0)
+            total_output_tokens += res.get("output_tokens", 0)
 
             retrieved_text = res.get("retrieved_text", "")
 
@@ -97,9 +99,12 @@ def _greedy_cover(
                 continue
 
             try:
-                if judge(question, gt, res["predicted_answer"], model_name=model_name):
+                correct, j_in, j_out = judge(question, gt, res["predicted_answer"], model_name=model_name)
+                if correct:
                     gained.add(d)
                 judge_calls += 1
+                total_input_tokens += j_in
+                total_output_tokens += j_out
             except Exception as exc:
                 print(f"    SKIP judge {d} (error: {exc})")
 
@@ -110,7 +115,7 @@ def _greedy_cover(
             U -= gained
             print(f"  + {r:<55}  gained={len(gained)}  remaining={len(U)}")
 
-    return newly_selected, per_rule_gained, qa_calls, judge_calls
+    return newly_selected, per_rule_gained, qa_calls, judge_calls, total_input_tokens, total_output_tokens
 
 
 def run_selection(
@@ -169,6 +174,7 @@ def run_selection(
             "baseline_accuracy": round(baseline_accuracy, 4),
             "selector_accuracy": 0.0,
             "llm_calls": {"phase_2_incremental": 0, "phase_3_coverage": 0},
+            "token_usage": {"total_input_tokens": 0, "total_output_tokens": 0},
         }
 
     # Phase 0 output: rules sorted cheapest-first
@@ -179,9 +185,11 @@ def run_selection(
 
     total_qa_calls = 0
     total_judge_calls = 0
+    total_input_tokens = 0
+    total_output_tokens = 0
 
     # Phase 2: initial greedy cover
-    S, per_rule_gained, qa, jc = _greedy_cover(
+    S, per_rule_gained, qa, jc, in_tok, out_tok = _greedy_cover(
         rules_sorted=rules_sorted,
         target_docs=target_docs,
         documents=documents,
@@ -195,6 +203,8 @@ def run_selection(
     )
     total_qa_calls += qa
     total_judge_calls += jc
+    total_input_tokens += in_tok
+    total_output_tokens += out_tok
 
     # Phase 3: tau check with ban-and-resume (up to 10 rounds)
     banned_global: set[str] = set()
@@ -221,7 +231,7 @@ def run_selection(
                 r for r in rules_sorted
                 if r not in set(S) and r not in banned_global
             ]
-            S_extra, gained_extra, qa, jc = _greedy_cover(
+            S_extra, gained_extra, qa, jc, in_tok, out_tok = _greedy_cover(
                 rules_sorted=remaining,
                 target_docs=docs_to_recover,
                 documents=documents,
@@ -236,6 +246,8 @@ def run_selection(
             )
             total_qa_calls += qa
             total_judge_calls += jc
+            total_input_tokens += in_tok
+            total_output_tokens += out_tok
             S += S_extra
             per_rule_gained.update(gained_extra)
 
@@ -256,5 +268,9 @@ def run_selection(
         "llm_calls": {
             "phase_2_incremental": total_qa_calls,
             "phase_3_coverage": total_judge_calls,
+        },
+        "token_usage": {
+            "total_input_tokens": total_input_tokens,
+            "total_output_tokens": total_output_tokens,
         },
     }

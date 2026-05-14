@@ -148,7 +148,7 @@ for question in questions:
         for r in run_results:
             doc_name     = r["doc_name"]
             ground_truth = labels.get(doc_name + ".pdf", {}).get(question)
-            correct      = judge(question, ground_truth, r["predicted"], model_name=MODEL_NAME)
+            correct, _, _ = judge(question, ground_truth, r["predicted"], model_name=MODEL_NAME)
             total_tok    = doc_total_tokens.get(doc_name, 1)
             cost_ratio   = r["retrieved_tokens"] / total_tok if total_tok > 0 else 0.0
             cost_ratios.append(cost_ratio)

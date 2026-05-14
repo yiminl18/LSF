@@ -43,16 +43,19 @@ def _backward_prune(
     labels: dict,
     model_name: str,
     output_dir: str,
-) -> tuple[list[str], dict[str, set[str]], int, int]:
+) -> tuple[list[str], dict[str, set[str]], int, int, int, int]:
     """Try removing each rule from selected (most expensive first).
 
     A rule is dropped if the remaining set still correctly answers every doc in
     target_docs. Iterates from the last-added (most expensive) rule to the first.
 
-    Returns (pruned_rules, updated_per_rule_gained, qa_calls, judge_calls).
+    Returns (pruned_rules, updated_per_rule_gained, qa_calls, judge_calls,
+             total_input_tokens, total_output_tokens).
     """
     qa_calls = 0
     judge_calls = 0
+    total_input_tokens = 0
+    total_output_tokens = 0
     current = list(selected)
 
     i = len(current) - 1
@@ -83,11 +86,16 @@ def _backward_prune(
                 failed = True
                 break
             qa_calls += 1
+            total_input_tokens += res.get("input_tokens", 0)
+            total_output_tokens += res.get("output_tokens", 0)
 
             try:
-                if judge(question, gt, res["predicted_answer"], model_name=model_name):
+                correct, j_in, j_out = judge(question, gt, res["predicted_answer"], model_name=model_name)
+                if correct:
                     covered.add(d)
                 judge_calls += 1
+                total_input_tokens += j_in
+                total_output_tokens += j_out
             except Exception as exc:
                 print(f"    PRUNE SKIP judge {d} (error: {exc})")
                 failed = True
@@ -107,7 +115,7 @@ def _backward_prune(
 
         i -= 1
 
-    return current, per_rule_gained, qa_calls, judge_calls
+    return current, per_rule_gained, qa_calls, judge_calls, total_input_tokens, total_output_tokens
 
 
 def run_selection_auto_tighten(
@@ -167,6 +175,7 @@ def run_selection_auto_tighten(
             "selector_accuracy": 0.0,
             "tightening_history": [],
             "llm_calls": {"phase_2_incremental": 0, "phase_3_coverage": 0, "phase_35_backtracking": 0, "phase_4_auto_tighten": 0},
+            "token_usage": {"total_input_tokens": 0, "total_output_tokens": 0},
         }
 
     rules_sorted = sorted(
@@ -183,9 +192,11 @@ def run_selection_auto_tighten(
     total_qa_calls = 0
     total_judge_calls = 0
     phase4_calls = 0
+    total_input_tokens = 0
+    total_output_tokens = 0
 
     # ── Phase 2: initial greedy cover ────────────────────────────────────────
-    S, per_rule_gained, qa, jc = _greedy_cover(
+    S, per_rule_gained, qa, jc, in_tok, out_tok = _greedy_cover(
         rules_sorted=rules_sorted,
         target_docs=target_docs,
         documents=documents,
@@ -199,6 +210,8 @@ def run_selection_auto_tighten(
     )
     total_qa_calls += qa
     total_judge_calls += jc
+    total_input_tokens += in_tok
+    total_output_tokens += out_tok
 
     # ── Phase 3: tau_floor check with ban-and-resume ──────────────────────────
     banned_global: set[str] = set()
@@ -225,7 +238,7 @@ def run_selection_auto_tighten(
                 r for r in rules_sorted
                 if r not in set(S) and r not in banned_global
             ]
-            S_extra, gained_extra, qa, jc = _greedy_cover(
+            S_extra, gained_extra, qa, jc, in_tok, out_tok = _greedy_cover(
                 rules_sorted=remaining,
                 target_docs=docs_to_recover,
                 documents=documents,
@@ -240,14 +253,18 @@ def run_selection_auto_tighten(
             )
             total_qa_calls += qa
             total_judge_calls += jc
+            total_input_tokens += in_tok
+            total_output_tokens += out_tok
             S += S_extra
             per_rule_gained.update(gained_extra)
 
     # ── Phase 3.5: backward pruning (optional) ───────────────────────────────
     backtrack_calls = 0
+    backtrack_input_tokens = 0
+    backtrack_output_tokens = 0
     if backtracking and S:
         print(f"\n  Phase 3.5 backtracking: |S|={len(S)}")
-        S, per_rule_gained, qa, jc = _backward_prune(
+        S, per_rule_gained, qa, jc, in_tok, out_tok = _backward_prune(
             selected=S,
             per_rule_gained=per_rule_gained,
             target_docs=target_docs,
@@ -260,11 +277,17 @@ def run_selection_auto_tighten(
             output_dir=output_dir,
         )
         backtrack_calls += qa + jc
+        backtrack_input_tokens += in_tok
+        backtrack_output_tokens += out_tok
+        total_input_tokens += in_tok
+        total_output_tokens += out_tok
         print(f"  Phase 3.5 done: |S|={len(S)}")
 
     # ── Phase 4: auto-tighten ─────────────────────────────────────────────────
     tau_best = min((cov_map.get(r, 0.0) for r in S), default=tau_floor)
     tightening_history: list[dict] = []
+    phase4_input_tokens = 0
+    phase4_output_tokens = 0
 
     print(f"\n  Phase 4 auto-tighten: |S|={len(S)}  tau_floor={tau_floor}  tau_best={tau_best:.3f}")
 
@@ -328,7 +351,7 @@ def run_selection_auto_tighten(
             print(f"    No admissible replacements — stop.")
             break
 
-        S_extra, gained_extra, qa, jc = _greedy_cover(
+        S_extra, gained_extra, qa, jc, in_tok, out_tok = _greedy_cover(
             rules_sorted=admissible,
             target_docs=docs_to_recover,
             documents=documents,
@@ -342,6 +365,10 @@ def run_selection_auto_tighten(
             initial_S=remaining_S,
         )
         phase4_calls += qa + jc
+        phase4_input_tokens += in_tok
+        phase4_output_tokens += out_tok
+        total_input_tokens += in_tok
+        total_output_tokens += out_tok
 
         candidate_gained = {r: per_rule_gained[r] for r in remaining_S}
         candidate_gained.update(gained_extra)
@@ -398,5 +425,15 @@ def run_selection_auto_tighten(
             "phase_3_coverage": total_judge_calls,
             "phase_35_backtracking": backtrack_calls,
             "phase_4_auto_tighten": phase4_calls,
+        },
+        "token_usage": {
+            "total_input_tokens": total_input_tokens,
+            "total_output_tokens": total_output_tokens,
+            "phase_2_3_input": total_input_tokens - backtrack_input_tokens - phase4_input_tokens,
+            "phase_2_3_output": total_output_tokens - backtrack_output_tokens - phase4_output_tokens,
+            "phase_35_input": backtrack_input_tokens,
+            "phase_35_output": backtrack_output_tokens,
+            "phase_4_input": phase4_input_tokens,
+            "phase_4_output": phase4_output_tokens,
         },
     }

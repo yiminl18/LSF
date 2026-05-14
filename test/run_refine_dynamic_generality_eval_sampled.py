@@ -127,6 +127,7 @@ for question in questions:
                     "latency_seconds":  result["latency_seconds"],
                     "retrieved_tokens": result["retrieved_token_count"],
                     "input_tokens":     result["input_tokens"],
+                    "output_tokens":    result["output_tokens"],
                 })
             except Exception as e:
                 print(f"  ERROR {doc_name}: {e}")
@@ -136,15 +137,20 @@ for question in questions:
                     "latency_seconds":  0.0,
                     "retrieved_tokens": 0,
                     "input_tokens":     0,
+                    "output_tokens":    0,
                 })
 
         per_doc_out: list[dict] = []
         cost_ratios: list[float] = []
 
+        total_judge_input = 0
+        total_judge_output = 0
         for r in run_results:
             doc_name     = r["doc_name"]
             ground_truth = labels.get(doc_name + ".pdf", {}).get(question)
-            correct      = judge(question, ground_truth, r["predicted"], model_name=MODEL_NAME)
+            correct, j_in, j_out = judge(question, ground_truth, r["predicted"], model_name=MODEL_NAME)
+            total_judge_input  += j_in
+            total_judge_output += j_out
             total_tok    = doc_total_tokens.get(doc_name, 1)
             cost_ratio   = r["retrieved_tokens"] / total_tok if total_tok > 0 else 0.0
             cost_ratios.append(cost_ratio)
@@ -157,24 +163,32 @@ for question in questions:
                 "latency_seconds":  r["latency_seconds"],
                 "retrieved_tokens": r["retrieved_tokens"],
                 "input_tokens":     r["input_tokens"],
+                "output_tokens":    r["output_tokens"],
             })
             status = "✓" if correct else "✗"
             print(f"  {status} {doc_name:<45}  pred={str(r['predicted'])[:30]!r}")
 
-        q_latency      = round(time.time() - q_start, 2)
-        n              = len(per_doc_out)
-        n_correct      = sum(r["correct"] for r in per_doc_out)
-        accuracy       = round(n_correct / n, 4) if n else 0.0
-        avg_latency    = round(mean(r["latency_seconds"]  for r in per_doc_out), 3)
-        avg_retrieved  = round(mean(r["retrieved_tokens"] for r in per_doc_out), 1)
-        avg_input_tok  = round(mean(r["input_tokens"]     for r in per_doc_out), 1)
-        avg_cost_ratio = round(mean(cost_ratios), 6)
+        q_latency        = round(time.time() - q_start, 2)
+        n                = len(per_doc_out)
+        n_correct        = sum(r["correct"] for r in per_doc_out)
+        accuracy         = round(n_correct / n, 4) if n else 0.0
+        avg_latency      = round(mean(r["latency_seconds"]  for r in per_doc_out), 3)
+        avg_retrieved    = round(mean(r["retrieved_tokens"] for r in per_doc_out), 1)
+        avg_input_tok    = round(mean(r["input_tokens"]     for r in per_doc_out), 1)
+        avg_output_tok   = round(mean(r["output_tokens"]    for r in per_doc_out), 1)
+        avg_cost_ratio   = round(mean(cost_ratios), 6)
+        total_qa_input   = sum(r["input_tokens"]  for r in per_doc_out)
+        total_qa_output  = sum(r["output_tokens"] for r in per_doc_out)
+        total_input_tok  = total_qa_input  + total_judge_input
+        total_output_tok = total_qa_output + total_judge_output
+        cost_usd = round(total_input_tok / 1e6 * 2.50 + total_output_tok / 1e6 * 15.00, 4)
 
         print(
             f"  accuracy={accuracy:.2f} ({n_correct}/{n})  "
             f"avg_cost_ratio={avg_cost_ratio:.5f}  "
             f"avg_latency={avg_latency:.3f}s  "
-            f"total_latency={q_latency:.1f}s"
+            f"total_latency={q_latency:.1f}s  "
+            f"input_tok={total_input_tok}  output_tok={total_output_tok}  cost=${cost_usd:.4f}"
         )
 
         per_q = {
@@ -189,7 +203,11 @@ for question in questions:
             "avg_latency":          avg_latency,
             "avg_retrieved":        avg_retrieved,
             "avg_input_tok":        avg_input_tok,
+            "avg_output_tok":       avg_output_tok,
             "avg_cost_ratio":       avg_cost_ratio,
+            "total_input_tokens":   total_input_tok,
+            "total_output_tokens":  total_output_tok,
+            "cost_usd":             cost_usd,
             "total_eval_latency_seconds": q_latency,
             "per_doc":              per_doc_out,
         }
@@ -201,7 +219,10 @@ for question in questions:
             "sampled": {
                 "n": n, "n_correct": n_correct, "accuracy": accuracy,
                 "avg_latency": avg_latency, "avg_retrieved": avg_retrieved,
-                "avg_input_tok": avg_input_tok, "avg_cost_ratio": avg_cost_ratio,
+                "avg_input_tok": avg_input_tok, "avg_output_tok": avg_output_tok,
+                "avg_cost_ratio": avg_cost_ratio,
+                "total_input_tokens": total_input_tok, "total_output_tokens": total_output_tok,
+                "cost_usd": cost_usd,
                 "total_eval_latency_seconds": q_latency,
             },
         })

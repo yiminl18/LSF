@@ -31,10 +31,13 @@ def judge(
     ground_truth,
     predicted,
     model_name: str = "gpt54",
-) -> bool:
-    """Return True iff predicted is semantically equivalent to ground_truth."""
+) -> tuple[bool, int, int]:
+    """Return (correct, input_tokens, output_tokens).
+
+    correct is True iff predicted is semantically equivalent to ground_truth.
+    """
     if ground_truth is None:
-        return False
+        return False, 0, 0
     gt_str = json.dumps(ground_truth) if not isinstance(ground_truth, str) else ground_truth
     pred_str = str(predicted) if predicted is not None else "null"
     user_msg = (
@@ -55,7 +58,10 @@ def judge(
     verdict = (response.choices[0].message.content or "").strip().lower()
     if verdict not in ("correct", "incorrect"):
         warnings.warn(f"Unexpected judge response: '{verdict}'")
-    return verdict == "correct"
+    usage = response.usage
+    in_tok = usage.prompt_tokens if usage else 0
+    out_tok = usage.completion_tokens if usage else 0
+    return verdict == "correct", in_tok, out_tok
 
 
 def proxy_judge(ground_truth, retrieved_text: str) -> bool:

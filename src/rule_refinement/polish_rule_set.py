@@ -65,7 +65,8 @@ def drop_test(
                 output_dir=output_dir,
             )
             gt = labels.get(d + ".pdf", {}).get(question)
-            if not judge(question, gt, res["predicted_answer"], model_name=model_name):
+            correct, _, _ = judge(question, gt, res["predicted_answer"], model_name=model_name)
+            if not correct:
                 still_all_correct = False
                 break
 
@@ -129,7 +130,8 @@ def swap_test(
             output_dir=output_dir,
         )
         gt = labels.get(d + ".pdf", {}).get(question)
-        if not judge(question, gt, res["predicted_answer"], model_name=model_name):
+        correct, _, _ = judge(question, gt, res["predicted_answer"], model_name=model_name)
+        if not correct:
             return selected_rules
 
     print(
