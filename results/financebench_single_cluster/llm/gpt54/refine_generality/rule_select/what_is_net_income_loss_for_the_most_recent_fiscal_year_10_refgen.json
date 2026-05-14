@@ -1,0 +1,37 @@
+{
+  "question": "What is net income (loss) for the most recent fiscal year?",
+  "question_slug": "what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm",
+  "tau": 0.2,
+  "selected_rules": [
+    "rule_mda_results_of_operations_net_income_text",
+    "rule_selected_financial_data_net_income_table"
+  ],
+  "selected_avg_cost_ratio_sum": 0.008962,
+  "covered_docs": [
+    "CORNING_2022_10K",
+    "COSTCO_2017_10K"
+  ],
+  "uncovered_docs": [
+    "AMAZON_2016_10K",
+    "AMAZON_2018_10K",
+    "BOEING_2018_10K",
+    "EBAY_2021_10K",
+    "JOHNSON_JOHNSON_2022_10K",
+    "LOCKHEEDMARTIN_2022_10K",
+    "NIKE_2021_10K"
+  ],
+  "baseline_accuracy": 0.9,
+  "selector_accuracy": 0.2,
+  "llm_calls": {
+    "phase_2_incremental": 248,
+    "phase_3_coverage": 2
+  },
+  "selection_latency_seconds": 190.37,
+  "refgen_slug": "what_is_net_income_loss_for_the_most_recent_fiscal_year_10_refgen",
+  "refgen_rules_dir": "rules/financebench_single_cluster/llm/gpt54/refine_generality/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_refgen",
+  "rules_copied": [
+    "rule_mda_results_of_operations_net_income_text",
+    "rule_selected_financial_data_net_income_table"
+  ],
+  "n_rules_total_pool": 33
+}

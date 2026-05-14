@@ -1,0 +1,45 @@
+{
+  "question": "What is the registrant's telephone number?",
+  "question_slug": "what_is_the_registrants_telephone_number_10_llm",
+  "tau": 0.2,
+  "selected_rules": [
+    "rule_exact_phone_only_span",
+    "rule_registrant_phone_following_zip_parent",
+    "rule_page1_before_documents_incorporated",
+    "rule_cover_page_before_section_12b",
+    "rule_page1_phone_followed_by_section12b_neighbor",
+    "rule_phone_only_or_phone_header"
+  ],
+  "selected_avg_cost_ratio_sum": 0.000492,
+  "covered_docs": [
+    "AMAZON_2016_10K",
+    "AMAZON_2018_10K",
+    "AMCOR_2019_10K",
+    "BOEING_2018_10K",
+    "CORNING_2022_10K",
+    "COSTCO_2017_10K",
+    "EBAY_2021_10K",
+    "JOHNSON_JOHNSON_2022_10K",
+    "LOCKHEEDMARTIN_2022_10K",
+    "NIKE_2021_10K"
+  ],
+  "uncovered_docs": [],
+  "baseline_accuracy": 1.0,
+  "selector_accuracy": 1.0,
+  "llm_calls": {
+    "phase_2_incremental": 170,
+    "phase_3_coverage": 12
+  },
+  "selection_latency_seconds": 122.79,
+  "refgen_slug": "what_is_the_registrants_telephone_number_10_refgen",
+  "refgen_rules_dir": "rules/financebench_single_cluster/llm/gpt54/refine_generality/what_is_the_registrants_telephone_number_10_refgen",
+  "rules_copied": [
+    "rule_exact_phone_only_span",
+    "rule_registrant_phone_following_zip_parent",
+    "rule_page1_before_documents_incorporated",
+    "rule_cover_page_before_section_12b",
+    "rule_page1_phone_followed_by_section12b_neighbor",
+    "rule_phone_only_or_phone_header"
+  ],
+  "n_rules_total_pool": 78
+}

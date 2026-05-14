@@ -1,0 +1,39 @@
+{
+  "question": "What is the address of principal executive offices and ZIP code?",
+  "question_slug": "what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm",
+  "tau": 0.2,
+  "selected_rules": [
+    "rule_address_header_text_itself",
+    "rule_split_address_then_zip_consecutive",
+    "rule_page1_address_label_and_phone_cluster"
+  ],
+  "selected_avg_cost_ratio_sum": 0.001639,
+  "covered_docs": [
+    "COSTCO_2017_10K",
+    "LOCKHEEDMARTIN_2022_10K",
+    "NIKE_2021_10K"
+  ],
+  "uncovered_docs": [
+    "AMAZON_2016_10K",
+    "AMAZON_2018_10K",
+    "AMCOR_2019_10K",
+    "CORNING_2022_10K",
+    "EBAY_2021_10K",
+    "JOHNSON_JOHNSON_2022_10K"
+  ],
+  "baseline_accuracy": 0.9,
+  "selector_accuracy": 0.3,
+  "llm_calls": {
+    "phase_2_incremental": 434,
+    "phase_3_coverage": 3
+  },
+  "selection_latency_seconds": 378.9,
+  "refgen_slug": "what_is_the_address_of_principal_executive_offices_and_zip_c_10_refgen",
+  "refgen_rules_dir": "rules/financebench_single_cluster/llm/gpt54/refine_generality/what_is_the_address_of_principal_executive_offices_and_zip_c_10_refgen",
+  "rules_copied": [
+    "rule_address_header_text_itself",
+    "rule_split_address_then_zip_consecutive",
+    "rule_page1_address_label_and_phone_cluster"
+  ],
+  "n_rules_total_pool": 61
+}

@@ -1,0 +1,32 @@
+{
+  "question": "What is long-term debt at year-end (0 if none)?",
+  "question_slug": "what_is_longterm_debt_at_yearend_0_if_none_10_llm",
+  "tau": 0.2,
+  "selected_rules": [
+    "rule_debt_table_under_notes_or_mda"
+  ],
+  "selected_avg_cost_ratio_sum": 0.005651,
+  "covered_docs": [
+    "COSTCO_2017_10K"
+  ],
+  "uncovered_docs": [
+    "AMAZON_2016_10K",
+    "CORNING_2022_10K",
+    "EBAY_2021_10K",
+    "JOHNSON_JOHNSON_2022_10K",
+    "NIKE_2021_10K"
+  ],
+  "baseline_accuracy": 0.6,
+  "selector_accuracy": 0.1,
+  "llm_calls": {
+    "phase_2_incremental": 208,
+    "phase_3_coverage": 1
+  },
+  "selection_latency_seconds": 162.79,
+  "refgen_slug": "what_is_longterm_debt_at_yearend_0_if_none_10_refgen",
+  "refgen_rules_dir": "rules/financebench_single_cluster/llm/gpt54/refine_generality/what_is_longterm_debt_at_yearend_0_if_none_10_refgen",
+  "rules_copied": [
+    "rule_debt_table_under_notes_or_mda"
+  ],
+  "n_rules_total_pool": 40
+}

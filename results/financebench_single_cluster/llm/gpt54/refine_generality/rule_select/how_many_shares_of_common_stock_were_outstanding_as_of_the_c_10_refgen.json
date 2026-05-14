@@ -1,0 +1,47 @@
+{
+  "question": "How many shares of common stock were outstanding as of the cover-page reference date?",
+  "question_slug": "how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm",
+  "tau": 0.2,
+  "selected_rules": [
+    "rule_page1_sentence_with_there_were_and_common_stock",
+    "rule_page1_cover_span_with_as_of_and_issued_outstanding",
+    "rule_page1_shares_outstanding_as_of_february",
+    "rule_page2_cover_page_numeric_sentence",
+    "rule_page1_registrant_common_stock_outstanding",
+    "rule_page1_phrase_shares_of_common_stock_issued_and_outstanding",
+    "rule_page1_cover_numeric_candidates"
+  ],
+  "selected_avg_cost_ratio_sum": 0.000418,
+  "covered_docs": [
+    "AMAZON_2018_10K",
+    "AMCOR_2019_10K",
+    "BOEING_2018_10K",
+    "CORNING_2022_10K",
+    "COSTCO_2017_10K",
+    "EBAY_2021_10K",
+    "JOHNSON_JOHNSON_2022_10K",
+    "LOCKHEEDMARTIN_2022_10K"
+  ],
+  "uncovered_docs": [
+    "AMAZON_2016_10K"
+  ],
+  "baseline_accuracy": 0.9,
+  "selector_accuracy": 0.8,
+  "llm_calls": {
+    "phase_2_incremental": 602,
+    "phase_3_coverage": 31
+  },
+  "selection_latency_seconds": 445.43,
+  "refgen_slug": "how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_refgen",
+  "refgen_rules_dir": "rules/financebench_single_cluster/llm/gpt54/refine_generality/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_refgen",
+  "rules_copied": [
+    "rule_page1_sentence_with_there_were_and_common_stock",
+    "rule_page1_cover_span_with_as_of_and_issued_outstanding",
+    "rule_page1_shares_outstanding_as_of_february",
+    "rule_page2_cover_page_numeric_sentence",
+    "rule_page1_registrant_common_stock_outstanding",
+    "rule_page1_phrase_shares_of_common_stock_issued_and_outstanding",
+    "rule_page1_cover_numeric_candidates"
+  ],
+  "n_rules_total_pool": 100
+}
