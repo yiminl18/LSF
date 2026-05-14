@@ -256,13 +256,67 @@ A driver script `test/run_select_all.py` should iterate `data/financebench/sampl
 
 ## 6. Hyperparameter `&tau;`
 
-`&tau;` is the only knob. Interpretation: minimum acceptable per-rule coverage on the sampled docs. Operationally for `m = 10`:
+`&tau;` is the only knob exposed to the user. Interpretation: minimum acceptable per-rule coverage on the sampled docs.
 
-- `&tau; = 0` disables overfit filtering — the selector returns the cheapest cover regardless of how specialised individual rules are.
-- `&tau; = 0.2` is a sensible default (drop rules that fire correctly on fewer than 2 docs — already advised in `task_prompt_rule_gen.py`, "A rule covering fewer than 2 documents should be merged into a broader rule or dropped").
-- Above `&tau;_max = min_{d &isin; D*} max_{r : a(r,d)=1} cov(r)`, the problem becomes infeasible. `&tau;_max` can be computed exactly when `eval_individual` is on disk: for each `d &isin; D*` find the max `cov(r)` among rules with `per_document[d].correct == True`, then take the min over `d`.
+### 6.1 Two related quantities
 
-Sweeping `&tau;` across `[0, &tau;_max]` traces the cost-vs-overfit-robustness Pareto curve — useful for sensitivity analysis on the unsampled split (`results/.../eval_merge/<slug>_10_unsampled.json`).
+It is worth distinguishing two values that are often conflated:
+
+- **`&tau;_floor`** (static, user-chosen). The non-negotiable minimum. The algorithm never admits a rule with `cov(r) < &tau;_floor` into the final `S`.
+- **`&tau;_realised`** (dynamic, emerges from the run). The minimum `cov(r)` among rules in the final `S`. By construction `&tau;_realised &ge; &tau;_floor`, and is usually strictly greater because the cheap-first selector tends to pick a few broad rules plus at most one or two narrower ones.
+
+For `m = 10` sampled docs:
+
+- `&tau;_floor = 0` disables overfit filtering — the selector returns the cheapest cover regardless of how specialised individual rules are.
+- `&tau;_floor = 0.2` is a sensible default (drop rules that fire correctly on fewer than 2 docs — aligned with the guidance in `task_prompt_rule_gen.py` that "a rule covering fewer than 2 documents should be merged into a broader rule or dropped").
+
+### 6.2 Static mode (default)
+
+Phase 3 enforces `cov(r) &ge; &tau;_floor` for every `r &isin; S`, banning and resuming as needed. The resulting `&tau;_realised` is reported as a diagnostic in `selected_rules/<slug>.json`. This is the cheapest mode: `cov` is only ever measured on the `|S|` selected rules, never on the wider pool. The selector reports both values so you can see at a glance whether the rule pool comfortably cleared the bar or scraped over it.
+
+### 6.3 Adaptive mode: maximum feasible `&tau;` (opt-in)
+
+The static mode in &sect;6.2 only enforces the lower bound `cov(r) &ge; &tau;_floor`. If instead you want the selector to find the *maximum* `&tau;` consistent with the accuracy constraint, wrap Phase 3 in a tightening loop governed by the following hard invariant.
+
+**Accuracy invariant (preserved at every iteration).** Every accepted state of `S` during the loop satisfies `A(S, d) = 1` for every `d &isin; D*`. A tightening step is only committed when this invariant is re-verified on the candidate `S`; otherwise the loop rolls back to the previous accepted state. The invariant is never violated, not even transiently — `S` always covers all of `D*`.
+
+**Algorithm.**
+
+```
+# Initial: run Phase 2 + Phase 3 with τ = τ_floor → S_0 covering all of D*;
+# let τ_realised = min cov in S_0.
+S       ← S_0
+τ_best  ← τ_realised                        # invariant: S covers D* at this τ_best
+
+while True:
+    r_min     ← rule in S with the current minimum cov
+    τ_try     ← cov(r_min) + ε              # tighten just past the bottleneck
+    candidate ← Phase 2 resumed from S \ {r_min},
+                admitting only rules with cov ≥ τ_try
+    if candidate covers all of D*:          # accuracy invariant preserved
+        S       ← candidate
+        τ_best  ← min cov(r) over r ∈ S
+        continue
+    else:
+        break                               # any further tightening would drop a
+                                            # doc from D*, violating the invariant
+
+return S, τ_best
+```
+
+**Guarantee on termination.** `S` covers all of `D*` (accuracy invariant intact) and `&tau;_best` is the largest `&tau;` such that the cheap-first selector, over the rules it has touched in this run, can produce a feasible `S`. Any attempt to raise `&tau;` further would force at least one document in `D*` to become uncovered.
+
+**Cost.** Each tightening iteration bans one rule and pulls in at most a small number — typically one to three — of replacement rules. Each replacement costs `m` LLM-judge calls to measure its `cov`. With at most `k` tightening rounds and ~3 new rules per round, the extra cost is bounded by roughly `3k · m` on top of the base run. For `k = 5` and `m = 10` that is ≈150 extra calls — still well under `n · m`.
+
+**One-sided and safe.** The loop only raises `&tau;`; it never falls below `&tau;_floor`. Failed tightening attempts are rolled back to the previous accepted `S`, so even in the pathological case where no tightening succeeds, the result is identical to the static mode of &sect;6.2. The accuracy constraint is enforced as a hard gate inside the loop, not as a soft penalty.
+
+**Practical effect.** On a healthy rule pool with a few broad high-coverage rules, the loop quickly pushes `&tau;_best` to 0.6–0.7 and stops — narrow overfit rules get banned automatically because higher-coverage alternatives exist. On a pool dominated by narrow rules, the loop stalls near `&tau;_floor` and you have learned something useful about the pool itself.
+
+**Recommended usage.** Off by default. Enable with a `--auto-tighten` flag on `src/select_rules_cheap_first.py` when overfit is the bigger concern than runtime. Persist both `&tau;_floor` and the final `&tau;_best` in `selected_rules/<slug>.json`, along with the per-iteration trail (`tightening_history`), so downstream consumers can audit how the run reached its threshold.
+
+### 6.4 Note on `&tau;_max`
+
+A theoretical upper bound `&tau;_max = min_{d &isin; D*} max_{r : a(r,d)=1} cov(r)` exists and characterises the global feasibility ceiling. Computing it exactly requires `a(r, d)` for *every* rule — `n · m` LLM-judge calls — which defeats the cheap-first design. So `&tau;_max` is not directly computable in production. Auto-tightening (&sect;6.3) is the cheap surrogate: it finds the largest `&tau;_realised` the *touched* rules can support, which is a lower bound on `&tau;_max` but is what actually matters for the selected set.
 
 ---
 
@@ -292,8 +346,10 @@ The win is dominated by replacing `n` with `k` in the dominant term and harvesti
 - Phase 0: assert `sum(W_r for r in rules)` equals the sum of `retrieved_token_count` across all `<rule>_individual.json` records for the question slug (allowing fallback-tokenisation drift).
 - Phase 1: confirm `|D*| / m` matches `eval_merge/<slug>_sampled.json::accuracy` for the same slug.
 - Phase 2: at termination, assert `D* &subseteq; &cup;_{r∈S} gained(r)` and rerun `rule_apply_merge(rule_names=S)` + judge on all of `D*` to confirm every doc is still correct.
-- Phase 3: re-read `eval_individual/<slug>/<r>_eval.json::accuracy` for every `r ∈ S` after ban-and-resume, assert all values &ge; `&tau;`.
+- Phase 3: re-read `eval_individual/<slug>/<r>_eval.json::accuracy` for every `r ∈ S` after ban-and-resume, assert all values &ge; `&tau;_floor` (and &ge; `&tau;_best` if auto-tighten was on).
+- Accuracy invariant: rerun `rule_apply_merge(rule_names=S)` + judge on every `d &isin; D*`. Every doc must come back `correct = True`. This is the contract the algorithm promises and must be checked at the very end, regardless of mode.
 - Cross-check: `selector_accuracy` recomputed via a full merge eval on `S` must be &ge; `baseline_accuracy` from `eval_merge/.../summary.json`.
+- Auto-tighten audit: for each entry in the `tightening_history`, verify that the recorded candidate `S` covered all of `D*` (only accepted entries are kept) and that `&tau;_best` monotonically non-decreased across iterations.
 
 ---
 

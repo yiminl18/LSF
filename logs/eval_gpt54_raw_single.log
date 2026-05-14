@@ -1,0 +1,144 @@
+Loading sampled docs ...
+Loading unsampled docs ...
+Questions: 10  sampled: 10  unsampled: 50
+
+
+Question: What is long-term debt at year-end (0 if none)?
+  [gen] SKIP what_is_longterm_debt_at_yearend_0_if_none_10
+  [apply:sampled] rules=3  docs=10
+  [apply:unsampled] rules=3  docs=50
+  [eval:sampled] accuracy=0.70 (7/10)  cost=0.0728
+  [eval:unsampled] accuracy=0.66 (33/50)  cost=0.0646
+
+Question: What is net income (loss) for the most recent fiscal year?
+  [gen] SKIP what_is_net_income_loss_for_the_most_recent_fiscal_year_10
+  [apply:sampled] rules=4  docs=10
+  [apply:unsampled] rules=4  docs=50
+  [eval:sampled] accuracy=0.90 (9/10)  cost=0.6080
+  [eval:unsampled] accuracy=0.80 (40/50)  cost=0.5400
+
+Question: What is total revenue for the most recent fiscal year (from the audited income statement)?
+  [gen] SKIP what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10
+  [apply:sampled] rules=4  docs=10
+  [apply:unsampled] rules=4  docs=50
+  [eval:sampled] accuracy=0.90 (9/10)  cost=0.4323
+  [eval:unsampled] accuracy=0.82 (41/50)  cost=0.4098
+
+Question: What is total assets at year-end (from the audited balance sheet)?
+  [gen] SKIP what_is_total_assets_at_yearend_from_the_audited_balance_she_10
+  [apply:sampled] rules=4  docs=10
+  [apply:unsampled] rules=4  docs=50
+  [eval:sampled] accuracy=0.60 (6/10)  cost=0.0293
+  [eval:unsampled] accuracy=0.78 (39/50)  cost=0.0331
+
+Question: What is the registrant's telephone number?
+  [gen] SKIP what_is_the_registrants_telephone_number_10
+  [apply:sampled] rules=1  docs=10
+  [apply:unsampled] rules=1  docs=50
+  [eval:sampled] accuracy=1.00 (10/10)  cost=0.0004
+  [eval:unsampled] accuracy=0.48 (24/50)  cost=0.0004
+
+Question: How many shares of common stock were outstanding as of the cover-page reference date?
+  [gen] SKIP how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10
+  [apply:sampled] rules=3  docs=10
+  [apply:unsampled] rules=3  docs=50
+  [eval:sampled] accuracy=0.90 (9/10)  cost=0.0005
+  [eval:unsampled] accuracy=0.96 (48/50)  cost=0.0010
+
+Question: What is the registrant's exact name?
+  [gen] SKIP what_is_the_registrants_exact_name_10
+  [apply:sampled] rules=1  docs=10
+  [apply:unsampled] rules=1  docs=50
+  [eval:sampled] accuracy=1.00 (10/10)  cost=0.0004
+  [eval:unsampled] accuracy=0.94 (47/50)  cost=0.0003
+
+Question: What is the state (or other jurisdiction) of incorporation and the IRS Employer Identification Number?
+  [gen] SKIP what_is_the_state_or_other_jurisdiction_of_incorporation_and_10
+  [apply:sampled] rules=2  docs=10
+  [apply:unsampled] rules=2  docs=50
+  [eval:sampled] accuracy=1.00 (10/10)  cost=0.0080
+  [eval:unsampled] accuracy=0.98 (49/50)  cost=0.0090
+
+Question: What is the address of principal executive offices and ZIP code?
+  [gen] SKIP what_is_the_address_of_principal_executive_offices_and_zip_c_10
+  [apply:sampled] rules=3  docs=10
+  [apply:unsampled] rules=3  docs=50
+  [eval:sampled] accuracy=0.90 (9/10)  cost=0.0006
+  [eval:unsampled] accuracy=0.66 (33/50)  cost=0.0005
+
+Question: What is/are the trading symbol(s) and listing exchange(s)?
+  [gen] SKIP what_isare_the_trading_symbols_and_listing_exchanges_10
+  [apply:sampled] rules=6  docs=10
+  [apply:unsampled] rules=6  docs=50
+  [eval:sampled] accuracy=0.70 (7/10)  cost=0.0027
+  [eval:unsampled] accuracy=0.46 (23/50)  cost=0.0017
+
+=== End-to-End Pipeline Summary ===
+Rule gen: src/rule_gen_llm_coarse.py  |  refine: off
+Question                                              Rules  SampAcc  UnsmpAcc  CostRatio
+-----------------------------------------------------------------------------------------
+  What is long-term debt at year-end (0 if none)?         3     0.70      0.66     0.0728
+  What is net income (loss) for the most recent fi        4     0.90      0.80     0.6080
+  What is total revenue for the most recent fiscal        4     0.90      0.82     0.4323
+  What is total assets at year-end (from the audit        4     0.60      0.78     0.0293
+  What is the registrant's telephone number?              1     1.00      0.48     0.0004
+  How many shares of common stock were outstanding        3     0.90      0.96     0.0005
+  What is the registrant's exact name?                    1     1.00      0.94     0.0004
+  What is the state (or other jurisdiction) of inc        2     1.00      0.98     0.0080
+  What is the address of principal executive offic        3     0.90      0.66     0.0006
+  What is/are the trading symbol(s) and listing ex        6     0.70      0.46     0.0027
+-----------------------------------------------------------------------------------------
+  AVERAGE                                                       0.86      0.75     0.1155
+[yiming-dev 115ddbc] pipeline results: raw
+ 42 files changed, 4652750 insertions(+)
+ create mode 100644 results/financebench_single_cluster/agent/gpt54/raw/eval_merge/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_sampled.json
+ create mode 100644 results/financebench_single_cluster/agent/gpt54/raw/eval_merge/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_unsampled.json
+ create mode 100644 results/financebench_single_cluster/agent/gpt54/raw/eval_merge/summary.json
+ create mode 100644 results/financebench_single_cluster/agent/gpt54/raw/eval_merge/what_is_longterm_debt_at_yearend_0_if_none_10_sampled.json
+ create mode 100644 results/financebench_single_cluster/agent/gpt54/raw/eval_merge/what_is_longterm_debt_at_yearend_0_if_none_10_unsampled.json
+ create mode 100644 results/financebench_single_cluster/agent/gpt54/raw/eval_merge/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_sampled.json
+ create mode 100644 results/financebench_single_cluster/agent/gpt54/raw/eval_merge/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_unsampled.json
+ create mode 100644 results/financebench_single_cluster/agent/gpt54/raw/eval_merge/what_is_the_address_of_principal_executive_offices_and_zip_c_10_sampled.json
+ create mode 100644 results/financebench_single_cluster/agent/gpt54/raw/eval_merge/what_is_the_address_of_principal_executive_offices_and_zip_c_10_unsampled.json
+ create mode 100644 results/financebench_single_cluster/agent/gpt54/raw/eval_merge/what_is_the_registrants_exact_name_10_sampled.json
+ create mode 100644 results/financebench_single_cluster/agent/gpt54/raw/eval_merge/what_is_the_registrants_exact_name_10_unsampled.json
+ create mode 100644 results/financebench_single_cluster/agent/gpt54/raw/eval_merge/what_is_the_registrants_telephone_number_10_sampled.json
+ create mode 100644 results/financebench_single_cluster/agent/gpt54/raw/eval_merge/what_is_the_registrants_telephone_number_10_unsampled.json
+ create mode 100644 results/financebench_single_cluster/agent/gpt54/raw/eval_merge/what_is_the_state_or_other_jurisdiction_of_incorporation_and_10_sampled.json
+ create mode 100644 results/financebench_single_cluster/agent/gpt54/raw/eval_merge/what_is_the_state_or_other_jurisdiction_of_incorporation_and_10_unsampled.json
+ create mode 100644 results/financebench_single_cluster/agent/gpt54/raw/eval_merge/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_sampled.json
+ create mode 100644 results/financebench_single_cluster/agent/gpt54/raw/eval_merge/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_unsampled.json
+ create mode 100644 results/financebench_single_cluster/agent/gpt54/raw/eval_merge/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_sampled.json
+ create mode 100644 results/financebench_single_cluster/agent/gpt54/raw/eval_merge/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_unsampled.json
+ create mode 100644 results/financebench_single_cluster/agent/gpt54/raw/eval_merge/what_isare_the_trading_symbols_and_listing_exchanges_10_sampled.json
+ create mode 100644 results/financebench_single_cluster/agent/gpt54/raw/eval_merge/what_isare_the_trading_symbols_and_listing_exchanges_10_unsampled.json
+ create mode 100644 results/financebench_single_cluster/agent/gpt54/raw/pipeline_summary.json
+ create mode 100644 results/financebench_single_cluster/agent/gpt54/raw/rule_run_merge/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_cover_page_numeric_share_spans__rule_cover_page_shares_outstanding__rule_nike_adjacent_share_numbers_merge.json
+ create mode 100644 results/financebench_single_cluster/agent/gpt54/raw/rule_run_merge/what_is_longterm_debt_at_yearend_0_if_none_10_llm/rule_balance_sheet_tables__rule_financial_statement_tables_long_term_debt__rule_selected_financial_data_tables_merge.json
+ create mode 100644 results/financebench_single_cluster/agent/gpt54/raw/rule_run_merge/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm/rule_financial_statements_net_income__rule_item7_item8_financial_sections__rule_late_page_item7_item8_sections__rule_pre_merge.json
+ create mode 100644 results/financebench_single_cluster/agent/gpt54/raw/rule_run_merge/what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm/rule_cover_address_block_components_page1__rule_cover_principal_offices_page1__rule_page1_company_block_dense_merge.json
+ create mode 100644 results/financebench_single_cluster/agent/gpt54/raw/rule_run_merge/what_is_the_registrants_exact_name_10_llm/rule_cover_exact_name_bold_merge.json
+ create mode 100644 results/financebench_single_cluster/agent/gpt54/raw/rule_run_merge/what_is_the_registrants_telephone_number_10_llm/rule_cover_page_telephone_merge.json
+ create mode 100644 results/financebench_single_cluster/agent/gpt54/raw/rule_run_merge/what_is_the_state_or_other_jurisdiction_of_incorporation_and_10_llm/rule_page1_company_header_block__rule_page1_incorporation_ein_block_merge.json
+ create mode 100644 results/financebench_single_cluster/agent/gpt54/raw/rule_run_merge/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm/rule_balance_sheet_assets_liabilities_table__rule_financial_tables_total_assets_cells__rule_item8_balance_sheet_tables___merge.json
+ create mode 100644 results/financebench_single_cluster/agent/gpt54/raw/rule_run_merge/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_item8_financial_statements_income_statement__rule_partii_sales_revenue_tables_text__rule_selected_financial_data_ta_merge.json
+ create mode 100644 results/financebench_single_cluster/agent/gpt54/raw/rule_run_merge/what_isare_the_trading_symbols_and_listing_exchanges_10_llm/rule_amcor_merger_symbol_exchange__rule_item1_business_listed_under_symbol__rule_jnj_page1_trading_symbols_exchange__rul_merge.json
+ create mode 100644 results/financebench_single_cluster/agent/gpt54/raw/rule_run_merge_unsampled/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm/rule_cover_page_numeric_share_spans__rule_cover_page_shares_outstanding__rule_nike_adjacent_share_numbers_merge.json
+ create mode 100644 results/financebench_single_cluster/agent/gpt54/raw/rule_run_merge_unsampled/what_is_longterm_debt_at_yearend_0_if_none_10_llm/rule_balance_sheet_tables__rule_financial_statement_tables_long_term_debt__rule_selected_financial_data_tables_merge.json
+ create mode 100644 results/financebench_single_cluster/agent/gpt54/raw/rule_run_merge_unsampled/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm/rule_financial_statements_net_income__rule_item7_item8_financial_sections__rule_late_page_item7_item8_sections__rule_pre_merge.json
+ create mode 100644 results/financebench_single_cluster/agent/gpt54/raw/rule_run_merge_unsampled/what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm/rule_cover_address_block_components_page1__rule_cover_principal_offices_page1__rule_page1_company_block_dense_merge.json
+ create mode 100644 results/financebench_single_cluster/agent/gpt54/raw/rule_run_merge_unsampled/what_is_the_registrants_exact_name_10_llm/rule_cover_exact_name_bold_merge.json
+ create mode 100644 results/financebench_single_cluster/agent/gpt54/raw/rule_run_merge_unsampled/what_is_the_registrants_telephone_number_10_llm/rule_cover_page_telephone_merge.json
+ create mode 100644 results/financebench_single_cluster/agent/gpt54/raw/rule_run_merge_unsampled/what_is_the_state_or_other_jurisdiction_of_incorporation_and_10_llm/rule_page1_company_header_block__rule_page1_incorporation_ein_block_merge.json
+ create mode 100644 results/financebench_single_cluster/agent/gpt54/raw/rule_run_merge_unsampled/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm/rule_balance_sheet_assets_liabilities_table__rule_financial_tables_total_assets_cells__rule_item8_balance_sheet_tables___merge.json
+ create mode 100644 results/financebench_single_cluster/agent/gpt54/raw/rule_run_merge_unsampled/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_item8_financial_statements_income_statement__rule_partii_sales_revenue_tables_text__rule_selected_financial_data_ta_merge.json
+ create mode 100644 results/financebench_single_cluster/agent/gpt54/raw/rule_run_merge_unsampled/what_isare_the_trading_symbols_and_listing_exchanges_10_llm/rule_amcor_merger_symbol_exchange__rule_item1_business_listed_under_symbol__rule_jnj_page1_trading_symbols_exchange__rul_merge.json
+remote: warning: See https://gh.io/lfs for more information.        
+remote: warning: File results/financebench_single_cluster/agent/gpt54/raw/rule_run_merge_unsampled/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm/rule_financial_statements_net_income__rule_item7_item8_financial_sections__rule_late_page_item7_item8_sections__rule_pre_merge.json is 75.26 MB; this is larger than GitHub's recommended maximum file size of 50.00 MB        
+remote: warning: File results/financebench_single_cluster/agent/gpt54/raw/rule_run_merge_unsampled/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm/rule_item8_financial_statements_income_statement__rule_partii_sales_revenue_tables_text__rule_selected_financial_data_ta_merge.json is 58.05 MB; this is larger than GitHub's recommended maximum file size of 50.00 MB        
+remote: warning: GH001: Large files detected. You may want to try Git Large File Storage - https://git-lfs.github.com.        
+To https://github.com/yiminl18/LSF.git
+   9501457..115ddbc  yiming-dev -> yiming-dev
+
+Results: results/financebench_single_cluster/agent/gpt54/raw/
+  [git] pushed results to remote

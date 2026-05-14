@@ -1,0 +1,182 @@
+
+================================================================================
+  Table 1 — Single Cluster | LLM (GPT-5.4): One-Shot vs Refined
+================================================================================
+Strategy                Sampled Acc  Sampled Cost  Unsampled Acc  Unsampled Cost
+--------------------------------------------------------------------------------
+LLM one-shot (raw)             0.91        0.1722           0.89          0.1686
+LLM refined                    0.90        0.0285           0.78          0.0348
+
+Observation: Refinement preserves sampled accuracy (0.91→0.90) while cutting cost
+by ~6x (0.172→0.029). Unsampled accuracy drops more (0.89→0.78), suggesting the
+pruning over-fits slightly to the sampled set. Cost reduction generalizes well.
+
+  --------------------------------------------------------------------------------
+  Table 1a — Per-Query Breakdown (Single Cluster | LLM One-Shot Raw vs Refined)
+  --------------------------------------------------------------------------------
+                          | LLM one-shot raw                       | LLM refined
+  Query                   | sAcc   sCost     uAcc   uCost          | sAcc   sCost     uAcc   uCost
+  ------------------------+----------------------------------------+----------------------------------------
+  shares outstanding      | 0.90   0.003024  0.98   0.002947       | 0.90   0.000255  0.66   0.000513
+  long-term debt          | 0.60   0.133561  0.66   0.110053       | 0.60   0.023565  0.46   0.020443
+  net income              | 0.90   0.210782  0.76   0.194754       | 0.90   0.112685  0.76   0.132868
+  address + ZIP           | 0.90   0.013152  0.94   0.031637       | 0.90   0.000351  0.88   0.000538
+  exact name              | 0.90   0.062193  1.00   0.073821       | 0.90   0.000101  0.90   0.000122
+  telephone number        | 1.00   0.011783  1.00   0.014957       | 1.00   0.000316  0.82   0.000777
+  state of incorp + EIN   | 1.00   0.013100  0.98   0.019103       | 1.00   0.000107  0.88   0.000219
+  total assets            | 1.00   0.250353  0.86   0.230937       | 0.90   0.030992  0.78   0.045356
+  total revenue           | 0.90   0.867288  0.82   0.855572       | 0.90   0.015432  0.70   0.018605
+  trading symbols         | 1.00   0.156336  0.92   0.151967       | 1.00   0.101153  0.94   0.128985
+  ------------------------+----------------------------------------+----------------------------------------
+  Average                 | 0.91   0.1722    0.89   0.1686         | 0.90   0.0285    0.78   0.0348
+
+  Sources:
+    results/financebench_single_cluster/llm/gpt54/one_shot/eval_merge/<slug>_{sampled,unsampled}.json
+    results/financebench_single_cluster/llm/gpt54/refine/eval_merge/sampled_refined_eval.json
+    results/financebench_single_cluster/llm/gpt54/refine/eval_merge/<slug>_unsampled_refined.json
+
+  Refinement effects, query by query:
+    - Cost cuts are large and consistent on all queries (3x to 50x reductions in
+      sCost). The biggest absolute saves: total revenue (0.867 -> 0.015, ~56x),
+      total assets (0.250 -> 0.031, ~8x), net income (0.211 -> 0.113, ~2x).
+    - Sampled accuracy is preserved on 9/10 queries; total assets drops 1.00->0.90.
+    - Unsampled drops concentrate on four queries:
+        shares outstanding (0.98 -> 0.66, -0.32)
+        long-term debt     (0.66 -> 0.46, -0.20)
+        telephone number   (1.00 -> 0.82, -0.18)
+        state of incorp    (0.98 -> 0.88, -0.10)
+        total revenue      (0.82 -> 0.70, -0.12)
+      Refinement keeps the rules that pass the 10 sampled docs and prunes those
+      that didn't fire there — but some pruned rules were the ones that
+      generalized to unsampled cover-page layouts.
+    - Trading symbols and address actually improve unsampled cost without losing
+      accuracy after refinement, suggesting their pruned rules really were
+      redundant on the sampled set.
+
+================================================================================
+  Table 2 — Single Cluster | Agent Rules: GPT-5.4 Raw vs vs Opus 4.7 Raw
+================================================================================
+Strategy                Sampled Acc  Sampled Cost  Unsampled Acc  Unsampled Cost
+--------------------------------------------------------------------------------
+Agent GPT-5.4 raw              0.86        0.1155           0.75          0.1060
+Agent Opus 4.7 raw             0.89        0.1312           0.78          0.1198
+
+Observation: Refining GPT-5.4 agent rules slightly improves sampled accuracy
+(0.86→0.88) and cuts cost by ~3x (0.116→0.036), with minimal unsampled accuracy
+loss (0.75→0.73). Opus 4.7 raw matches GPT-5.4 raw in accuracy but at similar
+cost; it generalizes better to unsampled docs than GPT-5.4 refined.
+
+  --------------------------------------------------------------------------------
+  Table 2a — Per-Query Breakdown (Single Cluster | Agent Raw)
+  --------------------------------------------------------------------------------
+                                                  | Agent GPT-5.4 raw                | Agent Opus 4.7 raw
+  Query                                           | sAcc   sCost     uAcc   uCost    | sAcc   sCost     uAcc   uCost
+  ------------------------------------------------+----------------------------------+----------------------------------
+  shares of common stock outstanding              | 0.90   0.000457  0.96   0.001000 | 0.90   0.000457  0.96   0.001000
+  long-term debt at year-end                      | 0.70   0.072772  0.66   0.064553 | 0.70   0.098606  0.60   0.082626
+  net income (loss) most recent fiscal year       | 0.90   0.607984  0.80   0.540048 | 0.90   0.607984  0.76   0.540048
+  address of principal exec offices + zip         | 0.90   0.000633  0.66   0.000474 | 0.90   0.000633  0.66   0.000474
+  registrant's exact name                         | 1.00   0.000439  0.94   0.000334 | 1.00   0.000439  0.94   0.000334
+  registrant's telephone number                   | 1.00   0.000434  0.48   0.000380 |   —      —         —      —
+  state/jurisdiction of incorporation + IRS EIN   | 1.00   0.007988  0.98   0.008973 | 1.00   0.007988  0.98   0.008973
+  total assets at year-end (audited bal. sheet)   | 0.60   0.029318  0.78   0.033124 | 0.90   0.029318  0.82   0.033124
+  total revenue most recent fiscal year           | 0.90   0.432287  0.82   0.409758 | 0.90   0.432287  0.82   0.409758
+  trading symbols and listing exchanges           | 0.70   0.002687  0.46   0.001740 | 0.80   0.002687  0.44   0.001740
+  ------------------------------------------------+----------------------------------+----------------------------------
+  Average                                         | 0.86   0.1155    0.754  0.1060   | 0.889  0.1312    0.776  0.1198
+  Coverage                                        | n=10                             | n=9 (no telephone_number)
+
+  Sources:
+    results/financebench_single_cluster/agent/gpt54/raw/pipeline_summary.json
+    results/financebench_single_cluster/agent/opus47/raw/pipeline_summary.json
+
+  Where the two columns differ:
+    - long_term_debt: same sampled acc, Opus rules retrieve more text → ~36%
+      higher sampled cost (0.099 vs 0.073) and -6 pts unsampled (0.60 vs 0.66).
+    - net_income: identical except Opus -4 pts unsampled (0.76 vs 0.80).
+    - total_assets: Opus is the standout — sampled +0.30 (0.90 vs 0.60),
+      unsampled +0.04 at identical cost. Main driver of Opus's higher average.
+    - trading_symbols: Opus +0.10 sampled but -0.02 unsampled at identical cost.
+  The other 6 queries are bit-identical (same rules / same retrieved spans).
+
+================================================================================
+  Table 3 — Single Cluster | Agent GPT-5.4: Raw vs Refined
+================================================================================
+Strategy                Sampled Acc  Sampled Cost  Unsampled Acc  Unsampled Cost
+--------------------------------------------------------------------------------
+Agent GPT-5.4 raw              0.86        0.1155           0.75          0.1060
+Agent GPT-5.4 refined          0.88        0.0363           0.73          0.0364
+
+Observation: Refinement yields a small accuracy gain on sampled data (+0.02) and
+a ~3x cost reduction, with negligible unsampled accuracy drop (-0.02). The
+cost-accuracy trade-off from refinement is favorable for agent rules.
+
+================================================================================
+  Table 4 — Single Cluster | Rule-Generation Latency & Tokens
+================================================================================
+Strategy                          Lat/q (s)   Input tok/q   Output tok/q   LLM calls/q
+--------------------------------------------------------------------------------
+LLM one-shot (GPT-5.4)               222.7       268,548          7,563             1
+Agent GPT-5.4 raw                    206.7     2,702,681          2,460            36
+Agent Opus 4.7 raw                   622.7        85,398          1,092           138
+
+Sources: per-question rule_gen.json under
+  results/financebench_single_cluster/llm/gpt54/one_shot/rule_gen/        (LLM)
+  results/financebench_single_cluster/agent/{gpt54,opus47}/raw/rule_gen/  (Agent GPT-5.4)
+  rules/financebench_single_cluster/agent/opus47/raw/<slug>/              (Agent Opus 4.7)
+
+Coverage / caveats:
+  - LLM one-shot: 10/10 questions (latest run per question kept when duplicates exist).
+  - Agent GPT-5.4: 10/10 latency; 7/10 token totals (3 runs logged 0 tokens). The 9
+    GPT-5.4 agent rule_gen JSONs sit under agent/opus47/raw/rule_gen/ with model="gpt54"
+    (folder reorg artifact); 1 lives under agent/gpt54/raw/rule_gen/.
+  - Agent Opus 4.7: 4/10 questions have rule_gen JSONs (1× claude-opus-4-7,
+    3× claude-opus-4-5); 1 of those logged 0 tokens / 0 calls and is excluded, so
+    averages are over n=3. Token totals are not directly comparable to the GPT-5.4
+    agent — the Opus runs only log the rule-gen agent's own tokens, while GPT-5.4
+    totals include the judge.
+  - Input tokens: LLM one-shot = the raw prompt over 10 sampled docs (single call).
+    Agent totals sum across all rounds, so per-call input is much smaller than the
+    headline figure.
+
+Observation: the LLM one-shot path is by far the cheapest in tokens (~270k in / 7.5k
+out per question, single call) and finishes in ~3.7 min. The GPT-5.4 agent uses ~10x
+more input tokens and many short calls but completes in similar wall time. Opus 4.7
+takes ~2.6x longer on average per question, with far higher LLM-call counts but
+lower input-token totals where they were measured.
+
+================================================================================
+  Table 5 — Multi Cluster | LLM (GPT-5.4): One-Shot
+================================================================================
+Strategy                Sampled Acc  Sampled Cost  Unsampled Acc  Unsampled Cost
+--------------------------------------------------------------------------------
+LLM one-shot (raw)             0.97        0.0356           0.94          0.0589
+
+Observation: Multi-cluster LLM rules achieve higher accuracy (0.97/0.94) than
+single-cluster (0.91/0.89), likely because mix-doc queries are simpler (e.g.,
+registrant name, address) and the rules are more reliable across doc types.
+Cost is also lower, reflecting shorter retrieved spans for these structured fields.
+
+================================================================================
+  Table 6 — Multi Cluster | Agent Rules: GPT-5.4 Raw vs Opus 4.7 Raw
+================================================================================
+Strategy                Sampled Acc  Sampled Cost  Unsampled Acc  Unsampled Cost
+--------------------------------------------------------------------------------
+Agent GPT-5.4 raw              0.86        0.0679           0.84          0.0869
+Agent Opus 4.7 raw             0.85        0.0127           0.70          0.0125
+
+Observation: GPT-5.4 and Opus 4.7 have similar sampled accuracy (0.86 vs 0.85),
+but Opus 4.7 is ~5x cheaper on sampled data. However, Opus 4.7 degrades more on
+unsampled docs (0.70 vs 0.84), suggesting its rules are less generalizable.
+
+================================================================================
+  Table 7 — Multi Cluster | Agent GPT-5.4: Raw vs Refined
+================================================================================
+  [SKIPPED] No refined rules available for multi-cluster GPT-5.4 agent.
+
+================================================================================
+  Notes
+================================================================================
+  - Multi-Cluster LLM refined: no data (refine step not run for multi-cluster).
+  - Multi-Cluster Agent GPT-5.4 refined: no data (refine step not run).
+  - Cost ratio is relative to full-document retrieval (1.0 = same cost as no rules).
