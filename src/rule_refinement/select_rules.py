@@ -44,7 +44,7 @@ def _greedy_cover(
     labels: dict,
     model_name: str = "gpt54",
     output_dir: str = _DEFAULT_OUTPUT_DIR,
-    use_proxy: bool = True,
+    use_proxy: bool = False,
     initial_S: list[str] | None = None,
 ) -> tuple[list[str], dict[str, set[str]], int, int]:
     """One greedy cover pass over rules_sorted.
@@ -125,7 +125,7 @@ def run_selection(
     tau: float = 0.20,
     model_name: str = "gpt54",
     output_dir: str = _DEFAULT_OUTPUT_DIR,
-    use_proxy: bool = True,
+    use_proxy: bool = False,
 ) -> dict[str, Any]:
     """Run the full Phase 2 + Phase 3 selection algorithm.
 

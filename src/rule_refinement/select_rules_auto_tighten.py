@@ -21,13 +21,88 @@ _ROOT = _SRC.parent
 if str(_SRC) not in sys.path:
     sys.path.insert(0, str(_SRC))
 
+from rule_apply_merge import rule_apply_merge
 from rule_refinement.select_rules import _greedy_cover
+from rule_refinement.eval_judge import judge
 from rule_refinement.baseline_targets import load_target_docs
 from rule_refinement.coverage_check import filter_by_tau, load_or_compute_coverage
 
 _DEFAULT_OUTPUT_DIR = (
     "results/financebench_single_cluster/llm/gpt54/refine_dynamic_generality/selector_run_auto"
 )
+
+
+def _backward_prune(
+    selected: list[str],
+    per_rule_gained: dict[str, set[str]],
+    target_docs: set[str],
+    documents: dict[str, dict],
+    question_slug: str,
+    question: str,
+    rules_dir: str,
+    labels: dict,
+    model_name: str,
+    output_dir: str,
+) -> tuple[list[str], dict[str, set[str]], int, int]:
+    """Try removing each rule from selected (most expensive first).
+
+    A rule is dropped if the remaining set still correctly answers every doc in
+    target_docs. Iterates from the last-added (most expensive) rule to the first.
+
+    Returns (pruned_rules, updated_per_rule_gained, qa_calls, judge_calls).
+    """
+    qa_calls = 0
+    judge_calls = 0
+    current = list(selected)
+
+    i = len(current) - 1
+    while i >= 0:
+        r = current[i]
+        candidate = [x for x in current if x != r]
+
+        if not candidate:
+            i -= 1
+            continue
+
+        covered: set[str] = set()
+        failed = False
+        for d in target_docs:
+            gt = labels.get(d + ".pdf", {}).get(question)
+            try:
+                res = rule_apply_merge(
+                    document=documents[d],
+                    rule_names=candidate,
+                    question_slug=question_slug,
+                    question=question,
+                    model_name=model_name,
+                    rules_dir=rules_dir,
+                    output_dir=output_dir,
+                )
+            except Exception as exc:
+                print(f"    PRUNE SKIP {d} (error: {exc})")
+                failed = True
+                break
+            qa_calls += 1
+
+            try:
+                if judge(question, gt, res["predicted_answer"], model_name=model_name):
+                    covered.add(d)
+                judge_calls += 1
+            except Exception as exc:
+                print(f"    PRUNE SKIP judge {d} (error: {exc})")
+                failed = True
+                break
+
+        if not failed and target_docs <= covered:
+            current = candidate
+            per_rule_gained.pop(r, None)
+            print(f"  PRUNE removed {r:<55}  D* still covered")
+        else:
+            print(f"  PRUNE kept    {r:<55}  losing {len(target_docs - covered)} doc(s)")
+
+        i -= 1
+
+    return current, per_rule_gained, qa_calls, judge_calls
 
 
 def run_selection_auto_tighten(
@@ -44,14 +119,18 @@ def run_selection_auto_tighten(
     max_iters: int = 10,
     model_name: str = "gpt54",
     output_dir: str = _DEFAULT_OUTPUT_DIR,
-    use_proxy: bool = True,
+    use_proxy: bool = False,
+    backtracking: bool = True,
 ) -> dict[str, Any]:
-    """Run Phase 2 + Phase 3 (static tau_floor) then Phase 4 (auto-tighten).
+    """Run Phase 2 + Phase 3 (static tau_floor) + optional backward pruning + Phase 4 (auto-tighten).
 
-    Phase 4 iteratively bans the lowest-coverage rule in S and tries to
-    replace it with higher-coverage alternatives. Each accepted step raises
-    tau_best while preserving full coverage of D*. Stops when no further
-    tightening is feasible.
+    Phase 3.5 (backtracking=True): after the greedy cover converges, try removing
+    each rule from most-expensive to cheapest. A rule is dropped if the remaining
+    set still covers all of D*. Cost: at most |S| * |D*| extra LLM calls.
+
+    Phase 4 iteratively bans the lowest-coverage rule in S and tries to replace
+    it with higher-coverage alternatives. Each accepted step raises tau_best while
+    preserving full coverage of D*. Stops when no further tightening is feasible.
 
     Returns dict with keys:
         question, question_slug, mode, tau_floor, tau_best,
@@ -59,7 +138,7 @@ def run_selection_auto_tighten(
         covered_docs, uncovered_docs,
         baseline_accuracy, selector_accuracy,
         tightening_history,
-        llm_calls: {phase_2_incremental, phase_3_coverage, phase_4_auto_tighten}
+        llm_calls: {phase_2_incremental, phase_3_coverage, phase_35_backtracking, phase_4_auto_tighten}
     """
     eval_data = json.loads(eval_merge_path.read_text(encoding="utf-8"))
     baseline_accuracy = eval_data.get("accuracy", 0.0)
@@ -82,7 +161,7 @@ def run_selection_auto_tighten(
             "baseline_accuracy": round(baseline_accuracy, 4),
             "selector_accuracy": 0.0,
             "tightening_history": [],
-            "llm_calls": {"phase_2_incremental": 0, "phase_3_coverage": 0, "phase_4_auto_tighten": 0},
+            "llm_calls": {"phase_2_incremental": 0, "phase_3_coverage": 0, "phase_35_backtracking": 0, "phase_4_auto_tighten": 0},
         }
 
     rules_sorted = sorted(
@@ -158,6 +237,25 @@ def run_selection_auto_tighten(
             total_judge_calls += jc
             S += S_extra
             per_rule_gained.update(gained_extra)
+
+    # ── Phase 3.5: backward pruning (optional) ───────────────────────────────
+    backtrack_calls = 0
+    if backtracking and S:
+        print(f"\n  Phase 3.5 backtracking: |S|={len(S)}")
+        S, per_rule_gained, qa, jc = _backward_prune(
+            selected=S,
+            per_rule_gained=per_rule_gained,
+            target_docs=target_docs,
+            documents=documents,
+            question_slug=question_slug,
+            question=question,
+            rules_dir=rules_dir,
+            labels=labels,
+            model_name=model_name,
+            output_dir=output_dir,
+        )
+        backtrack_calls += qa + jc
+        print(f"  Phase 3.5 done: |S|={len(S)}")
 
     # ── Phase 4: auto-tighten ─────────────────────────────────────────────────
     tau_best = min((cov_map.get(r, 0.0) for r in S), default=tau_floor)
@@ -293,6 +391,7 @@ def run_selection_auto_tighten(
         "llm_calls": {
             "phase_2_incremental": total_qa_calls,
             "phase_3_coverage": total_judge_calls,
+            "phase_35_backtracking": backtrack_calls,
             "phase_4_auto_tighten": phase4_calls,
         },
     }
