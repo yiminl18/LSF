@@ -178,27 +178,55 @@ A natural home for both: `src/polish_rule_set.py`.
 
 ---
 
-## 4. Files to add
+## 4. Files
+
+The static-`&tau;` pipeline is already implemented under `src/rule_refinement/` and `test/`:
 
 ```
-src/
+src/rule_refinement/
+  __init__.py
   cost_profile.py             # Phase 0 (free, no LLM)
   baseline_targets.py         # Phase 1 (reads existing eval_merge artefact)
-  eval_judge.py               # Extracted judge(...) from test/run_eval_merge_sampled.py
-  select_rules_cheap_first.py # Phase 2
-  coverage_check.py           # Phase 3
+  eval_judge.py               # Extracted judge(...) + proxy_judge(...)
+  select_rules.py             # Phase 2 + Phase 3 (run_selection)
+  coverage_check.py           # Phase 3 helper (filter_by_tau)
   polish_rule_set.py          # Optional polish
 
 test/
-  run_select_all.py           # Driver: for each question in sample_queries.txt, run the full pipeline
+  run_select_all.py           # Driver for the static-τ pipeline
 
 results/financebench_single_cluster/llm/gpt54/one_shot/
   cost_profile/<slug>_10_llm.json     # Cached W_r and per-doc costs
   selector_run/<slug>/...             # Merge prediction outputs from Phase 2 (segregated)
-  selected_rules/<slug>_10_llm.json   # Final S + accounting (LLM calls used, UB, τ, etc.)
+  selected_rules/<slug>_10_llm.json   # Final S + accounting (static-τ mode)
 ```
 
-The selected-rules artefact should record at minimum:
+### 4.1 Auto-tighten variant (additive — does not overwrite static-τ code)
+
+The maximum-feasible-`&tau;` mode from &sect;6.3 is added as separate files so the two modes coexist. Nothing in the static-`&tau;` files (`select_rules.py`, `run_select_all.py`, etc.) is modified.
+
+```
+src/rule_refinement/
+  select_rules_auto_tighten.py        # NEW — Phase 2 + Phase 3 + Phase 4 (auto-tighten)
+                                      # Imports _greedy_cover from select_rules.py,
+                                      # filter_by_tau from coverage_check.py,
+                                      # load_target_docs from baseline_targets.py.
+                                      # Exports run_selection_auto_tighten(...).
+
+test/
+  run_select_all_auto_tighten.py      # NEW — Driver mirroring run_select_all.py,
+                                      # writes to a separate output folder.
+
+results/financebench_single_cluster/llm/gpt54/one_shot/
+  selector_run_auto/<slug>/...        # NEW — Merge predictions from auto-tighten Phase 2/4
+  selected_rules_auto/<slug>.json     # NEW — Final S + accounting (auto-tighten mode)
+```
+
+Both drivers reuse the same upstream artefacts: `cost_profile/`, `eval_merge/`, `eval_individual/`. Only the post-selection outputs are segregated, so static-`&tau;` results and auto-tighten results can be compared side by side without overwriting each other.
+
+### 4.2 Output schemas
+
+Static mode (`selected_rules/<slug>.json`):
 
 ```json
 {
@@ -212,45 +240,84 @@ The selected-rules artefact should record at minimum:
   "baseline_accuracy": 0.90,
   "selector_accuracy": 0.90,
   "llm_calls": {
-    "phase_1_baseline": 10,
     "phase_2_incremental": 27,
     "phase_3_coverage": 35
   }
 }
 ```
 
----
+Auto-tighten mode (`selected_rules_auto/<slug>.json`) adds the tightening trace:
 
-## 5. End-to-end recipe (per question)
-
-```bash
-# Prereqs (existing pipeline):
-python test/run_rule_apply_merge_all.py        # produces rule_run_merge/...
-python test/run_eval_merge_sampled.py          # produces eval_merge/<slug>_sampled.json  (A*)
-# Optional but cheaper-for-Phase-3 if you already have it:
-python test/run_eval_individual.py             # produces eval_individual/<slug>/<rule>_eval.json (cov)
-
-# New (this pipeline):
-python -m src.cost_profile \
-  --rules-dir rules/financebench_single_cluster/llm/gpt54/one_shot/<slug>_10_llm \
-  --processing-dir data/financebench/processing \
-  --labels-file data/financebench/sample_doc_labels.json \
-  --out results/financebench_single_cluster/llm/gpt54/one_shot/cost_profile/<slug>_10_llm.json
-
-python -m src.select_rules_cheap_first \
-  --cost-profile results/.../cost_profile/<slug>_10_llm.json \
-  --eval-merge   results/.../eval_merge/<slug>_10_sampled.json \
-  --eval-individual-dir results/.../eval_individual/<slug>_10_llm/ \
-  --rules-dir    rules/.../one_shot/<slug>_10_llm \
-  --tau 0.20 \
-  --out results/.../selected_rules/<slug>_10_llm.json
-
-# Optional polish
-python -m src.polish_rule_set \
-  --selected results/.../selected_rules/<slug>_10_llm.json
+```json
+{
+  "question": "...",
+  "question_slug": "...",
+  "mode": "auto_tighten",
+  "tau_floor": 0.20,
+  "tau_best": 0.60,
+  "selected_rules": ["rule_..."],
+  "selected_avg_cost_ratio_sum": 0.072,
+  "covered_docs": ["..."],
+  "uncovered_docs": [],
+  "baseline_accuracy": 0.90,
+  "selector_accuracy": 0.90,
+  "tightening_history": [
+    {
+      "iteration": 1,
+      "banned_rule": "rule_specific_pageX",
+      "cov_banned": 0.20,
+      "tau_try": 0.20001,
+      "added_rules": ["rule_broader_anchor"],
+      "added_covs": {"rule_broader_anchor": 0.70},
+      "below_tau_try": [],
+      "feasible_cover": true,
+      "accepted": true
+    }
+  ],
+  "llm_calls": {
+    "phase_2_incremental": 27,
+    "phase_3_coverage": 35,
+    "phase_4_auto_tighten": 18
+  }
+}
 ```
 
-A driver script `test/run_select_all.py` should iterate `data/financebench/sample_queries.txt` and chain these calls, mirroring the structure of `test/run_eval_merge_sampled.py`.
+---
+
+## 5. End-to-end recipe
+
+Both modes share the same upstream prerequisites; they differ only in the final driver.
+
+```bash
+# Prereqs (existing pipeline — needed by both modes):
+python test/run_eval_merge_sampled.py          # eval_merge/<slug>_sampled.json (defines A* and D*)
+python test/run_eval_individual.py             # eval_individual/<slug>/<rule>_eval.json (cov for Phase 3)
+# cost_profile is auto-built/cached by either driver on first run.
+
+# Mode A — Static τ (default, untouched):
+python test/run_select_all.py
+#   → writes selected_rules/<slug>_10_llm.json
+#   → uses τ = TAU (hard-coded in the driver, default 0.20)
+
+# Mode B — Auto-tighten (additive, opt-in):
+python test/run_select_all_auto_tighten.py
+#   → writes selected_rules_auto/<slug>_10_llm.json
+#   → uses τ_floor = TAU_FLOOR and searches for the maximum feasible τ_best
+```
+
+The two drivers reuse the same cost-profile cache, `eval_merge`, and `eval_individual` artefacts; only the post-selection output folders (`selected_rules/` vs `selected_rules_auto/`) and the per-call merge logs (`selector_run/` vs `selector_run_auto/`) are kept separate. This lets you run both pipelines on the same data and compare outcomes per question.
+
+For a single-question dry run without the driver, import directly:
+
+```python
+# Static τ
+from rule_refinement.select_rules import run_selection
+result = run_selection(..., tau=0.20)
+
+# Auto-tighten
+from rule_refinement.select_rules_auto_tighten import run_selection_auto_tighten
+result = run_selection_auto_tighten(..., tau_floor=0.20, epsilon=1e-6, max_iters=20)
+```
 
 ---
 
@@ -312,7 +379,7 @@ return S, τ_best
 
 **Practical effect.** On a healthy rule pool with a few broad high-coverage rules, the loop quickly pushes `&tau;_best` to 0.6–0.7 and stops — narrow overfit rules get banned automatically because higher-coverage alternatives exist. On a pool dominated by narrow rules, the loop stalls near `&tau;_floor` and you have learned something useful about the pool itself.
 
-**Recommended usage.** Off by default. Enable with a `--auto-tighten` flag on `src/select_rules_cheap_first.py` when overfit is the bigger concern than runtime. Persist both `&tau;_floor` and the final `&tau;_best` in `selected_rules/<slug>.json`, along with the per-iteration trail (`tightening_history`), so downstream consumers can audit how the run reached its threshold.
+**Where it lives.** This mode is implemented in `src/rule_refinement/select_rules_auto_tighten.py` (additive — does not modify `select_rules.py`) and driven by `test/run_select_all_auto_tighten.py`. Output is written to `selected_rules_auto/` so it can coexist with static-`&tau;` results in `selected_rules/`. See &sect;4.1 for the full file map and &sect;4.2 for the auto-tighten output schema (`tau_floor`, `tau_best`, `tightening_history`).
 
 ### 6.4 Note on `&tau;_max`
 
