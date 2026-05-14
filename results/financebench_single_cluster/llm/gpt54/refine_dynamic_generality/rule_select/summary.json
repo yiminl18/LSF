@@ -1,0 +1,679 @@
+[
+  {
+    "question": "What is long-term debt at year-end (0 if none)?",
+    "question_slug": "what_is_longterm_debt_at_yearend_0_if_none_10_llm",
+    "mode": "auto_tighten",
+    "tau_floor": 0.2,
+    "tau_best": 0.2,
+    "selected_rules": [
+      "rule_debt_table_under_notes_or_mda"
+    ],
+    "selected_avg_cost_ratio_sum": 0.005651,
+    "covered_docs": [
+      "COSTCO_2017_10K"
+    ],
+    "uncovered_docs": [
+      "AMAZON_2016_10K",
+      "CORNING_2022_10K",
+      "EBAY_2021_10K",
+      "JOHNSON_JOHNSON_2022_10K",
+      "NIKE_2021_10K"
+    ],
+    "baseline_accuracy": 0.6,
+    "selector_accuracy": 0.1,
+    "tightening_history": [
+      {
+        "iteration": 1,
+        "banned_rule": "rule_debt_table_under_notes_or_mda",
+        "cov_banned": 0.2,
+        "tau_try": 0.200001,
+        "added_rules": [
+          "rule_note_debt_table"
+        ],
+        "added_covs": {
+          "rule_note_debt_table": 0.3
+        },
+        "below_tau_try": [],
+        "feasible_cover": false,
+        "accepted": false
+      }
+    ],
+    "llm_calls": {
+      "phase_2_incremental": 208,
+      "phase_3_coverage": 1,
+      "phase_4_auto_tighten": 3
+    },
+    "selection_latency_seconds": 164.0,
+    "refdyn_slug": "what_is_longterm_debt_at_yearend_0_if_none_10_refdyn",
+    "refdyn_rules_dir": "rules/financebench_single_cluster/llm/gpt54/refine_dynamic_generality/what_is_longterm_debt_at_yearend_0_if_none_10_refdyn",
+    "rules_copied": [
+      "rule_debt_table_under_notes_or_mda"
+    ],
+    "n_rules_total_pool": 40
+  },
+  {
+    "question": "What is net income (loss) for the most recent fiscal year?",
+    "question_slug": "what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm",
+    "mode": "auto_tighten",
+    "tau_floor": 0.2,
+    "tau_best": 0.3,
+    "selected_rules": [
+      "rule_mda_results_of_operations_net_income_text",
+      "rule_selected_financial_data_net_income_table"
+    ],
+    "selected_avg_cost_ratio_sum": 0.008962,
+    "covered_docs": [
+      "CORNING_2022_10K",
+      "COSTCO_2017_10K"
+    ],
+    "uncovered_docs": [
+      "AMAZON_2016_10K",
+      "AMAZON_2018_10K",
+      "BOEING_2018_10K",
+      "EBAY_2021_10K",
+      "JOHNSON_JOHNSON_2022_10K",
+      "LOCKHEEDMARTIN_2022_10K",
+      "NIKE_2021_10K"
+    ],
+    "baseline_accuracy": 0.9,
+    "selector_accuracy": 0.2,
+    "tightening_history": [
+      {
+        "iteration": 1,
+        "banned_rule": "rule_mda_results_of_operations_net_income_text",
+        "cov_banned": 0.3,
+        "tau_try": 0.300001,
+        "added_rules": [
+          "rule_mda_item7_net_income_text"
+        ],
+        "added_covs": {
+          "rule_mda_item7_net_income_text": 0.5
+        },
+        "below_tau_try": [],
+        "feasible_cover": false,
+        "accepted": false
+      }
+    ],
+    "llm_calls": {
+      "phase_2_incremental": 247,
+      "phase_3_coverage": 2,
+      "phase_4_auto_tighten": 6
+    },
+    "selection_latency_seconds": 218.86,
+    "refdyn_slug": "what_is_net_income_loss_for_the_most_recent_fiscal_year_10_refdyn",
+    "refdyn_rules_dir": "rules/financebench_single_cluster/llm/gpt54/refine_dynamic_generality/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_refdyn",
+    "rules_copied": [
+      "rule_mda_results_of_operations_net_income_text",
+      "rule_selected_financial_data_net_income_table"
+    ],
+    "n_rules_total_pool": 33
+  },
+  {
+    "question": "What is total revenue for the most recent fiscal year (from the audited income statement)?",
+    "question_slug": "what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm",
+    "mode": "auto_tighten",
+    "tau_floor": 0.2,
+    "tau_best": 0.2,
+    "selected_rules": [],
+    "selected_avg_cost_ratio_sum": 0,
+    "covered_docs": [],
+    "uncovered_docs": [
+      "AMAZON_2016_10K",
+      "AMAZON_2018_10K",
+      "AMCOR_2019_10K",
+      "BOEING_2018_10K",
+      "CORNING_2022_10K",
+      "EBAY_2021_10K",
+      "JOHNSON_JOHNSON_2022_10K",
+      "LOCKHEEDMARTIN_2022_10K",
+      "NIKE_2021_10K"
+    ],
+    "baseline_accuracy": 0.9,
+    "selector_accuracy": 0.0,
+    "tightening_history": [],
+    "llm_calls": {
+      "phase_2_incremental": 333,
+      "phase_3_coverage": 0,
+      "phase_4_auto_tighten": 0
+    },
+    "selection_latency_seconds": 314.16,
+    "refdyn_slug": "what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_refdyn",
+    "refdyn_rules_dir": "rules/financebench_single_cluster/llm/gpt54/refine_dynamic_generality/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_refdyn",
+    "rules_copied": [],
+    "n_rules_total_pool": 37
+  },
+  {
+    "question": "What is total assets at year-end (from the audited balance sheet)?",
+    "question_slug": "what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm",
+    "mode": "auto_tighten",
+    "tau_floor": 0.2,
+    "tau_best": 0.2,
+    "selected_rules": [
+      "rule_tables_with_total_assets_and_audited_year_end_context"
+    ],
+    "selected_avg_cost_ratio_sum": 0.003109,
+    "covered_docs": [
+      "COSTCO_2017_10K"
+    ],
+    "uncovered_docs": [
+      "AMAZON_2016_10K",
+      "AMAZON_2018_10K",
+      "AMCOR_2019_10K",
+      "BOEING_2018_10K",
+      "CORNING_2022_10K",
+      "EBAY_2021_10K",
+      "JOHNSON_JOHNSON_2022_10K",
+      "LOCKHEEDMARTIN_2022_10K",
+      "NIKE_2021_10K"
+    ],
+    "baseline_accuracy": 1.0,
+    "selector_accuracy": 0.1,
+    "tightening_history": [
+      {
+        "iteration": 1,
+        "banned_rule": "rule_tables_with_total_assets_and_audited_year_end_context",
+        "cov_banned": 0.2,
+        "tau_try": 0.200001,
+        "added_rules": [
+          "rule_tables_with_total_assets_and_financial_statements_path"
+        ],
+        "added_covs": {
+          "rule_tables_with_total_assets_and_financial_statements_path": 0.4
+        },
+        "below_tau_try": [],
+        "feasible_cover": false,
+        "accepted": false
+      }
+    ],
+    "llm_calls": {
+      "phase_2_incremental": 1075,
+      "phase_3_coverage": 1,
+      "phase_4_auto_tighten": 4
+    },
+    "selection_latency_seconds": 867.01,
+    "refdyn_slug": "what_is_total_assets_at_yearend_from_the_audited_balance_she_10_refdyn",
+    "refdyn_rules_dir": "rules/financebench_single_cluster/llm/gpt54/refine_dynamic_generality/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_refdyn",
+    "rules_copied": [
+      "rule_tables_with_total_assets_and_audited_year_end_context"
+    ],
+    "n_rules_total_pool": 118
+  },
+  {
+    "question": "What is the registrant's telephone number?",
+    "question_slug": "what_is_the_registrants_telephone_number_10_llm",
+    "mode": "auto_tighten",
+    "tau_floor": 0.2,
+    "tau_best": 0.8,
+    "selected_rules": [
+      "rule_page1_small_body_phone",
+      "rule_page1_text_phone",
+      "rule_phone_in_text_label",
+      "rule_page1_phone_preceded_by_address_neighbor",
+      "rule_page1_phone_number_pattern",
+      "rule_page1_phone_with_registrant_label_neighbor"
+    ],
+    "selected_avg_cost_ratio_sum": 0.00132,
+    "covered_docs": [
+      "AMAZON_2016_10K",
+      "AMAZON_2018_10K",
+      "AMCOR_2019_10K",
+      "BOEING_2018_10K",
+      "CORNING_2022_10K",
+      "COSTCO_2017_10K",
+      "EBAY_2021_10K",
+      "JOHNSON_JOHNSON_2022_10K",
+      "LOCKHEEDMARTIN_2022_10K",
+      "NIKE_2021_10K"
+    ],
+    "uncovered_docs": [],
+    "baseline_accuracy": 1.0,
+    "selector_accuracy": 1.0,
+    "tightening_history": [
+      {
+        "iteration": 1,
+        "banned_rule": "rule_registrant_phone_following_zip_parent",
+        "cov_banned": 0.2,
+        "tau_try": 0.200001,
+        "added_rules": [
+          "rule_cover_page_before_securities_registered"
+        ],
+        "added_covs": {
+          "rule_cover_page_before_securities_registered": 0.3
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 2,
+        "banned_rule": "rule_exact_phone_only_span",
+        "cov_banned": 0.3,
+        "tau_try": 0.300001,
+        "added_rules": [
+          "rule_page1_phone_with_parenthetical_area_code_label"
+        ],
+        "added_covs": {
+          "rule_page1_phone_with_parenthetical_area_code_label": 0.8
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 3,
+        "banned_rule": "rule_cover_page_before_section_12b",
+        "cov_banned": 0.3,
+        "tau_try": 0.300001,
+        "added_rules": [
+          "rule_registrant_telephone_parenthetical_label"
+        ],
+        "added_covs": {
+          "rule_registrant_telephone_parenthetical_label": 0.5
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 4,
+        "banned_rule": "rule_phone_only_or_phone_header",
+        "cov_banned": 0.3,
+        "tau_try": 0.300001,
+        "added_rules": [
+          "rule_path_contains_company_name_page1"
+        ],
+        "added_covs": {
+          "rule_path_contains_company_name_page1": 0.8
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 5,
+        "banned_rule": "rule_cover_page_before_securities_registered",
+        "cov_banned": 0.3,
+        "tau_try": 0.300001,
+        "added_rules": [
+          "rule_page1_small_body_phone"
+        ],
+        "added_covs": {
+          "rule_page1_small_body_phone": 0.8
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 6,
+        "banned_rule": "rule_page1_before_documents_incorporated",
+        "cov_banned": 0.4,
+        "tau_try": 0.400001,
+        "added_rules": [
+          "rule_page1_text_phone"
+        ],
+        "added_covs": {
+          "rule_page1_text_phone": 0.8
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 7,
+        "banned_rule": "rule_registrant_telephone_parenthetical_label",
+        "cov_banned": 0.5,
+        "tau_try": 0.500001,
+        "added_rules": [
+          "rule_phone_in_text_label"
+        ],
+        "added_covs": {
+          "rule_phone_in_text_label": 0.8
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 8,
+        "banned_rule": "rule_page1_phone_followed_by_section12b_neighbor",
+        "cov_banned": 0.8,
+        "tau_try": 0.800001,
+        "added_rules": [
+          "rule_page1_phone_preceded_by_address_neighbor"
+        ],
+        "added_covs": {
+          "rule_page1_phone_preceded_by_address_neighbor": 0.9
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 9,
+        "banned_rule": "rule_page1_phone_with_parenthetical_area_code_label",
+        "cov_banned": 0.8,
+        "tau_try": 0.800001,
+        "added_rules": [
+          "rule_page1_phone_number_pattern"
+        ],
+        "added_covs": {
+          "rule_page1_phone_number_pattern": 1.0
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 10,
+        "banned_rule": "rule_path_contains_company_name_page1",
+        "cov_banned": 0.8,
+        "tau_try": 0.800001,
+        "added_rules": [
+          "rule_page1_phone_with_registrant_label_neighbor"
+        ],
+        "added_covs": {
+          "rule_page1_phone_with_registrant_label_neighbor": 1.0
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      }
+    ],
+    "llm_calls": {
+      "phase_2_incremental": 170,
+      "phase_3_coverage": 12,
+      "phase_4_auto_tighten": 34
+    },
+    "selection_latency_seconds": 154.22,
+    "refdyn_slug": "what_is_the_registrants_telephone_number_10_refdyn",
+    "refdyn_rules_dir": "rules/financebench_single_cluster/llm/gpt54/refine_dynamic_generality/what_is_the_registrants_telephone_number_10_refdyn",
+    "rules_copied": [
+      "rule_page1_small_body_phone",
+      "rule_page1_text_phone",
+      "rule_phone_in_text_label",
+      "rule_page1_phone_preceded_by_address_neighbor",
+      "rule_page1_phone_number_pattern",
+      "rule_page1_phone_with_registrant_label_neighbor"
+    ],
+    "n_rules_total_pool": 78
+  },
+  {
+    "question": "How many shares of common stock were outstanding as of the cover-page reference date?",
+    "question_slug": "how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm",
+    "mode": "auto_tighten",
+    "tau_floor": 0.2,
+    "tau_best": 0.0,
+    "selected_rules": [
+      "rule_page1_sentence_with_there_were_and_common_stock",
+      "rule_page1_cover_span_with_as_of_and_issued_outstanding",
+      "rule_page1_shares_outstanding_as_of_february",
+      "rule_page2_cover_page_numeric_sentence",
+      "rule_page1_registrant_common_stock_outstanding",
+      "rule_page1_phrase_shares_of_common_stock_issued_and_outstanding",
+      "rule_page1_cover_numeric_candidates"
+    ],
+    "selected_avg_cost_ratio_sum": 0.000418,
+    "covered_docs": [
+      "AMAZON_2018_10K",
+      "AMCOR_2019_10K",
+      "BOEING_2018_10K",
+      "CORNING_2022_10K",
+      "COSTCO_2017_10K",
+      "EBAY_2021_10K",
+      "JOHNSON_JOHNSON_2022_10K",
+      "LOCKHEEDMARTIN_2022_10K"
+    ],
+    "uncovered_docs": [
+      "AMAZON_2016_10K"
+    ],
+    "baseline_accuracy": 0.9,
+    "selector_accuracy": 0.8,
+    "tightening_history": [
+      {
+        "iteration": 1,
+        "banned_rule": "rule_page1_phrase_shares_of_common_stock_issued_and_outstanding",
+        "cov_banned": 0.0,
+        "tau_try": 1e-06,
+        "added_rules": [
+          "rule_page2_issued_and_outstanding_sentence"
+        ],
+        "added_covs": {
+          "rule_page2_issued_and_outstanding_sentence": 0.2
+        },
+        "below_tau_try": [],
+        "feasible_cover": false,
+        "accepted": false
+      }
+    ],
+    "llm_calls": {
+      "phase_2_incremental": 603,
+      "phase_3_coverage": 31,
+      "phase_4_auto_tighten": 2
+    },
+    "selection_latency_seconds": 474.28,
+    "refdyn_slug": "how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_refdyn",
+    "refdyn_rules_dir": "rules/financebench_single_cluster/llm/gpt54/refine_dynamic_generality/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_refdyn",
+    "rules_copied": [
+      "rule_page1_sentence_with_there_were_and_common_stock",
+      "rule_page1_cover_span_with_as_of_and_issued_outstanding",
+      "rule_page1_shares_outstanding_as_of_february",
+      "rule_page2_cover_page_numeric_sentence",
+      "rule_page1_registrant_common_stock_outstanding",
+      "rule_page1_phrase_shares_of_common_stock_issued_and_outstanding",
+      "rule_page1_cover_numeric_candidates"
+    ],
+    "n_rules_total_pool": 100
+  },
+  {
+    "question": "What is the registrant's exact name?",
+    "question_slug": "what_is_the_registrants_exact_name_10_llm",
+    "mode": "auto_tighten",
+    "tau_floor": 0.2,
+    "tau_best": 1.0,
+    "selected_rules": [
+      "rule_exact_name_caption_parent",
+      "rule_page1_first_non_boilerplate_after_commission_file"
+    ],
+    "selected_avg_cost_ratio_sum": 0.000134,
+    "covered_docs": [
+      "AMAZON_2016_10K",
+      "AMAZON_2018_10K",
+      "AMCOR_2019_10K",
+      "BOEING_2018_10K",
+      "CORNING_2022_10K",
+      "COSTCO_2017_10K",
+      "JOHNSON_JOHNSON_2022_10K",
+      "LOCKHEEDMARTIN_2022_10K",
+      "NIKE_2021_10K"
+    ],
+    "uncovered_docs": [],
+    "baseline_accuracy": 0.9,
+    "selector_accuracy": 0.9,
+    "tightening_history": [
+      {
+        "iteration": 1,
+        "banned_rule": "rule_page1_company_heading_with_single_path",
+        "cov_banned": 0.8,
+        "tau_try": 0.800001,
+        "added_rules": [
+          "rule_exact_name_caption_parent"
+        ],
+        "added_covs": {
+          "rule_exact_name_caption_parent": 1.0
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 2,
+        "banned_rule": "rule_page1_large_bold_name_before_exact_caption",
+        "cov_banned": 0.9,
+        "tau_try": 0.900001,
+        "added_rules": [
+          "rule_page1_first_non_boilerplate_after_commission_file"
+        ],
+        "added_covs": {
+          "rule_page1_first_non_boilerplate_after_commission_file": 1.0
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 3,
+        "banned_rule": "rule_exact_name_caption_parent",
+        "cov_banned": 1.0,
+        "tau_try": 1.000001,
+        "added_rules": [],
+        "added_covs": {},
+        "below_tau_try": [],
+        "feasible_cover": false,
+        "accepted": false
+      }
+    ],
+    "llm_calls": {
+      "phase_2_incremental": 19,
+      "phase_3_coverage": 9,
+      "phase_4_auto_tighten": 18
+    },
+    "selection_latency_seconds": 36.21,
+    "refdyn_slug": "what_is_the_registrants_exact_name_10_refdyn",
+    "refdyn_rules_dir": "rules/financebench_single_cluster/llm/gpt54/refine_dynamic_generality/what_is_the_registrants_exact_name_10_refdyn",
+    "rules_copied": [
+      "rule_exact_name_caption_parent",
+      "rule_page1_first_non_boilerplate_after_commission_file"
+    ],
+    "n_rules_total_pool": 25
+  },
+  {
+    "question": "What is the state (or other jurisdiction) of incorporation and the IRS Employer Identification Number?",
+    "question_slug": "what_is_the_state_or_other_jurisdiction_of_incorporation_and_10_llm",
+    "mode": "auto_tighten",
+    "tau_floor": 0.2,
+    "tau_best": 0.2,
+    "selected_rules": [],
+    "selected_avg_cost_ratio_sum": 0,
+    "covered_docs": [],
+    "uncovered_docs": [
+      "AMAZON_2016_10K",
+      "AMAZON_2018_10K",
+      "AMCOR_2019_10K",
+      "BOEING_2018_10K",
+      "CORNING_2022_10K",
+      "COSTCO_2017_10K",
+      "EBAY_2021_10K",
+      "JOHNSON_JOHNSON_2022_10K",
+      "LOCKHEEDMARTIN_2022_10K",
+      "NIKE_2021_10K"
+    ],
+    "baseline_accuracy": 1.0,
+    "selector_accuracy": 0.0,
+    "tightening_history": [],
+    "llm_calls": {
+      "phase_2_incremental": 550,
+      "phase_3_coverage": 0,
+      "phase_4_auto_tighten": 0
+    },
+    "selection_latency_seconds": 433.98,
+    "refdyn_slug": "what_is_the_state_or_other_jurisdiction_of_incorporation_and_10_refdyn",
+    "refdyn_rules_dir": "rules/financebench_single_cluster/llm/gpt54/refine_dynamic_generality/what_is_the_state_or_other_jurisdiction_of_incorporation_and_10_refdyn",
+    "rules_copied": [],
+    "n_rules_total_pool": 55
+  },
+  {
+    "question": "What is the address of principal executive offices and ZIP code?",
+    "question_slug": "what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm",
+    "mode": "auto_tighten",
+    "tau_floor": 0.2,
+    "tau_best": 0.2,
+    "selected_rules": [
+      "rule_address_header_text_itself",
+      "rule_split_address_then_zip_consecutive",
+      "rule_page1_address_label_and_phone_cluster"
+    ],
+    "selected_avg_cost_ratio_sum": 0.001639,
+    "covered_docs": [
+      "COSTCO_2017_10K",
+      "LOCKHEEDMARTIN_2022_10K",
+      "NIKE_2021_10K"
+    ],
+    "uncovered_docs": [
+      "AMAZON_2016_10K",
+      "AMAZON_2018_10K",
+      "AMCOR_2019_10K",
+      "CORNING_2022_10K",
+      "EBAY_2021_10K",
+      "JOHNSON_JOHNSON_2022_10K"
+    ],
+    "baseline_accuracy": 0.9,
+    "selector_accuracy": 0.3,
+    "tightening_history": [
+      {
+        "iteration": 1,
+        "banned_rule": "rule_address_header_text_itself",
+        "cov_banned": 0.2,
+        "tau_try": 0.200001,
+        "added_rules": [
+          "rule_page1_h2_address_headers"
+        ],
+        "added_covs": {
+          "rule_page1_h2_address_headers": 0.3
+        },
+        "below_tau_try": [],
+        "feasible_cover": false,
+        "accepted": false
+      }
+    ],
+    "llm_calls": {
+      "phase_2_incremental": 434,
+      "phase_3_coverage": 3,
+      "phase_4_auto_tighten": 2
+    },
+    "selection_latency_seconds": 372.0,
+    "refdyn_slug": "what_is_the_address_of_principal_executive_offices_and_zip_c_10_refdyn",
+    "refdyn_rules_dir": "rules/financebench_single_cluster/llm/gpt54/refine_dynamic_generality/what_is_the_address_of_principal_executive_offices_and_zip_c_10_refdyn",
+    "rules_copied": [
+      "rule_address_header_text_itself",
+      "rule_split_address_then_zip_consecutive",
+      "rule_page1_address_label_and_phone_cluster"
+    ],
+    "n_rules_total_pool": 61
+  },
+  {
+    "question": "What is/are the trading symbol(s) and listing exchange(s)?",
+    "question_slug": "what_isare_the_trading_symbols_and_listing_exchanges_10_llm",
+    "mode": "auto_tighten",
+    "tau_floor": 0.2,
+    "tau_best": 0.2,
+    "selected_rules": [],
+    "selected_avg_cost_ratio_sum": 0,
+    "covered_docs": [],
+    "uncovered_docs": [
+      "AMAZON_2016_10K",
+      "AMAZON_2018_10K",
+      "AMCOR_2019_10K",
+      "BOEING_2018_10K",
+      "CORNING_2022_10K",
+      "COSTCO_2017_10K",
+      "EBAY_2021_10K",
+      "JOHNSON_JOHNSON_2022_10K",
+      "LOCKHEEDMARTIN_2022_10K",
+      "NIKE_2021_10K"
+    ],
+    "baseline_accuracy": 1.0,
+    "selector_accuracy": 0.0,
+    "tightening_history": [],
+    "llm_calls": {
+      "phase_2_incremental": 650,
+      "phase_3_coverage": 0,
+      "phase_4_auto_tighten": 0
+    },
+    "selection_latency_seconds": 552.87,
+    "refdyn_slug": "what_isare_the_trading_symbols_and_listing_exchanges_10_refdyn",
+    "refdyn_rules_dir": "rules/financebench_single_cluster/llm/gpt54/refine_dynamic_generality/what_isare_the_trading_symbols_and_listing_exchanges_10_refdyn",
+    "rules_copied": [],
+    "n_rules_total_pool": 65
+  }
+]

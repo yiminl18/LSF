@@ -1,0 +1,56 @@
+{
+  "question": "What is total assets at year-end (from the audited balance sheet)?",
+  "question_slug": "what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm",
+  "mode": "auto_tighten",
+  "tau_floor": 0.2,
+  "tau_best": 0.2,
+  "selected_rules": [
+    "rule_tables_with_total_assets_and_audited_year_end_context"
+  ],
+  "selected_avg_cost_ratio_sum": 0.003109,
+  "covered_docs": [
+    "COSTCO_2017_10K"
+  ],
+  "uncovered_docs": [
+    "AMAZON_2016_10K",
+    "AMAZON_2018_10K",
+    "AMCOR_2019_10K",
+    "BOEING_2018_10K",
+    "CORNING_2022_10K",
+    "EBAY_2021_10K",
+    "JOHNSON_JOHNSON_2022_10K",
+    "LOCKHEEDMARTIN_2022_10K",
+    "NIKE_2021_10K"
+  ],
+  "baseline_accuracy": 1.0,
+  "selector_accuracy": 0.1,
+  "tightening_history": [
+    {
+      "iteration": 1,
+      "banned_rule": "rule_tables_with_total_assets_and_audited_year_end_context",
+      "cov_banned": 0.2,
+      "tau_try": 0.200001,
+      "added_rules": [
+        "rule_tables_with_total_assets_and_financial_statements_path"
+      ],
+      "added_covs": {
+        "rule_tables_with_total_assets_and_financial_statements_path": 0.4
+      },
+      "below_tau_try": [],
+      "feasible_cover": false,
+      "accepted": false
+    }
+  ],
+  "llm_calls": {
+    "phase_2_incremental": 1075,
+    "phase_3_coverage": 1,
+    "phase_4_auto_tighten": 4
+  },
+  "selection_latency_seconds": 867.01,
+  "refdyn_slug": "what_is_total_assets_at_yearend_from_the_audited_balance_she_10_refdyn",
+  "refdyn_rules_dir": "rules/financebench_single_cluster/llm/gpt54/refine_dynamic_generality/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_refdyn",
+  "rules_copied": [
+    "rule_tables_with_total_assets_and_audited_year_end_context"
+  ],
+  "n_rules_total_pool": 118
+}

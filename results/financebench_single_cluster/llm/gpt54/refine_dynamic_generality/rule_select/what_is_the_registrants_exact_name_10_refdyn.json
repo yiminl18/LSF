@@ -1,0 +1,82 @@
+{
+  "question": "What is the registrant's exact name?",
+  "question_slug": "what_is_the_registrants_exact_name_10_llm",
+  "mode": "auto_tighten",
+  "tau_floor": 0.2,
+  "tau_best": 1.0,
+  "selected_rules": [
+    "rule_exact_name_caption_parent",
+    "rule_page1_first_non_boilerplate_after_commission_file"
+  ],
+  "selected_avg_cost_ratio_sum": 0.000134,
+  "covered_docs": [
+    "AMAZON_2016_10K",
+    "AMAZON_2018_10K",
+    "AMCOR_2019_10K",
+    "BOEING_2018_10K",
+    "CORNING_2022_10K",
+    "COSTCO_2017_10K",
+    "JOHNSON_JOHNSON_2022_10K",
+    "LOCKHEEDMARTIN_2022_10K",
+    "NIKE_2021_10K"
+  ],
+  "uncovered_docs": [],
+  "baseline_accuracy": 0.9,
+  "selector_accuracy": 0.9,
+  "tightening_history": [
+    {
+      "iteration": 1,
+      "banned_rule": "rule_page1_company_heading_with_single_path",
+      "cov_banned": 0.8,
+      "tau_try": 0.800001,
+      "added_rules": [
+        "rule_exact_name_caption_parent"
+      ],
+      "added_covs": {
+        "rule_exact_name_caption_parent": 1.0
+      },
+      "below_tau_try": [],
+      "feasible_cover": true,
+      "accepted": true
+    },
+    {
+      "iteration": 2,
+      "banned_rule": "rule_page1_large_bold_name_before_exact_caption",
+      "cov_banned": 0.9,
+      "tau_try": 0.900001,
+      "added_rules": [
+        "rule_page1_first_non_boilerplate_after_commission_file"
+      ],
+      "added_covs": {
+        "rule_page1_first_non_boilerplate_after_commission_file": 1.0
+      },
+      "below_tau_try": [],
+      "feasible_cover": true,
+      "accepted": true
+    },
+    {
+      "iteration": 3,
+      "banned_rule": "rule_exact_name_caption_parent",
+      "cov_banned": 1.0,
+      "tau_try": 1.000001,
+      "added_rules": [],
+      "added_covs": {},
+      "below_tau_try": [],
+      "feasible_cover": false,
+      "accepted": false
+    }
+  ],
+  "llm_calls": {
+    "phase_2_incremental": 19,
+    "phase_3_coverage": 9,
+    "phase_4_auto_tighten": 18
+  },
+  "selection_latency_seconds": 36.21,
+  "refdyn_slug": "what_is_the_registrants_exact_name_10_refdyn",
+  "refdyn_rules_dir": "rules/financebench_single_cluster/llm/gpt54/refine_dynamic_generality/what_is_the_registrants_exact_name_10_refdyn",
+  "rules_copied": [
+    "rule_exact_name_caption_parent",
+    "rule_page1_first_non_boilerplate_after_commission_file"
+  ],
+  "n_rules_total_pool": 25
+}

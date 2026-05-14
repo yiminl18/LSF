@@ -1,0 +1,200 @@
+{
+  "question": "What is the registrant's telephone number?",
+  "question_slug": "what_is_the_registrants_telephone_number_10_llm",
+  "mode": "auto_tighten",
+  "tau_floor": 0.2,
+  "tau_best": 0.8,
+  "selected_rules": [
+    "rule_page1_small_body_phone",
+    "rule_page1_text_phone",
+    "rule_phone_in_text_label",
+    "rule_page1_phone_preceded_by_address_neighbor",
+    "rule_page1_phone_number_pattern",
+    "rule_page1_phone_with_registrant_label_neighbor"
+  ],
+  "selected_avg_cost_ratio_sum": 0.00132,
+  "covered_docs": [
+    "AMAZON_2016_10K",
+    "AMAZON_2018_10K",
+    "AMCOR_2019_10K",
+    "BOEING_2018_10K",
+    "CORNING_2022_10K",
+    "COSTCO_2017_10K",
+    "EBAY_2021_10K",
+    "JOHNSON_JOHNSON_2022_10K",
+    "LOCKHEEDMARTIN_2022_10K",
+    "NIKE_2021_10K"
+  ],
+  "uncovered_docs": [],
+  "baseline_accuracy": 1.0,
+  "selector_accuracy": 1.0,
+  "tightening_history": [
+    {
+      "iteration": 1,
+      "banned_rule": "rule_registrant_phone_following_zip_parent",
+      "cov_banned": 0.2,
+      "tau_try": 0.200001,
+      "added_rules": [
+        "rule_cover_page_before_securities_registered"
+      ],
+      "added_covs": {
+        "rule_cover_page_before_securities_registered": 0.3
+      },
+      "below_tau_try": [],
+      "feasible_cover": true,
+      "accepted": true
+    },
+    {
+      "iteration": 2,
+      "banned_rule": "rule_exact_phone_only_span",
+      "cov_banned": 0.3,
+      "tau_try": 0.300001,
+      "added_rules": [
+        "rule_page1_phone_with_parenthetical_area_code_label"
+      ],
+      "added_covs": {
+        "rule_page1_phone_with_parenthetical_area_code_label": 0.8
+      },
+      "below_tau_try": [],
+      "feasible_cover": true,
+      "accepted": true
+    },
+    {
+      "iteration": 3,
+      "banned_rule": "rule_cover_page_before_section_12b",
+      "cov_banned": 0.3,
+      "tau_try": 0.300001,
+      "added_rules": [
+        "rule_registrant_telephone_parenthetical_label"
+      ],
+      "added_covs": {
+        "rule_registrant_telephone_parenthetical_label": 0.5
+      },
+      "below_tau_try": [],
+      "feasible_cover": true,
+      "accepted": true
+    },
+    {
+      "iteration": 4,
+      "banned_rule": "rule_phone_only_or_phone_header",
+      "cov_banned": 0.3,
+      "tau_try": 0.300001,
+      "added_rules": [
+        "rule_path_contains_company_name_page1"
+      ],
+      "added_covs": {
+        "rule_path_contains_company_name_page1": 0.8
+      },
+      "below_tau_try": [],
+      "feasible_cover": true,
+      "accepted": true
+    },
+    {
+      "iteration": 5,
+      "banned_rule": "rule_cover_page_before_securities_registered",
+      "cov_banned": 0.3,
+      "tau_try": 0.300001,
+      "added_rules": [
+        "rule_page1_small_body_phone"
+      ],
+      "added_covs": {
+        "rule_page1_small_body_phone": 0.8
+      },
+      "below_tau_try": [],
+      "feasible_cover": true,
+      "accepted": true
+    },
+    {
+      "iteration": 6,
+      "banned_rule": "rule_page1_before_documents_incorporated",
+      "cov_banned": 0.4,
+      "tau_try": 0.400001,
+      "added_rules": [
+        "rule_page1_text_phone"
+      ],
+      "added_covs": {
+        "rule_page1_text_phone": 0.8
+      },
+      "below_tau_try": [],
+      "feasible_cover": true,
+      "accepted": true
+    },
+    {
+      "iteration": 7,
+      "banned_rule": "rule_registrant_telephone_parenthetical_label",
+      "cov_banned": 0.5,
+      "tau_try": 0.500001,
+      "added_rules": [
+        "rule_phone_in_text_label"
+      ],
+      "added_covs": {
+        "rule_phone_in_text_label": 0.8
+      },
+      "below_tau_try": [],
+      "feasible_cover": true,
+      "accepted": true
+    },
+    {
+      "iteration": 8,
+      "banned_rule": "rule_page1_phone_followed_by_section12b_neighbor",
+      "cov_banned": 0.8,
+      "tau_try": 0.800001,
+      "added_rules": [
+        "rule_page1_phone_preceded_by_address_neighbor"
+      ],
+      "added_covs": {
+        "rule_page1_phone_preceded_by_address_neighbor": 0.9
+      },
+      "below_tau_try": [],
+      "feasible_cover": true,
+      "accepted": true
+    },
+    {
+      "iteration": 9,
+      "banned_rule": "rule_page1_phone_with_parenthetical_area_code_label",
+      "cov_banned": 0.8,
+      "tau_try": 0.800001,
+      "added_rules": [
+        "rule_page1_phone_number_pattern"
+      ],
+      "added_covs": {
+        "rule_page1_phone_number_pattern": 1.0
+      },
+      "below_tau_try": [],
+      "feasible_cover": true,
+      "accepted": true
+    },
+    {
+      "iteration": 10,
+      "banned_rule": "rule_path_contains_company_name_page1",
+      "cov_banned": 0.8,
+      "tau_try": 0.800001,
+      "added_rules": [
+        "rule_page1_phone_with_registrant_label_neighbor"
+      ],
+      "added_covs": {
+        "rule_page1_phone_with_registrant_label_neighbor": 1.0
+      },
+      "below_tau_try": [],
+      "feasible_cover": true,
+      "accepted": true
+    }
+  ],
+  "llm_calls": {
+    "phase_2_incremental": 170,
+    "phase_3_coverage": 12,
+    "phase_4_auto_tighten": 34
+  },
+  "selection_latency_seconds": 154.22,
+  "refdyn_slug": "what_is_the_registrants_telephone_number_10_refdyn",
+  "refdyn_rules_dir": "rules/financebench_single_cluster/llm/gpt54/refine_dynamic_generality/what_is_the_registrants_telephone_number_10_refdyn",
+  "rules_copied": [
+    "rule_page1_small_body_phone",
+    "rule_page1_text_phone",
+    "rule_phone_in_text_label",
+    "rule_page1_phone_preceded_by_address_neighbor",
+    "rule_page1_phone_number_pattern",
+    "rule_page1_phone_with_registrant_label_neighbor"
+  ],
+  "n_rules_total_pool": 78
+}

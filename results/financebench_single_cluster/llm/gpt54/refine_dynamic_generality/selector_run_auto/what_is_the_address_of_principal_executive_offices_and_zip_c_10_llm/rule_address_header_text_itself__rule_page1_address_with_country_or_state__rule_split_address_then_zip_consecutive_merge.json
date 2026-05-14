@@ -1,0 +1,792 @@
+[
+  {
+    "rule_names": [
+      "rule_address_header_text_itself",
+      "rule_split_address_then_zip_consecutive",
+      "rule_page1_address_with_country_or_state"
+    ],
+    "rule_set_slug": "rule_address_header_text_itself__rule_page1_address_with_country_or_state__rule_split_address_then_zip_consecutive",
+    "question_slug": "what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm",
+    "question": "What is the address of principal executive offices and ZIP code?",
+    "doc_name": "AMCOR_2019_10K",
+    "strategy": "merge",
+    "predicted_answer": "83 Tower Road North Warmley, Bristol BS30 8XP United Kingdom",
+    "latency_seconds": 0.935,
+    "input_tokens": 116,
+    "output_tokens": 19,
+    "retrieved_token_count": 24,
+    "rules_with_hits": [
+      "rule_address_header_text_itself",
+      "rule_page1_address_with_country_or_state"
+    ],
+    "rules_with_no_hits": [
+      "rule_split_address_then_zip_consecutive"
+    ],
+    "num_spans_before_dedup": 3,
+    "num_spans_after_dedup": 2,
+    "retrieved_spans": [
+      {
+        "text": "83 Tower Road North Warmley, Bristol BS30 8XP United Kingdom",
+        "text_span": "(Address of principal executive offices) Registrant’s telephone number, including area code: +44 117 9753200 Securities registered pursuant to Section 12(b) of the Act: Title of each class Name of each exchange",
+        "size": 8.0,
+        "bold": 1,
+        "font": "TimesNewRomanPS-BoldMT",
+        "all_cap": 0,
+        "num_st": 0,
+        "is_center": 0,
+        "is_underline": 0,
+        "label": "section_header",
+        "page_no": 1,
+        "structure": {
+          "level": "H2",
+          "level_index": 2,
+          "parent_id": 6,
+          "path_text": "AMCOR PLC | 83 Tower Road North Warmley, Bristol BS30 8XP United Kingdom",
+          "depth": 2,
+          "h1_index_norm": 0.6666666666666666,
+          "sibling_index_norm": 0.06451612903225806,
+          "is_first_child": false,
+          "is_last_child": false
+        },
+        "header_page": 1
+      },
+      {
+        "text": "Washington, D.C. 20549",
+        "text_span": "",
+        "size": 8.0,
+        "bold": 1,
+        "font": "TimesNewRomanPS-BoldMT",
+        "all_cap": 0,
+        "num_st": 0,
+        "is_center": 0,
+        "is_underline": 0,
+        "label": "text",
+        "page_no": 1,
+        "structure": {
+          "level": "Body",
+          "level_index": 2,
+          "parent_id": 0,
+          "path_text": "UNITED STATES SECURITIES AND EXCHANGE COMMISSION",
+          "depth": 2,
+          "h1_index_norm": 0.0,
+          "sibling_index_norm": 0.0,
+          "is_first_child": true,
+          "is_last_child": true
+        }
+      }
+    ],
+    "retrieved_text": "83 Tower Road North Warmley, Bristol BS30 8XP United Kingdom\n\nWashington, D.C. 20549"
+  },
+  {
+    "rule_names": [
+      "rule_address_header_text_itself",
+      "rule_split_address_then_zip_consecutive",
+      "rule_page1_address_with_country_or_state"
+    ],
+    "rule_set_slug": "rule_address_header_text_itself__rule_page1_address_with_country_or_state__rule_split_address_then_zip_consecutive",
+    "question_slug": "what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm",
+    "question": "What is the address of principal executive offices and ZIP code?",
+    "doc_name": "JOHNSON_JOHNSON_2022_10K",
+    "strategy": "merge",
+    "predicted_answer": "One Johnson & Johnson Plaza New Brunswick, New Jersey 08933",
+    "latency_seconds": 0.891,
+    "input_tokens": 326,
+    "output_tokens": 17,
+    "retrieved_token_count": 239,
+    "rules_with_hits": [
+      "rule_split_address_then_zip_consecutive",
+      "rule_page1_address_with_country_or_state"
+    ],
+    "rules_with_no_hits": [
+      "rule_address_header_text_itself"
+    ],
+    "num_spans_before_dedup": 5,
+    "num_spans_after_dedup": 4,
+    "retrieved_spans": [
+      {
+        "text": "UNITED STATES SECURITIES AND EXCHANGE COMMISSION Washington, D.C. 20549",
+        "text_span": "FORM 10-K ANNUAL REPORT PURSUANT TO SECTION 13 OF THE SECURITIES EXCHANGE ACT OF 1934 ☑ For the fiscal year ended January 1, 2023 or Transition Report Pursuant to Section 13 or 15(d) of the Securities Exchange Act of 1934 for the transition period from to ☐ Commission file number 1-3215",
+        "size": 11.0,
+        "bold": 1,
+        "font": "LiberationSerif-Bold",
+        "all_cap": 0,
+        "num_st": 0,
+        "is_center": 0,
+        "is_underline": 0,
+        "label": "section_header",
+        "page_no": 1,
+        "structure": {
+          "level": "H1",
+          "level_index": 1,
+          "parent_id": null,
+          "path_text": "UNITED STATES SECURITIES AND EXCHANGE COMMISSION Washington, D.C. 20549",
+          "depth": 1,
+          "h1_index_norm": 0.0,
+          "sibling_index_norm": 0.0,
+          "is_first_child": true,
+          "is_last_child": false
+        }
+      },
+      {
+        "text": "(Zip Code)",
+        "text_span": "",
+        "size": 7.0,
+        "bold": 0,
+        "font": "LiberationSerif",
+        "all_cap": 0,
+        "num_st": 0,
+        "is_center": 0,
+        "is_underline": 0,
+        "label": "text",
+        "page_no": 1,
+        "structure": {
+          "level": "Body",
+          "level_index": 3,
+          "parent_id": 17,
+          "path_text": "JOHNSON & JOHNSON | 08933",
+          "depth": 3,
+          "h1_index_norm": 1.0,
+          "sibling_index_norm": 0.0,
+          "is_first_child": true,
+          "is_last_child": false
+        }
+      },
+      {
+        "text": "One Johnson & Johnson Plaza New Brunswick, New Jersey 08933 (Address of principal executive offices)",
+        "text_span": "",
+        "size": 9.0,
+        "bold": 0,
+        "font": "LiberationSerif",
+        "all_cap": 0,
+        "num_st": 0,
+        "is_center": 0,
+        "is_underline": 0,
+        "label": "text",
+        "page_no": 1,
+        "structure": {
+          "level": "Body",
+          "level_index": 3,
+          "parent_id": 17,
+          "path_text": "JOHNSON & JOHNSON | 08933",
+          "depth": 3,
+          "h1_index_norm": 1.0,
+          "sibling_index_norm": 0.3333333333333333,
+          "is_first_child": false,
+          "is_last_child": false
+        }
+      },
+      {
+        "text": "| Common Stock, Par Value $1.00 | JNJ | New York Stock Exchange |\n| --- | --- | --- |\n| 0.650% Notes Due May 2024 | JNJ24C | New York Stock Exchange |\n| 5.50% Notes Due November 2024 | JNJ24BP | New York Stock Exchange |\n| 1.150% Notes Due November 2028 | JNJ28 | New York Stock Exchange |\n| 1.650% Notes Due May 2035 | JNJ35 | New York Stock Exchange |\n| Indicate by check mark if the registrant is a well-known seasoned issuer, as defined in Rule 405 of the Securities Act. Yes ☑ No o |  |  |\n| Large accelerated filer | ☑ Accelerated | ☐ |\n| Non-accelerated filer | ☐ Smaller | ☐ |\n| Emerging growth company | ☐ |  |",
+        "text_span": "",
+        "size": 9.0,
+        "bold": 0,
+        "font": "LiberationSerif",
+        "all_cap": 0,
+        "num_st": 0,
+        "is_center": 0,
+        "is_underline": 0,
+        "label": "table",
+        "page_no": 1,
+        "structure": {
+          "level": "Body",
+          "level_index": 3,
+          "parent_id": 1427,
+          "path_text": "JOHNSON & JOHNSON | SECURITIES REGISTERED PURSUANT TO SECTION 12(b) OF THE ACT",
+          "depth": 3,
+          "h1_index_norm": 1.0,
+          "sibling_index_norm": 0.1,
+          "is_first_child": false,
+          "is_last_child": false
+        },
+        "table_data": {
+          "num_rows": 9,
+          "num_cols": 3,
+          "cells": [
+            {
+              "row": 0,
+              "col": 0,
+              "text": "Common Stock, Par Value $1.00",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 0,
+              "col": 1,
+              "text": "JNJ",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 0,
+              "col": 2,
+              "text": "New York Stock Exchange",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 1,
+              "col": 0,
+              "text": "0.650% Notes Due May 2024",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 1,
+              "col": 1,
+              "text": "JNJ24C",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 1,
+              "col": 2,
+              "text": "New York Stock Exchange",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 2,
+              "col": 0,
+              "text": "5.50% Notes Due November 2024",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 2,
+              "col": 1,
+              "text": "JNJ24BP",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 2,
+              "col": 2,
+              "text": "New York Stock Exchange",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 3,
+              "col": 0,
+              "text": "1.150% Notes Due November 2028",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 3,
+              "col": 1,
+              "text": "JNJ28",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 3,
+              "col": 2,
+              "text": "New York Stock Exchange",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 4,
+              "col": 0,
+              "text": "1.650% Notes Due May 2035",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 4,
+              "col": 1,
+              "text": "JNJ35",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 4,
+              "col": 2,
+              "text": "New York Stock Exchange",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 5,
+              "col": 0,
+              "text": "Indicate by check mark if the registrant is a well-known seasoned issuer, as defined in Rule 405 of the Securities Act. Yes ☑ No o",
+              "row_span": 1,
+              "col_span": 3,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 6,
+              "col": 0,
+              "text": "Large accelerated filer",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 6,
+              "col": 1,
+              "text": "☑ Accelerated",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 6,
+              "col": 2,
+              "text": "☐",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 7,
+              "col": 0,
+              "text": "Non-accelerated filer",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 7,
+              "col": 1,
+              "text": "☐ Smaller",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 7,
+              "col": 2,
+              "text": "☐",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 8,
+              "col": 0,
+              "text": "Emerging growth company",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 8,
+              "col": 1,
+              "text": "☐",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            }
+          ]
+        }
+      }
+    ],
+    "retrieved_text": "UNITED STATES SECURITIES AND EXCHANGE COMMISSION Washington, D.C. 20549\n\n(Zip Code)\n\nOne Johnson & Johnson Plaza New Brunswick, New Jersey 08933 (Address of principal executive offices)\n\n| Common Stock, Par Value $1.00 | JNJ | New York Stock Exchange |\n| --- | --- | --- |\n| 0.650% Notes Due May 2024 | JNJ24C | New York Stock Exchange |\n| 5.50% Notes Due November 2024 | JNJ24BP | New York Stock Exchange |\n| 1.150% Notes Due November 2028 | JNJ28 | New York Stock Exchange |\n| 1.650% Notes Due May 2035 | JNJ35 | New York Stock Exchange |\n| Indicate by check mark if the registrant is a well-known seasoned issuer, as defined in Rule 405 of the Securities Act. Yes ☑ No o |  |  |\n| Large accelerated filer | ☑ Accelerated | ☐ |\n| Non-accelerated filer | ☐ Smaller | ☐ |\n| Emerging growth company | ☐ |  |"
+  },
+  {
+    "rule_names": [
+      "rule_address_header_text_itself",
+      "rule_split_address_then_zip_consecutive",
+      "rule_page1_address_with_country_or_state"
+    ],
+    "rule_set_slug": "rule_address_header_text_itself__rule_page1_address_with_country_or_state__rule_split_address_then_zip_consecutive",
+    "question_slug": "what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm",
+    "question": "What is the address of principal executive offices and ZIP code?",
+    "doc_name": "AMAZON_2018_10K",
+    "strategy": "merge",
+    "predicted_answer": "410 Terry Avenue North Seattle, Washington 98109-5210",
+    "latency_seconds": 0.853,
+    "input_tokens": 122,
+    "output_tokens": 17,
+    "retrieved_token_count": 30,
+    "rules_with_hits": [
+      "rule_page1_address_with_country_or_state"
+    ],
+    "rules_with_no_hits": [
+      "rule_address_header_text_itself",
+      "rule_split_address_then_zip_consecutive"
+    ],
+    "num_spans_before_dedup": 2,
+    "num_spans_after_dedup": 2,
+    "retrieved_spans": [
+      {
+        "text": "Washington, D.C. 20549",
+        "text_span": "____________________________________",
+        "size": 10.0,
+        "bold": 1,
+        "font": "Times New Roman,Bold",
+        "all_cap": 0,
+        "num_st": 0,
+        "is_center": 0,
+        "is_underline": 0,
+        "label": "section_header",
+        "page_no": 1,
+        "structure": {
+          "level": "H2",
+          "level_index": 2,
+          "parent_id": 0,
+          "path_text": "UNITED STATES SECURITIES AND EXCHANGE COMMISSION | Washington, D.C. 20549",
+          "depth": 2,
+          "h1_index_norm": 0.0,
+          "sibling_index_norm": 0.0,
+          "is_first_child": true,
+          "is_last_child": true
+        },
+        "header_page": 1
+      },
+      {
+        "text": "410 Terry Avenue North Seattle, Washington 98109-5210 (206) 266-1000",
+        "text_span": "",
+        "size": 7.5,
+        "bold": 1,
+        "font": "Times New Roman,Bold",
+        "all_cap": 0,
+        "num_st": 0,
+        "is_center": 0,
+        "is_underline": 0,
+        "label": "text",
+        "page_no": 1,
+        "structure": {
+          "level": "Body",
+          "level_index": 2,
+          "parent_id": 14,
+          "path_text": "AMAZON.COM, INC.",
+          "depth": 2,
+          "h1_index_norm": 0.6666666666666666,
+          "sibling_index_norm": 0.09433962264150944,
+          "is_first_child": false,
+          "is_last_child": false
+        }
+      }
+    ],
+    "retrieved_text": "Washington, D.C. 20549\n\n410 Terry Avenue North Seattle, Washington 98109-5210 (206) 266-1000"
+  },
+  {
+    "rule_names": [
+      "rule_address_header_text_itself",
+      "rule_split_address_then_zip_consecutive",
+      "rule_page1_address_with_country_or_state"
+    ],
+    "rule_set_slug": "rule_address_header_text_itself__rule_page1_address_with_country_or_state__rule_split_address_then_zip_consecutive",
+    "question_slug": "what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm",
+    "question": "What is the address of principal executive offices and ZIP code?",
+    "doc_name": "LOCKHEEDMARTIN_2022_10K",
+    "strategy": "merge",
+    "predicted_answer": "Washington, D.C. 20549",
+    "latency_seconds": 0.974,
+    "input_tokens": 111,
+    "output_tokens": 12,
+    "retrieved_token_count": 19,
+    "rules_with_hits": [
+      "rule_page1_address_with_country_or_state"
+    ],
+    "rules_with_no_hits": [
+      "rule_address_header_text_itself",
+      "rule_split_address_then_zip_consecutive"
+    ],
+    "num_spans_before_dedup": 1,
+    "num_spans_after_dedup": 1,
+    "retrieved_spans": [
+      {
+        "text": "UNITED STATES SECURITIES AND EXCHANGE COMMISSION Washington, D.C. 20549",
+        "text_span": "",
+        "size": 11.0,
+        "bold": 1,
+        "font": "TimesNewRoman-Bold",
+        "all_cap": 0,
+        "num_st": 0,
+        "is_center": 0,
+        "is_underline": 0,
+        "label": "text",
+        "page_no": 1,
+        "structure": {
+          "level": "Body",
+          "level_index": 1,
+          "parent_id": null,
+          "path_text": "",
+          "depth": 1,
+          "h1_index_norm": 0,
+          "sibling_index_norm": 0.0,
+          "is_first_child": true,
+          "is_last_child": false
+        }
+      }
+    ],
+    "retrieved_text": "UNITED STATES SECURITIES AND EXCHANGE COMMISSION Washington, D.C. 20549"
+  },
+  {
+    "rule_names": [
+      "rule_address_header_text_itself",
+      "rule_split_address_then_zip_consecutive",
+      "rule_page1_address_with_country_or_state"
+    ],
+    "rule_set_slug": "rule_address_header_text_itself__rule_page1_address_with_country_or_state__rule_split_address_then_zip_consecutive",
+    "question_slug": "what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm",
+    "question": "What is the address of principal executive offices and ZIP code?",
+    "doc_name": "AMAZON_2016_10K",
+    "strategy": "merge",
+    "predicted_answer": "410 Terry Avenue North Seattle, Washington 98109-5210",
+    "latency_seconds": 0.925,
+    "input_tokens": 122,
+    "output_tokens": 17,
+    "retrieved_token_count": 30,
+    "rules_with_hits": [
+      "rule_page1_address_with_country_or_state"
+    ],
+    "rules_with_no_hits": [
+      "rule_address_header_text_itself",
+      "rule_split_address_then_zip_consecutive"
+    ],
+    "num_spans_before_dedup": 2,
+    "num_spans_after_dedup": 2,
+    "retrieved_spans": [
+      {
+        "text": "Washington, D.C. 20549",
+        "text_span": "____________________________________",
+        "size": 10.0,
+        "bold": 1,
+        "font": "Times New Roman,Bold",
+        "all_cap": 0,
+        "num_st": 0,
+        "is_center": 0,
+        "is_underline": 0,
+        "label": "section_header",
+        "page_no": 1,
+        "structure": {
+          "level": "H2",
+          "level_index": 2,
+          "parent_id": 0,
+          "path_text": "UNITED STATES SECURITIES AND EXCHANGE COMMISSION | Washington, D.C. 20549",
+          "depth": 2,
+          "h1_index_norm": 0.0,
+          "sibling_index_norm": 0.0,
+          "is_first_child": true,
+          "is_last_child": true
+        },
+        "header_page": 1
+      },
+      {
+        "text": "410 Terry Avenue North Seattle, Washington 98109-5210 (206) 266-1000",
+        "text_span": "",
+        "size": 7.5,
+        "bold": 1,
+        "font": "Times New Roman,Bold",
+        "all_cap": 0,
+        "num_st": 0,
+        "is_center": 0,
+        "is_underline": 0,
+        "label": "text",
+        "page_no": 1,
+        "structure": {
+          "level": "Body",
+          "level_index": 2,
+          "parent_id": 13,
+          "path_text": "AMAZON.COM, INC.",
+          "depth": 2,
+          "h1_index_norm": 0.6666666666666666,
+          "sibling_index_norm": 0.11320754716981132,
+          "is_first_child": false,
+          "is_last_child": false
+        }
+      }
+    ],
+    "retrieved_text": "Washington, D.C. 20549\n\n410 Terry Avenue North Seattle, Washington 98109-5210 (206) 266-1000"
+  },
+  {
+    "rule_names": [
+      "rule_address_header_text_itself",
+      "rule_split_address_then_zip_consecutive",
+      "rule_page1_address_with_country_or_state"
+    ],
+    "rule_set_slug": "rule_address_header_text_itself__rule_page1_address_with_country_or_state__rule_split_address_then_zip_consecutive",
+    "question_slug": "what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm",
+    "question": "What is the address of principal executive offices and ZIP code?",
+    "doc_name": "CORNING_2022_10K",
+    "strategy": "merge",
+    "predicted_answer": "NOT FOUND",
+    "latency_seconds": 0.817,
+    "input_tokens": 157,
+    "output_tokens": 6,
+    "retrieved_token_count": 66,
+    "rules_with_hits": [
+      "rule_page1_address_with_country_or_state"
+    ],
+    "rules_with_no_hits": [
+      "rule_address_header_text_itself",
+      "rule_split_address_then_zip_consecutive"
+    ],
+    "num_spans_before_dedup": 2,
+    "num_spans_after_dedup": 2,
+    "retrieved_spans": [
+      {
+        "text": "UNITED STATES SECURITIES AND EXCHANGE COMMISSION WASHINGTON, D.C. 20549",
+        "text_span": "Form 10-K ☒ ANNUAL REPORT PURSUANT TO SECTION 13 OR 15(d) OF THE SECURITIES EXCHANGE ACT OF 1934 For the fiscal year ended December 31, 2022",
+        "size": 7.0,
+        "bold": 1,
+        "font": "TimesNewRomanPS-BoldMT",
+        "all_cap": 1,
+        "num_st": 0,
+        "is_center": 0,
+        "is_underline": 0,
+        "label": "section_header",
+        "page_no": 1,
+        "structure": {
+          "level": "H1",
+          "level_index": 1,
+          "parent_id": null,
+          "path_text": "UNITED STATES SECURITIES AND EXCHANGE COMMISSION WASHINGTON, D.C. 20549",
+          "depth": 1,
+          "h1_index_norm": 0,
+          "sibling_index_norm": 0.0,
+          "is_first_child": true,
+          "is_last_child": false
+        },
+        "header_page": 1
+      },
+      {
+        "text": "The aggregate market value of the common stock held by non-affiliates of the registrant as of June 30, 2022 was approximately $26 billion based on the New York Stock Exchange closing price on such date.",
+        "text_span": "",
+        "size": 7.0,
+        "bold": 0,
+        "font": "TimesNewRomanPSMT",
+        "all_cap": 0,
+        "num_st": 0,
+        "is_center": 0,
+        "is_underline": 0,
+        "label": "text",
+        "page_no": 1,
+        "structure": {
+          "level": "Body",
+          "level_index": 3,
+          "parent_id": 23,
+          "path_text": "GLW | New York Stock Exchange (NYSE)",
+          "depth": 3,
+          "h1_index_norm": 0,
+          "sibling_index_norm": 0.9310344827586207,
+          "is_first_child": false,
+          "is_last_child": false
+        }
+      }
+    ],
+    "retrieved_text": "UNITED STATES SECURITIES AND EXCHANGE COMMISSION WASHINGTON, D.C. 20549\n\nThe aggregate market value of the common stock held by non-affiliates of the registrant as of June 30, 2022 was approximately $26 billion based on the New York Stock Exchange closing price on such date."
+  },
+  {
+    "rule_names": [
+      "rule_address_header_text_itself",
+      "rule_split_address_then_zip_consecutive",
+      "rule_page1_address_with_country_or_state"
+    ],
+    "rule_set_slug": "rule_address_header_text_itself__rule_page1_address_with_country_or_state__rule_split_address_then_zip_consecutive",
+    "question_slug": "what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm",
+    "question": "What is the address of principal executive offices and ZIP code?",
+    "doc_name": "EBAY_2021_10K",
+    "strategy": "merge",
+    "predicted_answer": "2025 Hamilton Avenue San Jose,California 20549",
+    "latency_seconds": 0.899,
+    "input_tokens": 109,
+    "output_tokens": 15,
+    "retrieved_token_count": 17,
+    "rules_with_hits": [
+      "rule_address_header_text_itself",
+      "rule_page1_address_with_country_or_state"
+    ],
+    "rules_with_no_hits": [
+      "rule_split_address_then_zip_consecutive"
+    ],
+    "num_spans_before_dedup": 3,
+    "num_spans_after_dedup": 2,
+    "retrieved_spans": [
+      {
+        "text": "2025 Hamilton Avenue San Jose,California",
+        "text_span": "(Address of principal executive offices) 77-0430924 (I.R.S. Employer Identification No.)",
+        "size": 7.5,
+        "bold": 1,
+        "font": "Arial,Bold",
+        "all_cap": 0,
+        "num_st": 0,
+        "is_center": 0,
+        "is_underline": 0,
+        "label": "section_header",
+        "page_no": 1,
+        "structure": {
+          "level": "H2",
+          "level_index": 2,
+          "parent_id": 2,
+          "path_text": "Form 10-K | 2025 Hamilton Avenue San Jose,California",
+          "depth": 2,
+          "h1_index_norm": 1.0,
+          "sibling_index_norm": 0.2777777777777778,
+          "is_first_child": false,
+          "is_last_child": false
+        },
+        "header_page": 1
+      },
+      {
+        "text": "Washington, D.C. 20549",
+        "text_span": "",
+        "size": 8.0,
+        "bold": 1,
+        "font": "Arial,Bold",
+        "all_cap": 0,
+        "num_st": 0,
+        "is_center": 0,
+        "is_underline": 0,
+        "label": "text",
+        "page_no": 1,
+        "structure": {
+          "level": "Body",
+          "level_index": 2,
+          "parent_id": 0,
+          "path_text": "UNITED STATES SECURITIES AND EXCHANGE COMMISSION",
+          "depth": 2,
+          "h1_index_norm": 0.0,
+          "sibling_index_norm": 0.0,
+          "is_first_child": true,
+          "is_last_child": true
+        }
+      }
+    ],
+    "retrieved_text": "2025 Hamilton Avenue San Jose,California\n\nWashington, D.C. 20549"
+  }
+]

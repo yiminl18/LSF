@@ -1,0 +1,13 @@
+def rule_page1_shares_outstanding_as_of_february(doc: dict) -> list[dict]:
+    """Match spans with outstanding-share sentence using a February reference date."""
+    import re
+    try:
+        out = []
+        for span in doc.get("texts", []):
+            t = " ".join((span.get("text") or "").lower().split())
+            if span.get("page_no") in (1, 2):
+                if "outstanding" in t and re.search(r"as of february \d{1,2}, \d{4}", t):
+                    out.append(span)
+        return out
+    except Exception:
+        return []

@@ -1,0 +1,65 @@
+[
+  {
+    "rule_names": [
+      "rule_page1_sentence_with_there_were_and_common_stock",
+      "rule_page1_cover_span_with_as_of_and_issued_outstanding",
+      "rule_page1_shares_outstanding_as_of_february",
+      "rule_page2_cover_page_numeric_sentence",
+      "rule_h1_company_cover_span_with_outstanding",
+      "rule_page1_numeric_near_january_february_date",
+      "rule_page1_shares_outstanding_as_of_october",
+      "rule_page1_before_documents_incorporated"
+    ],
+    "rule_set_slug": "rule_h1_company_cover_span_with_outstanding__rule_page1_before_documents_incorporated__rule_page1_cover_span_with_as_of_",
+    "question_slug": "how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm",
+    "question": "How many shares of common stock were outstanding as of the cover-page reference date?",
+    "doc_name": "AMAZON_2016_10K",
+    "strategy": "merge",
+    "predicted_answer": "NOT FOUND",
+    "latency_seconds": 0.769,
+    "input_tokens": 112,
+    "output_tokens": 6,
+    "retrieved_token_count": 16,
+    "rules_with_hits": [
+      "rule_page1_before_documents_incorporated"
+    ],
+    "rules_with_no_hits": [
+      "rule_page1_sentence_with_there_were_and_common_stock",
+      "rule_page1_cover_span_with_as_of_and_issued_outstanding",
+      "rule_page1_shares_outstanding_as_of_february",
+      "rule_page2_cover_page_numeric_sentence",
+      "rule_h1_company_cover_span_with_outstanding",
+      "rule_page1_numeric_near_january_february_date",
+      "rule_page1_shares_outstanding_as_of_october"
+    ],
+    "num_spans_before_dedup": 1,
+    "num_spans_after_dedup": 1,
+    "retrieved_spans": [
+      {
+        "text": "Number of shares of common stock outstanding as of January 25, 2017",
+        "text_span": "",
+        "size": 7.5,
+        "bold": 0,
+        "font": "Times New Roman",
+        "all_cap": 0,
+        "num_st": 0,
+        "is_center": 0,
+        "is_underline": 0,
+        "label": "text",
+        "page_no": 1,
+        "structure": {
+          "level": "Body",
+          "level_index": 2,
+          "parent_id": 13,
+          "path_text": "AMAZON.COM, INC.",
+          "depth": 2,
+          "h1_index_norm": 0.6666666666666666,
+          "sibling_index_norm": 0.6792452830188679,
+          "is_first_child": false,
+          "is_last_child": false
+        }
+      }
+    ],
+    "retrieved_text": "Number of shares of common stock outstanding as of January 25, 2017"
+  }
+]

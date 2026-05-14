@@ -1,0 +1,929 @@
+[
+  {
+    "rule_names": [
+      "rule_tables_with_total_assets_and_financial_statements_path"
+    ],
+    "rule_set_slug": "rule_tables_with_total_assets_and_financial_statements_path",
+    "question_slug": "what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm",
+    "question": "What is total assets at year-end (from the audited balance sheet)?",
+    "doc_name": "COSTCO_2017_10K",
+    "strategy": "merge",
+    "predicted_answer": "36,347",
+    "latency_seconds": 0.598,
+    "input_tokens": 593,
+    "output_tokens": 7,
+    "retrieved_token_count": 500,
+    "rules_with_hits": [
+      "rule_tables_with_total_assets_and_financial_statements_path"
+    ],
+    "rules_with_no_hits": [],
+    "num_spans_before_dedup": 1,
+    "num_spans_after_dedup": 1,
+    "retrieved_spans": [
+      {
+        "text": "|  | United States Operations | Canadian Operations | Other International Operations | Total |\n| --- | --- | --- | --- | --- |\n| 2017 |  |  |  |  |\n| Total revenue | $ 93,889 | $ 18,775 | $ 16,361 | $ 129,025 |\n| Operating income | 2,644 | 841 | 626 | 4,111 |\n| Depreciation and amortization | 1,044 | 124 | 202 | 1,370 |\n| Additions to property and equipment | 1,714 | 277 | 511 | 2,502 |\n| Net property and equipment | 12,339 | 1,820 | 4,002 | 18,161 |\n| Total assets | 24,068 | 4,471 | 7,808 | 36,347 |\n| 2016 |  |  |  |  |\n| Total revenue | $ 86,579 | $ 17,028 | $ 15,112 | $ 118,719 |\n| Operating income | 2,326 | 778 | 568 | 3,672 |\n| Depreciation and amortization | 946 | 109 | 200 | 1,255 |\n| Additions to property and equipment | 1,823 | 299 | 527 | 2,649 |\n| Net property and equipment | 11,745 | 1,628 | 3,670 | 17,043 |\n| Total assets | 22,511 | 3,480 | 7,172 | 33,163 |\n| 2015 |  |  |  |  |\n| Total revenue | $ 84,351 | $ 17,341 | $ 14,507 | $ 116,199 |\n| Operating income | 2,308 | 771 | 545 | 3,624 |\n| Depreciation and amortization | 848 | 119 | 160 | 1,127 |\n| Additions to property and equipment | 1,574 | 148 | 671 | 2,393 |\n| Net property and equipment | 10,815 | 1,381 | 3,205 | 15,401 |\n| Total assets | 22,988 | 3,608 | 6,421 | 33,017 |",
+        "text_span": "",
+        "size": 9.0,
+        "bold": 0,
+        "font": "Arial",
+        "all_cap": 0,
+        "num_st": 0,
+        "is_center": 0,
+        "is_underline": 0,
+        "label": "table",
+        "page_no": 67,
+        "structure": {
+          "level": "Body",
+          "level_index": 6,
+          "parent_id": 611,
+          "path_text": "Costco Wholesale Corporation | PART IV | Item 16—Form 10-K Summary | NOTES TO CONSOLIDATED FINANCIAL STATEMENTS | Note 11—Segment Reporting",
+          "depth": 6,
+          "h1_index_norm": 0,
+          "sibling_index_norm": 0.25,
+          "is_first_child": false,
+          "is_last_child": false
+        },
+        "table_data": {
+          "num_rows": 22,
+          "num_cols": 5,
+          "cells": [
+            {
+              "row": 0,
+              "col": 1,
+              "text": "United States Operations",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": true,
+              "is_row_header": false
+            },
+            {
+              "row": 0,
+              "col": 2,
+              "text": "Canadian Operations",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": true,
+              "is_row_header": false
+            },
+            {
+              "row": 0,
+              "col": 3,
+              "text": "Other International Operations",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": true,
+              "is_row_header": false
+            },
+            {
+              "row": 0,
+              "col": 4,
+              "text": "Total",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": true,
+              "is_row_header": false
+            },
+            {
+              "row": 1,
+              "col": 0,
+              "text": "2017",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 2,
+              "col": 0,
+              "text": "Total revenue",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 2,
+              "col": 1,
+              "text": "$ 93,889",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 2,
+              "col": 2,
+              "text": "$ 18,775",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 2,
+              "col": 3,
+              "text": "$ 16,361",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 2,
+              "col": 4,
+              "text": "$ 129,025",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 3,
+              "col": 0,
+              "text": "Operating income",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 3,
+              "col": 1,
+              "text": "2,644",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 3,
+              "col": 2,
+              "text": "841",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 3,
+              "col": 3,
+              "text": "626",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 3,
+              "col": 4,
+              "text": "4,111",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 4,
+              "col": 0,
+              "text": "Depreciation and amortization",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 4,
+              "col": 1,
+              "text": "1,044",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 4,
+              "col": 2,
+              "text": "124",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 4,
+              "col": 3,
+              "text": "202",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 4,
+              "col": 4,
+              "text": "1,370",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 5,
+              "col": 0,
+              "text": "Additions to property and equipment",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 5,
+              "col": 1,
+              "text": "1,714",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 5,
+              "col": 2,
+              "text": "277",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 5,
+              "col": 3,
+              "text": "511",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 5,
+              "col": 4,
+              "text": "2,502",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 6,
+              "col": 0,
+              "text": "Net property and equipment",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 6,
+              "col": 1,
+              "text": "12,339",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 6,
+              "col": 2,
+              "text": "1,820",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 6,
+              "col": 3,
+              "text": "4,002",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 6,
+              "col": 4,
+              "text": "18,161",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 7,
+              "col": 0,
+              "text": "Total assets",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 7,
+              "col": 1,
+              "text": "24,068",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 7,
+              "col": 2,
+              "text": "4,471",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 7,
+              "col": 3,
+              "text": "7,808",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 7,
+              "col": 4,
+              "text": "36,347",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 8,
+              "col": 0,
+              "text": "2016",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 9,
+              "col": 0,
+              "text": "Total revenue",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 9,
+              "col": 1,
+              "text": "$ 86,579",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 9,
+              "col": 2,
+              "text": "$ 17,028",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 9,
+              "col": 3,
+              "text": "$ 15,112",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 9,
+              "col": 4,
+              "text": "$ 118,719",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 10,
+              "col": 0,
+              "text": "Operating income",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 10,
+              "col": 1,
+              "text": "2,326",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 10,
+              "col": 2,
+              "text": "778",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 10,
+              "col": 3,
+              "text": "568",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 10,
+              "col": 4,
+              "text": "3,672",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 11,
+              "col": 0,
+              "text": "Depreciation and amortization",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 11,
+              "col": 1,
+              "text": "946",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 11,
+              "col": 2,
+              "text": "109",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 11,
+              "col": 3,
+              "text": "200",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 11,
+              "col": 4,
+              "text": "1,255",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 12,
+              "col": 0,
+              "text": "Additions to property and equipment",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 12,
+              "col": 1,
+              "text": "1,823",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 12,
+              "col": 2,
+              "text": "299",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 12,
+              "col": 3,
+              "text": "527",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 12,
+              "col": 4,
+              "text": "2,649",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 13,
+              "col": 0,
+              "text": "Net property and equipment",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 13,
+              "col": 1,
+              "text": "11,745",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 13,
+              "col": 2,
+              "text": "1,628",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 13,
+              "col": 3,
+              "text": "3,670",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 13,
+              "col": 4,
+              "text": "17,043",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 14,
+              "col": 0,
+              "text": "Total assets",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 14,
+              "col": 1,
+              "text": "22,511",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 14,
+              "col": 2,
+              "text": "3,480",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 14,
+              "col": 3,
+              "text": "7,172",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 14,
+              "col": 4,
+              "text": "33,163",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 15,
+              "col": 0,
+              "text": "2015",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 16,
+              "col": 0,
+              "text": "Total revenue",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 16,
+              "col": 1,
+              "text": "$ 84,351",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 16,
+              "col": 2,
+              "text": "$ 17,341",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 16,
+              "col": 3,
+              "text": "$ 14,507",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 16,
+              "col": 4,
+              "text": "$ 116,199",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 17,
+              "col": 0,
+              "text": "Operating income",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 17,
+              "col": 1,
+              "text": "2,308",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 17,
+              "col": 2,
+              "text": "771",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 17,
+              "col": 3,
+              "text": "545",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 17,
+              "col": 4,
+              "text": "3,624",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 18,
+              "col": 0,
+              "text": "Depreciation and amortization",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 18,
+              "col": 1,
+              "text": "848",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 18,
+              "col": 2,
+              "text": "119",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 18,
+              "col": 3,
+              "text": "160",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 18,
+              "col": 4,
+              "text": "1,127",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 19,
+              "col": 0,
+              "text": "Additions to property and equipment",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 19,
+              "col": 1,
+              "text": "1,574",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 19,
+              "col": 2,
+              "text": "148",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 19,
+              "col": 3,
+              "text": "671",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 19,
+              "col": 4,
+              "text": "2,393",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 20,
+              "col": 0,
+              "text": "Net property and equipment",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 20,
+              "col": 1,
+              "text": "10,815",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 20,
+              "col": 2,
+              "text": "1,381",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 20,
+              "col": 3,
+              "text": "3,205",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 20,
+              "col": 4,
+              "text": "15,401",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 21,
+              "col": 0,
+              "text": "Total assets",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 21,
+              "col": 1,
+              "text": "22,988",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 21,
+              "col": 2,
+              "text": "3,608",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 21,
+              "col": 3,
+              "text": "6,421",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 21,
+              "col": 4,
+              "text": "33,017",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            }
+          ]
+        }
+      }
+    ],
+    "retrieved_text": "|  | United States Operations | Canadian Operations | Other International Operations | Total |\n| --- | --- | --- | --- | --- |\n| 2017 |  |  |  |  |\n| Total revenue | $ 93,889 | $ 18,775 | $ 16,361 | $ 129,025 |\n| Operating income | 2,644 | 841 | 626 | 4,111 |\n| Depreciation and amortization | 1,044 | 124 | 202 | 1,370 |\n| Additions to property and equipment | 1,714 | 277 | 511 | 2,502 |\n| Net property and equipment | 12,339 | 1,820 | 4,002 | 18,161 |\n| Total assets | 24,068 | 4,471 | 7,808 | 36,347 |\n| 2016 |  |  |  |  |\n| Total revenue | $ 86,579 | $ 17,028 | $ 15,112 | $ 118,719 |\n| Operating income | 2,326 | 778 | 568 | 3,672 |\n| Depreciation and amortization | 946 | 109 | 200 | 1,255 |\n| Additions to property and equipment | 1,823 | 299 | 527 | 2,649 |\n| Net property and equipment | 11,745 | 1,628 | 3,670 | 17,043 |\n| Total assets | 22,511 | 3,480 | 7,172 | 33,163 |\n| 2015 |  |  |  |  |\n| Total revenue | $ 84,351 | $ 17,341 | $ 14,507 | $ 116,199 |\n| Operating income | 2,308 | 771 | 545 | 3,624 |\n| Depreciation and amortization | 848 | 119 | 160 | 1,127 |\n| Additions to property and equipment | 1,574 | 148 | 671 | 2,393 |\n| Net property and equipment | 10,815 | 1,381 | 3,205 | 15,401 |\n| Total assets | 22,988 | 3,608 | 6,421 | 33,017 |"
+  }
+]

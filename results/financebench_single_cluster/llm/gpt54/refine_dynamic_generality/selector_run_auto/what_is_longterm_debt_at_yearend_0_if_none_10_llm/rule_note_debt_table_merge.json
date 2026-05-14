@@ -1,0 +1,659 @@
+[
+  {
+    "rule_names": [
+      "rule_note_debt_table"
+    ],
+    "rule_set_slug": "rule_note_debt_table",
+    "question_slug": "what_is_longterm_debt_at_yearend_0_if_none_10_llm",
+    "question": "What is long-term debt at year-end (0 if none)?",
+    "doc_name": "COSTCO_2017_10K",
+    "strategy": "merge",
+    "predicted_answer": "6,573",
+    "latency_seconds": 0.713,
+    "input_tokens": 481,
+    "output_tokens": 7,
+    "retrieved_token_count": 389,
+    "rules_with_hits": [
+      "rule_note_debt_table"
+    ],
+    "rules_with_no_hits": [],
+    "num_spans_before_dedup": 1,
+    "num_spans_after_dedup": 1,
+    "retrieved_spans": [
+      {
+        "text": "|  | 2017 |  | 2016 |  |\n|  | Carrying Value | Fair Value | Carrying Value | Fair Value |\n| --- | --- | --- | --- | --- |\n| 5.5% Senior Notes due March 2017 | $ 0 | $ 0 | $ 1,100 | $ 1,129 |\n| 1.125% Senior Notes due December 2017 | 0 | 0 | 1,099 | 1,103 |\n| 1.7% Senior Notes due December 2019 | 1,198 | 1,201 | 1,196 | 1,219 |\n| 1.75% Senior Notes due February 2020 | 498 | 501 | 498 | 508 |\n| 2.15% Senior Notes due May 2021 | 994 | 1,007 | 0 | 0 |\n| 2.25% Senior Notes due February 2022 | 497 | 504 | 497 | 512 |\n| 2.30% Senior Notes due May 2022 | 793 | 805 | 0 | 0 |\n| 2.75% Senior Notes due May 2024 | 991 | 1,010 | 0 | 0 |\n| 3.00% Senior Notes due May 2027 | 986 | 1,009 | 0 | 0 |\n| Other long-term debt | 702 | 716 | 771 | 803 |\n| Total long-term debt | 6,659 | 6,753 | 5,161 | 5,274 |\n| Less current portion | 86 |  | 1,100 |  |\n| Long-term debt, excluding current portion | $ 6,573 |  | $ 4,061 |  |",
+        "text_span": "",
+        "size": 9.0,
+        "bold": 0,
+        "font": "Arial",
+        "all_cap": 0,
+        "num_st": 0,
+        "is_center": 0,
+        "is_underline": 0,
+        "label": "table",
+        "page_no": 58,
+        "structure": {
+          "level": "Body",
+          "level_index": 6,
+          "parent_id": 523,
+          "path_text": "Costco Wholesale Corporation | PART IV | Item 16—Form 10-K Summary | NOTES TO CONSOLIDATED FINANCIAL STATEMENTS | Note 4—Debt (Continued)",
+          "depth": 6,
+          "h1_index_norm": 0,
+          "sibling_index_norm": 0.8333333333333334,
+          "is_first_child": false,
+          "is_last_child": true
+        },
+        "table_data": {
+          "num_rows": 15,
+          "num_cols": 5,
+          "cells": [
+            {
+              "row": 0,
+              "col": 1,
+              "text": "2017",
+              "row_span": 1,
+              "col_span": 2,
+              "is_column_header": true,
+              "is_row_header": false
+            },
+            {
+              "row": 0,
+              "col": 3,
+              "text": "2016",
+              "row_span": 1,
+              "col_span": 2,
+              "is_column_header": true,
+              "is_row_header": false
+            },
+            {
+              "row": 1,
+              "col": 1,
+              "text": "Carrying Value",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": true,
+              "is_row_header": false
+            },
+            {
+              "row": 1,
+              "col": 2,
+              "text": "Fair Value",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": true,
+              "is_row_header": false
+            },
+            {
+              "row": 1,
+              "col": 3,
+              "text": "Carrying Value",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": true,
+              "is_row_header": false
+            },
+            {
+              "row": 1,
+              "col": 4,
+              "text": "Fair Value",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": true,
+              "is_row_header": false
+            },
+            {
+              "row": 2,
+              "col": 0,
+              "text": "5.5% Senior Notes due March 2017",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 2,
+              "col": 1,
+              "text": "$ 0",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 2,
+              "col": 2,
+              "text": "$ 0",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 2,
+              "col": 3,
+              "text": "$ 1,100",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 2,
+              "col": 4,
+              "text": "$ 1,129",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 3,
+              "col": 0,
+              "text": "1.125% Senior Notes due December 2017",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 3,
+              "col": 1,
+              "text": "0",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 3,
+              "col": 2,
+              "text": "0",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 3,
+              "col": 3,
+              "text": "1,099",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 3,
+              "col": 4,
+              "text": "1,103",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 4,
+              "col": 0,
+              "text": "1.7% Senior Notes due December 2019",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 4,
+              "col": 1,
+              "text": "1,198",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 4,
+              "col": 2,
+              "text": "1,201",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 4,
+              "col": 3,
+              "text": "1,196",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 4,
+              "col": 4,
+              "text": "1,219",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 5,
+              "col": 0,
+              "text": "1.75% Senior Notes due February 2020",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 5,
+              "col": 1,
+              "text": "498",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 5,
+              "col": 2,
+              "text": "501",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 5,
+              "col": 3,
+              "text": "498",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 5,
+              "col": 4,
+              "text": "508",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 6,
+              "col": 0,
+              "text": "2.15% Senior Notes due May 2021",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 6,
+              "col": 1,
+              "text": "994",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 6,
+              "col": 2,
+              "text": "1,007",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 6,
+              "col": 3,
+              "text": "0",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 6,
+              "col": 4,
+              "text": "0",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 7,
+              "col": 0,
+              "text": "2.25% Senior Notes due February 2022",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 7,
+              "col": 1,
+              "text": "497",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 7,
+              "col": 2,
+              "text": "504",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 7,
+              "col": 3,
+              "text": "497",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 7,
+              "col": 4,
+              "text": "512",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 8,
+              "col": 0,
+              "text": "2.30% Senior Notes due May 2022",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 8,
+              "col": 1,
+              "text": "793",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 8,
+              "col": 2,
+              "text": "805",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 8,
+              "col": 3,
+              "text": "0",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 8,
+              "col": 4,
+              "text": "0",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 9,
+              "col": 0,
+              "text": "2.75% Senior Notes due May 2024",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 9,
+              "col": 1,
+              "text": "991",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 9,
+              "col": 2,
+              "text": "1,010",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 9,
+              "col": 3,
+              "text": "0",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 9,
+              "col": 4,
+              "text": "0",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 10,
+              "col": 0,
+              "text": "3.00% Senior Notes due May 2027",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 10,
+              "col": 1,
+              "text": "986",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 10,
+              "col": 2,
+              "text": "1,009",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 10,
+              "col": 3,
+              "text": "0",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 10,
+              "col": 4,
+              "text": "0",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 11,
+              "col": 0,
+              "text": "Other long-term debt",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 11,
+              "col": 1,
+              "text": "702",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 11,
+              "col": 2,
+              "text": "716",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 11,
+              "col": 3,
+              "text": "771",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 11,
+              "col": 4,
+              "text": "803",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 12,
+              "col": 0,
+              "text": "Total long-term debt",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 12,
+              "col": 1,
+              "text": "6,659",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 12,
+              "col": 2,
+              "text": "6,753",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 12,
+              "col": 3,
+              "text": "5,161",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 12,
+              "col": 4,
+              "text": "5,274",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 13,
+              "col": 0,
+              "text": "Less current portion",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 13,
+              "col": 1,
+              "text": "86",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 13,
+              "col": 3,
+              "text": "1,100",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 14,
+              "col": 0,
+              "text": "Long-term debt, excluding current portion",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 14,
+              "col": 1,
+              "text": "$ 6,573",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 14,
+              "col": 3,
+              "text": "$ 4,061",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            }
+          ]
+        }
+      }
+    ],
+    "retrieved_text": "|  | 2017 |  | 2016 |  |\n|  | Carrying Value | Fair Value | Carrying Value | Fair Value |\n| --- | --- | --- | --- | --- |\n| 5.5% Senior Notes due March 2017 | $ 0 | $ 0 | $ 1,100 | $ 1,129 |\n| 1.125% Senior Notes due December 2017 | 0 | 0 | 1,099 | 1,103 |\n| 1.7% Senior Notes due December 2019 | 1,198 | 1,201 | 1,196 | 1,219 |\n| 1.75% Senior Notes due February 2020 | 498 | 501 | 498 | 508 |\n| 2.15% Senior Notes due May 2021 | 994 | 1,007 | 0 | 0 |\n| 2.25% Senior Notes due February 2022 | 497 | 504 | 497 | 512 |\n| 2.30% Senior Notes due May 2022 | 793 | 805 | 0 | 0 |\n| 2.75% Senior Notes due May 2024 | 991 | 1,010 | 0 | 0 |\n| 3.00% Senior Notes due May 2027 | 986 | 1,009 | 0 | 0 |\n| Other long-term debt | 702 | 716 | 771 | 803 |\n| Total long-term debt | 6,659 | 6,753 | 5,161 | 5,274 |\n| Less current portion | 86 |  | 1,100 |  |\n| Long-term debt, excluding current portion | $ 6,573 |  | $ 4,061 |  |"
+  }
+]

@@ -1,0 +1,347 @@
+[
+  {
+    "rule_names": [
+      "rule_address_header_text_itself",
+      "rule_split_address_then_zip_consecutive",
+      "rule_page1_address_zip_same_or_adjacent"
+    ],
+    "rule_set_slug": "rule_address_header_text_itself__rule_page1_address_zip_same_or_adjacent__rule_split_address_then_zip_consecutive",
+    "question_slug": "what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm",
+    "question": "What is the address of principal executive offices and ZIP code?",
+    "doc_name": "AMCOR_2019_10K",
+    "strategy": "merge",
+    "predicted_answer": "83 Tower Road North Warmley, Bristol BS30 8XP United Kingdom",
+    "latency_seconds": 0.711,
+    "input_tokens": 107,
+    "output_tokens": 19,
+    "retrieved_token_count": 15,
+    "rules_with_hits": [
+      "rule_address_header_text_itself"
+    ],
+    "rules_with_no_hits": [
+      "rule_split_address_then_zip_consecutive",
+      "rule_page1_address_zip_same_or_adjacent"
+    ],
+    "num_spans_before_dedup": 1,
+    "num_spans_after_dedup": 1,
+    "retrieved_spans": [
+      {
+        "text": "83 Tower Road North Warmley, Bristol BS30 8XP United Kingdom",
+        "text_span": "(Address of principal executive offices) Registrant’s telephone number, including area code: +44 117 9753200 Securities registered pursuant to Section 12(b) of the Act: Title of each class Name of each exchange",
+        "size": 8.0,
+        "bold": 1,
+        "font": "TimesNewRomanPS-BoldMT",
+        "all_cap": 0,
+        "num_st": 0,
+        "is_center": 0,
+        "is_underline": 0,
+        "label": "section_header",
+        "page_no": 1,
+        "structure": {
+          "level": "H2",
+          "level_index": 2,
+          "parent_id": 6,
+          "path_text": "AMCOR PLC | 83 Tower Road North Warmley, Bristol BS30 8XP United Kingdom",
+          "depth": 2,
+          "h1_index_norm": 0.6666666666666666,
+          "sibling_index_norm": 0.06451612903225806,
+          "is_first_child": false,
+          "is_last_child": false
+        },
+        "header_page": 1
+      }
+    ],
+    "retrieved_text": "83 Tower Road North Warmley, Bristol BS30 8XP United Kingdom"
+  },
+  {
+    "rule_names": [
+      "rule_address_header_text_itself",
+      "rule_split_address_then_zip_consecutive",
+      "rule_page1_address_zip_same_or_adjacent"
+    ],
+    "rule_set_slug": "rule_address_header_text_itself__rule_page1_address_zip_same_or_adjacent__rule_split_address_then_zip_consecutive",
+    "question_slug": "what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm",
+    "question": "What is the address of principal executive offices and ZIP code?",
+    "doc_name": "JOHNSON_JOHNSON_2022_10K",
+    "strategy": "merge",
+    "predicted_answer": "One Johnson & Johnson Plaza New Brunswick, New Jersey 08933",
+    "latency_seconds": 0.944,
+    "input_tokens": 115,
+    "output_tokens": 17,
+    "retrieved_token_count": 24,
+    "rules_with_hits": [
+      "rule_split_address_then_zip_consecutive",
+      "rule_page1_address_zip_same_or_adjacent"
+    ],
+    "rules_with_no_hits": [
+      "rule_address_header_text_itself"
+    ],
+    "num_spans_before_dedup": 3,
+    "num_spans_after_dedup": 2,
+    "retrieved_spans": [
+      {
+        "text": "(Zip Code)",
+        "text_span": "",
+        "size": 7.0,
+        "bold": 0,
+        "font": "LiberationSerif",
+        "all_cap": 0,
+        "num_st": 0,
+        "is_center": 0,
+        "is_underline": 0,
+        "label": "text",
+        "page_no": 1,
+        "structure": {
+          "level": "Body",
+          "level_index": 3,
+          "parent_id": 17,
+          "path_text": "JOHNSON & JOHNSON | 08933",
+          "depth": 3,
+          "h1_index_norm": 1.0,
+          "sibling_index_norm": 0.0,
+          "is_first_child": true,
+          "is_last_child": false
+        }
+      },
+      {
+        "text": "One Johnson & Johnson Plaza New Brunswick, New Jersey 08933 (Address of principal executive offices)",
+        "text_span": "",
+        "size": 9.0,
+        "bold": 0,
+        "font": "LiberationSerif",
+        "all_cap": 0,
+        "num_st": 0,
+        "is_center": 0,
+        "is_underline": 0,
+        "label": "text",
+        "page_no": 1,
+        "structure": {
+          "level": "Body",
+          "level_index": 3,
+          "parent_id": 17,
+          "path_text": "JOHNSON & JOHNSON | 08933",
+          "depth": 3,
+          "h1_index_norm": 1.0,
+          "sibling_index_norm": 0.3333333333333333,
+          "is_first_child": false,
+          "is_last_child": false
+        }
+      }
+    ],
+    "retrieved_text": "(Zip Code)\n\nOne Johnson & Johnson Plaza New Brunswick, New Jersey 08933 (Address of principal executive offices)"
+  },
+  {
+    "rule_names": [
+      "rule_address_header_text_itself",
+      "rule_split_address_then_zip_consecutive",
+      "rule_page1_address_zip_same_or_adjacent"
+    ],
+    "rule_set_slug": "rule_address_header_text_itself__rule_page1_address_zip_same_or_adjacent__rule_split_address_then_zip_consecutive",
+    "question_slug": "what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm",
+    "question": "What is the address of principal executive offices and ZIP code?",
+    "doc_name": "AMAZON_2018_10K",
+    "strategy": "merge",
+    "predicted_answer": "410 Terry Avenue North Seattle, Washington 98109-5210",
+    "latency_seconds": 0.85,
+    "input_tokens": 113,
+    "output_tokens": 17,
+    "retrieved_token_count": 21,
+    "rules_with_hits": [
+      "rule_page1_address_zip_same_or_adjacent"
+    ],
+    "rules_with_no_hits": [
+      "rule_address_header_text_itself",
+      "rule_split_address_then_zip_consecutive"
+    ],
+    "num_spans_before_dedup": 1,
+    "num_spans_after_dedup": 1,
+    "retrieved_spans": [
+      {
+        "text": "410 Terry Avenue North Seattle, Washington 98109-5210 (206) 266-1000",
+        "text_span": "",
+        "size": 7.5,
+        "bold": 1,
+        "font": "Times New Roman,Bold",
+        "all_cap": 0,
+        "num_st": 0,
+        "is_center": 0,
+        "is_underline": 0,
+        "label": "text",
+        "page_no": 1,
+        "structure": {
+          "level": "Body",
+          "level_index": 2,
+          "parent_id": 14,
+          "path_text": "AMAZON.COM, INC.",
+          "depth": 2,
+          "h1_index_norm": 0.6666666666666666,
+          "sibling_index_norm": 0.09433962264150944,
+          "is_first_child": false,
+          "is_last_child": false
+        }
+      }
+    ],
+    "retrieved_text": "410 Terry Avenue North Seattle, Washington 98109-5210 (206) 266-1000"
+  },
+  {
+    "rule_names": [
+      "rule_address_header_text_itself",
+      "rule_split_address_then_zip_consecutive",
+      "rule_page1_address_zip_same_or_adjacent"
+    ],
+    "rule_set_slug": "rule_address_header_text_itself__rule_page1_address_zip_same_or_adjacent__rule_split_address_then_zip_consecutive",
+    "question_slug": "what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm",
+    "question": "What is the address of principal executive offices and ZIP code?",
+    "doc_name": "LOCKHEEDMARTIN_2022_10K",
+    "strategy": "merge",
+    "predicted_answer": "NOT FOUND",
+    "latency_seconds": 0.756,
+    "input_tokens": 91,
+    "output_tokens": 6,
+    "retrieved_token_count": 0,
+    "rules_with_hits": [],
+    "rules_with_no_hits": [
+      "rule_address_header_text_itself",
+      "rule_split_address_then_zip_consecutive",
+      "rule_page1_address_zip_same_or_adjacent"
+    ],
+    "num_spans_before_dedup": 0,
+    "num_spans_after_dedup": 0,
+    "retrieved_spans": [],
+    "retrieved_text": ""
+  },
+  {
+    "rule_names": [
+      "rule_address_header_text_itself",
+      "rule_split_address_then_zip_consecutive",
+      "rule_page1_address_zip_same_or_adjacent"
+    ],
+    "rule_set_slug": "rule_address_header_text_itself__rule_page1_address_zip_same_or_adjacent__rule_split_address_then_zip_consecutive",
+    "question_slug": "what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm",
+    "question": "What is the address of principal executive offices and ZIP code?",
+    "doc_name": "AMAZON_2016_10K",
+    "strategy": "merge",
+    "predicted_answer": "410 Terry Avenue North Seattle, Washington 98109-5210",
+    "latency_seconds": 0.885,
+    "input_tokens": 113,
+    "output_tokens": 17,
+    "retrieved_token_count": 21,
+    "rules_with_hits": [
+      "rule_page1_address_zip_same_or_adjacent"
+    ],
+    "rules_with_no_hits": [
+      "rule_address_header_text_itself",
+      "rule_split_address_then_zip_consecutive"
+    ],
+    "num_spans_before_dedup": 1,
+    "num_spans_after_dedup": 1,
+    "retrieved_spans": [
+      {
+        "text": "410 Terry Avenue North Seattle, Washington 98109-5210 (206) 266-1000",
+        "text_span": "",
+        "size": 7.5,
+        "bold": 1,
+        "font": "Times New Roman,Bold",
+        "all_cap": 0,
+        "num_st": 0,
+        "is_center": 0,
+        "is_underline": 0,
+        "label": "text",
+        "page_no": 1,
+        "structure": {
+          "level": "Body",
+          "level_index": 2,
+          "parent_id": 13,
+          "path_text": "AMAZON.COM, INC.",
+          "depth": 2,
+          "h1_index_norm": 0.6666666666666666,
+          "sibling_index_norm": 0.11320754716981132,
+          "is_first_child": false,
+          "is_last_child": false
+        }
+      }
+    ],
+    "retrieved_text": "410 Terry Avenue North Seattle, Washington 98109-5210 (206) 266-1000"
+  },
+  {
+    "rule_names": [
+      "rule_address_header_text_itself",
+      "rule_split_address_then_zip_consecutive",
+      "rule_page1_address_zip_same_or_adjacent"
+    ],
+    "rule_set_slug": "rule_address_header_text_itself__rule_page1_address_zip_same_or_adjacent__rule_split_address_then_zip_consecutive",
+    "question_slug": "what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm",
+    "question": "What is the address of principal executive offices and ZIP code?",
+    "doc_name": "CORNING_2022_10K",
+    "strategy": "merge",
+    "predicted_answer": "NOT FOUND",
+    "latency_seconds": 0.733,
+    "input_tokens": 91,
+    "output_tokens": 6,
+    "retrieved_token_count": 0,
+    "rules_with_hits": [],
+    "rules_with_no_hits": [
+      "rule_address_header_text_itself",
+      "rule_split_address_then_zip_consecutive",
+      "rule_page1_address_zip_same_or_adjacent"
+    ],
+    "num_spans_before_dedup": 0,
+    "num_spans_after_dedup": 0,
+    "retrieved_spans": [],
+    "retrieved_text": ""
+  },
+  {
+    "rule_names": [
+      "rule_address_header_text_itself",
+      "rule_split_address_then_zip_consecutive",
+      "rule_page1_address_zip_same_or_adjacent"
+    ],
+    "rule_set_slug": "rule_address_header_text_itself__rule_page1_address_zip_same_or_adjacent__rule_split_address_then_zip_consecutive",
+    "question_slug": "what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm",
+    "question": "What is the address of principal executive offices and ZIP code?",
+    "doc_name": "EBAY_2021_10K",
+    "strategy": "merge",
+    "predicted_answer": "2025 Hamilton Avenue, San Jose, California, NOT FOUND",
+    "latency_seconds": 0.964,
+    "input_tokens": 100,
+    "output_tokens": 16,
+    "retrieved_token_count": 8,
+    "rules_with_hits": [
+      "rule_address_header_text_itself"
+    ],
+    "rules_with_no_hits": [
+      "rule_split_address_then_zip_consecutive",
+      "rule_page1_address_zip_same_or_adjacent"
+    ],
+    "num_spans_before_dedup": 1,
+    "num_spans_after_dedup": 1,
+    "retrieved_spans": [
+      {
+        "text": "2025 Hamilton Avenue San Jose,California",
+        "text_span": "(Address of principal executive offices) 77-0430924 (I.R.S. Employer Identification No.)",
+        "size": 7.5,
+        "bold": 1,
+        "font": "Arial,Bold",
+        "all_cap": 0,
+        "num_st": 0,
+        "is_center": 0,
+        "is_underline": 0,
+        "label": "section_header",
+        "page_no": 1,
+        "structure": {
+          "level": "H2",
+          "level_index": 2,
+          "parent_id": 2,
+          "path_text": "Form 10-K | 2025 Hamilton Avenue San Jose,California",
+          "depth": 2,
+          "h1_index_norm": 1.0,
+          "sibling_index_norm": 0.2777777777777778,
+          "is_first_child": false,
+          "is_last_child": false
+        },
+        "header_page": 1
+      }
+    ],
+    "retrieved_text": "2025 Hamilton Avenue San Jose,California"
+  }
+]
