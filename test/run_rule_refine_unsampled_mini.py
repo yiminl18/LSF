@@ -127,5 +127,5 @@ if summary_path.exists():
             f"{s['merge_accuracy']:>5.2f}  "
             f"{s.get('avg_cost_ratio', s.get('avg_cost_ratio_selected', 0.0)):>8.5f}  "
             f"{s['total_llm_calls']:>6}  "
-            f"{s['total_latency_seconds']:>7.1f}"
+            f"{s.get('total_latency_seconds', 0.0):>7.1f}"
         )
