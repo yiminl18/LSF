@@ -174,23 +174,30 @@ def evaluate_merge_accuracy(
         if gt_val is not None and predicted is not None:
             gt_str   = json.dumps(gt_val) if not isinstance(gt_val, str) else gt_val
             pred_str = str(predicted)
-            judge_resp = model_mod.client.chat.completions.create(
-                model=model_mod.AZURE_DEPLOYMENT,
-                messages=[
-                    {"role": "system", "content": _JUDGE_SYSTEM},
-                    {"role": "user",   "content": (
-                        f"Question: {question}\n"
-                        f"Ground Truth: {gt_str}\n"
-                        f"Predicted: {pred_str}"
-                    )},
-                ],
-                max_completion_tokens=10,
-                temperature=0.0,
-            )
-            verdict = (judge_resp.choices[0].message.content or "").strip().lower()
-            correct = verdict == "correct"
-            judge_input_tokens  += judge_resp.usage.prompt_tokens     if judge_resp.usage else 0
-            judge_output_tokens += judge_resp.usage.completion_tokens if judge_resp.usage else 0
+            try:
+                judge_resp = model_mod.client.chat.completions.create(
+                    model=model_mod.AZURE_DEPLOYMENT,
+                    messages=[
+                        {"role": "system", "content": _JUDGE_SYSTEM},
+                        {"role": "user",   "content": (
+                            f"Question: {question}\n"
+                            f"Ground Truth: {gt_str}\n"
+                            f"Predicted: {pred_str}"
+                        )},
+                    ],
+                    max_completion_tokens=10,
+                    temperature=0.0,
+                )
+                verdict = (judge_resp.choices[0].message.content or "").strip().lower()
+                correct = verdict == "correct"
+                judge_input_tokens  += judge_resp.usage.prompt_tokens     if judge_resp.usage else 0
+                judge_output_tokens += judge_resp.usage.completion_tokens if judge_resp.usage else 0
+            except Exception as e:
+                if "content_filter" in str(e) or "content management" in str(e):
+                    warnings.warn(f"Content filter on judge for {doc_name}, treating as incorrect")
+                    correct = False
+                else:
+                    raise
 
         if correct:
             num_correct += 1
