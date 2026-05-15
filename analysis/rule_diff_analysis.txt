@@ -1,0 +1,380 @@
+RULE DIFF ANALYSIS: Sampled-Refined vs Unsampled-Refined (Gold)
+======================================================================
+Generated: 2026-05-15 12:37
+
+For each question: rules ONLY in sampled-refined (potential overfit)
+and rules ONLY in unsampled-refined (generalizable, missed by sampled).
+Coverage and cost computed on 50 unsampled docs (no LLM calls).
+
+
+======================================================================
+QUESTION: How many shares of common stock were outstanding as of the cover-page reference date?
+======================================================================
+  Sampled-refined  :  7 rules  | merged acc on unsampled: 0.66
+  Unsampled-refined:  9 rules  | merged acc on unsampled: 0.96
+  Overlap (both)   :  3 rules
+  Only in sampled  :  4 rules  ← overfit candidates
+  Only in unsampled:  6 rules  ← missed by sampled
+
+  RULES ONLY IN SAMPLED-REFINED (4) — overfit candidates:
+  Rule                                                     Cost_U  Cov_U  Cov_S  Description
+  -----------------------------------------------------------------------------------------------
+  rule_page1_phrase_number_of_shares_outstanding_of_registrant 0.00006   0.10   0.10  Match page-1 spans with 'number of shares outstanding of the registrant' style phrasing.
+  rule_page1_sentence_with_there_were_and_common_stock    0.00001   0.04   0.20  Match page-1 spans using 'There were ... common stock ... outstanding' style wording.
+  rule_page1_shares_outstanding_as_of_february            0.00004   0.08   0.20  Match spans with outstanding-share sentence using a February reference date.
+  rule_page2_cover_page_numeric_sentence                  0.00011   0.30   0.30  Match page-2 text spans with a long comma-formatted number and outstanding-share keywords for spillo
+
+  RULES ONLY IN UNSAMPLED-REFINED (6) — missed by sampled:
+  Rule                                                     Cost_U  Cov_U  Cov_S  Description
+  -----------------------------------------------------------------------------------------------
+  rule_cover_path_text_company_page1                      0.00175   0.86   0.80  Match page-1 body/text spans under the company cover block that mention outstanding shares.
+  rule_page1_after_nonaffiliate_market_value              0.00020   0.48   0.70  Match page-1 spans with outstanding-share language that follow a non-affiliate market value sentence
+  rule_page1_company_cover_section_header                 0.00000   0.00   0.00  Match the main company cover section_header on page 1 when it embeds the answer sentence.
+  rule_page1_market_value_and_number_of_shares_labels     0.00003   0.10   0.20  Match page-1 spans that are labels for market value and number of shares in side-by-side cover layou
+  rule_page1_numeric_only_after_outstanding_label         0.00001   0.10   0.10  Match numeric-only spans on page 1/2 that follow a label span mentioning outstanding common stock.
+  rule_page1_sentence_with_common_stock_outstanding_and_documents_reference 0.00003   0.46   0.50  Match page-1 spans with common-stock-outstanding language in the same large cover block as documents
+
+  DIAGNOSIS:
+    Overfit rules avg coverage: 0.20 (sampled) vs 0.13 (unsampled)
+    → Very low unsampled coverage (0.13): rules retrieve nothing on
+      most unsampled docs, so they add noise rather than signal.
+    Missed rules avg coverage: 0.38 (sampled) vs 0.33 (unsampled)
+
+======================================================================
+QUESTION: What is long-term debt at year-end (0 if none)?
+======================================================================
+  Sampled-refined  :  6 rules  | merged acc on unsampled: 0.46
+  Unsampled-refined: 11 rules  | merged acc on unsampled: 0.82
+  Overlap (both)   :  4 rules
+  Only in sampled  :  2 rules  ← overfit candidates
+  Only in unsampled:  7 rules  ← missed by sampled
+
+  RULES ONLY IN SAMPLED-REFINED (2) — overfit candidates:
+  Rule                                                     Cost_U  Cov_U  Cov_S  Description
+  -----------------------------------------------------------------------------------------------
+  rule_balance_sheet_table_on_pages_30_to_70              0.00042   0.12   0.20  Match mid-document financial statement tables on typical balance-sheet pages that mention long-term 
+  rule_mda_debt_at_year_end_text                          0.00177   0.40   0.60  Match text spans that explicitly say debt at year-end or at fiscal year-end.
+
+  RULES ONLY IN UNSAMPLED-REFINED (7) — missed by sampled:
+  Rule                                                     Cost_U  Cov_U  Cov_S  Description
+  -----------------------------------------------------------------------------------------------
+  rule_debt_note_header_same_page_tables                  0.00581   0.94   1.00  Match tables on the same page as a debt-related section header.
+  rule_debt_note_year_end_table                           0.00606   0.42   0.80  Match debt tables that explicitly present year-end balances.
+  rule_debt_related_section_headers                       0.00945   1.00   1.00  Match debt-related headers and nearby text spans as broad anchors.
+  rule_mda_liquidity_debt_paragraph                       0.00541   0.84   0.90  Match MD&A liquidity/capital resources text spans mentioning long-term debt at year-end.
+  rule_note_debt_header_near_table                        0.00549   0.84   0.90  Match section headers for debt notes that likely precede the answer table.
+  rule_note_debt_table                                    0.00453   0.72   0.90  Match debt note tables under notes to consolidated financial statements that mention long-term debt.
+  rule_text_span_long_term_debt_numeric                   0.00383   0.90   1.00  Match text spans containing long-term debt with nearby numeric amount.
+
+  DIAGNOSIS:
+    Overfit rules avg coverage: 0.40 (sampled) vs 0.26 (unsampled)
+    → Very low unsampled coverage (0.26): rules retrieve nothing on
+      most unsampled docs, so they add noise rather than signal.
+    Missed rules avg coverage: 0.93 (sampled) vs 0.81 (unsampled)
+
+======================================================================
+QUESTION: What is net income (loss) for the most recent fiscal year?
+======================================================================
+  Sampled-refined  : 14 rules  | merged acc on unsampled: 0.76
+  Unsampled-refined: 22 rules  | merged acc on unsampled: 0.82
+  Overlap (both)   : 10 rules
+  Only in sampled  :  4 rules  ← overfit candidates
+  Only in unsampled: 12 rules  ← missed by sampled
+
+  RULES ONLY IN SAMPLED-REFINED (4) — overfit candidates:
+  Rule                                                     Cost_U  Cov_U  Cov_S  Description
+  -----------------------------------------------------------------------------------------------
+  rule_consolidated_results_table                         0.04506   1.00   1.00  Match tables under paths mentioning consolidated financial statements/results with net income row.
+  rule_mda_results_of_operations_net_income_text          0.00413   0.80   0.70  Match text spans in MD&A / Results of Operations mentioning net income or net earnings.
+  rule_net_income_in_bold_summary_text                    0.00071   0.46   0.50  Match bold text spans mentioning net income/earnings/loss, often in summary sections.
+  rule_tables_with_row_net_and_column_years               0.04078   1.00   1.00  Match tables where a net row coexists with year-like column headers.
+
+  RULES ONLY IN UNSAMPLED-REFINED (12) — missed by sampled:
+  Rule                                                     Cost_U  Cov_U  Cov_S  Description
+  -----------------------------------------------------------------------------------------------
+  rule_financial_statement_table_with_parentheses_and_dollars 0.05132   1.00   1.00  Match likely financial statement tables with dollar formatting and a net income row.
+  rule_item8_financial_statements_pages                   0.01584   0.96   0.80  Match spans on pages associated with Item 8 / Financial Statements from the table of contents.
+  rule_net_income_row_in_financial_statements_section     0.03439   0.86   0.60  Match tables in Item 8 / Financial Statements and Supplementary Data with a net income row.
+  rule_net_income_row_in_income_statement_table           0.01271   0.92   1.00  Match tables containing a row labeled net income/loss in the income statement.
+  rule_page_after_statement_of_income_header              0.01148   0.82   0.90  Match spans on the same or next page after a Statement of Income/Operations header.
+  rule_row_header_net_income_in_any_table                 0.04965   1.00   1.00  Match any table where a row header cell is net income/loss/earnings.
+  rule_statement_of_income_heading_nearby                 0.00021   0.82   0.90  Match section headers for Statement of Income / Operations that likely precede the answer table.
+  rule_table_with_net_income_and_three_years              0.04692   1.00   1.00  Match tables with a net income row and at least three distinct year labels.
+  rule_tables_under_part_ii_with_net_income               0.02918   0.62   0.80  Match tables under Part II that mention net income/earnings/loss.
+  rule_tables_with_financial_units_and_recent_years       0.05062   1.00   1.00  Match financial tables using units like million/billion and containing year columns.
+  rule_toc_item7_page_then_following_pages                0.02844   0.96   0.80  Match spans on Item 7 pages and nearby pages, where some filers state net income in MD&A.
+  rule_toc_statement_of_income_page                       0.00666   0.82   0.90  Match spans on the page listed in the TOC for Consolidated Statement of Income/Operations.
+
+  DIAGNOSIS:
+    Overfit rules avg coverage: 0.80 (sampled) vs 0.82 (unsampled)
+    → Coverage gap is small; overfitting likely due to low individual
+      accuracy on unseen docs rather than retrieval failure.
+    Missed rules avg coverage: 0.89 (sampled) vs 0.90 (unsampled)
+
+======================================================================
+QUESTION: What is the address of principal executive offices and ZIP code?
+======================================================================
+  Sampled-refined  :  5 rules  | merged acc on unsampled: 0.88
+  Unsampled-refined:  7 rules  | merged acc on unsampled: 0.98
+  Overlap (both)   :  4 rules
+  Only in sampled  :  1 rules  ← overfit candidates
+  Only in unsampled:  3 rules  ← missed by sampled
+
+  RULES ONLY IN SAMPLED-REFINED (1) — overfit candidates:
+  Rule                                                     Cost_U  Cov_U  Cov_S  Description
+  -----------------------------------------------------------------------------------------------
+  rule_page1_before_securities_registered                 0.00004   0.32   0.20  Return address-like spans appearing before the first securities-registered line on page 1.
+
+  RULES ONLY IN UNSAMPLED-REFINED (3) — missed by sampled:
+  Rule                                                     Cost_U  Cov_U  Cov_S  Description
+  -----------------------------------------------------------------------------------------------
+  rule_page1_address_like_with_known_cover_labels         0.00002   0.20   0.30  Match spans where address-like text co-occurs with cover-page labels in text_span.
+  rule_page1_address_or_zip_single_token_headers          0.00028   0.98   1.00  Match single-token page-1 headers that are ZIP codes or short address fragments.
+  rule_page1_main_company_path_text                       0.00024   0.36   0.90  Match page-1 spans whose path_text is the main company name and that mention address/ZIP/phone.
+
+  DIAGNOSIS:
+    Overfit rules avg coverage: 0.20 (sampled) vs 0.32 (unsampled)
+    → Coverage gap is small; overfitting likely due to low individual
+      accuracy on unseen docs rather than retrieval failure.
+    Missed rules avg coverage: 0.73 (sampled) vs 0.51 (unsampled)
+
+======================================================================
+QUESTION: What is the registrant's exact name?
+======================================================================
+  Sampled-refined  :  2 rules  | merged acc on unsampled: 0.90
+  Unsampled-refined:  4 rules  | merged acc on unsampled: 1.00
+  Overlap (both)   :  2 rules
+  Only in sampled  :  0 rules  ← overfit candidates
+  Only in unsampled:  2 rules  ← missed by sampled
+
+  RULES ONLY IN SAMPLED-REFINED: none
+
+  RULES ONLY IN UNSAMPLED-REFINED (2) — missed by sampled:
+  Rule                                                     Cost_U  Cov_U  Cov_S  Description
+  -----------------------------------------------------------------------------------------------
+  rule_item1_general_company_mention                      0.00061   0.44   0.90  Match early Item 1 / General text spans that restate the company name.
+  rule_page1_company_heading_with_single_path             0.00006   0.86   0.80  Match page-1 headings whose path_text equals their text, a common cover-page company-name pattern.
+
+  DIAGNOSIS:
+    Missed rules avg coverage: 0.85 (sampled) vs 0.65 (unsampled)
+
+======================================================================
+QUESTION: What is the registrant's telephone number?
+======================================================================
+  Sampled-refined  :  5 rules  | merged acc on unsampled: 0.82
+  Unsampled-refined:  5 rules  | merged acc on unsampled: 0.98
+  Overlap (both)   :  1 rules
+  Only in sampled  :  4 rules  ← overfit candidates
+  Only in unsampled:  4 rules  ← missed by sampled
+
+  RULES ONLY IN SAMPLED-REFINED (4) — overfit candidates:
+  Rule                                                     Cost_U  Cov_U  Cov_S  Description
+  -----------------------------------------------------------------------------------------------
+  rule_cover_page_before_section_12b                      0.00012   0.80   0.90  Match page-1 spans where a phone number appears near the Section 12(b) registration text.
+  rule_exact_phone_only_span                              0.00005   0.56   0.30  Match spans whose text is primarily just a phone number.
+  rule_page1_before_documents_incorporated                0.00006   0.40   0.50  Match phone-like spans occurring before the 'DOCUMENTS INCORPORATED BY REFERENCE' area.
+  rule_registrant_phone_following_zip_parent              0.00041   0.16   0.20  Match child/body spans under a zip-code-related parent that contain the phone label or number.
+
+  RULES ONLY IN UNSAMPLED-REFINED (4) — missed by sampled:
+  Rule                                                     Cost_U  Cov_U  Cov_S  Description
+  -----------------------------------------------------------------------------------------------
+  rule_page1_h2_phone_header                              0.00005   0.50   0.60  Match page-1 H2 spans whose header text is or contains the phone number.
+  rule_page1_phone_with_parenthetical_area_code_label     0.00012   0.78   0.80  Match phone spans adjacent to '(Registrant's telephone number, including area code)' labels.
+  rule_phone_before_section12b                            0.00001   0.06   0.10  Match spans with phone numbers that occur before the Section 12(b) securities registration block.
+  rule_principal_executive_offices_and_phone              0.00015   0.66   0.90  Match spans mentioning principal executive offices together with a phone number.
+
+  DIAGNOSIS:
+    Overfit rules avg coverage: 0.47 (sampled) vs 0.48 (unsampled)
+    → Coverage gap is small; overfitting likely due to low individual
+      accuracy on unseen docs rather than retrieval failure.
+    Missed rules avg coverage: 0.60 (sampled) vs 0.50 (unsampled)
+
+======================================================================
+QUESTION: What is the state (or other jurisdiction) of incorporation and the IRS Employer Identification Number?
+======================================================================
+  Sampled-refined  :  3 rules  | merged acc on unsampled: 0.88
+  Unsampled-refined:  4 rules  | merged acc on unsampled: 1.00
+  Overlap (both)   :  1 rules
+  Only in sampled  :  2 rules  ← overfit candidates
+  Only in unsampled:  3 rules  ← missed by sampled
+
+  RULES ONLY IN SAMPLED-REFINED (2) — overfit candidates:
+  Rule                                                     Cost_U  Cov_U  Cov_S  Description
+  -----------------------------------------------------------------------------------------------
+  rule_page1_combined_state_and_ein_same_text             0.00004   0.04   0.10  Match page-1 spans whose text itself contains both a jurisdiction value and an EIN number.
+  rule_page1_ein_number_pattern                           0.00012   0.98   1.00  Match page-1 spans containing an EIN-like number pattern.
+
+  RULES ONLY IN UNSAMPLED-REFINED (3) — missed by sampled:
+  Rule                                                     Cost_U  Cov_U  Cov_S  Description
+  -----------------------------------------------------------------------------------------------
+  rule_page1_bold_ein_number_format                       0.00005   0.80   0.80  Match bold page-1 spans that look like standalone EIN numbers.
+  rule_page1_company_header_and_next_15                   0.00190   0.96   1.00  Match the first company-name header on page 1 and the next 15 spans after it.
+  rule_page1_texts_with_parent_h1_company_and_short_value 0.00080   0.84   0.80  Match short child text spans under a company H1 cover header, capturing state and EIN values.
+
+  DIAGNOSIS:
+    Overfit rules avg coverage: 0.55 (sampled) vs 0.51 (unsampled)
+    → Coverage gap is small; overfitting likely due to low individual
+      accuracy on unseen docs rather than retrieval failure.
+    Missed rules avg coverage: 0.87 (sampled) vs 0.87 (unsampled)
+
+======================================================================
+QUESTION: What is total assets at year-end (from the audited balance sheet)?
+======================================================================
+  Sampled-refined  : 27 rules  | merged acc on unsampled: 0.78
+  Unsampled-refined: 14 rules  | merged acc on unsampled: 0.92
+  Overlap (both)   : 12 rules
+  Only in sampled  : 15 rules  ← overfit candidates
+  Only in unsampled:  2 rules  ← missed by sampled
+
+  RULES ONLY IN SAMPLED-REFINED (15) — overfit candidates:
+  Rule                                                     Cost_U  Cov_U  Cov_S  Description
+  -----------------------------------------------------------------------------------------------
+  rule_tables_with_balance_sheet_in_toc_path              0.00360   0.08   0.00  Match tables whose path or nearby context suggests they are listed in the table of contents as balan
+  rule_tables_with_consolidated_keyword                   0.00820   0.94   1.00  Match tables with 'consolidated' plus balance-sheet-like content.
+  rule_tables_with_parenthetical_year_end_dates           0.00677   0.88   0.40  Match tables with year-end date style headers and total assets.
+  rule_tables_with_total_assets_and_financial_statements_path 0.00873   0.94   0.70  Match total-assets tables whose path_text includes financial statements wording.
+  rule_tables_with_total_assets_and_item8_path            0.00810   0.86   0.60  Match total-assets tables whose path_text includes Item 8.
+  rule_tables_with_total_assets_and_page_around_39        0.00398   0.42   0.50  Match total-assets tables around page 39, common in some healthcare filings.
+  rule_tables_with_total_assets_and_page_around_42        0.00448   0.60   0.30  Match total-assets tables around page 42, a common balance-sheet page in many 10-Ks.
+  rule_tables_with_total_assets_and_page_over_30          0.01437   1.00   1.00  Match total-assets tables on later pages, where audited statements often reside in 10-Ks.
+  rule_tables_with_total_assets_and_receivables           0.00807   0.98   1.00  Match balance-sheet-like tables containing total assets and receivables.
+  rule_tables_with_total_assets_and_total_current_assets  0.01065   0.98   1.00  Match tables containing both total current assets/current assets and total assets.
+  rule_tables_with_total_assets_and_total_equity          0.00313   0.30   0.40  Match balance-sheet-like tables containing total assets and total equity.
+  rule_tables_with_total_assets_and_total_liabilities     0.01102   1.00   1.00  Match tables containing both total assets and total liabilities.
+  rule_tables_with_total_assets_in_item8_path             0.00810   0.86   0.60  Match tables containing total assets under Item 8 path.
+  rule_tables_with_total_assets_on_same_page_as_item8     0.00039   0.10   0.10  Match tables on pages containing an Item 8 heading and total assets.
+  rule_tables_with_total_assets_within_three_pages_of_item8 0.00702   0.72   0.60  Match tables within three pages after Item 8 heading that contain total assets or assets.
+
+  RULES ONLY IN UNSAMPLED-REFINED (2) — missed by sampled:
+  Rule                                                     Cost_U  Cov_U  Cov_S  Description
+  -----------------------------------------------------------------------------------------------
+  rule_tables_with_total_assets_and_accounts_payable      0.00587   0.74   0.90  Match balance-sheet-like tables containing total assets and accounts payable.
+  rule_tables_with_total_assets_and_page_around_60        0.00393   0.56   0.50  Match total-assets tables around page 60, common in longer filings.
+
+  DIAGNOSIS:
+    Overfit rules avg coverage: 0.61 (sampled) vs 0.71 (unsampled)
+    → Coverage gap is small; overfitting likely due to low individual
+      accuracy on unseen docs rather than retrieval failure.
+    Missed rules avg coverage: 0.70 (sampled) vs 0.65 (unsampled)
+
+======================================================================
+QUESTION: What is total revenue for the most recent fiscal year (from the audited income statement)?
+======================================================================
+  Sampled-refined  :  5 rules  | merged acc on unsampled: 0.70
+  Unsampled-refined:  5 rules  | merged acc on unsampled: 0.90
+  Overlap (both)   :  1 rules
+  Only in sampled  :  4 rules  ← overfit candidates
+  Only in unsampled:  4 rules  ← missed by sampled
+
+  RULES ONLY IN SAMPLED-REFINED (4) — overfit candidates:
+  Rule                                                     Cost_U  Cov_U  Cov_S  Description
+  -----------------------------------------------------------------------------------------------
+  rule_first_financial_table_after_item8                  0.00317   0.98   0.90  Match the first table after an Item 8 Financial Statements header.
+  rule_income_statement_page_from_toc                     0.00547   0.68   0.60  Match spans on the page named in the TOC for Consolidated Statement of Income / Operations / Earning
+  rule_item8_income_statement_tables                      0.00537   0.72   0.70  Match tables under Item 8 / Financial Statements that look like audited income statements.
+  rule_segment_note_revenue_tables                        0.00261   0.30   0.40  Match tables in segment/geographic note contexts that may also contain total revenue for the latest 
+
+  RULES ONLY IN UNSAMPLED-REFINED (4) — missed by sampled:
+  Rule                                                     Cost_U  Cov_U  Cov_S  Description
+  -----------------------------------------------------------------------------------------------
+  rule_income_statement_nearby_tables                     0.00684   0.80   0.90  Match tables appearing shortly after an income-statement-like section header.
+  rule_row_header_net_revenues                            0.00230   0.22   0.10  Match tables containing a row header for net revenues.
+  rule_row_header_net_sales                               0.01274   0.46   0.60  Match tables containing a row header for net sales.
+  rule_row_header_total_revenue                           0.00779   0.44   0.40  Match tables containing a row header exactly or nearly equal to total revenue / total revenues.
+
+  DIAGNOSIS:
+    Overfit rules avg coverage: 0.65 (sampled) vs 0.67 (unsampled)
+    → Coverage gap is small; overfitting likely due to low individual
+      accuracy on unseen docs rather than retrieval failure.
+    Missed rules avg coverage: 0.50 (sampled) vs 0.48 (unsampled)
+
+======================================================================
+QUESTION: What is/are the trading symbol(s) and listing exchange(s)?
+======================================================================
+  Sampled-refined  :  4 rules  | merged acc on unsampled: 0.94
+  Unsampled-refined: 32 rules  | merged acc on unsampled: 0.98
+  Overlap (both)   :  2 rules
+  Only in sampled  :  2 rules  ← overfit candidates
+  Only in unsampled: 30 rules  ← missed by sampled
+
+  RULES ONLY IN SAMPLED-REFINED (2) — overfit candidates:
+  Rule                                                     Cost_U  Cov_U  Cov_S  Description
+  -----------------------------------------------------------------------------------------------
+  rule_cover_page_table_cells_symbol_exchange             0.00014   0.18   0.00  Match table spans whose cells contain trading symbol / exchange registration headers.
+  rule_page1_symbols_in_registration_window               0.00001   0.32   0.20  Match ticker-like spans appearing after the first 12(b) mention and before 12(g) on page 1.
+
+  RULES ONLY IN UNSAMPLED-REFINED (30) — missed by sampled:
+  Rule                                                     Cost_U  Cov_U  Cov_S  Description
+  -----------------------------------------------------------------------------------------------
+  rule_business_path_and_stock_terms                      0.01310   1.00   1.00  Match spans under Item 1 / Business whose text mentions common stock, exchange, or symbol.
+  rule_business_sentence_trades_on_exchange               0.00094   0.78   0.80  Match business-description sentences saying common stock trades/listed on an exchange under a symbol
+  rule_business_sentence_under_symbol                     0.00119   0.82   0.90  Match business-section sentences of the form 'common stock is listed/trades ... under the symbol ...
+  rule_cover_page_company_section_header                  0.00009   0.96   1.00  Match the large company-name section header on page 1 that often embeds the 12(b) registration text 
+  rule_cover_page_table_row_security_registration         0.00014   0.18   0.00  Match table spans whose cells contain Section 12(b) registration row content.
+  rule_exact_symbol_values                                0.00002   0.40   0.30  Match standalone ticker spans commonly used as trading symbols.
+  rule_inline_registered_under_symbol                     0.00086   0.68   0.80  Match body text that states stock is listed/traded under a symbol.
+  rule_item1_business_page3_symbol_exchange               0.00042   0.26   0.40  Match page 3 Item 1 Business spans, a common alternate location for symbol/exchange statements.
+  rule_page1_after_company_name_until_documents_incorporated 0.00944   0.94   0.90  Match page 1 spans between company-name header and 'Documents Incorporated by Reference' containing 
+  rule_page1_after_trading_symbol_header                  0.00076   0.60   0.60  Match spans immediately following a 'Trading Symbol' header on page 1.
+  rule_page1_allcaps_ticker_headers                       0.00000   0.16   0.20  Match all-caps short section headers on page 1 that are likely ticker symbols.
+  rule_page1_bold_smallfont_registration_values           0.00016   0.38   0.30  Match page 1 small-font bold spans likely used for ticker or exchange values in top matter.
+  rule_page1_exact_exchange_spans                         0.00003   0.38   0.90  Match page 1 spans whose text is exactly an exchange name.
+  rule_page1_exchange_before_symbol_like                  0.00005   0.38   0.30  Match symbol-like spans that appear shortly before/after exchange-name spans on page 1.
+  rule_page1_exchange_in_registration_window              0.00043   0.88   0.90  Match exchange-name spans appearing after the first 12(b) mention and before 12(g) on page 1.
+  rule_page1_exchange_symbol_split_reverse                0.00001   0.04   0.00  Match adjacent page 1 spans where one looks like an exchange and the next looks like a symbol.
+  rule_page1_exchange_then_symbol_adjacent                0.00004   0.20   0.20  Match adjacent page 1 spans where an exchange name is near a ticker-like token.
+  rule_page1_header_path_registration                     0.00115   0.86   0.80  Match page 1 spans whose path_text itself contains registration-related terms.
+  rule_page1_major_exchange_names                         0.00055   0.80   1.00  Match page 1 spans containing common exchange names.
+  rule_page1_near_company_name_and_section12b             0.00098   0.84   0.80  Match page 1 spans under company-name path_text where Section 12(b) registration data is usually lis
+  rule_page1_near_title_of_each_class                     0.00077   0.94   1.00  Match spans around 'Title of each class' because symbol/exchange values usually follow immediately.
+  rule_page1_registration_data_band                       0.00243   0.98   1.00  Match the dense band of page 1 body/header spans between company identity and 'Documents Incorporate
+  rule_page1_registration_keywords_broad                  0.00488   1.00   1.00  Broad high-recall rule for page 1 spans mentioning registration, symbol, exchange, or listing.
+  rule_page1_security_registration_cluster                0.00074   0.96   1.00  Match the cluster of page 1 spans between Section 12(b) and Section 12(g).
+  rule_page1_symbol_like_spans                            0.00002   0.40   0.30  Match short page 1 spans that look like ticker symbols.
+  rule_page1_symbol_then_exchange_adjacent                0.00008   0.32   0.20  Match adjacent page 1 spans where a ticker-like token is followed by an exchange name.
+  rule_page1_title_trading_exchange_cluster               0.00067   0.94   1.00  Match spans in the page 1 cluster containing title/trading symbol/exchange labels and nearby values.
+  rule_page1_topmatter_short_values_after_common_stock    0.00006   0.60   0.80  Match short value spans following a 'Common Stock' span in page 1 top matter.
+  rule_page1_under_company_header                         0.00729   0.94   0.90  Match page 1 body spans under the top company header, where cover-page registration data usually app
+  rule_title_trading_exchange_triplet                     0.00811   0.96   1.00  Match spans near the cover-page triplet 'Title of each class' / 'Trading Symbol' / 'Name of each exc
+
+  DIAGNOSIS:
+    Overfit rules avg coverage: 0.10 (sampled) vs 0.25 (unsampled)
+    → Very low unsampled coverage (0.25): rules retrieve nothing on
+      most unsampled docs, so they add noise rather than signal.
+    Missed rules avg coverage: 0.68 (sampled) vs 0.65 (unsampled)
+
+
+======================================================================
+OVERALL SUMMARY
+======================================================================
+
+  Question                                             S   U Both Only-S Only-U Acc-S Acc-U
+  -------------------------------------------------------------------------------------
+  How many shares of common stock were outstanding     7   9    3      4      6  0.66  0.96
+  What is long-term debt at year-end (0 if none)?      6  11    4      2      7  0.46  0.82
+  What is net income (loss) for the most recent fi    14  22   10      4     12  0.76  0.82
+  What is the address of principal executive offic     5   7    4      1      3  0.88  0.98
+  What is the registrant's exact name?                 2   4    2      0      2  0.90  1.00
+  What is the registrant's telephone number?           5   5    1      4      4  0.82  0.98
+  What is the state (or other jurisdiction) of inc     3   4    1      2      3  0.88  1.00
+  What is total assets at year-end (from the audit    27  14   12     15      2  0.78  0.92
+  What is total revenue for the most recent fiscal     5   5    1      4      4  0.70  0.90
+  What is/are the trading symbol(s) and listing ex     4  32    2      2     30  0.94  0.98
+
+  Total rules only in sampled  (overfit) : 38
+  Total rules only in unsampled (missed) : 73
+  Total rules in both                    : 40
+  Avg merged accuracy on unsampled: sampled-refined=0.778  unsampled-refined=0.936
+
+KEY PATTERNS:
+  1. Sampled-only rules tend to have high coverage on sampled docs but lower
+     coverage on unsampled — they fired on all 10 sampled docs but target
+     layout-specific patterns not present in the broader 50-doc set.
+  2. Unsampled-only rules were pruned during sampled refinement because they
+     had low/zero coverage on the 10 sampled docs, even though they generalize.
+  3. The exponential search on sampled picks a subset that hits all sampled
+     D* docs; backward pruning then removes rules whose individual contribution
+     looks redundant on 10 docs but would be needed on unseen layouts.
+  4. Questions with large only-S sets (total assets: 15, net income: 4)
+     show the strongest overfitting — more rules than needed were kept because
+     the sampled accuracy target was achievable with a redundant superset.
