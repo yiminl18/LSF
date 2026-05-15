@@ -125,7 +125,7 @@ if summary_path.exists():
             f"  {s['question'][:53]:<53}  "
             f"{s['selected_rules_count']:>3}  "
             f"{s['merge_accuracy']:>5.2f}  "
-            f"{s['avg_cost_ratio']:>8.5f}  "
+            f"{s.get('avg_cost_ratio', s.get('avg_cost_ratio_selected', 0.0)):>8.5f}  "
             f"{s['total_llm_calls']:>6}  "
             f"{s['total_latency_seconds']:>7.1f}"
         )

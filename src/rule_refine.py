@@ -147,19 +147,26 @@ def evaluate_merge_accuracy(
 
         # QA LLM call
         t0 = time.time()
-        qa_resp = model_mod.client.chat.completions.create(
-            model=model_mod.AZURE_DEPLOYMENT,
-            messages=[
-                {"role": "system", "content": _QA_SYSTEM},
-                {"role": "user",   "content": f"Passage:\n{retrieved_text}\n\nQuestion: {question}"},
-            ],
-            max_completion_tokens=500,
-            temperature=0.0,
-        )
-        predicted = (qa_resp.choices[0].message.content or "").strip() or None
+        try:
+            qa_resp = model_mod.client.chat.completions.create(
+                model=model_mod.AZURE_DEPLOYMENT,
+                messages=[
+                    {"role": "system", "content": _QA_SYSTEM},
+                    {"role": "user",   "content": f"Passage:\n{retrieved_text}\n\nQuestion: {question}"},
+                ],
+                max_completion_tokens=500,
+                temperature=0.0,
+            )
+            predicted = (qa_resp.choices[0].message.content or "").strip() or None
+            qa_input_tokens  += qa_resp.usage.prompt_tokens     if qa_resp.usage else 0
+            qa_output_tokens += qa_resp.usage.completion_tokens if qa_resp.usage else 0
+        except Exception as e:
+            if "content_filter" in str(e) or "content management" in str(e):
+                warnings.warn(f"Content filter on {doc_name}, treating as NOT FOUND: {e}")
+                predicted = None
+            else:
+                raise
         latency = round(time.time() - t0, 3)
-        qa_input_tokens  += qa_resp.usage.prompt_tokens     if qa_resp.usage else 0
-        qa_output_tokens += qa_resp.usage.completion_tokens if qa_resp.usage else 0
 
         # Judge LLM call
         gt_val = ground_truth.get(doc_name + ".pdf") or ground_truth.get(doc_name)
