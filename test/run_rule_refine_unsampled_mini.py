@@ -28,7 +28,6 @@ QUERIES_FILE        = "data/financebench/sample_queries.txt"
 LABELS_FILE         = "data/financebench/unsampled_doc_labels.json"
 PROCESSING_DIR      = "data/financebench/processing"
 ONE_SHOT_RULES_DIR  = "rules/financebench_single_cluster/llm/gpt54/one_shot"
-ONE_SHOT_EVAL_DIR   = "results/financebench_single_cluster/llm/gpt54/one_shot/eval_merge"
 OUTPUT_DIR          = "rules/financebench_single_cluster/llm/gpt54mini/refine_unsampled"
 MODEL_NAME          = "gpt54mini"
 
@@ -82,23 +81,13 @@ for question in questions:
         print(f"SKIP (empty rule folder): {rule_folder}")
         continue
 
-    eval_path = Path(ONE_SHOT_EVAL_DIR) / f"{out_slug}_unsampled.json"
-    if not eval_path.exists():
-        print(f"SKIP (no unsampled eval): {eval_path}")
-        continue
-
-    unsampled_eval = json.loads(eval_path.read_text(encoding="utf-8"))
-    target_accuracy = unsampled_eval.get("accuracy", 0.0)
-
     print(f"\n{'='*70}")
     print(f"Question : {question}")
     print(f"Rules    : {len(rule_names)}  |  Docs: {len(documents)}")
-    print(f"Target   : {target_accuracy:.4f}")
 
     try:
         result = rule_refine(
             rule_names=rule_names,
-            target_accuracy=target_accuracy,
             question=question,
             question_slug=out_slug,
             documents=documents,
@@ -106,6 +95,7 @@ for question in questions:
             rules_dir=ONE_SHOT_RULES_DIR,
             output_dir=OUTPUT_DIR,
             model_name=MODEL_NAME,
+            target_accuracy=None,  # auto-computed using gpt54mini
         )
         print(
             f"  selected={result['selected_rules_count']}  "

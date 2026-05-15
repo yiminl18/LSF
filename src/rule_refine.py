@@ -205,7 +205,6 @@ def evaluate_merge_accuracy(
 
 def rule_refine(
     rule_names: list[str],
-    target_accuracy: float,
     question: str,
     question_slug: str,
     documents: list[dict],
@@ -213,8 +212,12 @@ def rule_refine(
     rules_dir: str = "rules/financebench_single_cluster/llm/gpt54/one_shot",
     output_dir: str = "rules/financebench_single_cluster/llm/gpt54/refine",
     model_name: str = "gpt54",
+    target_accuracy: float | None = None,
 ) -> dict:
-    """Select a minimal-cost subset of rules whose merge accuracy matches target_accuracy."""
+    """Select a minimal-cost subset of rules whose merge accuracy matches target_accuracy.
+
+    If target_accuracy is None, it is computed by evaluating all rules with model_name first.
+    """
 
     import importlib as _imp
     model_mod = _imp.import_module(f"models.{model_name}")
@@ -297,14 +300,29 @@ def rule_refine(
     avg_cost_all = _avg_cost_of_set(sorted_rules)
     print(f"  [baseline] avg_cost_all={avg_cost_all:.4f}  valid_rules={len(valid_rules)}", flush=True)
 
-    # ── Step 2: exponential search ────────────────────────────────────────────
+    # ── Step 1.5: compute target from all-rules eval if not provided ──────────
     total_llm_calls = 0
-    exp_steps = 0
-    candidate = sorted_rules  # fallback
     total_qa_input_tokens    = 0
     total_qa_output_tokens   = 0
     total_judge_input_tokens = 0
     total_judge_output_tokens = 0
+    if target_accuracy is None:
+        print("  [target] computing all-rules accuracy with model...", flush=True)
+        t0 = time.time()
+        all_acc, _, qa_in, qa_out, judge_in, judge_out = evaluate_merge_accuracy(
+            sorted_rules, documents, ground_truth, question, rule_folder, model_mod
+        )
+        total_llm_calls += 2 * len(documents)
+        total_qa_input_tokens    += qa_in
+        total_qa_output_tokens   += qa_out
+        total_judge_input_tokens  += judge_in
+        total_judge_output_tokens += judge_out
+        target_accuracy = all_acc
+        print(f"  [target] all_rules_accuracy={target_accuracy:.4f}  ({time.time()-t0:.1f}s)", flush=True)
+
+    # ── Step 2: exponential search ────────────────────────────────────────────
+    exp_steps = 0
+    candidate = sorted_rules  # fallback
 
     k = 1
     while k <= len(sorted_rules):
