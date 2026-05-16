@@ -307,16 +307,34 @@ def extract_ground_truth(
 
 
 def get_query_text(dataset_root: str | Path, query_idx: int) -> str:
-    """Read line query_idx from queries.txt as the query text (authoritative source, 0-indexed)."""
-    queries_path = Path(dataset_root) / "queries.txt"
-    with queries_path.open("r", encoding="utf-8") as f:
-        lines = [line.rstrip("\n") for line in f]
+    """Read query_idx from queries.txt or queries.json (0-indexed)."""
+    root = Path(dataset_root)
+    queries_txt_path = root / "queries.txt"
+    if queries_txt_path.exists():
+        with queries_txt_path.open("r", encoding="utf-8") as f:
+            lines = [line.rstrip("\n") for line in f]
+        if query_idx < 0 or query_idx >= len(lines):
+            raise ValueError(
+                f"query_idx={query_idx} out of range for queries.txt ({len(lines)} lines)"
+            )
+        return lines[query_idx]
 
-    if query_idx < 0 or query_idx >= len(lines):
+    queries_json_path = root / "queries.json"
+    with queries_json_path.open("r", encoding="utf-8") as f:
+        queries = json.load(f)
+    if not isinstance(queries, list):
+        raise ValueError(f"{queries_json_path} must contain a JSON list")
+    if query_idx < 0 or query_idx >= len(queries):
         raise ValueError(
-            f"query_idx={query_idx} out of range for queries.txt ({len(lines)} lines)"
+            f"query_idx={query_idx} out of range for queries.json ({len(queries)} entries)"
         )
-    return lines[query_idx]
+    entry = queries[query_idx]
+    if not isinstance(entry, dict):
+        raise ValueError(f"{queries_json_path}[{query_idx}] must be an object")
+    text = entry.get("text")
+    if not isinstance(text, str) or not text:
+        raise ValueError(f"{queries_json_path}[{query_idx}].text must be a non-empty string")
+    return text
 
 
 from core.llm.tokens import estimate_tokens  # re-exported for agent callers

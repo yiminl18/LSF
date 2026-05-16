@@ -9,6 +9,8 @@ from __future__ import annotations
 
 import json
 import logging
+import random
+import re
 import time
 import traceback
 from pathlib import Path
@@ -34,6 +36,21 @@ def _query_doc_ids(config: dict[str, Any], query_idx: int) -> list[str]:
     return []
 
 
+def _safe_path_component(value: str) -> str:
+    safe = re.sub(r"[^A-Za-z0-9._-]+", "_", value.strip())
+    return safe.strip("._-") or "dataset"
+
+
+def _dataset_output_key(config: dict[str, Any]) -> str:
+    dataset = config.get("dataset")
+    if dataset:
+        return _safe_path_component(str(dataset))
+    dataset_root = Path(str(config.get("dataset_root", "datasets/pdfs/latest")))
+    if dataset_root.name == "latest" and dataset_root.parent.name:
+        return _safe_path_component(dataset_root.parent.name)
+    return _safe_path_component(dataset_root.name)
+
+
 def _get_extractor(
     experiment: str,
     deepread_max_pages: int | None = None,
@@ -56,6 +73,9 @@ def _get_extractor(
     if experiment == "mdocagent":
         from agent.baselines.mdocagent.extractor import MDocAgentExtractor
         return MDocAgentExtractor()
+    if experiment == "qa-agent":
+        from agent.baselines.qa_agent.extractor import QAAgentExtractor
+        return QAAgentExtractor()
     raise ValueError(f"Unknown baseline experiment: {experiment!r}")
 
 
@@ -73,9 +93,20 @@ def run_baseline_sweep(
     deepread_max_pages: int | None = None,
     deepread_ocr_model: str | None = None,
     deepread_ocr_provider: str | None = None,
+    embedding_provider: str | None = None,
+    embedding_model: str | None = None,
+    seed: int | None = None,
 ) -> None:
-    """Run the baseline sweep and write results to output_root/<experiment>/q<idx>/."""
+    """Run the baseline sweep and write output_root/<dataset>/<experiment>/q<idx>/."""
     config = load_config(config_path)
+    if seed is not None:
+        random.seed(seed)
+        try:
+            import numpy as np
+        except Exception:  # pragma: no cover - numpy is available in normal runs
+            pass
+        else:
+            np.random.seed(seed)
     eval_provider = eval_provider or llm_provider
     eval_model = eval_model or llm_model
 
@@ -87,6 +118,7 @@ def run_baseline_sweep(
     )
     cached_caller = CachedLLMCaller(DEFAULT_CACHE_DB_PATH)
     dataset_root = config.get("dataset_root", "datasets/pdfs/latest")
+    dataset_key = _dataset_output_key(config)
 
     for query_idx in query_indices:
         query_text = get_query_text(dataset_root, query_idx)
@@ -99,7 +131,7 @@ def run_baseline_sweep(
             doc_ids = doc_ids[:max_docs]
             logger.info("Capped doc set to %d docs (--max-docs)", max_docs)
 
-        out_dir = output_root / experiment / f"q{query_idx}"
+        out_dir = output_root / dataset_key / experiment / f"q{query_idx}"
         out_dir.mkdir(parents=True, exist_ok=True)
 
         print(
@@ -116,13 +148,19 @@ def run_baseline_sweep(
             t0 = time.perf_counter()
             try:
                 doc_inputs: DocInputs = build_doc_inputs(config, query_idx, doc_id)
-                result = extractor.extract(
-                    query_idx=query_idx,
-                    query_text=query_text,
-                    doc_id=doc_id,
-                    doc_inputs=doc_inputs,
-                    cached_caller=cached_caller,
-                )
+                extract_kwargs: dict[str, Any] = {
+                    "query_idx": query_idx,
+                    "query_text": query_text,
+                    "doc_id": doc_id,
+                    "doc_inputs": doc_inputs,
+                    "cached_caller": cached_caller,
+                    "llm_provider": llm_provider,
+                    "llm_model": llm_model,
+                }
+                if experiment == "qa-agent":
+                    extract_kwargs["embedding_provider"] = embedding_provider
+                    extract_kwargs["embedding_model"] = embedding_model
+                result = extractor.extract(**extract_kwargs)
                 row = score_and_build_row(
                     query_idx=query_idx,
                     doc_id=doc_id,

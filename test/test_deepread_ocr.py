@@ -15,7 +15,7 @@ from agent.baselines.deepread.index import (
     SectionMeta,
 )
 from agent.baselines.deepread.tools import retrieve, read_section
-from agent.baselines.deepread.ocr import _parse_page_ocr, _cache_path
+from agent.baselines.deepread.ocr import _parse_page_ocr, _cache_path, _ocr_page_call
 
 
 class TestParagraphIndex(unittest.TestCase):
@@ -156,6 +156,50 @@ class TestParsePageOcr(unittest.TestCase):
         self.assertEqual(sections, [])
 
 
+class TestOCRPageCall(unittest.TestCase):
+    def test_azure_uses_54mini_env_and_max_completion_tokens(self) -> None:
+        response = MagicMock()
+        choice = MagicMock()
+        choice.message.content = "OCR text"
+        response.choices = [choice]
+        response.usage.prompt_tokens = 12
+        response.usage.completion_tokens = 7
+
+        with patch.dict(
+            "os.environ",
+            {
+                "AZURE_54MINI_API_BASE": "https://example54mini.openai.azure.com",
+                "AZURE_54MINI_API_KEY": "test-key",
+                "AZURE_54MINI_API_VERSION": "2024-12-01-preview",
+                "AZURE_54MINI_DEPLOYMENT": "gpt-5.4-mini-deployment",
+            },
+            clear=False,
+        ), patch("openai.AzureOpenAI") as MockAzureOpenAI:
+            client = MockAzureOpenAI.return_value
+            client.chat.completions.create.return_value = response
+
+            text, in_tokens, out_tokens = _ocr_page_call(
+                "prompt",
+                "ZmFrZWpwZWc=",
+                provider="azure",
+                model="gpt-5.4-mini",
+                max_tokens=123,
+            )
+
+        self.assertEqual(text, "OCR text")
+        self.assertEqual(in_tokens, 12)
+        self.assertEqual(out_tokens, 7)
+        MockAzureOpenAI.assert_called_once_with(
+            azure_endpoint="https://example54mini.openai.azure.com",
+            api_key="test-key",
+            api_version="2024-12-01-preview",
+        )
+        kwargs = client.chat.completions.create.call_args.kwargs
+        self.assertEqual(kwargs["model"], "gpt-5.4-mini-deployment")
+        self.assertEqual(kwargs["max_completion_tokens"], 123)
+        self.assertNotIn("max_tokens", kwargs)
+
+
 class TestLLMOCRMaxPages(unittest.TestCase):
     """Bug 4: max_pages caps the OCR loop and affects the cache key."""
 
@@ -227,7 +271,7 @@ class TestLLMOCRMaxPages(unittest.TestCase):
             parser.add_argument("--config", type=Path, default=Path("src/agent/config_pdfs_10doc.yaml"))
             parser.add_argument("--query", type=int, required=True)
             parser.add_argument("--doc-id", required=True)
-            parser.add_argument("--ocr-model", default="gpt-4o")
+            parser.add_argument("--ocr-model", default="gpt-5.4-mini")
             parser.add_argument("--ocr-provider", default="azure")
             parser.add_argument("--max-pages", type=int, default=None)
             args = parser.parse_args(["--query", "0", "--doc-id", "X", "--max-pages", "3"])

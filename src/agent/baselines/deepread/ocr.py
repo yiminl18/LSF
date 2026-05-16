@@ -30,8 +30,7 @@ _OCR_PROMPT_PATH = (
 )
 
 # Default vision model; override with --ocr-model.
-# gpt-4o is required for vision; gpt-5.4-mini does not support image inputs.
-_DEFAULT_OCR_MODEL = "gpt-4o"
+_DEFAULT_OCR_MODEL = "gpt-5.4-mini"
 _DEFAULT_OCR_PROVIDER = "azure"
 _MAX_OCR_TOKENS = 2000
 _RENDER_DPI = 100  # lower DPI to reduce token cost; sufficient for text extraction
@@ -111,7 +110,7 @@ def _ocr_page_call(
         resp = client.chat.completions.create(
             model=os.environ.get("AZURE_54MINI_DEPLOYMENT", model),
             messages=messages,  # type: ignore[arg-type]
-            max_tokens=max_tokens,
+            max_completion_tokens=max_tokens,
             temperature=0,
         )
 

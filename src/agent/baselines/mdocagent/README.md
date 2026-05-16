@@ -21,24 +21,16 @@ cd -
 
 ### 3. Set environment variables
 
-The upstream `models/openai.py` uses `openai.OpenAI()`. The SDK reads:
-- `OPENAI_API_KEY` — your API key (or Azure key)
-- `OPENAI_BASE_URL` — your Azure endpoint (e.g. `https://<name>.openai.azure.com/`)
-
-The extractor auto-maps `AZURE_OPENAI_KEY` → `OPENAI_API_KEY` and
-`AZURE_OPENAI_ENDPOINT` → `OPENAI_BASE_URL` if the `OPENAI_*` vars are
-not already set.
-
-**Do NOT use `OPENAI_API_BASE`** — the openai SDK ≥1.0 only reads
-`OPENAI_BASE_URL`.
+The wrapper generates a runtime Hydra model config that points upstream
+MDocAgent at the LSF OpenAI-compatible adapter. For OpenRouter, set:
 
 ```bash
-export OPENAI_API_KEY=your-azure-key
-export OPENAI_BASE_URL=https://your-resource.openai.azure.com/
-# OR if you have the LSF Azure vars set:
-export AZURE_OPENAI_KEY=your-azure-key
-export AZURE_OPENAI_ENDPOINT=https://your-resource.openai.azure.com/
+export OPENROUTER_API_KEY=your-openrouter-key
 ```
+
+For Azure GPT-5.4-family models, the wrapper maps the existing `AZURE_54_*` or
+`AZURE_54MINI_*` variables into the subprocess environment and uses
+`max_completion_tokens`.
 
 ## Running
 
@@ -55,9 +47,10 @@ PYTHONPATH=src python -m agent.baselines.mdocagent.adapter \
 ```bash
 PYTHONPATH=src python -m agent.run_pipeline \
     --experiment baseline-mdocagent \
-    --phase b \
     --queries 1 \
-    --max-docs 1
+    --max-docs 1 \
+    --llm-provider openrouter \
+    --llm-model openai/gpt-4o
 ```
 
 ### Full sweep
@@ -65,15 +58,16 @@ PYTHONPATH=src python -m agent.run_pipeline \
 ```bash
 PYTHONPATH=src python -m agent.run_pipeline \
     --experiment baseline-mdocagent \
-    --phase b
+    --llm-provider openrouter \
+    --llm-model openai/gpt-4o
 ```
 
 ## Where results land
 
 - Per-call subprocess log: `.cache/mdocagent/logs/<run-name>.log`
 - MDocAgent result JSON: `src/agent/baselines/mdocagent/upstream/MDocAgent/results/lsf/<run-name>/<YYYY-MM-DD-HH-MM>.json`
-- Baseline rows: `output/agent/baselines/baseline-mdocagent/q<idx>/baseline_rows.jsonl`
-- Summary: `output/agent/baselines/baseline-mdocagent/q<idx>/baseline_summary.json`
+- Baseline rows: `output/agent/baselines/<dataset>/mdocagent/q<idx>/baseline_rows.jsonl`
+- Summary: `output/agent/baselines/<dataset>/mdocagent/q<idx>/baseline_summary.json`
 
 ## Retrieval deviation
 

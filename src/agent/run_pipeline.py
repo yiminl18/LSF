@@ -49,6 +49,7 @@ _BASELINE_EXPERIMENTS = {
     "baseline-exit":       "exit",
     "baseline-deepread":   "deepread",
     "baseline-mdocagent":  "mdocagent",
+    "baseline-qa-agent":   "qa-agent",
 }
 
 _EXPERIMENT_CHOICES = (
@@ -110,14 +111,37 @@ def _build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--experiment", required=True, choices=_EXPERIMENT_CHOICES)
     parser.add_argument("--config", type=Path, default=_DEFAULT_CONFIG)
     parser.add_argument("--queries", default="3", help="Comma-separated query indices")
-    parser.add_argument("--phase", choices=["a", "b", "both"], default="both")
-    parser.add_argument("--agent-provider", default="azure")
-    parser.add_argument("--agent-model", default="gpt-5.4-mini")
+    parser.add_argument("--phase", choices=["a", "b", "both"], default=None)
+    parser.add_argument("--llm-provider", default="azure")
+    parser.add_argument("--llm-model", default="gpt-5.4-mini")
+    parser.add_argument(
+        "--agent-provider",
+        dest="llm_provider",
+        default=argparse.SUPPRESS,
+        help=argparse.SUPPRESS,
+    )
+    parser.add_argument(
+        "--agent-model",
+        dest="llm_model",
+        default=argparse.SUPPRESS,
+        help=argparse.SUPPRESS,
+    )
     parser.add_argument("--eval-provider", default=None)
     parser.add_argument("--eval-model", default=None)
+    parser.add_argument(
+        "--embed-provider",
+        default=None,
+        help="Embedding provider for baseline-qa-agent semantic search.",
+    )
+    parser.add_argument(
+        "--embed-model",
+        default=None,
+        help="Embedding model for baseline-qa-agent semantic search.",
+    )
     parser.add_argument("--max-docs", type=int, default=10, help="Tool-agent Phase A max docs")
     parser.add_argument("--max-holdout-docs", type=int, default=25)
-    parser.add_argument("--holdout-seed", type=int, default=42)
+    parser.add_argument("--seed", type=int, default=None, help="Global random seed")
+    parser.add_argument("--holdout-seed", type=int, default=None)
     parser.add_argument("--bundle-output-root", type=Path, default=_DEFAULT_BUNDLE_OUTPUT_ROOT)
     parser.add_argument("--tool-output-root", type=Path, default=_DEFAULT_TOOL_OUTPUT_ROOT)
     parser.add_argument(
@@ -126,7 +150,7 @@ def _build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--max-turns", type=int, default=15)
     parser.add_argument("--budget", type=float, default=2.0)
     parser.add_argument("--multipath-n", type=int, default=2)
-    parser.add_argument("--partition-seed", type=int, default=42)
+    parser.add_argument("--partition-seed", type=int, default=None)
     parser.add_argument(
         "--bundle-deploy",
         action="store_true",
@@ -139,7 +163,7 @@ def _build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument(
         "--ocr-model", default=None,
-        help="Override DeepRead OCR vision model (default: gpt-4o)",
+        help="Override DeepRead OCR vision model (default: gpt-5.4-mini)",
     )
     parser.add_argument(
         "--ocr-provider", default=None,
@@ -155,6 +179,14 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
 
     is_bundle = args.experiment in _BUNDLE_EXPERIMENTS
     is_baseline = args.experiment in _BASELINE_EXPERIMENTS
+    seed_default = args.seed if args.seed is not None else 42
+    args.seed = seed_default
+    if args.holdout_seed is None:
+        args.holdout_seed = seed_default
+    if args.partition_seed is None:
+        args.partition_seed = seed_default
+    if args.phase is None:
+        args.phase = "b" if is_baseline else "both"
     if args.bundle_deploy and not is_bundle:
         parser.error("--bundle-deploy is only valid for bundle experiments")
     if args.bundle_deploy and args.phase == "a":
@@ -164,8 +196,10 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     if is_baseline and args.phase == "a":
         parser.error(
             f"--experiment {args.experiment} does not support --phase a; "
-            "baselines have no Phase A rule-discovery step. Use --phase b."
+            "baselines have no Phase A rule-discovery step."
         )
+    if is_baseline:
+        args.phase = "b"
     return args
 
 
@@ -196,15 +230,15 @@ def _run_bundle_phase_a(
         query_indices=query_indices,
         config_path=args.config,
         output_root=args.bundle_output_root,
-        llm_provider=args.agent_provider,
-        llm_model=args.agent_model,
+        llm_provider=args.llm_provider,
+        llm_model=args.llm_model,
         rule_mode=rule_mode,
     )
 
 
 def _run_bundle_phase_b(args: argparse.Namespace, packaging_mode: str) -> None:
-    eval_provider = args.eval_provider or args.agent_provider
-    eval_model = args.eval_model or args.agent_model
+    eval_provider = args.eval_provider or args.llm_provider
+    eval_model = args.eval_model or args.llm_model
     if args.dry_run:
         config = _load_config(args.config)
         processing_dir, label_dir = _processing_and_label_dirs(config)
@@ -260,8 +294,8 @@ def _run_bundle_phase_b(args: argparse.Namespace, packaging_mode: str) -> None:
 
 
 def _run_bundle_deploy(args: argparse.Namespace, packaging_mode: str) -> None:
-    eval_provider = args.eval_provider or args.agent_provider
-    eval_model = args.eval_model or args.agent_model
+    eval_provider = args.eval_provider or args.llm_provider
+    eval_model = args.eval_model or args.llm_model
     query_indices = _parse_query_indices(args.queries)
 
     if args.dry_run:
@@ -320,9 +354,9 @@ def _run_tool_agent(args: argparse.Namespace, mode: str) -> None:
         "--holdout-seed",
         str(args.holdout_seed),
         "--agent-provider",
-        args.agent_provider,
+        args.llm_provider,
         "--agent-model",
-        args.agent_model,
+        args.llm_model,
         "--max-turns",
         str(args.max_turns),
         "--budget",
@@ -353,15 +387,15 @@ def _run_baseline(args: argparse.Namespace, experiment_key: str) -> None:
     from agent.baselines.runner import run_baseline_sweep as _baseline_sweep
 
     query_indices = _parse_query_indices(args.queries)
-    eval_provider = args.eval_provider or args.agent_provider
-    eval_model = args.eval_model or args.agent_model
+    eval_provider = args.eval_provider or args.llm_provider
+    eval_model = args.eval_model or args.llm_model
     _baseline_sweep(
         experiment=experiment_key,
         query_indices=query_indices,
         config_path=args.config,
         output_root=args.baseline_output_root,
-        llm_provider=args.agent_provider,
-        llm_model=args.agent_model,
+        llm_provider=args.llm_provider,
+        llm_model=args.llm_model,
         eval_provider=eval_provider,
         eval_model=eval_model,
         dry_run=args.dry_run,
@@ -369,6 +403,9 @@ def _run_baseline(args: argparse.Namespace, experiment_key: str) -> None:
         deepread_max_pages=args.deepread_max_pages,
         deepread_ocr_model=args.ocr_model,
         deepread_ocr_provider=args.ocr_provider,
+        embedding_provider=args.embed_provider,
+        embedding_model=args.embed_model,
+        seed=args.seed,
     )
 
 

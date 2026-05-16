@@ -19,12 +19,17 @@ resolves ``data_dir: ./data/lsf``, ``extract_path: ./tmp/lsf``, etc.
 
 from __future__ import annotations
 
+import json
 import shutil
 from pathlib import Path
 
 _OVERRIDES_DIR = Path(__file__).parent / "config_overrides" / "dataset"
+_MODEL_OVERRIDES_DIR = Path(__file__).parent / "config_overrides" / "model"
 _UPSTREAM_DATASET_CFG_DIR = (
     Path(__file__).parent / "upstream" / "MDocAgent" / "config" / "dataset"
+)
+_UPSTREAM_MODEL_CFG_DIR = (
+    Path(__file__).parent / "upstream" / "MDocAgent" / "config" / "model"
 )
 
 _LSF_DATASET_YAML = """\
@@ -54,3 +59,37 @@ def generate_lsf_dataset_config() -> Path:
         return target
 
     return source
+
+
+def generate_lsf_openai_model_config(
+    model: str,
+    *,
+    config_name: str = "lsf_openai",
+) -> str:
+    """Write a Hydra OpenAI-compatible model config for MDocAgent.
+
+    MDocAgent composes ``model/<name>.yaml`` internally, so CLI overrides cannot
+    change ``model/openai.yaml`` after composition. This generated config lets
+    the wrapper route all MDocAgent agents to the requested runtime model without
+    editing the upstream submodule source.
+    """
+    model_yaml = f"""\
+defaults:
+  - base
+  - _self_
+
+model: {json.dumps(model)}
+api_key: ${{oc.env:OPENAI_API_KEY,}}
+module_name: agent.baselines.mdocagent.openai_model
+class_name: MyOpenAI
+"""
+    _MODEL_OVERRIDES_DIR.mkdir(parents=True, exist_ok=True)
+    source = _MODEL_OVERRIDES_DIR / f"{config_name}.yaml"
+    source.write_text(model_yaml, encoding="utf-8")
+
+    if _UPSTREAM_MODEL_CFG_DIR.exists():
+        target = _UPSTREAM_MODEL_CFG_DIR / f"{config_name}.yaml"
+        if not target.exists() or target.read_text(encoding="utf-8") != model_yaml:
+            shutil.copy2(source, target)
+
+    return config_name

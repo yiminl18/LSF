@@ -12,6 +12,7 @@ Pipeline:
 
 from __future__ import annotations
 
+import os
 import re
 import sys
 import time
@@ -49,6 +50,14 @@ def _gemma_checkpoint_available() -> bool:
         return isinstance(result, str)
     except Exception:
         return False
+
+
+def _require_gemma_checkpoint() -> bool:
+    return os.environ.get("LSF_EXIT_REQUIRE_GEMMA", "").strip().lower() in {
+        "1",
+        "true",
+        "yes",
+    }
 
 
 def _get_compressor() -> Any:
@@ -195,7 +204,9 @@ class ExitExtractor:
             import fitz
             text = "\n\n".join(page.get_text() for page in fitz.open(str(doc_inputs.pdf_path)))
 
-        if _gemma_checkpoint_available() and _UPSTREAM_DIR.exists():
+        has_gemma_checkpoint = _gemma_checkpoint_available()
+        has_upstream = _UPSTREAM_DIR.exists()
+        if has_gemma_checkpoint and has_upstream:
             if str(_UPSTREAM_DIR) not in sys.path:
                 sys.path.insert(0, str(_UPSTREAM_DIR))
             from exit_rag import Document as ExitDocument  # type: ignore[import]
@@ -211,6 +222,16 @@ class ExitExtractor:
             n_selected = sum(1 for s in selections if s)
             classifier_method = "gemma_checkpoint"
         else:
+            if _require_gemma_checkpoint():
+                missing = []
+                if not has_gemma_checkpoint:
+                    missing.append(f"HF checkpoint {_GEMMA_HF_REPO}")
+                if not has_upstream:
+                    missing.append(f"upstream EXIT directory {_UPSTREAM_DIR}")
+                raise RuntimeError(
+                    "EXIT Gemma checkpoint required but unavailable: "
+                    + ", ".join(missing)
+                )
             compressed_text, n_total, n_selected, classify_cost = _llm_compress(
                 query=query_text,
                 text=text,

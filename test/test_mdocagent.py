@@ -255,6 +255,8 @@ class TestMDocAgentExtractorSubprocess(unittest.TestCase):
             with patch.object(mdoc_ext, "_UPSTREAM_DIR", tmp_path), \
                  patch.object(mdoc_ext, "_upstream_is_present", return_value=True), \
                  patch("agent.baselines.mdocagent.extractor.generate_lsf_dataset_config"), \
+                 patch("agent.baselines.mdocagent.extractor.generate_lsf_openai_model_config",
+                       return_value="lsf_openai_test"), \
                  patch("agent.baselines.mdocagent.extractor.prepare_inputs",
                        return_value={"sample_id": "0_TEST_DOC", "n_pages": 2,
                                      "data_dir": tmp_path, "extract_path": tmp_path}), \
@@ -270,6 +272,8 @@ class TestMDocAgentExtractorSubprocess(unittest.TestCase):
                     doc_id="TEST_DOC",
                     doc_inputs=_make_stub_doc_inputs(),
                     cached_caller=self._make_caller(),
+                    llm_provider="openrouter",
+                    llm_model="openai/gpt-4o",
                 )
 
         self.assertTrue(len(captured_cmd) > 0, "subprocess.run not called")
@@ -278,11 +282,11 @@ class TestMDocAgentExtractorSubprocess(unittest.TestCase):
         # Must use Hydra append syntax (+dataset=lsf), NOT plain dataset=lsf
         self.assertIn("+dataset=lsf", cmd_str)
         self.assertNotIn(" dataset=lsf", cmd_str)
-        # Must contain all 4 agent model overrides
-        self.assertIn("mdoc_agent.agents.0.model=openai", cmd_str)
-        self.assertIn("mdoc_agent.agents.1.model=openai", cmd_str)
-        self.assertIn("mdoc_agent.agents.2.model=openai", cmd_str)
-        self.assertIn("mdoc_agent.sum_agent.model=openai", cmd_str)
+        # Must contain all 4 agent model overrides using the generated config
+        self.assertIn("mdoc_agent.agents.0.model=lsf_openai_test", cmd_str)
+        self.assertIn("mdoc_agent.agents.1.model=lsf_openai_test", cmd_str)
+        self.assertIn("mdoc_agent.agents.2.model=lsf_openai_test", cmd_str)
+        self.assertIn("mdoc_agent.sum_agent.model=lsf_openai_test", cmd_str)
         # model field is a string config-group name in predict.py — api_key subkey
         # overrides would be a Hydra type conflict; api_key is read from env var instead.
         self.assertNotIn("model.api_key=null", cmd_str)
@@ -301,6 +305,8 @@ class TestMDocAgentExtractorSubprocess(unittest.TestCase):
 
             with patch.object(mdoc_ext, "_upstream_is_present", return_value=True), \
                  patch("agent.baselines.mdocagent.extractor.generate_lsf_dataset_config"), \
+                 patch("agent.baselines.mdocagent.extractor.generate_lsf_openai_model_config",
+                       return_value="lsf_openai_test"), \
                  patch("agent.baselines.mdocagent.extractor.prepare_inputs",
                        return_value={"sample_id": "0_TEST_DOC", "n_pages": 2,
                                      "data_dir": tmp_path, "extract_path": tmp_path}), \
@@ -334,6 +340,8 @@ class TestMDocAgentExtractorSubprocess(unittest.TestCase):
 
             with patch.object(mdoc_ext, "_upstream_is_present", return_value=True), \
                  patch("agent.baselines.mdocagent.extractor.generate_lsf_dataset_config"), \
+                 patch("agent.baselines.mdocagent.extractor.generate_lsf_openai_model_config",
+                       return_value="lsf_openai_test"), \
                  patch("agent.baselines.mdocagent.extractor.prepare_inputs",
                        return_value={"sample_id": "0_TEST_DOC", "n_pages": 2,
                                      "data_dir": tmp_path, "extract_path": tmp_path}), \
@@ -351,6 +359,37 @@ class TestMDocAgentExtractorSubprocess(unittest.TestCase):
                         cached_caller=self._make_caller(),
                     )
                 self.assertIn("TEST_DOC", str(ctx.exception))
+
+    def test_openrouter_env_mapping_uses_openrouter_key(self) -> None:
+        from agent.baselines.mdocagent.extractor import _configure_openai_compatible_env
+
+        env = {
+            "OPENROUTER_API_KEY": "or-key",
+            "OPENAI_API_KEY": "openai-key",
+        }
+        _configure_openai_compatible_env(env, "openrouter", "openai/gpt-4o")
+
+        self.assertEqual(env["OPENAI_API_KEY"], "or-key")
+        self.assertEqual(env["OPENAI_BASE_URL"], "https://openrouter.ai/api/v1")
+        self.assertEqual(env["LSF_MDOCAGENT_PROVIDER"], "openrouter")
+
+    def test_azure_env_mapping_sets_mdocagent_adapter_vars(self) -> None:
+        from agent.baselines.mdocagent.extractor import _configure_openai_compatible_env
+
+        env = {
+            "AZURE_54MINI_API_KEY": "az-key",
+            "AZURE_54MINI_API_BASE": "https://example.openai.azure.com/",
+            "AZURE_54MINI_API_VERSION": "2024-12-01-preview",
+            "AZURE_54MINI_DEPLOYMENT": "gpt-5.4-mini",
+        }
+        _configure_openai_compatible_env(env, "azure", "gpt-5.4-mini")
+
+        self.assertEqual(env["OPENAI_API_KEY"], "az-key")
+        self.assertEqual(env["OPENAI_BASE_URL"], "https://example.openai.azure.com/openai/v1/")
+        self.assertEqual(env["LSF_MDOCAGENT_PROVIDER"], "azure")
+        self.assertEqual(env["LSF_MDOCAGENT_AZURE_API_BASE"], "https://example.openai.azure.com/")
+        self.assertEqual(env["LSF_MDOCAGENT_AZURE_API_VERSION"], "2024-12-01-preview")
+        self.assertEqual(env["LSF_MDOCAGENT_AZURE_DEPLOYMENT"], "gpt-5.4-mini")
 
     def test_not_implemented_when_submodule_absent(self) -> None:
         from agent.baselines.mdocagent.extractor import MDocAgentExtractor
@@ -423,8 +462,6 @@ class TestDatasetConfig(unittest.TestCase):
     def test_generates_lsf_yaml_in_overrides(self) -> None:
         from agent.baselines.mdocagent.dataset_config import (
             generate_lsf_dataset_config,
-            _OVERRIDES_DIR,
-            _LSF_DATASET_YAML,
         )
 
         # Patch upstream dir to a temp dir so we don't mutate the submodule
@@ -442,6 +479,33 @@ class TestDatasetConfig(unittest.TestCase):
             content = target.read_text(encoding="utf-8")
             self.assertIn("name: lsf", content)
             self.assertIn("defaults:", content)
+
+    def test_generates_runtime_openai_model_config(self) -> None:
+        from agent.baselines.mdocagent import dataset_config as dc
+        from agent.baselines.mdocagent.dataset_config import (
+            generate_lsf_openai_model_config,
+        )
+
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            fake_source = tmp_path / "overrides" / "model"
+            fake_upstream = tmp_path / "upstream" / "config" / "model"
+            fake_upstream.mkdir(parents=True)
+
+            with patch.object(dc, "_MODEL_OVERRIDES_DIR", fake_source), \
+                 patch.object(dc, "_UPSTREAM_MODEL_CFG_DIR", fake_upstream):
+                config_name = generate_lsf_openai_model_config(
+                    "openai/gpt-4o-mini",
+                    config_name="lsf_openai_test",
+                )
+
+            self.assertEqual(config_name, "lsf_openai_test")
+            target = fake_upstream / "lsf_openai_test.yaml"
+            content = target.read_text(encoding="utf-8")
+            self.assertIn('model: "openai/gpt-4o-mini"', content)
+            self.assertIn("api_key: ${oc.env:OPENAI_API_KEY,}", content)
+            self.assertIn("module_name: agent.baselines.mdocagent.openai_model", content)
+            self.assertIn("class_name: MyOpenAI", content)
 
 
 # ---------------------------------------------------------------------------

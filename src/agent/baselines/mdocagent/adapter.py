@@ -89,6 +89,7 @@ def prepare_inputs(
     dataset_name: str = _DEFAULT_DATASET_NAME,
     query_idx: int = 0,
     query_text: str = "",
+    max_pages: int | None = None,
 ) -> dict[str, Any]:
     """Materialise one (query, doc) sample in MDocAgent's expected layout.
 
@@ -112,7 +113,7 @@ def prepare_inputs(
     sample_id = f"{query_idx}_{doc_name}"
 
     # Step 1: render pages
-    n_pages = _render_pages(doc_inputs, doc_name, extract_path)
+    n_pages = _render_pages(doc_inputs, doc_name, extract_path, max_pages=max_pages)
 
     # Step 2 & 3: update samples + retrieval JSON
     _upsert_sample(
@@ -136,6 +137,7 @@ def _render_pages(
     doc_inputs: DocInputs,
     doc_name: str,
     extract_path: Path,
+    max_pages: int | None = None,
 ) -> int:
     """Render PDF pages to PNG and extract per-page text.
 
@@ -158,12 +160,15 @@ def _render_pages(
         import pymupdf  # type: ignore[import]
     except ImportError:
         # pymupdf not available — try pypdfium2
-        return _render_pages_pypdfium2(doc_inputs, doc_name, extract_path)
+        return _render_pages_pypdfium2(doc_inputs, doc_name, extract_path, max_pages=max_pages)
 
     n_pages = 0
     try:
         with pymupdf.open(str(doc_inputs.pdf_path)) as pdf:
+            effective_pages = min(len(pdf), max_pages) if max_pages is not None else len(pdf)
             for page_idx, page in enumerate(pdf):
+                if page_idx >= effective_pages:
+                    break
                 # Image
                 img_file = extract_path / f"{doc_name}_{page_idx}.png"
                 if not img_file.exists():
@@ -191,6 +196,7 @@ def _render_pages_pypdfium2(
     doc_inputs: DocInputs,
     doc_name: str,
     extract_path: Path,
+    max_pages: int | None = None,
 ) -> int:
     """Fallback page renderer using pypdfium2."""
     n_pages = 0
@@ -199,7 +205,9 @@ def _render_pages_pypdfium2(
 
         pdf = pdfium.PdfDocument(str(doc_inputs.pdf_path))
         scale = _RENDER_DPI / 72.0
-        for page_idx, page in enumerate(pdf):
+        effective_pages = min(len(pdf), max_pages) if max_pages is not None else len(pdf)
+        for page_idx in range(effective_pages):
+            page = pdf[page_idx]
             img_file = extract_path / f"{doc_name}_{page_idx}.png"
             if not img_file.exists():
                 bitmap = page.render(scale=scale)

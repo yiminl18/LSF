@@ -8,25 +8,21 @@ subprocess with Hydra command-line overrides, keeping dependency isolation.
 Pre-requisites for end-to-end use:
     1. git submodule update --init src/agent/baselines/mdocagent/upstream
     2. cd src/agent/baselines/mdocagent/upstream/MDocAgent && bash install.sh
-    3. Set OPENAI_API_KEY and OPENAI_API_BASE env vars (Azure endpoint).
+    3. Set OPENROUTER_API_KEY, OPENAI_API_KEY, or AZURE_54*/AZURE_54MINI* env vars.
     4. Set MDOCAGENT_E2E=1 to enable the optional smoke test.
 
 Hydra overrides passed to predict.py:
     dataset=lsf
     run-name=<unique>
-    mdoc_agent.agents.0.model=openai
-    mdoc_agent.agents.1.model=openai
-    mdoc_agent.agents.2.model=openai
-    mdoc_agent.sum_agent.model=openai
+    mdoc_agent.agents.0.model=<generated OpenAI-compatible config>
+    mdoc_agent.agents.1.model=<generated OpenAI-compatible config>
+    mdoc_agent.agents.2.model=<generated OpenAI-compatible config>
+    mdoc_agent.sum_agent.model=<generated OpenAI-compatible config>
 
-The ``openai`` model config (config/model/openai.yaml) uses the standard
-``openai.OpenAI`` client.  The openai SDK reads ``OPENAI_API_KEY`` and
-``OPENAI_BASE_URL`` from the environment (NOT ``OPENAI_API_BASE``).
-We set both in the subprocess environment so Azure traffic routes correctly:
-    OPENAI_API_KEY  = $AZURE_OPENAI_KEY  (or $OPENAI_API_KEY, whichever is set)
-    OPENAI_BASE_URL = $AZURE_OPENAI_ENDPOINT (e.g. https://<name>.openai.azure.com/)
-No patching of the upstream code is required; the SDK env-var contract is
-stable across openai>=1.0.
+The generated model config uses the upstream standard ``openai.OpenAI`` client
+and sets the concrete model from ``llm_model``. ``OPENAI_API_KEY`` and
+``OPENAI_BASE_URL`` are set in the subprocess environment for OpenRouter or
+Azure-compatible routing.
 
 DEVIATION from paper (capped retrieval): we pre-supply the first 10 page
 indices as the retrieved set in sample-with-retrieval-results.json, bypassing
@@ -47,6 +43,7 @@ import subprocess
 import sys
 import time
 import uuid
+from hashlib import sha256
 from pathlib import Path
 from typing import Any
 
@@ -56,7 +53,10 @@ from agent.baselines.mdocagent.adapter import (
     prepare_inputs,
     _doc_name_from_doc_id,
 )
-from agent.baselines.mdocagent.dataset_config import generate_lsf_dataset_config
+from agent.baselines.mdocagent.dataset_config import (
+    generate_lsf_dataset_config,
+    generate_lsf_openai_model_config,
+)
 from core.pipeline.e2e_utils.cache import CachedLLMCaller
 
 logger = logging.getLogger(__name__)
@@ -67,21 +67,15 @@ _UPSTREAM_DIR = Path(__file__).parent / "upstream" / "MDocAgent"
 # Log directory for subprocess output (outside the submodule)
 _LOG_DIR = Path(".cache") / "mdocagent" / "logs"
 
-# Hydra override list for OpenAI model on all agents
-# Syntax: Hydra 1.2 CLI overrides use key=value (no leading '~')
-# Agents list indexing: 0=image_agent, 1=text_agent, 2=general_agent (from base.yaml)
-# model field is a string (config-group name) used in predict.py as:
-#   hydra.compose(config_name="model/"+model_name)
-# Setting api_key via override would be a type conflict (can't set subkey on string).
-# The openai SDK reads OPENAI_API_KEY from the environment — set by _run_predict_subprocess.
-# api_key in config/model/openai.yaml is already empty, so no override needed.
-_AGENT_MODEL_OVERRIDES = [
-    "mdoc_agent.agents.0.model=openai",
-    "mdoc_agent.agents.1.model=openai",
-    "mdoc_agent.agents.2.model=openai",
-    "mdoc_agent.sum_agent.model=openai",
-    "mdoc_agent.save_message=true",
-]
+def _agent_model_overrides(model_config_name: str) -> list[str]:
+    # Agents list indexing: 0=image_agent, 1=text_agent, 2=general_agent.
+    return [
+        f"mdoc_agent.agents.0.model={model_config_name}",
+        f"mdoc_agent.agents.1.model={model_config_name}",
+        f"mdoc_agent.agents.2.model={model_config_name}",
+        f"mdoc_agent.sum_agent.model={model_config_name}",
+        "mdoc_agent.save_message=true",
+    ]
 
 
 def _upstream_is_present() -> bool:
@@ -96,6 +90,9 @@ def _upstream_is_present() -> bool:
 
 class MDocAgentExtractor:
     name: str = "mdocagent"
+
+    def __init__(self, max_pages: int | None = None) -> None:
+        self._max_pages = max_pages
 
     def extract(
         self,
@@ -117,8 +114,15 @@ class MDocAgentExtractor:
 
         t0 = time.perf_counter()
 
-        # Generate lsf.yaml dataset config into upstream submodule
+        runtime_model = _resolve_runtime_model(llm_provider, llm_model)
+        model_config_name = _model_config_name(runtime_model)
+
+        # Generate lsf.yaml dataset config and runtime model config into upstream.
         generate_lsf_dataset_config()
+        model_config_name = generate_lsf_openai_model_config(
+            runtime_model,
+            config_name=model_config_name,
+        )
 
         # Prepare data layout (render pages, write samples.json + retrieval JSON)
         info = prepare_inputs(
@@ -127,6 +131,7 @@ class MDocAgentExtractor:
             dataset_name=_DEFAULT_DATASET_NAME,
             query_idx=query_idx,
             query_text=query_text,
+            max_pages=self._max_pages,
         )
 
         # Unique run name so parallel runs don't clobber each other.
@@ -136,7 +141,12 @@ class MDocAgentExtractor:
         run_name = f"lsf-q{query_idx}-{_safe}-{uuid.uuid4().hex[:6]}"
 
         # Run subprocess
-        stdout, stderr, returncode = _run_predict_subprocess(run_name)
+        stdout, stderr, returncode = _run_predict_subprocess(
+            run_name,
+            llm_provider=llm_provider,
+            llm_model=llm_model,
+            model_config_name=model_config_name,
+        )
 
         # Log output
         _LOG_DIR.mkdir(parents=True, exist_ok=True)
@@ -173,7 +183,13 @@ class MDocAgentExtractor:
         )
 
 
-def _run_predict_subprocess(run_name: str) -> tuple[str, str, int]:
+def _run_predict_subprocess(
+    run_name: str,
+    *,
+    llm_provider: str = "openrouter",
+    llm_model: str = "gpt-4o",
+    model_config_name: str = "lsf_openai",
+) -> tuple[str, str, int]:
     """Invoke MDocAgent's scripts/predict.py via subprocess with Hydra overrides.
 
     Returns (stdout, stderr, returncode).
@@ -185,21 +201,17 @@ def _run_predict_subprocess(run_name: str) -> tuple[str, str, int]:
     overrides = [
         "+dataset=lsf",
         f"run-name={run_name}",
-    ] + _AGENT_MODEL_OVERRIDES
+    ] + _agent_model_overrides(model_config_name)
 
-    # Build env: route MDocAgent through OpenRouter so the standard openai.OpenAI()
-    # client works without Azure-specific wiring. The SDK reads OPENAI_BASE_URL and
-    # OPENAI_API_KEY from env when not explicitly passed to OpenAI().
     env = os.environ.copy()
-    openrouter_key = env.get("OPENROUTER_API_KEY", "")
-    if openrouter_key:
-        env["OPENAI_API_KEY"] = openrouter_key
-        env["OPENAI_BASE_URL"] = "https://openrouter.ai/api/v1"
-    elif env.get("OPENAI_API_KEY"):
-        pass  # caller set it explicitly; leave as-is
-    elif env.get("AZURE_54MINI_API_KEY"):
-        # Fallback: Azure key won't work against api.openai.com, but let it fail visibly
-        env["OPENAI_API_KEY"] = env["AZURE_54MINI_API_KEY"]
+    _configure_openai_compatible_env(env, llm_provider, llm_model)
+
+    repo_src = Path(__file__).resolve().parents[3]
+    env["PYTHONPATH"] = (
+        str(repo_src)
+        + os.pathsep
+        + env.get("PYTHONPATH", "")
+    ).rstrip(os.pathsep)
 
     # Disable CUDA (we're using API calls — no local GPU needed)
     env["CUDA_VISIBLE_DEVICES"] = ""
@@ -219,6 +231,58 @@ def _run_predict_subprocess(run_name: str) -> tuple[str, str, int]:
         return completed.stdout, completed.stderr, completed.returncode
     except subprocess.TimeoutExpired:
         return "", "subprocess timed out after 600s", 124
+
+
+def _model_config_name(model: str) -> str:
+    digest = sha256(model.encode("utf-8")).hexdigest()[:8]
+    return f"lsf_openai_{digest}"
+
+
+def _resolve_runtime_model(llm_provider: str, llm_model: str) -> str:
+    if llm_provider != "azure":
+        return llm_model
+    prefix = _azure_env_prefix(llm_model)
+    return os.environ.get(f"{prefix}_DEPLOYMENT", llm_model)
+
+
+def _azure_env_prefix(llm_model: str) -> str:
+    return "AZURE_54MINI" if "mini" in llm_model.lower() else "AZURE_54"
+
+
+def _configure_openai_compatible_env(
+    env: dict[str, str],
+    llm_provider: str,
+    llm_model: str,
+) -> None:
+    provider = llm_provider.strip().lower()
+    if provider == "openrouter":
+        env["LSF_MDOCAGENT_PROVIDER"] = "openrouter"
+        openrouter_key = env.get("OPENROUTER_API_KEY", "")
+        if openrouter_key:
+            env["OPENAI_API_KEY"] = openrouter_key
+        else:
+            env.pop("OPENAI_API_KEY", None)
+        env["OPENAI_BASE_URL"] = "https://openrouter.ai/api/v1"
+        return
+    if provider == "azure":
+        env["LSF_MDOCAGENT_PROVIDER"] = "azure"
+        prefix = _azure_env_prefix(llm_model)
+        api_key = env.get(f"{prefix}_API_KEY", "")
+        api_base = env.get(f"{prefix}_API_BASE", "")
+        api_version = env.get(f"{prefix}_API_VERSION", "")
+        deployment = env.get(f"{prefix}_DEPLOYMENT", "")
+        if api_key:
+            env["OPENAI_API_KEY"] = api_key
+        else:
+            env.pop("OPENAI_API_KEY", None)
+        if api_base:
+            env["OPENAI_BASE_URL"] = api_base.rstrip("/") + "/openai/v1/"
+            env["LSF_MDOCAGENT_AZURE_API_BASE"] = api_base
+        if api_version:
+            env["LSF_MDOCAGENT_AZURE_API_VERSION"] = api_version
+        if deployment:
+            env["LSF_MDOCAGENT_AZURE_DEPLOYMENT"] = deployment
+        return
 
 
 def _parse_result(

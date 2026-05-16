@@ -193,6 +193,28 @@ class TestExitExtractorLLMFallback(unittest.TestCase):
         self.assertGreaterEqual(cached_caller.call.call_count, 2)  # classifier + reader
         self.assertIsInstance(result.generated_answer, str)
 
+    def test_require_gemma_disables_llm_fallback(self) -> None:
+        from agent.baselines.exit.extractor import ExitExtractor
+        import agent.baselines.exit.extractor as mod
+
+        cached_caller = _make_cached_caller()
+
+        with patch.dict("os.environ", {"LSF_EXIT_REQUIRE_GEMMA": "1"}), \
+             patch.object(mod, "_gemma_checkpoint_available", return_value=False):
+            with self.assertRaises(RuntimeError) as ctx:
+                ExitExtractor().extract(
+                    query_idx=0,
+                    query_text=_STUB_QUERY,
+                    doc_id=_STUB_DOC_ID,
+                    doc_inputs=_make_doc_inputs(),
+                    cached_caller=cached_caller,
+                    llm_provider="azure",
+                    llm_model="gpt-5.4-mini",
+                )
+
+        self.assertIn("required but unavailable", str(ctx.exception))
+        cached_caller.call.assert_not_called()
+
     def test_classifier_cost_accumulates(self) -> None:
         from agent.baselines.exit.extractor import ExitExtractor, _llm_compress
         import agent.baselines.exit.extractor as mod
