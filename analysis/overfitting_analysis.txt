@@ -1,0 +1,609 @@
+OVERFITTING ANALYSIS: Sampled-Refined vs Unsampled-Refined Rules
+================================================================
+Generated: 2026-05-15 23:24:14 UTC
+
+QUESTION: How many shares of common stock were outstanding as of the cover-page reference date?
+---------------------------------------------------------
+  Sampled-refined acc (merged, 10 sampled docs):    0.90  (#rules: 7)
+  Sampled-refined acc (merged, 50 unsampled docs):  0.66  (#rules: 7)
+  Unsampled-refined acc (merged, 50 unsampled docs): 0.96  (#rules: 9)
+  Accuracy gap (sampled_merged - gold_merged):       -0.30
+
+  SAMPLED-REFINED RULES (selected on 10 sampled docs, gpt54):
+  rule_name                                | In_Gold | Accuracy | Coverage | Cost_Ratio
+  -------------------------------------------------------------------------------------
+  rule_h1_company_cover_span_with_outstanding | YES     | 0.00     | 0.00     | 0.00000
+  rule_page1_numeric_after_phrase_as_of_january | YES     | 0.02     | 0.06     | 0.00001
+  rule_page1_cover_text_with_multiple_large_numbers | YES     | 0.10     | 0.14     | 0.00018
+  rule_page1_sentence_with_there_were_and_common_stock | NO      | 0.04     | 0.04     | 0.00001
+  rule_page1_shares_outstanding_as_of_february | NO      | 0.08     | 0.08     | 0.00004
+  rule_page1_phrase_number_of_shares_outstanding_of_registrant | NO      | 0.10     | 0.10     | 0.00006
+  rule_page2_cover_page_numeric_sentence   | NO      | 0.30     | 0.30     | 0.00011
+
+  UNSAMPLED-REFINED (GOLD) RULES (selected on 50 unsampled docs, gpt54mini):
+  rule_name                                | In_Sampled | Accuracy | Coverage | Cost_Ratio
+  ----------------------------------------------------------------------------------------
+  rule_h1_company_cover_span_with_outstanding | YES        | 0.00     | 0.00     | 0.00000
+  rule_page1_company_cover_section_header  | NO         | 0.00     | 0.00     | 0.00000
+  rule_page1_numeric_after_phrase_as_of_january | YES        | 0.02     | 0.06     | 0.00001
+  rule_page1_numeric_only_after_outstanding_label | NO         | 0.04     | 0.10     | 0.00001
+  rule_page1_market_value_and_number_of_shares_labels | NO         | 0.00     | 0.10     | 0.00003
+  rule_page1_sentence_with_common_stock_outstanding_and_documents_reference | NO         | 0.00     | 0.46     | 0.00003
+  rule_page1_cover_text_with_multiple_large_numbers | YES        | 0.10     | 0.14     | 0.00018
+  rule_page1_after_nonaffiliate_market_value | NO         | 0.36     | 0.48     | 0.00020
+  rule_cover_path_text_company_page1       | NO         | 0.72     | 0.86     | 0.00175
+
+  OVERFITTING DIAGNOSIS:
+    Rules only in sampled (dropped by gold): 4 rules
+      Average accuracy on unsampled: 0.13
+      Average coverage on unsampled: 0.13
+      - rule_page1_sentence_with_there_were_and_common_stock: acc=0.04, cov=0.04, cost=0.00001
+      - rule_page1_shares_outstanding_as_of_february: acc=0.08, cov=0.08, cost=0.00004
+      - rule_page1_phrase_number_of_shares_outstanding_of_registrant: acc=0.10, cov=0.10, cost=0.00006
+      - rule_page2_cover_page_numeric_sentence: acc=0.30, cov=0.30, cost=0.00011
+    Rules only in gold (missed by sampled): 6 rules
+      Average accuracy on unsampled: 0.19
+      Average coverage on unsampled: 0.33
+      - rule_page1_company_cover_section_header: acc=0.00, cov=0.00, cost=0.00000
+      - rule_page1_numeric_only_after_outstanding_label: acc=0.04, cov=0.10, cost=0.00001
+      - rule_page1_market_value_and_number_of_shares_labels: acc=0.00, cov=0.10, cost=0.00003
+      - rule_page1_sentence_with_common_stock_outstanding_and_documents_reference: acc=0.00, cov=0.46, cost=0.00003
+      - rule_page1_after_nonaffiliate_market_value: acc=0.36, cov=0.48, cost=0.00020
+      - rule_cover_path_text_company_page1: acc=0.72, cov=0.86, cost=0.00175
+    Rules in both (shared): 3 rules
+      Average accuracy on unsampled: 0.04
+    Root cause summary: Sampled selection chose rules with higher coverage on sampled docs but lower generalization (acc=0.13, cov=0.13 on unsampled) while missing gold rules (acc=0.19, cov=0.33) that generalize better to the full 50-doc set.
+
+
+QUESTION: What is long-term debt at year-end (0 if none)?
+---------------------------------------------------------
+  Sampled-refined acc (merged, 10 sampled docs):    0.50  (#rules: 6)
+  Sampled-refined acc (merged, 50 unsampled docs):  0.46  (#rules: 6)
+  Unsampled-refined acc (merged, 50 unsampled docs): 0.82  (#rules: 11)
+  Accuracy gap (sampled_merged - gold_merged):       -0.36
+
+  SAMPLED-REFINED RULES (selected on 10 sampled docs, gpt54):
+  rule_name                                | In_Gold | Accuracy | Coverage | Cost_Ratio
+  -------------------------------------------------------------------------------------
+  rule_near_balance_sheet_pages_with_debt  | YES     | 0.00     | 0.00     | 0.00000
+  rule_balance_sheet_table_on_pages_30_to_70 | NO      | 0.04     | 0.12     | 0.00042
+  rule_mda_debt_at_year_end_text           | NO      | 0.08     | 0.40     | 0.00177
+  rule_debt_table_under_notes_or_mda       | YES     | 0.12     | 0.30     | 0.00271
+  rule_pages_near_item_8_from_toc          | YES     | 0.06     | 0.70     | 0.00545
+  rule_debt_table_with_noncurrent_context  | YES     | 0.38     | 0.56     | 0.00523
+
+  UNSAMPLED-REFINED (GOLD) RULES (selected on 50 unsampled docs, gpt54mini):
+  rule_name                                | In_Sampled | Accuracy | Coverage | Cost_Ratio
+  ----------------------------------------------------------------------------------------
+  rule_near_balance_sheet_pages_with_debt  | YES        | 0.00     | 0.00     | 0.00000
+  rule_debt_table_under_notes_or_mda       | YES        | 0.12     | 0.30     | 0.00271
+  rule_text_span_long_term_debt_numeric    | NO         | 0.12     | 0.90     | 0.00383
+  rule_note_debt_table                     | NO         | 0.44     | 0.72     | 0.00453
+  rule_debt_table_with_noncurrent_context  | YES        | 0.38     | 0.56     | 0.00523
+  rule_mda_liquidity_debt_paragraph        | NO         | 0.08     | 0.84     | 0.00541
+  rule_pages_near_item_8_from_toc          | YES        | 0.06     | 0.70     | 0.00545
+  rule_note_debt_header_near_table         | NO         | 0.42     | 0.84     | 0.00549
+  rule_debt_note_header_same_page_tables   | NO         | 0.46     | 0.94     | 0.00581
+  rule_debt_note_year_end_table            | NO         | 0.22     | 0.42     | 0.00606
+  rule_debt_related_section_headers        | NO         | 0.42     | 1.00     | 0.00945
+
+  OVERFITTING DIAGNOSIS:
+    Rules only in sampled (dropped by gold): 2 rules
+      Average accuracy on unsampled: 0.06
+      Average coverage on unsampled: 0.26
+      - rule_balance_sheet_table_on_pages_30_to_70: acc=0.04, cov=0.12, cost=0.00042
+      - rule_mda_debt_at_year_end_text: acc=0.08, cov=0.40, cost=0.00177
+    Rules only in gold (missed by sampled): 7 rules
+      Average accuracy on unsampled: 0.31
+      Average coverage on unsampled: 0.81
+      - rule_text_span_long_term_debt_numeric: acc=0.12, cov=0.90, cost=0.00383
+      - rule_note_debt_table: acc=0.44, cov=0.72, cost=0.00453
+      - rule_mda_liquidity_debt_paragraph: acc=0.08, cov=0.84, cost=0.00541
+      - rule_note_debt_header_near_table: acc=0.42, cov=0.84, cost=0.00549
+      - rule_debt_note_header_same_page_tables: acc=0.46, cov=0.94, cost=0.00581
+      - rule_debt_note_year_end_table: acc=0.22, cov=0.42, cost=0.00606
+      - rule_debt_related_section_headers: acc=0.42, cov=1.00, cost=0.00945
+    Rules in both (shared): 4 rules
+      Average accuracy on unsampled: 0.14
+    Root cause summary: Sampled selection chose rules with higher coverage on sampled docs but lower generalization (acc=0.06, cov=0.26 on unsampled) while missing gold rules (acc=0.31, cov=0.81) that generalize better to the full 50-doc set.
+
+
+QUESTION: What is net income (loss) for the most recent fiscal year?
+---------------------------------------------------------
+  Sampled-refined acc (merged, 10 sampled docs):    0.90  (#rules: 14)
+  Sampled-refined acc (merged, 50 unsampled docs):  0.76  (#rules: 14)
+  Unsampled-refined acc (merged, 50 unsampled docs): 0.82  (#rules: 22)
+  Accuracy gap (sampled_merged - gold_merged):       -0.06
+
+  SAMPLED-REFINED RULES (selected on 10 sampled docs, gpt54):
+  rule_name                                | In_Gold | Accuracy | Coverage | Cost_Ratio
+  -------------------------------------------------------------------------------------
+  rule_tables_with_recent_year_columns     | YES     | 0.00     | 0.00     | 0.00000
+  rule_net_income_in_bold_summary_text     | NO      | 0.04     | 0.46     | 0.00071
+  rule_selected_financial_data_section     | YES     | 0.00     | 0.60     | 0.00007
+  rule_item8_or_selected_data_headers      | YES     | 0.00     | 1.00     | 0.00024
+  rule_first_financial_table_after_item8   | YES     | 0.08     | 0.78     | 0.00203
+  rule_financial_tables_on_pages_from_toc_income_or_item8 | YES     | 0.00     | 0.50     | 0.00069
+  rule_mda_results_of_operations_net_income_text | NO      | 0.26     | 0.80     | 0.00413
+  rule_selected_financial_data_net_income_table | YES     | 0.26     | 0.58     | 0.00511
+  rule_first_table_after_statement_of_income_header | YES     | 0.34     | 0.82     | 0.00501
+  rule_pages_near_item8_from_toc_and_net_income | YES     | 0.24     | 0.62     | 0.00593
+  rule_mda_item7_net_income_text           | YES     | 0.46     | 0.82     | 0.00708
+  rule_tables_with_row_net_and_column_years | NO      | 0.40     | 1.00     | 0.04078
+  rule_consolidated_results_table          | NO      | 0.54     | 1.00     | 0.04506
+  rule_nearby_after_anchor_headers         | YES     | 0.70     | 1.00     | 0.05753
+
+  UNSAMPLED-REFINED (GOLD) RULES (selected on 50 unsampled docs, gpt54mini):
+  rule_name                                | In_Sampled | Accuracy | Coverage | Cost_Ratio
+  ----------------------------------------------------------------------------------------
+  rule_tables_with_recent_year_columns     | YES        | 0.00     | 0.00     | 0.00000
+  rule_selected_financial_data_section     | YES        | 0.00     | 0.60     | 0.00007
+  rule_statement_of_income_heading_nearby  | NO         | 0.00     | 0.82     | 0.00021
+  rule_item8_or_selected_data_headers      | YES        | 0.00     | 1.00     | 0.00024
+  rule_financial_tables_on_pages_from_toc_income_or_item8 | YES        | 0.00     | 0.50     | 0.00069
+  rule_first_financial_table_after_item8   | YES        | 0.08     | 0.78     | 0.00203
+  rule_first_table_after_statement_of_income_header | YES        | 0.34     | 0.82     | 0.00501
+  rule_selected_financial_data_net_income_table | YES        | 0.26     | 0.58     | 0.00511
+  rule_pages_near_item8_from_toc_and_net_income | YES        | 0.24     | 0.62     | 0.00593
+  rule_toc_statement_of_income_page        | NO         | 0.20     | 0.82     | 0.00666
+  rule_mda_item7_net_income_text           | YES        | 0.46     | 0.82     | 0.00708
+  rule_page_after_statement_of_income_header | NO         | 0.40     | 0.82     | 0.01148
+  rule_net_income_row_in_income_statement_table | NO         | 0.48     | 0.92     | 0.01271
+  rule_item8_financial_statements_pages    | NO         | 0.06     | 0.96     | 0.01584
+  rule_toc_item7_page_then_following_pages | NO         | 0.32     | 0.96     | 0.02844
+  rule_tables_under_part_ii_with_net_income | NO         | 0.30     | 0.62     | 0.02918
+  rule_net_income_row_in_financial_statements_section | NO         | 0.38     | 0.86     | 0.03439
+  rule_table_with_net_income_and_three_years | NO         | 0.46     | 1.00     | 0.04692
+  rule_row_header_net_income_in_any_table  | NO         | 0.54     | 1.00     | 0.04965
+  rule_tables_with_financial_units_and_recent_years | NO         | 0.44     | 1.00     | 0.05062
+  rule_financial_statement_table_with_parentheses_and_dollars | NO         | 0.48     | 1.00     | 0.05132
+  rule_nearby_after_anchor_headers         | YES        | 0.70     | 1.00     | 0.05753
+
+  OVERFITTING DIAGNOSIS:
+    Rules only in sampled (dropped by gold): 4 rules
+      Average accuracy on unsampled: 0.31
+      Average coverage on unsampled: 0.82
+      - rule_net_income_in_bold_summary_text: acc=0.04, cov=0.46, cost=0.00071
+      - rule_mda_results_of_operations_net_income_text: acc=0.26, cov=0.80, cost=0.00413
+      - rule_tables_with_row_net_and_column_years: acc=0.40, cov=1.00, cost=0.04078
+      - rule_consolidated_results_table: acc=0.54, cov=1.00, cost=0.04506
+    Rules only in gold (missed by sampled): 12 rules
+      Average accuracy on unsampled: 0.34
+      Average coverage on unsampled: 0.90
+      - rule_statement_of_income_heading_nearby: acc=0.00, cov=0.82, cost=0.00021
+      - rule_toc_statement_of_income_page: acc=0.20, cov=0.82, cost=0.00666
+      - rule_page_after_statement_of_income_header: acc=0.40, cov=0.82, cost=0.01148
+      - rule_net_income_row_in_income_statement_table: acc=0.48, cov=0.92, cost=0.01271
+      - rule_item8_financial_statements_pages: acc=0.06, cov=0.96, cost=0.01584
+      - rule_toc_item7_page_then_following_pages: acc=0.32, cov=0.96, cost=0.02844
+      - rule_tables_under_part_ii_with_net_income: acc=0.30, cov=0.62, cost=0.02918
+      - rule_net_income_row_in_financial_statements_section: acc=0.38, cov=0.86, cost=0.03439
+      - rule_table_with_net_income_and_three_years: acc=0.46, cov=1.00, cost=0.04692
+      - rule_row_header_net_income_in_any_table: acc=0.54, cov=1.00, cost=0.04965
+      - rule_tables_with_financial_units_and_recent_years: acc=0.44, cov=1.00, cost=0.05062
+      - rule_financial_statement_table_with_parentheses_and_dollars: acc=0.48, cov=1.00, cost=0.05132
+    Rules in both (shared): 10 rules
+      Average accuracy on unsampled: 0.21
+    Root cause summary: Sampled selection chose rules with higher coverage on sampled docs but lower generalization (acc=0.31, cov=0.82 on unsampled) while missing gold rules (acc=0.34, cov=0.90) that generalize better to the full 50-doc set.
+
+
+QUESTION: What is the address of principal executive offices and ZIP code?
+---------------------------------------------------------
+  Sampled-refined acc (merged, 10 sampled docs):    0.90  (#rules: 5)
+  Sampled-refined acc (merged, 50 unsampled docs):  0.88  (#rules: 5)
+  Unsampled-refined acc (merged, 50 unsampled docs): 0.98  (#rules: 7)
+  Accuracy gap (sampled_merged - gold_merged):       -0.10
+
+  SAMPLED-REFINED RULES (selected on 10 sampled docs, gpt54):
+  rule_name                                | In_Gold | Accuracy | Coverage | Cost_Ratio
+  -------------------------------------------------------------------------------------
+  rule_page1_before_securities_registered  | NO      | 0.06     | 0.32     | 0.00004
+  rule_page1_address_with_city_state_no_zip | YES     | 0.00     | 0.24     | 0.00004
+  rule_page1_address_after_state_before_ein | YES     | 0.22     | 0.42     | 0.00014
+  rule_page1_city_state_zip_only           | YES     | 0.38     | 0.76     | 0.00009
+  rule_page1_zip_code_label_spans          | YES     | 0.06     | 0.66     | 0.00014
+
+  UNSAMPLED-REFINED (GOLD) RULES (selected on 50 unsampled docs, gpt54mini):
+  rule_name                                | In_Sampled | Accuracy | Coverage | Cost_Ratio
+  ----------------------------------------------------------------------------------------
+  rule_page1_address_like_with_known_cover_labels | NO         | 0.06     | 0.20     | 0.00002
+  rule_page1_address_with_city_state_no_zip | YES        | 0.00     | 0.24     | 0.00004
+  rule_page1_city_state_zip_only           | YES        | 0.38     | 0.76     | 0.00009
+  rule_page1_address_after_state_before_ein | YES        | 0.22     | 0.42     | 0.00014
+  rule_page1_zip_code_label_spans          | YES        | 0.06     | 0.66     | 0.00014
+  rule_page1_main_company_path_text        | NO         | 0.30     | 0.36     | 0.00024
+  rule_page1_address_or_zip_single_token_headers | NO         | 0.10     | 0.98     | 0.00028
+
+  OVERFITTING DIAGNOSIS:
+    Rules only in sampled (dropped by gold): 1 rules
+      Average accuracy on unsampled: 0.06
+      Average coverage on unsampled: 0.32
+      - rule_page1_before_securities_registered: acc=0.06, cov=0.32, cost=0.00004
+    Rules only in gold (missed by sampled): 3 rules
+      Average accuracy on unsampled: 0.15
+      Average coverage on unsampled: 0.51
+      - rule_page1_address_like_with_known_cover_labels: acc=0.06, cov=0.20, cost=0.00002
+      - rule_page1_main_company_path_text: acc=0.30, cov=0.36, cost=0.00024
+      - rule_page1_address_or_zip_single_token_headers: acc=0.10, cov=0.98, cost=0.00028
+    Rules in both (shared): 4 rules
+      Average accuracy on unsampled: 0.17
+    Root cause summary: Sampled selection chose rules with higher coverage on sampled docs but lower generalization (acc=0.06, cov=0.32 on unsampled) while missing gold rules (acc=0.15, cov=0.51) that generalize better to the full 50-doc set.
+
+
+QUESTION: What is the registrant's exact name?
+---------------------------------------------------------
+  Sampled-refined acc (merged, 10 sampled docs):    0.90  (#rules: 2)
+  Sampled-refined acc (merged, 50 unsampled docs):  0.90  (#rules: 2)
+  Unsampled-refined acc (merged, 50 unsampled docs): 1.00  (#rules: 4)
+  Accuracy gap (sampled_merged - gold_merged):       -0.10
+
+  SAMPLED-REFINED RULES (selected on 10 sampled docs, gpt54):
+  rule_name                                | In_Gold | Accuracy | Coverage | Cost_Ratio
+  -------------------------------------------------------------------------------------
+  rule_page1_before_state_header           | YES     | 0.02     | 0.94     | 0.00003
+  rule_page1_large_bold_name_before_exact_caption | YES     | 0.88     | 0.88     | 0.00006
+
+  UNSAMPLED-REFINED (GOLD) RULES (selected on 50 unsampled docs, gpt54mini):
+  rule_name                                | In_Sampled | Accuracy | Coverage | Cost_Ratio
+  ----------------------------------------------------------------------------------------
+  rule_page1_before_state_header           | YES        | 0.02     | 0.94     | 0.00003
+  rule_page1_company_heading_with_single_path | NO         | 0.84     | 0.86     | 0.00006
+  rule_page1_large_bold_name_before_exact_caption | YES        | 0.88     | 0.88     | 0.00006
+  rule_item1_general_company_mention       | NO         | 0.36     | 0.44     | 0.00061
+
+  OVERFITTING DIAGNOSIS:
+    Rules only in sampled (dropped by gold): 0 rules
+    Rules only in gold (missed by sampled): 2 rules
+      Average accuracy on unsampled: 0.60
+      Average coverage on unsampled: 0.65
+      - rule_page1_company_heading_with_single_path: acc=0.84, cov=0.86, cost=0.00006
+      - rule_item1_general_company_mention: acc=0.36, cov=0.44, cost=0.00061
+    Rules in both (shared): 2 rules
+      Average accuracy on unsampled: 0.45
+    Root cause summary: Sampled selection missed gold rules (avg acc=0.60) that generalize well to the full 50-doc set.
+
+
+QUESTION: What is the registrant's telephone number?
+---------------------------------------------------------
+  Sampled-refined acc (merged, 10 sampled docs):    1.00  (#rules: 5)
+  Sampled-refined acc (merged, 50 unsampled docs):  0.82  (#rules: 5)
+  Unsampled-refined acc (merged, 50 unsampled docs): 0.98  (#rules: 5)
+  Accuracy gap (sampled_merged - gold_merged):       -0.16
+
+  SAMPLED-REFINED RULES (selected on 10 sampled docs, gpt54):
+  rule_name                                | In_Gold | Accuracy | Coverage | Cost_Ratio
+  -------------------------------------------------------------------------------------
+  rule_exact_phone_only_span               | NO      | 0.56     | 0.56     | 0.00005
+  rule_registrant_phone_following_zip_parent | NO      | 0.10     | 0.16     | 0.00041
+  rule_page1_before_documents_incorporated | NO      | 0.38     | 0.40     | 0.00006
+  rule_cover_page_before_section_12b       | NO      | 0.30     | 0.80     | 0.00012
+  rule_phone_with_address_and_zip          | YES     | 0.14     | 0.62     | 0.00012
+
+  UNSAMPLED-REFINED (GOLD) RULES (selected on 50 unsampled docs, gpt54mini):
+  rule_name                                | In_Sampled | Accuracy | Coverage | Cost_Ratio
+  ----------------------------------------------------------------------------------------
+  rule_phone_before_section12b             | NO         | 0.06     | 0.06     | 0.00001
+  rule_page1_h2_phone_header               | NO         | 0.28     | 0.50     | 0.00005
+  rule_page1_phone_with_parenthetical_area_code_label | NO         | 0.78     | 0.78     | 0.00012
+  rule_phone_with_address_and_zip          | YES        | 0.14     | 0.62     | 0.00012
+  rule_principal_executive_offices_and_phone | NO         | 0.10     | 0.66     | 0.00015
+
+  OVERFITTING DIAGNOSIS:
+    Rules only in sampled (dropped by gold): 4 rules
+      Average accuracy on unsampled: 0.34
+      Average coverage on unsampled: 0.48
+      - rule_exact_phone_only_span: acc=0.56, cov=0.56, cost=0.00005
+      - rule_registrant_phone_following_zip_parent: acc=0.10, cov=0.16, cost=0.00041
+      - rule_page1_before_documents_incorporated: acc=0.38, cov=0.40, cost=0.00006
+      - rule_cover_page_before_section_12b: acc=0.30, cov=0.80, cost=0.00012
+    Rules only in gold (missed by sampled): 4 rules
+      Average accuracy on unsampled: 0.30
+      Average coverage on unsampled: 0.50
+      - rule_phone_before_section12b: acc=0.06, cov=0.06, cost=0.00001
+      - rule_page1_h2_phone_header: acc=0.28, cov=0.50, cost=0.00005
+      - rule_page1_phone_with_parenthetical_area_code_label: acc=0.78, cov=0.78, cost=0.00012
+      - rule_principal_executive_offices_and_phone: acc=0.10, cov=0.66, cost=0.00015
+    Rules in both (shared): 1 rules
+      Average accuracy on unsampled: 0.14
+    Root cause summary: Sampled selection chose rules with higher coverage on sampled docs but lower generalization (acc=0.34, cov=0.48 on unsampled) while missing gold rules (acc=0.30, cov=0.50) that generalize better to the full 50-doc set.
+
+
+QUESTION: What is the state (or other jurisdiction) of incorporation and the IRS Employer Identification Number?
+---------------------------------------------------------
+  Sampled-refined acc (merged, 10 sampled docs):    1.00  (#rules: 3)
+  Sampled-refined acc (merged, 50 unsampled docs):  0.88  (#rules: 3)
+  Unsampled-refined acc (merged, 50 unsampled docs): 1.00  (#rules: 4)
+  Accuracy gap (sampled_merged - gold_merged):       -0.12
+
+  SAMPLED-REFINED RULES (selected on 10 sampled docs, gpt54):
+  rule_name                                | In_Gold | Accuracy | Coverage | Cost_Ratio
+  -------------------------------------------------------------------------------------
+  rule_page1_combined_state_and_ein_same_text | NO      | 0.04     | 0.04     | 0.00004
+  rule_page1_state_value_followed_by_incorporation_label | YES     | 0.02     | 0.92     | 0.00003
+  rule_page1_ein_number_pattern            | NO      | 0.04     | 0.98     | 0.00012
+
+  UNSAMPLED-REFINED (GOLD) RULES (selected on 50 unsampled docs, gpt54mini):
+  rule_name                                | In_Sampled | Accuracy | Coverage | Cost_Ratio
+  ----------------------------------------------------------------------------------------
+  rule_page1_state_value_followed_by_incorporation_label | YES        | 0.02     | 0.92     | 0.00003
+  rule_page1_bold_ein_number_format        | NO         | 0.00     | 0.80     | 0.00005
+  rule_page1_texts_with_parent_h1_company_and_short_value | NO         | 0.72     | 0.84     | 0.00080
+  rule_page1_company_header_and_next_15    | NO         | 0.88     | 0.96     | 0.00190
+
+  OVERFITTING DIAGNOSIS:
+    Rules only in sampled (dropped by gold): 2 rules
+      Average accuracy on unsampled: 0.04
+      Average coverage on unsampled: 0.51
+      - rule_page1_combined_state_and_ein_same_text: acc=0.04, cov=0.04, cost=0.00004
+      - rule_page1_ein_number_pattern: acc=0.04, cov=0.98, cost=0.00012
+    Rules only in gold (missed by sampled): 3 rules
+      Average accuracy on unsampled: 0.53
+      Average coverage on unsampled: 0.87
+      - rule_page1_bold_ein_number_format: acc=0.00, cov=0.80, cost=0.00005
+      - rule_page1_texts_with_parent_h1_company_and_short_value: acc=0.72, cov=0.84, cost=0.00080
+      - rule_page1_company_header_and_next_15: acc=0.88, cov=0.96, cost=0.00190
+    Rules in both (shared): 1 rules
+      Average accuracy on unsampled: 0.02
+    Root cause summary: Sampled selection chose rules with higher coverage on sampled docs but lower generalization (acc=0.04, cov=0.51 on unsampled) while missing gold rules (acc=0.53, cov=0.87) that generalize better to the full 50-doc set.
+
+
+QUESTION: What is total assets at year-end (from the audited balance sheet)?
+---------------------------------------------------------
+  Sampled-refined acc (merged, 10 sampled docs):    0.90  (#rules: 27)
+  Sampled-refined acc (merged, 50 unsampled docs):  0.78  (#rules: 27)
+  Unsampled-refined acc (merged, 50 unsampled docs): 0.92  (#rules: 14)
+  Accuracy gap (sampled_merged - gold_merged):       -0.14
+
+  SAMPLED-REFINED RULES (selected on 10 sampled docs, gpt54):
+  rule_name                                | In_Gold | Accuracy | Coverage | Cost_Ratio
+  -------------------------------------------------------------------------------------
+  rule_tables_with_balance_sheet_in_toc_path | NO      | 0.08     | 0.08     | 0.00360
+  rule_tables_with_total_assets_and_inventory | YES     | 0.02     | 0.04     | 0.00025
+  rule_statement_of_financial_position_heading_spans | YES     | 0.00     | 0.00     | 0.00000
+  rule_item8_heading_spans                 | YES     | 0.00     | 0.98     | 0.00013
+  rule_balance_sheet_heading_spans         | YES     | 0.00     | 0.92     | 0.00038
+  rule_tables_with_total_assets_on_same_page_as_item8 | NO      | 0.00     | 0.10     | 0.00039
+  rule_tables_with_total_assets_and_page_after_toc_item8 | YES     | 0.04     | 0.32     | 0.00186
+  rule_tables_with_total_assets_and_page_around_47 | YES     | 0.04     | 0.28     | 0.00165
+  rule_tables_with_statement_of_financial_position | YES     | 0.00     | 0.08     | 0.00048
+  rule_statement_of_financial_position_phrase | YES     | 0.00     | 0.16     | 0.00073
+  rule_tables_with_financial_position_and_total_assets | YES     | 0.10     | 0.20     | 0.00158
+  rule_tables_with_total_assets_and_financial_position_path | YES     | 0.06     | 0.08     | 0.00066
+  rule_tables_with_total_assets_and_page_around_34 | YES     | 0.10     | 0.30     | 0.00314
+  rule_tables_with_total_assets_and_audited_year_end_context | YES     | 0.14     | 0.18     | 0.00226
+  rule_tables_with_total_assets_and_page_around_39 | NO      | 0.26     | 0.42     | 0.00398
+  rule_tables_with_parenthetical_year_end_dates | NO      | 0.48     | 0.88     | 0.00677
+  rule_tables_with_total_assets_and_page_around_42 | NO      | 0.28     | 0.60     | 0.00448
+  rule_tables_with_total_assets_and_total_equity | NO      | 0.20     | 0.30     | 0.00313
+  rule_tables_with_total_assets_and_item8_path | NO      | 0.68     | 0.86     | 0.00810
+  rule_tables_with_total_assets_in_item8_path | NO      | 0.64     | 0.86     | 0.00810
+  rule_tables_with_total_assets_within_three_pages_of_item8 | NO      | 0.32     | 0.72     | 0.00702
+  rule_tables_with_total_assets_and_financial_statements_path | NO      | 0.76     | 0.94     | 0.00873
+  rule_tables_with_total_assets_and_receivables | NO      | 0.70     | 0.98     | 0.00807
+  rule_tables_with_total_assets_and_total_current_assets | NO      | 0.80     | 0.98     | 0.01065
+  rule_tables_with_consolidated_keyword    | NO      | 0.06     | 0.94     | 0.00820
+  rule_tables_with_total_assets_and_total_liabilities | NO      | 0.74     | 1.00     | 0.01102
+  rule_tables_with_total_assets_and_page_over_30 | NO      | 0.82     | 1.00     | 0.01437
+
+  UNSAMPLED-REFINED (GOLD) RULES (selected on 50 unsampled docs, gpt54mini):
+  rule_name                                | In_Sampled | Accuracy | Coverage | Cost_Ratio
+  ----------------------------------------------------------------------------------------
+  rule_statement_of_financial_position_heading_spans | YES        | 0.00     | 0.00     | 0.00000
+  rule_item8_heading_spans                 | YES        | 0.00     | 0.98     | 0.00013
+  rule_tables_with_total_assets_and_inventory | YES        | 0.02     | 0.04     | 0.00025
+  rule_balance_sheet_heading_spans         | YES        | 0.00     | 0.92     | 0.00038
+  rule_tables_with_statement_of_financial_position | YES        | 0.00     | 0.08     | 0.00048
+  rule_tables_with_total_assets_and_financial_position_path | YES        | 0.06     | 0.08     | 0.00066
+  rule_statement_of_financial_position_phrase | YES        | 0.00     | 0.16     | 0.00073
+  rule_tables_with_financial_position_and_total_assets | YES        | 0.10     | 0.20     | 0.00158
+  rule_tables_with_total_assets_and_page_around_47 | YES        | 0.04     | 0.28     | 0.00165
+  rule_tables_with_total_assets_and_page_after_toc_item8 | YES        | 0.04     | 0.32     | 0.00186
+  rule_tables_with_total_assets_and_audited_year_end_context | YES        | 0.14     | 0.18     | 0.00226
+  rule_tables_with_total_assets_and_page_around_34 | YES        | 0.10     | 0.30     | 0.00314
+  rule_tables_with_total_assets_and_page_around_60 | NO         | 0.06     | 0.56     | 0.00393
+  rule_tables_with_total_assets_and_accounts_payable | NO         | 0.72     | 0.74     | 0.00587
+
+  OVERFITTING DIAGNOSIS:
+    Rules only in sampled (dropped by gold): 15 rules
+      Average accuracy on unsampled: 0.45
+      Average coverage on unsampled: 0.71
+      - rule_tables_with_balance_sheet_in_toc_path: acc=0.08, cov=0.08, cost=0.00360
+      - rule_tables_with_total_assets_on_same_page_as_item8: acc=0.00, cov=0.10, cost=0.00039
+      - rule_tables_with_total_assets_and_page_around_39: acc=0.26, cov=0.42, cost=0.00398
+      - rule_tables_with_parenthetical_year_end_dates: acc=0.48, cov=0.88, cost=0.00677
+      - rule_tables_with_total_assets_and_page_around_42: acc=0.28, cov=0.60, cost=0.00448
+      - rule_tables_with_total_assets_and_total_equity: acc=0.20, cov=0.30, cost=0.00313
+      - rule_tables_with_total_assets_and_item8_path: acc=0.68, cov=0.86, cost=0.00810
+      - rule_tables_with_total_assets_in_item8_path: acc=0.64, cov=0.86, cost=0.00810
+      - rule_tables_with_total_assets_within_three_pages_of_item8: acc=0.32, cov=0.72, cost=0.00702
+      - rule_tables_with_total_assets_and_financial_statements_path: acc=0.76, cov=0.94, cost=0.00873
+      - rule_tables_with_total_assets_and_receivables: acc=0.70, cov=0.98, cost=0.00807
+      - rule_tables_with_total_assets_and_total_current_assets: acc=0.80, cov=0.98, cost=0.01065
+      - rule_tables_with_consolidated_keyword: acc=0.06, cov=0.94, cost=0.00820
+      - rule_tables_with_total_assets_and_total_liabilities: acc=0.74, cov=1.00, cost=0.01102
+      - rule_tables_with_total_assets_and_page_over_30: acc=0.82, cov=1.00, cost=0.01437
+    Rules only in gold (missed by sampled): 2 rules
+      Average accuracy on unsampled: 0.39
+      Average coverage on unsampled: 0.65
+      - rule_tables_with_total_assets_and_page_around_60: acc=0.06, cov=0.56, cost=0.00393
+      - rule_tables_with_total_assets_and_accounts_payable: acc=0.72, cov=0.74, cost=0.00587
+    Rules in both (shared): 12 rules
+      Average accuracy on unsampled: 0.04
+    Root cause summary: Sampled selection chose rules with higher coverage on sampled docs but lower generalization (acc=0.45, cov=0.71 on unsampled) while missing gold rules (acc=0.39, cov=0.65) that generalize better to the full 50-doc set.
+
+
+QUESTION: What is total revenue for the most recent fiscal year (from the audited income statement)?
+---------------------------------------------------------
+  Sampled-refined acc (merged, 10 sampled docs):    0.90  (#rules: 5)
+  Sampled-refined acc (merged, 50 unsampled docs):  0.70  (#rules: 5)
+  Unsampled-refined acc (merged, 50 unsampled docs): 0.90  (#rules: 5)
+  Accuracy gap (sampled_merged - gold_merged):       -0.20
+
+  SAMPLED-REFINED RULES (selected on 10 sampled docs, gpt54):
+  rule_name                                | In_Gold | Accuracy | Coverage | Cost_Ratio
+  -------------------------------------------------------------------------------------
+  rule_consolidated_statement_of_earnings_heading | YES     | 0.00     | 0.10     | 0.00001
+  rule_first_financial_table_after_item8   | NO      | 0.14     | 0.98     | 0.00317
+  rule_income_statement_page_from_toc      | NO      | 0.22     | 0.68     | 0.00547
+  rule_segment_note_revenue_tables         | NO      | 0.26     | 0.30     | 0.00261
+  rule_item8_income_statement_tables       | NO      | 0.32     | 0.72     | 0.00537
+
+  UNSAMPLED-REFINED (GOLD) RULES (selected on 50 unsampled docs, gpt54mini):
+  rule_name                                | In_Sampled | Accuracy | Coverage | Cost_Ratio
+  ----------------------------------------------------------------------------------------
+  rule_consolidated_statement_of_earnings_heading | YES        | 0.00     | 0.10     | 0.00001
+  rule_row_header_net_revenues             | NO         | 0.14     | 0.22     | 0.00230
+  rule_income_statement_nearby_tables      | NO         | 0.42     | 0.80     | 0.00684
+  rule_row_header_total_revenue            | NO         | 0.14     | 0.44     | 0.00779
+  rule_row_header_net_sales                | NO         | 0.28     | 0.46     | 0.01274
+
+  OVERFITTING DIAGNOSIS:
+    Rules only in sampled (dropped by gold): 4 rules
+      Average accuracy on unsampled: 0.24
+      Average coverage on unsampled: 0.67
+      - rule_first_financial_table_after_item8: acc=0.14, cov=0.98, cost=0.00317
+      - rule_income_statement_page_from_toc: acc=0.22, cov=0.68, cost=0.00547
+      - rule_segment_note_revenue_tables: acc=0.26, cov=0.30, cost=0.00261
+      - rule_item8_income_statement_tables: acc=0.32, cov=0.72, cost=0.00537
+    Rules only in gold (missed by sampled): 4 rules
+      Average accuracy on unsampled: 0.24
+      Average coverage on unsampled: 0.48
+      - rule_row_header_net_revenues: acc=0.14, cov=0.22, cost=0.00230
+      - rule_income_statement_nearby_tables: acc=0.42, cov=0.80, cost=0.00684
+      - rule_row_header_total_revenue: acc=0.14, cov=0.44, cost=0.00779
+      - rule_row_header_net_sales: acc=0.28, cov=0.46, cost=0.01274
+    Rules in both (shared): 1 rules
+      Average accuracy on unsampled: 0.00
+    Root cause summary: Sampled selection chose rules with higher coverage on sampled docs but lower generalization (acc=0.24, cov=0.67 on unsampled) while missing gold rules (acc=0.24, cov=0.48) that generalize better to the full 50-doc set.
+
+
+QUESTION: What is/are the trading symbol(s) and listing exchange(s)?
+---------------------------------------------------------
+  Sampled-refined acc (merged, 10 sampled docs):    1.00  (#rules: 4)
+  Sampled-refined acc (merged, 50 unsampled docs):  0.94  (#rules: 4)
+  Unsampled-refined acc (merged, 50 unsampled docs): 0.98  (#rules: 32)
+  Accuracy gap (sampled_merged - gold_merged):       -0.04
+
+  SAMPLED-REFINED RULES (selected on 10 sampled docs, gpt54):
+  rule_name                                | In_Gold | Accuracy | Coverage | Cost_Ratio
+  -------------------------------------------------------------------------------------
+  rule_cover_page_table_cells_symbol_exchange | NO      | 0.18     | 0.18     | 0.00014
+  rule_page1_symbols_in_registration_window | NO      | 0.12     | 0.32     | 0.00001
+  rule_cover_page_embedded_symbol_exchange | YES     | 0.20     | 0.52     | 0.00019
+  rule_cover_page_registration_sequence    | YES     | 0.94     | 1.00     | 0.19096
+
+  UNSAMPLED-REFINED (GOLD) RULES (selected on 50 unsampled docs, gpt54mini):
+  rule_name                                | In_Sampled | Accuracy | Coverage | Cost_Ratio
+  ----------------------------------------------------------------------------------------
+  rule_page1_allcaps_ticker_headers        | NO         | 0.08     | 0.16     | 0.00000
+  rule_page1_exchange_symbol_split_reverse | NO         | 0.04     | 0.04     | 0.00001
+  rule_exact_symbol_values                 | NO         | 0.10     | 0.40     | 0.00002
+  rule_page1_symbol_like_spans             | NO         | 0.10     | 0.40     | 0.00002
+  rule_page1_exact_exchange_spans          | NO         | 0.00     | 0.38     | 0.00003
+  rule_page1_exchange_then_symbol_adjacent | NO         | 0.04     | 0.20     | 0.00004
+  rule_page1_exchange_before_symbol_like   | NO         | 0.10     | 0.38     | 0.00005
+  rule_page1_topmatter_short_values_after_common_stock | NO         | 0.22     | 0.60     | 0.00006
+  rule_page1_symbol_then_exchange_adjacent | NO         | 0.16     | 0.32     | 0.00008
+  rule_cover_page_company_section_header   | NO         | 0.04     | 0.96     | 0.00009
+  rule_cover_page_table_row_security_registration | NO         | 0.18     | 0.18     | 0.00014
+  rule_page1_bold_smallfont_registration_values | NO         | 0.14     | 0.38     | 0.00016
+  rule_cover_page_embedded_symbol_exchange | YES        | 0.20     | 0.52     | 0.00019
+  rule_item1_business_page3_symbol_exchange | NO         | 0.22     | 0.26     | 0.00042
+  rule_page1_exchange_in_registration_window | NO         | 0.24     | 0.88     | 0.00043
+  rule_page1_major_exchange_names          | NO         | 0.40     | 0.80     | 0.00055
+  rule_page1_title_trading_exchange_cluster | NO         | 0.54     | 0.94     | 0.00067
+  rule_page1_security_registration_cluster | NO         | 0.16     | 0.96     | 0.00074
+  rule_page1_after_trading_symbol_header   | NO         | 0.24     | 0.60     | 0.00076
+  rule_page1_near_title_of_each_class      | NO         | 0.52     | 0.94     | 0.00077
+  rule_inline_registered_under_symbol      | NO         | 0.60     | 0.68     | 0.00086
+  rule_business_sentence_trades_on_exchange | NO         | 0.74     | 0.78     | 0.00094
+  rule_page1_near_company_name_and_section12b | NO         | 0.24     | 0.84     | 0.00098
+  rule_page1_header_path_registration      | NO         | 0.04     | 0.86     | 0.00115
+  rule_business_sentence_under_symbol      | NO         | 0.68     | 0.82     | 0.00119
+  rule_page1_registration_data_band        | NO         | 0.52     | 0.98     | 0.00243
+  rule_page1_registration_keywords_broad   | NO         | 0.22     | 1.00     | 0.00488
+  rule_page1_under_company_header          | NO         | 0.48     | 0.94     | 0.00729
+  rule_title_trading_exchange_triplet      | NO         | 0.60     | 0.96     | 0.00811
+  rule_page1_after_company_name_until_documents_incorporated | NO         | 0.60     | 0.94     | 0.00944
+  rule_business_path_and_stock_terms       | NO         | 0.36     | 1.00     | 0.01310
+  rule_cover_page_registration_sequence    | YES        | 0.94     | 1.00     | 0.19096
+
+  OVERFITTING DIAGNOSIS:
+    Rules only in sampled (dropped by gold): 2 rules
+      Average accuracy on unsampled: 0.15
+      Average coverage on unsampled: 0.25
+      - rule_cover_page_table_cells_symbol_exchange: acc=0.18, cov=0.18, cost=0.00014
+      - rule_page1_symbols_in_registration_window: acc=0.12, cov=0.32, cost=0.00001
+    Rules only in gold (missed by sampled): 30 rules
+      Average accuracy on unsampled: 0.29
+      Average coverage on unsampled: 0.65
+      - rule_page1_allcaps_ticker_headers: acc=0.08, cov=0.16, cost=0.00000
+      - rule_page1_exchange_symbol_split_reverse: acc=0.04, cov=0.04, cost=0.00001
+      - rule_exact_symbol_values: acc=0.10, cov=0.40, cost=0.00002
+      - rule_page1_symbol_like_spans: acc=0.10, cov=0.40, cost=0.00002
+      - rule_page1_exact_exchange_spans: acc=0.00, cov=0.38, cost=0.00003
+      - rule_page1_exchange_then_symbol_adjacent: acc=0.04, cov=0.20, cost=0.00004
+      - rule_page1_exchange_before_symbol_like: acc=0.10, cov=0.38, cost=0.00005
+      - rule_page1_topmatter_short_values_after_common_stock: acc=0.22, cov=0.60, cost=0.00006
+      - rule_page1_symbol_then_exchange_adjacent: acc=0.16, cov=0.32, cost=0.00008
+      - rule_cover_page_company_section_header: acc=0.04, cov=0.96, cost=0.00009
+      - rule_cover_page_table_row_security_registration: acc=0.18, cov=0.18, cost=0.00014
+      - rule_page1_bold_smallfont_registration_values: acc=0.14, cov=0.38, cost=0.00016
+      - rule_item1_business_page3_symbol_exchange: acc=0.22, cov=0.26, cost=0.00042
+      - rule_page1_exchange_in_registration_window: acc=0.24, cov=0.88, cost=0.00043
+      - rule_page1_major_exchange_names: acc=0.40, cov=0.80, cost=0.00055
+      - rule_page1_title_trading_exchange_cluster: acc=0.54, cov=0.94, cost=0.00067
+      - rule_page1_security_registration_cluster: acc=0.16, cov=0.96, cost=0.00074
+      - rule_page1_after_trading_symbol_header: acc=0.24, cov=0.60, cost=0.00076
+      - rule_page1_near_title_of_each_class: acc=0.52, cov=0.94, cost=0.00077
+      - rule_inline_registered_under_symbol: acc=0.60, cov=0.68, cost=0.00086
+      - rule_business_sentence_trades_on_exchange: acc=0.74, cov=0.78, cost=0.00094
+      - rule_page1_near_company_name_and_section12b: acc=0.24, cov=0.84, cost=0.00098
+      - rule_page1_header_path_registration: acc=0.04, cov=0.86, cost=0.00115
+      - rule_business_sentence_under_symbol: acc=0.68, cov=0.82, cost=0.00119
+      - rule_page1_registration_data_band: acc=0.52, cov=0.98, cost=0.00243
+      - rule_page1_registration_keywords_broad: acc=0.22, cov=1.00, cost=0.00488
+      - rule_page1_under_company_header: acc=0.48, cov=0.94, cost=0.00729
+      - rule_title_trading_exchange_triplet: acc=0.60, cov=0.96, cost=0.00811
+      - rule_page1_after_company_name_until_documents_incorporated: acc=0.60, cov=0.94, cost=0.00944
+      - rule_business_path_and_stock_terms: acc=0.36, cov=1.00, cost=0.01310
+    Rules in both (shared): 2 rules
+      Average accuracy on unsampled: 0.57
+    Root cause summary: Sampled selection chose rules with higher coverage on sampled docs but lower generalization (acc=0.15, cov=0.25 on unsampled) while missing gold rules (acc=0.29, cov=0.65) that generalize better to the full 50-doc set.
+
+
+OVERALL SUMMARY
+================================================================
+
+  Question                                                | Smp@Smp | Smp@Uns | Gold@Uns |    Gap | OvfitRules
+  --------------------------------------------------------------------------------------------------------------
+  How many shares of common stock were outstanding as o   |    0.90 |    0.66 |     0.96 |  -0.30 |          4
+  What is long-term debt at year-end (0 if none)?         |    0.50 |    0.46 |     0.82 |  -0.36 |          2
+  What is net income (loss) for the most recent fiscal    |    0.90 |    0.76 |     0.82 |  -0.06 |          4
+  What is the address of principal executive offices an   |    0.90 |    0.88 |     0.98 |  -0.10 |          1
+  What is the registrant's exact name?                    |    0.90 |    0.90 |     1.00 |  -0.10 |          0
+  What is the registrant's telephone number?              |    1.00 |    0.82 |     0.98 |  -0.16 |          4
+  What is the state (or other jurisdiction) of incorpor   |    1.00 |    0.88 |     1.00 |  -0.12 |          2
+  What is total assets at year-end (from the audited ba   |    0.90 |    0.78 |     0.92 |  -0.14 |         15
+  What is total revenue for the most recent fiscal year   |    0.90 |    0.70 |     0.90 |  -0.20 |          4
+  What is/are the trading symbol(s) and listing exchang   |    1.00 |    0.94 |     0.98 |  -0.04 |          2
+
+  Average accuracy gap (sampled - gold): -0.158
+  Questions where sampled UNDERPERFORMS gold: 10 / 10
+  Questions where sampled OVERPERFORMS gold: 0 / 10
+
+  KEY PATTERNS:
+
+  - Total rules selected only on sampled (potentially overfit): 38
+  - Total rules selected only in gold (missed by sampled): 73
+  - Total shared rules (selected in both): 40
+
+  - Avg accuracy of sampled-only rules on unsampled docs: 0.197
+  - Avg accuracy of gold-only rules on unsampled docs:    0.335
+
+  OVERFITTING MECHANISM: The sampled refinement (10 docs) selects rules based on a small,
+  potentially unrepresentative sample. Rules that happen to match patterns in those 10 docs
+  get selected even if they don't generalize. The gold refinement (50 docs) provides a more
+  reliable signal, resulting in different (often better-generalizing) rule selections.
+  The accuracy gap primarily reflects: (1) sampled-only rules performing poorly on unsampled
+  docs, and (2) missed gold rules that generalize well but were not triggered by the 10 sampled docs.
