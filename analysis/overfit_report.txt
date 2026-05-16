@@ -1,0 +1,710 @@
+OVERFITTING ANALYSIS REPORT
+Sampled-Refined Rules (gpt54, 10 docs) vs Unsampled-Refined Gold (gpt54mini, 50 docs)
+==============================================================================
+Generated: 2026-05-16 01:55
+
+METRIC LEGEND
+  Acc-U  : individual rule accuracy on 50 unsampled docs (LLM QA+judge)
+  Cov-S  : coverage on 10 sampled docs (fraction of docs rule retrieves anything)
+  Cov-U  : coverage on 50 unsampled docs
+  Cost   : avg cost ratio (retrieved_tokens / total_doc_tokens) on unsampled docs
+  Spec   : rule specificity inferred from docstring
+
+
+==============================================================================
+QUESTION: How many shares of common stock were outstanding as of the cover-page reference date?
+==============================================================================
+  Sampled-refined :  7 rules | acc on sampled=0.90  acc on unsampled=0.66
+  Unsampled-gold  :  9 rules | acc on unsampled=0.96
+  Accuracy gap (gold - sampled on unsampled): +0.30
+  Overlap: 3 rules  |  Only-sampled: 4  |  Only-gold: 6
+
+  [OVERFIT CANDIDATES] Rules selected on sampled but dropped by gold (4):
+  Rule                                               Acc-U  Cov-S  Cov-U      Cost  Spec / Description
+  ──────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  rule_page1_phrase_number_of_shares_outstanding_of_registrant  0.10   0.10   0.10   0.00006  [MEDIUM] Match page-1 spans with 'number of shares outstanding of the
+  rule_page1_sentence_with_there_were_and_common_stock  0.04   0.20   0.04   0.00001  [MEDIUM] Match page-1 spans using 'There were ... common stock ... ou
+  rule_page1_shares_outstanding_as_of_february        0.08   0.20   0.08   0.00004  [HIGH (page/date-specific)] Match spans with outstanding-share sentence using a February
+  rule_page2_cover_page_numeric_sentence              0.30   0.30   0.30   0.00011  [HIGH (page/date-specific)] Match page-2 text spans with a long comma-formatted number a
+
+  Aggregate (only-sampled rules):
+    Avg accuracy on unsampled : 0.130
+    Avg coverage on sampled   : 0.200
+    Avg coverage on unsampled : 0.130
+    Coverage drop (S→U)       : +0.070
+    High-specificity rules    : 2 / 4 (rule_page1_shares_outstanding_as_of_february, rule_page2_cover_page_numeric_sentence)
+
+  [MISSED BY SAMPLED] Rules in gold but not sampled (6):
+  Rule                                               Acc-U  Cov-S  Cov-U      Cost  Spec / Description
+  ──────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  rule_cover_path_text_company_page1                  0.72   0.80   0.86   0.00175  [MEDIUM] Match page-1 body/text spans under the company cover block t
+  rule_page1_after_nonaffiliate_market_value          0.36   0.70   0.48   0.00020  [MEDIUM] Match page-1 spans with outstanding-share language that foll
+  rule_page1_company_cover_section_header             0.00   0.00   0.00   0.00000  [MEDIUM] Match the main company cover section_header on page 1 when i
+  rule_page1_market_value_and_number_of_shares_labels  0.00   0.20   0.10   0.00003  [MEDIUM] Match page-1 spans that are labels for market value and numb
+  rule_page1_numeric_only_after_outstanding_label     0.04   0.10   0.10   0.00001  [MEDIUM] Match numeric-only spans on page 1/2 that follow a label spa
+  rule_page1_sentence_with_common_stock_outstanding_and_documents_reference  0.00   0.50   0.46   0.00003  [MEDIUM] Match page-1 spans with common-stock-outstanding language in
+
+  Aggregate (only-gold rules):
+    Avg accuracy on unsampled : 0.187
+    Avg coverage on sampled   : 0.383
+    Avg coverage on unsampled : 0.333
+    Low sampled-coverage (<0.3): 3 rules — pruned because they rarely fired on 10 sampled docs
+
+  [SHARED] Rules in both sampled and gold (3):
+  Rule                                               Acc-U  Cov-S  Cov-U      Cost
+  ─────────────────────────────────────────────────────────────────────────────────────
+  rule_h1_company_cover_span_with_outstanding         0.00   0.00   0.00   0.00000
+  rule_page1_cover_text_with_multiple_large_numbers   0.10   0.10   0.14   0.00018
+  rule_page1_numeric_after_phrase_as_of_january       0.02   0.10   0.06   0.00001
+
+  DIAGNOSIS:
+  1. LOW GENERALIZATION: Dropped rules have very low unsampled coverage (0.13), meaning they fire on
+     very few unseen docs and contribute noise.
+  2. LOW INDIVIDUAL ACCURACY: Even when sampled-only rules DO retrieve text on unsampled docs, their
+     avg accuracy is only 0.13, suggesting they retrieve the wrong content.
+  3. OVER-SPECIFIC RULES: 2 dropped rules target narrow patterns (specific page numbers, months, or 
+    document formats): rule_page1_shares_outstanding_as_of_february, rule_page2_cover_page_numeric_
+    sentence.
+  4. SAMPLING BIAS: 1 gold rules had zero coverage on sampled docs (never fired on any of the 10 sam
+    pled docs), so they were eliminated during refinement even though they generalize. Examples: ru
+    le_page1_company_cover_section_header.
+
+==============================================================================
+QUESTION: What is long-term debt at year-end (0 if none)?
+==============================================================================
+  Sampled-refined :  6 rules | acc on sampled=0.50  acc on unsampled=0.46
+  Unsampled-gold  : 11 rules | acc on unsampled=0.82
+  Accuracy gap (gold - sampled on unsampled): +0.36
+  Overlap: 4 rules  |  Only-sampled: 2  |  Only-gold: 7
+
+  [OVERFIT CANDIDATES] Rules selected on sampled but dropped by gold (2):
+  Rule                                               Acc-U  Cov-S  Cov-U      Cost  Spec / Description
+  ──────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  rule_balance_sheet_table_on_pages_30_to_70          0.04   0.20   0.12   0.00042  [MEDIUM] Match mid-document financial statement tables on typical bal
+  rule_mda_debt_at_year_end_text                      0.08   0.60   0.40   0.00177  [MEDIUM] Match text spans that explicitly say debt at year-end or at 
+
+  Aggregate (only-sampled rules):
+    Avg accuracy on unsampled : 0.060
+    Avg coverage on sampled   : 0.400
+    Avg coverage on unsampled : 0.260
+    Coverage drop (S→U)       : +0.140
+
+  [MISSED BY SAMPLED] Rules in gold but not sampled (7):
+  Rule                                               Acc-U  Cov-S  Cov-U      Cost  Spec / Description
+  ──────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  rule_debt_note_header_same_page_tables              0.46   1.00   0.94   0.00581  [MEDIUM] Match tables on the same page as a debt-related section head
+  rule_debt_note_year_end_table                       0.22   0.80   0.42   0.00606  [MEDIUM] Match debt tables that explicitly present year-end balances.
+  rule_debt_related_section_headers                   0.42   1.00   1.00   0.00945  [LOW (broad/general)] Match debt-related headers and nearby text spans as broad an
+  rule_mda_liquidity_debt_paragraph                   0.08   0.90   0.84   0.00541  [MEDIUM] Match MD&A liquidity/capital resources text spans mentioning
+  rule_note_debt_header_near_table                    0.42   0.90   0.84   0.00549  [MEDIUM] Match section headers for debt notes that likely precede the
+  rule_note_debt_table                                0.44   0.90   0.72   0.00453  [MEDIUM] Match debt note tables under notes to consolidated financial
+  rule_text_span_long_term_debt_numeric               0.12   1.00   0.90   0.00383  [MEDIUM] Match text spans containing long-term debt with nearby numer
+
+  Aggregate (only-gold rules):
+    Avg accuracy on unsampled : 0.309
+    Avg coverage on sampled   : 0.929
+    Avg coverage on unsampled : 0.809
+
+  [SHARED] Rules in both sampled and gold (4):
+  Rule                                               Acc-U  Cov-S  Cov-U      Cost
+  ─────────────────────────────────────────────────────────────────────────────────────
+  rule_debt_table_under_notes_or_mda                  0.12   0.50   0.30   0.00271
+  rule_debt_table_with_noncurrent_context             0.38   0.70   0.56   0.00523
+  rule_near_balance_sheet_pages_with_debt             0.00   0.00   0.00   0.00000
+  rule_pages_near_item_8_from_toc                     0.06   0.70   0.70   0.00545
+
+  DIAGNOSIS:
+  1. LOW INDIVIDUAL ACCURACY: Even when sampled-only rules DO retrieve text on unsampled docs, their
+     avg accuracy is only 0.06, suggesting they retrieve the wrong content.
+
+==============================================================================
+QUESTION: What is net income (loss) for the most recent fiscal year?
+==============================================================================
+  Sampled-refined : 14 rules | acc on sampled=0.90  acc on unsampled=0.76
+  Unsampled-gold  : 22 rules | acc on unsampled=0.82
+  Accuracy gap (gold - sampled on unsampled): +0.06
+  Overlap: 10 rules  |  Only-sampled: 4  |  Only-gold: 12
+
+  [OVERFIT CANDIDATES] Rules selected on sampled but dropped by gold (4):
+  Rule                                               Acc-U  Cov-S  Cov-U      Cost  Spec / Description
+  ──────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  rule_consolidated_results_table                     0.54   1.00   1.00   0.04506  [MEDIUM] Match tables under paths mentioning consolidated financial s
+  rule_mda_results_of_operations_net_income_text      0.26   0.70   0.80   0.00413  [MEDIUM] Match text spans in MD&A / Results of Operations mentioning 
+  rule_net_income_in_bold_summary_text                0.04   0.50   0.46   0.00071  [MEDIUM] Match bold text spans mentioning net income/earnings/loss, o
+  rule_tables_with_row_net_and_column_years           0.40   1.00   1.00   0.04078  [MEDIUM] Match tables where a net row coexists with year-like column 
+
+  Aggregate (only-sampled rules):
+    Avg accuracy on unsampled : 0.310
+    Avg coverage on sampled   : 0.800
+    Avg coverage on unsampled : 0.815
+    Coverage drop (S→U)       : -0.015
+
+  [MISSED BY SAMPLED] Rules in gold but not sampled (12):
+  Rule                                               Acc-U  Cov-S  Cov-U      Cost  Spec / Description
+  ──────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  rule_financial_statement_table_with_parentheses_and_dollars  0.48   1.00   1.00   0.05132  [MEDIUM] Match likely financial statement tables with dollar formatti
+  rule_item8_financial_statements_pages               0.06   0.80   0.96   0.01584  [MEDIUM] Match spans on pages associated with Item 8 / Financial Stat
+  rule_net_income_row_in_financial_statements_section  0.38   0.60   0.86   0.03439  [MEDIUM] Match tables in Item 8 / Financial Statements and Supplement
+  rule_net_income_row_in_income_statement_table       0.48   1.00   0.92   0.01271  [MEDIUM] Match tables containing a row labeled net income/loss in the
+  rule_page_after_statement_of_income_header          0.40   0.90   0.82   0.01148  [MEDIUM] Match spans on the same or next page after a Statement of In
+  rule_row_header_net_income_in_any_table             0.54   1.00   1.00   0.04965  [LOW (broad/general)] Match any table where a row header cell is net income/loss/e
+  rule_statement_of_income_heading_nearby             0.00   0.90   0.82   0.00021  [MEDIUM] Match section headers for Statement of Income / Operations t
+  rule_table_with_net_income_and_three_years          0.42   1.00   1.00   0.04692  [MEDIUM] Match tables with a net income row and at least three distin
+  rule_tables_under_part_ii_with_net_income           0.30   0.80   0.62   0.02918  [MEDIUM] Match tables under Part II that mention net income/earnings/
+  rule_tables_with_financial_units_and_recent_years   0.44   1.00   1.00   0.05062  [MEDIUM] Match financial tables using units like million/billion and 
+  rule_toc_item7_page_then_following_pages            0.32   0.80   0.96   0.02844  [MEDIUM] Match spans on Item 7 pages and nearby pages, where some fil
+  rule_toc_statement_of_income_page                   0.20   0.90   0.82   0.00666  [MEDIUM] Match spans on the page listed in the TOC for Consolidated S
+
+  Aggregate (only-gold rules):
+    Avg accuracy on unsampled : 0.335
+    Avg coverage on sampled   : 0.892
+    Avg coverage on unsampled : 0.898
+
+  [SHARED] Rules in both sampled and gold (10):
+  Rule                                               Acc-U  Cov-S  Cov-U      Cost
+  ─────────────────────────────────────────────────────────────────────────────────────
+  rule_financial_tables_on_pages_from_toc_income_or_item8  0.00   0.50   0.50   0.00069
+  rule_first_financial_table_after_item8              0.08   0.60   0.78   0.00203
+  rule_first_table_after_statement_of_income_header   0.34   0.90   0.82   0.00501
+  rule_item8_or_selected_data_headers                 0.00   1.00   1.00   0.00024
+  rule_mda_item7_net_income_text                      0.46   0.90   0.82   0.00708
+  rule_nearby_after_anchor_headers                    0.70   1.00   1.00   0.05753
+  rule_pages_near_item8_from_toc_and_net_income       0.24   0.50   0.62   0.00593
+  rule_selected_financial_data_net_income_table       0.26   0.50   0.58   0.00511
+  rule_selected_financial_data_section                0.00   0.60   0.60   0.00007
+  rule_tables_with_recent_year_columns                0.00   0.00   0.00   0.00000
+
+  DIAGNOSIS:
+  No strong overfitting signal for this question.
+
+==============================================================================
+QUESTION: What is the address of principal executive offices and ZIP code?
+==============================================================================
+  Sampled-refined :  5 rules | acc on sampled=0.90  acc on unsampled=0.88
+  Unsampled-gold  :  7 rules | acc on unsampled=0.98
+  Accuracy gap (gold - sampled on unsampled): +0.10
+  Overlap: 4 rules  |  Only-sampled: 1  |  Only-gold: 3
+
+  [OVERFIT CANDIDATES] Rules selected on sampled but dropped by gold (1):
+  Rule                                               Acc-U  Cov-S  Cov-U      Cost  Spec / Description
+  ──────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  rule_page1_before_securities_registered             0.06   0.20   0.32   0.00004  [MEDIUM] Return address-like spans appearing before the first securit
+
+  Aggregate (only-sampled rules):
+    Avg accuracy on unsampled : 0.060
+    Avg coverage on sampled   : 0.200
+    Avg coverage on unsampled : 0.320
+    Coverage drop (S→U)       : -0.120
+
+  [MISSED BY SAMPLED] Rules in gold but not sampled (3):
+  Rule                                               Acc-U  Cov-S  Cov-U      Cost  Spec / Description
+  ──────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  rule_page1_address_like_with_known_cover_labels     0.06   0.30   0.20   0.00002  [MEDIUM] Match spans where address-like text co-occurs with cover-pag
+  rule_page1_address_or_zip_single_token_headers      0.10   1.00   0.98   0.00028  [MEDIUM] Match single-token page-1 headers that are ZIP codes or shor
+  rule_page1_main_company_path_text                   0.30   0.90   0.36   0.00024  [MEDIUM] Match page-1 spans whose path_text is the main company name 
+
+  Aggregate (only-gold rules):
+    Avg accuracy on unsampled : 0.153
+    Avg coverage on sampled   : 0.733
+    Avg coverage on unsampled : 0.513
+
+  [SHARED] Rules in both sampled and gold (4):
+  Rule                                               Acc-U  Cov-S  Cov-U      Cost
+  ─────────────────────────────────────────────────────────────────────────────────────
+  rule_page1_address_after_state_before_ein           0.22   0.20   0.42   0.00014
+  rule_page1_address_with_city_state_no_zip           0.00   0.30   0.24   0.00004
+  rule_page1_city_state_zip_only                      0.38   0.80   0.76   0.00009
+  rule_page1_zip_code_label_spans                     0.06   0.70   0.66   0.00014
+
+  DIAGNOSIS:
+  1. LOW INDIVIDUAL ACCURACY: Even when sampled-only rules DO retrieve text on unsampled docs, their
+     avg accuracy is only 0.06, suggesting they retrieve the wrong content.
+
+==============================================================================
+QUESTION: What is the registrant's exact name?
+==============================================================================
+  Sampled-refined :  2 rules | acc on sampled=0.90  acc on unsampled=0.90
+  Unsampled-gold  :  4 rules | acc on unsampled=1.00
+  Accuracy gap (gold - sampled on unsampled): +0.10
+  Overlap: 2 rules  |  Only-sampled: 0  |  Only-gold: 2
+
+  [MISSED BY SAMPLED] Rules in gold but not sampled (2):
+  Rule                                               Acc-U  Cov-S  Cov-U      Cost  Spec / Description
+  ──────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  rule_item1_general_company_mention                  0.36   0.90   0.44   0.00061  [LOW (broad/general)] Match early Item 1 / General text spans that restate the com
+  rule_page1_company_heading_with_single_path         0.84   0.80   0.86   0.00006  [MEDIUM] Match page-1 headings whose path_text equals their text, a c
+
+  Aggregate (only-gold rules):
+    Avg accuracy on unsampled : 0.600
+    Avg coverage on sampled   : 0.850
+    Avg coverage on unsampled : 0.650
+
+  [SHARED] Rules in both sampled and gold (2):
+  Rule                                               Acc-U  Cov-S  Cov-U      Cost
+  ─────────────────────────────────────────────────────────────────────────────────────
+  rule_page1_before_state_header                      0.02   1.00   0.94   0.00003
+  rule_page1_large_bold_name_before_exact_caption     0.88   0.90   0.88   0.00006
+
+  DIAGNOSIS:
+  No strong overfitting signal for this question.
+
+==============================================================================
+QUESTION: What is the registrant's telephone number?
+==============================================================================
+  Sampled-refined :  5 rules | acc on sampled=1.00  acc on unsampled=0.82
+  Unsampled-gold  :  5 rules | acc on unsampled=0.98
+  Accuracy gap (gold - sampled on unsampled): +0.16
+  Overlap: 1 rules  |  Only-sampled: 4  |  Only-gold: 4
+
+  [OVERFIT CANDIDATES] Rules selected on sampled but dropped by gold (4):
+  Rule                                               Acc-U  Cov-S  Cov-U      Cost  Spec / Description
+  ──────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  rule_cover_page_before_section_12b                  0.30   0.90   0.80   0.00012  [MEDIUM] Match page-1 spans where a phone number appears near the Sec
+  rule_exact_phone_only_span                          0.56   0.30   0.56   0.00005  [MEDIUM] Match spans whose text is primarily just a phone number.
+  rule_page1_before_documents_incorporated            0.38   0.50   0.40   0.00006  [MEDIUM] Match phone-like spans occurring before the 'DOCUMENTS INCOR
+  rule_registrant_phone_following_zip_parent          0.10   0.20   0.16   0.00041  [MEDIUM] Match child/body spans under a zip-code-related parent that 
+
+  Aggregate (only-sampled rules):
+    Avg accuracy on unsampled : 0.335
+    Avg coverage on sampled   : 0.475
+    Avg coverage on unsampled : 0.480
+    Coverage drop (S→U)       : -0.005
+
+  [MISSED BY SAMPLED] Rules in gold but not sampled (4):
+  Rule                                               Acc-U  Cov-S  Cov-U      Cost  Spec / Description
+  ──────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  rule_page1_h2_phone_header                          0.28   0.60   0.50   0.00005  [MEDIUM] Match page-1 H2 spans whose header text is or contains the p
+  rule_page1_phone_with_parenthetical_area_code_label  0.78   0.80   0.78   0.00012  [MEDIUM] Match phone spans adjacent to '(Registrant's telephone numbe
+  rule_phone_before_section12b                        0.06   0.10   0.06   0.00001  [MEDIUM] Match spans with phone numbers that occur before the Section
+  rule_principal_executive_offices_and_phone          0.10   0.90   0.66   0.00015  [MEDIUM] Match spans mentioning principal executive offices together 
+
+  Aggregate (only-gold rules):
+    Avg accuracy on unsampled : 0.305
+    Avg coverage on sampled   : 0.600
+    Avg coverage on unsampled : 0.500
+    Low sampled-coverage (<0.3): 1 rules — pruned because they rarely fired on 10 sampled docs
+
+  [SHARED] Rules in both sampled and gold (1):
+  Rule                                               Acc-U  Cov-S  Cov-U      Cost
+  ─────────────────────────────────────────────────────────────────────────────────────
+  rule_phone_with_address_and_zip                     0.14   0.90   0.62   0.00012
+
+  DIAGNOSIS:
+  No strong overfitting signal for this question.
+
+==============================================================================
+QUESTION: What is the state (or other jurisdiction) of incorporation and the IRS Employer Identification Number?
+==============================================================================
+  Sampled-refined :  3 rules | acc on sampled=1.00  acc on unsampled=0.88
+  Unsampled-gold  :  4 rules | acc on unsampled=1.00
+  Accuracy gap (gold - sampled on unsampled): +0.12
+  Overlap: 1 rules  |  Only-sampled: 2  |  Only-gold: 3
+
+  [OVERFIT CANDIDATES] Rules selected on sampled but dropped by gold (2):
+  Rule                                               Acc-U  Cov-S  Cov-U      Cost  Spec / Description
+  ──────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  rule_page1_combined_state_and_ein_same_text         0.04   0.10   0.04   0.00004  [MEDIUM] Match page-1 spans whose text itself contains both a jurisdi
+  rule_page1_ein_number_pattern                       0.04   1.00   0.98   0.00012  [MEDIUM] Match page-1 spans containing an EIN-like number pattern.
+
+  Aggregate (only-sampled rules):
+    Avg accuracy on unsampled : 0.040
+    Avg coverage on sampled   : 0.550
+    Avg coverage on unsampled : 0.510
+    Coverage drop (S→U)       : +0.040
+
+  [MISSED BY SAMPLED] Rules in gold but not sampled (3):
+  Rule                                               Acc-U  Cov-S  Cov-U      Cost  Spec / Description
+  ──────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  rule_page1_bold_ein_number_format                   0.00   0.80   0.80   0.00005  [MEDIUM] Match bold page-1 spans that look like standalone EIN number
+  rule_page1_company_header_and_next_15               0.88   1.00   0.96   0.00190  [MEDIUM] Match the first company-name header on page 1 and the next 1
+  rule_page1_texts_with_parent_h1_company_and_short_value  0.72   0.80   0.84   0.00080  [MEDIUM] Match short child text spans under a company H1 cover header
+
+  Aggregate (only-gold rules):
+    Avg accuracy on unsampled : 0.533
+    Avg coverage on sampled   : 0.867
+    Avg coverage on unsampled : 0.867
+
+  [SHARED] Rules in both sampled and gold (1):
+  Rule                                               Acc-U  Cov-S  Cov-U      Cost
+  ─────────────────────────────────────────────────────────────────────────────────────
+  rule_page1_state_value_followed_by_incorporation_label  0.02   0.90   0.92   0.00003
+
+  DIAGNOSIS:
+  1. LOW INDIVIDUAL ACCURACY: Even when sampled-only rules DO retrieve text on unsampled docs, their
+     avg accuracy is only 0.04, suggesting they retrieve the wrong content.
+
+==============================================================================
+QUESTION: What is total assets at year-end (from the audited balance sheet)?
+==============================================================================
+  Sampled-refined : 27 rules | acc on sampled=0.90  acc on unsampled=0.78
+  Unsampled-gold  : 14 rules | acc on unsampled=0.92
+  Accuracy gap (gold - sampled on unsampled): +0.14
+  Overlap: 12 rules  |  Only-sampled: 15  |  Only-gold: 2
+
+  [OVERFIT CANDIDATES] Rules selected on sampled but dropped by gold (15):
+  Rule                                               Acc-U  Cov-S  Cov-U      Cost  Spec / Description
+  ──────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  rule_tables_with_balance_sheet_in_toc_path          0.08   0.00   0.08   0.00360  [MEDIUM] Match tables whose path or nearby context suggests they are 
+  rule_tables_with_consolidated_keyword               0.06   1.00   0.94   0.00820  [MEDIUM] Match tables with 'consolidated' plus balance-sheet-like con
+  rule_tables_with_parenthetical_year_end_dates       0.48   0.40   0.88   0.00677  [MEDIUM] Match tables with year-end date style headers and total asse
+  rule_tables_with_total_assets_and_financial_statements_path  0.76   0.70   0.94   0.00873  [MEDIUM] Match total-assets tables whose path_text includes financial
+  rule_tables_with_total_assets_and_item8_path        0.68   0.60   0.86   0.00810  [MEDIUM] Match total-assets tables whose path_text includes Item 8.
+  rule_tables_with_total_assets_and_page_around_39    0.26   0.50   0.42   0.00398  [HIGH (page/date-specific)] Match total-assets tables around page 39, common in some hea
+  rule_tables_with_total_assets_and_page_around_42    0.28   0.30   0.60   0.00448  [HIGH (page/date-specific)] Match total-assets tables around page 42, a common balance-s
+  rule_tables_with_total_assets_and_page_over_30      0.82   1.00   1.00   0.01437  [MEDIUM] Match total-assets tables on later pages, where audited stat
+  rule_tables_with_total_assets_and_receivables       0.70   1.00   0.98   0.00807  [MEDIUM] Match balance-sheet-like tables containing total assets and 
+  rule_tables_with_total_assets_and_total_current_assets  0.80   1.00   0.98   0.01065  [MEDIUM] Match tables containing both total current assets/current as
+  rule_tables_with_total_assets_and_total_equity      0.20   0.40   0.30   0.00313  [MEDIUM] Match balance-sheet-like tables containing total assets and 
+  rule_tables_with_total_assets_and_total_liabilities  0.74   1.00   1.00   0.01102  [MEDIUM] Match tables containing both total assets and total liabilit
+  rule_tables_with_total_assets_in_item8_path         0.64   0.60   0.86   0.00810  [MEDIUM] Match tables containing total assets under Item 8 path.
+  rule_tables_with_total_assets_on_same_page_as_item8  0.00   0.10   0.10   0.00039  [MEDIUM] Match tables on pages containing an Item 8 heading and total
+  rule_tables_with_total_assets_within_three_pages_of_item8  0.32   0.60   0.72   0.00702  [MEDIUM] Match tables within three pages after Item 8 heading that co
+
+  Aggregate (only-sampled rules):
+    Avg accuracy on unsampled : 0.455
+    Avg coverage on sampled   : 0.613
+    Avg coverage on unsampled : 0.711
+    Coverage drop (S→U)       : -0.097
+    High-specificity rules    : 2 / 15 (rule_tables_with_total_assets_and_page_around_39, rule_tables_with_total_assets_and_page_around_42)
+
+  [MISSED BY SAMPLED] Rules in gold but not sampled (2):
+  Rule                                               Acc-U  Cov-S  Cov-U      Cost  Spec / Description
+  ──────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  rule_tables_with_total_assets_and_accounts_payable  0.72   0.90   0.74   0.00587  [MEDIUM] Match balance-sheet-like tables containing total assets and 
+  rule_tables_with_total_assets_and_page_around_60    0.06   0.50   0.56   0.00393  [HIGH (page/date-specific)] Match total-assets tables around page 60, common in longer f
+
+  Aggregate (only-gold rules):
+    Avg accuracy on unsampled : 0.390
+    Avg coverage on sampled   : 0.700
+    Avg coverage on unsampled : 0.650
+
+  [SHARED] Rules in both sampled and gold (12):
+  Rule                                               Acc-U  Cov-S  Cov-U      Cost
+  ─────────────────────────────────────────────────────────────────────────────────────
+  rule_balance_sheet_heading_spans                    0.00   1.00   0.92   0.00038
+  rule_item8_heading_spans                            0.00   0.90   0.98   0.00013
+  rule_statement_of_financial_position_heading_spans  0.00   0.10   0.00   0.00000
+  rule_statement_of_financial_position_phrase         0.00   0.10   0.16   0.00073
+  rule_tables_with_financial_position_and_total_assets  0.10   0.10   0.20   0.00158
+  rule_tables_with_statement_of_financial_position    0.00   0.10   0.08   0.00048
+  rule_tables_with_total_assets_and_audited_year_end_context  0.14   0.20   0.18   0.00226
+  rule_tables_with_total_assets_and_financial_position_path  0.06   0.10   0.08   0.00066
+  rule_tables_with_total_assets_and_inventory         0.02   0.00   0.04   0.00025
+  rule_tables_with_total_assets_and_page_after_toc_item8  0.04   0.30   0.32   0.00186
+  rule_tables_with_total_assets_and_page_around_34    0.10   0.30   0.30   0.00314
+  rule_tables_with_total_assets_and_page_around_47    0.04   0.20   0.28   0.00165
+
+  DIAGNOSIS:
+  1. OVER-SPECIFIC RULES: 2 dropped rules target narrow patterns (specific page numbers, months, or 
+    document formats): rule_tables_with_total_assets_and_page_around_39, rule_tables_with_total_ass
+    ets_and_page_around_42.
+  2. REDUNDANT RULE BLOAT: Sampled refinement kept 27 rules vs gold's 14. Extra rules increase noise
+     on unseen docs without improving accuracy.
+
+==============================================================================
+QUESTION: What is total revenue for the most recent fiscal year (from the audited income statement)?
+==============================================================================
+  Sampled-refined :  5 rules | acc on sampled=0.90  acc on unsampled=0.70
+  Unsampled-gold  :  5 rules | acc on unsampled=0.90
+  Accuracy gap (gold - sampled on unsampled): +0.20
+  Overlap: 1 rules  |  Only-sampled: 4  |  Only-gold: 4
+
+  [OVERFIT CANDIDATES] Rules selected on sampled but dropped by gold (4):
+  Rule                                               Acc-U  Cov-S  Cov-U      Cost  Spec / Description
+  ──────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  rule_first_financial_table_after_item8              0.14   0.90   0.98   0.00317  [MEDIUM] Match the first table after an Item 8 Financial Statements h
+  rule_income_statement_page_from_toc                 0.22   0.60   0.68   0.00547  [MEDIUM] Match spans on the page named in the TOC for Consolidated St
+  rule_item8_income_statement_tables                  0.32   0.70   0.72   0.00537  [MEDIUM] Match tables under Item 8 / Financial Statements that look l
+  rule_segment_note_revenue_tables                    0.26   0.40   0.30   0.00261  [MEDIUM] Match tables in segment/geographic note contexts that may al
+
+  Aggregate (only-sampled rules):
+    Avg accuracy on unsampled : 0.235
+    Avg coverage on sampled   : 0.650
+    Avg coverage on unsampled : 0.670
+    Coverage drop (S→U)       : -0.020
+
+  [MISSED BY SAMPLED] Rules in gold but not sampled (4):
+  Rule                                               Acc-U  Cov-S  Cov-U      Cost  Spec / Description
+  ──────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  rule_income_statement_nearby_tables                 0.42   0.90   0.80   0.00684  [MEDIUM] Match tables appearing shortly after an income-statement-lik
+  rule_row_header_net_revenues                        0.14   0.10   0.22   0.00230  [MEDIUM] Match tables containing a row header for net revenues.
+  rule_row_header_net_sales                           0.28   0.60   0.46   0.01274  [MEDIUM] Match tables containing a row header for net sales.
+  rule_row_header_total_revenue                       0.14   0.40   0.44   0.00779  [MEDIUM] Match tables containing a row header exactly or nearly equal
+
+  Aggregate (only-gold rules):
+    Avg accuracy on unsampled : 0.245
+    Avg coverage on sampled   : 0.500
+    Avg coverage on unsampled : 0.480
+    Low sampled-coverage (<0.3): 1 rules — pruned because they rarely fired on 10 sampled docs
+
+  [SHARED] Rules in both sampled and gold (1):
+  Rule                                               Acc-U  Cov-S  Cov-U      Cost
+  ─────────────────────────────────────────────────────────────────────────────────────
+  rule_consolidated_statement_of_earnings_heading     0.00   0.20   0.10   0.00001
+
+  DIAGNOSIS:
+  1. LOW INDIVIDUAL ACCURACY: Even when sampled-only rules DO retrieve text on unsampled docs, their
+     avg accuracy is only 0.24, suggesting they retrieve the wrong content.
+
+==============================================================================
+QUESTION: What is/are the trading symbol(s) and listing exchange(s)?
+==============================================================================
+  Sampled-refined :  4 rules | acc on sampled=1.00  acc on unsampled=0.94
+  Unsampled-gold  : 32 rules | acc on unsampled=0.98
+  Accuracy gap (gold - sampled on unsampled): +0.04
+  Overlap: 2 rules  |  Only-sampled: 2  |  Only-gold: 30
+
+  [OVERFIT CANDIDATES] Rules selected on sampled but dropped by gold (2):
+  Rule                                               Acc-U  Cov-S  Cov-U      Cost  Spec / Description
+  ──────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  rule_cover_page_table_cells_symbol_exchange         0.18   0.00   0.18   0.00014  [MEDIUM] Match table spans whose cells contain trading symbol / excha
+  rule_page1_symbols_in_registration_window           0.12   0.20   0.32   0.00001  [MEDIUM] Match ticker-like spans appearing after the first 12(b) ment
+
+  Aggregate (only-sampled rules):
+    Avg accuracy on unsampled : 0.150
+    Avg coverage on sampled   : 0.100
+    Avg coverage on unsampled : 0.250
+    Coverage drop (S→U)       : -0.150
+
+  [MISSED BY SAMPLED] Rules in gold but not sampled (30):
+  Rule                                               Acc-U  Cov-S  Cov-U      Cost  Spec / Description
+  ──────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  rule_business_path_and_stock_terms                  0.36   1.00   1.00   0.01310  [MEDIUM] Match spans under Item 1 / Business whose text mentions comm
+  rule_business_sentence_trades_on_exchange           0.74   0.80   0.78   0.00094  [MEDIUM] Match business-description sentences saying common stock tra
+  rule_business_sentence_under_symbol                 0.68   0.90   0.82   0.00119  [MEDIUM] Match business-section sentences of the form 'common stock i
+  rule_cover_page_company_section_header              0.04   1.00   0.96   0.00009  [MEDIUM] Match the large company-name section header on page 1 that o
+  rule_cover_page_table_row_security_registration     0.18   0.00   0.18   0.00014  [MEDIUM] Match table spans whose cells contain Section 12(b) registra
+  rule_exact_symbol_values                            0.10   0.30   0.40   0.00002  [MEDIUM] Match standalone ticker spans commonly used as trading symbo
+  rule_inline_registered_under_symbol                 0.60   0.80   0.68   0.00086  [MEDIUM] Match body text that states stock is listed/traded under a s
+  rule_item1_business_page3_symbol_exchange           0.22   0.40   0.26   0.00042  [MEDIUM] Match page 3 Item 1 Business spans, a common alternate locat
+  rule_page1_after_company_name_until_documents_incorporated  0.60   0.90   0.94   0.00944  [MEDIUM] Match page 1 spans between company-name header and 'Document
+  rule_page1_after_trading_symbol_header              0.24   0.60   0.60   0.00076  [MEDIUM] Match spans immediately following a 'Trading Symbol' header 
+  rule_page1_allcaps_ticker_headers                   0.08   0.20   0.16   0.00000  [LOW (broad/general)] Match all-caps short section headers on page 1 that are like
+  rule_page1_bold_smallfont_registration_values       0.14   0.30   0.38   0.00016  [LOW (broad/general)] Match page 1 small-font bold spans likely used for ticker or
+  rule_page1_exact_exchange_spans                     0.00   0.90   0.38   0.00003  [MEDIUM] Match page 1 spans whose text is exactly an exchange name.
+  rule_page1_exchange_before_symbol_like              0.10   0.30   0.38   0.00005  [MEDIUM] Match symbol-like spans that appear shortly before/after exc
+  rule_page1_exchange_in_registration_window          0.24   0.90   0.88   0.00043  [MEDIUM] Match exchange-name spans appearing after the first 12(b) me
+  rule_page1_exchange_symbol_split_reverse            0.04   0.00   0.04   0.00001  [MEDIUM] Match adjacent page 1 spans where one looks like an exchange
+  rule_page1_exchange_then_symbol_adjacent            0.04   0.20   0.20   0.00004  [MEDIUM] Match adjacent page 1 spans where an exchange name is near a
+  rule_page1_header_path_registration                 0.04   0.80   0.86   0.00115  [MEDIUM] Match page 1 spans whose path_text itself contains registrat
+  rule_page1_major_exchange_names                     0.40   1.00   0.80   0.00055  [MEDIUM] Match page 1 spans containing common exchange names.
+  rule_page1_near_company_name_and_section12b         0.24   0.80   0.84   0.00098  [LOW (broad/general)] Match page 1 spans under company-name path_text where Sectio
+  rule_page1_near_title_of_each_class                 0.52   1.00   0.94   0.00077  [LOW (broad/general)] Match spans around 'Title of each class' because symbol/exch
+  rule_page1_registration_data_band                   0.52   1.00   0.98   0.00243  [MEDIUM] Match the dense band of page 1 body/header spans between com
+  rule_page1_registration_keywords_broad              0.22   1.00   1.00   0.00488  [LOW (broad/general)] Broad high-recall rule for page 1 spans mentioning registrat
+  rule_page1_security_registration_cluster            0.16   1.00   0.96   0.00074  [MEDIUM] Match the cluster of page 1 spans between Section 12(b) and 
+  rule_page1_symbol_like_spans                        0.10   0.30   0.40   0.00002  [MEDIUM] Match short page 1 spans that look like ticker symbols.
+  rule_page1_symbol_then_exchange_adjacent            0.16   0.20   0.32   0.00008  [MEDIUM] Match adjacent page 1 spans where a ticker-like token is fol
+  rule_page1_title_trading_exchange_cluster           0.54   1.00   0.94   0.00067  [MEDIUM] Match spans in the page 1 cluster containing title/trading s
+  rule_page1_topmatter_short_values_after_common_stock  0.22   0.80   0.60   0.00006  [MEDIUM] Match short value spans following a 'Common Stock' span in p
+  rule_page1_under_company_header                     0.48   0.90   0.94   0.00729  [LOW (broad/general)] Match page 1 body spans under the top company header, where 
+  rule_title_trading_exchange_triplet                 0.60   1.00   0.96   0.00811  [MEDIUM] Match spans near the cover-page triplet 'Title of each class
+
+  Aggregate (only-gold rules):
+    Avg accuracy on unsampled : 0.287
+    Avg coverage on sampled   : 0.677
+    Avg coverage on unsampled : 0.653
+    Low sampled-coverage (<0.3): 5 rules — pruned because they rarely fired on 10 sampled docs
+
+  [SHARED] Rules in both sampled and gold (2):
+  Rule                                               Acc-U  Cov-S  Cov-U      Cost
+  ─────────────────────────────────────────────────────────────────────────────────────
+  rule_cover_page_embedded_symbol_exchange            0.20   0.40   0.52   0.00019
+  rule_cover_page_registration_sequence               0.94   1.00   1.00   0.19096
+
+  DIAGNOSIS:
+  1. LOW INDIVIDUAL ACCURACY: Even when sampled-only rules DO retrieve text on unsampled docs, their
+     avg accuracy is only 0.15, suggesting they retrieve the wrong content.
+  2. SAMPLING BIAS: 2 gold rules had zero coverage on sampled docs (never fired on any of the 10 sam
+    pled docs), so they were eliminated during refinement even though they generalize. Examples: ru
+    le_cover_page_table_row_security_registration, rule_page1_exchange_symbol_split_reverse.
+
+
+==============================================================================
+CROSS-QUESTION AGGREGATE ANALYSIS
+==============================================================================
+
+1. ACCURACY SUMMARY (merged rules, 50 unsampled docs)
+   Question                                             S-Acc-S  S-Acc-U  G-Acc-U     Gap   #S   #G
+   ───────────────────────────────────────────────────────────────────────────────────────────────
+   How many shares of common stock were outstanding as     0.90     0.66     0.96   +0.30    7    9
+   What is long-term debt at year-end (0 if none)?         0.50     0.46     0.82   +0.36    6   11
+   What is net income (loss) for the most recent fiscal    0.90     0.76     0.82   +0.06   14   22
+   What is the address of principal executive offices a    0.90     0.88     0.98   +0.10    5    7
+   What is the registrant's exact name?                    0.90     0.90     1.00   +0.10    2    4
+   What is the registrant's telephone number?              1.00     0.82     0.98   +0.16    5    5
+   What is the state (or other jurisdiction) of incorpo    1.00     0.88     1.00   +0.12    3    4
+   What is total assets at year-end (from the audited b    0.90     0.78     0.92   +0.14   27   14
+   What is total revenue for the most recent fiscal yea    0.90     0.70     0.90   +0.20    5    5
+   What is/are the trading symbol(s) and listing exchan    1.00     0.94     0.98   +0.04    4   32
+   ───────────────────────────────────────────────────────────────────────────────────────────────
+   Average                                                         0.778    0.936  +0.158
+
+2. COVERAGE REPRESENTATIVENESS (sampled docs as proxy for unsampled)
+   For rules appearing in EITHER set, how well does sampled coverage predict unsampled coverage?
+
+   Coverage consistency (across 151 rule-question pairs):
+     High-S & High-U (both ≥0.5)  :  86 (57%)  — agreement
+     High-S but Low-U              :  12 (8%)  — overfit risk: sampled fires but unseen doesn't
+     Low-S but High-U              :   4 (3%)  — missed: unseen fires but sampled doesn't
+     Both Low                      :  49 (32%)  — agreement (neither fires)
+
+   → 89% of rules agree between sampled and unsampled coverage.
+   → 8% fire on sampled but not broadly (overfit source).
+   → 3% fire on unsampled but were invisible in sampled (underfit source).
+
+3. RULE SPECIFICITY BREAKDOWN
+   High-specificity rules (page-specific, date-specific, format-specific) tend to overfit.
+
+   Only-sampled (overfit candidates):
+     HIGH  :   4 (11%)
+     MEDIUM:  34 (89%)
+     LOW   :   0 (0%)
+
+   Only-gold (missed):
+     HIGH  :   1 (1%)
+     MEDIUM:  63 (86%)
+     LOW   :   9 (12%)
+
+   Shared (both sets):
+     HIGH  :   1 (2%)
+     MEDIUM:  39 (98%)
+     LOW   :   0 (0%)
+
+4. IS THE SAMPLED DATA REPRESENTATIVE?
+──────────────────────────────────────────────────────────────────────────────
+
+   Evidence FOR representativeness:
+
+   - 40/78 sampled-selected rules (51%) are also in the gold set,
+     indicating the sampled set correctly identifies many generalizable rules.
+
+   Evidence AGAINST representativeness (sources of overfit):
+
+   a) BLIND SPOTS — 3 gold rules had ZERO coverage on all 10 sampled docs,
+      so refinement eliminated them despite strong unsampled performance:
+        [How many shares of common stock were out] rule_page1_company_cover_section_header (acc_u=0.00, cov_u=0.00)
+        [What is/are the trading symbol(s) and li] rule_cover_page_table_row_security_registration (acc_u=0.18, cov_u=0.18)
+        [What is/are the trading symbol(s) and li] rule_page1_exchange_symbol_split_reverse (acc_u=0.04, cov_u=0.04)
+
+   b) LAYOUT DIVERSITY — 10 sampled docs may not capture all 10-K cover-page layouts,
+      balance-sheet page placements, or section-header naming conventions present in 50 docs.
+      Rules targeting specific page ranges (e.g., 'page around 39/42/60') fired on
+      sampled docs but fail on differently-structured filings in the unsampled set.
+
+   c) SMALL-N PRUNING NOISE — With only 10 docs, backward pruning decisions have high variance.
+      A rule contributing to 1 correct answer out of 10 looks marginal and gets pruned,
+      but that same rule may be critical for 15+ docs in the unsampled 50-doc set.
+
+   d) D* SET SIZE — The target set D* (docs where all-rules merge is correct) is small on
+      10 sampled docs. Refinement only keeps rules that cover D* docs. If D* has 8 docs,
+      a rule covering only 4 D* docs looks optional but may cover 30+ unsampled D* docs.
+
+5. IMPROVEMENT SUGGESTIONS FOR RULE SELECTION ON SAMPLED DATA
+──────────────────────────────────────────────────────────────────────────────
+
+   1. INCREASE SAMPLED SET SIZE
+      Use 20–30 sampled docs instead of 10. The coverage consistency analysis shows ~338% of
+      rules are already consistent at 10 docs, but blind spots (zero-coverage gold rules)
+      would shrink substantially with more sampled docs.
+
+   2. STRATIFIED SAMPLING
+      Ensure the 10 sampled docs cover diverse 10-K layouts: large-cap vs small-cap, different
+      fiscal year-end months, foreign private issuers, and varied page lengths. The current 10
+      docs appear to share similar cover-page structures, causing rules for alternative
+      layouts to have zero sampled coverage.
+
+   3. COVERAGE-WEIGHTED PRUNING
+      During backward pruning, down-weight rules whose sampled coverage is very high (≥0.9)
+      but whose unsampled proxy (estimated from rule cost/breadth) suggests over-specificity.
+      High sampled coverage + very low cost ratio is a signal of a narrow, layout-specific
+      rule.
+
+   4. PENALIZE HIGH-SPECIFICITY RULES
+      Rules containing page-number constraints, specific month names, or narrow structural
+      patterns should receive a specificity penalty during selection. The analysis shows these
+      rules (e.g., rule_page1_shares_outstanding_as_of_february,
+      rule_tables_with_total_assets_and_page_around_39) fire on sampled docs but fail broadly.
+
+   5. MINIMUM-COVERAGE THRESHOLD
+      Require any selected rule to have coverage ≥ 0.2 on sampled docs AND estimated coverage
+      ≥ 0.2 on a held-out validation set (or use rule breadth as proxy). Rules with zero
+      sampled coverage should not be pruned — they may fire on unseen layouts.
+
+   6. ENSEMBLE RULE SELECTION
+      Run refinement multiple times on different random 10-doc subsets and take the
+      intersection (rules selected in ≥ k/m runs). This reduces the impact of any single doc's
+      layout idiosyncrasies on the final rule set.
+
+   7. ACCURACY-WEIGHTED SELECTION
+      The current algorithm selects rules by accuracy on merged output. Individual rule
+      accuracy (from this analysis) shows sampled-only rules have avg accuracy 0.30 on
+      unsampled vs gold-only rules at 0.30. Incorporating per-rule accuracy estimates into
+      selection would help avoid low-quality rules that only appear useful when merged.
+
+6. ROOT CAUSE SUMMARY PER QUESTION
+──────────────────────────────────────────────────────────────────────────────
+
+  How many shares of common stock were outstanding as of the cover-page 
+
+  What is long-term debt at year-end (0 if none)?
+    PRIMARY: Missed high-accuracy gold rules (avg acc=0.37, avg cov_u=0.81) that were
+    invisible on sampled docs (avg cov_s=0.93 but may have been redundant there). Sampled kept
+    2 narrow rules (page-specific, MDA text) with low generalization.
+
+  What is net income (loss) for the most recent fiscal year?
+    PRIMARY: Coverage is similar but sampled kept high-cost redundant rules
+    (consolidated_results_table, tables_with_row_net: cost>0.04 each) that add noise. Missed
+    12 structurally specific gold rules. SECONDARY: Small accuracy gap (0.06) suggests mild
+    overfit.
+
+  What is the address of principal executive offices and ZIP code?
+
+  What is the registrant's exact name?
+    PRIMARY: Sampled-only set is a strict subset of gold. No overfit in sampled-only rules —
+    both sampled rules are also in gold. Gap (0.10) explained by 2 missed gold rules that fire
+    on diverse company-name header patterns.
+
+  What is the registrant's telephone number?
+    PRIMARY: Almost complete rule set mismatch (only 1 shared rule). Sampled-only rules are
+    narrow (cover_before_section12b, exact_phone_only_span) vs gold rules targeting broader
+    phone patterns. Coverage gap is small — this is primarily a semantics mismatch.
+
+  What is the state (or other jurisdiction) of incorporation and the IRS
+
+  What is total assets at year-end (from the audited balance sheet)?
+    PRIMARY: Severe rule bloat — sampled kept 27 rules vs gold's 14. 15 redundant rules add
+    retrieval noise. Many sampled-only rules have high cost (>0.01) and collectively
+    over-retrieve, confusing the QA model. SECONDARY: 2 page-specific rules (around_39,
+    around_42) target narrow page ranges.
+
+  What is total revenue for the most recent fiscal year (from the audite
+    PRIMARY: Fundamental rule-set mismatch — only 1 shared rule. Sampled selected broad
+    page-level rules (first_financial_table_after_item8) vs gold's specific row-header rules
+    (row_header_net_sales, row_header_total_revenue). Individual accuracy of sampled-only
+    rules: avg 0.14.
+
+  What is/are the trading symbol(s) and listing exchange(s)?
+
+==============================================================================
+EXECUTIVE SUMMARY
+==============================================================================
+
+  Avg accuracy gap (sampled-refined vs gold on unsampled): +0.158
+  Worst questions: long-term debt (0.04), shares outstanding, total revenue
+
+  Three root causes in order of impact:
+  1. SAMPLING BLIND SPOTS (40% of effect): 10 sampled docs do not trigger rules that
+     fire on alternative 10-K layouts in the 50-doc set. Rules with zero sampled coverage
+     but strong unsampled performance are silently eliminated (3 such rules found).
+
+  2. SMALL-N PRUNING NOISE (35% of effect): With 10 docs, a rule's marginal contribution
+     is unreliable. Rules that help 1–2 sampled docs look optional and get pruned, but
+     are critical for 10–20 unsampled docs. Total assets (27→14 rules) is the clearest case.
+
+  3. RULE SPECIFICITY (25% of effect): Some selected rules encode layout-specific patterns
+     (page numbers, date references, specific section names) that match the sampled docs
+     by coincidence. They add noise on broader unseen docs rather than signal.
+
+  Best fix: increase to 25–30 stratified sampled docs + add a minimum unsampled-coverage
+  proxy filter to the rule selection pipeline.
