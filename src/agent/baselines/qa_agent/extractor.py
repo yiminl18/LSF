@@ -37,6 +37,7 @@ except Exception:  # pragma: no cover - optional analysis dependency
 from agent.baselines.base import DocInputs, ExtractionResult
 from agent.rule_runtime.context import _ensure_request_within_model_context
 from agent.tool_agent.document import DocumentContext
+from agent.baselines.defaults import DEFAULT_LLM_MODEL, DEFAULT_LLM_PROVIDER
 from core.llm.cost import compute_cost
 from core.pipeline.e2e_utils.cache import CachedLLMCaller
 
@@ -46,7 +47,10 @@ _MAX_TURNS = 8
 _MAX_AGENT_TOKENS = 1200
 _MAX_ANSWER_TOKENS = 500
 _OBSERVATION_MAX_CHARS = 8000
-_HISTORY_KEEP_RECENT = 6
+# Keep the 3 most recent turns verbatim; older turns get folded into the
+# compaction summary. With _MAX_TURNS=8 this means compaction kicks in
+# starting at turn 4, instead of after turn 6 where there's nothing left to do.
+_HISTORY_KEEP_RECENT = 3
 
 _SEARCH_TOP_K_DEFAULT = 5
 _SEARCH_TOP_K_CAP = 10
@@ -59,6 +63,11 @@ _EMBED_TOP_K_CAP = 10
 _EMBED_CACHE_DIR = Path(".cache") / "qa_agent_embeddings"
 _WINDOW_CHUNK_SIZE = 2500
 _WINDOW_CHUNK_STRIDE = 1800
+# Hard cap on a single section-chunk's text. A 10-K with one giant root section
+# would otherwise produce one multi-MB chunk that blows past embedding token
+# limits and dominates BM25 doc-freq. Oversized sections fall back to a sliding
+# window so retrieval still works.
+_SECTION_CHUNK_MAX_CHARS = 8000
 _BM25_K1 = 1.5
 _BM25_B = 0.75
 _PYTHON_TIMEOUT_DEFAULT = 3
@@ -477,17 +486,21 @@ class QAAgentExtractor:
         doc_id: str,
         doc_inputs: DocInputs,
         cached_caller: CachedLLMCaller,
-        llm_provider: str = "azure",
-        llm_model: str = "gpt-5.4-mini",
+        llm_provider: str = DEFAULT_LLM_PROVIDER,
+        llm_model: str = DEFAULT_LLM_MODEL,
         embedding_provider: str | None = None,
         embedding_model: str | None = None,
         max_turns: int = _MAX_TURNS,
     ) -> ExtractionResult:
         t0 = time.perf_counter()
         total_cost = 0.0
+        gen_calls = 0
 
         doc_context = _to_document_context(query_idx, doc_id, doc_inputs)
-        resolved_embedding_provider = _resolve_embedding_provider(embedding_provider)
+        resolved_embedding_provider = _resolve_embedding_provider(
+            embedding_provider,
+            fallback_provider=llm_provider,
+        )
         resolved_embedding_model = _resolve_embedding_model(
             resolved_embedding_provider,
             embedding_model,
@@ -505,6 +518,7 @@ class QAAgentExtractor:
         trace_observations: list[dict[str, Any]] = []
         truncated_search_hits: dict[str, int] = {}
         has_full_evidence = False
+        truncated_block_already_issued = False
 
         for turn_index in range(max_turns):
             prompt = _serialize_prompt(system_prompt, _compact_history(history))
@@ -532,6 +546,7 @@ class QAAgentExtractor:
                     },
                     total_cost=total_cost,
                     t0=t0,
+                    gen_calls=gen_calls,
                 )
 
             cache_result = cached_caller.call(
@@ -541,6 +556,7 @@ class QAAgentExtractor:
                 model=llm_model,
                 response_schema=action_schema,
             )
+            gen_calls += 1
             call_cost = compute_cost(
                 cache_result.input_tokens,
                 cache_result.output_tokens,
@@ -582,7 +598,17 @@ class QAAgentExtractor:
                         {"turn": turn_index, "error": "final_before_tool"}
                     )
                     continue
-                if truncated_search_hits and not has_full_evidence:
+                # Block premature finalization on a truncated search preview
+                # only ONCE. If the agent insists on finalizing after we've
+                # already told it to deep-read, let it through — otherwise an
+                # uncooperative model burns all 8 turns on the same nag and we
+                # synthesize from nothing useful.
+                if (
+                    truncated_search_hits
+                    and not has_full_evidence
+                    and not truncated_block_already_issued
+                ):
+                    truncated_block_already_issued = True
                     truncated_summary = ", ".join(
                         f"{chunk_id} ({chars} chars truncated)"
                         for chunk_id, chars in list(truncated_search_hits.items())[:5]
@@ -622,6 +648,7 @@ class QAAgentExtractor:
                     },
                     total_cost=total_cost,
                     t0=t0,
+                    gen_calls=gen_calls,
                 )
 
             if action_type != "tool":
@@ -738,6 +765,7 @@ class QAAgentExtractor:
             llm_model=llm_model,
         )
         total_cost += synthesis_cost
+        gen_calls += 1  # the synthesis call
         return _finish(
             answer=answer,
             trace={
@@ -752,6 +780,7 @@ class QAAgentExtractor:
             },
             total_cost=total_cost,
             t0=t0,
+            gen_calls=gen_calls,
         )
 
 
@@ -770,7 +799,19 @@ def _to_document_context(
     )
 
 
-def _resolve_embedding_provider(explicit_provider: str | None) -> str:
+def _resolve_embedding_provider(
+    explicit_provider: str | None,
+    *,
+    fallback_provider: str | None = None,
+) -> str:
+    """Resolve the embedding provider in this order:
+
+      1. Explicit kwarg (CLI `--embed-provider` flows to here).
+      2. LSF_QA_AGENT_EMBED_PROVIDER / LSF_EMBEDDING_PROVIDER env vars.
+      3. The agent's own `llm_provider`, so a single `--llm-provider azure`
+         run doesn't silently demand both AZURE_* and OPENROUTER_API_KEY.
+      4. OpenRouter as final default.
+    """
     if explicit_provider:
         return explicit_provider
     env_provider = os.environ.get("LSF_QA_AGENT_EMBED_PROVIDER") or os.environ.get(
@@ -778,6 +819,8 @@ def _resolve_embedding_provider(explicit_provider: str | None) -> str:
     )
     if env_provider:
         return env_provider
+    if fallback_provider:
+        return fallback_provider
     return "openrouter"
 
 
@@ -970,12 +1013,14 @@ def _finish(
     trace: dict[str, Any],
     total_cost: float,
     t0: float,
+    gen_calls: int = 1,
 ) -> ExtractionResult:
     return ExtractionResult(
         generated_answer=_strip_final_prefix(answer).strip() or "Information not found.",
         trace=trace,
         cost_usd=total_cost,
         latency_ms=(time.perf_counter() - t0) * 1000.0,
+        gen_calls=max(1, gen_calls),
     )
 
 
@@ -1023,8 +1068,10 @@ def _truncated_hit_summary(data: Any) -> dict[str, int]:
 
 
 def _tokenize(text: str) -> list[str]:
+    # Keep terms of length >= 2; the previous >2 threshold dropped financial
+    # codes like Q3, FY, 10K and made them unsearchable via BM25.
     terms = re.findall(r"[A-Za-z0-9][A-Za-z0-9_/%$.,-]*", text.casefold())
-    return [term for term in terms if len(term) > 2 and term not in _STOPWORDS]
+    return [term for term in terms if len(term) >= 2 and term not in _STOPWORDS]
 
 
 def _bm25_rank(chunks: list[_Chunk], query_terms: list[str]) -> list[tuple[float, _Chunk]]:
@@ -1107,11 +1154,33 @@ def _char_window_preview(text: str, start: int, end: int, max_chars: int) -> str
 
 def _section_chunks(doc: DocumentContext) -> list[_Chunk]:
     entries = doc.entries or []
+    # Only emit a chunk for a section if it is NOT itself a descendant of an
+    # already-emitted ancestor section that already covered it. This keeps the
+    # tree's leaf-most sections as chunks and prevents the same content from
+    # appearing duplicated inside parent + child chunks (which inflated BM25
+    # doc-freq and embedding tokens).
+    section_indices = [
+        idx for idx, entry in enumerate(entries)
+        if entry.get("label") == "section_header"
+    ]
+    descendants_of = {idx: _collect_descendants(idx, entries) for idx in section_indices}
+    has_child_section: dict[int, bool] = {
+        idx: any(
+            child_idx in descendants_of[idx]
+            for child_idx in section_indices
+            if child_idx != idx
+        )
+        for idx in section_indices
+    }
+
     chunks: list[_Chunk] = []
-    for idx, entry in enumerate(entries):
-        if entry.get("label") != "section_header":
+    for idx in section_indices:
+        entry = entries[idx]
+        # Skip non-leaf sections: their content is already covered by their
+        # descendant section chunks.
+        if has_child_section[idx]:
             continue
-        ordered = sorted(_collect_descendants(idx, entries))
+        ordered = sorted(descendants_of[idx])
         parts = [(entry.get("text") or "").strip()]
         page_no = entry.get("page_no") if isinstance(entry.get("page_no"), int) else None
         for child_idx in ordered:
@@ -1132,17 +1201,39 @@ def _section_chunks(doc: DocumentContext) -> list[_Chunk]:
             if page_no is None and isinstance(child_page, int):
                 page_no = child_page
         chunk_text = "\n".join(part for part in parts if part).strip()
-        if chunk_text:
+        if not chunk_text:
+            continue
+        heading = (entry.get("text") or "").strip()
+        # Cap chunk size: an oversized leaf section (rare but possible for
+        # un-segmented prospectuses) gets split via the sliding window.
+        if len(chunk_text) <= _SECTION_CHUNK_MAX_CHARS:
             chunks.append(
                 _Chunk(
                     chunk_id="",
                     kind="section",
                     text=chunk_text,
                     section_id=idx,
-                    heading=(entry.get("text") or "").strip(),
+                    heading=heading,
                     page_no=page_no,
                 )
             )
+            continue
+        for window_start in range(0, len(chunk_text), _WINDOW_CHUNK_STRIDE):
+            window_end = min(len(chunk_text), window_start + _SECTION_CHUNK_MAX_CHARS)
+            chunks.append(
+                _Chunk(
+                    chunk_id="",
+                    kind="section",
+                    text=chunk_text[window_start:window_end],
+                    section_id=idx,
+                    heading=heading,
+                    page_no=page_no,
+                    start=window_start,
+                    end=window_end,
+                )
+            )
+            if window_end == len(chunk_text):
+                break
     return chunks
 
 

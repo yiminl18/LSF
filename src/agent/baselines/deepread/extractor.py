@@ -17,8 +17,9 @@ from pathlib import Path
 from typing import Any
 
 from agent.baselines.base import BaselineExtractor, DocInputs, ExtractionResult
+from agent.baselines.defaults import DEFAULT_LLM_MODEL, DEFAULT_LLM_PROVIDER
 from agent.baselines.deepread.index import ParagraphIndex
-from agent.baselines.deepread.ocr import LLMOCR
+from agent.baselines.deepread.ocr import DEFAULT_OCR_MODEL, DEFAULT_OCR_PROVIDER, LLMOCR
 from agent.baselines.deepread.tools import retrieve, read_section
 from core.pipeline.e2e_utils.cache import CachedLLMCaller
 from core.llm.cost import compute_cost
@@ -29,9 +30,6 @@ _LOCATE_READ_PROMPT_PATH = (
 _MAX_TURNS = 6
 _MAX_ANSWER_TOKENS = 500
 _MAX_TOOL_TOKENS = 800
-
-_DEFAULT_OCR_MODEL = "gpt-5.4-mini"
-_DEFAULT_OCR_PROVIDER = "azure"
 
 
 def _load_locate_read_prompt() -> str:
@@ -74,8 +72,8 @@ class DeepReadExtractor:
 
     def __init__(
         self,
-        ocr_model: str = _DEFAULT_OCR_MODEL,
-        ocr_provider: str = _DEFAULT_OCR_PROVIDER,
+        ocr_model: str = DEFAULT_OCR_MODEL,
+        ocr_provider: str = DEFAULT_OCR_PROVIDER,
         max_pages: int | None = None,
     ) -> None:
         self._ocr_model = ocr_model
@@ -90,13 +88,17 @@ class DeepReadExtractor:
         doc_id: str,
         doc_inputs: DocInputs,
         cached_caller: CachedLLMCaller,
-        llm_provider: str = "azure",
-        llm_model: str = "gpt-5.4-mini",
+        llm_provider: str = DEFAULT_LLM_PROVIDER,
+        llm_model: str = DEFAULT_LLM_MODEL,
     ) -> ExtractionResult:
         t0 = time.perf_counter()
         total_cost = 0.0
+        gen_calls = 0
 
-        # Step 1: OCR
+        # Step 1: OCR — the vision call doesn't share the SQLite cache, so we
+        # add OCR cost back into total_cost via LLMOCR.last_cost_usd. Each OCR
+        # page is one generation call when not cached; LLMOCR exposes this so
+        # the runner's call-count summary stays accurate.
         ocr = LLMOCR(
             cached_caller,
             ocr_model=self._ocr_model,
@@ -104,6 +106,8 @@ class DeepReadExtractor:
             max_pages=self._max_pages,
         )
         index = ocr.parse_pdf(doc_inputs.pdf_path, doc_id=doc_id)
+        total_cost += ocr.last_cost_usd
+        gen_calls += getattr(ocr, "last_call_count", 0)
 
         if not index.paragraphs:
             # PDF could not be parsed (e.g., missing file); fall back to normalized text.
@@ -136,6 +140,7 @@ class DeepReadExtractor:
                 max_tokens=_MAX_TOOL_TOKENS,
                 model=llm_model,
             )
+            gen_calls += 1
             call_cost = compute_cost(
                 result.input_tokens,
                 result.output_tokens,
@@ -157,6 +162,7 @@ class DeepReadExtractor:
                     },
                     cost_usd=total_cost,
                     latency_ms=latency_ms,
+                    gen_calls=gen_calls,
                 )
 
             parsed = _parse_tool_call(response)
@@ -173,6 +179,7 @@ class DeepReadExtractor:
                     },
                     cost_usd=total_cost,
                     latency_ms=latency_ms,
+                    gen_calls=gen_calls,
                 )
 
             tool_name, args = parsed
@@ -193,12 +200,15 @@ class DeepReadExtractor:
 
             evidence_parts.append(f"[{tool_name}]\n{obs}")
 
-        # Exhausted turns — do a final answer call with accumulated evidence
+        # Exhausted turns — do a final answer call with accumulated evidence.
+        # Use the same "\n\n" join as the in-loop user message; the two-space
+        # join here was a typo that flattened evidence into one wall of text.
+        evidence_text = "\n\n".join(evidence_parts) if evidence_parts else "No evidence collected."
         final_prompt = (
             system_prompt
             + "\n\n"
             + f"Question: {query_text}\n\n"
-            + f"Evidence:\n{'  '.join(evidence_parts)}\n\n"
+            + f"Evidence:\n{evidence_text}\n\n"
             + "FINAL ANSWER:"
         )
         final_result = cached_caller.call(
@@ -207,6 +217,7 @@ class DeepReadExtractor:
             max_tokens=_MAX_ANSWER_TOKENS,
             model=llm_model,
         )
+        gen_calls += 1
         total_cost += compute_cost(
             final_result.input_tokens,
             final_result.output_tokens,
@@ -224,6 +235,7 @@ class DeepReadExtractor:
             },
             cost_usd=total_cost,
             latency_ms=latency_ms,
+            gen_calls=gen_calls,
         )
 
 

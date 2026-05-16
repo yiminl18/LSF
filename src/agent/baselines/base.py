@@ -6,7 +6,7 @@ the common DocInputs / ExtractionResult types defined here.
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Protocol
 
@@ -35,7 +35,12 @@ class DocInputs:
 
 @dataclass(frozen=True, slots=True)
 class ExtractionResult:
-    """Output from a baseline extractor for one (query, doc) pair."""
+    """Output from a baseline extractor for one (query, doc) pair.
+
+    `gen_calls` is the number of generation LLM calls the extractor made
+    (OCR + classifier + reader + agent turns). Defaults to 1 so existing
+    single-call extractors keep working; richer extractors should override.
+    """
 
     generated_answer: str
     trace: dict[str, Any]
@@ -43,10 +48,17 @@ class ExtractionResult:
 
     cost_usd: float
     latency_ms: float
+    gen_calls: int = 1
 
 
 class BaselineExtractor(Protocol):
-    """Protocol every baseline extractor must satisfy."""
+    """Protocol every baseline extractor must satisfy.
+
+    `**kwargs` is part of the contract because the runner / majority-vote
+    harness pass shared keyword arguments (llm_provider, llm_model, and
+    baseline-specific extras like embedding_provider). Extractors that don't
+    need a given kwarg may ignore it but must accept it.
+    """
 
     name: str
 
@@ -58,4 +70,5 @@ class BaselineExtractor(Protocol):
         doc_id: str,
         doc_inputs: DocInputs,
         cached_caller: CachedLLMCaller,
+        **kwargs: Any,
     ) -> ExtractionResult: ...

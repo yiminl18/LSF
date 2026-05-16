@@ -118,10 +118,10 @@ Implementation: `exit/`.
 
 EXIT is an extractive-compression baseline:
 
-1. Split document text into sentences.
-2. Select relevant sentences with the upstream Gemma checkpoint when available.
-3. Fall back to LLM zero-shot sentence relevance classification otherwise.
-4. Ask the configured reader LLM to answer from the compressed context.
+1. Split document text into sentences (via upstream's spaCy senter).
+2. Select relevant sentences with the upstream Gemma-2B PEFT checkpoint
+   (`doubleyyh/exit-gemma-2b` on top of `google/gemma-2b-it`).
+3. Ask the configured reader LLM to answer from the compressed context.
 
 Run:
 
@@ -134,11 +134,11 @@ PYTHONPATH=src python3 -m agent.run_pipeline \
 
 Notes:
 
-- Uses `doc_inputs.normalized_text` first.
-- Falls back to direct PDF text extraction when normalized text is empty and the PDF exists.
-- Upstream checkpoint path is optional; the LLM fallback keeps the baseline runnable.
-- Set `LSF_EXIT_REQUIRE_GEMMA=1` for GPU verification runs where EXIT must fail
-  instead of falling back when the Gemma checkpoint or upstream code is missing.
+- Uses `doc_inputs.normalized_text` (the shared loader already falls back to
+  PyMuPDF when no reconstructed JSON is present).
+- The Gemma checkpoint is mandatory. The extractor raises if the upstream
+  submodule, base model, or PEFT adapter is unavailable; there is no LLM-only
+  fallback. Initialise the submodule and warm the HF cache before running.
 
 ## baseline-deepread
 

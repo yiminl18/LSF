@@ -162,6 +162,10 @@ def _build_parser() -> argparse.ArgumentParser:
         help="Cap DeepRead OCR to this many pages per document",
     )
     parser.add_argument(
+        "--mdocagent-max-pages", type=int, default=None,
+        help="Cap MDocAgent rendered pages per document (default: full doc)",
+    )
+    parser.add_argument(
         "--ocr-model", default=None,
         help="Override DeepRead OCR vision model (default: gpt-5.4-mini)",
     )
@@ -403,9 +407,9 @@ def _run_baseline(args: argparse.Namespace, experiment_key: str) -> None:
         deepread_max_pages=args.deepread_max_pages,
         deepread_ocr_model=args.ocr_model,
         deepread_ocr_provider=args.ocr_provider,
+        mdocagent_max_pages=getattr(args, "mdocagent_max_pages", None),
         embedding_provider=args.embed_provider,
         embedding_model=args.embed_model,
-        seed=args.seed,
     )
 
 

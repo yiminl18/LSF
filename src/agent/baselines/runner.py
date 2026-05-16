@@ -9,7 +9,6 @@ from __future__ import annotations
 
 import json
 import logging
-import random
 import re
 import time
 import traceback
@@ -17,6 +16,7 @@ from pathlib import Path
 from typing import Any
 
 from agent.baselines.base import BaselineExtractor, DocInputs
+from agent.baselines.defaults import DEFAULT_LLM_MODEL, DEFAULT_LLM_PROVIDER
 from agent.baselines.loader import build_doc_inputs, load_config
 from agent.baselines.scorer_adapter import error_row, score_and_build_row
 from agent.rule_runtime.data import get_query_text
@@ -45,7 +45,9 @@ def _dataset_output_key(config: dict[str, Any]) -> str:
     dataset = config.get("dataset")
     if dataset:
         return _safe_path_component(str(dataset))
-    dataset_root = Path(str(config.get("dataset_root", "datasets/pdfs/latest")))
+    from agent.baselines.defaults import resolve_dataset_root
+
+    dataset_root = resolve_dataset_root(config)
     if dataset_root.name == "latest" and dataset_root.parent.name:
         return _safe_path_component(dataset_root.parent.name)
     return _safe_path_component(dataset_root.name)
@@ -56,6 +58,7 @@ def _get_extractor(
     deepread_max_pages: int | None = None,
     deepread_ocr_model: str | None = None,
     deepread_ocr_provider: str | None = None,
+    mdocagent_max_pages: int | None = None,
 ) -> BaselineExtractor:
     if experiment == "exit":
         from agent.baselines.exit.extractor import ExitExtractor
@@ -72,7 +75,7 @@ def _get_extractor(
         return DeepReadExtractor(**kwargs)
     if experiment == "mdocagent":
         from agent.baselines.mdocagent.extractor import MDocAgentExtractor
-        return MDocAgentExtractor()
+        return MDocAgentExtractor(max_pages=mdocagent_max_pages)
     if experiment == "qa-agent":
         from agent.baselines.qa_agent.extractor import QAAgentExtractor
         return QAAgentExtractor()
@@ -84,8 +87,8 @@ def run_baseline_sweep(
     query_indices: list[int],
     config_path: Path,
     output_root: Path = _DEFAULT_BASELINE_OUTPUT_ROOT,
-    llm_provider: str = "azure",
-    llm_model: str = "gpt-5.4-mini",
+    llm_provider: str = DEFAULT_LLM_PROVIDER,
+    llm_model: str = DEFAULT_LLM_MODEL,
     eval_provider: str | None = None,
     eval_model: str | None = None,
     dry_run: bool = False,
@@ -93,20 +96,18 @@ def run_baseline_sweep(
     deepread_max_pages: int | None = None,
     deepread_ocr_model: str | None = None,
     deepread_ocr_provider: str | None = None,
+    mdocagent_max_pages: int | None = None,
     embedding_provider: str | None = None,
     embedding_model: str | None = None,
-    seed: int | None = None,
 ) -> None:
-    """Run the baseline sweep and write output_root/<dataset>/<experiment>/q<idx>/."""
+    """Run the baseline sweep and write output_root/<dataset>/<experiment>/q<idx>/.
+
+    Note: there is no `seed` parameter. None of the extractors use Python /
+    NumPy global RNGs (temperature=0 LLM calls; deterministic retrieval), so a
+    seed flag here would have no observable effect. `majority_vote_eval.py`
+    has its own local `random.Random(seed)` for sample selection.
+    """
     config = load_config(config_path)
-    if seed is not None:
-        random.seed(seed)
-        try:
-            import numpy as np
-        except Exception:  # pragma: no cover - numpy is available in normal runs
-            pass
-        else:
-            np.random.seed(seed)
     eval_provider = eval_provider or llm_provider
     eval_model = eval_model or llm_model
 
@@ -115,9 +116,12 @@ def run_baseline_sweep(
         deepread_max_pages=deepread_max_pages,
         deepread_ocr_model=deepread_ocr_model,
         deepread_ocr_provider=deepread_ocr_provider,
+        mdocagent_max_pages=mdocagent_max_pages,
     )
+    from agent.baselines.defaults import resolve_dataset_root
+
     cached_caller = CachedLLMCaller(DEFAULT_CACHE_DB_PATH)
-    dataset_root = config.get("dataset_root", "datasets/pdfs/latest")
+    dataset_root = str(resolve_dataset_root(config))
     dataset_key = _dataset_output_key(config)
 
     for query_idx in query_indices:
@@ -145,7 +149,8 @@ def run_baseline_sweep(
 
         rows: list[DeployedRow] = []
         for doc_id in doc_ids:
-            t0 = time.perf_counter()
+            wrapper_t0 = time.perf_counter()
+            result_latency_ms: float | None = None
             try:
                 doc_inputs: DocInputs = build_doc_inputs(config, query_idx, doc_id)
                 extract_kwargs: dict[str, Any] = {
@@ -161,6 +166,7 @@ def run_baseline_sweep(
                     extract_kwargs["embedding_provider"] = embedding_provider
                     extract_kwargs["embedding_model"] = embedding_model
                 result = extractor.extract(**extract_kwargs)
+                result_latency_ms = result.latency_ms
                 row = score_and_build_row(
                     query_idx=query_idx,
                     doc_id=doc_id,
@@ -183,11 +189,19 @@ def run_baseline_sweep(
                     blocker=f"extractor_error:{type(exc).__name__}:{exc}",
                 )
 
-            elapsed_ms = (time.perf_counter() - t0) * 1000.0
+            # Prefer the extractor's own latency_ms when it succeeded so the
+            # console line matches what landed in the JSONL row; fall back to
+            # wrapper-measured elapsed when the extractor errored before
+            # producing a result.
+            latency_ms = (
+                result_latency_ms
+                if result_latency_ms is not None
+                else (time.perf_counter() - wrapper_t0) * 1000.0
+            )
             status = "pass" if row["judge_result"] is True else "fail"
             print(
                 f"  {doc_id}: {status} cost=${row['actual_cost_usd']:.4f} "
-                f"latency={elapsed_ms:.0f}ms"
+                f"latency={latency_ms:.0f}ms"
             )
             rows.append(row)
 

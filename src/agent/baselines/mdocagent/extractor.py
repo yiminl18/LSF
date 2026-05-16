@@ -9,10 +9,11 @@ Pre-requisites for end-to-end use:
     1. git submodule update --init src/agent/baselines/mdocagent/upstream
     2. cd src/agent/baselines/mdocagent/upstream/MDocAgent && bash install.sh
     3. Set OPENROUTER_API_KEY, OPENAI_API_KEY, or AZURE_54*/AZURE_54MINI* env vars.
-    4. Set MDOCAGENT_E2E=1 to enable the optional smoke test.
 
 Hydra overrides passed to predict.py:
-    dataset=lsf
+    +dataset=lsf          # `+` is required: upstream config/base.yaml has
+                          # `dataset:` inline (not in `defaults:`), so the
+                          # group must be added rather than overridden.
     run-name=<unique>
     mdoc_agent.agents.0.model=<generated OpenAI-compatible config>
     mdoc_agent.agents.1.model=<generated OpenAI-compatible config>
@@ -48,6 +49,7 @@ from pathlib import Path
 from typing import Any
 
 from agent.baselines.base import BaselineExtractor, DocInputs, ExtractionResult
+from agent.baselines.defaults import DEFAULT_LLM_MODEL, DEFAULT_LLM_PROVIDER
 from agent.baselines.mdocagent.adapter import (
     _DEFAULT_DATASET_NAME,
     prepare_inputs,
@@ -64,8 +66,10 @@ logger = logging.getLogger(__name__)
 # Submodule root
 _UPSTREAM_DIR = Path(__file__).parent / "upstream" / "MDocAgent"
 
-# Log directory for subprocess output (outside the submodule)
-_LOG_DIR = Path(".cache") / "mdocagent" / "logs"
+# Log directory for subprocess output — repo-relative so logs land in the same
+# place regardless of which directory `agent.run_pipeline` was launched from.
+_REPO_ROOT = Path(__file__).resolve().parents[4]
+_LOG_DIR = _REPO_ROOT / ".cache" / "mdocagent" / "logs"
 
 def _agent_model_overrides(model_config_name: str) -> list[str]:
     # Agents list indexing: 0=image_agent, 1=text_agent, 2=general_agent.
@@ -102,8 +106,8 @@ class MDocAgentExtractor:
         doc_id: str,
         doc_inputs: DocInputs,
         cached_caller: CachedLLMCaller,
-        llm_provider: str = "azure",
-        llm_model: str = "gpt-4o",
+        llm_provider: str = DEFAULT_LLM_PROVIDER,
+        llm_model: str = DEFAULT_LLM_MODEL,
     ) -> ExtractionResult:
         if not _upstream_is_present():
             raise NotImplementedError(
@@ -175,19 +179,25 @@ class MDocAgentExtractor:
             stdout=stdout,
         )
 
+        # Upstream MultiAgentSystem never surfaces token usage, so we report
+        # cost_usd=0.0 here (see review notes: this is an upstream gap). The
+        # pipeline has 3 agents + a sum_agent, plus a critique pass, so each
+        # (query, doc) is at least 5 generation calls. If save_message=true
+        # was set, the trace's combined_messages string preserves them.
         return ExtractionResult(
             generated_answer=answer,
             trace=trace,
-            cost_usd=0.0,  # MDocAgent doesn't expose per-call token counts
+            cost_usd=0.0,
             latency_ms=latency_ms,
+            gen_calls=5,
         )
 
 
 def _run_predict_subprocess(
     run_name: str,
     *,
-    llm_provider: str = "openrouter",
-    llm_model: str = "gpt-4o",
+    llm_provider: str = DEFAULT_LLM_PROVIDER,
+    llm_model: str = DEFAULT_LLM_MODEL,
     model_config_name: str = "lsf_openai",
 ) -> tuple[str, str, int]:
     """Invoke MDocAgent's scripts/predict.py via subprocess with Hydra overrides.
@@ -213,8 +223,12 @@ def _run_predict_subprocess(
         + env.get("PYTHONPATH", "")
     ).rstrip(os.pathsep)
 
-    # Disable CUDA (we're using API calls — no local GPU needed)
-    env["CUDA_VISIBLE_DEVICES"] = ""
+    # Disable CUDA by default (the wrapper always uses API-only model adapters,
+    # so no local GPU is needed and an unset device avoids upstream's torch.cuda
+    # path). Set LSF_MDOCAGENT_PRESERVE_CUDA=1 to keep the inherited value, e.g.
+    # if you swap the model config back to a local-GPU reader.
+    if env.get("LSF_MDOCAGENT_PRESERVE_CUDA", "").strip().lower() not in {"1", "true", "yes"}:
+        env["CUDA_VISIBLE_DEVICES"] = ""
 
     cmd = [sys.executable, str(predict_script)] + overrides
 
@@ -275,8 +289,11 @@ def _configure_openai_compatible_env(
             env["OPENAI_API_KEY"] = api_key
         else:
             env.pop("OPENAI_API_KEY", None)
+        # openai_model.MyOpenAI builds AzureOpenAI(azure_endpoint=...) directly
+        # from LSF_MDOCAGENT_AZURE_API_BASE, so we never set OPENAI_BASE_URL on
+        # the Azure path — it would be ignored at best and misleading at worst.
+        env.pop("OPENAI_BASE_URL", None)
         if api_base:
-            env["OPENAI_BASE_URL"] = api_base.rstrip("/") + "/openai/v1/"
             env["LSF_MDOCAGENT_AZURE_API_BASE"] = api_base
         if api_version:
             env["LSF_MDOCAGENT_AZURE_API_VERSION"] = api_version
@@ -322,13 +339,23 @@ def _parse_result(
             "error": str(exc),
         }
 
-    # Find our sample by id
+    # Find our sample by id. We write exactly one sample per (query, doc),
+    # so failure to match is a real bug — never silently grab samples[0].
     matching = [s for s in samples if s.get("id") == sample_id]
     if not matching:
-        # Try matching on doc_id substring (defensive fallback)
-        matching = samples  # take first if only one sample
+        available_ids = [s.get("id") for s in samples]
+        logger.error(
+            "MDocAgent result file %s missing sample_id=%r (available=%r)",
+            result_file, sample_id, available_ids,
+        )
+        return "Information not found.", {
+            "run_name": run_name,
+            "sample_id": sample_id,
+            "result_file": str(result_file),
+            "error": f"sample_id not in result file (available={available_ids})",
+        }
 
-    sample = matching[0] if matching else {}
+    sample = matching[0]
     answer = sample.get(ans_key) or sample.get("answer") or "Information not found."
     if not isinstance(answer, str):
         answer = str(answer)

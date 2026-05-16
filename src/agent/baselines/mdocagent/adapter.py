@@ -323,7 +323,8 @@ def main(argv: list[str] | None = None) -> None:
     cfg_path = generate_lsf_dataset_config()
     print(f"Dataset config: {cfg_path}")
 
-    from agent.baselines.loader import build_doc_inputs, get_query_text
+    from agent.baselines.loader import build_doc_inputs
+    from agent.rule_runtime.data import get_query_text
     query_text = get_query_text(config["dataset_root"], args.query)
     doc_inputs = build_doc_inputs(config, args.query, args.doc_id)
 

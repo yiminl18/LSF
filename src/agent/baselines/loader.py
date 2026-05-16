@@ -2,12 +2,13 @@
 
 Falls back gracefully when a dataset lacks pipeline-processed files:
 - No reconstructed.json → text extracted directly from PDF via PyMuPDF.
-- No label file → ground_truth returned as "".
+- No label file → ground_truth returned as "" (a warning is logged).
 """
 
 from __future__ import annotations
 
 import json
+import logging
 from pathlib import Path
 from typing import Any
 
@@ -16,10 +17,12 @@ import yaml
 from agent.rule_runtime.data import (
     extract_ground_truth,
     get_label_filename,
-    get_query_text,
     reconstruct_to_normalized_text,
 )
 from agent.baselines.base import DocInputs
+from agent.baselines.defaults import resolve_dataset_root
+
+logger = logging.getLogger(__name__)
 
 
 def _pdf_text_fallback(pdf_path: Path) -> str:
@@ -34,7 +37,7 @@ def _pdf_text_fallback(pdf_path: Path) -> str:
 
 
 def _processing_dir(config: dict[str, Any]) -> Path:
-    root = Path(config["dataset_root"])
+    root = resolve_dataset_root(config)
     parser = config.get("parser", "docling")
     if parser == "mineru":
         return root / "processing_mineru"
@@ -42,7 +45,7 @@ def _processing_dir(config: dict[str, Any]) -> Path:
 
 
 def _label_dir(config: dict[str, Any]) -> Path:
-    root = Path(config["dataset_root"])
+    root = resolve_dataset_root(config)
     parser = config.get("parser", "docling")
     if parser == "mineru":
         return root / "label_mineru"
@@ -51,7 +54,7 @@ def _label_dir(config: dict[str, Any]) -> Path:
 
 def _pdf_path(config: dict[str, Any], doc_id: str) -> Path:
     """Resolve the original PDF path from the dataset layout."""
-    root = Path(config["dataset_root"])
+    root = resolve_dataset_root(config)
     pdf = root / "raw" / f"{doc_id}.pdf"
     return pdf
 
@@ -93,12 +96,20 @@ def build_doc_inputs(
         normalized_text = _pdf_text_fallback(pdf)
         entries, section_index = [], {}
 
-    try:
-        label_filename = get_label_filename({"dataset": config.get("dataset", "pdfs")}, query_idx)
-        label_path = label_dir / label_filename
-        ground_truth = extract_ground_truth(label_path, doc_id, query_idx)
-    except Exception:
-        ground_truth = ""
+    # Distinguish missing-label-file (expected for unlabeled datasets) from a
+    # corrupt label / lookup bug (a real error worth surfacing). When the label
+    # directory just doesn't exist we silently skip; for anything else we log.
+    ground_truth = ""
+    if label_dir.exists():
+        try:
+            label_filename = get_label_filename({"dataset": config.get("dataset", "pdfs")}, query_idx)
+            label_path = label_dir / label_filename
+            if label_path.exists():
+                ground_truth = extract_ground_truth(label_path, doc_id, query_idx)
+        except Exception as exc:
+            logger.warning(
+                "extract_ground_truth failed for q=%d doc=%s: %s", query_idx, doc_id, exc,
+            )
 
     return DocInputs(
         normalized_text=normalized_text,

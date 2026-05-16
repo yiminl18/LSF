@@ -1,10 +1,12 @@
 """LLM-OCR module for DeepRead.
 
-Renders each PDF page to PNG via pypdfium2, then calls a vision-capable
-LLM to produce hierarchical Markdown with structured paragraph tags.
-The output is parsed into a ParagraphIndex and cached on disk.
+Renders each PDF page to JPEG via pypdfium2, then calls a vision-capable
+LLM to produce hierarchical Markdown with structured paragraph tags. The
+output is parsed into a ParagraphIndex and cached on disk.
 
-Cache location: .cache/deepread_ocr/<doc_id>.json
+Cache location: .cache/deepread_ocr/<doc_id>__<prompt_hash>__<model>.json
+The prompt hash and model are baked into the filename so that editing the
+OCR prompt or switching the OCR model invalidates the cache automatically.
 
 Usage as a standalone prep step:
     PYTHONPATH=src python -m agent.baselines.deepread.ocr --query 0 --doc-id AMAZON_2015_10K
@@ -14,14 +16,19 @@ from __future__ import annotations
 
 import argparse
 import base64
+import hashlib
 import json
 import logging
-import re
 from pathlib import Path
 from typing import Any
 
+from agent.baselines.defaults import (
+    DEFAULT_OCR_MODEL as _DEFAULT_OCR_MODEL,
+    DEFAULT_OCR_PROVIDER as _DEFAULT_OCR_PROVIDER,
+)
 from agent.baselines.deepread.index import ParagraphIndex
 from core.pipeline.e2e_utils.cache import CachedLLMCaller, DEFAULT_CACHE_DB_PATH
+from core.llm.cost import compute_cost
 
 _REPO_ROOT = Path(__file__).resolve().parents[4]
 _CACHE_DIR = _REPO_ROOT / ".cache" / "deepread_ocr"
@@ -29,17 +36,28 @@ _OCR_PROMPT_PATH = (
     Path(__file__).parent.parent.parent / "prompts" / "baselines" / "deepread_ocr_page.txt"
 )
 
-# Default vision model; override with --ocr-model.
-_DEFAULT_OCR_MODEL = "gpt-5.4-mini"
-_DEFAULT_OCR_PROVIDER = "azure"
+# Re-export so extractor.py and the standalone CLI keep using one symbol.
+DEFAULT_OCR_MODEL = _DEFAULT_OCR_MODEL
+DEFAULT_OCR_PROVIDER = _DEFAULT_OCR_PROVIDER
 _MAX_OCR_TOKENS = 2000
 _RENDER_DPI = 100  # lower DPI to reduce token cost; sufficient for text extraction
 
 
-def _cache_path(doc_id: str, max_pages: int | None = None) -> Path:
-    if max_pages is not None:
-        return _CACHE_DIR / f"{doc_id}_maxpages{max_pages}.json"
-    return _CACHE_DIR / f"{doc_id}.json"
+def _prompt_hash() -> str:
+    text = _OCR_PROMPT_PATH.read_bytes()
+    return hashlib.sha256(text).hexdigest()[:10]
+
+
+def _cache_path(
+    doc_id: str,
+    *,
+    prompt_hash: str,
+    model: str,
+    max_pages: int | None,
+) -> Path:
+    model_slug = model.replace("/", "_")
+    pages_part = f"_maxpages{max_pages}" if max_pages is not None else ""
+    return _CACHE_DIR / f"{doc_id}__{prompt_hash}__{model_slug}{pages_part}.json"
 
 
 def _load_ocr_prompt() -> str:
@@ -47,12 +65,7 @@ def _load_ocr_prompt() -> str:
 
 
 def _render_page_jpeg(page: Any, dpi: int = _RENDER_DPI, quality: int = 85) -> bytes:
-    """Render a pypdfium2 page to JPEG bytes.
-
-    JPEG is dramatically smaller than PNG for document pages (10-20× compression),
-    which avoids exceeding 128K-token context limits when base64-encoded images
-    are sent via the multimodal API.
-    """
+    """Render a pypdfium2 page to JPEG bytes."""
     import io
     scale = dpi / 72.0
     bitmap = page.render(scale=scale)
@@ -69,11 +82,7 @@ def _ocr_page_call(
     model: str,
     max_tokens: int,
 ) -> tuple[str, int, int]:
-    """Make a vision API call for one page. Returns (response_text, in_tokens, out_tokens).
-
-    Sends the image as a proper multimodal content block (not embedded in prompt text)
-    so the model receives it as visual tokens (~1K) rather than base64 text (~150K+).
-    """
+    """Make a vision API call for one page. Returns (response_text, in_tokens, out_tokens)."""
     import os
     from openai import OpenAI, AzureOpenAI
 
@@ -129,82 +138,60 @@ def _parse_page_ocr(page_no: int, raw: str, global_section_counter: list[int]) -
       ## Sub-heading
       <p sid="1" pid="1">paragraph text</p>
 
-    Returns a list of section dicts (same format as ParagraphIndex.from_ocr_result expects).
     sid values are page-local; we remap them to global monotonic IDs.
     """
-    # Map page-local sid -> global section id
+    import re
+
     local_to_global: dict[str, int] = {}
     sections_out: list[dict[str, Any]] = []
-    current_section_local: str | None = None
+    sections_by_gsid: dict[int, dict[str, Any]] = {}
 
-    # Parse heading lines and paragraph tags
-    lines = raw.splitlines()
     heading_re = re.compile(r"^(#{1,6})\s+(.*)")
     para_re = re.compile(r'<p\s+sid="([^"]+)"\s+pid="([^"]+)">(.*?)</p>', re.DOTALL)
 
     current_heading = ""
     current_level = 1
-    para_order_in_section: dict[str, int] = {}
 
-    # First pass: collect all paragraphs in order
-    for line in lines:
+    # Walk the raw output line-by-line so heading state stays correct,
+    # but match paragraph tags greedily across lines so multi-line <p>...</p>
+    # bodies are captured. One pass — no need to scan twice.
+    cursor = 0
+    while cursor < len(raw):
+        nl = raw.find("\n", cursor)
+        line_end = nl if nl != -1 else len(raw)
+        line = raw[cursor:line_end]
+
         hm = heading_re.match(line)
         if hm:
-            level = len(hm.group(1))
-            heading = hm.group(2).strip()
-            # This heading creates a new logical section; we don't have a sid yet
-            current_heading = heading
-            current_level = level
+            current_level = len(hm.group(1))
+            current_heading = hm.group(2).strip()
+            cursor = line_end + 1
             continue
-        # Inline paragraphs
-        for pm in para_re.finditer(line):
-            local_sid = pm.group(1)
-            text = pm.group(3).strip()
-            if not text:
-                continue
-            if local_sid not in local_to_global:
-                global_section_counter[0] += 1
-                local_to_global[local_sid] = global_section_counter[0]
-                sections_out.append({
-                    "section_id": global_section_counter[0],
-                    "heading": current_heading or f"Section {global_section_counter[0]}",
-                    "level": current_level,
-                    "page_no": page_no,
-                    "paragraphs": [],
-                })
-            gsid = local_to_global[local_sid]
-            order = para_order_in_section.get(local_sid, 0)
-            para_order_in_section[local_sid] = order + 1
-            # Find the section in sections_out
-            for sec in sections_out:
-                if sec["section_id"] == gsid:
-                    sec["paragraphs"].append({"text": text, "page_no": page_no})
-                    break
 
-    # Also scan for multi-line paragraph tags
-    for pm in para_re.finditer(raw):
-        local_sid = pm.group(1)
-        text = pm.group(3).strip()
+        m = para_re.search(raw, cursor)
+        if m is None:
+            break
+        local_sid = m.group(1)
+        text = m.group(3).strip()
         if not text:
+            cursor = m.end()
             continue
         if local_sid not in local_to_global:
             global_section_counter[0] += 1
-            local_to_global[local_sid] = global_section_counter[0]
-            sections_out.append({
-                "section_id": global_section_counter[0],
-                "heading": current_heading or f"Section {global_section_counter[0]}",
+            gsid = global_section_counter[0]
+            local_to_global[local_sid] = gsid
+            section_dict = {
+                "section_id": gsid,
+                "heading": current_heading or f"Section {gsid}",
                 "level": current_level,
                 "page_no": page_no,
                 "paragraphs": [],
-            })
+            }
+            sections_out.append(section_dict)
+            sections_by_gsid[gsid] = section_dict
         gsid = local_to_global[local_sid]
-        # Avoid adding duplicates already added by line scan
-        for sec in sections_out:
-            if sec["section_id"] == gsid:
-                existing = [p["text"] for p in sec["paragraphs"]]
-                if text not in existing:
-                    sec["paragraphs"].append({"text": text, "page_no": page_no})
-                break
+        sections_by_gsid[gsid]["paragraphs"].append({"text": text, "page_no": page_no})
+        cursor = m.end()
 
     return sections_out
 
@@ -218,28 +205,61 @@ class LLMOCR:
     def __init__(
         self,
         cached_caller: CachedLLMCaller,
-        ocr_model: str = _DEFAULT_OCR_MODEL,
-        ocr_provider: str = _DEFAULT_OCR_PROVIDER,
+        ocr_model: str = DEFAULT_OCR_MODEL,
+        ocr_provider: str = DEFAULT_OCR_PROVIDER,
         max_pages: int | None = None,
     ) -> None:
+        # cached_caller is accepted for interface symmetry with other baselines,
+        # but vision multimodal calls don't pass through SQLite (multipart
+        # payloads don't share cache keys with text prompts). OCR has its own
+        # per-document JSON cache instead.
         self._caller = cached_caller
         self._ocr_model = ocr_model
         self._ocr_provider = ocr_provider
         self._max_pages = max_pages
+        self._last_cost_usd: float = 0.0
+        self._last_call_count: int = 0
+
+    @property
+    def last_cost_usd(self) -> float:
+        """Cost (USD) of the most recent parse_pdf() call. 0 when fully cached."""
+        return self._last_cost_usd
+
+    @property
+    def last_call_count(self) -> int:
+        """Number of vision calls made by the most recent parse_pdf(). 0 when cached."""
+        return self._last_call_count
 
     def parse_pdf(self, pdf_path: Path, doc_id: str) -> ParagraphIndex:
         """Parse pages of pdf_path; uses disk cache when available.
 
-        Cache key is doc_id-specific; max_pages is included in the filename to
-        avoid poisoning the full-run cache with a capped partial result.
+        Cache key includes the prompt hash and model so the cache invalidates
+        automatically when either changes. Empty results are not cached, so
+        a transient LLM hiccup doesn't poison future runs.
         """
-        cache = _cache_path(doc_id, self._max_pages)
+        cache = _cache_path(
+            doc_id,
+            prompt_hash=_prompt_hash(),
+            model=self._ocr_model,
+            max_pages=self._max_pages,
+        )
+        self._last_cost_usd = 0.0
+        self._last_call_count = 0
         if cache.exists():
             with cache.open("r", encoding="utf-8") as f:
                 data = json.load(f)
             return ParagraphIndex.from_ocr_result(data)
 
-        result = self._parse_pdf_uncached(pdf_path)
+        result, cost_usd, call_count = self._parse_pdf_uncached(pdf_path)
+        self._last_cost_usd = cost_usd
+        self._last_call_count = call_count
+
+        if not result.paragraphs:
+            _ocr_logger.warning(
+                "OCR produced 0 paragraphs for %s; not writing cache to avoid poisoning",
+                pdf_path.name,
+            )
+            return result
 
         _CACHE_DIR.mkdir(parents=True, exist_ok=True)
         data = result.to_dict()
@@ -248,7 +268,7 @@ class LLMOCR:
 
         return result
 
-    def _parse_pdf_uncached(self, pdf_path: Path) -> ParagraphIndex:
+    def _parse_pdf_uncached(self, pdf_path: Path) -> tuple[ParagraphIndex, float, int]:
         import pypdfium2 as pdfium  # type: ignore[import]
 
         prompt_template = _load_ocr_prompt()
@@ -261,8 +281,10 @@ class LLMOCR:
                 self._max_pages, n_pages, effective_pages, pdf_path.name,
             )
 
-        global_section_counter = [0]  # mutable reference for page-local -> global mapping
+        global_section_counter = [0]
         all_sections: list[dict[str, Any]] = []
+        total_cost = 0.0
+        call_count = 0
 
         for page_no in range(effective_pages):
             page = doc[page_no]
@@ -276,6 +298,8 @@ class LLMOCR:
                 model=self._ocr_model,
                 max_tokens=_MAX_OCR_TOKENS,
             )
+            total_cost += compute_cost(in_tok, out_tok, self._ocr_provider, model=self._ocr_model)
+            call_count += 1
             page_sections = _parse_page_ocr(
                 page_no=page_no + 1,
                 raw=response_text,
@@ -284,7 +308,7 @@ class LLMOCR:
             all_sections.extend(page_sections)
 
         doc.close()
-        return ParagraphIndex.from_ocr_result({"sections": all_sections})
+        return ParagraphIndex.from_ocr_result({"sections": all_sections}), total_cost, call_count
 
 
 def main(argv: list[str] | None = None) -> None:
@@ -295,8 +319,8 @@ def main(argv: list[str] | None = None) -> None:
     parser.add_argument("--config", type=Path, default=Path("src/agent/config_pdfs_10doc.yaml"))
     parser.add_argument("--query", type=int, required=True)
     parser.add_argument("--doc-id", required=True)
-    parser.add_argument("--ocr-model", default=_DEFAULT_OCR_MODEL)
-    parser.add_argument("--ocr-provider", default=_DEFAULT_OCR_PROVIDER)
+    parser.add_argument("--ocr-model", default=DEFAULT_OCR_MODEL)
+    parser.add_argument("--ocr-provider", default=DEFAULT_OCR_PROVIDER)
     parser.add_argument("--max-pages", type=int, default=None, help="Cap OCR to this many pages")
     args = parser.parse_args(argv)
 
@@ -317,7 +341,13 @@ def main(argv: list[str] | None = None) -> None:
     )
     idx = ocr.parse_pdf(pdf_path, doc_id=args.doc_id)
     print(f"OCR complete: {len(idx.paragraphs)} paragraphs, {len(idx.sections)} sections")
-    cache = _cache_path(args.doc_id)
+    print(f"Cost: ${ocr.last_cost_usd:.4f}")
+    cache = _cache_path(
+        args.doc_id,
+        prompt_hash=_prompt_hash(),
+        model=args.ocr_model,
+        max_pages=args.max_pages,
+    )
     print(f"Cached at: {cache}")
 
 

@@ -688,6 +688,7 @@ class TestRunnerDryRun(unittest.TestCase):
                     deepread_max_pages=None,
                     deepread_ocr_model=None,
                     deepread_ocr_provider=None,
+                    mdocagent_max_pages=None,
                 )
         finally:
             config_path.unlink(missing_ok=True)

@@ -14,6 +14,7 @@ from pathlib import Path
 from typing import Any, Callable, Iterable, Sequence
 
 from agent.baselines.base import BaselineExtractor, DocInputs
+from agent.baselines.defaults import DEFAULT_LLM_MODEL, DEFAULT_LLM_PROVIDER
 from agent.baselines.loader import build_doc_inputs
 from agent.rule_runtime.data import get_query_text
 from core.pipeline.e2e_utils.cache import CachedLLMCaller, DEFAULT_CACHE_DB_PATH
@@ -161,6 +162,18 @@ def _limit_doc_inputs(doc_inputs: DocInputs, max_doc_chars: int | None) -> DocIn
 
 
 def _limit_doc_pages(doc_inputs: DocInputs, max_doc_pages: int | None) -> DocInputs:
+    """Truncate normalized_text to the first `max_doc_pages` PDF pages.
+
+    Side effect: `entries` and `section_index` are cleared because they come
+    from the full reconstructed.json and can't be sliced to match a page
+    range without re-running the parser. Downstream:
+      - qa_agent's `_section_chunks` falls back to `_window_chunks`, so its
+        `read_pages` reports "page metadata unavailable" instead of returning
+        real page text;
+      - exit / deepread use only normalized_text, so they're unaffected.
+    This is the price of fair cross-baseline token budgets — pass through
+    untouched DocInputs when you want qa_agent's full tool surface.
+    """
     if max_doc_pages is None or max_doc_pages <= 0 or not doc_inputs.pdf_path.exists():
         return doc_inputs
     import fitz
@@ -188,18 +201,60 @@ def _normalize_answer_for_vote(answer: str | None) -> str:
     return normalized.casefold()
 
 
+_NON_ANSWER_EXACT: frozenset[str] = frozenset({
+    "",
+    _INFO_NOT_FOUND,
+    "not found",
+    "unknown",
+    "n/a",
+    "none",
+    "no answer",
+    "cannot determine",
+    "not available",
+    "no information",
+    "no information available",
+    "no information found",
+    "not provided",
+    "not specified",
+    "not mentioned",
+    "not stated",
+    "not disclosed",
+    "not applicable",
+    "unable to determine",
+    "cannot be determined",
+    "i don't know",
+    "i do not know",
+})
+
+# Phrases that, if the normalized answer starts with them, mean "I refuse / no
+# data". EXIT and DeepRead emit free-form refusals; qa_agent and mdocagent
+# self-canonicalize to "Information not found." — without this, voting was
+# asymmetric across the four baselines.
+_NON_ANSWER_PREFIXES: tuple[str, ...] = (
+    "information not found",
+    "the information is not",
+    "the information was not",
+    "no information",
+    "there is no information",
+    "there is no mention",
+    "this information is not",
+    "i could not find",
+    "i cannot find",
+    "i was unable to find",
+    "i don't have",
+    "i do not have",
+    "the document does not",
+    "the text does not",
+    "the context does not",
+    "the provided document",
+    "the provided context",
+)
+
+
 def _is_non_answer(normalized_answer: str) -> bool:
-    return normalized_answer in {
-        "",
-        _INFO_NOT_FOUND,
-        "not found",
-        "unknown",
-        "n/a",
-        "none",
-        "no answer",
-        "cannot determine",
-        "not available",
-    }
+    if normalized_answer in _NON_ANSWER_EXACT:
+        return True
+    return any(normalized_answer.startswith(p) for p in _NON_ANSWER_PREFIXES)
 
 
 def _jsonable(value: Any) -> Any:
@@ -232,6 +287,7 @@ def _run_one(
         "normalized_answer": "",
         "cost_usd": 0.0,
         "latency_ms": 0.0,
+        "gen_calls": 0,
         "error": None,
     }
     try:
@@ -252,6 +308,7 @@ def _run_one(
         row["normalized_answer"] = _normalize_answer_for_vote(result.generated_answer)
         row["cost_usd"] = result.cost_usd
         row["latency_ms"] = result.latency_ms
+        row["gen_calls"] = int(getattr(result, "gen_calls", 1) or 1)
         if include_trace:
             row["trace"] = _jsonable(result.trace)
     except Exception as exc:
@@ -313,7 +370,11 @@ def _majority_for_rows(
     top_cluster = clusters[0]
     top_count = len(top_cluster)
     tied = len(clusters) > 1 and len(clusters[1]) == top_count
-    needed = len(valid) // 2 + 1
+    # Require strict majority AND at least 2 supporting votes. A single
+    # surviving voter is not a "majority" — three of four baselines erroring
+    # or self-canonicalizing to "Information not found." would otherwise let
+    # one voter's answer win by default and inflate that baseline's accuracy.
+    needed = max(2, len(valid) // 2 + 1)
     resolved = (not tied) and top_count >= needed
     display_answer = top_cluster[0].get("answer") if resolved else None
     top_norms = sorted({row["normalized_answer"] for row in top_cluster}) if resolved else []
@@ -612,8 +673,8 @@ def _build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--output-root", type=Path, default=DEFAULT_OUTPUT_ROOT)
     parser.add_argument("--run-name", default=None)
-    parser.add_argument("--llm-provider", default="azure")
-    parser.add_argument("--llm-model", default="gpt-5.4-mini")
+    parser.add_argument("--llm-provider", default=DEFAULT_LLM_PROVIDER)
+    parser.add_argument("--llm-model", default=DEFAULT_LLM_MODEL)
     parser.add_argument("--embed-provider", default=None)
     parser.add_argument("--embed-model", default=None)
     parser.add_argument("--deepread-max-pages", type=int, default=None)

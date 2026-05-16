@@ -245,15 +245,47 @@ class TestLLMOCRMaxPages(unittest.TestCase):
 
     def test_max_pages_cache_key_is_distinct(self) -> None:
         """Cache path with max_pages differs from cache path without."""
-        path_no_cap = _cache_path("TEST_DOC")
-        path_3pages = _cache_path("TEST_DOC", max_pages=3)
-        path_5pages = _cache_path("TEST_DOC", max_pages=5)
+        path_no_cap = _cache_path(
+            "TEST_DOC",
+            prompt_hash="abc123",
+            model="gpt-5.4-mini",
+            max_pages=None,
+        )
+        path_3pages = _cache_path(
+            "TEST_DOC",
+            prompt_hash="abc123",
+            model="gpt-5.4-mini",
+            max_pages=3,
+        )
+        path_5pages = _cache_path(
+            "TEST_DOC",
+            prompt_hash="abc123",
+            model="gpt-5.4-mini",
+            max_pages=5,
+        )
+        path_other_prompt = _cache_path(
+            "TEST_DOC",
+            prompt_hash="def456",
+            model="gpt-5.4-mini",
+            max_pages=3,
+        )
+        path_other_model = _cache_path(
+            "TEST_DOC",
+            prompt_hash="abc123",
+            model="openai/gpt-4o-mini",
+            max_pages=3,
+        )
 
         self.assertNotEqual(path_no_cap, path_3pages)
         self.assertNotEqual(path_no_cap, path_5pages)
         self.assertNotEqual(path_3pages, path_5pages)
+        self.assertNotEqual(path_3pages, path_other_prompt)
+        self.assertNotEqual(path_3pages, path_other_model)
         self.assertIn("maxpages3", str(path_3pages))
         self.assertIn("maxpages5", str(path_5pages))
+        self.assertIn("abc123", str(path_3pages))
+        self.assertIn("def456", str(path_other_prompt))
+        self.assertIn("openai_gpt-4o-mini", str(path_other_model))
 
     def test_parse_args_max_pages_flag(self) -> None:
         """Standalone ocr.py CLI accepts --max-pages."""
