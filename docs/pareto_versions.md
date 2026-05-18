@@ -1,5 +1,8 @@
 # Pareto Rule Selection — Version Tracking
 
+> **⚠️ Superseded by `docs/rule_refinement_versions.md`** — that doc covers Pareto plus v1, agentic, and the fallback strategy with up-to-date numbers. Keep this file only as the Pareto-specific history.
+
+
 This document tracks all Pareto-frontier rule selection variants implemented in `src/rule_refinement/`. Each variant is a separate file (additive — none overwrites another) with its own drivers and output folders so they can be compared head-to-head.
 
 Companion to `docs/rule_selection_pareto_implementation.md` (which specifies the original Pareto algorithm).
