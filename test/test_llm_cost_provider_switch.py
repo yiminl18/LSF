@@ -6,7 +6,12 @@ from types import SimpleNamespace
 
 import pytest
 
-from core.llm.cost import compute_cost, get_prices
+from core.llm.cost import (
+    compute_cost,
+    compute_cost_with_cached_input,
+    get_prices,
+    get_prices_with_cached_input,
+)
 from core.pipeline import generate_labels
 from core.pipeline.e2e_utils.baselines.base import BaseRAGBaseline
 from core.pipeline.e2e_utils.cache import CacheResult
@@ -60,6 +65,32 @@ def test_gpt54mini_pricing_overrides_generic_mini_pricing():
     assert get_prices("azure", "gpt-5.4-mini") == (0.75, 4.5)
     assert get_prices("azure", "gpt-5.4-mini-2026-04-14") == (0.75, 4.5)
     assert get_prices("openrouter", "openrouter:openai/gpt-5.4-mini") == (0.75, 4.5)
+
+
+def test_gpt54_cached_input_pricing_is_azure_specific():
+    assert get_prices_with_cached_input("azure", "gpt-5.4") == (2.5, 0.25, 15.0)
+    assert get_prices_with_cached_input("azure", "gpt-5.4-mini") == (
+        0.75,
+        0.075,
+        4.5,
+    )
+    assert get_prices_with_cached_input("openrouter", "openai/gpt-5.4") == (
+        2.5,
+        2.5,
+        15.0,
+    )
+
+
+def test_compute_cost_with_cached_input_splits_total_input_tokens():
+    cost = compute_cost_with_cached_input(
+        input_tokens=1000,
+        cached_input_tokens=600,
+        output_tokens=200,
+        llm_provider="azure",
+        model="gpt-5.4-mini",
+    )
+
+    assert cost == pytest.approx((400 * 0.75 + 600 * 0.075 + 200 * 4.5) / 1_000_000)
 
 
 def test_gpt54_prefix_matching_requires_model_boundary():

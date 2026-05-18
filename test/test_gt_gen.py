@@ -37,9 +37,11 @@ def test_generate_ground_truth_defaults_to_native_pdf_mini(tmp_path, monkeypatch
         return CacheResult(
             response='{"answer":"23-35560","support":"cover page"}',
             input_tokens=10,
+            cached_input_tokens=6,
             output_tokens=5,
             latency_ms=1.0,
             cache_hit=False,
+            cost_usd=0.00003,
         )
 
     monkeypatch.setattr(generator.NativePDFCacheCaller, "call", fake_call)
@@ -58,9 +60,12 @@ def test_generate_ground_truth_defaults_to_native_pdf_mini(tmp_path, monkeypatch
     )
     assert output == {"1": "23-35560"}
     assert summary.generated_count == 1
+    assert summary.results[0].cached_input_tokens == 6
+    assert summary.results[0].cost_usd == pytest.approx(0.00003)
     assert seen["llm_provider"] == "azure"
     assert seen["model"] == "gpt-5.4-mini"
     assert seen["pdf_path"] == root / "raw" / "doc_a.pdf"
+    assert seen["response_schema"]["required"] == ["answer", "support"]
     assert "Answer type: string" in seen["prompt"]
 
 
@@ -140,19 +145,29 @@ def test_parse_answer_response_requires_answer_field():
 
 def test_cli_parser_defaults_to_native_pdf_mini():
     args = generator._build_parser().parse_args(
-        ["--target-dir", "datasets/court", "--query-idx", "1"]
+        ["--target-dir", "datasets/court", "--query-idx", "1", "--progress-cost"]
     )
     assert args.llm_provider == "azure"
     assert args.model == "gpt-5.4-mini"
     assert args.input_mode == "auto"
+    assert args.generation_mode == "single"
+    assert args.progress_cost is True
 
 
 def test_cli_parser_accepts_query_indices():
     args = generator._build_parser().parse_args(
-        ["--target-dir", "datasets/court", "--query-indices", "1-2"]
+        [
+            "--target-dir",
+            "datasets/court",
+            "--query-indices",
+            "1-2",
+            "--generation-mode",
+            "all",
+        ]
     )
     assert args.query_idx is None
     assert args.query_indices == "1-2"
+    assert args.generation_mode == "all"
     assert generator._parse_query_indices_arg("1,3-4") == [1, 3, 4]
     assert generator._parse_query_indices_arg("all") is None
 
@@ -327,6 +342,122 @@ def test_generate_ground_truth_for_queries_uses_doc_major_order(tmp_path, monkey
     ) == {"1": "answer-1", "2": "answer-2"}
 
 
+def test_generation_mode_all_answers_selected_queries_once_per_doc(tmp_path, monkeypatch):
+    root = _make_dataset(tmp_path, names=("doc_a", "doc_b"))
+    calls = []
+
+    def fake_call(self, **kwargs):
+        prompt = kwargs["prompt"]
+        calls.append(kwargs["pdf_path"].stem)
+        assert "Question index: 1" in prompt
+        assert "Question index: 2" in prompt
+        assert "answers" in kwargs["response_schema"]["properties"]
+        return CacheResult(
+            response=json.dumps(
+                {
+                    "answers": [
+                        {"query_idx": 1, "answer": "docket", "support": "page 1"},
+                        {"query_idx": 2, "answer": "judge", "support": "page 2"},
+                    ]
+                }
+            ),
+            input_tokens=100,
+            cached_input_tokens=50,
+            output_tokens=20,
+            latency_ms=1.0,
+            cache_hit=False,
+            cost_usd=0.01,
+        )
+
+    monkeypatch.setattr(generator.NativePDFCacheCaller, "call", fake_call)
+
+    summary = generator.generate_ground_truth_for_queries(
+        target_dir=root,
+        query_indices=[1, 2],
+        num_doc=2,
+        generation_mode="all",
+        cache_db=str(tmp_path / "cache.db"),
+    )
+
+    assert calls == ["doc_a", "doc_b"]
+    assert summary.generated_count == 4
+    assert json.loads(
+        (root / "ground_truth" / "doc_a.txt_answers.json").read_text(
+            encoding="utf-8"
+        )
+    ) == {"1": "docket", "2": "judge"}
+    assert generator._api_usage_totals(summary.results)[:4] == (200, 100, 40, 0.02)
+
+
+def test_generation_mode_all_skips_existing_queries(tmp_path, monkeypatch):
+    root = _make_dataset(tmp_path)
+    gt_dir = root / "ground_truth"
+    gt_dir.mkdir()
+    (gt_dir / "doc_a.txt_answers.json").write_text(
+        json.dumps({"1": "existing"}), encoding="utf-8"
+    )
+    prompts = []
+
+    def fake_call(self, **kwargs):
+        prompts.append(kwargs["prompt"])
+        return CacheResult(
+            response=json.dumps(
+                {
+                    "answers": [
+                        {"query_idx": 2, "answer": "new", "support": "page 2"},
+                    ]
+                }
+            ),
+            input_tokens=100,
+            output_tokens=10,
+            latency_ms=1.0,
+            cache_hit=False,
+        )
+
+    monkeypatch.setattr(generator.NativePDFCacheCaller, "call", fake_call)
+
+    summary = generator.generate_ground_truth_for_queries(
+        target_dir=root,
+        query_indices=[1, 2],
+        generation_mode="all",
+        cache_db=str(tmp_path / "cache.db"),
+    )
+
+    assert len(prompts) == 1
+    assert "Question index: 1" not in prompts[0]
+    assert "Question index: 2" in prompts[0]
+    assert summary.skipped_existing_count == 1
+    assert summary.generated_count == 1
+    assert json.loads((gt_dir / "doc_a.txt_answers.json").read_text()) == {
+        "1": "existing",
+        "2": "new",
+    }
+
+
+def test_parse_answers_response_rejects_missing_duplicate_and_unexpected_queries():
+    queries = [
+        generator.QuerySpec(idx=1, text="Q1", answer_type="string"),
+        generator.QuerySpec(idx=2, text="Q2", answer_type="string"),
+    ]
+
+    with pytest.raises(ValueError, match="Missing answers"):
+        generator.parse_answers_response(
+            '{"answers":[{"query_idx":1,"answer":"a","support":"s"}]}',
+            queries,
+        )
+    with pytest.raises(ValueError, match="Duplicate answer"):
+        generator.parse_answers_response(
+            '{"answers":[{"query_idx":1,"answer":"a","support":"s"},'
+            '{"query_idx":1,"answer":"b","support":"s"}]}',
+            [queries[0]],
+        )
+    with pytest.raises(ValueError, match="Unexpected answer"):
+        generator.parse_answers_response(
+            '{"answers":[{"query_idx":3,"answer":"a","support":"s"}]}',
+            [queries[0]],
+        )
+
+
 def test_text_prompt_puts_document_before_query_for_prefix_cache():
     query = generator.QuerySpec(
         idx=2,
@@ -341,3 +472,93 @@ def test_text_prompt_puts_document_before_query_for_prefix_cache():
 
     assert prompt.index("shared document text") < prompt.index("[QUESTION]")
     assert "Question index: 2" in prompt
+
+
+def test_build_azure_call_result_uses_cached_token_usage():
+    usage = SimpleNamespace(
+        input_tokens=1000,
+        output_tokens=200,
+        input_tokens_details=SimpleNamespace(cached_tokens=600),
+    )
+
+    result = generator._build_azure_call_result(
+        answer='{"answer":"ok","support":"page 1"}',
+        usage=usage,
+        model="gpt-5.4-mini",
+    )
+
+    assert result.input_tokens == 1000
+    assert result.cached_input_tokens == 600
+    assert result.output_tokens == 200
+    assert result.cost_usd == pytest.approx(
+        (400 * 0.75 + 600 * 0.075 + 200 * 4.5) / 1_000_000
+    )
+
+
+def test_azure_text_mode_records_exact_responses_usage(tmp_path, monkeypatch):
+    root = _make_dataset(tmp_path)
+    monkeypatch.setattr(
+        generator,
+        "_extract_pdf_text_for_prompt",
+        lambda pdf_path: "[DOCUMENT TEXT START]\ntext",
+    )
+    monkeypatch.setattr(
+        generator,
+        "_azure_responses_text_call",
+        lambda **kwargs: generator.AzureResponsesCallResult(
+            response='{"answer":"ok","support":"page 1"}',
+            input_tokens=100,
+            cached_input_tokens=80,
+            output_tokens=10,
+            cost_usd=0.000123,
+        ),
+    )
+
+    summary = generator.generate_ground_truth(
+        target_dir=root,
+        query_idx=1,
+        num_doc=1,
+        input_mode="text",
+        cache_db=str(tmp_path / "cache.db"),
+    )
+
+    assert summary.generated_count == 1
+    assert summary.results[0].input_tokens == 100
+    assert summary.results[0].cached_input_tokens == 80
+    assert summary.results[0].output_tokens == 10
+    assert summary.results[0].cost_usd == pytest.approx(0.000123)
+
+
+def test_azure_responses_text_call_passes_structured_output(monkeypatch):
+    seen = {}
+
+    class FakeResponses:
+        def create(self, **kwargs):
+            seen.update(kwargs)
+            return SimpleNamespace(
+                output_text='{"answer":"ok","support":"page 1"}',
+                usage=SimpleNamespace(
+                    input_tokens=10,
+                    output_tokens=2,
+                    input_tokens_details=SimpleNamespace(cached_tokens=0),
+                ),
+            )
+
+    fake_client = SimpleNamespace(responses=FakeResponses())
+    monkeypatch.setattr(
+        generator,
+        "_azure_responses_client_and_deployment",
+        lambda model: (fake_client, "deployment"),
+    )
+
+    generator._azure_responses_text_call(
+        prompt="prompt",
+        model="gpt-5.4-mini",
+        max_tokens=20,
+        response_schema=generator._answer_response_schema(),
+        temperature=0,
+    )
+
+    assert seen["text"]["format"]["type"] == "json_schema"
+    assert seen["text"]["format"]["name"] == "gt_gen_single_answer"
+    assert seen["text"]["format"]["schema"]["required"] == ["answer", "support"]

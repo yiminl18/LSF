@@ -88,6 +88,8 @@ class CacheResult:
     output_tokens: int
     latency_ms: float
     cache_hit: bool
+    cached_input_tokens: int = 0
+    cost_usd: float = 0.0
 
 
 class CachedLLMCaller:

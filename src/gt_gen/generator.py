@@ -19,10 +19,10 @@ from typing import Any, Literal, Sequence
 
 from openai import OpenAI
 
+from core.llm.cost import compute_cost_with_cached_input
 from core.llm.tokens import estimate_tokens
 from core.pipeline.e2e_utils.cache import (
     CacheResult,
-    CachedLLMCaller,
     DEFAULT_CACHE_DB_PATH,
 )
 
@@ -30,11 +30,13 @@ DEFAULT_LLM_PROVIDER = "azure"
 DEFAULT_MODEL = "gpt-5.4-mini"
 DEFAULT_CLAUDE_MODEL = "sonnet"
 DEFAULT_INPUT_MODE = "auto"
+DEFAULT_GENERATION_MODE = "single"
 DEFAULT_MAX_TOKENS = 1200
 DEFAULT_CLAUDE_TIMEOUT_SEC = 600
 
 InputMode = Literal["auto", "native-pdf", "text", "claude-read-pdf"]
 ResolvedInputMode = Literal["native-pdf", "text", "claude-read-pdf"]
+GenerationMode = Literal["single", "all"]
 
 _CACHE_CREATE_TABLE_SQL = """
 CREATE TABLE IF NOT EXISTS llm_cache (
@@ -72,7 +74,10 @@ class DocRunResult:
     cache_hit: bool = False
     answer: Any = None
     input_tokens: int = 0
+    cached_input_tokens: int = 0
     output_tokens: int = 0
+    cost_usd: float = 0.0
+    api_call_id: str = ""
     error: str = ""
 
 
@@ -102,6 +107,17 @@ class BatchGenerationSummary:
     results: tuple[DocRunResult, ...] = field(default_factory=tuple)
 
 
+@dataclass(frozen=True)
+class AzureResponsesCallResult:
+    """Raw Azure Responses API output plus provider-reported usage."""
+
+    response: str
+    input_tokens: int
+    cached_input_tokens: int
+    output_tokens: int
+    cost_usd: float
+
+
 def generate_ground_truth(
     target_dir: str | Path,
     query_idx: int,
@@ -111,9 +127,11 @@ def generate_ground_truth(
     seed: int = 42,
     *,
     input_mode: InputMode = DEFAULT_INPUT_MODE,
+    generation_mode: GenerationMode = DEFAULT_GENERATION_MODE,
     cache_db: str = DEFAULT_CACHE_DB_PATH,
     max_tokens: int = DEFAULT_MAX_TOKENS,
     claude_timeout_sec: int = DEFAULT_CLAUDE_TIMEOUT_SEC,
+    progress_cost: bool = False,
 ) -> GenerationSummary:
     """Generate ground-truth answers for sampled PDFs.
 
@@ -127,13 +145,17 @@ def generate_ground_truth(
         input_mode: auto chooses provider default; native-pdf uses Azure Responses
             input_file; text uses extracted text; claude-read-pdf asks Claude Code
             to read the local PDF path.
+        generation_mode: single answers this query with the single-answer schema;
+            all answers the selected query set with the multi-answer schema.
         cache_db: SQLite LLM cache path.
         max_tokens: Max output tokens.
         claude_timeout_sec: Timeout for each Claude Code CLI call.
+        progress_cost: Print per-call API usage/cost as the run progresses.
     """
     resolved_provider = normalize_llm_provider(llm_provider)
     resolved_model = resolve_model_for_provider(resolved_provider, model)
     resolved_input_mode = resolve_input_mode(resolved_provider, input_mode)
+    resolved_generation_mode = resolve_generation_mode(generation_mode)
     dataset_root = resolve_dataset_root(target_dir)
     query = load_query(dataset_root / "queries.json", query_idx)
     pdf_paths = sample_pdf_paths(dataset_root / "raw", num_doc=num_doc, seed=seed)
@@ -144,7 +166,7 @@ def generate_ground_truth(
         NativePDFCacheCaller(cache_db) if resolved_input_mode == "native-pdf" else None
     )
     text_caller = (
-        CachedLLMCaller(cache_db)
+        AzureResponsesTextCacheCaller(cache_db)
         if resolved_provider == "azure" and resolved_input_mode == "text"
         else None
     )
@@ -158,32 +180,56 @@ def generate_ground_truth(
         output_path = gt_dir / f"{doc_id}.txt_answers.json"
         gt_key = str(query_idx)
         if output_path.exists() and _has_existing_answer(output_path, gt_key):
-            results.append(
+            _record_result(
+                results,
                 DocRunResult(
                     doc_id=doc_id,
                     output_path=output_path,
                     status="skipped_existing",
                     query_idx=query.idx,
-                )
+                ),
+                progress_cost=progress_cost,
             )
             continue
 
         try:
-            response = _call_model_for_doc(
-                pdf_path=pdf_path,
-                query=query,
-                llm_provider=resolved_provider,
-                model=resolved_model,
-                input_mode=resolved_input_mode,
-                native_caller=native_caller,
-                text_caller=text_caller,
-                claude_caller=claude_caller,
-                max_tokens=max_tokens,
-                claude_timeout_sec=claude_timeout_sec,
-            )
-            answer = parse_answer_response(response.response)
+            if resolved_generation_mode == "all":
+                response = _call_model_for_queries_for_doc(
+                    pdf_path=pdf_path,
+                    queries=[query],
+                    llm_provider=resolved_provider,
+                    model=resolved_model,
+                    input_mode=resolved_input_mode,
+                    native_caller=native_caller,
+                    text_caller=text_caller,
+                    claude_caller=claude_caller,
+                    max_tokens=max_tokens,
+                    claude_timeout_sec=claude_timeout_sec,
+                )
+                answer = parse_answers_response(response.response, [query])[query.idx]
+                api_call_id = _build_result_api_call_id(
+                    pdf_path=pdf_path,
+                    queries=[query],
+                    generation_mode=resolved_generation_mode,
+                )
+            else:
+                response = _call_model_for_doc(
+                    pdf_path=pdf_path,
+                    query=query,
+                    llm_provider=resolved_provider,
+                    model=resolved_model,
+                    input_mode=resolved_input_mode,
+                    native_caller=native_caller,
+                    text_caller=text_caller,
+                    claude_caller=claude_caller,
+                    max_tokens=max_tokens,
+                    claude_timeout_sec=claude_timeout_sec,
+                )
+                answer = parse_answer_response(response.response)
+                api_call_id = ""
             _merge_ground_truth(output_path, gt_key, answer)
-            results.append(
+            _record_result(
+                results,
                 DocRunResult(
                     doc_id=doc_id,
                     output_path=output_path,
@@ -192,18 +238,24 @@ def generate_ground_truth(
                     cache_hit=response.cache_hit,
                     answer=answer,
                     input_tokens=response.input_tokens,
+                    cached_input_tokens=response.cached_input_tokens,
                     output_tokens=response.output_tokens,
-                )
+                    cost_usd=response.cost_usd,
+                    api_call_id=api_call_id,
+                ),
+                progress_cost=progress_cost,
             )
         except Exception as exc:  # keep the batch moving across bad PDFs/API failures
-            results.append(
+            _record_result(
+                results,
                 DocRunResult(
                     doc_id=doc_id,
                     output_path=output_path,
                     status="failed",
                     query_idx=query.idx,
                     error=f"{type(exc).__name__}: {exc}",
-                )
+                ),
+                progress_cost=progress_cost,
             )
 
     return GenerationSummary(
@@ -226,19 +278,25 @@ def generate_ground_truth_for_queries(
     seed: int = 42,
     *,
     input_mode: InputMode = DEFAULT_INPUT_MODE,
+    generation_mode: GenerationMode = DEFAULT_GENERATION_MODE,
     cache_db: str = DEFAULT_CACHE_DB_PATH,
     max_tokens: int = DEFAULT_MAX_TOKENS,
     claude_timeout_sec: int = DEFAULT_CLAUDE_TIMEOUT_SEC,
+    progress_cost: bool = False,
 ) -> BatchGenerationSummary:
     """Generate ground-truth answers for multiple queries using doc-major order.
 
     This is the preferred entry point when running more than one query. It keeps
     the same document adjacent across query calls, which gives provider-side
     prompt caching the best chance to reuse the long document prefix.
+
+    Args:
+        progress_cost: Print per-call API usage/cost as the run progresses.
     """
     resolved_provider = normalize_llm_provider(llm_provider)
     resolved_model = resolve_model_for_provider(resolved_provider, model)
     resolved_input_mode = resolve_input_mode(resolved_provider, input_mode)
+    resolved_generation_mode = resolve_generation_mode(generation_mode)
     dataset_root = resolve_dataset_root(target_dir)
     queries = load_queries(dataset_root / "queries.json", query_indices)
     pdf_paths = sample_pdf_paths(dataset_root / "raw", num_doc=num_doc, seed=seed)
@@ -249,7 +307,7 @@ def generate_ground_truth_for_queries(
         NativePDFCacheCaller(cache_db) if resolved_input_mode == "native-pdf" else None
     )
     text_caller = (
-        CachedLLMCaller(cache_db)
+        AzureResponsesTextCacheCaller(cache_db)
         if resolved_provider == "azure" and resolved_input_mode == "text"
         else None
     )
@@ -267,16 +325,94 @@ def generate_ground_truth_for_queries(
             else None
         )
 
+        if resolved_generation_mode == "all":
+            pending_queries: list[QuerySpec] = []
+            for query in queries:
+                gt_key = str(query.idx)
+                if output_path.exists() and _has_existing_answer(output_path, gt_key):
+                    _record_result(
+                        results,
+                        DocRunResult(
+                            doc_id=doc_id,
+                            output_path=output_path,
+                            status="skipped_existing",
+                            query_idx=query.idx,
+                        ),
+                        progress_cost=progress_cost,
+                    )
+                else:
+                    pending_queries.append(query)
+
+            if not pending_queries:
+                continue
+
+            api_call_id = _build_result_api_call_id(
+                pdf_path=pdf_path,
+                queries=pending_queries,
+                generation_mode=resolved_generation_mode,
+            )
+            try:
+                response = _call_model_for_queries_for_doc(
+                    pdf_path=pdf_path,
+                    queries=pending_queries,
+                    llm_provider=resolved_provider,
+                    model=resolved_model,
+                    input_mode=resolved_input_mode,
+                    native_caller=native_caller,
+                    text_caller=text_caller,
+                    claude_caller=claude_caller,
+                    max_tokens=max_tokens,
+                    claude_timeout_sec=claude_timeout_sec,
+                    document_text=document_text,
+                )
+                answers = parse_answers_response(response.response, pending_queries)
+                _merge_ground_truth_answers(output_path, answers)
+                for query in pending_queries:
+                    _record_result(
+                        results,
+                        DocRunResult(
+                            doc_id=doc_id,
+                            output_path=output_path,
+                            status="generated",
+                            query_idx=query.idx,
+                            cache_hit=response.cache_hit,
+                            answer=answers[query.idx],
+                            input_tokens=response.input_tokens,
+                            cached_input_tokens=response.cached_input_tokens,
+                            output_tokens=response.output_tokens,
+                            cost_usd=response.cost_usd,
+                            api_call_id=api_call_id,
+                        ),
+                        progress_cost=progress_cost,
+                    )
+            except Exception as exc:  # keep the batch moving across bad PDFs/API failures
+                for query in pending_queries:
+                    _record_result(
+                        results,
+                        DocRunResult(
+                            doc_id=doc_id,
+                            output_path=output_path,
+                            status="failed",
+                            query_idx=query.idx,
+                            api_call_id=api_call_id,
+                            error=f"{type(exc).__name__}: {exc}",
+                        ),
+                        progress_cost=progress_cost,
+                    )
+            continue
+
         for query in queries:
             gt_key = str(query.idx)
             if output_path.exists() and _has_existing_answer(output_path, gt_key):
-                results.append(
+                _record_result(
+                    results,
                     DocRunResult(
                         doc_id=doc_id,
                         output_path=output_path,
                         status="skipped_existing",
                         query_idx=query.idx,
-                    )
+                    ),
+                    progress_cost=progress_cost,
                 )
                 continue
 
@@ -296,7 +432,8 @@ def generate_ground_truth_for_queries(
                 )
                 answer = parse_answer_response(response.response)
                 _merge_ground_truth(output_path, gt_key, answer)
-                results.append(
+                _record_result(
+                    results,
                     DocRunResult(
                         doc_id=doc_id,
                         output_path=output_path,
@@ -305,18 +442,23 @@ def generate_ground_truth_for_queries(
                         cache_hit=response.cache_hit,
                         answer=answer,
                         input_tokens=response.input_tokens,
+                        cached_input_tokens=response.cached_input_tokens,
                         output_tokens=response.output_tokens,
-                    )
+                        cost_usd=response.cost_usd,
+                    ),
+                    progress_cost=progress_cost,
                 )
             except Exception as exc:  # keep the batch moving across bad PDFs/API failures
-                results.append(
+                _record_result(
+                    results,
                     DocRunResult(
                         doc_id=doc_id,
                         output_path=output_path,
                         status="failed",
                         query_idx=query.idx,
                         error=f"{type(exc).__name__}: {exc}",
-                    )
+                    ),
+                    progress_cost=progress_cost,
                 )
 
     return BatchGenerationSummary(
@@ -355,10 +497,13 @@ class NativePDFCacheCaller:
         llm_provider: str,
         model: str,
         max_tokens: int,
+        response_schema: dict[str, Any] | None = None,
         temperature: float = 0,
     ) -> CacheResult:
         if llm_provider != "azure":
-            raise ValueError("native-pdf input mode currently supports only llm_provider='azure'")
+            raise ValueError(
+                "native-pdf input mode currently supports only llm_provider='azure'"
+            )
         resolved_model = _require_model(model)
         normalized_temperature = float(temperature)
         pdf_hash = _sha256_file(pdf_path)
@@ -368,6 +513,7 @@ class NativePDFCacheCaller:
             llm_provider=llm_provider,
             model=resolved_model,
             max_tokens=max_tokens,
+            response_schema=response_schema,
             temperature=normalized_temperature,
         )
 
@@ -389,11 +535,12 @@ class NativePDFCacheCaller:
                 )
 
         t0 = time.perf_counter()
-        response_text, input_tokens, output_tokens = _azure_responses_pdf_call(
+        call_result = _azure_responses_pdf_call(
             pdf_path=pdf_path,
             prompt=prompt,
             model=resolved_model,
             max_tokens=max_tokens,
+            response_schema=response_schema,
             temperature=normalized_temperature,
         )
         latency_ms = (time.perf_counter() - t0) * 1000.0
@@ -405,6 +552,7 @@ class NativePDFCacheCaller:
                     "pdf_name": pdf_path.name,
                     "pdf_sha256": pdf_hash,
                     "prompt": prompt,
+                    "response_schema": response_schema,
                 },
                 ensure_ascii=False,
                 sort_keys=True,
@@ -419,9 +567,9 @@ class NativePDFCacheCaller:
                 (
                     cache_key,
                     metadata,
-                    response_text,
-                    input_tokens,
-                    output_tokens,
+                    call_result.response,
+                    call_result.input_tokens,
+                    call_result.output_tokens,
                     latency_ms,
                     resolved_model,
                     llm_provider,
@@ -431,11 +579,112 @@ class NativePDFCacheCaller:
             conn.commit()
 
         return CacheResult(
-            response=response_text,
-            input_tokens=input_tokens,
-            output_tokens=output_tokens,
+            response=call_result.response,
+            input_tokens=call_result.input_tokens,
+            output_tokens=call_result.output_tokens,
             latency_ms=latency_ms,
             cache_hit=False,
+            cached_input_tokens=call_result.cached_input_tokens,
+            cost_usd=call_result.cost_usd,
+        )
+
+
+class AzureResponsesTextCacheCaller:
+    """Azure Responses API text caller with the shared SQLite LLM cache."""
+
+    def __init__(self, db_path: str = DEFAULT_CACHE_DB_PATH) -> None:
+        Path(db_path).parent.mkdir(parents=True, exist_ok=True)
+        self._db_path = db_path
+        self._local = threading.local()
+        conn = self._get_conn()
+        conn.execute(_CACHE_CREATE_TABLE_SQL)
+        conn.commit()
+
+    def _get_conn(self) -> sqlite3.Connection:
+        if not hasattr(self._local, "conn"):
+            self._local.conn = sqlite3.connect(self._db_path)
+            self._local.conn.execute(_CACHE_CREATE_TABLE_SQL)
+        return self._local.conn
+
+    def call(
+        self,
+        prompt: str,
+        llm_provider: str,
+        model: str,
+        max_tokens: int,
+        response_schema: dict[str, Any] | None = None,
+        temperature: float = 0,
+    ) -> CacheResult:
+        if llm_provider != "azure":
+            raise ValueError("text Responses input mode supports only azure")
+        resolved_model = _require_model(model)
+        normalized_temperature = float(temperature)
+        cache_key = _build_azure_text_cache_key(
+            prompt=prompt,
+            llm_provider=llm_provider,
+            model=resolved_model,
+            max_tokens=max_tokens,
+            response_schema=response_schema,
+            temperature=normalized_temperature,
+        )
+
+        conn = self._get_conn()
+        if normalized_temperature == 0.0:
+            row = conn.execute(
+                "SELECT response, input_tokens, output_tokens, latency_ms "
+                "FROM llm_cache WHERE cache_key = ?",
+                (cache_key,),
+            ).fetchone()
+            if row is not None:
+                response, input_tokens, output_tokens, latency_ms = row
+                return CacheResult(
+                    response=response,
+                    input_tokens=input_tokens,
+                    output_tokens=output_tokens,
+                    latency_ms=latency_ms,
+                    cache_hit=True,
+                )
+
+        t0 = time.perf_counter()
+        call_result = _azure_responses_text_call(
+            prompt=prompt,
+            model=resolved_model,
+            max_tokens=max_tokens,
+            response_schema=response_schema,
+            temperature=normalized_temperature,
+        )
+        latency_ms = (time.perf_counter() - t0) * 1000.0
+
+        if normalized_temperature == 0.0:
+            conn.execute(
+                """
+                INSERT OR IGNORE INTO llm_cache
+                    (cache_key, prompt_text, response, input_tokens, output_tokens,
+                     latency_ms, model, llm_provider, max_tokens)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    cache_key,
+                    prompt,
+                    call_result.response,
+                    call_result.input_tokens,
+                    call_result.output_tokens,
+                    latency_ms,
+                    resolved_model,
+                    llm_provider,
+                    max_tokens,
+                ),
+            )
+            conn.commit()
+
+        return CacheResult(
+            response=call_result.response,
+            input_tokens=call_result.input_tokens,
+            output_tokens=call_result.output_tokens,
+            latency_ms=latency_ms,
+            cache_hit=False,
+            cached_input_tokens=call_result.cached_input_tokens,
+            cost_usd=call_result.cost_usd,
         )
 
 
@@ -466,6 +715,7 @@ class ClaudeCodeCacheCaller:
         input_mode: ResolvedInputMode,
         max_tokens: int,
         timeout_sec: int,
+        response_schema: dict[str, Any] | None = None,
     ) -> CacheResult:
         if llm_provider != "claude-code":
             raise ValueError("Claude Code caller requires llm_provider='claude-code'")
@@ -484,6 +734,7 @@ class ClaudeCodeCacheCaller:
             input_mode=input_mode,
             max_tokens=max_tokens,
             timeout_sec=timeout_sec,
+            response_schema=response_schema,
         )
 
         conn = self._get_conn()
@@ -509,6 +760,7 @@ class ClaudeCodeCacheCaller:
             model=resolved_model,
             input_mode=input_mode,
             timeout_sec=timeout_sec,
+            response_schema=response_schema or _answer_response_schema(),
         )
         latency_ms = (time.perf_counter() - t0) * 1000.0
 
@@ -519,6 +771,7 @@ class ClaudeCodeCacheCaller:
                 "pdf_name": pdf_path.name,
                 "pdf_sha256": pdf_hash,
                 "prompt_sha256": prompt_hash,
+                "response_schema": response_schema,
                 "timeout_sec": timeout_sec,
             },
             ensure_ascii=False,
@@ -593,6 +846,13 @@ def resolve_input_mode(llm_provider: str, input_mode: InputMode) -> ResolvedInpu
             )
         return "claude-read-pdf"
     raise ValueError("input_mode must be one of: auto, native-pdf, text, claude-read-pdf")
+
+
+def resolve_generation_mode(generation_mode: str) -> GenerationMode:
+    mode = str(generation_mode).strip().lower().replace("_", "-")
+    if mode in {"single", "all"}:
+        return mode  # type: ignore[return-value]
+    raise ValueError("generation_mode must be one of: single, all")
 
 
 def resolve_dataset_root(target_dir: str | Path) -> Path:
@@ -679,7 +939,44 @@ def parse_answer_response(raw_response: str) -> Any:
     data = _loads_json_object(raw_response)
     if "answer" not in data:
         raise ValueError("LLM response JSON must contain an 'answer' field")
-    answer = data["answer"]
+    return _normalize_answer_value(data["answer"])
+
+
+def parse_answers_response(
+    raw_response: str, queries: Sequence[QuerySpec]
+) -> dict[int, Any]:
+    data = _loads_json_object(raw_response)
+    answers = data.get("answers")
+    if not isinstance(answers, list):
+        raise ValueError("LLM response JSON must contain an 'answers' list")
+
+    expected = {query.idx for query in queries}
+    parsed: dict[int, Any] = {}
+    for entry in answers:
+        if not isinstance(entry, dict):
+            raise ValueError("Each answers entry must be a JSON object")
+        raw_query_idx = entry.get("query_idx")
+        if isinstance(raw_query_idx, int):
+            query_idx = raw_query_idx
+        elif isinstance(raw_query_idx, str) and raw_query_idx.isdigit():
+            query_idx = int(raw_query_idx)
+        else:
+            raise ValueError("Each answers entry must include an integer query_idx")
+        if query_idx not in expected:
+            raise ValueError(f"Unexpected answer for query_idx={query_idx}")
+        if query_idx in parsed:
+            raise ValueError(f"Duplicate answer for query_idx={query_idx}")
+        if "answer" not in entry:
+            raise ValueError(f"Answer entry for query_idx={query_idx} is missing answer")
+        parsed[query_idx] = _normalize_answer_value(entry["answer"])
+
+    missing = sorted(expected - set(parsed))
+    if missing:
+        raise ValueError(f"Missing answers for query indices: {missing}")
+    return parsed
+
+
+def _normalize_answer_value(answer: Any) -> Any:
     if answer is None:
         return "None"
     if isinstance(answer, str):
@@ -696,13 +993,14 @@ def _call_model_for_doc(
     model: str,
     input_mode: ResolvedInputMode,
     native_caller: NativePDFCacheCaller | None,
-    text_caller: CachedLLMCaller | None,
+    text_caller: AzureResponsesTextCacheCaller | None,
     claude_caller: ClaudeCodeCacheCaller | None,
     max_tokens: int,
     claude_timeout_sec: int,
     document_text: str | None = None,
 ) -> CacheResult:
     prompt = build_ground_truth_prompt(query=query, doc_id=pdf_path.stem)
+    response_schema = _answer_response_schema()
     if input_mode == "native-pdf":
         if native_caller is None:
             raise RuntimeError("native PDF caller is not initialized")
@@ -712,6 +1010,7 @@ def _call_model_for_doc(
             llm_provider=llm_provider,
             model=model,
             max_tokens=max_tokens,
+            response_schema=response_schema,
             temperature=0,
         )
     if input_mode == "text":
@@ -736,6 +1035,7 @@ def _call_model_for_doc(
                 input_mode=input_mode,
                 max_tokens=max_tokens,
                 timeout_sec=claude_timeout_sec,
+                response_schema=response_schema,
             )
         if text_caller is None:
             raise RuntimeError("text caller is not initialized")
@@ -744,6 +1044,7 @@ def _call_model_for_doc(
             llm_provider=llm_provider,
             model=model,
             max_tokens=max_tokens,
+            response_schema=response_schema,
             temperature=0,
         )
     if input_mode == "claude-read-pdf":
@@ -763,6 +1064,91 @@ def _call_model_for_doc(
             input_mode=input_mode,
             max_tokens=max_tokens,
             timeout_sec=claude_timeout_sec,
+            response_schema=response_schema,
+        )
+    raise ValueError(f"Unsupported input_mode={input_mode!r}")
+
+
+def _call_model_for_queries_for_doc(
+    *,
+    pdf_path: Path,
+    queries: Sequence[QuerySpec],
+    llm_provider: str,
+    model: str,
+    input_mode: ResolvedInputMode,
+    native_caller: NativePDFCacheCaller | None,
+    text_caller: AzureResponsesTextCacheCaller | None,
+    claude_caller: ClaudeCodeCacheCaller | None,
+    max_tokens: int,
+    claude_timeout_sec: int,
+    document_text: str | None = None,
+) -> CacheResult:
+    prompt = build_ground_truth_all_prompt(queries=queries, doc_id=pdf_path.stem)
+    response_schema = _answers_response_schema(queries)
+    if input_mode == "native-pdf":
+        if native_caller is None:
+            raise RuntimeError("native PDF caller is not initialized")
+        return native_caller.call(
+            pdf_path=pdf_path,
+            prompt=prompt,
+            llm_provider=llm_provider,
+            model=model,
+            max_tokens=max_tokens,
+            response_schema=response_schema,
+            temperature=0,
+        )
+    if input_mode == "text":
+        resolved_document_text = (
+            document_text
+            if document_text is not None
+            else _extract_pdf_text_for_prompt(pdf_path)
+        )
+        text_prompt = build_ground_truth_all_text_prompt(
+            queries=queries,
+            doc_id=pdf_path.stem,
+            document_text=resolved_document_text,
+        )
+        if llm_provider == "claude-code":
+            if claude_caller is None:
+                raise RuntimeError("Claude Code caller is not initialized")
+            return claude_caller.call(
+                pdf_path=pdf_path,
+                prompt=text_prompt,
+                llm_provider=llm_provider,
+                model=model,
+                input_mode=input_mode,
+                max_tokens=max_tokens,
+                timeout_sec=claude_timeout_sec,
+                response_schema=response_schema,
+            )
+        if text_caller is None:
+            raise RuntimeError("text caller is not initialized")
+        return text_caller.call(
+            text_prompt,
+            llm_provider=llm_provider,
+            model=model,
+            max_tokens=max_tokens,
+            response_schema=response_schema,
+            temperature=0,
+        )
+    if input_mode == "claude-read-pdf":
+        if claude_caller is None:
+            raise RuntimeError("Claude Code caller is not initialized")
+        prompt_with_path = (
+            prompt
+            + "\n\n"
+            + f"Local PDF path: {pdf_path}\n"
+            + "Use the Read tool to inspect this local PDF file. Do not use outside knowledge."
+        )
+        return claude_caller.call(
+            pdf_path=pdf_path,
+            prompt=prompt_with_path,
+            llm_provider=llm_provider,
+            model=model,
+            input_mode=input_mode,
+            max_tokens=max_tokens,
+            timeout_sec=claude_timeout_sec,
+            response_schema=response_schema,
         )
     raise ValueError(f"Unsupported input_mode={input_mode!r}")
 
@@ -795,6 +1181,30 @@ def build_ground_truth_text_prompt(
     )
 
 
+def build_ground_truth_all_prompt(*, queries: Sequence[QuerySpec], doc_id: str) -> str:
+    return (
+        _ground_truth_all_instructions()
+        + "\n\n"
+        f"Document id: {doc_id}\n"
+        + _format_query_list(queries)
+    )
+
+
+def build_ground_truth_all_text_prompt(
+    *, queries: Sequence[QuerySpec], doc_id: str, document_text: str
+) -> str:
+    """Build a cache-friendly multi-query text prompt with document before queries."""
+    return (
+        _ground_truth_all_instructions()
+        + "\n\n"
+        f"Document id: {doc_id}\n\n"
+        + document_text
+        + "\n\n"
+        + "[QUESTIONS]\n"
+        + _format_query_list(queries)
+    )
+
+
 def _ground_truth_instructions() -> str:
     return (
         "You generate gold ground-truth answers for a PDF question-answering benchmark.\n"
@@ -806,6 +1216,30 @@ def _ground_truth_instructions() -> str:
         "question such as \"not disclosed\" or \"not applicable\"; otherwise use \"None\".\n"
         "Return exactly one valid JSON object and no markdown:\n"
         "{\"answer\": <answer matching answer_type>, \"support\": \"short evidence quote or page note\"}"
+    )
+
+
+def _ground_truth_all_instructions() -> str:
+    return (
+        "You generate gold ground-truth answers for a PDF question-answering benchmark.\n"
+        "Use only the attached PDF/document content. Do not use outside knowledge.\n"
+        "Read the entire document before answering. Preserve names, docket numbers, dates, "
+        "statutes, and numeric values exactly as presented when possible.\n"
+        "Answer every listed question exactly once. If an answer is a list, return every "
+        "distinct answer in document order. If requested information is absent, use an "
+        "explicit string required by the question such as \"not disclosed\" or "
+        "\"not applicable\"; otherwise use \"None\"."
+    )
+
+
+def _format_query_list(queries: Sequence[QuerySpec]) -> str:
+    return "\n".join(
+        (
+            f"Question index: {query.idx}\n"
+            f"Question: {query.text}\n"
+            f"Answer type: {query.answer_type}\n"
+        )
+        for query in queries
     )
 
 
@@ -828,17 +1262,10 @@ def _azure_responses_pdf_call(
     prompt: str,
     model: str,
     max_tokens: int,
+    response_schema: dict[str, Any] | None,
     temperature: float,
-) -> tuple[str, int, int]:
-    env_prefix = _azure_env_prefix_for_model(model)
-    api_key = _require_env(f"{env_prefix}_API_KEY")
-    endpoint = _require_env(f"{env_prefix}_API_BASE").rstrip("/")
-    deployment = _require_env(f"{env_prefix}_DEPLOYMENT")
-
-    client = OpenAI(
-        base_url=f"{endpoint}/openai/v1/",
-        api_key=api_key,
-    )
+) -> AzureResponsesCallResult:
+    client, deployment = _azure_responses_client_and_deployment(model)
     file_data = base64.b64encode(pdf_path.read_bytes()).decode("utf-8")
     response = client.responses.create(
         model=deployment,
@@ -856,15 +1283,95 @@ def _azure_responses_pdf_call(
             }
         ],
         max_output_tokens=max_tokens,
+        text=_responses_text_config(response_schema, name="gt_gen_single_answer"),
         temperature=temperature,
     )
     answer = str(getattr(response, "output_text", "")).strip()
     if not answer:
         raise ValueError("Azure Responses API returned empty output_text")
     usage = getattr(response, "usage", None)
-    input_tokens = _usage_int(usage, "input_tokens", fallback=estimate_tokens(prompt))
-    output_tokens = _usage_int(usage, "output_tokens", fallback=estimate_tokens(answer))
-    return answer, input_tokens, output_tokens
+    return _build_azure_call_result(
+        answer=answer,
+        usage=usage,
+        model=model,
+    )
+
+
+def _azure_responses_text_call(
+    *,
+    prompt: str,
+    model: str,
+    max_tokens: int,
+    response_schema: dict[str, Any] | None,
+    temperature: float,
+) -> AzureResponsesCallResult:
+    client, deployment = _azure_responses_client_and_deployment(model)
+    response = client.responses.create(
+        model=deployment,
+        input=prompt,
+        max_output_tokens=max_tokens,
+        text=_responses_text_config(response_schema, name="gt_gen_single_answer"),
+        temperature=temperature,
+    )
+    answer = str(getattr(response, "output_text", "")).strip()
+    if not answer:
+        raise ValueError("Azure Responses API returned empty output_text")
+    usage = getattr(response, "usage", None)
+    return _build_azure_call_result(
+        answer=answer,
+        usage=usage,
+        model=model,
+    )
+
+
+def _azure_responses_client_and_deployment(model: str) -> tuple[OpenAI, str]:
+    env_prefix = _azure_env_prefix_for_model(model)
+    api_key = _require_env(f"{env_prefix}_API_KEY")
+    endpoint = _require_env(f"{env_prefix}_API_BASE").rstrip("/")
+    deployment = _require_env(f"{env_prefix}_DEPLOYMENT")
+    client = OpenAI(
+        base_url=f"{endpoint}/openai/v1/",
+        api_key=api_key,
+    )
+    return client, deployment
+
+
+def _build_azure_call_result(
+    *,
+    answer: str,
+    usage: Any,
+    model: str,
+) -> AzureResponsesCallResult:
+    if usage is None:
+        raise ValueError("Azure Responses API did not return usage")
+    input_tokens = _usage_int(usage, "input_tokens", fallback=-1)
+    if input_tokens < 0:
+        raise ValueError("Azure Responses API usage did not include input_tokens")
+    cached_input_tokens = min(
+        _usage_cached_input_tokens(usage),
+        input_tokens,
+    )
+    output_tokens = _usage_int(
+        usage,
+        "output_tokens",
+        fallback=-1,
+    )
+    if output_tokens < 0:
+        raise ValueError("Azure Responses API usage did not include output_tokens")
+    cost_usd = compute_cost_with_cached_input(
+        input_tokens=input_tokens,
+        cached_input_tokens=cached_input_tokens,
+        output_tokens=output_tokens,
+        llm_provider="azure",
+        model=model,
+    )
+    return AzureResponsesCallResult(
+        response=answer,
+        input_tokens=input_tokens,
+        cached_input_tokens=cached_input_tokens,
+        output_tokens=output_tokens,
+        cost_usd=cost_usd,
+    )
 
 
 def _claude_code_call(
@@ -874,6 +1381,7 @@ def _claude_code_call(
     model: str,
     input_mode: ResolvedInputMode,
     timeout_sec: int,
+    response_schema: dict[str, Any],
 ) -> tuple[str, int, int]:
     cmd = [
         "claude",
@@ -886,7 +1394,7 @@ def _claude_code_call(
         "--permission-mode",
         "dontAsk",
         "--json-schema",
-        json.dumps(_answer_response_schema(), separators=(",", ":")),
+        json.dumps(response_schema, separators=(",", ":")),
     ]
     if input_mode == "claude-read-pdf":
         cmd.extend(["--tools=Read", "--add-dir", str(pdf_path.parent)])
@@ -930,6 +1438,53 @@ def _answer_response_schema() -> dict[str, Any]:
     }
 
 
+def _answers_response_schema(queries: Sequence[QuerySpec]) -> dict[str, Any]:
+    allowed_query_indices = [query.idx for query in queries]
+    return {
+        "type": "object",
+        "additionalProperties": False,
+        "properties": {
+            "answers": {
+                "type": "array",
+                "minItems": len(allowed_query_indices),
+                "maxItems": len(allowed_query_indices),
+                "items": {
+                    "type": "object",
+                    "additionalProperties": False,
+                    "properties": {
+                        "query_idx": {"type": "integer", "enum": allowed_query_indices},
+                        "answer": {},
+                        "support": {"type": "string"},
+                    },
+                    "required": ["query_idx", "answer", "support"],
+                },
+            }
+        },
+        "required": ["answers"],
+    }
+
+
+def _responses_text_config(
+    response_schema: dict[str, Any] | None,
+    *,
+    name: str,
+) -> dict[str, Any] | None:
+    if response_schema is None:
+        return None
+    schema_name = (
+        "gt_gen_multi_answers"
+        if "answers" in response_schema.get("properties", {})
+        else name
+    )
+    return {
+        "format": {
+            "type": "json_schema",
+            "name": schema_name,
+            "schema": response_schema,
+        }
+    }
+
+
 def _parse_claude_cli_stdout(stdout: str) -> dict[str, Any]:
     text = stdout.strip()
     if not text:
@@ -969,6 +1524,17 @@ def _usage_int(usage: Any, attr: str, fallback: int) -> int:
     return fallback
 
 
+def _usage_cached_input_tokens(usage: Any) -> int:
+    details = getattr(usage, "input_tokens_details", None)
+    value = _usage_int(details, "cached_tokens", fallback=0)
+    if value:
+        return value
+    if isinstance(usage, dict):
+        dict_details = usage.get("input_tokens_details")
+        return _usage_int(dict_details, "cached_tokens", fallback=0)
+    return 0
+
+
 def _azure_env_prefix_for_model(model: str) -> str:
     resolved_model = _require_model(model)
     if resolved_model.startswith("gpt-5.4-mini"):
@@ -1003,6 +1569,7 @@ def _build_native_pdf_cache_key(
     llm_provider: str,
     model: str,
     max_tokens: int,
+    response_schema: dict[str, Any] | None,
     temperature: float,
 ) -> str:
     payload = json.dumps(
@@ -1013,6 +1580,33 @@ def _build_native_pdf_cache_key(
             "llm_provider": llm_provider,
             "model": model,
             "max_tokens": max_tokens,
+            "response_schema": _schema_identity(response_schema),
+            "temperature": temperature,
+        },
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+    )
+    return hashlib.sha256(payload.encode("utf-8")).hexdigest()
+
+
+def _build_azure_text_cache_key(
+    *,
+    prompt: str,
+    llm_provider: str,
+    model: str,
+    max_tokens: int,
+    response_schema: dict[str, Any] | None,
+    temperature: float,
+) -> str:
+    payload = json.dumps(
+        {
+            "mode": "gt_gen_azure_responses_text_v1",
+            "prompt": prompt,
+            "llm_provider": llm_provider,
+            "model": model,
+            "max_tokens": max_tokens,
+            "response_schema": _schema_identity(response_schema),
             "temperature": temperature,
         },
         ensure_ascii=False,
@@ -1031,6 +1625,7 @@ def _build_claude_code_cache_key(
     input_mode: ResolvedInputMode,
     max_tokens: int,
     timeout_sec: int,
+    response_schema: dict[str, Any] | None,
 ) -> str:
     payload = json.dumps(
         {
@@ -1041,6 +1636,7 @@ def _build_claude_code_cache_key(
             "model": model,
             "input_mode": input_mode,
             "max_tokens": max_tokens,
+            "response_schema": _schema_identity(response_schema),
             "timeout_sec": timeout_sec,
         },
         ensure_ascii=False,
@@ -1060,6 +1656,14 @@ def _sha256_file(path: Path) -> str:
 
 def _sha256_text(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
+def _schema_identity(response_schema: dict[str, Any] | None) -> str:
+    if response_schema is None:
+        return ""
+    return json.dumps(
+        response_schema, ensure_ascii=False, sort_keys=True, separators=(",", ":")
+    )
 
 
 def _loads_json_object(raw_response: str) -> dict[str, Any]:
@@ -1117,6 +1721,19 @@ def _merge_ground_truth(output_path: Path, gt_key: str, answer: Any) -> None:
     _atomic_write_json(output_path, data)
 
 
+def _merge_ground_truth_answers(output_path: Path, answers: dict[int, Any]) -> None:
+    data: dict[str, Any] = {}
+    if output_path.exists():
+        with output_path.open("r", encoding="utf-8") as f:
+            loaded = json.load(f)
+        if not isinstance(loaded, dict):
+            raise ValueError(f"{output_path} must contain a JSON object")
+        data = loaded
+    for query_idx, answer in answers.items():
+        data[str(query_idx)] = answer
+    _atomic_write_json(output_path, data)
+
+
 def _atomic_write_json(output_path: Path, data: dict[str, Any]) -> None:
     output_path.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.NamedTemporaryFile(
@@ -1155,12 +1772,26 @@ def _build_parser() -> argparse.ArgumentParser:
         choices=["auto", "native-pdf", "text", "claude-read-pdf"],
         default=DEFAULT_INPUT_MODE,
     )
+    parser.add_argument(
+        "--generation-mode",
+        choices=["single", "all"],
+        default=DEFAULT_GENERATION_MODE,
+        help=(
+            "single answers one question per API call; all answers selected "
+            "questions per document in one API call."
+        ),
+    )
     parser.add_argument("--cache-db", default=DEFAULT_CACHE_DB_PATH)
     parser.add_argument("--max-tokens", type=int, default=DEFAULT_MAX_TOKENS)
     parser.add_argument(
         "--claude-timeout-sec",
         type=int,
         default=DEFAULT_CLAUDE_TIMEOUT_SEC,
+    )
+    parser.add_argument(
+        "--progress-cost",
+        action="store_true",
+        help="Print per-call API token usage and cumulative cost while running.",
     )
     return parser
 
@@ -1169,18 +1800,25 @@ def main(
     argv: Sequence[str] | None = None,
 ) -> GenerationSummary | BatchGenerationSummary:
     args = _build_parser().parse_args(argv)
-    if args.query_indices:
+    if args.query_indices or args.generation_mode == "all":
+        query_indices = (
+            _parse_query_indices_arg(args.query_indices)
+            if args.query_indices
+            else [args.query_idx]
+        )
         summary = generate_ground_truth_for_queries(
             target_dir=args.target_dir,
-            query_indices=_parse_query_indices_arg(args.query_indices),
+            query_indices=query_indices,
             num_doc=args.num_doc,
             llm_provider=args.llm_provider,
             model=args.model,
             seed=args.seed,
             input_mode=args.input_mode,
+            generation_mode=args.generation_mode,
             cache_db=args.cache_db,
             max_tokens=args.max_tokens,
             claude_timeout_sec=args.claude_timeout_sec,
+            progress_cost=args.progress_cost,
         )
         _print_batch_summary(summary)
         return summary
@@ -1193,9 +1831,11 @@ def main(
         model=args.model,
         seed=args.seed,
         input_mode=args.input_mode,
+        generation_mode=args.generation_mode,
         cache_db=args.cache_db,
         max_tokens=args.max_tokens,
         claude_timeout_sec=args.claude_timeout_sec,
+        progress_cost=args.progress_cost,
     )
     _print_summary(summary)
     return summary
@@ -1223,6 +1863,105 @@ def _parse_query_indices_arg(raw: str) -> list[int] | None:
     return indices
 
 
+def _record_result(
+    results: list[DocRunResult],
+    result: DocRunResult,
+    *,
+    progress_cost: bool,
+) -> None:
+    results.append(result)
+    if progress_cost:
+        _print_progress_cost(result, results)
+
+
+def _build_result_api_call_id(
+    *,
+    pdf_path: Path,
+    queries: Sequence[QuerySpec],
+    generation_mode: GenerationMode,
+) -> str:
+    query_part = ",".join(str(query.idx) for query in queries)
+    return f"{generation_mode}:{pdf_path.stem}:{query_part}"
+
+
+def _api_usage_totals(
+    results: Sequence[DocRunResult],
+) -> tuple[int, int, int, float, int]:
+    input_tokens = 0
+    cached_input_tokens = 0
+    output_tokens = 0
+    cost_usd = 0.0
+    local_cache_hits = 0
+    seen_usage_keys: set[str] = set()
+    for position, result in enumerate(results):
+        if result.status != "generated":
+            continue
+        usage_key = result.api_call_id or f"result:{position}"
+        if usage_key in seen_usage_keys:
+            continue
+        seen_usage_keys.add(usage_key)
+        if result.cache_hit:
+            local_cache_hits += 1
+            continue
+        input_tokens += result.input_tokens
+        cached_input_tokens += result.cached_input_tokens
+        output_tokens += result.output_tokens
+        cost_usd += result.cost_usd
+    return input_tokens, cached_input_tokens, output_tokens, cost_usd, local_cache_hits
+
+
+def _format_usd(value: float) -> str:
+    return f"${value:.6f}"
+
+
+def _print_progress_cost(
+    result: DocRunResult,
+    results: Sequence[DocRunResult],
+) -> None:
+    if result.api_call_id and any(
+        previous.api_call_id == result.api_call_id for previous in results[:-1]
+    ):
+        return
+    input_tokens, cached_input_tokens, output_tokens, cost_usd, _local_hits = (
+        _api_usage_totals(results)
+    )
+    total = _format_usd(cost_usd)
+    if result.status == "failed":
+        print(f"[GT_COST] q{result.query_idx} {result.doc_id}: failed total={total}")
+        return
+    if result.status == "skipped_existing":
+        print(f"[GT_COST] q{result.query_idx} {result.doc_id}: skipped total={total}")
+        return
+    if result.cache_hit:
+        print(
+            f"[GT_COST] q{result.query_idx} {result.doc_id}: "
+            f"local_cache_hit total={total}"
+        )
+        return
+    print(
+        f"[GT_COST] q{result.query_idx} {result.doc_id}: "
+        f"input={result.input_tokens} "
+        f"cached_input={result.cached_input_tokens} "
+        f"output={result.output_tokens} "
+        f"cost={_format_usd(result.cost_usd)} "
+        f"run_input={input_tokens} "
+        f"run_cached_input={cached_input_tokens} "
+        f"run_output={output_tokens} "
+        f"total={total}"
+    )
+
+
+def _print_usage_summary(results: Sequence[DocRunResult]) -> None:
+    input_tokens, cached_input_tokens, output_tokens, cost_usd, local_cache_hits = (
+        _api_usage_totals(results)
+    )
+    print(f"API Input:    {input_tokens}")
+    print(f"API Cached:   {cached_input_tokens}")
+    print(f"API Output:   {output_tokens}")
+    print(f"API Cost:     {_format_usd(cost_usd)}")
+    print(f"Local Cache:  {local_cache_hits}")
+
+
 def _print_summary(summary: GenerationSummary) -> None:
     print("=== Ground Truth Generation ===")
     print(f"Dataset Root: {summary.dataset_root}")
@@ -1231,6 +1970,7 @@ def _print_summary(summary: GenerationSummary) -> None:
     print(f"Generated:    {summary.generated_count}")
     print(f"Skipped:      {summary.skipped_existing_count}")
     print(f"Failed:       {summary.failed_count}")
+    _print_usage_summary(summary.results)
     for result in summary.results:
         suffix = " cache_hit" if result.cache_hit else ""
         if result.status == "failed":
@@ -1250,6 +1990,7 @@ def _print_batch_summary(summary: BatchGenerationSummary) -> None:
     print(f"Generated:    {summary.generated_count}")
     print(f"Skipped:      {summary.skipped_existing_count}")
     print(f"Failed:       {summary.failed_count}")
+    _print_usage_summary(summary.results)
     for result in summary.results:
         suffix = " cache_hit" if result.cache_hit else ""
         if result.status == "failed":

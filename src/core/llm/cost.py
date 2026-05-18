@@ -1,20 +1,21 @@
 """
-LLM 调用费用计算
+LLM call cost calculation.
 
-基于 token 数量和 provider 定价计算 LLM API 调用费用。
-所有 provider 的定价集中在此管理。
+Centralized token-based API pricing for all supported providers.
 """
 
 from core.config import (
     GPT_PRICE_PER_MILLION_INPUT,
     GPT_PRICE_PER_MILLION_OUTPUT,
+    GPT_54_MINI_PRICE_PER_MILLION_CACHED_INPUT,
     GPT_54_MINI_PRICE_PER_MILLION_INPUT,
     GPT_54_MINI_PRICE_PER_MILLION_OUTPUT,
+    GPT_54_PRICE_PER_MILLION_CACHED_INPUT,
     GPT_54_PRICE_PER_MILLION_INPUT,
     GPT_54_PRICE_PER_MILLION_OUTPUT,
 )
 
-# provider → (input_price, output_price) per million tokens
+# provider -> (input_price, output_price) per million tokens
 PROVIDER_PRICES: dict[str, tuple[float, float]] = {
     "azure": (GPT_PRICE_PER_MILLION_INPUT, GPT_PRICE_PER_MILLION_OUTPUT),
 }
@@ -46,8 +47,16 @@ MODEL_PREFIX_PRICES: tuple[tuple[str, tuple[float, float]], ...] = (
     ("gpt-5.4", (GPT_54_PRICE_PER_MILLION_INPUT, GPT_54_PRICE_PER_MILLION_OUTPUT)),
 )
 
-# mini 模型定价（跨 provider 统一）
+MODEL_PREFIX_CACHED_INPUT_PRICES: tuple[tuple[str, float], ...] = (
+    ("openai/gpt-5.4-mini", GPT_54_MINI_PRICE_PER_MILLION_CACHED_INPUT),
+    ("gpt-5.4-mini", GPT_54_MINI_PRICE_PER_MILLION_CACHED_INPUT),
+    ("openai/gpt-5.4", GPT_54_PRICE_PER_MILLION_CACHED_INPUT),
+    ("gpt-5.4", GPT_54_PRICE_PER_MILLION_CACHED_INPUT),
+)
+
+# Generic mini-model pricing shared across providers.
 MINI_PRICE_INPUT = 0.15
+MINI_PRICE_CACHED_INPUT = 0.075
 MINI_PRICE_OUTPUT = 0.60
 
 
@@ -57,25 +66,52 @@ def compute_cost(
     llm_provider: str,
     model: str,
 ) -> float:
-    """计算 LLM 调用费用（美元）。
+    """Compute LLM call cost in USD.
 
-    参数:
-        input_tokens: 输入 token 数量
-        output_tokens: 输出 token 数量
-        llm_provider: 提供商名称（azure/openrouter）
-        model: 模型名称（用于 provider 内部的模型级定价）
+    Args:
+        input_tokens: Number of input tokens.
+        output_tokens: Number of output tokens.
+        llm_provider: Provider name, such as azure or openrouter.
+        model: Model name for provider-specific pricing.
 
-    返回:
-        费用（美元）
+    Returns:
+        Cost in USD.
 
-    异常:
-        ValueError: 未知的 provider
+    Raises:
+        ValueError: Unknown provider or missing model pricing.
     """
     if input_tokens == 0 and output_tokens == 0:
         return 0.0
 
     price_input, price_output = get_prices(llm_provider, model=model)
     return (input_tokens * price_input + output_tokens * price_output) / 1_000_000
+
+
+def compute_cost_with_cached_input(
+    input_tokens: int,
+    cached_input_tokens: int,
+    output_tokens: int,
+    llm_provider: str,
+    model: str,
+) -> float:
+    """Compute LLM call cost in USD with cached-input pricing.
+
+    API usage typically reports cached input tokens inside total input tokens,
+    so cached tokens are split out and billed at the cached-input rate.
+    """
+    if input_tokens == 0 and cached_input_tokens == 0 and output_tokens == 0:
+        return 0.0
+
+    input_price, cached_input_price, output_price = get_prices_with_cached_input(
+        llm_provider, model=model
+    )
+    cached_tokens = max(0, min(cached_input_tokens, input_tokens))
+    uncached_tokens = max(0, input_tokens - cached_tokens)
+    return (
+        uncached_tokens * input_price
+        + cached_tokens * cached_input_price
+        + output_tokens * output_price
+    ) / 1_000_000
 
 
 def _normalize_model_name(model: str) -> str:
@@ -96,14 +132,22 @@ def _match_model_prefix_price(normalized_model: str) -> tuple[float, float] | No
     return None
 
 
+def _match_model_prefix_cached_input_price(normalized_model: str) -> float | None:
+    for prefix, price in MODEL_PREFIX_CACHED_INPUT_PRICES:
+        if normalized_model == prefix or normalized_model.startswith(f"{prefix}-"):
+            return price
+    return None
+
+
 def get_prices(llm_provider: str, model: str) -> tuple[float, float]:
-    """获取指定 provider/model 的 (input_price, output_price) per million tokens。
+    """Return (input_price, output_price) per million tokens.
 
-    参数:
-        llm_provider: 提供商名称
-        model: 模型名称（含 "mini" 时使用 mini 定价）
+    Args:
+        llm_provider: Provider name.
+        model: Model name. Generic mini pricing is used for mini models
+            without model-specific pricing.
 
-    返回:
+    Returns:
         (input_price_per_million, output_price_per_million)
     """
     normalized_model = _normalize_model_name(model)
@@ -122,6 +166,31 @@ def get_prices(llm_provider: str, model: str) -> tuple[float, float]:
         )
 
     if llm_provider not in PROVIDER_PRICES:
-        raise ValueError(f"未知的 llm_provider: {llm_provider!r}")
+        raise ValueError(f"Unknown llm_provider: {llm_provider!r}")
 
     return PROVIDER_PRICES[llm_provider]
+
+
+def get_prices_with_cached_input(
+    llm_provider: str, model: str
+) -> tuple[float, float, float]:
+    """Return (input, cached_input, output) prices per million tokens."""
+    normalized_model = _normalize_model_name(model)
+    input_price, output_price = get_prices(llm_provider, model=model)
+    normalized_provider = str(llm_provider).strip().lower()
+    cached_input_price = (
+        _match_model_prefix_cached_input_price(normalized_model)
+        if normalized_provider == "azure"
+        else None
+    )
+    if cached_input_price is not None:
+        return input_price, cached_input_price, output_price
+    if normalized_provider == "azure" and "mini" in normalized_model and (
+        input_price,
+        output_price,
+    ) == (
+        MINI_PRICE_INPUT,
+        MINI_PRICE_OUTPUT,
+    ):
+        return input_price, MINI_PRICE_CACHED_INPUT, output_price
+    return input_price, input_price, output_price
