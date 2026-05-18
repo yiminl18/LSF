@@ -4,23 +4,20 @@ This document describes how to (a) connect to the GCP servers that run the LSF p
 
 ---
 
-## 0. Servers
+## 0. Server
 
-Two GCP VMs are available. Both live in project `doc-structure`, zone `us-central1-a`. **Whenever this doc says "the server", it means `lsf`.**
+The server is a single GCP VM:
 
-| Priority | VM instance name | Role | Disk | Status |
-|----------|-----------------|------|------|--------|
-| **`lsf`** ⭐ | `lsf` | **Default** — primary working server | 9.7 G root + **100 G `/mnt/data`** (where `~/LSF` lives) | Active, fully provisioned |
-| `doc-structure` | `doc-structure` | Secondary — older box, kept for historical runs | 9.7 G root only | Active but space-constrained; prefer `lsf` for new work |
+| VM instance name | Project (GCP) | Zone | Disk |
+|------------------|---------------|------|------|
+| **`lsf`** | `doc-structure` | `us-central1-a` | 9.7 G root + **100 G `/mnt/data`** (where `~/LSF` lives) |
 
-Both share the same GitHub auth and the same Azure API keys (mirrored). To target the non-default server, pass the instance name explicitly:
+> The GCP **project** happens to be named `doc-structure` — this is the project identifier used by `gcloud`, not a server. Don't confuse it with anything else.
+
+Connect with:
 
 ```bash
-# Default (lsf) — these forms are interchangeable
 gcloud compute ssh lsf --project=doc-structure --zone=us-central1-a --tunnel-through-iap
-
-# Target doc-structure explicitly when you need to
-gcloud compute ssh doc-structure --project=doc-structure --zone=us-central1-a --tunnel-through-iap
 ```
 
 ---
@@ -96,17 +93,9 @@ gcloud compute ssh lsf \
 
 Server-side, the project lives at `~/LSF/` — a symlink to `/mnt/data/LSF` on the 100 GB extra disk, so there's plenty of room for intermediates.
 
-To target the secondary `doc-structure` VM (e.g. to compare against an older run that lives there), swap the instance name:
-
-```bash
-gcloud compute ssh doc-structure --zone=us-central1-a --project=doc-structure --tunnel-through-iap
-```
-
 ---
 
 ## 5. Run a command remotely (no interactive shell)
-
-Default target is `lsf`. Swap the instance name to target `doc-structure`.
 
 ```bash
 gcloud compute ssh lsf \
@@ -159,7 +148,7 @@ gcloud compute scp --recurse \
     --tunnel-through-iap
 ```
 
-Replace `<folder>` with the specific subdirectory (e.g. `financebench_single_cluster/llm/gpt54/one_shot/eval_merge`). The trailing slash on the destination keeps the source folder name intact under the local `results/` directory. Substitute `doc-structure:` for `lsf:` to pull from the secondary VM instead.
+Replace `<folder>` with the specific subdirectory (e.g. `financebench_single_cluster/llm/gpt54/one_shot/eval_merge`). The trailing slash on the destination keeps the source folder name intact under the local `results/` directory.
 
 ### Option B — `git pull` (when the server commits results)
 
@@ -254,34 +243,13 @@ pip3 install --user --break-system-packages openai tiktoken
 
 ### 9.4 GitHub authentication
 
-Two options. The path used for `lsf` was option B (mirror the existing SSH key from `doc-structure`).
+Generate a new SSH key on the VM, add the public half to your GitHub account, and configure SSH to use it for `github.com`:
 
-**Option A — generate a new SSH key on the VM and add to GitHub:**
 ```bash
-ssh-keygen -t ed25519 -C "yiminglin@<vm-name>"
-cat ~/.ssh/id_ed25519.pub          # paste into github.com/settings/keys
-# Then add this to ~/.ssh/config:
-#   Host github.com
-#     IdentityFile ~/.ssh/id_ed25519
-#     IdentitiesOnly yes
-```
+ssh-keygen -t ed25519 -C "yiminglin@<vm-name>" -f ~/.ssh/github_ed25519 -N ""
 
-**Option B — copy the existing key from another provisioned VM** (the `lsf` path):
-```bash
-# From your local machine, with both VMs reachable:
-TMPDIR=$(mktemp -d)
-gcloud compute scp --project=doc-structure --zone=us-central1-a --tunnel-through-iap \
-    doc-structure:~/.ssh/github_ed25519 \
-    doc-structure:~/.ssh/github_ed25519.pub \
-    "$TMPDIR/"
-gcloud compute scp --project=doc-structure --zone=us-central1-a --tunnel-through-iap \
-    "$TMPDIR/github_ed25519" "$TMPDIR/github_ed25519.pub" \
-    lsf:~/.ssh/
-rm -rf "$TMPDIR"
+cat ~/.ssh/github_ed25519.pub      # paste into github.com/settings/keys
 
-# Then on the new VM:
-chmod 600 ~/.ssh/github_ed25519
-chmod 644 ~/.ssh/github_ed25519.pub
 cat >> ~/.ssh/config <<EOF
 Host github.com
   HostName github.com
@@ -290,7 +258,7 @@ Host github.com
   IdentitiesOnly yes
   StrictHostKeyChecking accept-new
 EOF
-chmod 600 ~/.ssh/config
+chmod 600 ~/.ssh/config ~/.ssh/github_ed25519
 
 # Verify
 ssh -T git@github.com   # should print: "Hi yiminl18! You've successfully authenticated..."
@@ -304,25 +272,22 @@ rmdir /mnt/data/LSF 2>/dev/null
 git clone --branch yiming-dev git@github.com:yiminl18/LSF.git /mnt/data/LSF
 ```
 
-### 9.6 Copy secrets from an already-provisioned VM
+### 9.6 Provision secrets (Azure API keys + helper scripts)
 
 The Azure API keys for `gpt54` / `gpt54mini` live in `~/api_keys/azure_cloudbank/` (one file per model, read by `src/models/gpt54.py` and `src/models/gpt54mini.py`). They are NOT in git. `~/LSF/local/` also holds helper scripts that are not in git.
 
-The FinanceBench processed-doc JSONs (`data/financebench/processing/`, ~267 MB / 60 docs) **are** in git as of yiming-dev, so they come with `git clone`; no scp needed.
+The FinanceBench processed-doc JSONs (`data/financebench/processing/`, ~267 MB / 60 docs) **are** in git as of yiming-dev, so they come with `git clone`; no provisioning needed.
+
+For the API keys, paste the contents of each model's key file (the format `src/models/gpt54.py` expects: one key per file, plain text, no quotes):
 
 ```bash
-# Azure API keys (~16 KB) — from local machine
-gcloud compute scp --recurse \
-    doc-structure:~/api_keys \
-    lsf:~/ \
-    --zone=us-central1-a --project=doc-structure --tunnel-through-iap
-
-# Local helper scripts (~few hundred KB)
-gcloud compute scp --recurse \
-    doc-structure:~/LSF/local \
-    lsf:~/LSF/ \
-    --zone=us-central1-a --project=doc-structure --tunnel-through-iap
+mkdir -p ~/api_keys/azure_cloudbank
+nano ~/api_keys/azure_cloudbank/gpt-54_1.txt        # paste the gpt54 key
+nano ~/api_keys/azure_cloudbank/gpt-54-mini.txt     # paste the gpt54mini key
+chmod 600 ~/api_keys/azure_cloudbank/*.txt
 ```
+
+If you don't yet have the keys, ask the team for the current values, or check the Azure portal for the deployment under your subscription.
 
 ### 9.7 Install + authenticate Claude CLI (only if you need agentic pipelines)
 
@@ -375,6 +340,6 @@ After bootstrap, with everything in place, `~/LSF` totals roughly:
 | `~/api_keys/` Azure keys | ~16 KB |
 | Per-pipeline intermediates (selector_run_*, eval_*/run_*) — generated during runs | up to 1 GB per run; clean up after |
 
-**On `lsf` (default):** ~330 MB checkout lives on the 100 GB `/mnt/data` partition (via the `~/LSF → /mnt/data/LSF` symlink from §9.2). The 9.7 GB root partition stays for OS + pip cache + `~/.claude/`. Intermediates can accumulate freely without disk pressure.
+**With the extra disk mounted** (the `lsf` setup): the ~330 MB checkout lives on the 100 GB `/mnt/data` partition (via the `~/LSF → /mnt/data/LSF` symlink from §9.2). The 9.7 GB root partition stays for OS + pip cache + `~/.claude/`. Intermediates can accumulate freely without disk pressure.
 
-**On a VM without an extra disk** (e.g., `doc-structure`): the root partition holds everything. Periodic cleanup of `selector_run_*` and `eval_*/run_*` is required; see `disk_watchdog.sh` for an automated pattern.
+**Without an extra disk** (a future VM provisioned with only the root partition): the root partition holds everything. Periodic cleanup of `selector_run_*` and `eval_*/run_*` is required; see `disk_watchdog.sh` for an automated pattern.
