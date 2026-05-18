@@ -147,6 +147,16 @@ def test_cli_parser_defaults_to_native_pdf_mini():
     assert args.input_mode == "auto"
 
 
+def test_cli_parser_accepts_query_indices():
+    args = generator._build_parser().parse_args(
+        ["--target-dir", "datasets/court", "--query-indices", "1-2"]
+    )
+    assert args.query_idx is None
+    assert args.query_indices == "1-2"
+    assert generator._parse_query_indices_arg("1,3-4") == [1, 3, 4]
+    assert generator._parse_query_indices_arg("all") is None
+
+
 def test_provider_auto_input_mode_resolution():
     assert generator.resolve_input_mode("azure", "auto") == "native-pdf"
     assert generator.resolve_input_mode("claude-code", "auto") == "text"
@@ -197,6 +207,9 @@ def test_claude_code_text_mode_passes_prompt_via_stdin(tmp_path, monkeypatch):
     assert seen["cmd"][:4] == ["claude", "-p", "--model", "sonnet"]
     assert "secret document text" in seen["input"]
     assert "secret document text" not in " ".join(seen["cmd"])
+    assert seen["input"].index("secret document text") < seen["input"].index(
+        "Question:"
+    )
     output = json.loads(
         (root / "ground_truth" / "doc_a.txt_answers.json").read_text(
             encoding="utf-8"
@@ -278,3 +291,53 @@ def test_claude_code_cache_hit_skips_subprocess(tmp_path, monkeypatch):
     assert first.results[0].cache_hit is False
     assert second.results[0].cache_hit is True
     assert calls["count"] == 1
+
+
+def test_generate_ground_truth_for_queries_uses_doc_major_order(tmp_path, monkeypatch):
+    root = _make_dataset(tmp_path, names=("doc_a", "doc_b"))
+    calls = []
+
+    def fake_call(self, **kwargs):
+        prompt = kwargs["prompt"]
+        query_idx = int(prompt.split("Question index: ", 1)[1].splitlines()[0])
+        calls.append((kwargs["pdf_path"].stem, query_idx))
+        return CacheResult(
+            response=f'{{"answer":"answer-{query_idx}","support":"page 1"}}',
+            input_tokens=10,
+            output_tokens=5,
+            latency_ms=1.0,
+            cache_hit=False,
+        )
+
+    monkeypatch.setattr(generator.NativePDFCacheCaller, "call", fake_call)
+
+    summary = generator.generate_ground_truth_for_queries(
+        target_dir=root,
+        query_indices=[1, 2],
+        num_doc=2,
+        cache_db=str(tmp_path / "cache.db"),
+    )
+
+    assert calls == [("doc_a", 1), ("doc_a", 2), ("doc_b", 1), ("doc_b", 2)]
+    assert summary.generated_count == 4
+    assert json.loads(
+        (root / "ground_truth" / "doc_a.txt_answers.json").read_text(
+            encoding="utf-8"
+        )
+    ) == {"1": "answer-1", "2": "answer-2"}
+
+
+def test_text_prompt_puts_document_before_query_for_prefix_cache():
+    query = generator.QuerySpec(
+        idx=2,
+        text="Who authored the opinion?",
+        answer_type="string",
+    )
+    prompt = generator.build_ground_truth_text_prompt(
+        query=query,
+        doc_id="doc_a",
+        document_text="[DOCUMENT TEXT START]\nshared document text",
+    )
+
+    assert prompt.index("shared document text") < prompt.index("[QUESTION]")
+    assert "Question index: 2" in prompt

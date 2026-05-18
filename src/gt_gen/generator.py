@@ -68,6 +68,7 @@ class DocRunResult:
     doc_id: str
     output_path: Path
     status: str
+    query_idx: int = 0
     cache_hit: bool = False
     answer: Any = None
     input_tokens: int = 0
@@ -81,6 +82,19 @@ class GenerationSummary:
 
     dataset_root: Path
     query: QuerySpec
+    selected_count: int
+    generated_count: int
+    skipped_existing_count: int
+    failed_count: int
+    results: tuple[DocRunResult, ...] = field(default_factory=tuple)
+
+
+@dataclass(frozen=True)
+class BatchGenerationSummary:
+    """Run summary returned by generate_ground_truth_for_queries()."""
+
+    dataset_root: Path
+    queries: tuple[QuerySpec, ...]
     selected_count: int
     generated_count: int
     skipped_existing_count: int
@@ -149,6 +163,7 @@ def generate_ground_truth(
                     doc_id=doc_id,
                     output_path=output_path,
                     status="skipped_existing",
+                    query_idx=query.idx,
                 )
             )
             continue
@@ -173,6 +188,7 @@ def generate_ground_truth(
                     doc_id=doc_id,
                     output_path=output_path,
                     status="generated",
+                    query_idx=query.idx,
                     cache_hit=response.cache_hit,
                     answer=answer,
                     input_tokens=response.input_tokens,
@@ -185,6 +201,7 @@ def generate_ground_truth(
                     doc_id=doc_id,
                     output_path=output_path,
                     status="failed",
+                    query_idx=query.idx,
                     error=f"{type(exc).__name__}: {exc}",
                 )
             )
@@ -192,6 +209,119 @@ def generate_ground_truth(
     return GenerationSummary(
         dataset_root=dataset_root,
         query=query,
+        selected_count=len(pdf_paths),
+        generated_count=sum(r.status == "generated" for r in results),
+        skipped_existing_count=sum(r.status == "skipped_existing" for r in results),
+        failed_count=sum(r.status == "failed" for r in results),
+        results=tuple(results),
+    )
+
+
+def generate_ground_truth_for_queries(
+    target_dir: str | Path,
+    query_indices: Sequence[int] | None = None,
+    num_doc: int | None = None,
+    llm_provider: str = DEFAULT_LLM_PROVIDER,
+    model: str = DEFAULT_MODEL,
+    seed: int = 42,
+    *,
+    input_mode: InputMode = DEFAULT_INPUT_MODE,
+    cache_db: str = DEFAULT_CACHE_DB_PATH,
+    max_tokens: int = DEFAULT_MAX_TOKENS,
+    claude_timeout_sec: int = DEFAULT_CLAUDE_TIMEOUT_SEC,
+) -> BatchGenerationSummary:
+    """Generate ground-truth answers for multiple queries using doc-major order.
+
+    This is the preferred entry point when running more than one query. It keeps
+    the same document adjacent across query calls, which gives provider-side
+    prompt caching the best chance to reuse the long document prefix.
+    """
+    resolved_provider = normalize_llm_provider(llm_provider)
+    resolved_model = resolve_model_for_provider(resolved_provider, model)
+    resolved_input_mode = resolve_input_mode(resolved_provider, input_mode)
+    dataset_root = resolve_dataset_root(target_dir)
+    queries = load_queries(dataset_root / "queries.json", query_indices)
+    pdf_paths = sample_pdf_paths(dataset_root / "raw", num_doc=num_doc, seed=seed)
+    gt_dir = dataset_root / "ground_truth"
+    gt_dir.mkdir(parents=True, exist_ok=True)
+
+    native_caller = (
+        NativePDFCacheCaller(cache_db) if resolved_input_mode == "native-pdf" else None
+    )
+    text_caller = (
+        CachedLLMCaller(cache_db)
+        if resolved_provider == "azure" and resolved_input_mode == "text"
+        else None
+    )
+    claude_caller = (
+        ClaudeCodeCacheCaller(cache_db) if resolved_provider == "claude-code" else None
+    )
+
+    results: list[DocRunResult] = []
+    for pdf_path in pdf_paths:
+        doc_id = pdf_path.stem
+        output_path = gt_dir / f"{doc_id}.txt_answers.json"
+        document_text = (
+            _extract_pdf_text_for_prompt(pdf_path)
+            if resolved_input_mode == "text"
+            else None
+        )
+
+        for query in queries:
+            gt_key = str(query.idx)
+            if output_path.exists() and _has_existing_answer(output_path, gt_key):
+                results.append(
+                    DocRunResult(
+                        doc_id=doc_id,
+                        output_path=output_path,
+                        status="skipped_existing",
+                        query_idx=query.idx,
+                    )
+                )
+                continue
+
+            try:
+                response = _call_model_for_doc(
+                    pdf_path=pdf_path,
+                    query=query,
+                    llm_provider=resolved_provider,
+                    model=resolved_model,
+                    input_mode=resolved_input_mode,
+                    native_caller=native_caller,
+                    text_caller=text_caller,
+                    claude_caller=claude_caller,
+                    max_tokens=max_tokens,
+                    claude_timeout_sec=claude_timeout_sec,
+                    document_text=document_text,
+                )
+                answer = parse_answer_response(response.response)
+                _merge_ground_truth(output_path, gt_key, answer)
+                results.append(
+                    DocRunResult(
+                        doc_id=doc_id,
+                        output_path=output_path,
+                        status="generated",
+                        query_idx=query.idx,
+                        cache_hit=response.cache_hit,
+                        answer=answer,
+                        input_tokens=response.input_tokens,
+                        output_tokens=response.output_tokens,
+                    )
+                )
+            except Exception as exc:  # keep the batch moving across bad PDFs/API failures
+                results.append(
+                    DocRunResult(
+                        doc_id=doc_id,
+                        output_path=output_path,
+                        status="failed",
+                        query_idx=query.idx,
+                        error=f"{type(exc).__name__}: {exc}",
+                    )
+                )
+
+    return BatchGenerationSummary(
+        dataset_root=dataset_root,
+        queries=tuple(queries),
         selected_count=len(pdf_paths),
         generated_count=sum(r.status == "generated" for r in results),
         skipped_existing_count=sum(r.status == "skipped_existing" for r in results),
@@ -499,6 +629,37 @@ def load_query(queries_path: Path, query_idx: int) -> QuerySpec:
     return QuerySpec(idx=query_idx, text=text, answer_type=answer_type)
 
 
+def load_queries(
+    queries_path: Path, query_indices: Sequence[int] | None = None
+) -> list[QuerySpec]:
+    with queries_path.open("r", encoding="utf-8") as f:
+        data = json.load(f)
+    if not isinstance(data, list):
+        raise ValueError(f"{queries_path} must contain a JSON list")
+    if query_indices is None:
+        selected = range(1, len(data) + 1)
+    else:
+        selected = query_indices
+    queries: list[QuerySpec] = []
+    for query_idx in selected:
+        if query_idx < 1:
+            raise ValueError("query indices are 1-based and must be >= 1")
+        zero_based_idx = query_idx - 1
+        if zero_based_idx >= len(data):
+            raise ValueError(
+                f"query_idx={query_idx} out of range for {queries_path} ({len(data)} queries)"
+            )
+        entry = data[zero_based_idx]
+        if not isinstance(entry, dict):
+            raise ValueError(f"query {query_idx} must be a JSON object")
+        text = str(entry.get("text", "")).strip()
+        answer_type = str(entry.get("answer_type", "")).strip() or "string"
+        if not text:
+            raise ValueError(f"query {query_idx} has empty text")
+        queries.append(QuerySpec(idx=query_idx, text=text, answer_type=answer_type))
+    return queries
+
+
 def sample_pdf_paths(raw_dir: Path, num_doc: int | None, seed: int) -> list[Path]:
     pdf_paths = sorted(raw_dir.glob("*.pdf"))
     if not pdf_paths:
@@ -539,6 +700,7 @@ def _call_model_for_doc(
     claude_caller: ClaudeCodeCacheCaller | None,
     max_tokens: int,
     claude_timeout_sec: int,
+    document_text: str | None = None,
 ) -> CacheResult:
     prompt = build_ground_truth_prompt(query=query, doc_id=pdf_path.stem)
     if input_mode == "native-pdf":
@@ -553,13 +715,22 @@ def _call_model_for_doc(
             temperature=0,
         )
     if input_mode == "text":
+        resolved_document_text = (
+            document_text
+            if document_text is not None
+            else _extract_pdf_text_for_prompt(pdf_path)
+        )
+        text_prompt = build_ground_truth_text_prompt(
+            query=query,
+            doc_id=pdf_path.stem,
+            document_text=resolved_document_text,
+        )
         if llm_provider == "claude-code":
             if claude_caller is None:
                 raise RuntimeError("Claude Code caller is not initialized")
-            document_text = _extract_pdf_text_for_prompt(pdf_path)
             return claude_caller.call(
                 pdf_path=pdf_path,
-                prompt=prompt + "\n\n" + document_text,
+                prompt=text_prompt,
                 llm_provider=llm_provider,
                 model=model,
                 input_mode=input_mode,
@@ -568,7 +739,6 @@ def _call_model_for_doc(
             )
         if text_caller is None:
             raise RuntimeError("text caller is not initialized")
-        text_prompt = prompt + "\n\n" + _extract_pdf_text_for_prompt(pdf_path)
         return text_caller.call(
             text_prompt,
             llm_provider=llm_provider,
@@ -599,6 +769,34 @@ def _call_model_for_doc(
 
 def build_ground_truth_prompt(*, query: QuerySpec, doc_id: str) -> str:
     return (
+        _ground_truth_instructions()
+        + "\n\n"
+        f"Document id: {doc_id}\n"
+        f"Question index: {query.idx}\n"
+        f"Question: {query.text}\n"
+        f"Answer type: {query.answer_type}\n"
+    )
+
+
+def build_ground_truth_text_prompt(
+    *, query: QuerySpec, doc_id: str, document_text: str
+) -> str:
+    """Build a cache-friendly text prompt with document before query details."""
+    return (
+        _ground_truth_instructions()
+        + "\n\n"
+        f"Document id: {doc_id}\n\n"
+        + document_text
+        + "\n\n"
+        + "[QUESTION]\n"
+        f"Question index: {query.idx}\n"
+        f"Question: {query.text}\n"
+        f"Answer type: {query.answer_type}\n"
+    )
+
+
+def _ground_truth_instructions() -> str:
+    return (
         "You generate gold ground-truth answers for a PDF question-answering benchmark.\n"
         "Use only the attached PDF/document content. Do not use outside knowledge.\n"
         "Read the entire document before answering. Preserve names, docket numbers, dates, "
@@ -607,11 +805,7 @@ def build_ground_truth_prompt(*, query: QuerySpec, doc_id: str) -> str:
         "If the requested information is absent, use an explicit string required by the "
         "question such as \"not disclosed\" or \"not applicable\"; otherwise use \"None\".\n"
         "Return exactly one valid JSON object and no markdown:\n"
-        "{\"answer\": <answer matching answer_type>, \"support\": \"short evidence quote or page note\"}\n\n"
-        f"Document id: {doc_id}\n"
-        f"Question index: {query.idx}\n"
-        f"Question: {query.text}\n"
-        f"Answer type: {query.answer_type}\n"
+        "{\"answer\": <answer matching answer_type>, \"support\": \"short evidence quote or page note\"}"
     )
 
 
@@ -948,7 +1142,12 @@ def _build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument("--model", default=DEFAULT_MODEL)
     parser.add_argument("--target-dir", required=True)
-    parser.add_argument("--query-idx", type=int, required=True)
+    query_group = parser.add_mutually_exclusive_group(required=True)
+    query_group.add_argument("--query-idx", type=int)
+    query_group.add_argument(
+        "--query-indices",
+        help="Comma-separated 1-based query indices, ranges like 1-5, or 'all'.",
+    )
     parser.add_argument("--num-doc", type=int)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument(
@@ -966,8 +1165,26 @@ def _build_parser() -> argparse.ArgumentParser:
     return parser
 
 
-def main(argv: Sequence[str] | None = None) -> GenerationSummary:
+def main(
+    argv: Sequence[str] | None = None,
+) -> GenerationSummary | BatchGenerationSummary:
     args = _build_parser().parse_args(argv)
+    if args.query_indices:
+        summary = generate_ground_truth_for_queries(
+            target_dir=args.target_dir,
+            query_indices=_parse_query_indices_arg(args.query_indices),
+            num_doc=args.num_doc,
+            llm_provider=args.llm_provider,
+            model=args.model,
+            seed=args.seed,
+            input_mode=args.input_mode,
+            cache_db=args.cache_db,
+            max_tokens=args.max_tokens,
+            claude_timeout_sec=args.claude_timeout_sec,
+        )
+        _print_batch_summary(summary)
+        return summary
+
     summary = generate_ground_truth(
         target_dir=args.target_dir,
         query_idx=args.query_idx,
@@ -984,6 +1201,28 @@ def main(argv: Sequence[str] | None = None) -> GenerationSummary:
     return summary
 
 
+def _parse_query_indices_arg(raw: str) -> list[int] | None:
+    value = raw.strip().lower()
+    if value == "all":
+        return None
+    indices: list[int] = []
+    for part in value.split(","):
+        token = part.strip()
+        if not token:
+            continue
+        if "-" in token:
+            start_raw, end_raw = token.split("-", 1)
+            start, end = int(start_raw), int(end_raw)
+            if start > end:
+                raise ValueError(f"Invalid descending query range: {token}")
+            indices.extend(range(start, end + 1))
+        else:
+            indices.append(int(token))
+    if not indices:
+        raise ValueError("--query-indices must not be empty")
+    return indices
+
+
 def _print_summary(summary: GenerationSummary) -> None:
     print("=== Ground Truth Generation ===")
     print(f"Dataset Root: {summary.dataset_root}")
@@ -995,9 +1234,28 @@ def _print_summary(summary: GenerationSummary) -> None:
     for result in summary.results:
         suffix = " cache_hit" if result.cache_hit else ""
         if result.status == "failed":
-            print(f"  {result.doc_id}: failed - {result.error}")
+            print(f"  q{result.query_idx} {result.doc_id}: failed - {result.error}")
         else:
-            print(f"  {result.doc_id}: {result.status}{suffix}")
+            print(f"  q{result.query_idx} {result.doc_id}: {result.status}{suffix}")
+
+
+def _print_batch_summary(summary: BatchGenerationSummary) -> None:
+    print("=== Ground Truth Generation ===")
+    print(f"Dataset Root: {summary.dataset_root}")
+    print(
+        "Queries:      "
+        + ", ".join(f"q{query.idx} ({query.answer_type})" for query in summary.queries)
+    )
+    print(f"Selected:     {summary.selected_count}")
+    print(f"Generated:    {summary.generated_count}")
+    print(f"Skipped:      {summary.skipped_existing_count}")
+    print(f"Failed:       {summary.failed_count}")
+    for result in summary.results:
+        suffix = " cache_hit" if result.cache_hit else ""
+        if result.status == "failed":
+            print(f"  q{result.query_idx} {result.doc_id}: failed - {result.error}")
+        else:
+            print(f"  q{result.query_idx} {result.doc_id}: {result.status}{suffix}")
 
 
 if __name__ == "__main__":
