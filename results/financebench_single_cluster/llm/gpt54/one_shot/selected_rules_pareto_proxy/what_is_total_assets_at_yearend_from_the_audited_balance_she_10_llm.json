@@ -1,0 +1,71 @@
+{
+  "question": "What is total assets at year-end (from the audited balance sheet)?",
+  "question_slug": "what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm",
+  "mode": "pareto_proxy",
+  "baseline_accuracy": 1.0,
+  "selected_rules": [
+    "rule_tables_with_total_assets_and_no_revenue"
+  ],
+  "selected_avg_cost_ratio_sum": 0.009017,
+  "covered_docs": [
+    "COSTCO_2017_10K"
+  ],
+  "uncovered_docs": [
+    "AMAZON_2016_10K",
+    "AMAZON_2018_10K",
+    "AMCOR_2019_10K",
+    "BOEING_2018_10K",
+    "CORNING_2022_10K",
+    "EBAY_2021_10K",
+    "JOHNSON_JOHNSON_2022_10K",
+    "LOCKHEEDMARTIN_2022_10K",
+    "NIKE_2021_10K"
+  ],
+  "selector_accuracy": 0.1,
+  "tau_safety_floor": 0.0,
+  "banned_rules": [],
+  "frontier": [
+    {
+      "cost": 0.0,
+      "accuracy_match": 0.0,
+      "rules_admitted": [],
+      "added_rule": null,
+      "rule_cov": null,
+      "rule_avg_cost": null
+    },
+    {
+      "cost": 0.009017,
+      "accuracy_match": 0.1,
+      "rules_admitted": [
+        "rule_tables_with_total_assets_and_no_revenue"
+      ],
+      "added_rule": "rule_tables_with_total_assets_and_no_revenue",
+      "rule_cov": 0.8,
+      "rule_avg_cost": 0.009017
+    }
+  ],
+  "query_table": {
+    "0.50": null,
+    "0.80": null,
+    "0.90": null,
+    "0.95": null,
+    "1.00": null
+  },
+  "knee_point": {
+    "cost": 0.009017,
+    "accuracy_match": 0.1,
+    "n_rules": 1,
+    "rules": [
+      "rule_tables_with_total_assets_and_no_revenue"
+    ]
+  },
+  "knee_lambda": 10.0,
+  "llm_calls": {
+    "phase_2_incremental": 0,
+    "phase_2_judge": 0
+  },
+  "token_usage": {
+    "total_input_tokens": 0,
+    "total_output_tokens": 0
+  }
+}

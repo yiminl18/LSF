@@ -1,0 +1,217 @@
+{
+  "question": "What is/are the trading symbol(s) and listing exchange(s)?",
+  "question_slug": "what_isare_the_trading_symbols_and_listing_exchanges_10_llm",
+  "mode": "pareto",
+  "baseline_accuracy": 1.0,
+  "selected_rules": [
+    "rule_page1_symbol_exchange_split_across_adjacent_spans",
+    "rule_page1_bold_smallfont_registration_values",
+    "rule_table_cells_symbol_exchange",
+    "rule_page1_registration_block_with_symbol_and_exchange_same_span",
+    "rule_page1_major_exchange_names",
+    "rule_page1_near_trading_symbol_label",
+    "rule_page1_registration_block_all",
+    "rule_business_sentence_trades_on_exchange",
+    "rule_business_sentence_under_symbol"
+  ],
+  "selected_avg_cost_ratio_sum": 0.004783,
+  "covered_docs": [
+    "AMAZON_2016_10K",
+    "AMAZON_2018_10K",
+    "AMCOR_2019_10K",
+    "BOEING_2018_10K",
+    "CORNING_2022_10K",
+    "COSTCO_2017_10K",
+    "EBAY_2021_10K",
+    "JOHNSON_JOHNSON_2022_10K",
+    "LOCKHEEDMARTIN_2022_10K",
+    "NIKE_2021_10K"
+  ],
+  "uncovered_docs": [],
+  "selector_accuracy": 1.0,
+  "tau_safety_floor": 0.0,
+  "banned_rules": [],
+  "frontier": [
+    {
+      "cost": 0.0,
+      "accuracy_match": 0.0,
+      "rules_admitted": [],
+      "added_rule": null,
+      "rule_cov": null,
+      "rule_avg_cost": null
+    },
+    {
+      "cost": 9e-06,
+      "accuracy_match": 0.1,
+      "rules_admitted": [
+        "rule_page1_symbol_exchange_split_across_adjacent_spans"
+      ],
+      "added_rule": "rule_page1_symbol_exchange_split_across_adjacent_spans",
+      "rule_cov": 0.1,
+      "rule_avg_cost": 9e-06
+    },
+    {
+      "cost": 4e-05,
+      "accuracy_match": 0.2,
+      "rules_admitted": [
+        "rule_page1_symbol_exchange_split_across_adjacent_spans",
+        "rule_page1_bold_smallfont_registration_values"
+      ],
+      "added_rule": "rule_page1_bold_smallfont_registration_values",
+      "rule_cov": 0.2,
+      "rule_avg_cost": 3.1e-05
+    },
+    {
+      "cost": 0.000103,
+      "accuracy_match": 0.3,
+      "rules_admitted": [
+        "rule_page1_symbol_exchange_split_across_adjacent_spans",
+        "rule_page1_bold_smallfont_registration_values",
+        "rule_table_cells_symbol_exchange"
+      ],
+      "added_rule": "rule_table_cells_symbol_exchange",
+      "rule_cov": 0.1,
+      "rule_avg_cost": 6.3e-05
+    },
+    {
+      "cost": 0.000377,
+      "accuracy_match": 0.4,
+      "rules_admitted": [
+        "rule_page1_symbol_exchange_split_across_adjacent_spans",
+        "rule_page1_bold_smallfont_registration_values",
+        "rule_table_cells_symbol_exchange",
+        "rule_page1_registration_block_with_symbol_and_exchange_same_span"
+      ],
+      "added_rule": "rule_page1_registration_block_with_symbol_and_exchange_same_span",
+      "rule_cov": 0.3,
+      "rule_avg_cost": 0.000274
+    },
+    {
+      "cost": 0.000792,
+      "accuracy_match": 0.5,
+      "rules_admitted": [
+        "rule_page1_symbol_exchange_split_across_adjacent_spans",
+        "rule_page1_bold_smallfont_registration_values",
+        "rule_table_cells_symbol_exchange",
+        "rule_page1_registration_block_with_symbol_and_exchange_same_span",
+        "rule_page1_major_exchange_names"
+      ],
+      "added_rule": "rule_page1_major_exchange_names",
+      "rule_cov": 0.4,
+      "rule_avg_cost": 0.000415
+    },
+    {
+      "cost": 0.001317,
+      "accuracy_match": 0.6,
+      "rules_admitted": [
+        "rule_page1_symbol_exchange_split_across_adjacent_spans",
+        "rule_page1_bold_smallfont_registration_values",
+        "rule_table_cells_symbol_exchange",
+        "rule_page1_registration_block_with_symbol_and_exchange_same_span",
+        "rule_page1_major_exchange_names",
+        "rule_page1_near_trading_symbol_label"
+      ],
+      "added_rule": "rule_page1_near_trading_symbol_label",
+      "rule_cov": 0.5,
+      "rule_avg_cost": 0.000525
+    },
+    {
+      "cost": 0.002059,
+      "accuracy_match": 0.7,
+      "rules_admitted": [
+        "rule_page1_symbol_exchange_split_across_adjacent_spans",
+        "rule_page1_bold_smallfont_registration_values",
+        "rule_table_cells_symbol_exchange",
+        "rule_page1_registration_block_with_symbol_and_exchange_same_span",
+        "rule_page1_major_exchange_names",
+        "rule_page1_near_trading_symbol_label",
+        "rule_page1_registration_block_all"
+      ],
+      "added_rule": "rule_page1_registration_block_all",
+      "rule_cov": 0.5,
+      "rule_avg_cost": 0.000742
+    },
+    {
+      "cost": 0.003163,
+      "accuracy_match": 0.9,
+      "rules_admitted": [
+        "rule_page1_symbol_exchange_split_across_adjacent_spans",
+        "rule_page1_bold_smallfont_registration_values",
+        "rule_table_cells_symbol_exchange",
+        "rule_page1_registration_block_with_symbol_and_exchange_same_span",
+        "rule_page1_major_exchange_names",
+        "rule_page1_near_trading_symbol_label",
+        "rule_page1_registration_block_all",
+        "rule_business_sentence_trades_on_exchange"
+      ],
+      "added_rule": "rule_business_sentence_trades_on_exchange",
+      "rule_cov": 0.7,
+      "rule_avg_cost": 0.001104
+    },
+    {
+      "cost": 0.004783,
+      "accuracy_match": 1.0,
+      "rules_admitted": [
+        "rule_page1_symbol_exchange_split_across_adjacent_spans",
+        "rule_page1_bold_smallfont_registration_values",
+        "rule_table_cells_symbol_exchange",
+        "rule_page1_registration_block_with_symbol_and_exchange_same_span",
+        "rule_page1_major_exchange_names",
+        "rule_page1_near_trading_symbol_label",
+        "rule_page1_registration_block_all",
+        "rule_business_sentence_trades_on_exchange",
+        "rule_business_sentence_under_symbol"
+      ],
+      "added_rule": "rule_business_sentence_under_symbol",
+      "rule_cov": 0.7,
+      "rule_avg_cost": 0.00162
+    }
+  ],
+  "query_table": {
+    "0.50": {
+      "cost": 0.000792,
+      "n_rules": 5
+    },
+    "0.80": {
+      "cost": 0.003163,
+      "n_rules": 8
+    },
+    "0.90": {
+      "cost": 0.003163,
+      "n_rules": 8
+    },
+    "0.95": {
+      "cost": 0.004783,
+      "n_rules": 9
+    },
+    "1.00": {
+      "cost": 0.004783,
+      "n_rules": 9
+    }
+  },
+  "knee_point": {
+    "cost": 0.004783,
+    "accuracy_match": 1.0,
+    "n_rules": 9,
+    "rules": [
+      "rule_page1_symbol_exchange_split_across_adjacent_spans",
+      "rule_page1_bold_smallfont_registration_values",
+      "rule_table_cells_symbol_exchange",
+      "rule_page1_registration_block_with_symbol_and_exchange_same_span",
+      "rule_page1_major_exchange_names",
+      "rule_page1_near_trading_symbol_label",
+      "rule_page1_registration_block_all",
+      "rule_business_sentence_trades_on_exchange",
+      "rule_business_sentence_under_symbol"
+    ]
+  },
+  "knee_lambda": 10.0,
+  "llm_calls": {
+    "phase_2_incremental": 102,
+    "phase_2_judge": 102
+  },
+  "token_usage": {
+    "total_input_tokens": 33271,
+    "total_output_tokens": 1520
+  }
+}

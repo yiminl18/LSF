@@ -1,0 +1,151 @@
+{
+  "question": "What is long-term debt at year-end (0 if none)?",
+  "question_slug": "what_is_longterm_debt_at_yearend_0_if_none_10_llm",
+  "mode": "pareto_v2",
+  "baseline_accuracy": 0.6,
+  "selected_rules": [
+    "rule_balance_sheet_header_followed_by_table",
+    "rule_balance_sheet_long_term_debt_and_current_portion"
+  ],
+  "selected_avg_cost_ratio_sum": 0.021516,
+  "covered_docs": [
+    "AMAZON_2016_10K",
+    "BOEING_2018_10K",
+    "CORNING_2022_10K",
+    "COSTCO_2017_10K",
+    "EBAY_2021_10K",
+    "JOHNSON_JOHNSON_2022_10K",
+    "NIKE_2021_10K"
+  ],
+  "uncovered_docs": [],
+  "selector_accuracy": 0.6,
+  "final_merge_accuracy": 0.6,
+  "matches_base": true,
+  "frontier": [
+    {
+      "cost": 0.0,
+      "accuracy_match": 0.0,
+      "rules_admitted": [],
+      "added_rule": null,
+      "rule_cov": null,
+      "rule_avg_cost": null
+    },
+    {
+      "cost": 0.007588,
+      "accuracy_match": 0.8333,
+      "rules_admitted": [
+        "rule_balance_sheet_header_followed_by_table"
+      ],
+      "added_rule": "rule_balance_sheet_header_followed_by_table",
+      "rule_cov": 0.6,
+      "rule_avg_cost": 0.007588
+    },
+    {
+      "cost": 0.021516,
+      "accuracy_match": 1.1667,
+      "rules_admitted": [
+        "rule_balance_sheet_header_followed_by_table",
+        "rule_balance_sheet_long_term_debt_and_current_portion"
+      ],
+      "added_rule": "rule_balance_sheet_long_term_debt_and_current_portion",
+      "rule_cov": 0.6,
+      "rule_avg_cost": 0.013928
+    }
+  ],
+  "query_table": {
+    "0.50": {
+      "cost": 0.007588,
+      "n_rules": 1
+    },
+    "0.80": {
+      "cost": 0.007588,
+      "n_rules": 1
+    },
+    "0.90": {
+      "cost": 0.021516,
+      "n_rules": 2
+    },
+    "0.95": {
+      "cost": 0.021516,
+      "n_rules": 2
+    },
+    "1.00": {
+      "cost": 0.021516,
+      "n_rules": 2
+    }
+  },
+  "knee_point": {
+    "cost": 0.021516,
+    "accuracy_match": 1.1667,
+    "n_rules": 2,
+    "rules": [
+      "rule_balance_sheet_header_followed_by_table",
+      "rule_balance_sheet_long_term_debt_and_current_portion"
+    ]
+  },
+  "knee_lambda": 10.0,
+  "extras_added_phase_b": [
+    {
+      "iter": 1,
+      "added": "rule_note_debt_header_near_table",
+      "gained": [],
+      "acc_after": 0.5
+    },
+    {
+      "iter": 2,
+      "added": "rule_balance_sheet_path_followed_by_table",
+      "gained": [],
+      "acc_after": 0.5
+    },
+    {
+      "iter": 3,
+      "added": "rule_debt_note_header_same_page_tables",
+      "gained": [],
+      "acc_after": 0.5
+    },
+    {
+      "iter": 4,
+      "added": "rule_note_debt_table",
+      "gained": [],
+      "acc_after": 0.5
+    },
+    {
+      "iter": 5,
+      "added": "rule_balance_sheet_long_term_debt_and_current_portion",
+      "gained": [
+        "BOEING_2018_10K",
+        "JOHNSON_JOHNSON_2022_10K"
+      ],
+      "acc_after": 0.7
+    }
+  ],
+  "pruned_phase_c": [
+    {
+      "removed": "rule_note_debt_table",
+      "acc_after": 0.6
+    },
+    {
+      "removed": "rule_debt_note_header_same_page_tables",
+      "acc_after": 0.6
+    },
+    {
+      "removed": "rule_balance_sheet_path_followed_by_table",
+      "acc_after": 0.7
+    },
+    {
+      "removed": "rule_note_debt_header_near_table",
+      "acc_after": 0.7
+    }
+  ],
+  "phase_a_rules_count": 1,
+  "phase_b_extras_count": 5,
+  "phase_c_pruned_count": 4,
+  "llm_calls": {
+    "qa": 175,
+    "judge": 175
+  },
+  "token_usage": {
+    "total_input_tokens": 318012,
+    "total_output_tokens": 2433
+  }
+}

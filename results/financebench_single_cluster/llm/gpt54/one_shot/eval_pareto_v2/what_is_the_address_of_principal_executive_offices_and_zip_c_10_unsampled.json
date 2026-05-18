@@ -1,0 +1,465 @@
+{
+  "question": "What is the address of principal executive offices and ZIP code?",
+  "question_slug": "what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm",
+  "eval_model": "gpt54",
+  "selection_source": "results/financebench_single_cluster/llm/gpt54/one_shot/selected_rules_pareto_v2/what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm.json",
+  "selected_rules": [
+    "rule_page1_bold_short_address_fragments",
+    "rule_page1_address_block_from_split_lines"
+  ],
+  "accuracy": 0.64,
+  "avg_cost_ratio": 0.000483,
+  "num_documents": 50,
+  "per_doc": [
+    {
+      "doc_name": "AMCOR_2023_10K",
+      "predicted": "83 Tower Road North Warmley, Bristol United Kingdom, 98-1455367",
+      "ground_truth": "83 Tower Road North, Warmley, Bristol, United Kingdom BS30 8XP",
+      "correct": false,
+      "retrieved_tokens": 31,
+      "total_doc_tokens": 105951,
+      "cost_ratio": 0.000293
+    },
+    {
+      "doc_name": "APPLE_2016_10K",
+      "predicted": "NOT FOUND",
+      "ground_truth": "1 Infinite Loop, Cupertino, California 95014",
+      "correct": false,
+      "retrieved_tokens": 2,
+      "total_doc_tokens": 79177,
+      "cost_ratio": 2.5e-05
+    },
+    {
+      "doc_name": "BESTBUY_2020_10K",
+      "predicted": "7601 Penn Avenue South Richfield, Minnesota 55423",
+      "ground_truth": "7601 Penn Avenue South, Richfield, Minnesota, 55423",
+      "correct": true,
+      "retrieved_tokens": 33,
+      "total_doc_tokens": 66489,
+      "cost_ratio": 0.000496
+    },
+    {
+      "doc_name": "INTEL_2016_10K",
+      "predicted": "2200 Mission College Boulevard, Santa Clara, California 95054-1549",
+      "ground_truth": "2200 Mission College Boulevard, Santa Clara, California 95054-1549",
+      "correct": true,
+      "retrieved_tokens": 37,
+      "total_doc_tokens": 110197,
+      "cost_ratio": 0.000336
+    },
+    {
+      "doc_name": "ACTIVISIONBLIZZARD_2017_10K",
+      "predicted": "3100 Ocean Park Boulevard, Santa Monica, CA 90405",
+      "ground_truth": "3100 Ocean Park Boulevard, Santa Monica, CA 90405",
+      "correct": true,
+      "retrieved_tokens": 34,
+      "total_doc_tokens": 102120,
+      "cost_ratio": 0.000333
+    },
+    {
+      "doc_name": "ACTIVISIONBLIZZARD_2020_10K",
+      "predicted": "3100 Ocean Park Boulevard, Santa Monica, 90405",
+      "ground_truth": "3100 Ocean Park Boulevard, Santa Monica, CA 90405",
+      "correct": true,
+      "retrieved_tokens": 26,
+      "total_doc_tokens": 101336,
+      "cost_ratio": 0.000257
+    },
+    {
+      "doc_name": "ADOBE_2015_10K",
+      "predicted": "345 Park Avenue, San Jose, California 95110-2704",
+      "ground_truth": "345 Park Avenue, San Jose, California 95110-2704",
+      "correct": true,
+      "retrieved_tokens": 41,
+      "total_doc_tokens": 94768,
+      "cost_ratio": 0.000433
+    },
+    {
+      "doc_name": "ADOBE_2016_10K",
+      "predicted": "345 Park Avenue, San Jose, California 95110-2704",
+      "ground_truth": "345 Park Avenue, San Jose, California 95110-2704",
+      "correct": true,
+      "retrieved_tokens": 41,
+      "total_doc_tokens": 88600,
+      "cost_ratio": 0.000463
+    },
+    {
+      "doc_name": "ADOBE_2017_10K",
+      "predicted": "345 Park Avenue, San Jose, California 95110-2704",
+      "ground_truth": "345 Park Avenue, San Jose, California 95110-2704",
+      "correct": true,
+      "retrieved_tokens": 41,
+      "total_doc_tokens": 86150,
+      "cost_ratio": 0.000476
+    },
+    {
+      "doc_name": "ADOBE_2018_10K",
+      "predicted": "345 Park Avenue, San Jose, California 95110-2704",
+      "ground_truth": "345 Park Avenue, San Jose, California 95110-2704",
+      "correct": true,
+      "retrieved_tokens": 24,
+      "total_doc_tokens": 89326,
+      "cost_ratio": 0.000269
+    },
+    {
+      "doc_name": "ADOBE_2019_10K",
+      "predicted": "345 Park Avenue, San Jose, California 95110-2704",
+      "ground_truth": "345 Park Avenue, San Jose, California 95110-2704",
+      "correct": true,
+      "retrieved_tokens": 41,
+      "total_doc_tokens": 91798,
+      "cost_ratio": 0.000447
+    },
+    {
+      "doc_name": "ADOBE_2020_10K",
+      "predicted": "345 Park Avenue, San Jose, California 95110-2704",
+      "ground_truth": "345 Park Avenue, San Jose, California 95110-2704",
+      "correct": true,
+      "retrieved_tokens": 41,
+      "total_doc_tokens": 91087,
+      "cost_ratio": 0.00045
+    },
+    {
+      "doc_name": "ADOBE_2021_10K",
+      "predicted": "345 Park Avenue, San Jose, California 95110-2704",
+      "ground_truth": "345 Park Avenue, San Jose, California 95110-2704",
+      "correct": true,
+      "retrieved_tokens": 41,
+      "total_doc_tokens": 77147,
+      "cost_ratio": 0.000531
+    },
+    {
+      "doc_name": "ADOBE_2022_10K",
+      "predicted": "345 Park Avenue, San Jose, California 95110-2704",
+      "ground_truth": "345 Park Avenue, San Jose, California 95110-2704",
+      "correct": true,
+      "retrieved_tokens": 41,
+      "total_doc_tokens": 75604,
+      "cost_ratio": 0.000542
+    },
+    {
+      "doc_name": "AMAZON_2015_10K",
+      "predicted": "410 Terry Avenue North Seattle, Washington 98109-5210",
+      "ground_truth": "410 Terry Avenue North, Seattle, Washington 98109-5210",
+      "correct": true,
+      "retrieved_tokens": 57,
+      "total_doc_tokens": 63146,
+      "cost_ratio": 0.000903
+    },
+    {
+      "doc_name": "AMAZON_2017_10K",
+      "predicted": "410 Terry Avenue North Seattle, Washington 98109-5210",
+      "ground_truth": "410 Terry Avenue North, Seattle, Washington 98109-5210",
+      "correct": true,
+      "retrieved_tokens": 57,
+      "total_doc_tokens": 65757,
+      "cost_ratio": 0.000867
+    },
+    {
+      "doc_name": "AMAZON_2019_10K",
+      "predicted": "410 Terry Avenue North Seattle, Washington 98109-5210",
+      "ground_truth": "410 Terry Avenue North, Seattle, Washington 98109-5210",
+      "correct": true,
+      "retrieved_tokens": 57,
+      "total_doc_tokens": 62208,
+      "cost_ratio": 0.000916
+    },
+    {
+      "doc_name": "AMAZON_2020_10K",
+      "predicted": "410 Terry Avenue North Seattle, Washington 98109-5210",
+      "ground_truth": "410 Terry Avenue North, Seattle, Washington 98109-5210",
+      "correct": true,
+      "retrieved_tokens": 61,
+      "total_doc_tokens": 58831,
+      "cost_ratio": 0.001037
+    },
+    {
+      "doc_name": "AMAZON_2022_10K",
+      "predicted": "410 Terry Avenue North Seattle, Washington 98109-5210",
+      "ground_truth": "410 Terry Avenue North, Seattle, Washington 98109-5210",
+      "correct": true,
+      "retrieved_tokens": 57,
+      "total_doc_tokens": 61806,
+      "cost_ratio": 0.000922
+    },
+    {
+      "doc_name": "AMCOR_2021_10K",
+      "predicted": "83 Tower Road North Warmley, Bristol United Kingdom, 98-1455367",
+      "ground_truth": "83 Tower Road North, Warmley, Bristol, United Kingdom BS30 8XP",
+      "correct": false,
+      "retrieved_tokens": 31,
+      "total_doc_tokens": 107976,
+      "cost_ratio": 0.000287
+    },
+    {
+      "doc_name": "AMCOR_2022_10K",
+      "predicted": "83 Tower Road North Warmley, Bristol United Kingdom, 98-1455367",
+      "ground_truth": "83 Tower Road North, Warmley, Bristol, United Kingdom BS30 8XP",
+      "correct": false,
+      "retrieved_tokens": 31,
+      "total_doc_tokens": 101405,
+      "cost_ratio": 0.000306
+    },
+    {
+      "doc_name": "AMD_2019_10K",
+      "predicted": "2485 Augustine Drive Santa Clara, California 95054",
+      "ground_truth": "2485 Augustine Drive, Santa Clara, California 95054",
+      "correct": true,
+      "retrieved_tokens": 32,
+      "total_doc_tokens": 83800,
+      "cost_ratio": 0.000382
+    },
+    {
+      "doc_name": "AMD_2020_10K",
+      "predicted": "2485 Augustine Drive Santa Clara, California 95054",
+      "ground_truth": "2485 Augustine Drive, Santa Clara, California 95054",
+      "correct": true,
+      "retrieved_tokens": 38,
+      "total_doc_tokens": 105729,
+      "cost_ratio": 0.000359
+    },
+    {
+      "doc_name": "AMD_2021_10K",
+      "predicted": "2485 Augustine Drive Santa Clara, California 95054",
+      "ground_truth": "2485 Augustine Drive, Santa Clara, California 95054",
+      "correct": true,
+      "retrieved_tokens": 38,
+      "total_doc_tokens": 79875,
+      "cost_ratio": 0.000476
+    },
+    {
+      "doc_name": "AMD_2022_10K",
+      "predicted": "2485 Augustine Drive Santa Clara, California 95054",
+      "ground_truth": "2485 Augustine Drive, Santa Clara, California 95054",
+      "correct": true,
+      "retrieved_tokens": 52,
+      "total_doc_tokens": 86624,
+      "cost_ratio": 0.0006
+    },
+    {
+      "doc_name": "APPLE_2015_10K",
+      "predicted": "NOT FOUND",
+      "ground_truth": "1 Infinite Loop, Cupertino, California 95014",
+      "correct": false,
+      "retrieved_tokens": 2,
+      "total_doc_tokens": 69341,
+      "cost_ratio": 2.9e-05
+    },
+    {
+      "doc_name": "APPLE_2017_10K",
+      "predicted": "NOT FOUND",
+      "ground_truth": "1 Infinite Loop, Cupertino, California, 95014",
+      "correct": false,
+      "retrieved_tokens": 2,
+      "total_doc_tokens": 95206,
+      "cost_ratio": 2.1e-05
+    },
+    {
+      "doc_name": "APPLE_2018_10K",
+      "predicted": "NOT FOUND",
+      "ground_truth": "One Apple Park Way, Cupertino, California 95014",
+      "correct": false,
+      "retrieved_tokens": 2,
+      "total_doc_tokens": 77309,
+      "cost_ratio": 2.6e-05
+    },
+    {
+      "doc_name": "APPLE_2019_10K",
+      "predicted": "NOT FOUND",
+      "ground_truth": "One Apple Park Way, Cupertino, California 95014",
+      "correct": false,
+      "retrieved_tokens": 2,
+      "total_doc_tokens": 78621,
+      "cost_ratio": 2.5e-05
+    },
+    {
+      "doc_name": "APPLE_2020_10K",
+      "predicted": "NOT FOUND",
+      "ground_truth": "One Apple Park Way, Cupertino, California, 95014",
+      "correct": false,
+      "retrieved_tokens": 2,
+      "total_doc_tokens": 81919,
+      "cost_ratio": 2.4e-05
+    },
+    {
+      "doc_name": "APPLE_2021_10K",
+      "predicted": "NOT FOUND",
+      "ground_truth": "One Apple Park Way, Cupertino, California, 95014",
+      "correct": false,
+      "retrieved_tokens": 2,
+      "total_doc_tokens": 64998,
+      "cost_ratio": 3.1e-05
+    },
+    {
+      "doc_name": "APPLE_2022_10K",
+      "predicted": "NOT FOUND",
+      "ground_truth": "One Apple Park Way, Cupertino, California 95014",
+      "correct": false,
+      "retrieved_tokens": 2,
+      "total_doc_tokens": 63642,
+      "cost_ratio": 3.1e-05
+    },
+    {
+      "doc_name": "BESTBUY_2015_10K",
+      "predicted": "7601 PENN AVE SOUTH, RICHFIELD, MN 55423",
+      "ground_truth": "7601 Penn Avenue South, Richfield, Minnesota 55423",
+      "correct": true,
+      "retrieved_tokens": 23,
+      "total_doc_tokens": 102184,
+      "cost_ratio": 0.000225
+    },
+    {
+      "doc_name": "BESTBUY_2021_10K",
+      "predicted": "7601 Penn Avenue South Richfield, Minnesota 55423",
+      "ground_truth": "7601 Penn Avenue South, Richfield, Minnesota 55423",
+      "correct": true,
+      "retrieved_tokens": 80,
+      "total_doc_tokens": 87076,
+      "cost_ratio": 0.000919
+    },
+    {
+      "doc_name": "BESTBUY_2022_10K",
+      "predicted": "7601 Penn Avenue South Richfield, Minnesota 55423",
+      "ground_truth": "7601 Penn Avenue South, Richfield, Minnesota 55423",
+      "correct": true,
+      "retrieved_tokens": 80,
+      "total_doc_tokens": 87772,
+      "cost_ratio": 0.000911
+    },
+    {
+      "doc_name": "BESTBUY_2023_10K",
+      "predicted": "7601 Penn Avenue South, Richfield, Minnesota 55423",
+      "ground_truth": "7601 Penn Avenue South, Richfield, Minnesota 55423",
+      "correct": true,
+      "retrieved_tokens": 67,
+      "total_doc_tokens": 64621,
+      "cost_ratio": 0.001037
+    },
+    {
+      "doc_name": "BOEING_2017_10K",
+      "predicted": "100 N. Riverside Plaza, Chicago, IL 60606-1596",
+      "ground_truth": "100 N. Riverside Plaza, Chicago, IL 60606-1596",
+      "correct": true,
+      "retrieved_tokens": 36,
+      "total_doc_tokens": 82849,
+      "cost_ratio": 0.000435
+    },
+    {
+      "doc_name": "BOEING_2019_10K",
+      "predicted": "100 N. Riverside Plaza, 60606-1596",
+      "ground_truth": "100 N. Riverside Plaza, Chicago, IL 60606-1596",
+      "correct": false,
+      "retrieved_tokens": 32,
+      "total_doc_tokens": 91888,
+      "cost_ratio": 0.000348
+    },
+    {
+      "doc_name": "BOEING_2020_10K",
+      "predicted": "100 N. Riverside Plaza, 60606-1596",
+      "ground_truth": "100 N. Riverside Plaza, Chicago, IL 60606-1596",
+      "correct": false,
+      "retrieved_tokens": 26,
+      "total_doc_tokens": 104434,
+      "cost_ratio": 0.000249
+    },
+    {
+      "doc_name": "BOEING_2022_10K",
+      "predicted": "929 Long Bridge Drive, Arlington, 22202",
+      "ground_truth": "929 Long Bridge Drive, Arlington, VA 22202",
+      "correct": false,
+      "retrieved_tokens": 26,
+      "total_doc_tokens": 114226,
+      "cost_ratio": 0.000228
+    },
+    {
+      "doc_name": "CORNING_2022_10K",
+      "predicted": "NOT FOUND",
+      "ground_truth": "One Riverfront Plaza, Corning, New York 14831",
+      "correct": false,
+      "retrieved_tokens": 0,
+      "total_doc_tokens": 107052,
+      "cost_ratio": 0.0
+    },
+    {
+      "doc_name": "COSTCO_2015_10K",
+      "predicted": "999 Lake Drive, Issaquah, WA 98027",
+      "ground_truth": "999 Lake Drive, Issaquah, WA 98027",
+      "correct": true,
+      "retrieved_tokens": 56,
+      "total_doc_tokens": 58179,
+      "cost_ratio": 0.000963
+    },
+    {
+      "doc_name": "COSTCO_2016_10K",
+      "predicted": "999 Lake Drive, Issaquah, WA 98027",
+      "ground_truth": "999 Lake Drive, Issaquah, WA 98027",
+      "correct": true,
+      "retrieved_tokens": 56,
+      "total_doc_tokens": 51931,
+      "cost_ratio": 0.001078
+    },
+    {
+      "doc_name": "COSTCO_2018_10K",
+      "predicted": "999 Lake Drive, Issaquah, WA 98027",
+      "ground_truth": "999 Lake Drive, Issaquah, WA 98027",
+      "correct": true,
+      "retrieved_tokens": 56,
+      "total_doc_tokens": 48852,
+      "cost_ratio": 0.001146
+    },
+    {
+      "doc_name": "GENERALMILLS_2022_10K",
+      "predicted": "Number One General Mills Boulevard, Minneapolis, Minnesota 55426",
+      "ground_truth": "Number One General Mills Boulevard, Minneapolis, Minnesota 55426",
+      "correct": true,
+      "retrieved_tokens": 105,
+      "total_doc_tokens": 96530,
+      "cost_ratio": 0.001088
+    },
+    {
+      "doc_name": "INTEL_2022_10K",
+      "predicted": "2200 Mission College Boulevard, Santa Clara, California 95054-1549",
+      "ground_truth": "2200 Mission College Boulevard, Santa Clara, California 95054-1549",
+      "correct": true,
+      "retrieved_tokens": 32,
+      "total_doc_tokens": 105373,
+      "cost_ratio": 0.000304
+    },
+    {
+      "doc_name": "KRAFTHEINZ_2021_10K",
+      "predicted": "NOT FOUND",
+      "ground_truth": "One PPG Place, Pittsburgh, Pennsylvania 15222",
+      "correct": false,
+      "retrieved_tokens": 2,
+      "total_doc_tokens": 120020,
+      "cost_ratio": 1.7e-05
+    },
+    {
+      "doc_name": "FOOTLOCKER_2023_10K",
+      "predicted": "330 West 34 th Street, New York, New York, NOT FOUND",
+      "ground_truth": "330 West 34th Street, New York, New York 10001",
+      "correct": false,
+      "retrieved_tokens": 33,
+      "total_doc_tokens": 74645,
+      "cost_ratio": 0.000442
+    },
+    {
+      "doc_name": "NIKE_2019_10K",
+      "predicted": "NOT FOUND",
+      "ground_truth": "One Bowerman Drive, Beaverton, Oregon 97005-6453",
+      "correct": false,
+      "retrieved_tokens": 0,
+      "total_doc_tokens": 84424,
+      "cost_ratio": 0.0
+    },
+    {
+      "doc_name": "LOCKHEEDMARTIN_2021_10K",
+      "predicted": "6801 Rockledge Drive, Bethesda, Maryland 20817",
+      "ground_truth": "6801 Rockledge Drive, Bethesda, Maryland 20817",
+      "correct": true,
+      "retrieved_tokens": 240,
+      "total_doc_tokens": 110448,
+      "cost_ratio": 0.002173
+    }
+  ]
+}

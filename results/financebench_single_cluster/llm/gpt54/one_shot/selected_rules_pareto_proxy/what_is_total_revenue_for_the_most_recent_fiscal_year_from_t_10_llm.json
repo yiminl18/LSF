@@ -1,0 +1,50 @@
+{
+  "question": "What is total revenue for the most recent fiscal year (from the audited income statement)?",
+  "question_slug": "what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm",
+  "mode": "pareto_proxy",
+  "baseline_accuracy": 0.9,
+  "selected_rules": [],
+  "selected_avg_cost_ratio_sum": 0,
+  "covered_docs": [],
+  "uncovered_docs": [
+    "AMAZON_2016_10K",
+    "AMAZON_2018_10K",
+    "AMCOR_2019_10K",
+    "BOEING_2018_10K",
+    "CORNING_2022_10K",
+    "EBAY_2021_10K",
+    "JOHNSON_JOHNSON_2022_10K",
+    "LOCKHEEDMARTIN_2022_10K",
+    "NIKE_2021_10K"
+  ],
+  "selector_accuracy": 0.0,
+  "tau_safety_floor": 0.0,
+  "banned_rules": [],
+  "frontier": [
+    {
+      "cost": 0.0,
+      "accuracy_match": 0.0,
+      "rules_admitted": [],
+      "added_rule": null,
+      "rule_cov": null,
+      "rule_avg_cost": null
+    }
+  ],
+  "query_table": {
+    "0.50": null,
+    "0.80": null,
+    "0.90": null,
+    "0.95": null,
+    "1.00": null
+  },
+  "knee_point": null,
+  "knee_lambda": 10.0,
+  "llm_calls": {
+    "phase_2_incremental": 0,
+    "phase_2_judge": 0
+  },
+  "token_usage": {
+    "total_input_tokens": 0,
+    "total_output_tokens": 0
+  }
+}

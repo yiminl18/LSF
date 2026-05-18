@@ -1,0 +1,197 @@
+{
+  "question": "What is/are the trading symbol(s) and listing exchange(s)?",
+  "question_slug": "what_isare_the_trading_symbols_and_listing_exchanges_10_llm",
+  "mode": "pareto",
+  "baseline_accuracy": 1.0,
+  "selected_rules": [
+    "rule_page1_symbol_exchange_split_across_adjacent_spans",
+    "rule_exact_symbol_values",
+    "rule_page1_bold_smallfont_registration_values",
+    "rule_cover_page_embedded_symbol_exchange",
+    "rule_table_cells_symbol_exchange",
+    "rule_page1_registration_block_with_symbol_and_exchange_same_span",
+    "rule_business_sentence_trades_on_exchange",
+    "rule_page1_near_title_of_each_class"
+  ],
+  "selected_avg_cost_ratio_sum": 0.0022,
+  "covered_docs": [
+    "AMAZON_2016_10K",
+    "AMAZON_2018_10K",
+    "AMCOR_2019_10K",
+    "BOEING_2018_10K",
+    "CORNING_2022_10K",
+    "COSTCO_2017_10K",
+    "EBAY_2021_10K",
+    "JOHNSON_JOHNSON_2022_10K",
+    "LOCKHEEDMARTIN_2022_10K",
+    "NIKE_2021_10K"
+  ],
+  "uncovered_docs": [],
+  "selector_accuracy": 1.0,
+  "tau_safety_floor": 0.0,
+  "banned_rules": [],
+  "frontier": [
+    {
+      "cost": 0.0,
+      "accuracy_match": 0.0,
+      "rules_admitted": [],
+      "added_rule": null,
+      "rule_cov": null,
+      "rule_avg_cost": null
+    },
+    {
+      "cost": 9e-06,
+      "accuracy_match": 0.1,
+      "rules_admitted": [
+        "rule_page1_symbol_exchange_split_across_adjacent_spans"
+      ],
+      "added_rule": "rule_page1_symbol_exchange_split_across_adjacent_spans",
+      "rule_cov": 0.1,
+      "rule_avg_cost": 9e-06
+    },
+    {
+      "cost": 2.4e-05,
+      "accuracy_match": 0.2,
+      "rules_admitted": [
+        "rule_page1_symbol_exchange_split_across_adjacent_spans",
+        "rule_exact_symbol_values"
+      ],
+      "added_rule": "rule_exact_symbol_values",
+      "rule_cov": 0.1,
+      "rule_avg_cost": 1.5e-05
+    },
+    {
+      "cost": 5.5e-05,
+      "accuracy_match": 0.3,
+      "rules_admitted": [
+        "rule_page1_symbol_exchange_split_across_adjacent_spans",
+        "rule_exact_symbol_values",
+        "rule_page1_bold_smallfont_registration_values"
+      ],
+      "added_rule": "rule_page1_bold_smallfont_registration_values",
+      "rule_cov": 0.2,
+      "rule_avg_cost": 3.1e-05
+    },
+    {
+      "cost": 0.000109,
+      "accuracy_match": 0.4,
+      "rules_admitted": [
+        "rule_page1_symbol_exchange_split_across_adjacent_spans",
+        "rule_exact_symbol_values",
+        "rule_page1_bold_smallfont_registration_values",
+        "rule_cover_page_embedded_symbol_exchange"
+      ],
+      "added_rule": "rule_cover_page_embedded_symbol_exchange",
+      "rule_cov": 0.1,
+      "rule_avg_cost": 5.4e-05
+    },
+    {
+      "cost": 0.000172,
+      "accuracy_match": 0.5,
+      "rules_admitted": [
+        "rule_page1_symbol_exchange_split_across_adjacent_spans",
+        "rule_exact_symbol_values",
+        "rule_page1_bold_smallfont_registration_values",
+        "rule_cover_page_embedded_symbol_exchange",
+        "rule_table_cells_symbol_exchange"
+      ],
+      "added_rule": "rule_table_cells_symbol_exchange",
+      "rule_cov": 0.1,
+      "rule_avg_cost": 6.3e-05
+    },
+    {
+      "cost": 0.000446,
+      "accuracy_match": 0.6,
+      "rules_admitted": [
+        "rule_page1_symbol_exchange_split_across_adjacent_spans",
+        "rule_exact_symbol_values",
+        "rule_page1_bold_smallfont_registration_values",
+        "rule_cover_page_embedded_symbol_exchange",
+        "rule_table_cells_symbol_exchange",
+        "rule_page1_registration_block_with_symbol_and_exchange_same_span"
+      ],
+      "added_rule": "rule_page1_registration_block_with_symbol_and_exchange_same_span",
+      "rule_cov": 0.3,
+      "rule_avg_cost": 0.000274
+    },
+    {
+      "cost": 0.00155,
+      "accuracy_match": 0.9,
+      "rules_admitted": [
+        "rule_page1_symbol_exchange_split_across_adjacent_spans",
+        "rule_exact_symbol_values",
+        "rule_page1_bold_smallfont_registration_values",
+        "rule_cover_page_embedded_symbol_exchange",
+        "rule_table_cells_symbol_exchange",
+        "rule_page1_registration_block_with_symbol_and_exchange_same_span",
+        "rule_business_sentence_trades_on_exchange"
+      ],
+      "added_rule": "rule_business_sentence_trades_on_exchange",
+      "rule_cov": 0.7,
+      "rule_avg_cost": 0.001104
+    },
+    {
+      "cost": 0.0022,
+      "accuracy_match": 1.0,
+      "rules_admitted": [
+        "rule_page1_symbol_exchange_split_across_adjacent_spans",
+        "rule_exact_symbol_values",
+        "rule_page1_bold_smallfont_registration_values",
+        "rule_cover_page_embedded_symbol_exchange",
+        "rule_table_cells_symbol_exchange",
+        "rule_page1_registration_block_with_symbol_and_exchange_same_span",
+        "rule_business_sentence_trades_on_exchange",
+        "rule_page1_near_title_of_each_class"
+      ],
+      "added_rule": "rule_page1_near_title_of_each_class",
+      "rule_cov": 0.4,
+      "rule_avg_cost": 0.00065
+    }
+  ],
+  "query_table": {
+    "0.50": {
+      "cost": 0.000172,
+      "n_rules": 5
+    },
+    "0.80": {
+      "cost": 0.00155,
+      "n_rules": 7
+    },
+    "0.90": {
+      "cost": 0.00155,
+      "n_rules": 7
+    },
+    "0.95": {
+      "cost": 0.0022,
+      "n_rules": 8
+    },
+    "1.00": {
+      "cost": 0.0022,
+      "n_rules": 8
+    }
+  },
+  "knee_point": {
+    "cost": 0.0022,
+    "accuracy_match": 1.0,
+    "n_rules": 8,
+    "rules": [
+      "rule_page1_symbol_exchange_split_across_adjacent_spans",
+      "rule_exact_symbol_values",
+      "rule_page1_bold_smallfont_registration_values",
+      "rule_cover_page_embedded_symbol_exchange",
+      "rule_table_cells_symbol_exchange",
+      "rule_page1_registration_block_with_symbol_and_exchange_same_span",
+      "rule_business_sentence_trades_on_exchange",
+      "rule_page1_near_title_of_each_class"
+    ]
+  },
+  "knee_lambda": 10.0,
+  "llm_calls": {
+    "phase_2_incremental": 83,
+    "phase_2_judge": 83
+  },
+  "token_usage": {
+    "total_input_tokens": 26209,
+    "total_output_tokens": 1197
+  }
+}

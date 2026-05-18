@@ -1,0 +1,111 @@
+{
+  "question": "What is net income (loss) for the most recent fiscal year?",
+  "question_slug": "what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm",
+  "mode": "pareto",
+  "baseline_accuracy": 0.9,
+  "selected_rules": [
+    "rule_first_table_after_statement_of_income_header",
+    "rule_mda_results_of_operations_net_income_text",
+    "rule_pages_near_item8_from_toc_and_net_income"
+  ],
+  "selected_avg_cost_ratio_sum": 0.017098,
+  "covered_docs": [
+    "AMAZON_2016_10K",
+    "AMAZON_2018_10K",
+    "BOEING_2018_10K",
+    "CORNING_2022_10K",
+    "COSTCO_2017_10K",
+    "EBAY_2021_10K",
+    "JOHNSON_JOHNSON_2022_10K",
+    "LOCKHEEDMARTIN_2022_10K",
+    "NIKE_2021_10K"
+  ],
+  "uncovered_docs": [],
+  "selector_accuracy": 0.9,
+  "tau_safety_floor": 0.0,
+  "banned_rules": [],
+  "frontier": [
+    {
+      "cost": 0.0,
+      "accuracy_match": 0.0,
+      "rules_admitted": [],
+      "added_rule": null,
+      "rule_cov": null,
+      "rule_avg_cost": null
+    },
+    {
+      "cost": 0.00584,
+      "accuracy_match": 0.7778,
+      "rules_admitted": [
+        "rule_first_table_after_statement_of_income_header"
+      ],
+      "added_rule": "rule_first_table_after_statement_of_income_header",
+      "rule_cov": 0.8,
+      "rule_avg_cost": 0.00584
+    },
+    {
+      "cost": 0.010236,
+      "accuracy_match": 0.8889,
+      "rules_admitted": [
+        "rule_first_table_after_statement_of_income_header",
+        "rule_mda_results_of_operations_net_income_text"
+      ],
+      "added_rule": "rule_mda_results_of_operations_net_income_text",
+      "rule_cov": 0.3,
+      "rule_avg_cost": 0.004396
+    },
+    {
+      "cost": 0.017098,
+      "accuracy_match": 1.0,
+      "rules_admitted": [
+        "rule_first_table_after_statement_of_income_header",
+        "rule_mda_results_of_operations_net_income_text",
+        "rule_pages_near_item8_from_toc_and_net_income"
+      ],
+      "added_rule": "rule_pages_near_item8_from_toc_and_net_income",
+      "rule_cov": 0.4,
+      "rule_avg_cost": 0.006862
+    }
+  ],
+  "query_table": {
+    "0.50": {
+      "cost": 0.00584,
+      "n_rules": 1
+    },
+    "0.80": {
+      "cost": 0.010236,
+      "n_rules": 2
+    },
+    "0.90": {
+      "cost": 0.017098,
+      "n_rules": 3
+    },
+    "0.95": {
+      "cost": 0.017098,
+      "n_rules": 3
+    },
+    "1.00": {
+      "cost": 0.017098,
+      "n_rules": 3
+    }
+  },
+  "knee_point": {
+    "cost": 0.017098,
+    "accuracy_match": 1.0,
+    "n_rules": 3,
+    "rules": [
+      "rule_first_table_after_statement_of_income_header",
+      "rule_mda_results_of_operations_net_income_text",
+      "rule_pages_near_item8_from_toc_and_net_income"
+    ]
+  },
+  "knee_lambda": 10.0,
+  "llm_calls": {
+    "phase_2_incremental": 14,
+    "phase_2_judge": 14
+  },
+  "token_usage": {
+    "total_input_tokens": 10926,
+    "total_output_tokens": 203
+  }
+}

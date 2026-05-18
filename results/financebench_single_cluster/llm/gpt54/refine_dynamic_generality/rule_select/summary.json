@@ -3,24 +3,25 @@
     "question": "What is long-term debt at year-end (0 if none)?",
     "question_slug": "what_is_longterm_debt_at_yearend_0_if_none_10_llm",
     "mode": "auto_tighten",
-    "tau_floor": 0.2,
-    "tau_best": 0.2,
+    "tau_floor": 0.0,
+    "tau_best": 0.7,
     "selected_rules": [
-      "rule_debt_table_under_notes_or_mda"
+      "rule_balance_sheet_long_term_debt_row",
+      "rule_table_with_debt_and_total_liabilities",
+      "rule_debt_table_with_liabilities_and_equity_context"
     ],
-    "selected_avg_cost_ratio_sum": 0.005651,
+    "selected_avg_cost_ratio_sum": 0.070051,
     "covered_docs": [
-      "COSTCO_2017_10K"
-    ],
-    "uncovered_docs": [
       "AMAZON_2016_10K",
       "CORNING_2022_10K",
+      "COSTCO_2017_10K",
       "EBAY_2021_10K",
       "JOHNSON_JOHNSON_2022_10K",
       "NIKE_2021_10K"
     ],
+    "uncovered_docs": [],
     "baseline_accuracy": 0.6,
-    "selector_accuracy": 0.1,
+    "selector_accuracy": 0.6,
     "tightening_history": [
       {
         "iteration": 1,
@@ -34,20 +35,164 @@
           "rule_note_debt_table": 0.3
         },
         "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 2,
+        "banned_rule": "rule_text_span_long_term_debt_numeric",
+        "cov_banned": 0.3,
+        "tau_try": 0.300001,
+        "added_rules": [
+          "rule_balance_sheet_header_followed_by_table"
+        ],
+        "added_covs": {
+          "rule_balance_sheet_header_followed_by_table": 0.6
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 3,
+        "banned_rule": "rule_note_debt_table",
+        "cov_banned": 0.3,
+        "tau_try": 0.300001,
+        "added_rules": [
+          "rule_debt_note_header_same_page_tables"
+        ],
+        "added_covs": {
+          "rule_debt_note_header_same_page_tables": 0.4
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 4,
+        "banned_rule": "rule_note_debt_header_near_table",
+        "cov_banned": 0.4,
+        "tau_try": 0.400001,
+        "added_rules": [
+          "rule_balance_sheet_path_followed_by_table"
+        ],
+        "added_covs": {
+          "rule_balance_sheet_path_followed_by_table": 0.5
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 5,
+        "banned_rule": "rule_debt_note_header_same_page_tables",
+        "cov_banned": 0.4,
+        "tau_try": 0.400001,
+        "added_rules": [
+          "rule_balance_sheet_long_term_debt_and_current_portion"
+        ],
+        "added_covs": {
+          "rule_balance_sheet_long_term_debt_and_current_portion": 0.6
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 6,
+        "banned_rule": "rule_balance_sheet_path_followed_by_table",
+        "cov_banned": 0.5,
+        "tau_try": 0.500001,
+        "added_rules": [
+          "rule_debt_note_current_and_long_term_split"
+        ],
+        "added_covs": {
+          "rule_debt_note_current_and_long_term_split": 0.6
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 7,
+        "banned_rule": "rule_balance_sheet_header_followed_by_table",
+        "cov_banned": 0.6,
+        "tau_try": 0.600001,
+        "added_rules": [
+          "rule_balance_sheet_long_term_debt_row"
+        ],
+        "added_covs": {
+          "rule_balance_sheet_long_term_debt_row": 0.7
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 8,
+        "banned_rule": "rule_balance_sheet_long_term_debt_and_current_portion",
+        "cov_banned": 0.6,
+        "tau_try": 0.600001,
+        "added_rules": [
+          "rule_table_with_debt_and_total_liabilities"
+        ],
+        "added_covs": {
+          "rule_table_with_debt_and_total_liabilities": 0.7
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 9,
+        "banned_rule": "rule_debt_note_current_and_long_term_split",
+        "cov_banned": 0.6,
+        "tau_try": 0.600001,
+        "added_rules": [
+          "rule_debt_table_with_liabilities_and_equity_context"
+        ],
+        "added_covs": {
+          "rule_debt_table_with_liabilities_and_equity_context": 0.7
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 10,
+        "banned_rule": "rule_balance_sheet_long_term_debt_row",
+        "cov_banned": 0.7,
+        "tau_try": 0.700001,
+        "added_rules": [],
+        "added_covs": {},
+        "below_tau_try": [],
         "feasible_cover": false,
         "accepted": false
       }
     ],
     "llm_calls": {
-      "phase_2_incremental": 208,
-      "phase_3_coverage": 1,
-      "phase_4_auto_tighten": 3
+      "phase_2_incremental": 54,
+      "phase_3_coverage": 54,
+      "phase_35_backtracking": 36,
+      "phase_4_auto_tighten": 40
     },
-    "selection_latency_seconds": 164.0,
+    "token_usage": {
+      "total_input_tokens": 93923,
+      "total_output_tokens": 1235,
+      "phase_2_3_input": 25856,
+      "phase_2_3_output": 712,
+      "phase_35_input": 25903,
+      "phase_35_output": 256,
+      "phase_4_input": 42164,
+      "phase_4_output": 267
+    },
+    "selection_latency_seconds": 145.43,
     "refdyn_slug": "what_is_longterm_debt_at_yearend_0_if_none_10_refdyn",
     "refdyn_rules_dir": "rules/financebench_single_cluster/llm/gpt54/refine_dynamic_generality/what_is_longterm_debt_at_yearend_0_if_none_10_refdyn",
     "rules_copied": [
-      "rule_debt_table_under_notes_or_mda"
+      "rule_balance_sheet_long_term_debt_row",
+      "rule_table_with_debt_and_total_liabilities",
+      "rule_debt_table_with_liabilities_and_equity_context"
     ],
     "n_rules_total_pool": 40
   },
@@ -55,56 +200,213 @@
     "question": "What is net income (loss) for the most recent fiscal year?",
     "question_slug": "what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm",
     "mode": "auto_tighten",
-    "tau_floor": 0.2,
-    "tau_best": 0.3,
+    "tau_floor": 0.0,
+    "tau_best": 0.8,
     "selected_rules": [
-      "rule_mda_results_of_operations_net_income_text",
-      "rule_selected_financial_data_net_income_table"
+      "rule_net_income_row_in_income_statement_table",
+      "rule_tables_with_row_net_and_column_years",
+      "rule_net_income_row_with_latest_year_value_table",
+      "rule_row_header_net_income_in_any_table",
+      "rule_tables_with_financial_units_and_recent_years",
+      "rule_financial_statement_table_with_parentheses_and_dollars"
     ],
-    "selected_avg_cost_ratio_sum": 0.008962,
+    "selected_avg_cost_ratio_sum": 0.309071,
     "covered_docs": [
-      "CORNING_2022_10K",
-      "COSTCO_2017_10K"
-    ],
-    "uncovered_docs": [
       "AMAZON_2016_10K",
       "AMAZON_2018_10K",
       "BOEING_2018_10K",
+      "CORNING_2022_10K",
+      "COSTCO_2017_10K",
       "EBAY_2021_10K",
       "JOHNSON_JOHNSON_2022_10K",
       "LOCKHEEDMARTIN_2022_10K",
       "NIKE_2021_10K"
     ],
+    "uncovered_docs": [],
     "baseline_accuracy": 0.9,
-    "selector_accuracy": 0.2,
+    "selector_accuracy": 0.9,
     "tightening_history": [
       {
         "iteration": 1,
+        "banned_rule": "rule_financial_tables_on_pages_from_toc_income_or_item8",
+        "cov_banned": 0.1,
+        "tau_try": 0.100001,
+        "added_rules": [
+          "rule_pages_near_item8_from_toc_and_net_income"
+        ],
+        "added_covs": {
+          "rule_pages_near_item8_from_toc_and_net_income": 0.4
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 2,
         "banned_rule": "rule_mda_results_of_operations_net_income_text",
         "cov_banned": 0.3,
         "tau_try": 0.300001,
         "added_rules": [
+          "rule_toc_statement_of_income_page",
           "rule_mda_item7_net_income_text"
         ],
         "added_covs": {
+          "rule_toc_statement_of_income_page": 0.4,
           "rule_mda_item7_net_income_text": 0.5
         },
         "below_tau_try": [],
-        "feasible_cover": false,
-        "accepted": false
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 3,
+        "banned_rule": "rule_pages_near_item8_from_toc_and_net_income",
+        "cov_banned": 0.4,
+        "tau_try": 0.400001,
+        "added_rules": [
+          "rule_page_after_statement_of_income_header"
+        ],
+        "added_covs": {
+          "rule_page_after_statement_of_income_header": 0.7
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 4,
+        "banned_rule": "rule_toc_statement_of_income_page",
+        "cov_banned": 0.4,
+        "tau_try": 0.400001,
+        "added_rules": [
+          "rule_net_income_row_in_income_statement_table"
+        ],
+        "added_covs": {
+          "rule_net_income_row_in_income_statement_table": 0.9
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 5,
+        "banned_rule": "rule_selected_financial_data_net_income_table",
+        "cov_banned": 0.5,
+        "tau_try": 0.500001,
+        "added_rules": [
+          "rule_net_income_row_in_financial_statements_section",
+          "rule_tables_with_row_net_and_column_years"
+        ],
+        "added_covs": {
+          "rule_net_income_row_in_financial_statements_section": 0.6,
+          "rule_tables_with_row_net_and_column_years": 0.9
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 6,
+        "banned_rule": "rule_mda_item7_net_income_text",
+        "cov_banned": 0.5,
+        "tau_try": 0.500001,
+        "added_rules": [
+          "rule_net_income_row_with_latest_year_value_table"
+        ],
+        "added_covs": {
+          "rule_net_income_row_with_latest_year_value_table": 0.8
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 7,
+        "banned_rule": "rule_net_income_row_in_financial_statements_section",
+        "cov_banned": 0.6,
+        "tau_try": 0.600001,
+        "added_rules": [
+          "rule_tables_under_part_ii_with_net_income"
+        ],
+        "added_covs": {
+          "rule_tables_under_part_ii_with_net_income": 0.7
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 8,
+        "banned_rule": "rule_page_after_statement_of_income_header",
+        "cov_banned": 0.7,
+        "tau_try": 0.700001,
+        "added_rules": [
+          "rule_row_header_net_income_in_any_table"
+        ],
+        "added_covs": {
+          "rule_row_header_net_income_in_any_table": 0.9
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 9,
+        "banned_rule": "rule_tables_under_part_ii_with_net_income",
+        "cov_banned": 0.7,
+        "tau_try": 0.700001,
+        "added_rules": [
+          "rule_tables_with_financial_units_and_recent_years"
+        ],
+        "added_covs": {
+          "rule_tables_with_financial_units_and_recent_years": 0.8
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 10,
+        "banned_rule": "rule_first_table_after_statement_of_income_header",
+        "cov_banned": 0.8,
+        "tau_try": 0.800001,
+        "added_rules": [
+          "rule_financial_statement_table_with_parentheses_and_dollars"
+        ],
+        "added_covs": {
+          "rule_financial_statement_table_with_parentheses_and_dollars": 0.9
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
       }
     ],
     "llm_calls": {
-      "phase_2_incremental": 247,
-      "phase_3_coverage": 2,
-      "phase_4_auto_tighten": 6
+      "phase_2_incremental": 80,
+      "phase_3_coverage": 80,
+      "phase_35_backtracking": 72,
+      "phase_4_auto_tighten": 48
     },
-    "selection_latency_seconds": 218.86,
+    "token_usage": {
+      "total_input_tokens": 176794,
+      "total_output_tokens": 1954,
+      "phase_2_3_input": 36083,
+      "phase_2_3_output": 1059,
+      "phase_35_input": 42925,
+      "phase_35_output": 532,
+      "phase_4_input": 97786,
+      "phase_4_output": 363
+    },
+    "selection_latency_seconds": 213.49,
     "refdyn_slug": "what_is_net_income_loss_for_the_most_recent_fiscal_year_10_refdyn",
     "refdyn_rules_dir": "rules/financebench_single_cluster/llm/gpt54/refine_dynamic_generality/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_refdyn",
     "rules_copied": [
-      "rule_mda_results_of_operations_net_income_text",
-      "rule_selected_financial_data_net_income_table"
+      "rule_net_income_row_in_income_statement_table",
+      "rule_tables_with_row_net_and_column_years",
+      "rule_net_income_row_with_latest_year_value_table",
+      "rule_row_header_net_income_in_any_table",
+      "rule_tables_with_financial_units_and_recent_years",
+      "rule_financial_statement_table_with_parentheses_and_dollars"
     ],
     "n_rules_total_pool": 33
   },
@@ -112,50 +414,16 @@
     "question": "What is total revenue for the most recent fiscal year (from the audited income statement)?",
     "question_slug": "what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm",
     "mode": "auto_tighten",
-    "tau_floor": 0.2,
-    "tau_best": 0.2,
-    "selected_rules": [],
-    "selected_avg_cost_ratio_sum": 0,
-    "covered_docs": [],
-    "uncovered_docs": [
-      "AMAZON_2016_10K",
-      "AMAZON_2018_10K",
-      "AMCOR_2019_10K",
-      "BOEING_2018_10K",
-      "CORNING_2022_10K",
-      "EBAY_2021_10K",
-      "JOHNSON_JOHNSON_2022_10K",
-      "LOCKHEEDMARTIN_2022_10K",
-      "NIKE_2021_10K"
-    ],
-    "baseline_accuracy": 0.9,
-    "selector_accuracy": 0.0,
-    "tightening_history": [],
-    "llm_calls": {
-      "phase_2_incremental": 333,
-      "phase_3_coverage": 0,
-      "phase_4_auto_tighten": 0
-    },
-    "selection_latency_seconds": 314.16,
-    "refdyn_slug": "what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_refdyn",
-    "refdyn_rules_dir": "rules/financebench_single_cluster/llm/gpt54/refine_dynamic_generality/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_refdyn",
-    "rules_copied": [],
-    "n_rules_total_pool": 37
-  },
-  {
-    "question": "What is total assets at year-end (from the audited balance sheet)?",
-    "question_slug": "what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm",
-    "mode": "auto_tighten",
-    "tau_floor": 0.2,
-    "tau_best": 0.2,
+    "tau_floor": 0.0,
+    "tau_best": 0.9,
     "selected_rules": [
-      "rule_tables_with_total_assets_and_audited_year_end_context"
+      "rule_statement_heading_and_following_numeric_table",
+      "rule_tables_with_million_units_and_revenue",
+      "rule_recent_fiscal_year_column_cells",
+      "rule_top_row_revenue_in_income_tables"
     ],
-    "selected_avg_cost_ratio_sum": 0.003109,
+    "selected_avg_cost_ratio_sum": 0.149216,
     "covered_docs": [
-      "COSTCO_2017_10K"
-    ],
-    "uncovered_docs": [
       "AMAZON_2016_10K",
       "AMAZON_2018_10K",
       "AMCOR_2019_10K",
@@ -166,53 +434,200 @@
       "LOCKHEEDMARTIN_2022_10K",
       "NIKE_2021_10K"
     ],
-    "baseline_accuracy": 1.0,
-    "selector_accuracy": 0.1,
+    "uncovered_docs": [],
+    "baseline_accuracy": 0.9,
+    "selector_accuracy": 0.9,
     "tightening_history": [
       {
         "iteration": 1,
-        "banned_rule": "rule_tables_with_total_assets_and_audited_year_end_context",
-        "cov_banned": 0.2,
-        "tau_try": 0.200001,
+        "banned_rule": "rule_first_financial_table_after_item8",
+        "cov_banned": 0.1,
+        "tau_try": 0.100001,
         "added_rules": [
-          "rule_tables_with_total_assets_and_financial_statements_path"
+          "rule_row_header_total_revenue"
         ],
         "added_covs": {
-          "rule_tables_with_total_assets_and_financial_statements_path": 0.4
+          "rule_row_header_total_revenue": 0.3
         },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 2,
+        "banned_rule": "rule_row_header_total_revenue",
+        "cov_banned": 0.3,
+        "tau_try": 0.300001,
+        "added_rules": [
+          "rule_income_statement_nearby_tables"
+        ],
+        "added_covs": {
+          "rule_income_statement_nearby_tables": 0.8
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 3,
+        "banned_rule": "rule_segment_note_revenue_tables",
+        "cov_banned": 0.4,
+        "tau_try": 0.400001,
+        "added_rules": [
+          "rule_revenue_row_top_of_table_under_item8"
+        ],
+        "added_covs": {
+          "rule_revenue_row_top_of_table_under_item8": 0.6
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 4,
+        "banned_rule": "rule_item8_income_statement_tables",
+        "cov_banned": 0.4,
+        "tau_try": 0.400001,
+        "added_rules": [
+          "rule_row_header_net_sales"
+        ],
+        "added_covs": {
+          "rule_row_header_net_sales": 0.5
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 5,
+        "banned_rule": "rule_income_statement_page_from_toc",
+        "cov_banned": 0.5,
+        "tau_try": 0.500001,
+        "added_rules": [
+          "rule_statement_heading_and_following_numeric_table"
+        ],
+        "added_covs": {
+          "rule_statement_heading_and_following_numeric_table": 0.9
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 6,
+        "banned_rule": "rule_row_header_net_sales",
+        "cov_banned": 0.5,
+        "tau_try": 0.500001,
+        "added_rules": [
+          "rule_tables_with_million_units_and_revenue"
+        ],
+        "added_covs": {
+          "rule_tables_with_million_units_and_revenue": 0.9
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 7,
+        "banned_rule": "rule_revenue_row_top_of_table_under_item8",
+        "cov_banned": 0.6,
+        "tau_try": 0.600001,
+        "added_rules": [
+          "rule_tables_with_consolidated_keyword_and_revenue"
+        ],
+        "added_covs": {
+          "rule_tables_with_consolidated_keyword_and_revenue": 0.8
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 8,
+        "banned_rule": "rule_income_statement_nearby_tables",
+        "cov_banned": 0.8,
+        "tau_try": 0.800001,
+        "added_rules": [
+          "rule_recent_fiscal_year_column_cells"
+        ],
+        "added_covs": {
+          "rule_recent_fiscal_year_column_cells": 0.9
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 9,
+        "banned_rule": "rule_tables_with_consolidated_keyword_and_revenue",
+        "cov_banned": 0.8,
+        "tau_try": 0.800001,
+        "added_rules": [
+          "rule_top_row_revenue_in_income_tables"
+        ],
+        "added_covs": {
+          "rule_top_row_revenue_in_income_tables": 0.9
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 10,
+        "banned_rule": "rule_statement_heading_and_following_numeric_table",
+        "cov_banned": 0.9,
+        "tau_try": 0.900001,
+        "added_rules": [],
+        "added_covs": {},
         "below_tau_try": [],
         "feasible_cover": false,
         "accepted": false
       }
     ],
     "llm_calls": {
-      "phase_2_incremental": 1075,
-      "phase_3_coverage": 1,
-      "phase_4_auto_tighten": 4
+      "phase_2_incremental": 91,
+      "phase_3_coverage": 91,
+      "phase_35_backtracking": 90,
+      "phase_4_auto_tighten": 32
     },
-    "selection_latency_seconds": 867.01,
-    "refdyn_slug": "what_is_total_assets_at_yearend_from_the_audited_balance_she_10_refdyn",
-    "refdyn_rules_dir": "rules/financebench_single_cluster/llm/gpt54/refine_dynamic_generality/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_refdyn",
+    "token_usage": {
+      "total_input_tokens": 209238,
+      "total_output_tokens": 2102,
+      "phase_2_3_input": 47714,
+      "phase_2_3_output": 1200,
+      "phase_35_input": 77531,
+      "phase_35_output": 662,
+      "phase_4_input": 83993,
+      "phase_4_output": 240
+    },
+    "selection_latency_seconds": 230.04,
+    "refdyn_slug": "what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_refdyn",
+    "refdyn_rules_dir": "rules/financebench_single_cluster/llm/gpt54/refine_dynamic_generality/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_refdyn",
     "rules_copied": [
-      "rule_tables_with_total_assets_and_audited_year_end_context"
+      "rule_statement_heading_and_following_numeric_table",
+      "rule_tables_with_million_units_and_revenue",
+      "rule_recent_fiscal_year_column_cells",
+      "rule_top_row_revenue_in_income_tables"
     ],
-    "n_rules_total_pool": 118
+    "n_rules_total_pool": 37
   },
   {
-    "question": "What is the registrant's telephone number?",
-    "question_slug": "what_is_the_registrants_telephone_number_10_llm",
+    "question": "What is total assets at year-end (from the audited balance sheet)?",
+    "question_slug": "what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm",
     "mode": "auto_tighten",
-    "tau_floor": 0.2,
-    "tau_best": 0.8,
+    "tau_floor": 0.0,
+    "tau_best": 0.5,
     "selected_rules": [
-      "rule_page1_small_body_phone",
-      "rule_page1_text_phone",
-      "rule_phone_in_text_label",
-      "rule_page1_phone_preceded_by_address_neighbor",
-      "rule_page1_phone_number_pattern",
-      "rule_page1_phone_with_registrant_label_neighbor"
+      "rule_item8_balance_sheet_from_toc",
+      "rule_tables_near_item8_toc_balance_sheet_page",
+      "rule_tables_with_assets_and_balance_sheet_title_in_text",
+      "rule_tables_with_total_assets_and_total_liabilities_and_equity",
+      "rule_tables_with_total_assets_and_total_liabilities_equity",
+      "rule_tables_with_total_assets_and_balance_keywords_in_path",
+      "rule_tables_with_total_assets_and_no_income_statement_terms"
     ],
-    "selected_avg_cost_ratio_sum": 0.00132,
+    "selected_avg_cost_ratio_sum": 0.057117,
     "covered_docs": [
       "AMAZON_2016_10K",
       "AMAZON_2018_10K",
@@ -231,14 +646,14 @@
     "tightening_history": [
       {
         "iteration": 1,
-        "banned_rule": "rule_registrant_phone_following_zip_parent",
-        "cov_banned": 0.2,
-        "tau_try": 0.200001,
+        "banned_rule": "rule_tables_with_financial_position_and_total_assets",
+        "cov_banned": 0.1,
+        "tau_try": 0.100001,
         "added_rules": [
-          "rule_cover_page_before_securities_registered"
+          "rule_tables_with_total_assets_and_page_around_42"
         ],
         "added_covs": {
-          "rule_cover_page_before_securities_registered": 0.3
+          "rule_tables_with_total_assets_and_page_around_42": 0.2
         },
         "below_tau_try": [],
         "feasible_cover": true,
@@ -246,7 +661,233 @@
       },
       {
         "iteration": 2,
-        "banned_rule": "rule_exact_phone_only_span",
+        "banned_rule": "rule_tables_with_total_assets_and_audited_year_end_context",
+        "cov_banned": 0.2,
+        "tau_try": 0.200001,
+        "added_rules": [
+          "rule_tables_with_total_assets_in_item8_path"
+        ],
+        "added_covs": {
+          "rule_tables_with_total_assets_in_item8_path": 0.4
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 3,
+        "banned_rule": "rule_tables_with_total_assets_and_page_around_39",
+        "cov_banned": 0.2,
+        "tau_try": 0.200001,
+        "added_rules": [
+          "rule_tables_with_total_assets_and_financial_statements_path"
+        ],
+        "added_covs": {
+          "rule_tables_with_total_assets_and_financial_statements_path": 0.4
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 4,
+        "banned_rule": "rule_tables_with_total_assets_and_page_around_60",
+        "cov_banned": 0.2,
+        "tau_try": 0.200001,
+        "added_rules": [
+          "rule_tables_near_item8_toc_balance_sheet_page"
+        ],
+        "added_covs": {
+          "rule_tables_near_item8_toc_balance_sheet_page": 0.5
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 5,
+        "banned_rule": "rule_tables_with_total_assets_and_page_around_42",
+        "cov_banned": 0.2,
+        "tau_try": 0.200001,
+        "added_rules": [
+          "rule_tables_with_million_or_billion_units"
+        ],
+        "added_covs": {
+          "rule_tables_with_million_or_billion_units": 0.4
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 6,
+        "banned_rule": "rule_tables_with_total_assets_and_item8_path",
+        "cov_banned": 0.3,
+        "tau_try": 0.300001,
+        "added_rules": [
+          "rule_tables_with_total_assets_and_other_assets",
+          "rule_tables_with_assets_and_balance_sheet_title_in_text"
+        ],
+        "added_covs": {
+          "rule_tables_with_total_assets_and_other_assets": 0.4,
+          "rule_tables_with_assets_and_balance_sheet_title_in_text": 0.6
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 7,
+        "banned_rule": "rule_tables_with_total_assets_in_item8_path",
+        "cov_banned": 0.4,
+        "tau_try": 0.400001,
+        "added_rules": [
+          "rule_tables_with_total_assets_and_total_liabilities_and_equity"
+        ],
+        "added_covs": {
+          "rule_tables_with_total_assets_and_total_liabilities_and_equity": 0.5
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 8,
+        "banned_rule": "rule_tables_with_total_assets_and_financial_statements_path",
+        "cov_banned": 0.4,
+        "tau_try": 0.400001,
+        "added_rules": [
+          "rule_tables_with_total_assets_and_total_liabilities_equity"
+        ],
+        "added_covs": {
+          "rule_tables_with_total_assets_and_total_liabilities_equity": 0.6
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 9,
+        "banned_rule": "rule_tables_with_million_or_billion_units",
+        "cov_banned": 0.4,
+        "tau_try": 0.400001,
+        "added_rules": [
+          "rule_tables_with_total_assets_and_balance_keywords_in_path"
+        ],
+        "added_covs": {
+          "rule_tables_with_total_assets_and_balance_keywords_in_path": 0.5
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 10,
+        "banned_rule": "rule_tables_with_total_assets_and_other_assets",
+        "cov_banned": 0.4,
+        "tau_try": 0.400001,
+        "added_rules": [
+          "rule_tables_with_total_assets_and_no_income_statement_terms"
+        ],
+        "added_covs": {
+          "rule_tables_with_total_assets_and_no_income_statement_terms": 0.7
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      }
+    ],
+    "llm_calls": {
+      "phase_2_incremental": 176,
+      "phase_3_coverage": 176,
+      "phase_35_backtracking": 140,
+      "phase_4_auto_tighten": 56
+    },
+    "token_usage": {
+      "total_input_tokens": 243138,
+      "total_output_tokens": 3765,
+      "phase_2_3_input": 81607,
+      "phase_2_3_output": 2318,
+      "phase_35_input": 114872,
+      "phase_35_output": 1021,
+      "phase_4_input": 46659,
+      "phase_4_output": 426
+    },
+    "selection_latency_seconds": 407.66,
+    "refdyn_slug": "what_is_total_assets_at_yearend_from_the_audited_balance_she_10_refdyn",
+    "refdyn_rules_dir": "rules/financebench_single_cluster/llm/gpt54/refine_dynamic_generality/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_refdyn",
+    "rules_copied": [
+      "rule_item8_balance_sheet_from_toc",
+      "rule_tables_near_item8_toc_balance_sheet_page",
+      "rule_tables_with_assets_and_balance_sheet_title_in_text",
+      "rule_tables_with_total_assets_and_total_liabilities_and_equity",
+      "rule_tables_with_total_assets_and_total_liabilities_equity",
+      "rule_tables_with_total_assets_and_balance_keywords_in_path",
+      "rule_tables_with_total_assets_and_no_income_statement_terms"
+    ],
+    "n_rules_total_pool": 118
+  },
+  {
+    "question": "What is the registrant's telephone number?",
+    "question_slug": "what_is_the_registrants_telephone_number_10_llm",
+    "mode": "auto_tighten",
+    "tau_floor": 0.0,
+    "tau_best": 1.0,
+    "selected_rules": [
+      "rule_page1_phone_number_pattern",
+      "rule_page1_phone_with_registrant_label_neighbor",
+      "rule_phone_number_answer_extractor_spans"
+    ],
+    "selected_avg_cost_ratio_sum": 0.000766,
+    "covered_docs": [
+      "AMAZON_2016_10K",
+      "AMAZON_2018_10K",
+      "AMCOR_2019_10K",
+      "BOEING_2018_10K",
+      "CORNING_2022_10K",
+      "COSTCO_2017_10K",
+      "EBAY_2021_10K",
+      "JOHNSON_JOHNSON_2022_10K",
+      "LOCKHEEDMARTIN_2022_10K",
+      "NIKE_2021_10K"
+    ],
+    "uncovered_docs": [],
+    "baseline_accuracy": 1.0,
+    "selector_accuracy": 1.0,
+    "tightening_history": [
+      {
+        "iteration": 1,
+        "banned_rule": "rule_phone_before_section12b",
+        "cov_banned": 0.1,
+        "tau_try": 0.100001,
+        "added_rules": [
+          "rule_registrant_phone_following_zip_parent"
+        ],
+        "added_covs": {
+          "rule_registrant_phone_following_zip_parent": 0.2
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 2,
+        "banned_rule": "rule_registrant_phone_following_zip_parent",
+        "cov_banned": 0.2,
+        "tau_try": 0.200001,
+        "added_rules": [
+          "rule_page1_before_documents_incorporated"
+        ],
+        "added_covs": {
+          "rule_page1_before_documents_incorporated": 0.4
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 3,
+        "banned_rule": "rule_cover_page_before_section_12b",
         "cov_banned": 0.3,
         "tau_try": 0.300001,
         "added_rules": [
@@ -260,10 +901,10 @@
         "accepted": true
       },
       {
-        "iteration": 3,
-        "banned_rule": "rule_cover_page_before_section_12b",
-        "cov_banned": 0.3,
-        "tau_try": 0.300001,
+        "iteration": 4,
+        "banned_rule": "rule_page1_before_documents_incorporated",
+        "cov_banned": 0.4,
+        "tau_try": 0.400001,
         "added_rules": [
           "rule_registrant_telephone_parenthetical_label"
         ],
@@ -275,10 +916,10 @@
         "accepted": true
       },
       {
-        "iteration": 4,
-        "banned_rule": "rule_phone_only_or_phone_header",
-        "cov_banned": 0.3,
-        "tau_try": 0.300001,
+        "iteration": 5,
+        "banned_rule": "rule_registrant_telephone_parenthetical_label",
+        "cov_banned": 0.5,
+        "tau_try": 0.500001,
         "added_rules": [
           "rule_path_contains_company_name_page1"
         ],
@@ -290,52 +931,7 @@
         "accepted": true
       },
       {
-        "iteration": 5,
-        "banned_rule": "rule_cover_page_before_securities_registered",
-        "cov_banned": 0.3,
-        "tau_try": 0.300001,
-        "added_rules": [
-          "rule_page1_small_body_phone"
-        ],
-        "added_covs": {
-          "rule_page1_small_body_phone": 0.8
-        },
-        "below_tau_try": [],
-        "feasible_cover": true,
-        "accepted": true
-      },
-      {
         "iteration": 6,
-        "banned_rule": "rule_page1_before_documents_incorporated",
-        "cov_banned": 0.4,
-        "tau_try": 0.400001,
-        "added_rules": [
-          "rule_page1_text_phone"
-        ],
-        "added_covs": {
-          "rule_page1_text_phone": 0.8
-        },
-        "below_tau_try": [],
-        "feasible_cover": true,
-        "accepted": true
-      },
-      {
-        "iteration": 7,
-        "banned_rule": "rule_registrant_telephone_parenthetical_label",
-        "cov_banned": 0.5,
-        "tau_try": 0.500001,
-        "added_rules": [
-          "rule_phone_in_text_label"
-        ],
-        "added_covs": {
-          "rule_phone_in_text_label": 0.8
-        },
-        "below_tau_try": [],
-        "feasible_cover": true,
-        "accepted": true
-      },
-      {
-        "iteration": 8,
         "banned_rule": "rule_page1_phone_followed_by_section12b_neighbor",
         "cov_banned": 0.8,
         "tau_try": 0.800001,
@@ -350,7 +946,7 @@
         "accepted": true
       },
       {
-        "iteration": 9,
+        "iteration": 7,
         "banned_rule": "rule_page1_phone_with_parenthetical_area_code_label",
         "cov_banned": 0.8,
         "tau_try": 0.800001,
@@ -365,7 +961,7 @@
         "accepted": true
       },
       {
-        "iteration": 10,
+        "iteration": 8,
         "banned_rule": "rule_path_contains_company_name_page1",
         "cov_banned": 0.8,
         "tau_try": 0.800001,
@@ -378,23 +974,57 @@
         "below_tau_try": [],
         "feasible_cover": true,
         "accepted": true
+      },
+      {
+        "iteration": 9,
+        "banned_rule": "rule_page1_phone_preceded_by_address_neighbor",
+        "cov_banned": 0.9,
+        "tau_try": 0.900001,
+        "added_rules": [
+          "rule_phone_number_answer_extractor_spans"
+        ],
+        "added_covs": {
+          "rule_phone_number_answer_extractor_spans": 1.0
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 10,
+        "banned_rule": "rule_page1_phone_number_pattern",
+        "cov_banned": 1.0,
+        "tau_try": 1.000001,
+        "added_rules": [],
+        "added_covs": {},
+        "below_tau_try": [],
+        "feasible_cover": false,
+        "accepted": false
       }
     ],
     "llm_calls": {
-      "phase_2_incremental": 170,
-      "phase_3_coverage": 12,
-      "phase_4_auto_tighten": 34
+      "phase_2_incremental": 168,
+      "phase_3_coverage": 168,
+      "phase_35_backtracking": 140,
+      "phase_4_auto_tighten": 54
     },
-    "selection_latency_seconds": 154.22,
+    "token_usage": {
+      "total_input_tokens": 78673,
+      "total_output_tokens": 3920,
+      "phase_2_3_input": 48543,
+      "phase_2_3_output": 2232,
+      "phase_35_input": 21848,
+      "phase_35_output": 1226,
+      "phase_4_input": 8282,
+      "phase_4_output": 462
+    },
+    "selection_latency_seconds": 411.18,
     "refdyn_slug": "what_is_the_registrants_telephone_number_10_refdyn",
     "refdyn_rules_dir": "rules/financebench_single_cluster/llm/gpt54/refine_dynamic_generality/what_is_the_registrants_telephone_number_10_refdyn",
     "rules_copied": [
-      "rule_page1_small_body_phone",
-      "rule_page1_text_phone",
-      "rule_phone_in_text_label",
-      "rule_page1_phone_preceded_by_address_neighbor",
       "rule_page1_phone_number_pattern",
-      "rule_page1_phone_with_registrant_label_neighbor"
+      "rule_page1_phone_with_registrant_label_neighbor",
+      "rule_phone_number_answer_extractor_spans"
     ],
     "n_rules_total_pool": 78
   },
@@ -402,19 +1032,19 @@
     "question": "How many shares of common stock were outstanding as of the cover-page reference date?",
     "question_slug": "how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm",
     "mode": "auto_tighten",
-    "tau_floor": 0.2,
-    "tau_best": 0.0,
+    "tau_floor": 0.0,
+    "tau_best": 0.1,
     "selected_rules": [
+      "rule_page1_numeric_after_phrase_as_of_january",
+      "rule_page1_cover_text_with_multiple_large_numbers",
       "rule_page1_sentence_with_there_were_and_common_stock",
-      "rule_page1_cover_span_with_as_of_and_issued_outstanding",
       "rule_page1_shares_outstanding_as_of_february",
-      "rule_page2_cover_page_numeric_sentence",
-      "rule_page1_registrant_common_stock_outstanding",
-      "rule_page1_phrase_shares_of_common_stock_issued_and_outstanding",
-      "rule_page1_cover_numeric_candidates"
+      "rule_page1_phrase_number_of_shares_outstanding_of_registrant",
+      "rule_page2_cover_page_numeric_sentence"
     ],
-    "selected_avg_cost_ratio_sum": 0.000418,
+    "selected_avg_cost_ratio_sum": 0.000276,
     "covered_docs": [
+      "AMAZON_2016_10K",
       "AMAZON_2018_10K",
       "AMCOR_2019_10K",
       "BOEING_2018_10K",
@@ -424,44 +1054,48 @@
       "JOHNSON_JOHNSON_2022_10K",
       "LOCKHEEDMARTIN_2022_10K"
     ],
-    "uncovered_docs": [
-      "AMAZON_2016_10K"
-    ],
+    "uncovered_docs": [],
     "baseline_accuracy": 0.9,
-    "selector_accuracy": 0.8,
+    "selector_accuracy": 0.9,
     "tightening_history": [
       {
         "iteration": 1,
-        "banned_rule": "rule_page1_phrase_shares_of_common_stock_issued_and_outstanding",
-        "cov_banned": 0.0,
-        "tau_try": 1e-06,
-        "added_rules": [
-          "rule_page2_issued_and_outstanding_sentence"
-        ],
-        "added_covs": {
-          "rule_page2_issued_and_outstanding_sentence": 0.2
-        },
+        "banned_rule": "rule_page1_numeric_after_phrase_as_of_january",
+        "cov_banned": 0.1,
+        "tau_try": 0.100001,
+        "added_rules": [],
+        "added_covs": {},
         "below_tau_try": [],
         "feasible_cover": false,
         "accepted": false
       }
     ],
     "llm_calls": {
-      "phase_2_incremental": 603,
-      "phase_3_coverage": 31,
-      "phase_4_auto_tighten": 2
+      "phase_2_incremental": 296,
+      "phase_3_coverage": 296,
+      "phase_35_backtracking": 144,
+      "phase_4_auto_tighten": 98
     },
-    "selection_latency_seconds": 474.28,
+    "token_usage": {
+      "total_input_tokens": 126924,
+      "total_output_tokens": 5612,
+      "phase_2_3_input": 87846,
+      "phase_2_3_output": 3871,
+      "phase_35_input": 23124,
+      "phase_35_output": 1104,
+      "phase_4_input": 15954,
+      "phase_4_output": 637
+    },
+    "selection_latency_seconds": 646.47,
     "refdyn_slug": "how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_refdyn",
     "refdyn_rules_dir": "rules/financebench_single_cluster/llm/gpt54/refine_dynamic_generality/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_refdyn",
     "rules_copied": [
+      "rule_page1_numeric_after_phrase_as_of_january",
+      "rule_page1_cover_text_with_multiple_large_numbers",
       "rule_page1_sentence_with_there_were_and_common_stock",
-      "rule_page1_cover_span_with_as_of_and_issued_outstanding",
       "rule_page1_shares_outstanding_as_of_february",
-      "rule_page2_cover_page_numeric_sentence",
-      "rule_page1_registrant_common_stock_outstanding",
-      "rule_page1_phrase_shares_of_common_stock_issued_and_outstanding",
-      "rule_page1_cover_numeric_candidates"
+      "rule_page1_phrase_number_of_shares_outstanding_of_registrant",
+      "rule_page2_cover_page_numeric_sentence"
     ],
     "n_rules_total_pool": 100
   },
@@ -469,7 +1103,7 @@
     "question": "What is the registrant's exact name?",
     "question_slug": "what_is_the_registrants_exact_name_10_llm",
     "mode": "auto_tighten",
-    "tau_floor": 0.2,
+    "tau_floor": 0.0,
     "tau_best": 1.0,
     "selected_rules": [
       "rule_exact_name_caption_parent",
@@ -535,10 +1169,21 @@
     ],
     "llm_calls": {
       "phase_2_incremental": 19,
-      "phase_3_coverage": 9,
+      "phase_3_coverage": 19,
+      "phase_35_backtracking": 36,
       "phase_4_auto_tighten": 18
     },
-    "selection_latency_seconds": 36.21,
+    "token_usage": {
+      "total_input_tokens": 13193,
+      "total_output_tokens": 683,
+      "phase_2_3_input": 5429,
+      "phase_2_3_output": 270,
+      "phase_35_input": 5169,
+      "phase_35_output": 273,
+      "phase_4_input": 2595,
+      "phase_4_output": 140
+    },
+    "selection_latency_seconds": 69.43,
     "refdyn_slug": "what_is_the_registrants_exact_name_10_refdyn",
     "refdyn_rules_dir": "rules/financebench_single_cluster/llm/gpt54/refine_dynamic_generality/what_is_the_registrants_exact_name_10_refdyn",
     "rules_copied": [
@@ -551,12 +1196,16 @@
     "question": "What is the state (or other jurisdiction) of incorporation and the IRS Employer Identification Number?",
     "question_slug": "what_is_the_state_or_other_jurisdiction_of_incorporation_and_10_llm",
     "mode": "auto_tighten",
-    "tau_floor": 0.2,
-    "tau_best": 0.2,
-    "selected_rules": [],
-    "selected_avg_cost_ratio_sum": 0,
-    "covered_docs": [],
-    "uncovered_docs": [
+    "tau_floor": 0.0,
+    "tau_best": 0.5,
+    "selected_rules": [
+      "rule_page1_window_after_ein_label",
+      "rule_page1_texts_with_parent_h1_company_and_short_value",
+      "rule_page1_window_after_incorporation_label",
+      "rule_page1_cover_answer_cluster"
+    ],
+    "selected_avg_cost_ratio_sum": 0.003527,
+    "covered_docs": [
       "AMAZON_2016_10K",
       "AMAZON_2018_10K",
       "AMCOR_2019_10K",
@@ -568,76 +1217,248 @@
       "LOCKHEEDMARTIN_2022_10K",
       "NIKE_2021_10K"
     ],
+    "uncovered_docs": [],
     "baseline_accuracy": 1.0,
-    "selector_accuracy": 0.0,
-    "tightening_history": [],
+    "selector_accuracy": 1.0,
+    "tightening_history": [
+      {
+        "iteration": 1,
+        "banned_rule": "rule_page1_state_value_before_ein_value_sequence",
+        "cov_banned": 0.0,
+        "tau_try": 1e-06,
+        "added_rules": [
+          "rule_page1_combined_state_and_ein_same_text",
+          "rule_page1_short_bold_text_values"
+        ],
+        "added_covs": {
+          "rule_page1_combined_state_and_ein_same_text": 0.1,
+          "rule_page1_short_bold_text_values": 0.5
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 2,
+        "banned_rule": "rule_page1_ein_number_pattern",
+        "cov_banned": 0.1,
+        "tau_try": 0.100001,
+        "added_rules": [
+          "rule_page1_ein_or_state_labels"
+        ],
+        "added_covs": {
+          "rule_page1_ein_or_state_labels": 0.4
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 3,
+        "banned_rule": "rule_page1_combined_state_and_ein_same_text",
+        "cov_banned": 0.1,
+        "tau_try": 0.100001,
+        "added_rules": [
+          "rule_page1_h2_or_h3_value_headers_with_label_textspan"
+        ],
+        "added_covs": {
+          "rule_page1_h2_or_h3_value_headers_with_label_textspan": 0.4
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 4,
+        "banned_rule": "rule_page1_short_numeric_or_state_h2s",
+        "cov_banned": 0.3,
+        "tau_try": 0.300001,
+        "added_rules": [
+          "rule_page1_textspan_contains_labels"
+        ],
+        "added_covs": {
+          "rule_page1_textspan_contains_labels": 0.4
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 5,
+        "banned_rule": "rule_page1_ein_or_state_labels",
+        "cov_banned": 0.4,
+        "tau_try": 0.400001,
+        "added_rules": [
+          "rule_page1_ein_or_incorporation_keywords"
+        ],
+        "added_covs": {
+          "rule_page1_ein_or_incorporation_keywords": 0.5
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 6,
+        "banned_rule": "rule_page1_h2_or_h3_value_headers_with_label_textspan",
+        "cov_banned": 0.4,
+        "tau_try": 0.400001,
+        "added_rules": [
+          "rule_page1_first_40_spans_with_ein_or_incorporation"
+        ],
+        "added_covs": {
+          "rule_page1_first_40_spans_with_ein_or_incorporation": 0.5
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 7,
+        "banned_rule": "rule_page1_textspan_contains_labels",
+        "cov_banned": 0.4,
+        "tau_try": 0.400001,
+        "added_rules": [
+          "rule_page1_window_after_ein_label"
+        ],
+        "added_covs": {
+          "rule_page1_window_after_ein_label": 0.5
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 8,
+        "banned_rule": "rule_page1_short_bold_text_values",
+        "cov_banned": 0.5,
+        "tau_try": 0.500001,
+        "added_rules": [
+          "rule_page1_texts_with_parent_h1_company_and_short_value"
+        ],
+        "added_covs": {
+          "rule_page1_texts_with_parent_h1_company_and_short_value": 0.8
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 9,
+        "banned_rule": "rule_page1_ein_or_incorporation_keywords",
+        "cov_banned": 0.5,
+        "tau_try": 0.500001,
+        "added_rules": [
+          "rule_page1_window_after_incorporation_label"
+        ],
+        "added_covs": {
+          "rule_page1_window_after_incorporation_label": 0.9
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      },
+      {
+        "iteration": 10,
+        "banned_rule": "rule_page1_first_40_spans_with_ein_or_incorporation",
+        "cov_banned": 0.5,
+        "tau_try": 0.500001,
+        "added_rules": [
+          "rule_page1_cover_answer_cluster"
+        ],
+        "added_covs": {
+          "rule_page1_cover_answer_cluster": 1.0
+        },
+        "below_tau_try": [],
+        "feasible_cover": true,
+        "accepted": true
+      }
+    ],
     "llm_calls": {
-      "phase_2_incremental": 550,
-      "phase_3_coverage": 0,
-      "phase_4_auto_tighten": 0
+      "phase_2_incremental": 171,
+      "phase_3_coverage": 171,
+      "phase_35_backtracking": 80,
+      "phase_4_auto_tighten": 202
     },
-    "selection_latency_seconds": 433.98,
+    "token_usage": {
+      "total_input_tokens": 99349,
+      "total_output_tokens": 4461,
+      "phase_2_3_input": 52770,
+      "phase_2_3_output": 2285,
+      "phase_35_input": 12944,
+      "phase_35_output": 700,
+      "phase_4_input": 33635,
+      "phase_4_output": 1476
+    },
+    "selection_latency_seconds": 454.35,
     "refdyn_slug": "what_is_the_state_or_other_jurisdiction_of_incorporation_and_10_refdyn",
     "refdyn_rules_dir": "rules/financebench_single_cluster/llm/gpt54/refine_dynamic_generality/what_is_the_state_or_other_jurisdiction_of_incorporation_and_10_refdyn",
-    "rules_copied": [],
+    "rules_copied": [
+      "rule_page1_window_after_ein_label",
+      "rule_page1_texts_with_parent_h1_company_and_short_value",
+      "rule_page1_window_after_incorporation_label",
+      "rule_page1_cover_answer_cluster"
+    ],
     "n_rules_total_pool": 55
   },
   {
     "question": "What is the address of principal executive offices and ZIP code?",
     "question_slug": "what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm",
     "mode": "auto_tighten",
-    "tau_floor": 0.2,
-    "tau_best": 0.2,
+    "tau_floor": 0.0,
+    "tau_best": 1.0,
     "selected_rules": [
-      "rule_address_header_text_itself",
-      "rule_split_address_then_zip_consecutive",
-      "rule_page1_address_label_and_phone_cluster"
+      "rule_page1_address_near_exact_name_of_registrant"
     ],
-    "selected_avg_cost_ratio_sum": 0.001639,
+    "selected_avg_cost_ratio_sum": 0.001323,
     "covered_docs": [
-      "COSTCO_2017_10K",
-      "LOCKHEEDMARTIN_2022_10K",
-      "NIKE_2021_10K"
-    ],
-    "uncovered_docs": [
       "AMAZON_2016_10K",
       "AMAZON_2018_10K",
       "AMCOR_2019_10K",
       "CORNING_2022_10K",
+      "COSTCO_2017_10K",
       "EBAY_2021_10K",
-      "JOHNSON_JOHNSON_2022_10K"
+      "JOHNSON_JOHNSON_2022_10K",
+      "LOCKHEEDMARTIN_2022_10K",
+      "NIKE_2021_10K"
     ],
+    "uncovered_docs": [],
     "baseline_accuracy": 0.9,
-    "selector_accuracy": 0.3,
+    "selector_accuracy": 0.9,
     "tightening_history": [
       {
         "iteration": 1,
-        "banned_rule": "rule_address_header_text_itself",
-        "cov_banned": 0.2,
-        "tau_try": 0.200001,
-        "added_rules": [
-          "rule_page1_h2_address_headers"
-        ],
-        "added_covs": {
-          "rule_page1_h2_address_headers": 0.3
-        },
+        "banned_rule": "rule_page1_address_near_exact_name_of_registrant",
+        "cov_banned": 1.0,
+        "tau_try": 1.000001,
+        "added_rules": [],
+        "added_covs": {},
         "below_tau_try": [],
         "feasible_cover": false,
         "accepted": false
       }
     ],
     "llm_calls": {
-      "phase_2_incremental": 434,
-      "phase_3_coverage": 3,
-      "phase_4_auto_tighten": 2
+      "phase_2_incremental": 130,
+      "phase_3_coverage": 130,
+      "phase_35_backtracking": 144,
+      "phase_4_auto_tighten": 0
     },
-    "selection_latency_seconds": 372.0,
+    "token_usage": {
+      "total_input_tokens": 70251,
+      "total_output_tokens": 3645,
+      "phase_2_3_input": 40718,
+      "phase_2_3_output": 1990,
+      "phase_35_input": 29533,
+      "phase_35_output": 1655,
+      "phase_4_input": 0,
+      "phase_4_output": 0
+    },
+    "selection_latency_seconds": 310.22,
     "refdyn_slug": "what_is_the_address_of_principal_executive_offices_and_zip_c_10_refdyn",
     "refdyn_rules_dir": "rules/financebench_single_cluster/llm/gpt54/refine_dynamic_generality/what_is_the_address_of_principal_executive_offices_and_zip_c_10_refdyn",
     "rules_copied": [
-      "rule_address_header_text_itself",
-      "rule_split_address_then_zip_consecutive",
-      "rule_page1_address_label_and_phone_cluster"
+      "rule_page1_address_near_exact_name_of_registrant"
     ],
     "n_rules_total_pool": 61
   },

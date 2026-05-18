@@ -1,0 +1,89 @@
+{
+  "question": "What is the registrant's exact name?",
+  "question_slug": "what_is_the_registrants_exact_name_10_llm",
+  "mode": "pareto_v2",
+  "baseline_accuracy": 0.9,
+  "selected_rules": [
+    "rule_exact_name_caption_parent"
+  ],
+  "selected_avg_cost_ratio_sum": 6.7e-05,
+  "covered_docs": [
+    "AMAZON_2016_10K",
+    "AMAZON_2018_10K",
+    "AMCOR_2019_10K",
+    "BOEING_2018_10K",
+    "CORNING_2022_10K",
+    "COSTCO_2017_10K",
+    "JOHNSON_JOHNSON_2022_10K",
+    "LOCKHEEDMARTIN_2022_10K",
+    "NIKE_2021_10K"
+  ],
+  "uncovered_docs": [],
+  "selector_accuracy": 1.0,
+  "final_merge_accuracy": 1.0,
+  "matches_base": true,
+  "frontier": [
+    {
+      "cost": 0.0,
+      "accuracy_match": 0.0,
+      "rules_admitted": [],
+      "added_rule": null,
+      "rule_cov": null,
+      "rule_avg_cost": null
+    },
+    {
+      "cost": 6.7e-05,
+      "accuracy_match": 1.0,
+      "rules_admitted": [
+        "rule_exact_name_caption_parent"
+      ],
+      "added_rule": "rule_exact_name_caption_parent",
+      "rule_cov": 1.0,
+      "rule_avg_cost": 6.7e-05
+    }
+  ],
+  "query_table": {
+    "0.50": {
+      "cost": 6.7e-05,
+      "n_rules": 1
+    },
+    "0.80": {
+      "cost": 6.7e-05,
+      "n_rules": 1
+    },
+    "0.90": {
+      "cost": 6.7e-05,
+      "n_rules": 1
+    },
+    "0.95": {
+      "cost": 6.7e-05,
+      "n_rules": 1
+    },
+    "1.00": {
+      "cost": 6.7e-05,
+      "n_rules": 1
+    }
+  },
+  "knee_point": {
+    "cost": 6.7e-05,
+    "accuracy_match": 1.0,
+    "n_rules": 1,
+    "rules": [
+      "rule_exact_name_caption_parent"
+    ]
+  },
+  "knee_lambda": 10.0,
+  "extras_added_phase_b": [],
+  "pruned_phase_c": [],
+  "phase_a_rules_count": 1,
+  "phase_b_extras_count": 0,
+  "phase_c_pruned_count": 0,
+  "llm_calls": {
+    "qa": 29,
+    "judge": 29
+  },
+  "token_usage": {
+    "total_input_tokens": 8353,
+    "total_output_tokens": 448
+  }
+}

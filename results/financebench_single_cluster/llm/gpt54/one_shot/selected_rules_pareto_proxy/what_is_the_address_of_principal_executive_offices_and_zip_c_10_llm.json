@@ -1,0 +1,97 @@
+{
+  "question": "What is the address of principal executive offices and ZIP code?",
+  "question_slug": "what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm",
+  "mode": "pareto_proxy",
+  "baseline_accuracy": 0.9,
+  "selected_rules": [
+    "rule_address_header_text_itself",
+    "rule_page1_bold_short_address_fragments",
+    "rule_page1_address_label_and_phone_cluster"
+  ],
+  "selected_avg_cost_ratio_sum": 0.001699,
+  "covered_docs": [
+    "COSTCO_2017_10K",
+    "LOCKHEEDMARTIN_2022_10K",
+    "NIKE_2021_10K"
+  ],
+  "uncovered_docs": [
+    "AMAZON_2016_10K",
+    "AMAZON_2018_10K",
+    "AMCOR_2019_10K",
+    "CORNING_2022_10K",
+    "EBAY_2021_10K",
+    "JOHNSON_JOHNSON_2022_10K"
+  ],
+  "selector_accuracy": 0.3,
+  "tau_safety_floor": 0.0,
+  "banned_rules": [],
+  "frontier": [
+    {
+      "cost": 0.0,
+      "accuracy_match": 0.0,
+      "rules_admitted": [],
+      "added_rule": null,
+      "rule_cov": null,
+      "rule_avg_cost": null
+    },
+    {
+      "cost": 4.4e-05,
+      "accuracy_match": 0.1111,
+      "rules_admitted": [
+        "rule_address_header_text_itself"
+      ],
+      "added_rule": "rule_address_header_text_itself",
+      "rule_cov": 0.2,
+      "rule_avg_cost": 4.4e-05
+    },
+    {
+      "cost": 0.000205,
+      "accuracy_match": 0.2222,
+      "rules_admitted": [
+        "rule_address_header_text_itself",
+        "rule_page1_bold_short_address_fragments"
+      ],
+      "added_rule": "rule_page1_bold_short_address_fragments",
+      "rule_cov": 0.7,
+      "rule_avg_cost": 0.000161
+    },
+    {
+      "cost": 0.001699,
+      "accuracy_match": 0.3333,
+      "rules_admitted": [
+        "rule_address_header_text_itself",
+        "rule_page1_bold_short_address_fragments",
+        "rule_page1_address_label_and_phone_cluster"
+      ],
+      "added_rule": "rule_page1_address_label_and_phone_cluster",
+      "rule_cov": 0.7,
+      "rule_avg_cost": 0.001494
+    }
+  ],
+  "query_table": {
+    "0.50": null,
+    "0.80": null,
+    "0.90": null,
+    "0.95": null,
+    "1.00": null
+  },
+  "knee_point": {
+    "cost": 0.001699,
+    "accuracy_match": 0.3333,
+    "n_rules": 3,
+    "rules": [
+      "rule_address_header_text_itself",
+      "rule_page1_bold_short_address_fragments",
+      "rule_page1_address_label_and_phone_cluster"
+    ]
+  },
+  "knee_lambda": 10.0,
+  "llm_calls": {
+    "phase_2_incremental": 0,
+    "phase_2_judge": 0
+  },
+  "token_usage": {
+    "total_input_tokens": 0,
+    "total_output_tokens": 0
+  }
+}

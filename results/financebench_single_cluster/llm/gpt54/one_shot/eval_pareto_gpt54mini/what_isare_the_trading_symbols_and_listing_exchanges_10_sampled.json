@@ -1,0 +1,132 @@
+{
+  "question": "What is/are the trading symbol(s) and listing exchange(s)?",
+  "question_slug": "what_isare_the_trading_symbols_and_listing_exchanges_10_llm",
+  "eval_model": "gpt54",
+  "selection_source": "results/financebench_single_cluster/llm/gpt54/one_shot/selected_rules_pareto_gpt54mini/what_isare_the_trading_symbols_and_listing_exchanges_10_llm.json",
+  "selected_rules": [
+    "rule_page1_symbol_exchange_split_across_adjacent_spans",
+    "rule_exact_symbol_values",
+    "rule_page1_bold_smallfont_registration_values",
+    "rule_cover_page_embedded_symbol_exchange",
+    "rule_table_cells_symbol_exchange",
+    "rule_page1_registration_block_with_symbol_and_exchange_same_span",
+    "rule_business_sentence_trades_on_exchange",
+    "rule_page1_near_title_of_each_class"
+  ],
+  "accuracy": 0.8,
+  "avg_cost_ratio": 0.001913,
+  "num_documents": 10,
+  "per_doc": [
+    {
+      "doc_name": "AMCOR_2019_10K",
+      "predicted": "AMCR; NOT FOUND",
+      "ground_truth": "AMCR, The New York Stock Exchange",
+      "correct": false,
+      "retrieved_tokens": 102,
+      "total_doc_tokens": 84134,
+      "cost_ratio": 0.001212
+    },
+    {
+      "doc_name": "COSTCO_2017_10K",
+      "predicted": "COST — NASDAQ Global Select Market",
+      "ground_truth": "COST, The NASDAQ Global Select Market",
+      "correct": true,
+      "retrieved_tokens": 247,
+      "total_doc_tokens": 50565,
+      "cost_ratio": 0.004885
+    },
+    {
+      "doc_name": "BOEING_2018_10K",
+      "predicted": "NOT FOUND",
+      "ground_truth": "BA, New York Stock Exchange",
+      "correct": false,
+      "retrieved_tokens": 33,
+      "total_doc_tokens": 88449,
+      "cost_ratio": 0.000373
+    },
+    {
+      "doc_name": "AMAZON_2018_10K",
+      "predicted": "AMZN — Nasdaq Global Select Market",
+      "ground_truth": "AMZN, Nasdaq Global Select Market",
+      "correct": true,
+      "retrieved_tokens": 135,
+      "total_doc_tokens": 67659,
+      "cost_ratio": 0.001995
+    },
+    {
+      "doc_name": "EBAY_2021_10K",
+      "predicted": "EBAY — The Nasdaq Global Select Market",
+      "ground_truth": "EBAY, The Nasdaq Global Select Market",
+      "correct": true,
+      "retrieved_tokens": 116,
+      "total_doc_tokens": 104188,
+      "cost_ratio": 0.001113
+    },
+    {
+      "doc_name": "AMAZON_2016_10K",
+      "predicted": "AMZN — NASDAQ Global Select Market",
+      "ground_truth": "AMZN, NASDAQ Global Select Market",
+      "correct": true,
+      "retrieved_tokens": 165,
+      "total_doc_tokens": 63358,
+      "cost_ratio": 0.002604
+    },
+    {
+      "doc_name": "CORNING_2022_10K",
+      "predicted": "GLW — New York Stock Exchange (NYSE)",
+      "ground_truth": "GLW, New York Stock Exchange (NYSE)",
+      "correct": true,
+      "retrieved_tokens": 99,
+      "total_doc_tokens": 107052,
+      "cost_ratio": 0.000925
+    },
+    {
+      "doc_name": "NIKE_2021_10K",
+      "predicted": "NKE — New York Stock Exchange",
+      "ground_truth": "NKE, New York Stock Exchange",
+      "correct": true,
+      "retrieved_tokens": 173,
+      "total_doc_tokens": 89991,
+      "cost_ratio": 0.001922
+    },
+    {
+      "doc_name": "LOCKHEEDMARTIN_2022_10K",
+      "predicted": "LMT — New York Stock Exchange (NYSE)",
+      "ground_truth": "LMT, New York Stock Exchange",
+      "correct": true,
+      "retrieved_tokens": 93,
+      "total_doc_tokens": 105703,
+      "cost_ratio": 0.00088
+    },
+    {
+      "doc_name": "JOHNSON_JOHNSON_2022_10K",
+      "predicted": "JNJ — New York Stock Exchange; JNJ24C — New York Stock Exchange; JNJ24BP — New York Stock Exchange; JNJ28 — New York Stock Exchange; JNJ35 — New York Stock Exchange",
+      "ground_truth": [
+        {
+          "Trading Symbol": "JNJ",
+          "Exchange": "New York Stock Exchange"
+        },
+        {
+          "Trading Symbol": "JNJ24C",
+          "Exchange": "New York Stock Exchange"
+        },
+        {
+          "Trading Symbol": "JNJ24BP",
+          "Exchange": "New York Stock Exchange"
+        },
+        {
+          "Trading Symbol": "JNJ28",
+          "Exchange": "New York Stock Exchange"
+        },
+        {
+          "Trading Symbol": "JNJ35",
+          "Exchange": "New York Stock Exchange"
+        }
+      ],
+      "correct": true,
+      "retrieved_tokens": 397,
+      "total_doc_tokens": 123226,
+      "cost_ratio": 0.003222
+    }
+  ]
+}

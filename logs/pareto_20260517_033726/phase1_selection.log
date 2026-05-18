@@ -1,0 +1,179 @@
+Questions: 10  |  Docs loaded: 10
+
+======================================================================
+Question : What is long-term debt at year-end (0 if none)?
+Rule slug: what_is_longterm_debt_at_yearend_0_if_none_10_llm
+  Cost profile: 40 rules
+  D* = 6 / 10 docs  baseline_accuracy=0.60
+  Sorted by cov/cost descending; top-3:
+    rule_balance_sheet_header_followed_by_table              cov=0.60  cost=0.007588  ratio=79.1
+    rule_note_debt_header_near_table                         cov=0.40  cost=0.005724  ratio=69.9
+    rule_balance_sheet_path_followed_by_table                cov=0.50  cost=0.008240  ratio=60.7
+  + rule_balance_sheet_header_followed_by_table              gained=5  remaining=1
+  + rule_balance_sheet_path_followed_by_table                gained=1  remaining=0
+  → 2 rules selected  cost=0.01583  selector_acc=0.60  frontier=3pts  knee=(cost=0.01583, acc=1.00, n=2)
+  Saved: results/financebench_single_cluster/llm/gpt54/one_shot/selected_rules_pareto_gpt54mini/what_is_longterm_debt_at_yearend_0_if_none_10_llm.json
+
+======================================================================
+Question : What is net income (loss) for the most recent fiscal year?
+Rule slug: what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm
+  Cost profile: 33 rules
+  D* = 9 / 10 docs  baseline_accuracy=0.90
+  Sorted by cov/cost descending; top-3:
+    rule_first_table_after_statement_of_income_header        cov=0.80  cost=0.005840  ratio=137.0
+    rule_selected_financial_data_net_income_table            cov=0.50  cost=0.004566  ratio=109.5
+    rule_mda_results_of_operations_net_income_text           cov=0.30  cost=0.004396  ratio=68.2
+  + rule_first_table_after_statement_of_income_header        gained=6  remaining=3
+  + rule_mda_results_of_operations_net_income_text           gained=1  remaining=2
+/home/yiminglin/LSF/src/rule_refinement/eval_judge.py:60: UserWarning: Unexpected judge response: 'cor'
+  warnings.warn(f"Unexpected judge response: '{verdict}'")
+  + rule_toc_statement_of_income_page                        gained=1  remaining=1
+  → 3 rules selected  cost=0.01826  selector_acc=0.80  frontier=4pts  knee=(cost=0.01826, acc=0.89, n=3)
+  Saved: results/financebench_single_cluster/llm/gpt54/one_shot/selected_rules_pareto_gpt54mini/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm.json
+
+======================================================================
+Question : What is total revenue for the most recent fiscal year (from the audited income statement)?
+Rule slug: what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm
+  Cost profile: 37 rules
+  D* = 9 / 10 docs  baseline_accuracy=0.90
+  Sorted by cov/cost descending; top-3:
+    rule_income_statement_page_from_toc                      cov=0.50  cost=0.005016  ratio=99.7
+    rule_segment_note_revenue_tables                         cov=0.40  cost=0.005105  ratio=78.4
+    rule_item8_income_statement_tables                       cov=0.40  cost=0.005581  ratio=71.7
+  + rule_income_statement_page_from_toc                      gained=5  remaining=4
+  + rule_item8_income_statement_tables                       gained=3  remaining=1
+  + rule_first_financial_table_after_item8                   gained=1  remaining=0
+  → 3 rules selected  cost=0.01316  selector_acc=0.90  frontier=4pts  knee=(cost=0.01316, acc=1.00, n=3)
+  Saved: results/financebench_single_cluster/llm/gpt54/one_shot/selected_rules_pareto_gpt54mini/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm.json
+
+======================================================================
+Question : What is total assets at year-end (from the audited balance sheet)?
+Rule slug: what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm
+  Cost profile: 118 rules
+  D* = 10 / 10 docs  baseline_accuracy=1.00
+  Sorted by cov/cost descending; top-3:
+    rule_tables_with_total_assets_and_no_revenue             cov=0.80  cost=0.009017  ratio=88.7
+    rule_item8_balance_sheet_from_toc                        cov=0.50  cost=0.006314  ratio=79.2
+    rule_tables_near_item8_toc_balance_sheet_page            cov=0.50  cost=0.006314  ratio=79.2
+  + rule_tables_with_total_assets_and_no_revenue             gained=9  remaining=1
+  + rule_tables_with_total_assets_and_receivables            gained=1  remaining=0
+  → 2 rules selected  cost=0.01850  selector_acc=1.00  frontier=3pts  knee=(cost=0.01850, acc=1.00, n=2)
+  Saved: results/financebench_single_cluster/llm/gpt54/one_shot/selected_rules_pareto_gpt54mini/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm.json
+
+======================================================================
+Question : What is the registrant's telephone number?
+Rule slug: what_is_the_registrants_telephone_number_10_llm
+  Cost profile: 78 rules
+  D* = 10 / 10 docs  baseline_accuracy=1.00
+  Sorted by cov/cost descending; top-3:
+    rule_exact_phone_only_span                               cov=0.30  cost=0.000022  ratio=13635.7
+    rule_phone_only_or_phone_header                          cov=0.30  cost=0.000022  ratio=13635.7
+    rule_registrant_phone_following_zip_parent               cov=0.20  cost=0.000037  ratio=5405.3
+  + rule_exact_phone_only_span                               gained=3  remaining=7
+  + rule_registrant_phone_following_zip_parent               gained=2  remaining=5
+  + rule_page1_phone_with_parenthetical_area_code_label      gained=3  remaining=2
+  + rule_page1_phone_number_pattern                          gained=2  remaining=0
+  → 4 rules selected  cost=0.00045  selector_acc=1.00  frontier=5pts  knee=(cost=0.00045, acc=1.00, n=4)
+  Saved: results/financebench_single_cluster/llm/gpt54/one_shot/selected_rules_pareto_gpt54mini/what_is_the_registrants_telephone_number_10_llm.json
+
+======================================================================
+Question : How many shares of common stock were outstanding as of the cover-page reference date?
+Rule slug: how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm
+  Cost profile: 100 rules
+  D* = 9 / 10 docs  baseline_accuracy=0.90
+  Sorted by cov/cost descending; top-3:
+    rule_page1_numeric_after_phrase_as_of_january            cov=0.10  cost=0.000019  ratio=5262.9
+    rule_page1_numeric_near_january_february_date            cov=0.10  cost=0.000019  ratio=5262.9
+    rule_page1_numeric_only_after_outstanding_label          cov=0.10  cost=0.000019  ratio=5262.9
+  + rule_page1_shares_outstanding_issued_and_outstanding     gained=1  remaining=8
+  + rule_page2_cover_page_numeric_sentence                   gained=2  remaining=6
+  + rule_page1_sentence_with_there_were_and_common_stock     gained=2  remaining=4
+  + rule_page1_shares_outstanding_as_of_february             gained=1  remaining=3
+  + rule_page1_outstanding_as_of_january_or_february         gained=1  remaining=2
+  → 5 rules selected  cost=0.00039  selector_acc=0.70  frontier=6pts  knee=(cost=0.00039, acc=0.78, n=5)
+  Saved: results/financebench_single_cluster/llm/gpt54/one_shot/selected_rules_pareto_gpt54mini/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm.json
+
+======================================================================
+Question : What is the registrant's exact name?
+Rule slug: what_is_the_registrants_exact_name_10_llm
+  Cost profile: 25 rules
+  D* = 9 / 10 docs  baseline_accuracy=0.90
+  Sorted by cov/cost descending; top-3:
+    rule_exact_name_caption_parent                           cov=1.00  cost=0.000067  ratio=14925.2
+    rule_page1_first_non_boilerplate_after_commission_file   cov=1.00  cost=0.000067  ratio=14925.2
+    rule_parent_of_page1_exact_name_caption                  cov=1.00  cost=0.000067  ratio=14925.2
+  + rule_exact_name_caption_parent                           gained=9  remaining=0
+  → 1 rules selected  cost=0.00007  selector_acc=0.90  frontier=2pts  knee=(cost=0.00007, acc=1.00, n=1)
+  Saved: results/financebench_single_cluster/llm/gpt54/one_shot/selected_rules_pareto_gpt54mini/what_is_the_registrants_exact_name_10_llm.json
+
+======================================================================
+Question : What is the state (or other jurisdiction) of incorporation and the IRS Employer Identification Number?
+Rule slug: what_is_the_state_or_other_jurisdiction_of_incorporation_and_10_llm
+  WARNING: skipping rule_page1_state_name_candidates: unterminated string literal (detected at line 8) (rule_page1_state_name_candidates.py, line 8)
+  Cost profile: 55 rules
+  D* = 10 / 10 docs  baseline_accuracy=1.00
+  Sorted by cov/cost descending; top-3:
+    rule_page1_combined_state_and_ein_same_text              cov=0.10  cost=0.000014  ratio=7142.3
+    rule_page1_short_numeric_or_state_h2s                    cov=0.30  cost=0.000065  ratio=4615.3
+    rule_page1_h2_or_h3_value_headers_with_label_textspan    cov=0.40  cost=0.000092  ratio=4347.8
+  + rule_page1_combined_state_and_ein_same_text              gained=1  remaining=9
+  + rule_page1_short_numeric_or_state_h2s                    gained=4  remaining=5
+  + rule_page1_textspan_contains_labels                      gained=1  remaining=4
+  + rule_page1_ein_or_incorporation_keywords                 gained=1  remaining=3
+  + rule_page1_short_bold_text_values                        gained=2  remaining=1
+  + rule_page1_window_after_incorporation_label              gained=1  remaining=0
+  → 6 rules selected  cost=0.00162  selector_acc=1.00  frontier=7pts  knee=(cost=0.00162, acc=1.00, n=6)
+  Saved: results/financebench_single_cluster/llm/gpt54/one_shot/selected_rules_pareto_gpt54mini/what_is_the_state_or_other_jurisdiction_of_incorporation_and_10_llm.json
+
+======================================================================
+Question : What is the address of principal executive offices and ZIP code?
+Rule slug: what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm
+  Cost profile: 61 rules
+  D* = 9 / 10 docs  baseline_accuracy=0.90
+  Sorted by cov/cost descending; top-3:
+    rule_address_header_text_itself                          cov=0.20  cost=0.000044  ratio=4545.4
+    rule_page1_address_like_with_known_cover_labels          cov=0.20  cost=0.000044  ratio=4545.4
+    rule_page1_bold_short_address_fragments                  cov=0.70  cost=0.000161  ratio=4347.8
+  + rule_address_header_text_itself                          gained=3  remaining=6
+  + rule_page1_bold_short_address_fragments                  gained=3  remaining=3
+  + rule_page1_address_like_excluding_long_narrative         gained=1  remaining=2
+  + rule_page1_address_block_from_split_lines                gained=1  remaining=1
+  + rule_page1_main_company_path_text                        gained=1  remaining=0
+  → 5 rules selected  cost=0.00140  selector_acc=0.90  frontier=6pts  knee=(cost=0.00140, acc=1.00, n=5)
+  Saved: results/financebench_single_cluster/llm/gpt54/one_shot/selected_rules_pareto_gpt54mini/what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm.json
+
+======================================================================
+Question : What is/are the trading symbol(s) and listing exchange(s)?
+Rule slug: what_isare_the_trading_symbols_and_listing_exchanges_10_llm
+  Cost profile: 65 rules
+  D* = 10 / 10 docs  baseline_accuracy=1.00
+  Sorted by cov/cost descending; top-3:
+    rule_page1_symbol_exchange_split_across_adjacent_spans   cov=0.10  cost=0.000009  ratio=11109.9
+    rule_exact_symbol_values                                 cov=0.10  cost=0.000015  ratio=6666.2
+    rule_page1_bold_smallfont_registration_values            cov=0.20  cost=0.000031  ratio=6451.4
+  + rule_page1_symbol_exchange_split_across_adjacent_spans   gained=1  remaining=9
+  + rule_exact_symbol_values                                 gained=1  remaining=8
+  + rule_page1_bold_smallfont_registration_values            gained=1  remaining=7
+  + rule_cover_page_embedded_symbol_exchange                 gained=1  remaining=6
+  + rule_table_cells_symbol_exchange                         gained=1  remaining=5
+  + rule_page1_registration_block_with_symbol_and_exchange_same_span  gained=1  remaining=4
+  + rule_business_sentence_trades_on_exchange                gained=3  remaining=1
+  + rule_page1_near_title_of_each_class                      gained=1  remaining=0
+  → 8 rules selected  cost=0.00220  selector_acc=1.00  frontier=9pts  knee=(cost=0.00220, acc=1.00, n=8)
+  Saved: results/financebench_single_cluster/llm/gpt54/one_shot/selected_rules_pareto_gpt54mini/what_isare_the_trading_symbols_and_listing_exchanges_10_llm.json
+
+Question                                               Rules  BaseAcc   SelAcc    CostSum  FrontPts
+----------------------------------------------------------------------------------------------------
+  What is long-term debt at year-end (0 if none)?          2     0.60     0.60    0.01583         3
+  What is net income (loss) for the most recent fisca      3     0.90     0.80    0.01826         4
+  What is total revenue for the most recent fiscal ye      3     0.90     0.90    0.01316         4
+  What is total assets at year-end (from the audited       2     1.00     1.00    0.01850         3
+  What is the registrant's telephone number?               4     1.00     1.00    0.00045         5
+  How many shares of common stock were outstanding as      5     0.90     0.70    0.00039         6
+  What is the registrant's exact name?                     1     0.90     0.90    0.00007         2
+  What is the state (or other jurisdiction) of incorp      6     1.00     1.00    0.00162         7
+  What is the address of principal executive offices       5     0.90     0.90    0.00140         6
+  What is/are the trading symbol(s) and listing excha      8     1.00     1.00    0.00220         9
+
+Summary: results/financebench_single_cluster/llm/gpt54/one_shot/selected_rules_pareto_gpt54mini/summary.json
+Results: results/financebench_single_cluster/llm/gpt54/one_shot/selected_rules_pareto_gpt54mini/

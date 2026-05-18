@@ -1,0 +1,192 @@
+{
+  "question": "What is total assets at year-end (from the audited balance sheet)?",
+  "question_slug": "what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm",
+  "mode": "pareto_v2",
+  "baseline_accuracy": 1.0,
+  "selected_rules": [
+    "rule_tables_with_total_assets_and_no_revenue",
+    "rule_item8_balance_sheet_from_toc",
+    "rule_tables_with_total_assets_and_no_income_statement_terms",
+    "rule_tables_with_total_assets_and_receivables",
+    "rule_tables_with_total_assets_and_total_liabilities_equity"
+  ],
+  "selected_avg_cost_ratio_sum": 0.0424,
+  "covered_docs": [
+    "AMAZON_2016_10K",
+    "AMAZON_2018_10K",
+    "AMCOR_2019_10K",
+    "BOEING_2018_10K",
+    "CORNING_2022_10K",
+    "COSTCO_2017_10K",
+    "EBAY_2021_10K",
+    "JOHNSON_JOHNSON_2022_10K",
+    "LOCKHEEDMARTIN_2022_10K",
+    "NIKE_2021_10K"
+  ],
+  "uncovered_docs": [],
+  "selector_accuracy": 0.9,
+  "final_merge_accuracy": 0.9,
+  "matches_base": false,
+  "frontier": [
+    {
+      "cost": 0.0,
+      "accuracy_match": 0.0,
+      "rules_admitted": [],
+      "added_rule": null,
+      "rule_cov": null,
+      "rule_avg_cost": null
+    },
+    {
+      "cost": 0.009017,
+      "accuracy_match": 0.9,
+      "rules_admitted": [
+        "rule_tables_with_total_assets_and_no_revenue"
+      ],
+      "added_rule": "rule_tables_with_total_assets_and_no_revenue",
+      "rule_cov": 0.8,
+      "rule_avg_cost": 0.009017
+    },
+    {
+      "cost": 0.015331,
+      "accuracy_match": 1.0,
+      "rules_admitted": [
+        "rule_tables_with_total_assets_and_no_revenue",
+        "rule_item8_balance_sheet_from_toc"
+      ],
+      "added_rule": "rule_item8_balance_sheet_from_toc",
+      "rule_cov": 0.5,
+      "rule_avg_cost": 0.006314
+    },
+    {
+      "cost": 0.024348,
+      "accuracy_match": 1.0,
+      "rules_admitted": [
+        "rule_tables_with_total_assets_and_no_revenue",
+        "rule_item8_balance_sheet_from_toc",
+        "rule_tables_with_total_assets_and_no_income_statement_terms"
+      ],
+      "added_rule": "rule_tables_with_total_assets_and_no_income_statement_terms",
+      "rule_cov": 0.7,
+      "rule_avg_cost": 0.009017
+    },
+    {
+      "cost": 0.033826,
+      "accuracy_match": 1.0,
+      "rules_admitted": [
+        "rule_tables_with_total_assets_and_no_revenue",
+        "rule_item8_balance_sheet_from_toc",
+        "rule_tables_with_total_assets_and_no_income_statement_terms",
+        "rule_tables_with_total_assets_and_receivables"
+      ],
+      "added_rule": "rule_tables_with_total_assets_and_receivables",
+      "rule_cov": 0.7,
+      "rule_avg_cost": 0.009478
+    },
+    {
+      "cost": 0.0424,
+      "accuracy_match": 1.0,
+      "rules_admitted": [
+        "rule_tables_with_total_assets_and_no_revenue",
+        "rule_item8_balance_sheet_from_toc",
+        "rule_tables_with_total_assets_and_no_income_statement_terms",
+        "rule_tables_with_total_assets_and_receivables",
+        "rule_tables_with_total_assets_and_total_liabilities_equity"
+      ],
+      "added_rule": "rule_tables_with_total_assets_and_total_liabilities_equity",
+      "rule_cov": 0.6,
+      "rule_avg_cost": 0.008574
+    }
+  ],
+  "query_table": {
+    "0.50": {
+      "cost": 0.009017,
+      "n_rules": 1
+    },
+    "0.80": {
+      "cost": 0.009017,
+      "n_rules": 1
+    },
+    "0.90": {
+      "cost": 0.009017,
+      "n_rules": 1
+    },
+    "0.95": {
+      "cost": 0.015331,
+      "n_rules": 2
+    },
+    "1.00": {
+      "cost": 0.015331,
+      "n_rules": 2
+    }
+  },
+  "knee_point": {
+    "cost": 0.015331,
+    "accuracy_match": 1.0,
+    "n_rules": 2,
+    "rules": [
+      "rule_tables_with_total_assets_and_no_revenue",
+      "rule_item8_balance_sheet_from_toc"
+    ]
+  },
+  "knee_lambda": 10.0,
+  "extras_added_phase_b": [
+    {
+      "iter": 1,
+      "added": "rule_tables_near_item8_toc_balance_sheet_page",
+      "gained": [
+        "JOHNSON_JOHNSON_2022_10K"
+      ],
+      "acc_after": 0.9
+    },
+    {
+      "iter": 2,
+      "added": "rule_tables_with_total_assets_in_item8_path",
+      "gained": [
+        "NIKE_2021_10K"
+      ],
+      "acc_after": 0.9
+    },
+    {
+      "iter": 3,
+      "added": "rule_tables_with_total_assets_and_no_income_statement_terms",
+      "gained": [],
+      "acc_after": 0.8
+    },
+    {
+      "iter": 4,
+      "added": "rule_tables_with_total_assets_and_receivables",
+      "gained": [],
+      "acc_after": 0.8
+    },
+    {
+      "iter": 5,
+      "added": "rule_tables_with_total_assets_and_total_liabilities_equity",
+      "gained": [
+        "JOHNSON_JOHNSON_2022_10K",
+        "NIKE_2021_10K"
+      ],
+      "acc_after": 1.0
+    }
+  ],
+  "pruned_phase_c": [
+    {
+      "removed": "rule_tables_with_total_assets_in_item8_path",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_near_item8_toc_balance_sheet_page",
+      "acc_after": 1.0
+    }
+  ],
+  "phase_a_rules_count": 2,
+  "phase_b_extras_count": 5,
+  "phase_c_pruned_count": 2,
+  "llm_calls": {
+    "qa": 151,
+    "judge": 151
+  },
+  "token_usage": {
+    "total_input_tokens": 199849,
+    "total_output_tokens": 2203
+  }
+}

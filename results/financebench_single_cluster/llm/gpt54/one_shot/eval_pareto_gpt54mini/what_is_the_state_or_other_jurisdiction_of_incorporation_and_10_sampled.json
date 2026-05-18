@@ -1,0 +1,109 @@
+{
+  "question": "What is the state (or other jurisdiction) of incorporation and the IRS Employer Identification Number?",
+  "question_slug": "what_is_the_state_or_other_jurisdiction_of_incorporation_and_10_llm",
+  "eval_model": "gpt54",
+  "selection_source": "results/financebench_single_cluster/llm/gpt54/one_shot/selected_rules_pareto_gpt54mini/what_is_the_state_or_other_jurisdiction_of_incorporation_and_10_llm.json",
+  "selected_rules": [
+    "rule_page1_combined_state_and_ein_same_text",
+    "rule_page1_short_numeric_or_state_h2s",
+    "rule_page1_textspan_contains_labels",
+    "rule_page1_ein_or_incorporation_keywords",
+    "rule_page1_short_bold_text_values",
+    "rule_page1_window_after_incorporation_label"
+  ],
+  "accuracy": 1.0,
+  "avg_cost_ratio": 0.001109,
+  "num_documents": 10,
+  "per_doc": [
+    {
+      "doc_name": "AMCOR_2019_10K",
+      "predicted": "Jersey (Channel Islands), 98-1455367",
+      "ground_truth": "Jersey (Channel Islands), 98-1455367",
+      "correct": true,
+      "retrieved_tokens": 125,
+      "total_doc_tokens": 84134,
+      "cost_ratio": 0.001486
+    },
+    {
+      "doc_name": "COSTCO_2017_10K",
+      "predicted": "Washington; 91-1223280",
+      "ground_truth": "Washington, 91-1223280",
+      "correct": true,
+      "retrieved_tokens": 97,
+      "total_doc_tokens": 50565,
+      "cost_ratio": 0.001918
+    },
+    {
+      "doc_name": "BOEING_2018_10K",
+      "predicted": "Delaware; 91-0425694",
+      "ground_truth": "Delaware, 91-0425694",
+      "correct": true,
+      "retrieved_tokens": 76,
+      "total_doc_tokens": 88449,
+      "cost_ratio": 0.000859
+    },
+    {
+      "doc_name": "AMAZON_2018_10K",
+      "predicted": "Delaware; 91-1646860",
+      "ground_truth": "Delaware, 91-1646860",
+      "correct": true,
+      "retrieved_tokens": 105,
+      "total_doc_tokens": 67659,
+      "cost_ratio": 0.001552
+    },
+    {
+      "doc_name": "EBAY_2021_10K",
+      "predicted": "Delaware; 77-0430924",
+      "ground_truth": "Delaware, 77-0430924",
+      "correct": true,
+      "retrieved_tokens": 84,
+      "total_doc_tokens": 104188,
+      "cost_ratio": 0.000806
+    },
+    {
+      "doc_name": "AMAZON_2016_10K",
+      "predicted": "Delaware; 91-1646860",
+      "ground_truth": "Delaware, 91-1646860",
+      "correct": true,
+      "retrieved_tokens": 90,
+      "total_doc_tokens": 63358,
+      "cost_ratio": 0.00142
+    },
+    {
+      "doc_name": "CORNING_2022_10K",
+      "predicted": "New York, 16-0393470",
+      "ground_truth": "New York, 16-0393470",
+      "correct": true,
+      "retrieved_tokens": 60,
+      "total_doc_tokens": 107052,
+      "cost_ratio": 0.00056
+    },
+    {
+      "doc_name": "NIKE_2021_10K",
+      "predicted": "Oregon, 93-0584541",
+      "ground_truth": "Oregon, 93-0584541",
+      "correct": true,
+      "retrieved_tokens": 105,
+      "total_doc_tokens": 89991,
+      "cost_ratio": 0.001167
+    },
+    {
+      "doc_name": "LOCKHEEDMARTIN_2022_10K",
+      "predicted": "Maryland, 52-1893632",
+      "ground_truth": "Maryland, 52-1893632",
+      "correct": true,
+      "retrieved_tokens": 80,
+      "total_doc_tokens": 105703,
+      "cost_ratio": 0.000757
+    },
+    {
+      "doc_name": "JOHNSON_JOHNSON_2022_10K",
+      "predicted": "New Jersey; 22-1024240",
+      "ground_truth": "New Jersey, 22-1024240",
+      "correct": true,
+      "retrieved_tokens": 70,
+      "total_doc_tokens": 123226,
+      "cost_ratio": 0.000568
+    }
+  ]
+}

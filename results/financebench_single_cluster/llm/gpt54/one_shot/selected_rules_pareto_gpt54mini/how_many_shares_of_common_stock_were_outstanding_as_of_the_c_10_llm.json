@@ -1,0 +1,131 @@
+{
+  "question": "How many shares of common stock were outstanding as of the cover-page reference date?",
+  "question_slug": "how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm",
+  "mode": "pareto",
+  "baseline_accuracy": 0.9,
+  "selected_rules": [
+    "rule_page1_shares_outstanding_issued_and_outstanding",
+    "rule_page2_cover_page_numeric_sentence",
+    "rule_page1_sentence_with_there_were_and_common_stock",
+    "rule_page1_shares_outstanding_as_of_february",
+    "rule_page1_outstanding_as_of_january_or_february"
+  ],
+  "selected_avg_cost_ratio_sum": 0.000391,
+  "covered_docs": [
+    "AMCOR_2019_10K",
+    "BOEING_2018_10K",
+    "CORNING_2022_10K",
+    "COSTCO_2017_10K",
+    "EBAY_2021_10K",
+    "JOHNSON_JOHNSON_2022_10K",
+    "LOCKHEEDMARTIN_2022_10K"
+  ],
+  "uncovered_docs": [
+    "AMAZON_2016_10K",
+    "AMAZON_2018_10K"
+  ],
+  "selector_accuracy": 0.7,
+  "tau_safety_floor": 0.0,
+  "banned_rules": [],
+  "frontier": [
+    {
+      "cost": 0.0,
+      "accuracy_match": 0.0,
+      "rules_admitted": [],
+      "added_rule": null,
+      "rule_cov": null,
+      "rule_avg_cost": null
+    },
+    {
+      "cost": 2.1e-05,
+      "accuracy_match": 0.1111,
+      "rules_admitted": [
+        "rule_page1_shares_outstanding_issued_and_outstanding"
+      ],
+      "added_rule": "rule_page1_shares_outstanding_issued_and_outstanding",
+      "rule_cov": 0.1,
+      "rule_avg_cost": 2.1e-05
+    },
+    {
+      "cost": 9.4e-05,
+      "accuracy_match": 0.3333,
+      "rules_admitted": [
+        "rule_page1_shares_outstanding_issued_and_outstanding",
+        "rule_page2_cover_page_numeric_sentence"
+      ],
+      "added_rule": "rule_page2_cover_page_numeric_sentence",
+      "rule_cov": 0.3,
+      "rule_avg_cost": 7.3e-05
+    },
+    {
+      "cost": 0.000146,
+      "accuracy_match": 0.5556,
+      "rules_admitted": [
+        "rule_page1_shares_outstanding_issued_and_outstanding",
+        "rule_page2_cover_page_numeric_sentence",
+        "rule_page1_sentence_with_there_were_and_common_stock"
+      ],
+      "added_rule": "rule_page1_sentence_with_there_were_and_common_stock",
+      "rule_cov": 0.2,
+      "rule_avg_cost": 5.2e-05
+    },
+    {
+      "cost": 0.0002,
+      "accuracy_match": 0.6667,
+      "rules_admitted": [
+        "rule_page1_shares_outstanding_issued_and_outstanding",
+        "rule_page2_cover_page_numeric_sentence",
+        "rule_page1_sentence_with_there_were_and_common_stock",
+        "rule_page1_shares_outstanding_as_of_february"
+      ],
+      "added_rule": "rule_page1_shares_outstanding_as_of_february",
+      "rule_cov": 0.2,
+      "rule_avg_cost": 5.4e-05
+    },
+    {
+      "cost": 0.000391,
+      "accuracy_match": 0.7778,
+      "rules_admitted": [
+        "rule_page1_shares_outstanding_issued_and_outstanding",
+        "rule_page2_cover_page_numeric_sentence",
+        "rule_page1_sentence_with_there_were_and_common_stock",
+        "rule_page1_shares_outstanding_as_of_february",
+        "rule_page1_outstanding_as_of_january_or_february"
+      ],
+      "added_rule": "rule_page1_outstanding_as_of_january_or_february",
+      "rule_cov": 0.4,
+      "rule_avg_cost": 0.000191
+    }
+  ],
+  "query_table": {
+    "0.50": {
+      "cost": 0.000146,
+      "n_rules": 3
+    },
+    "0.80": null,
+    "0.90": null,
+    "0.95": null,
+    "1.00": null
+  },
+  "knee_point": {
+    "cost": 0.000391,
+    "accuracy_match": 0.7778,
+    "n_rules": 5,
+    "rules": [
+      "rule_page1_shares_outstanding_issued_and_outstanding",
+      "rule_page2_cover_page_numeric_sentence",
+      "rule_page1_sentence_with_there_were_and_common_stock",
+      "rule_page1_shares_outstanding_as_of_february",
+      "rule_page1_outstanding_as_of_january_or_february"
+    ]
+  },
+  "knee_lambda": 10.0,
+  "llm_calls": {
+    "phase_2_incremental": 277,
+    "phase_2_judge": 277
+  },
+  "token_usage": {
+    "total_input_tokens": 86818,
+    "total_output_tokens": 3694
+  }
+}

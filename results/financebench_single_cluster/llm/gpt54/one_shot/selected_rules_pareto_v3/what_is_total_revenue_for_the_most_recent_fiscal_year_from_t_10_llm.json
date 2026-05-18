@@ -1,0 +1,111 @@
+{
+  "question": "What is total revenue for the most recent fiscal year (from the audited income statement)?",
+  "question_slug": "what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm",
+  "mode": "pareto_v3",
+  "baseline_accuracy": 0.9,
+  "selected_rules": [
+    "rule_income_statement_page_from_toc",
+    "rule_segment_note_revenue_tables",
+    "rule_income_statement_nearby_tables"
+  ],
+  "selected_avg_cost_ratio_sum": 0.024021,
+  "covered_docs": [
+    "AMAZON_2016_10K",
+    "AMAZON_2018_10K",
+    "AMCOR_2019_10K",
+    "CORNING_2022_10K",
+    "EBAY_2021_10K",
+    "JOHNSON_JOHNSON_2022_10K",
+    "NIKE_2021_10K"
+  ],
+  "uncovered_docs": [
+    "BOEING_2018_10K",
+    "LOCKHEEDMARTIN_2022_10K"
+  ],
+  "selector_accuracy": 0.8,
+  "final_merge_accuracy": 0.8,
+  "matches_base": false,
+  "frontier": [
+    {
+      "cost": 0.0,
+      "accuracy_match": 0.0,
+      "rules_admitted": [],
+      "added_rule": null,
+      "rule_cov": null,
+      "rule_avg_cost": null
+    },
+    {
+      "cost": 0.005016,
+      "accuracy_match": 0.5556,
+      "rules_admitted": [
+        "rule_income_statement_page_from_toc"
+      ],
+      "added_rule": "rule_income_statement_page_from_toc",
+      "rule_cov": 0.5,
+      "rule_avg_cost": 0.005016
+    },
+    {
+      "cost": 0.010121,
+      "accuracy_match": 0.6667,
+      "rules_admitted": [
+        "rule_income_statement_page_from_toc",
+        "rule_segment_note_revenue_tables"
+      ],
+      "added_rule": "rule_segment_note_revenue_tables",
+      "rule_cov": 0.4,
+      "rule_avg_cost": 0.005105
+    },
+    {
+      "cost": 0.024021,
+      "accuracy_match": 0.7778,
+      "rules_admitted": [
+        "rule_income_statement_page_from_toc",
+        "rule_segment_note_revenue_tables",
+        "rule_income_statement_nearby_tables"
+      ],
+      "added_rule": "rule_income_statement_nearby_tables",
+      "rule_cov": 0.8,
+      "rule_avg_cost": 0.0139
+    }
+  ],
+  "query_table": {
+    "0.50": {
+      "cost": 0.005016,
+      "n_rules": 1
+    },
+    "0.80": null,
+    "0.90": null,
+    "0.95": null,
+    "1.00": null
+  },
+  "knee_point": {
+    "cost": 0.010121,
+    "accuracy_match": 0.6667,
+    "n_rules": 2,
+    "rules": [
+      "rule_income_statement_page_from_toc",
+      "rule_segment_note_revenue_tables"
+    ]
+  },
+  "knee_lambda": 10.0,
+  "extras_added_phase_b": [],
+  "phase_b_prime_iters": [],
+  "pruned_phase_c": [
+    {
+      "removed": "rule_item8_income_statement_tables",
+      "acc_after": 0.9
+    }
+  ],
+  "phase_a_rules_count": 4,
+  "phase_b_extras_count": 0,
+  "phase_b_prime_iters_count": 0,
+  "phase_c_pruned_count": 1,
+  "llm_calls": {
+    "qa": 77,
+    "judge": 77
+  },
+  "token_usage": {
+    "total_input_tokens": 131880,
+    "total_output_tokens": 1134
+  }
+}

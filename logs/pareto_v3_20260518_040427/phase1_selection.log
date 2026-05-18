@@ -1,0 +1,412 @@
+Questions: 10  |  Docs loaded: 10
+
+======================================================================
+Question : What is long-term debt at year-end (0 if none)?
+Rule slug: what_is_longterm_debt_at_yearend_0_if_none_10_llm
+  Cost profile: 40 rules
+  D* = 6 / 10 docs  baseline_accuracy=0.60
+  [A] cost-effectiveness greedy cover...
+  + rule_balance_sheet_header_followed_by_table              gained=4  remaining=2
+  + rule_note_debt_header_near_table                         gained=1  remaining=1
+  + rule_debt_table_with_liabilities_and_equity_context      gained=1  remaining=0
+  [A] greedy selected 3 rules
+  [B] enforcing accuracy floor (target=0.60)...
+  [B] initial merge_acc=0.60
+  [B] floor reached: 0.60 >= 0.60
+  [C] backward pruning...
+  [C]   rule_debt_table_with_liabilities_and_equity_context  acc_if_removed=0.50  kept
+  [C] - rule_note_debt_header_near_table  acc=0.60  removed
+  [C] - rule_balance_sheet_header_followed_by_table  acc=0.60  removed
+  [final] selected=1  acc=0.60  base=0.60
+  → 1 rules selected  cost=0.02419  selector_acc=0.60  frontier=2pts  knee=(cost=0.02419, acc=0.17, n=1)
+  Saved: results/financebench_single_cluster/llm/gpt54/one_shot/selected_rules_pareto_v3/what_is_longterm_debt_at_yearend_0_if_none_10_llm.json
+
+======================================================================
+Question : What is net income (loss) for the most recent fiscal year?
+Rule slug: what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm
+  Cost profile: 33 rules
+  D* = 9 / 10 docs  baseline_accuracy=0.90
+  [A] cost-effectiveness greedy cover...
+  + rule_first_table_after_statement_of_income_header        gained=8  remaining=1
+  + rule_mda_results_of_operations_net_income_text           gained=1  remaining=0
+  [A] greedy selected 2 rules
+  [B] enforcing accuracy floor (target=0.90)...
+  [B] initial merge_acc=0.80
+  [B] + rule_selected_financial_data_net_income_table  gained=1  acc=0.90
+  [B] floor reached: 0.90 >= 0.90
+  [C] backward pruning...
+  [C]   rule_selected_financial_data_net_income_table  acc_if_removed=0.70  kept
+  [C]   rule_mda_results_of_operations_net_income_text  acc_if_removed=0.80  kept
+  [C]   rule_first_table_after_statement_of_income_header  acc_if_removed=0.60  kept
+  [final] selected=3  acc=0.90  base=0.90
+  → 3 rules selected  cost=0.01480  selector_acc=0.90  frontier=4pts  knee=(cost=0.01024, acc=1.00, n=2)
+  Saved: results/financebench_single_cluster/llm/gpt54/one_shot/selected_rules_pareto_v3/what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm.json
+
+======================================================================
+Question : What is total revenue for the most recent fiscal year (from the audited income statement)?
+Rule slug: what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm
+  Cost profile: 37 rules
+  D* = 9 / 10 docs  baseline_accuracy=0.90
+  [A] cost-effectiveness greedy cover...
+  + rule_income_statement_page_from_toc                      gained=5  remaining=4
+  + rule_segment_note_revenue_tables                         gained=1  remaining=3
+  + rule_item8_income_statement_tables                       gained=2  remaining=1
+  + rule_income_statement_nearby_tables                      gained=1  remaining=0
+  [A] greedy selected 4 rules
+  [B] enforcing accuracy floor (target=0.90)...
+  [B] initial merge_acc=0.90
+  [B] floor reached: 0.90 >= 0.90
+  [C] backward pruning...
+  [C]   rule_income_statement_nearby_tables  acc_if_removed=0.80  kept
+  [C] - rule_item8_income_statement_tables  acc=0.90  removed
+  [C]   rule_segment_note_revenue_tables  acc_if_removed=0.80  kept
+  [C]   rule_income_statement_page_from_toc  acc_if_removed=0.80  kept
+  [final] selected=3  acc=0.80  base=0.90
+  → 3 rules selected  cost=0.02402  selector_acc=0.80  frontier=4pts  knee=(cost=0.01012, acc=0.67, n=2)
+  Saved: results/financebench_single_cluster/llm/gpt54/one_shot/selected_rules_pareto_v3/what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm.json
+
+======================================================================
+Question : What is total assets at year-end (from the audited balance sheet)?
+Rule slug: what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm
+  Cost profile: 118 rules
+  D* = 10 / 10 docs  baseline_accuracy=1.00
+  [A] cost-effectiveness greedy cover...
+  + rule_tables_with_total_assets_and_no_revenue             gained=8  remaining=2
+  + rule_item8_balance_sheet_from_toc                        gained=1  remaining=1
+  + rule_tables_with_total_assets_row                        gained=1  remaining=0
+  [A] greedy selected 3 rules
+  [B] enforcing accuracy floor (target=1.00)...
+  [B] initial merge_acc=0.90
+  [B] + rule_tables_near_item8_toc_balance_sheet_page  gained=0  acc=0.80
+  [B] + rule_tables_with_total_assets_in_item8_path  gained=0  acc=0.80
+  [B] + rule_tables_with_total_assets_and_no_income_statement_terms  gained=0  acc=0.80
+  [B] + rule_tables_with_total_assets_and_receivables  gained=0  acc=0.80
+  [B] + rule_tables_with_total_assets_and_total_liabilities_equity  gained=0  acc=0.80
+  [B] + rule_tables_with_total_assets_and_retained_earnings  gained=0  acc=0.80
+  [B] + rule_tables_with_total_assets_and_current_assets  gained=0  acc=0.80
+  [B] + rule_tables_with_total_assets_and_total_current_assets  gained=0  acc=0.80
+  [B] + rule_tables_with_total_assets_and_goodwill  gained=0  acc=0.80
+  [B] + rule_tables_with_total_assets_and_financial_statements_path  gained=0  acc=0.80
+  [B] + rule_tables_with_total_assets_and_property_plant_equipment  gained=0  acc=0.80
+  [B] + rule_tables_with_total_assets_and_audited_year_end_context  gained=0  acc=0.80
+  [B] + rule_tables_with_total_assets_and_accounts_receivable  gained=0  acc=0.80
+  [B] + rule_tables_with_total_assets_on_pages_30_to_80  gained=0  acc=0.80
+  [B] + rule_tables_with_total_assets_and_consolidated_balance_sheet_toc_reference  gained=0  acc=0.80
+  [B] + rule_tables_with_assets_and_balance_sheet_title_in_text  gained=1  acc=0.90
+  [B] + rule_tables_with_million_or_billion_units  gained=0  acc=0.80
+  [B] + rule_tables_with_total_assets_and_page_around_39  gained=0  acc=0.80
+  [B] + rule_tables_with_total_assets_and_item8_path  gained=0  acc=0.80
+  [B] + rule_tables_with_total_assets_and_few_columns  gained=0  acc=0.80
+  [B] WARNING: floor not reached (0.80 < 1.00)
+  [B'] Phase B hit cap without reaching base; switching to cumulative-prefix testing...
+  [B'] k=1 (added 1 new rules)  acc=0.80
+  [B'] k=2 (added 2 new rules)  acc=0.80
+  [B'] k=4 (added 4 new rules)  acc=0.90
+  [B'] k=8 (added 8 new rules)  acc=0.80
+  [B'] k=16 (added 16 new rules)  acc=0.90
+  [B'] k=32 (added 32 new rules)  acc=0.80
+  [B'] k=64 (added 64 new rules)  acc=1.00
+  [B'] floor reached via prefix fallback
+  [C] backward pruning...
+  [C]   rule_consolidated_balance_sheet_phrase  acc_if_removed=0.90  kept
+  [C] - rule_tables_with_audited_financial_statement_context  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_and_statement_order  acc=1.00  removed
+  [C] - rule_tables_before_notes_section  acc=1.00  removed
+  [C] - rule_tables_with_parenthetical_year_end_dates  acc=1.00  removed
+  [C] - rule_tables_with_assets_on_same_or_next_page_after_auditor  acc=1.00  removed
+  [C] - rule_balance_sheet_table  acc=1.00  removed
+  [C] - rule_audited_financial_statement_context  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_and_page_around_60  acc=1.00  removed
+  [C] - rule_tables_with_assets_liabilities_equity_keywords  acc=1.00  removed
+  [C] - rule_tables_with_assets_and_current_liabilities  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_and_common_stock  acc=1.00  removed
+  [C] - rule_tables_with_assets_liabilities_equity_triplet  acc=1.00  removed
+  [C] - rule_total_assets_row_near_bottom  acc=1.00  removed
+  [C] - rule_total_assets_row_header_first_col  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_in_first_column  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_and_total_liabilities  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_and_many_rows  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_and_cash  acc=1.00  removed
+  [C] - rule_tables_with_assets_on_pages_after_item8  acc=1.00  removed
+  [C] - rule_tables_with_assets_and_noncurrent_assets  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_and_total_equity  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_and_header_dates  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_and_equity  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_and_page_around_42  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_and_assets_section_row  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_and_total_current_liabilities  acc=1.00  removed
+  [C] - rule_total_assets_row_with_numeric_values  acc=1.00  removed
+  [C] - rule_total_assets_row_cells  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_excluding_executive_tables  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_and_year_columns  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_and_not_toc_page  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_and_not_cover_page  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_and_no_equity_statement_terms  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_and_multiple_numeric_year_values  acc=1.00  removed
+  [C] - rule_tables_with_dollar_figures_and_total_assets  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_and_balance_sheet_heading_nearby  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_near_bottom  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_and_multiple_numeric_cells  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_and_accounts_payable  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_on_late_pages  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_and_other_assets  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_and_no_cashflow_terms  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_and_shareholders_equity  acc=1.00  removed
+  [C] - rule_tables_with_two_year_columns_and_total_assets  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_and_long_term_debt  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_and_balance_sheet_synonyms  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_and_parentheses_negatives  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_prefix_cell  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_and_usd_units  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_and_two_or_more_asset_lines  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_and_financial_statement_neighbors  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_exact_cell  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_and_balance_sheet_path  acc=1.00  removed
+  [C] - rule_total_assets_with_numeric_same_row  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_in_row_header  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_and_financial_position_path  acc=1.00  removed
+  [C] - rule_tables_with_financial_position_and_total_assets  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_and_page_over_30  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_on_pages_40_to_120  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_and_balance_keywords_in_path  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_and_dates_in_headers  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_and_current_liabilities  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_and_total_liabilities_and_equity  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_and_few_columns  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_and_item8_path  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_and_page_around_39  acc=1.00  removed
+  [C] - rule_tables_with_million_or_billion_units  acc=1.00  removed
+  [C] - rule_tables_with_assets_and_balance_sheet_title_in_text  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_and_consolidated_balance_sheet_toc_reference  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_on_pages_30_to_80  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_and_accounts_receivable  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_and_audited_year_end_context  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_and_property_plant_equipment  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_and_financial_statements_path  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_and_goodwill  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_and_total_current_assets  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_and_current_assets  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_and_retained_earnings  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_and_total_liabilities_equity  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_and_receivables  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_and_no_income_statement_terms  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_in_item8_path  acc=1.00  removed
+  [C] - rule_tables_near_item8_toc_balance_sheet_page  acc=1.00  removed
+  [C] - rule_tables_with_total_assets_row  acc=1.00  removed
+  [C] - rule_item8_balance_sheet_from_toc  acc=1.00  removed
+  [C]   rule_tables_with_total_assets_and_no_revenue  acc_if_removed=0.90  kept
+  [final] selected=2  acc=1.00  base=1.00
+  → 2 rules selected  cost=0.05258  selector_acc=1.00  frontier=3pts  knee=(cost=0.00902, acc=0.80, n=1)
+  Saved: results/financebench_single_cluster/llm/gpt54/one_shot/selected_rules_pareto_v3/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm.json
+
+======================================================================
+Question : What is the registrant's telephone number?
+Rule slug: what_is_the_registrants_telephone_number_10_llm
+  Cost profile: 78 rules
+  D* = 10 / 10 docs  baseline_accuracy=1.00
+  [A] cost-effectiveness greedy cover...
+  + rule_exact_phone_only_span                               gained=3  remaining=7
+  + rule_registrant_phone_following_zip_parent               gained=2  remaining=5
+  + rule_page1_phone_with_parenthetical_area_code_label      gained=3  remaining=2
+  + rule_page1_phone_number_pattern                          gained=2  remaining=0
+  [A] greedy selected 4 rules
+  [B] enforcing accuracy floor (target=1.00)...
+  [B] initial merge_acc=1.00
+  [B] floor reached: 1.00 >= 1.00
+  [C] backward pruning...
+  [C]   rule_page1_phone_number_pattern  acc_if_removed=0.80  kept
+  [C] - rule_page1_phone_with_parenthetical_area_code_label  acc=1.00  removed
+  [C] - rule_registrant_phone_following_zip_parent  acc=1.00  removed
+  [C] - rule_exact_phone_only_span  acc=1.00  removed
+  [final] selected=1  acc=1.00  base=1.00
+  → 1 rules selected  cost=0.00023  selector_acc=1.00  frontier=2pts  knee=(cost=0.00023, acc=0.20, n=1)
+  Saved: results/financebench_single_cluster/llm/gpt54/one_shot/selected_rules_pareto_v3/what_is_the_registrants_telephone_number_10_llm.json
+
+======================================================================
+Question : How many shares of common stock were outstanding as of the cover-page reference date?
+Rule slug: how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm
+  Cost profile: 100 rules
+  D* = 9 / 10 docs  baseline_accuracy=0.90
+  [A] cost-effectiveness greedy cover...
+  + rule_page1_numeric_after_phrase_as_of_january            gained=1  remaining=8
+  + rule_page1_cover_text_with_multiple_large_numbers        gained=1  remaining=7
+  + rule_page1_shares_outstanding_issued_and_outstanding     gained=1  remaining=6
+  + rule_page2_cover_page_numeric_sentence                   gained=2  remaining=4
+  + rule_page1_sentence_with_there_were_and_common_stock     gained=2  remaining=2
+  + rule_page1_shares_outstanding_as_of_february             gained=1  remaining=1
+  + rule_page1_outstanding_as_of_january_or_february         gained=1  remaining=0
+  [A] greedy selected 7 rules
+  [B] enforcing accuracy floor (target=0.90)...
+  [B] initial merge_acc=0.90
+  [B] floor reached: 0.90 >= 0.90
+  [C] backward pruning...
+  [C]   rule_page1_outstanding_as_of_january_or_february  acc_if_removed=0.80  kept
+  [C] - rule_page1_shares_outstanding_as_of_february  acc=0.90  removed
+  [C] - rule_page1_sentence_with_there_were_and_common_stock  acc=0.90  removed
+  [C]   rule_page2_cover_page_numeric_sentence  acc_if_removed=0.70  kept
+  [C] - rule_page1_shares_outstanding_issued_and_outstanding  acc=0.90  removed
+  [C]   rule_page1_cover_text_with_multiple_large_numbers  acc_if_removed=0.80  kept
+  [C]   rule_page1_numeric_after_phrase_as_of_january  acc_if_removed=0.80  kept
+  [final] selected=4  acc=0.90  base=0.90
+  → 4 rules selected  cost=0.00030  selector_acc=0.90  frontier=5pts  knee=(cost=0.00030, acc=0.56, n=4)
+  Saved: results/financebench_single_cluster/llm/gpt54/one_shot/selected_rules_pareto_v3/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm.json
+
+======================================================================
+Question : What is the registrant's exact name?
+Rule slug: what_is_the_registrants_exact_name_10_llm
+  Cost profile: 25 rules
+  D* = 9 / 10 docs  baseline_accuracy=0.90
+  [A] cost-effectiveness greedy cover...
+  + rule_exact_name_caption_parent                           gained=9  remaining=0
+  [A] greedy selected 1 rules
+  [B] enforcing accuracy floor (target=0.90)...
+  [B] initial merge_acc=1.00
+  [B] floor reached: 1.00 >= 0.90
+  [C] backward pruning...
+  [final] selected=1  acc=1.00  base=0.90
+  → 1 rules selected  cost=0.00007  selector_acc=1.00  frontier=2pts  knee=(cost=0.00007, acc=1.00, n=1)
+  Saved: results/financebench_single_cluster/llm/gpt54/one_shot/selected_rules_pareto_v3/what_is_the_registrants_exact_name_10_llm.json
+
+======================================================================
+Question : What is the state (or other jurisdiction) of incorporation and the IRS Employer Identification Number?
+Rule slug: what_is_the_state_or_other_jurisdiction_of_incorporation_and_10_llm
+  Cost profile: 55 rules
+  D* = 10 / 10 docs  baseline_accuracy=1.00
+  [A] cost-effectiveness greedy cover...
+  + rule_page1_combined_state_and_ein_same_text              gained=1  remaining=9
+  + rule_page1_short_numeric_or_state_h2s                    gained=3  remaining=6
+  + rule_page1_ein_or_incorporation_keywords                 gained=1  remaining=5
+  + rule_page1_short_bold_text_values                        gained=5  remaining=0
+  [A] greedy selected 4 rules
+  [B] enforcing accuracy floor (target=1.00)...
+  [B] initial merge_acc=1.00
+  [B] floor reached: 1.00 >= 1.00
+  [C] backward pruning...
+  [C]   rule_page1_short_bold_text_values  acc_if_removed=0.50  kept
+  [C]   rule_page1_ein_or_incorporation_keywords  acc_if_removed=0.90  kept
+  [C] - rule_page1_short_numeric_or_state_h2s  acc=1.00  removed
+  [C] - rule_page1_combined_state_and_ein_same_text  acc=1.00  removed
+  [final] selected=2  acc=1.00  base=1.00
+  → 2 rules selected  cost=0.00065  selector_acc=1.00  frontier=3pts  knee=(cost=0.00065, acc=0.60, n=2)
+  Saved: results/financebench_single_cluster/llm/gpt54/one_shot/selected_rules_pareto_v3/what_is_the_state_or_other_jurisdiction_of_incorporation_and_10_llm.json
+
+======================================================================
+Question : What is the address of principal executive offices and ZIP code?
+Rule slug: what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm
+  Cost profile: 61 rules
+  D* = 9 / 10 docs  baseline_accuracy=0.90
+  [A] cost-effectiveness greedy cover...
+  + rule_address_header_text_itself                          gained=2  remaining=7
+  + rule_page1_bold_short_address_fragments                  gained=4  remaining=3
+  + rule_page1_address_like_excluding_long_narrative         gained=1  remaining=2
+  + rule_page1_address_block_from_split_lines                gained=1  remaining=1
+  + rule_page1_main_company_path_text                        gained=1  remaining=0
+  [A] greedy selected 5 rules
+  [B] enforcing accuracy floor (target=0.90)...
+  [B] initial merge_acc=1.00
+  [B] floor reached: 1.00 >= 0.90
+  [C] backward pruning...
+  [C] - rule_page1_main_company_path_text  acc=0.90  removed
+  [C]   rule_page1_address_block_from_split_lines  acc_if_removed=0.80  kept
+  [C] - rule_page1_address_like_excluding_long_narrative  acc=0.90  removed
+  [C]   rule_page1_bold_short_address_fragments  acc_if_removed=0.70  kept
+  [C] - rule_address_header_text_itself  acc=0.90  removed
+  [final] selected=2  acc=0.90  base=0.90
+  → 2 rules selected  cost=0.00068  selector_acc=0.90  frontier=3pts  knee=(cost=0.00068, acc=0.56, n=2)
+  Saved: results/financebench_single_cluster/llm/gpt54/one_shot/selected_rules_pareto_v3/what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm.json
+
+======================================================================
+Question : What is/are the trading symbol(s) and listing exchange(s)?
+Rule slug: what_isare_the_trading_symbols_and_listing_exchanges_10_llm
+  Cost profile: 65 rules
+  D* = 10 / 10 docs  baseline_accuracy=1.00
+  [A] cost-effectiveness greedy cover...
+  + rule_page1_symbol_exchange_split_across_adjacent_spans   gained=1  remaining=9
+  + rule_page1_bold_smallfont_registration_values            gained=1  remaining=8
+  + rule_table_cells_symbol_exchange                         gained=1  remaining=7
+  + rule_page1_registration_block_with_symbol_and_exchange_same_span  gained=1  remaining=6
+  + rule_page1_near_trading_symbol_label                     gained=2  remaining=4
+  + rule_page1_registration_block_all                        gained=1  remaining=3
+  + rule_business_sentence_trades_on_exchange                gained=2  remaining=1
+  + rule_business_sentence_under_symbol                      gained=1  remaining=0
+  [A] greedy selected 8 rules
+  [B] enforcing accuracy floor (target=1.00)...
+  [B] initial merge_acc=0.90
+  [B] + rule_exact_symbol_values  gained=0  acc=0.90
+  [B] + rule_page1_topmatter_short_values_after_common_stock  gained=0  acc=0.90
+  [B] + rule_cover_page_embedded_symbol_exchange  gained=0  acc=0.90
+  [B] + rule_page1_symbol_then_exchange_adjacent  gained=0  acc=0.90
+  [B] + rule_page1_h2_h3_registration_headers  gained=0  acc=0.90
+  [B] + rule_page1_major_exchange_names  gained=0  acc=0.90
+  [B] + rule_page1_title_trading_exchange_cluster  gained=0  acc=0.90
+  [B] + rule_page1_security_registration_cluster  gained=0  acc=0.90
+  [B] + rule_page1_near_title_of_each_class  gained=0  acc=0.90
+  [B] + rule_jnj_multi_symbol_exchange_table  gained=0  acc=0.90
+  [B] + rule_page1_exchange_keyword  gained=0  acc=0.90
+  [B] + rule_jnj_multi_symbol_exchange_cover  gained=0  acc=0.90
+  [B] + rule_inline_registered_under_symbol  gained=0  acc=0.90
+  [B] + rule_page1_body_spans_with_exchange_or_symbol  gained=0  acc=0.90
+  [B] + rule_item1_business_exchange_sentence  gained=0  acc=0.90
+  [B] + rule_item1_business_page3_symbol_exchange  gained=0  acc=0.90
+  [B] + rule_item1_business_symbol_sentence  gained=0  acc=0.90
+  [B] + rule_page1_after_trading_symbol_header  gained=0  acc=0.90
+  [B] + rule_page1_topmatter_with_common_stock_and_exchange  gained=0  acc=0.90
+  [B] + rule_page1_near_exchange_label  gained=0  acc=0.90
+  [B] WARNING: floor not reached (0.90 < 1.00)
+  [B'] Phase B hit cap without reaching base; switching to cumulative-prefix testing...
+  [B'] k=1 (added 1 new rules)  acc=0.90
+  [B'] k=2 (added 2 new rules)  acc=0.90
+  [B'] k=4 (added 4 new rules)  acc=0.90
+  [B'] k=8 (added 8 new rules)  acc=0.90
+  [B'] k=16 (added 16 new rules)  acc=0.90
+  [B'] k=32 (added 32 new rules)  acc=0.90
+  [B'] k=37 (added 37 new rules)  acc=0.90
+  [B'] WARNING: even full pool didn't reach base (0.90 < 1.00)
+  [C] backward pruning...
+  [C]   rule_page1_near_exchange_label  acc_if_removed=0.90  kept
+  [C]   rule_page1_topmatter_with_common_stock_and_exchange  acc_if_removed=0.90  kept
+  [C]   rule_page1_after_trading_symbol_header  acc_if_removed=0.90  kept
+  [C]   rule_item1_business_symbol_sentence  acc_if_removed=0.90  kept
+  [C]   rule_item1_business_page3_symbol_exchange  acc_if_removed=0.90  kept
+  [C]   rule_item1_business_exchange_sentence  acc_if_removed=0.90  kept
+  [C]   rule_page1_body_spans_with_exchange_or_symbol  acc_if_removed=0.90  kept
+  [C]   rule_inline_registered_under_symbol  acc_if_removed=0.90  kept
+  [C]   rule_jnj_multi_symbol_exchange_cover  acc_if_removed=0.90  kept
+  [C]   rule_page1_exchange_keyword  acc_if_removed=0.90  kept
+  [C]   rule_jnj_multi_symbol_exchange_table  acc_if_removed=0.90  kept
+  [C]   rule_page1_near_title_of_each_class  acc_if_removed=0.90  kept
+  [C]   rule_page1_security_registration_cluster  acc_if_removed=0.90  kept
+  [C]   rule_page1_title_trading_exchange_cluster  acc_if_removed=0.90  kept
+  [C]   rule_page1_major_exchange_names  acc_if_removed=0.90  kept
+  [C]   rule_page1_h2_h3_registration_headers  acc_if_removed=0.90  kept
+  [C]   rule_page1_symbol_then_exchange_adjacent  acc_if_removed=0.90  kept
+  [C]   rule_cover_page_embedded_symbol_exchange  acc_if_removed=0.90  kept
+  [C]   rule_page1_topmatter_short_values_after_common_stock  acc_if_removed=0.90  kept
+  [C]   rule_exact_symbol_values  acc_if_removed=0.90  kept
+  [C]   rule_business_sentence_under_symbol  acc_if_removed=0.80  kept
+  [C]   rule_business_sentence_trades_on_exchange  acc_if_removed=0.90  kept
+  [C]   rule_page1_registration_block_all  acc_if_removed=0.90  kept
+  [C]   rule_page1_near_trading_symbol_label  acc_if_removed=0.90  kept
+  [C]   rule_page1_registration_block_with_symbol_and_exchange_same_span  acc_if_removed=0.90  kept
+  [C]   rule_table_cells_symbol_exchange  acc_if_removed=0.90  kept
+  [C]   rule_page1_bold_smallfont_registration_values  acc_if_removed=0.90  kept
+  [C]   rule_page1_symbol_exchange_split_across_adjacent_spans  acc_if_removed=0.90  kept
+  [final] selected=28  acc=0.90  base=1.00
+  → 28 rules selected  cost=0.01476  selector_acc=0.90  frontier=29pts  knee=(cost=0.00437, acc=1.00, n=8)
+  Saved: results/financebench_single_cluster/llm/gpt54/one_shot/selected_rules_pareto_v3/what_isare_the_trading_symbols_and_listing_exchanges_10_llm.json
+
+Question                                               Rules  BaseAcc   SelAcc    CostSum  FrontPts
+----------------------------------------------------------------------------------------------------
+  What is long-term debt at year-end (0 if none)?          1     0.60     0.60    0.02419         2
+  What is net income (loss) for the most recent fisca      3     0.90     0.90    0.01480         4
+  What is total revenue for the most recent fiscal ye      3     0.90     0.80    0.02402         4
+  What is total assets at year-end (from the audited       2     1.00     1.00    0.05258         3
+  What is the registrant's telephone number?               1     1.00     1.00    0.00023         2
+  How many shares of common stock were outstanding as      4     0.90     0.90    0.00030         5
+  What is the registrant's exact name?                     1     0.90     1.00    0.00007         2
+  What is the state (or other jurisdiction) of incorp      2     1.00     1.00    0.00065         3
+  What is the address of principal executive offices       2     0.90     0.90    0.00068         3
+  What is/are the trading symbol(s) and listing excha     28     1.00     0.90    0.01476        29
+
+Summary: results/financebench_single_cluster/llm/gpt54/one_shot/selected_rules_pareto_v3/summary.json
+Results: results/financebench_single_cluster/llm/gpt54/one_shot/selected_rules_pareto_v3/

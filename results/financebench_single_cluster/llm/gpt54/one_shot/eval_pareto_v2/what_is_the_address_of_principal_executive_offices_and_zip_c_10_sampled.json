@@ -1,0 +1,105 @@
+{
+  "question": "What is the address of principal executive offices and ZIP code?",
+  "question_slug": "what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm",
+  "eval_model": "gpt54",
+  "selection_source": "results/financebench_single_cluster/llm/gpt54/one_shot/selected_rules_pareto_v2/what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm.json",
+  "selected_rules": [
+    "rule_page1_bold_short_address_fragments",
+    "rule_page1_address_block_from_split_lines"
+  ],
+  "accuracy": 0.9,
+  "avg_cost_ratio": 0.000535,
+  "num_documents": 10,
+  "per_doc": [
+    {
+      "doc_name": "AMCOR_2019_10K",
+      "predicted": "83 Tower Road North Warmley, Bristol BS30 8XP United Kingdom",
+      "ground_truth": "83 Tower Road North, Warmley, Bristol BS30 8XP, United Kingdom",
+      "correct": true,
+      "retrieved_tokens": 55,
+      "total_doc_tokens": 84134,
+      "cost_ratio": 0.000654
+    },
+    {
+      "doc_name": "COSTCO_2017_10K",
+      "predicted": "999 Lake Drive, Issaquah, WA 98027",
+      "ground_truth": "999 Lake Drive, Issaquah, WA 98027",
+      "correct": true,
+      "retrieved_tokens": 60,
+      "total_doc_tokens": 50565,
+      "cost_ratio": 0.001187
+    },
+    {
+      "doc_name": "BOEING_2018_10K",
+      "predicted": "100 N. Riverside Plaza, Chicago, IL 60606-1596",
+      "ground_truth": "100 N. Riverside Plaza, Chicago, IL 60606-1596",
+      "correct": true,
+      "retrieved_tokens": 36,
+      "total_doc_tokens": 88449,
+      "cost_ratio": 0.000407
+    },
+    {
+      "doc_name": "AMAZON_2018_10K",
+      "predicted": "410 Terry Avenue North Seattle, Washington 98109-5210",
+      "ground_truth": "410 Terry Avenue North, Seattle, Washington 98109-5210",
+      "correct": true,
+      "retrieved_tokens": 57,
+      "total_doc_tokens": 67659,
+      "cost_ratio": 0.000842
+    },
+    {
+      "doc_name": "EBAY_2021_10K",
+      "predicted": "2025 Hamilton Avenue San Jose, California 95125",
+      "ground_truth": "2025 Hamilton Avenue, San Jose, California 95125",
+      "correct": true,
+      "retrieved_tokens": 32,
+      "total_doc_tokens": 104188,
+      "cost_ratio": 0.000307
+    },
+    {
+      "doc_name": "AMAZON_2016_10K",
+      "predicted": "410 Terry Avenue North Seattle, Washington 98109-5210",
+      "ground_truth": "410 Terry Avenue North, Seattle, Washington 98109-5210",
+      "correct": true,
+      "retrieved_tokens": 57,
+      "total_doc_tokens": 63358,
+      "cost_ratio": 0.0009
+    },
+    {
+      "doc_name": "CORNING_2022_10K",
+      "predicted": "NOT FOUND",
+      "ground_truth": "One Riverfront Plaza, Corning, New York 14831",
+      "correct": false,
+      "retrieved_tokens": 0,
+      "total_doc_tokens": 107052,
+      "cost_ratio": 0.0
+    },
+    {
+      "doc_name": "NIKE_2021_10K",
+      "predicted": "One Bowerman Drive, Beaverton, Oregon 97005-6453",
+      "ground_truth": "One Bowerman Drive, Beaverton, Oregon 97005-6453",
+      "correct": true,
+      "retrieved_tokens": 47,
+      "total_doc_tokens": 89991,
+      "cost_ratio": 0.000522
+    },
+    {
+      "doc_name": "LOCKHEEDMARTIN_2022_10K",
+      "predicted": "6801 Rockledge Drive, Bethesda, Maryland 20817",
+      "ground_truth": "6801 Rockledge Drive, Bethesda, Maryland 20817",
+      "correct": true,
+      "retrieved_tokens": 21,
+      "total_doc_tokens": 105703,
+      "cost_ratio": 0.000199
+    },
+    {
+      "doc_name": "JOHNSON_JOHNSON_2022_10K",
+      "predicted": "One Johnson & Johnson Plaza New Brunswick, New Jersey 08933",
+      "ground_truth": "One Johnson & Johnson Plaza, New Brunswick, New Jersey 08933",
+      "correct": true,
+      "retrieved_tokens": 41,
+      "total_doc_tokens": 123226,
+      "cost_ratio": 0.000333
+    }
+  ]
+}

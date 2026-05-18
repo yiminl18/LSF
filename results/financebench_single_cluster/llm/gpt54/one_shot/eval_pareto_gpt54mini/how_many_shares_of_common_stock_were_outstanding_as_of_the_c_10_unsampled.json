@@ -1,0 +1,468 @@
+{
+  "question": "How many shares of common stock were outstanding as of the cover-page reference date?",
+  "question_slug": "how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm",
+  "eval_model": "gpt54",
+  "selection_source": "results/financebench_single_cluster/llm/gpt54/one_shot/selected_rules_pareto_gpt54mini/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm.json",
+  "selected_rules": [
+    "rule_page1_shares_outstanding_issued_and_outstanding",
+    "rule_page2_cover_page_numeric_sentence",
+    "rule_page1_sentence_with_there_were_and_common_stock",
+    "rule_page1_shares_outstanding_as_of_february",
+    "rule_page1_outstanding_as_of_january_or_february"
+  ],
+  "accuracy": 0.76,
+  "avg_cost_ratio": 0.000615,
+  "num_documents": 50,
+  "per_doc": [
+    {
+      "doc_name": "AMCOR_2023_10K",
+      "predicted": "1,448,493,870",
+      "ground_truth": "1,448,493,870",
+      "correct": true,
+      "retrieved_tokens": 27,
+      "total_doc_tokens": 105951,
+      "cost_ratio": 0.000255
+    },
+    {
+      "doc_name": "APPLE_2016_10K",
+      "predicted": "5,332,313,000 shares",
+      "ground_truth": "5,332,313,000",
+      "correct": true,
+      "retrieved_tokens": 25,
+      "total_doc_tokens": 79177,
+      "cost_ratio": 0.000316
+    },
+    {
+      "doc_name": "BESTBUY_2020_10K",
+      "predicted": "NOT FOUND",
+      "ground_truth": "256,971,220",
+      "correct": false,
+      "retrieved_tokens": 0,
+      "total_doc_tokens": 66489,
+      "cost_ratio": 0.0
+    },
+    {
+      "doc_name": "INTEL_2016_10K",
+      "predicted": "4,728 million shares",
+      "ground_truth": "4,728 million shares of common stock outstanding as of February 7, 2017",
+      "correct": true,
+      "retrieved_tokens": 18,
+      "total_doc_tokens": 110197,
+      "cost_ratio": 0.000163
+    },
+    {
+      "doc_name": "ACTIVISIONBLIZZARD_2017_10K",
+      "predicted": "758,631,663",
+      "ground_truth": "758,631,663",
+      "correct": true,
+      "retrieved_tokens": 28,
+      "total_doc_tokens": 102120,
+      "cost_ratio": 0.000274
+    },
+    {
+      "doc_name": "ACTIVISIONBLIZZARD_2020_10K",
+      "predicted": "774,753,965",
+      "ground_truth": "774,753,965",
+      "correct": true,
+      "retrieved_tokens": 28,
+      "total_doc_tokens": 101336,
+      "cost_ratio": 0.000276
+    },
+    {
+      "doc_name": "ADOBE_2015_10K",
+      "predicted": "498,330,407",
+      "ground_truth": "498,330,407",
+      "correct": true,
+      "retrieved_tokens": 186,
+      "total_doc_tokens": 94768,
+      "cost_ratio": 0.001963
+    },
+    {
+      "doc_name": "ADOBE_2016_10K",
+      "predicted": "494,078,475",
+      "ground_truth": "494,078,475",
+      "correct": true,
+      "retrieved_tokens": 186,
+      "total_doc_tokens": 88600,
+      "cost_ratio": 0.002099
+    },
+    {
+      "doc_name": "ADOBE_2017_10K",
+      "predicted": "491,578,529",
+      "ground_truth": "491,578,529",
+      "correct": true,
+      "retrieved_tokens": 186,
+      "total_doc_tokens": 86150,
+      "cost_ratio": 0.002159
+    },
+    {
+      "doc_name": "ADOBE_2018_10K",
+      "predicted": "487,725,915",
+      "ground_truth": "487,725,915",
+      "correct": true,
+      "retrieved_tokens": 186,
+      "total_doc_tokens": 89326,
+      "cost_ratio": 0.002082
+    },
+    {
+      "doc_name": "ADOBE_2019_10K",
+      "predicted": "482,130,975",
+      "ground_truth": "482,130,975",
+      "correct": true,
+      "retrieved_tokens": 183,
+      "total_doc_tokens": 91798,
+      "cost_ratio": 0.001994
+    },
+    {
+      "doc_name": "ADOBE_2020_10K",
+      "predicted": "478.7 million shares",
+      "ground_truth": "478.7 million",
+      "correct": true,
+      "retrieved_tokens": 182,
+      "total_doc_tokens": 91087,
+      "cost_ratio": 0.001998
+    },
+    {
+      "doc_name": "ADOBE_2021_10K",
+      "predicted": "471.7 million shares",
+      "ground_truth": "471.7 million",
+      "correct": true,
+      "retrieved_tokens": 182,
+      "total_doc_tokens": 77147,
+      "cost_ratio": 0.002359
+    },
+    {
+      "doc_name": "ADOBE_2022_10K",
+      "predicted": "457.8 million shares",
+      "ground_truth": "457.8 million",
+      "correct": true,
+      "retrieved_tokens": 182,
+      "total_doc_tokens": 75604,
+      "cost_ratio": 0.002407
+    },
+    {
+      "doc_name": "AMAZON_2015_10K",
+      "predicted": "NOT FOUND",
+      "ground_truth": "470,842,035",
+      "correct": false,
+      "retrieved_tokens": 16,
+      "total_doc_tokens": 63146,
+      "cost_ratio": 0.000253
+    },
+    {
+      "doc_name": "AMAZON_2017_10K",
+      "predicted": "NOT FOUND",
+      "ground_truth": "484,107,183",
+      "correct": false,
+      "retrieved_tokens": 16,
+      "total_doc_tokens": 65757,
+      "cost_ratio": 0.000243
+    },
+    {
+      "doc_name": "AMAZON_2019_10K",
+      "predicted": "NOT FOUND",
+      "ground_truth": "497,810,444",
+      "correct": false,
+      "retrieved_tokens": 16,
+      "total_doc_tokens": 62208,
+      "cost_ratio": 0.000257
+    },
+    {
+      "doc_name": "AMAZON_2020_10K",
+      "predicted": "NOT FOUND",
+      "ground_truth": "503,564,743",
+      "correct": false,
+      "retrieved_tokens": 16,
+      "total_doc_tokens": 58831,
+      "cost_ratio": 0.000272
+    },
+    {
+      "doc_name": "AMAZON_2022_10K",
+      "predicted": "NOT FOUND",
+      "ground_truth": "10,247,259,757",
+      "correct": false,
+      "retrieved_tokens": 41,
+      "total_doc_tokens": 61806,
+      "cost_ratio": 0.000663
+    },
+    {
+      "doc_name": "AMCOR_2021_10K",
+      "predicted": "1,538,319,792",
+      "ground_truth": "1,538,319,792",
+      "correct": true,
+      "retrieved_tokens": 27,
+      "total_doc_tokens": 107976,
+      "cost_ratio": 0.00025
+    },
+    {
+      "doc_name": "AMCOR_2022_10K",
+      "predicted": "1,489,019,556",
+      "ground_truth": "1,489,019,556",
+      "correct": true,
+      "retrieved_tokens": 27,
+      "total_doc_tokens": 101405,
+      "cost_ratio": 0.000266
+    },
+    {
+      "doc_name": "AMD_2019_10K",
+      "predicted": "1,169,661,536",
+      "ground_truth": "1,169,661,536 shares of common stock, $0.01 par value per share, as of January 31, 2020",
+      "correct": true,
+      "retrieved_tokens": 59,
+      "total_doc_tokens": 83800,
+      "cost_ratio": 0.000704
+    },
+    {
+      "doc_name": "AMD_2020_10K",
+      "predicted": "1,211,280,009",
+      "ground_truth": "1,211,280,009 shares of common stock",
+      "correct": true,
+      "retrieved_tokens": 59,
+      "total_doc_tokens": 105729,
+      "cost_ratio": 0.000558
+    },
+    {
+      "doc_name": "AMD_2021_10K",
+      "predicted": "1,199,303,422",
+      "ground_truth": "1,199,303,422",
+      "correct": true,
+      "retrieved_tokens": 59,
+      "total_doc_tokens": 79875,
+      "cost_ratio": 0.000739
+    },
+    {
+      "doc_name": "AMD_2022_10K",
+      "predicted": "1,611,388,217",
+      "ground_truth": "1,611,388,217 shares",
+      "correct": true,
+      "retrieved_tokens": 59,
+      "total_doc_tokens": 86624,
+      "cost_ratio": 0.000681
+    },
+    {
+      "doc_name": "APPLE_2015_10K",
+      "predicted": "5,575,331,000 shares",
+      "ground_truth": "5,575,331,000",
+      "correct": true,
+      "retrieved_tokens": 25,
+      "total_doc_tokens": 69341,
+      "cost_ratio": 0.000361
+    },
+    {
+      "doc_name": "APPLE_2017_10K",
+      "predicted": "5,134,312,000",
+      "ground_truth": "5,134,312,000",
+      "correct": true,
+      "retrieved_tokens": 25,
+      "total_doc_tokens": 95206,
+      "cost_ratio": 0.000263
+    },
+    {
+      "doc_name": "APPLE_2018_10K",
+      "predicted": "4,745,398,000 shares",
+      "ground_truth": "4,745,398,000",
+      "correct": true,
+      "retrieved_tokens": 25,
+      "total_doc_tokens": 77309,
+      "cost_ratio": 0.000323
+    },
+    {
+      "doc_name": "APPLE_2019_10K",
+      "predicted": "4,443,265,000 shares",
+      "ground_truth": "4,443,265,000",
+      "correct": true,
+      "retrieved_tokens": 25,
+      "total_doc_tokens": 78621,
+      "cost_ratio": 0.000318
+    },
+    {
+      "doc_name": "APPLE_2020_10K",
+      "predicted": "17,001,802,000 shares",
+      "ground_truth": "17,001,802,000",
+      "correct": true,
+      "retrieved_tokens": 25,
+      "total_doc_tokens": 81919,
+      "cost_ratio": 0.000305
+    },
+    {
+      "doc_name": "APPLE_2021_10K",
+      "predicted": "16,406,397,000 shares",
+      "ground_truth": "16,406,397,000",
+      "correct": true,
+      "retrieved_tokens": 25,
+      "total_doc_tokens": 64998,
+      "cost_ratio": 0.000385
+    },
+    {
+      "doc_name": "APPLE_2022_10K",
+      "predicted": "15,908,118,000 shares",
+      "ground_truth": "15,908,118,000",
+      "correct": true,
+      "retrieved_tokens": 25,
+      "total_doc_tokens": 63642,
+      "cost_ratio": 0.000393
+    },
+    {
+      "doc_name": "BESTBUY_2015_10K",
+      "predicted": "NOT FOUND",
+      "ground_truth": "352,185,626",
+      "correct": false,
+      "retrieved_tokens": 0,
+      "total_doc_tokens": 102184,
+      "cost_ratio": 0.0
+    },
+    {
+      "doc_name": "BESTBUY_2021_10K",
+      "predicted": "NOT FOUND",
+      "ground_truth": "250,044,876",
+      "correct": false,
+      "retrieved_tokens": 0,
+      "total_doc_tokens": 87076,
+      "cost_ratio": 0.0
+    },
+    {
+      "doc_name": "BESTBUY_2022_10K",
+      "predicted": "NOT FOUND",
+      "ground_truth": "225,227,756",
+      "correct": false,
+      "retrieved_tokens": 0,
+      "total_doc_tokens": 87772,
+      "cost_ratio": 0.0
+    },
+    {
+      "doc_name": "BESTBUY_2023_10K",
+      "predicted": "NOT FOUND",
+      "ground_truth": "218,045,737",
+      "correct": false,
+      "retrieved_tokens": 0,
+      "total_doc_tokens": 64621,
+      "cost_ratio": 0.0
+    },
+    {
+      "doc_name": "BOEING_2017_10K",
+      "predicted": "588,490,313",
+      "ground_truth": "588,490,313",
+      "correct": true,
+      "retrieved_tokens": 29,
+      "total_doc_tokens": 82849,
+      "cost_ratio": 0.00035
+    },
+    {
+      "doc_name": "BOEING_2019_10K",
+      "predicted": "563,152,208",
+      "ground_truth": "563,152,208",
+      "correct": true,
+      "retrieved_tokens": 29,
+      "total_doc_tokens": 91888,
+      "cost_ratio": 0.000316
+    },
+    {
+      "doc_name": "BOEING_2020_10K",
+      "predicted": "582,996,860",
+      "ground_truth": "582,996,860",
+      "correct": true,
+      "retrieved_tokens": 29,
+      "total_doc_tokens": 104434,
+      "cost_ratio": 0.000278
+    },
+    {
+      "doc_name": "BOEING_2022_10K",
+      "predicted": "598,239,585",
+      "ground_truth": "598,239,585",
+      "correct": true,
+      "retrieved_tokens": 29,
+      "total_doc_tokens": 114226,
+      "cost_ratio": 0.000254
+    },
+    {
+      "doc_name": "CORNING_2022_10K",
+      "predicted": "846,563,422",
+      "ground_truth": "846,563,422",
+      "correct": true,
+      "retrieved_tokens": 23,
+      "total_doc_tokens": 107052,
+      "cost_ratio": 0.000215
+    },
+    {
+      "doc_name": "COSTCO_2015_10K",
+      "predicted": "437,406,636",
+      "ground_truth": "437,406,636",
+      "correct": true,
+      "retrieved_tokens": 29,
+      "total_doc_tokens": 58179,
+      "cost_ratio": 0.000498
+    },
+    {
+      "doc_name": "COSTCO_2016_10K",
+      "predicted": "437,126,569",
+      "ground_truth": "437,126,569",
+      "correct": true,
+      "retrieved_tokens": 29,
+      "total_doc_tokens": 51931,
+      "cost_ratio": 0.000558
+    },
+    {
+      "doc_name": "COSTCO_2018_10K",
+      "predicted": "438,208,376",
+      "ground_truth": "438,208,376",
+      "correct": true,
+      "retrieved_tokens": 29,
+      "total_doc_tokens": 48852,
+      "cost_ratio": 0.000594
+    },
+    {
+      "doc_name": "GENERALMILLS_2022_10K",
+      "predicted": "597,158,440",
+      "ground_truth": "597,158,440",
+      "correct": true,
+      "retrieved_tokens": 36,
+      "total_doc_tokens": 96530,
+      "cost_ratio": 0.000373
+    },
+    {
+      "doc_name": "INTEL_2022_10K",
+      "predicted": "4,137 million shares",
+      "ground_truth": "4,137 million shares",
+      "correct": true,
+      "retrieved_tokens": 81,
+      "total_doc_tokens": 105373,
+      "cost_ratio": 0.000769
+    },
+    {
+      "doc_name": "KRAFTHEINZ_2021_10K",
+      "predicted": "1,223,740,203",
+      "ground_truth": "1,223,740,203",
+      "correct": true,
+      "retrieved_tokens": 83,
+      "total_doc_tokens": 120020,
+      "cost_ratio": 0.000692
+    },
+    {
+      "doc_name": "FOOTLOCKER_2023_10K",
+      "predicted": "NOT FOUND",
+      "ground_truth": "93,429,371",
+      "correct": false,
+      "retrieved_tokens": 0,
+      "total_doc_tokens": 74645,
+      "cost_ratio": 0.0
+    },
+    {
+      "doc_name": "NIKE_2019_10K",
+      "predicted": "NOT FOUND",
+      "ground_truth": "1,566,888,373",
+      "correct": false,
+      "retrieved_tokens": 0,
+      "total_doc_tokens": 84424,
+      "cost_ratio": 0.0
+    },
+    {
+      "doc_name": "LOCKHEEDMARTIN_2021_10K",
+      "predicted": "272,326,925",
+      "ground_truth": "272,326,925",
+      "correct": true,
+      "retrieved_tokens": 32,
+      "total_doc_tokens": 110448,
+      "cost_ratio": 0.00029
+    }
+  ]
+}

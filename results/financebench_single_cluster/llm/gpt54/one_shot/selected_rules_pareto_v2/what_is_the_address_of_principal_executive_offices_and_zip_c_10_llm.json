@@ -1,0 +1,104 @@
+{
+  "question": "What is the address of principal executive offices and ZIP code?",
+  "question_slug": "what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm",
+  "mode": "pareto_v2",
+  "baseline_accuracy": 0.9,
+  "selected_rules": [
+    "rule_page1_bold_short_address_fragments",
+    "rule_page1_address_block_from_split_lines"
+  ],
+  "selected_avg_cost_ratio_sum": 0.000683,
+  "covered_docs": [
+    "AMAZON_2016_10K",
+    "AMAZON_2018_10K",
+    "COSTCO_2017_10K",
+    "EBAY_2021_10K",
+    "LOCKHEEDMARTIN_2022_10K"
+  ],
+  "uncovered_docs": [
+    "AMCOR_2019_10K",
+    "CORNING_2022_10K",
+    "JOHNSON_JOHNSON_2022_10K",
+    "NIKE_2021_10K"
+  ],
+  "selector_accuracy": 0.9,
+  "final_merge_accuracy": 0.9,
+  "matches_base": true,
+  "frontier": [
+    {
+      "cost": 0.0,
+      "accuracy_match": 0.0,
+      "rules_admitted": [],
+      "added_rule": null,
+      "rule_cov": null,
+      "rule_avg_cost": null
+    },
+    {
+      "cost": 0.000161,
+      "accuracy_match": 0.4444,
+      "rules_admitted": [
+        "rule_page1_bold_short_address_fragments"
+      ],
+      "added_rule": "rule_page1_bold_short_address_fragments",
+      "rule_cov": 0.7,
+      "rule_avg_cost": 0.000161
+    },
+    {
+      "cost": 0.000683,
+      "accuracy_match": 0.5556,
+      "rules_admitted": [
+        "rule_page1_bold_short_address_fragments",
+        "rule_page1_address_block_from_split_lines"
+      ],
+      "added_rule": "rule_page1_address_block_from_split_lines",
+      "rule_cov": 0.7,
+      "rule_avg_cost": 0.000522
+    }
+  ],
+  "query_table": {
+    "0.50": {
+      "cost": 0.000683,
+      "n_rules": 2
+    },
+    "0.80": null,
+    "0.90": null,
+    "0.95": null,
+    "1.00": null
+  },
+  "knee_point": {
+    "cost": 0.000683,
+    "accuracy_match": 0.5556,
+    "n_rules": 2,
+    "rules": [
+      "rule_page1_bold_short_address_fragments",
+      "rule_page1_address_block_from_split_lines"
+    ]
+  },
+  "knee_lambda": 10.0,
+  "extras_added_phase_b": [],
+  "pruned_phase_c": [
+    {
+      "removed": "rule_page1_main_company_path_text",
+      "acc_after": 0.9
+    },
+    {
+      "removed": "rule_page1_address_like_excluding_long_narrative",
+      "acc_after": 0.9
+    },
+    {
+      "removed": "rule_address_header_text_itself",
+      "acc_after": 0.9
+    }
+  ],
+  "phase_a_rules_count": 5,
+  "phase_b_extras_count": 0,
+  "phase_c_pruned_count": 3,
+  "llm_calls": {
+    "qa": 141,
+    "judge": 141
+  },
+  "token_usage": {
+    "total_input_tokens": 46015,
+    "total_output_tokens": 2769
+  }
+}

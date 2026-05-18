@@ -2,58 +2,60 @@
   "question": "What is the address of principal executive offices and ZIP code?",
   "question_slug": "what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm",
   "mode": "auto_tighten",
-  "tau_floor": 0.2,
-  "tau_best": 0.2,
+  "tau_floor": 0.0,
+  "tau_best": 1.0,
   "selected_rules": [
-    "rule_address_header_text_itself",
-    "rule_split_address_then_zip_consecutive",
-    "rule_page1_address_label_and_phone_cluster"
+    "rule_page1_address_near_exact_name_of_registrant"
   ],
-  "selected_avg_cost_ratio_sum": 0.001639,
+  "selected_avg_cost_ratio_sum": 0.001323,
   "covered_docs": [
-    "COSTCO_2017_10K",
-    "LOCKHEEDMARTIN_2022_10K",
-    "NIKE_2021_10K"
-  ],
-  "uncovered_docs": [
     "AMAZON_2016_10K",
     "AMAZON_2018_10K",
     "AMCOR_2019_10K",
     "CORNING_2022_10K",
+    "COSTCO_2017_10K",
     "EBAY_2021_10K",
-    "JOHNSON_JOHNSON_2022_10K"
+    "JOHNSON_JOHNSON_2022_10K",
+    "LOCKHEEDMARTIN_2022_10K",
+    "NIKE_2021_10K"
   ],
+  "uncovered_docs": [],
   "baseline_accuracy": 0.9,
-  "selector_accuracy": 0.3,
+  "selector_accuracy": 0.9,
   "tightening_history": [
     {
       "iteration": 1,
-      "banned_rule": "rule_address_header_text_itself",
-      "cov_banned": 0.2,
-      "tau_try": 0.200001,
-      "added_rules": [
-        "rule_page1_h2_address_headers"
-      ],
-      "added_covs": {
-        "rule_page1_h2_address_headers": 0.3
-      },
+      "banned_rule": "rule_page1_address_near_exact_name_of_registrant",
+      "cov_banned": 1.0,
+      "tau_try": 1.000001,
+      "added_rules": [],
+      "added_covs": {},
       "below_tau_try": [],
       "feasible_cover": false,
       "accepted": false
     }
   ],
   "llm_calls": {
-    "phase_2_incremental": 434,
-    "phase_3_coverage": 3,
-    "phase_4_auto_tighten": 2
+    "phase_2_incremental": 130,
+    "phase_3_coverage": 130,
+    "phase_35_backtracking": 144,
+    "phase_4_auto_tighten": 0
   },
-  "selection_latency_seconds": 372.0,
+  "token_usage": {
+    "total_input_tokens": 70251,
+    "total_output_tokens": 3645,
+    "phase_2_3_input": 40718,
+    "phase_2_3_output": 1990,
+    "phase_35_input": 29533,
+    "phase_35_output": 1655,
+    "phase_4_input": 0,
+    "phase_4_output": 0
+  },
+  "selection_latency_seconds": 310.22,
   "refdyn_slug": "what_is_the_address_of_principal_executive_offices_and_zip_c_10_refdyn",
   "refdyn_rules_dir": "rules/financebench_single_cluster/llm/gpt54/refine_dynamic_generality/what_is_the_address_of_principal_executive_offices_and_zip_c_10_refdyn",
   "rules_copied": [
-    "rule_address_header_text_itself",
-    "rule_split_address_then_zip_consecutive",
-    "rule_page1_address_label_and_phone_cluster"
+    "rule_page1_address_near_exact_name_of_registrant"
   ],
   "n_rules_total_pool": 61
 }

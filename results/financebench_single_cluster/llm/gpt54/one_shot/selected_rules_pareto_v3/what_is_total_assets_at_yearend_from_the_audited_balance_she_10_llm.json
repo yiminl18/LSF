@@ -1,0 +1,606 @@
+{
+  "question": "What is total assets at year-end (from the audited balance sheet)?",
+  "question_slug": "what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm",
+  "mode": "pareto_v3",
+  "baseline_accuracy": 1.0,
+  "selected_rules": [
+    "rule_tables_with_total_assets_and_no_revenue",
+    "rule_consolidated_balance_sheet_phrase"
+  ],
+  "selected_avg_cost_ratio_sum": 0.052582,
+  "covered_docs": [
+    "AMAZON_2016_10K",
+    "AMAZON_2018_10K",
+    "AMCOR_2019_10K",
+    "BOEING_2018_10K",
+    "CORNING_2022_10K",
+    "COSTCO_2017_10K",
+    "JOHNSON_JOHNSON_2022_10K",
+    "LOCKHEEDMARTIN_2022_10K",
+    "NIKE_2021_10K"
+  ],
+  "uncovered_docs": [
+    "EBAY_2021_10K"
+  ],
+  "selector_accuracy": 1.0,
+  "final_merge_accuracy": 1.0,
+  "matches_base": true,
+  "frontier": [
+    {
+      "cost": 0.0,
+      "accuracy_match": 0.0,
+      "rules_admitted": [],
+      "added_rule": null,
+      "rule_cov": null,
+      "rule_avg_cost": null
+    },
+    {
+      "cost": 0.009017,
+      "accuracy_match": 0.8,
+      "rules_admitted": [
+        "rule_tables_with_total_assets_and_no_revenue"
+      ],
+      "added_rule": "rule_tables_with_total_assets_and_no_revenue",
+      "rule_cov": 0.8,
+      "rule_avg_cost": 0.009017
+    },
+    {
+      "cost": 0.052582,
+      "accuracy_match": 0.9,
+      "rules_admitted": [
+        "rule_tables_with_total_assets_and_no_revenue",
+        "rule_consolidated_balance_sheet_phrase"
+      ],
+      "added_rule": "rule_consolidated_balance_sheet_phrase",
+      "rule_cov": 0.9,
+      "rule_avg_cost": 0.043565
+    }
+  ],
+  "query_table": {
+    "0.50": {
+      "cost": 0.009017,
+      "n_rules": 1
+    },
+    "0.80": {
+      "cost": 0.009017,
+      "n_rules": 1
+    },
+    "0.90": {
+      "cost": 0.052582,
+      "n_rules": 2
+    },
+    "0.95": null,
+    "1.00": null
+  },
+  "knee_point": {
+    "cost": 0.009017,
+    "accuracy_match": 0.8,
+    "n_rules": 1,
+    "rules": [
+      "rule_tables_with_total_assets_and_no_revenue"
+    ]
+  },
+  "knee_lambda": 10.0,
+  "extras_added_phase_b": [
+    {
+      "iter": 1,
+      "added": "rule_tables_near_item8_toc_balance_sheet_page",
+      "gained": [],
+      "acc_after": 0.8
+    },
+    {
+      "iter": 2,
+      "added": "rule_tables_with_total_assets_in_item8_path",
+      "gained": [],
+      "acc_after": 0.8
+    },
+    {
+      "iter": 3,
+      "added": "rule_tables_with_total_assets_and_no_income_statement_terms",
+      "gained": [],
+      "acc_after": 0.8
+    },
+    {
+      "iter": 4,
+      "added": "rule_tables_with_total_assets_and_receivables",
+      "gained": [],
+      "acc_after": 0.8
+    },
+    {
+      "iter": 5,
+      "added": "rule_tables_with_total_assets_and_total_liabilities_equity",
+      "gained": [],
+      "acc_after": 0.8
+    },
+    {
+      "iter": 6,
+      "added": "rule_tables_with_total_assets_and_retained_earnings",
+      "gained": [],
+      "acc_after": 0.8
+    },
+    {
+      "iter": 7,
+      "added": "rule_tables_with_total_assets_and_current_assets",
+      "gained": [],
+      "acc_after": 0.8
+    },
+    {
+      "iter": 8,
+      "added": "rule_tables_with_total_assets_and_total_current_assets",
+      "gained": [],
+      "acc_after": 0.8
+    },
+    {
+      "iter": 9,
+      "added": "rule_tables_with_total_assets_and_goodwill",
+      "gained": [],
+      "acc_after": 0.8
+    },
+    {
+      "iter": 10,
+      "added": "rule_tables_with_total_assets_and_financial_statements_path",
+      "gained": [],
+      "acc_after": 0.8
+    },
+    {
+      "iter": 11,
+      "added": "rule_tables_with_total_assets_and_property_plant_equipment",
+      "gained": [],
+      "acc_after": 0.8
+    },
+    {
+      "iter": 12,
+      "added": "rule_tables_with_total_assets_and_audited_year_end_context",
+      "gained": [],
+      "acc_after": 0.8
+    },
+    {
+      "iter": 13,
+      "added": "rule_tables_with_total_assets_and_accounts_receivable",
+      "gained": [],
+      "acc_after": 0.8
+    },
+    {
+      "iter": 14,
+      "added": "rule_tables_with_total_assets_on_pages_30_to_80",
+      "gained": [],
+      "acc_after": 0.8
+    },
+    {
+      "iter": 15,
+      "added": "rule_tables_with_total_assets_and_consolidated_balance_sheet_toc_reference",
+      "gained": [],
+      "acc_after": 0.8
+    },
+    {
+      "iter": 16,
+      "added": "rule_tables_with_assets_and_balance_sheet_title_in_text",
+      "gained": [
+        "NIKE_2021_10K"
+      ],
+      "acc_after": 0.9
+    },
+    {
+      "iter": 17,
+      "added": "rule_tables_with_million_or_billion_units",
+      "gained": [],
+      "acc_after": 0.8
+    },
+    {
+      "iter": 18,
+      "added": "rule_tables_with_total_assets_and_page_around_39",
+      "gained": [],
+      "acc_after": 0.8
+    },
+    {
+      "iter": 19,
+      "added": "rule_tables_with_total_assets_and_item8_path",
+      "gained": [],
+      "acc_after": 0.8
+    },
+    {
+      "iter": 20,
+      "added": "rule_tables_with_total_assets_and_few_columns",
+      "gained": [],
+      "acc_after": 0.8
+    }
+  ],
+  "phase_b_prime_iters": [
+    {
+      "iter": 1,
+      "k": 1,
+      "added_n": 1,
+      "acc_after": 0.8
+    },
+    {
+      "iter": 2,
+      "k": 2,
+      "added_n": 2,
+      "acc_after": 0.8
+    },
+    {
+      "iter": 3,
+      "k": 4,
+      "added_n": 4,
+      "acc_after": 0.9
+    },
+    {
+      "iter": 4,
+      "k": 8,
+      "added_n": 8,
+      "acc_after": 0.8
+    },
+    {
+      "iter": 5,
+      "k": 16,
+      "added_n": 16,
+      "acc_after": 0.9
+    },
+    {
+      "iter": 6,
+      "k": 32,
+      "added_n": 32,
+      "acc_after": 0.8
+    },
+    {
+      "iter": 7,
+      "k": 64,
+      "added_n": 64,
+      "acc_after": 1.0
+    }
+  ],
+  "pruned_phase_c": [
+    {
+      "removed": "rule_tables_with_audited_financial_statement_context",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_and_statement_order",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_before_notes_section",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_parenthetical_year_end_dates",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_assets_on_same_or_next_page_after_auditor",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_balance_sheet_table",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_audited_financial_statement_context",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_and_page_around_60",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_assets_liabilities_equity_keywords",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_assets_and_current_liabilities",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_and_common_stock",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_assets_liabilities_equity_triplet",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_total_assets_row_near_bottom",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_total_assets_row_header_first_col",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_in_first_column",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_and_total_liabilities",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_and_many_rows",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_and_cash",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_assets_on_pages_after_item8",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_assets_and_noncurrent_assets",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_and_total_equity",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_and_header_dates",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_and_equity",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_and_page_around_42",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_and_assets_section_row",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_and_total_current_liabilities",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_total_assets_row_with_numeric_values",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_total_assets_row_cells",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_excluding_executive_tables",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_and_year_columns",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_and_not_toc_page",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_and_not_cover_page",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_and_no_equity_statement_terms",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_and_multiple_numeric_year_values",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_dollar_figures_and_total_assets",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_and_balance_sheet_heading_nearby",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_near_bottom",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_and_multiple_numeric_cells",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_and_accounts_payable",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_on_late_pages",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_and_other_assets",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_and_no_cashflow_terms",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_and_shareholders_equity",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_two_year_columns_and_total_assets",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_and_long_term_debt",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_and_balance_sheet_synonyms",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_and_parentheses_negatives",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_prefix_cell",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_and_usd_units",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_and_two_or_more_asset_lines",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_and_financial_statement_neighbors",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_exact_cell",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_and_balance_sheet_path",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_total_assets_with_numeric_same_row",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_in_row_header",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_and_financial_position_path",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_financial_position_and_total_assets",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_and_page_over_30",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_on_pages_40_to_120",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_and_balance_keywords_in_path",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_and_dates_in_headers",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_and_current_liabilities",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_and_total_liabilities_and_equity",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_and_few_columns",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_and_item8_path",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_and_page_around_39",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_million_or_billion_units",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_assets_and_balance_sheet_title_in_text",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_and_consolidated_balance_sheet_toc_reference",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_on_pages_30_to_80",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_and_accounts_receivable",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_and_audited_year_end_context",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_and_property_plant_equipment",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_and_financial_statements_path",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_and_goodwill",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_and_total_current_assets",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_and_current_assets",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_and_retained_earnings",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_and_total_liabilities_equity",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_and_receivables",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_and_no_income_statement_terms",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_in_item8_path",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_near_item8_toc_balance_sheet_page",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_tables_with_total_assets_row",
+      "acc_after": 1.0
+    },
+    {
+      "removed": "rule_item8_balance_sheet_from_toc",
+      "acc_after": 1.0
+    }
+  ],
+  "phase_a_rules_count": 67,
+  "phase_b_extras_count": 20,
+  "phase_b_prime_iters_count": 7,
+  "phase_c_pruned_count": 85,
+  "llm_calls": {
+    "qa": 1228,
+    "judge": 1228
+  },
+  "token_usage": {
+    "total_input_tokens": 5464392,
+    "total_output_tokens": 18316
+  }
+}

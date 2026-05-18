@@ -1,0 +1,938 @@
+{
+  "question": "What is/are the trading symbol(s) and listing exchange(s)?",
+  "question_slug": "what_isare_the_trading_symbols_and_listing_exchanges_10_llm",
+  "mode": "pareto_v3",
+  "baseline_accuracy": 1.0,
+  "selected_rules": [
+    "rule_page1_symbol_exchange_split_across_adjacent_spans",
+    "rule_page1_bold_smallfont_registration_values",
+    "rule_table_cells_symbol_exchange",
+    "rule_page1_registration_block_with_symbol_and_exchange_same_span",
+    "rule_page1_near_trading_symbol_label",
+    "rule_page1_registration_block_all",
+    "rule_business_sentence_trades_on_exchange",
+    "rule_business_sentence_under_symbol",
+    "rule_exact_symbol_values",
+    "rule_page1_topmatter_short_values_after_common_stock",
+    "rule_cover_page_embedded_symbol_exchange",
+    "rule_page1_symbol_then_exchange_adjacent",
+    "rule_page1_h2_h3_registration_headers",
+    "rule_page1_major_exchange_names",
+    "rule_page1_title_trading_exchange_cluster",
+    "rule_page1_security_registration_cluster",
+    "rule_page1_near_title_of_each_class",
+    "rule_jnj_multi_symbol_exchange_table",
+    "rule_page1_exchange_keyword",
+    "rule_jnj_multi_symbol_exchange_cover",
+    "rule_inline_registered_under_symbol",
+    "rule_page1_body_spans_with_exchange_or_symbol",
+    "rule_item1_business_exchange_sentence",
+    "rule_item1_business_page3_symbol_exchange",
+    "rule_item1_business_symbol_sentence",
+    "rule_page1_after_trading_symbol_header",
+    "rule_page1_topmatter_with_common_stock_and_exchange",
+    "rule_page1_near_exchange_label"
+  ],
+  "selected_avg_cost_ratio_sum": 0.014759,
+  "covered_docs": [
+    "AMAZON_2016_10K",
+    "AMAZON_2018_10K",
+    "AMCOR_2019_10K",
+    "BOEING_2018_10K",
+    "CORNING_2022_10K",
+    "COSTCO_2017_10K",
+    "EBAY_2021_10K",
+    "JOHNSON_JOHNSON_2022_10K",
+    "LOCKHEEDMARTIN_2022_10K",
+    "NIKE_2021_10K"
+  ],
+  "uncovered_docs": [],
+  "selector_accuracy": 0.9,
+  "final_merge_accuracy": 0.9,
+  "matches_base": false,
+  "frontier": [
+    {
+      "cost": 0.0,
+      "accuracy_match": 0.0,
+      "rules_admitted": [],
+      "added_rule": null,
+      "rule_cov": null,
+      "rule_avg_cost": null
+    },
+    {
+      "cost": 9e-06,
+      "accuracy_match": 0.1,
+      "rules_admitted": [
+        "rule_page1_symbol_exchange_split_across_adjacent_spans"
+      ],
+      "added_rule": "rule_page1_symbol_exchange_split_across_adjacent_spans",
+      "rule_cov": 0.1,
+      "rule_avg_cost": 9e-06
+    },
+    {
+      "cost": 4e-05,
+      "accuracy_match": 0.2,
+      "rules_admitted": [
+        "rule_page1_symbol_exchange_split_across_adjacent_spans",
+        "rule_page1_bold_smallfont_registration_values"
+      ],
+      "added_rule": "rule_page1_bold_smallfont_registration_values",
+      "rule_cov": 0.2,
+      "rule_avg_cost": 3.1e-05
+    },
+    {
+      "cost": 0.000103,
+      "accuracy_match": 0.3,
+      "rules_admitted": [
+        "rule_page1_symbol_exchange_split_across_adjacent_spans",
+        "rule_page1_bold_smallfont_registration_values",
+        "rule_table_cells_symbol_exchange"
+      ],
+      "added_rule": "rule_table_cells_symbol_exchange",
+      "rule_cov": 0.1,
+      "rule_avg_cost": 6.3e-05
+    },
+    {
+      "cost": 0.000377,
+      "accuracy_match": 0.4,
+      "rules_admitted": [
+        "rule_page1_symbol_exchange_split_across_adjacent_spans",
+        "rule_page1_bold_smallfont_registration_values",
+        "rule_table_cells_symbol_exchange",
+        "rule_page1_registration_block_with_symbol_and_exchange_same_span"
+      ],
+      "added_rule": "rule_page1_registration_block_with_symbol_and_exchange_same_span",
+      "rule_cov": 0.3,
+      "rule_avg_cost": 0.000274
+    },
+    {
+      "cost": 0.000902,
+      "accuracy_match": 0.6,
+      "rules_admitted": [
+        "rule_page1_symbol_exchange_split_across_adjacent_spans",
+        "rule_page1_bold_smallfont_registration_values",
+        "rule_table_cells_symbol_exchange",
+        "rule_page1_registration_block_with_symbol_and_exchange_same_span",
+        "rule_page1_near_trading_symbol_label"
+      ],
+      "added_rule": "rule_page1_near_trading_symbol_label",
+      "rule_cov": 0.5,
+      "rule_avg_cost": 0.000525
+    },
+    {
+      "cost": 0.001644,
+      "accuracy_match": 0.7,
+      "rules_admitted": [
+        "rule_page1_symbol_exchange_split_across_adjacent_spans",
+        "rule_page1_bold_smallfont_registration_values",
+        "rule_table_cells_symbol_exchange",
+        "rule_page1_registration_block_with_symbol_and_exchange_same_span",
+        "rule_page1_near_trading_symbol_label",
+        "rule_page1_registration_block_all"
+      ],
+      "added_rule": "rule_page1_registration_block_all",
+      "rule_cov": 0.5,
+      "rule_avg_cost": 0.000742
+    },
+    {
+      "cost": 0.002748,
+      "accuracy_match": 0.9,
+      "rules_admitted": [
+        "rule_page1_symbol_exchange_split_across_adjacent_spans",
+        "rule_page1_bold_smallfont_registration_values",
+        "rule_table_cells_symbol_exchange",
+        "rule_page1_registration_block_with_symbol_and_exchange_same_span",
+        "rule_page1_near_trading_symbol_label",
+        "rule_page1_registration_block_all",
+        "rule_business_sentence_trades_on_exchange"
+      ],
+      "added_rule": "rule_business_sentence_trades_on_exchange",
+      "rule_cov": 0.7,
+      "rule_avg_cost": 0.001104
+    },
+    {
+      "cost": 0.004368,
+      "accuracy_match": 1.0,
+      "rules_admitted": [
+        "rule_page1_symbol_exchange_split_across_adjacent_spans",
+        "rule_page1_bold_smallfont_registration_values",
+        "rule_table_cells_symbol_exchange",
+        "rule_page1_registration_block_with_symbol_and_exchange_same_span",
+        "rule_page1_near_trading_symbol_label",
+        "rule_page1_registration_block_all",
+        "rule_business_sentence_trades_on_exchange",
+        "rule_business_sentence_under_symbol"
+      ],
+      "added_rule": "rule_business_sentence_under_symbol",
+      "rule_cov": 0.7,
+      "rule_avg_cost": 0.00162
+    },
+    {
+      "cost": 0.004383,
+      "accuracy_match": 1.0,
+      "rules_admitted": [
+        "rule_page1_symbol_exchange_split_across_adjacent_spans",
+        "rule_page1_bold_smallfont_registration_values",
+        "rule_table_cells_symbol_exchange",
+        "rule_page1_registration_block_with_symbol_and_exchange_same_span",
+        "rule_page1_near_trading_symbol_label",
+        "rule_page1_registration_block_all",
+        "rule_business_sentence_trades_on_exchange",
+        "rule_business_sentence_under_symbol",
+        "rule_exact_symbol_values"
+      ],
+      "added_rule": "rule_exact_symbol_values",
+      "rule_cov": 0.1,
+      "rule_avg_cost": 1.5e-05
+    },
+    {
+      "cost": 0.004441,
+      "accuracy_match": 1.0,
+      "rules_admitted": [
+        "rule_page1_symbol_exchange_split_across_adjacent_spans",
+        "rule_page1_bold_smallfont_registration_values",
+        "rule_table_cells_symbol_exchange",
+        "rule_page1_registration_block_with_symbol_and_exchange_same_span",
+        "rule_page1_near_trading_symbol_label",
+        "rule_page1_registration_block_all",
+        "rule_business_sentence_trades_on_exchange",
+        "rule_business_sentence_under_symbol",
+        "rule_exact_symbol_values",
+        "rule_page1_topmatter_short_values_after_common_stock"
+      ],
+      "added_rule": "rule_page1_topmatter_short_values_after_common_stock",
+      "rule_cov": 0.2,
+      "rule_avg_cost": 5.8e-05
+    },
+    {
+      "cost": 0.004495,
+      "accuracy_match": 1.0,
+      "rules_admitted": [
+        "rule_page1_symbol_exchange_split_across_adjacent_spans",
+        "rule_page1_bold_smallfont_registration_values",
+        "rule_table_cells_symbol_exchange",
+        "rule_page1_registration_block_with_symbol_and_exchange_same_span",
+        "rule_page1_near_trading_symbol_label",
+        "rule_page1_registration_block_all",
+        "rule_business_sentence_trades_on_exchange",
+        "rule_business_sentence_under_symbol",
+        "rule_exact_symbol_values",
+        "rule_page1_topmatter_short_values_after_common_stock",
+        "rule_cover_page_embedded_symbol_exchange"
+      ],
+      "added_rule": "rule_cover_page_embedded_symbol_exchange",
+      "rule_cov": 0.1,
+      "rule_avg_cost": 5.4e-05
+    },
+    {
+      "cost": 0.004582,
+      "accuracy_match": 1.0,
+      "rules_admitted": [
+        "rule_page1_symbol_exchange_split_across_adjacent_spans",
+        "rule_page1_bold_smallfont_registration_values",
+        "rule_table_cells_symbol_exchange",
+        "rule_page1_registration_block_with_symbol_and_exchange_same_span",
+        "rule_page1_near_trading_symbol_label",
+        "rule_page1_registration_block_all",
+        "rule_business_sentence_trades_on_exchange",
+        "rule_business_sentence_under_symbol",
+        "rule_exact_symbol_values",
+        "rule_page1_topmatter_short_values_after_common_stock",
+        "rule_cover_page_embedded_symbol_exchange",
+        "rule_page1_symbol_then_exchange_adjacent"
+      ],
+      "added_rule": "rule_page1_symbol_then_exchange_adjacent",
+      "rule_cov": 0.1,
+      "rule_avg_cost": 8.7e-05
+    },
+    {
+      "cost": 0.004676,
+      "accuracy_match": 1.0,
+      "rules_admitted": [
+        "rule_page1_symbol_exchange_split_across_adjacent_spans",
+        "rule_page1_bold_smallfont_registration_values",
+        "rule_table_cells_symbol_exchange",
+        "rule_page1_registration_block_with_symbol_and_exchange_same_span",
+        "rule_page1_near_trading_symbol_label",
+        "rule_page1_registration_block_all",
+        "rule_business_sentence_trades_on_exchange",
+        "rule_business_sentence_under_symbol",
+        "rule_exact_symbol_values",
+        "rule_page1_topmatter_short_values_after_common_stock",
+        "rule_cover_page_embedded_symbol_exchange",
+        "rule_page1_symbol_then_exchange_adjacent",
+        "rule_page1_h2_h3_registration_headers"
+      ],
+      "added_rule": "rule_page1_h2_h3_registration_headers",
+      "rule_cov": 0.1,
+      "rule_avg_cost": 9.4e-05
+    },
+    {
+      "cost": 0.005091,
+      "accuracy_match": 1.0,
+      "rules_admitted": [
+        "rule_page1_symbol_exchange_split_across_adjacent_spans",
+        "rule_page1_bold_smallfont_registration_values",
+        "rule_table_cells_symbol_exchange",
+        "rule_page1_registration_block_with_symbol_and_exchange_same_span",
+        "rule_page1_near_trading_symbol_label",
+        "rule_page1_registration_block_all",
+        "rule_business_sentence_trades_on_exchange",
+        "rule_business_sentence_under_symbol",
+        "rule_exact_symbol_values",
+        "rule_page1_topmatter_short_values_after_common_stock",
+        "rule_cover_page_embedded_symbol_exchange",
+        "rule_page1_symbol_then_exchange_adjacent",
+        "rule_page1_h2_h3_registration_headers",
+        "rule_page1_major_exchange_names"
+      ],
+      "added_rule": "rule_page1_major_exchange_names",
+      "rule_cov": 0.4,
+      "rule_avg_cost": 0.000415
+    },
+    {
+      "cost": 0.005802,
+      "accuracy_match": 1.0,
+      "rules_admitted": [
+        "rule_page1_symbol_exchange_split_across_adjacent_spans",
+        "rule_page1_bold_smallfont_registration_values",
+        "rule_table_cells_symbol_exchange",
+        "rule_page1_registration_block_with_symbol_and_exchange_same_span",
+        "rule_page1_near_trading_symbol_label",
+        "rule_page1_registration_block_all",
+        "rule_business_sentence_trades_on_exchange",
+        "rule_business_sentence_under_symbol",
+        "rule_exact_symbol_values",
+        "rule_page1_topmatter_short_values_after_common_stock",
+        "rule_cover_page_embedded_symbol_exchange",
+        "rule_page1_symbol_then_exchange_adjacent",
+        "rule_page1_h2_h3_registration_headers",
+        "rule_page1_major_exchange_names",
+        "rule_page1_title_trading_exchange_cluster"
+      ],
+      "added_rule": "rule_page1_title_trading_exchange_cluster",
+      "rule_cov": 0.5,
+      "rule_avg_cost": 0.000711
+    },
+    {
+      "cost": 0.00628,
+      "accuracy_match": 1.0,
+      "rules_admitted": [
+        "rule_page1_symbol_exchange_split_across_adjacent_spans",
+        "rule_page1_bold_smallfont_registration_values",
+        "rule_table_cells_symbol_exchange",
+        "rule_page1_registration_block_with_symbol_and_exchange_same_span",
+        "rule_page1_near_trading_symbol_label",
+        "rule_page1_registration_block_all",
+        "rule_business_sentence_trades_on_exchange",
+        "rule_business_sentence_under_symbol",
+        "rule_exact_symbol_values",
+        "rule_page1_topmatter_short_values_after_common_stock",
+        "rule_cover_page_embedded_symbol_exchange",
+        "rule_page1_symbol_then_exchange_adjacent",
+        "rule_page1_h2_h3_registration_headers",
+        "rule_page1_major_exchange_names",
+        "rule_page1_title_trading_exchange_cluster",
+        "rule_page1_security_registration_cluster"
+      ],
+      "added_rule": "rule_page1_security_registration_cluster",
+      "rule_cov": 0.3,
+      "rule_avg_cost": 0.000478
+    },
+    {
+      "cost": 0.00693,
+      "accuracy_match": 1.0,
+      "rules_admitted": [
+        "rule_page1_symbol_exchange_split_across_adjacent_spans",
+        "rule_page1_bold_smallfont_registration_values",
+        "rule_table_cells_symbol_exchange",
+        "rule_page1_registration_block_with_symbol_and_exchange_same_span",
+        "rule_page1_near_trading_symbol_label",
+        "rule_page1_registration_block_all",
+        "rule_business_sentence_trades_on_exchange",
+        "rule_business_sentence_under_symbol",
+        "rule_exact_symbol_values",
+        "rule_page1_topmatter_short_values_after_common_stock",
+        "rule_cover_page_embedded_symbol_exchange",
+        "rule_page1_symbol_then_exchange_adjacent",
+        "rule_page1_h2_h3_registration_headers",
+        "rule_page1_major_exchange_names",
+        "rule_page1_title_trading_exchange_cluster",
+        "rule_page1_security_registration_cluster",
+        "rule_page1_near_title_of_each_class"
+      ],
+      "added_rule": "rule_page1_near_title_of_each_class",
+      "rule_cov": 0.4,
+      "rule_avg_cost": 0.00065
+    },
+    {
+      "cost": 0.007442,
+      "accuracy_match": 1.0,
+      "rules_admitted": [
+        "rule_page1_symbol_exchange_split_across_adjacent_spans",
+        "rule_page1_bold_smallfont_registration_values",
+        "rule_table_cells_symbol_exchange",
+        "rule_page1_registration_block_with_symbol_and_exchange_same_span",
+        "rule_page1_near_trading_symbol_label",
+        "rule_page1_registration_block_all",
+        "rule_business_sentence_trades_on_exchange",
+        "rule_business_sentence_under_symbol",
+        "rule_exact_symbol_values",
+        "rule_page1_topmatter_short_values_after_common_stock",
+        "rule_cover_page_embedded_symbol_exchange",
+        "rule_page1_symbol_then_exchange_adjacent",
+        "rule_page1_h2_h3_registration_headers",
+        "rule_page1_major_exchange_names",
+        "rule_page1_title_trading_exchange_cluster",
+        "rule_page1_security_registration_cluster",
+        "rule_page1_near_title_of_each_class",
+        "rule_jnj_multi_symbol_exchange_table"
+      ],
+      "added_rule": "rule_jnj_multi_symbol_exchange_table",
+      "rule_cov": 0.3,
+      "rule_avg_cost": 0.000512
+    },
+    {
+      "cost": 0.008027,
+      "accuracy_match": 1.0,
+      "rules_admitted": [
+        "rule_page1_symbol_exchange_split_across_adjacent_spans",
+        "rule_page1_bold_smallfont_registration_values",
+        "rule_table_cells_symbol_exchange",
+        "rule_page1_registration_block_with_symbol_and_exchange_same_span",
+        "rule_page1_near_trading_symbol_label",
+        "rule_page1_registration_block_all",
+        "rule_business_sentence_trades_on_exchange",
+        "rule_business_sentence_under_symbol",
+        "rule_exact_symbol_values",
+        "rule_page1_topmatter_short_values_after_common_stock",
+        "rule_cover_page_embedded_symbol_exchange",
+        "rule_page1_symbol_then_exchange_adjacent",
+        "rule_page1_h2_h3_registration_headers",
+        "rule_page1_major_exchange_names",
+        "rule_page1_title_trading_exchange_cluster",
+        "rule_page1_security_registration_cluster",
+        "rule_page1_near_title_of_each_class",
+        "rule_jnj_multi_symbol_exchange_table",
+        "rule_page1_exchange_keyword"
+      ],
+      "added_rule": "rule_page1_exchange_keyword",
+      "rule_cov": 0.3,
+      "rule_avg_cost": 0.000585
+    },
+    {
+      "cost": 0.008665,
+      "accuracy_match": 1.0,
+      "rules_admitted": [
+        "rule_page1_symbol_exchange_split_across_adjacent_spans",
+        "rule_page1_bold_smallfont_registration_values",
+        "rule_table_cells_symbol_exchange",
+        "rule_page1_registration_block_with_symbol_and_exchange_same_span",
+        "rule_page1_near_trading_symbol_label",
+        "rule_page1_registration_block_all",
+        "rule_business_sentence_trades_on_exchange",
+        "rule_business_sentence_under_symbol",
+        "rule_exact_symbol_values",
+        "rule_page1_topmatter_short_values_after_common_stock",
+        "rule_cover_page_embedded_symbol_exchange",
+        "rule_page1_symbol_then_exchange_adjacent",
+        "rule_page1_h2_h3_registration_headers",
+        "rule_page1_major_exchange_names",
+        "rule_page1_title_trading_exchange_cluster",
+        "rule_page1_security_registration_cluster",
+        "rule_page1_near_title_of_each_class",
+        "rule_jnj_multi_symbol_exchange_table",
+        "rule_page1_exchange_keyword",
+        "rule_jnj_multi_symbol_exchange_cover"
+      ],
+      "added_rule": "rule_jnj_multi_symbol_exchange_cover",
+      "rule_cov": 0.3,
+      "rule_avg_cost": 0.000638
+    },
+    {
+      "cost": 0.009965,
+      "accuracy_match": 1.0,
+      "rules_admitted": [
+        "rule_page1_symbol_exchange_split_across_adjacent_spans",
+        "rule_page1_bold_smallfont_registration_values",
+        "rule_table_cells_symbol_exchange",
+        "rule_page1_registration_block_with_symbol_and_exchange_same_span",
+        "rule_page1_near_trading_symbol_label",
+        "rule_page1_registration_block_all",
+        "rule_business_sentence_trades_on_exchange",
+        "rule_business_sentence_under_symbol",
+        "rule_exact_symbol_values",
+        "rule_page1_topmatter_short_values_after_common_stock",
+        "rule_cover_page_embedded_symbol_exchange",
+        "rule_page1_symbol_then_exchange_adjacent",
+        "rule_page1_h2_h3_registration_headers",
+        "rule_page1_major_exchange_names",
+        "rule_page1_title_trading_exchange_cluster",
+        "rule_page1_security_registration_cluster",
+        "rule_page1_near_title_of_each_class",
+        "rule_jnj_multi_symbol_exchange_table",
+        "rule_page1_exchange_keyword",
+        "rule_jnj_multi_symbol_exchange_cover",
+        "rule_inline_registered_under_symbol"
+      ],
+      "added_rule": "rule_inline_registered_under_symbol",
+      "rule_cov": 0.6,
+      "rule_avg_cost": 0.0013
+    },
+    {
+      "cost": 0.010401,
+      "accuracy_match": 1.0,
+      "rules_admitted": [
+        "rule_page1_symbol_exchange_split_across_adjacent_spans",
+        "rule_page1_bold_smallfont_registration_values",
+        "rule_table_cells_symbol_exchange",
+        "rule_page1_registration_block_with_symbol_and_exchange_same_span",
+        "rule_page1_near_trading_symbol_label",
+        "rule_page1_registration_block_all",
+        "rule_business_sentence_trades_on_exchange",
+        "rule_business_sentence_under_symbol",
+        "rule_exact_symbol_values",
+        "rule_page1_topmatter_short_values_after_common_stock",
+        "rule_cover_page_embedded_symbol_exchange",
+        "rule_page1_symbol_then_exchange_adjacent",
+        "rule_page1_h2_h3_registration_headers",
+        "rule_page1_major_exchange_names",
+        "rule_page1_title_trading_exchange_cluster",
+        "rule_page1_security_registration_cluster",
+        "rule_page1_near_title_of_each_class",
+        "rule_jnj_multi_symbol_exchange_table",
+        "rule_page1_exchange_keyword",
+        "rule_jnj_multi_symbol_exchange_cover",
+        "rule_inline_registered_under_symbol",
+        "rule_page1_body_spans_with_exchange_or_symbol"
+      ],
+      "added_rule": "rule_page1_body_spans_with_exchange_or_symbol",
+      "rule_cov": 0.2,
+      "rule_avg_cost": 0.000436
+    },
+    {
+      "cost": 0.011185,
+      "accuracy_match": 1.0,
+      "rules_admitted": [
+        "rule_page1_symbol_exchange_split_across_adjacent_spans",
+        "rule_page1_bold_smallfont_registration_values",
+        "rule_table_cells_symbol_exchange",
+        "rule_page1_registration_block_with_symbol_and_exchange_same_span",
+        "rule_page1_near_trading_symbol_label",
+        "rule_page1_registration_block_all",
+        "rule_business_sentence_trades_on_exchange",
+        "rule_business_sentence_under_symbol",
+        "rule_exact_symbol_values",
+        "rule_page1_topmatter_short_values_after_common_stock",
+        "rule_cover_page_embedded_symbol_exchange",
+        "rule_page1_symbol_then_exchange_adjacent",
+        "rule_page1_h2_h3_registration_headers",
+        "rule_page1_major_exchange_names",
+        "rule_page1_title_trading_exchange_cluster",
+        "rule_page1_security_registration_cluster",
+        "rule_page1_near_title_of_each_class",
+        "rule_jnj_multi_symbol_exchange_table",
+        "rule_page1_exchange_keyword",
+        "rule_jnj_multi_symbol_exchange_cover",
+        "rule_inline_registered_under_symbol",
+        "rule_page1_body_spans_with_exchange_or_symbol",
+        "rule_item1_business_exchange_sentence"
+      ],
+      "added_rule": "rule_item1_business_exchange_sentence",
+      "rule_cov": 0.3,
+      "rule_avg_cost": 0.000784
+    },
+    {
+      "cost": 0.011969,
+      "accuracy_match": 1.0,
+      "rules_admitted": [
+        "rule_page1_symbol_exchange_split_across_adjacent_spans",
+        "rule_page1_bold_smallfont_registration_values",
+        "rule_table_cells_symbol_exchange",
+        "rule_page1_registration_block_with_symbol_and_exchange_same_span",
+        "rule_page1_near_trading_symbol_label",
+        "rule_page1_registration_block_all",
+        "rule_business_sentence_trades_on_exchange",
+        "rule_business_sentence_under_symbol",
+        "rule_exact_symbol_values",
+        "rule_page1_topmatter_short_values_after_common_stock",
+        "rule_cover_page_embedded_symbol_exchange",
+        "rule_page1_symbol_then_exchange_adjacent",
+        "rule_page1_h2_h3_registration_headers",
+        "rule_page1_major_exchange_names",
+        "rule_page1_title_trading_exchange_cluster",
+        "rule_page1_security_registration_cluster",
+        "rule_page1_near_title_of_each_class",
+        "rule_jnj_multi_symbol_exchange_table",
+        "rule_page1_exchange_keyword",
+        "rule_jnj_multi_symbol_exchange_cover",
+        "rule_inline_registered_under_symbol",
+        "rule_page1_body_spans_with_exchange_or_symbol",
+        "rule_item1_business_exchange_sentence",
+        "rule_item1_business_page3_symbol_exchange"
+      ],
+      "added_rule": "rule_item1_business_page3_symbol_exchange",
+      "rule_cov": 0.3,
+      "rule_avg_cost": 0.000784
+    },
+    {
+      "cost": 0.012753,
+      "accuracy_match": 1.0,
+      "rules_admitted": [
+        "rule_page1_symbol_exchange_split_across_adjacent_spans",
+        "rule_page1_bold_smallfont_registration_values",
+        "rule_table_cells_symbol_exchange",
+        "rule_page1_registration_block_with_symbol_and_exchange_same_span",
+        "rule_page1_near_trading_symbol_label",
+        "rule_page1_registration_block_all",
+        "rule_business_sentence_trades_on_exchange",
+        "rule_business_sentence_under_symbol",
+        "rule_exact_symbol_values",
+        "rule_page1_topmatter_short_values_after_common_stock",
+        "rule_cover_page_embedded_symbol_exchange",
+        "rule_page1_symbol_then_exchange_adjacent",
+        "rule_page1_h2_h3_registration_headers",
+        "rule_page1_major_exchange_names",
+        "rule_page1_title_trading_exchange_cluster",
+        "rule_page1_security_registration_cluster",
+        "rule_page1_near_title_of_each_class",
+        "rule_jnj_multi_symbol_exchange_table",
+        "rule_page1_exchange_keyword",
+        "rule_jnj_multi_symbol_exchange_cover",
+        "rule_inline_registered_under_symbol",
+        "rule_page1_body_spans_with_exchange_or_symbol",
+        "rule_item1_business_exchange_sentence",
+        "rule_item1_business_page3_symbol_exchange",
+        "rule_item1_business_symbol_sentence"
+      ],
+      "added_rule": "rule_item1_business_symbol_sentence",
+      "rule_cov": 0.3,
+      "rule_avg_cost": 0.000784
+    },
+    {
+      "cost": 0.013566,
+      "accuracy_match": 1.0,
+      "rules_admitted": [
+        "rule_page1_symbol_exchange_split_across_adjacent_spans",
+        "rule_page1_bold_smallfont_registration_values",
+        "rule_table_cells_symbol_exchange",
+        "rule_page1_registration_block_with_symbol_and_exchange_same_span",
+        "rule_page1_near_trading_symbol_label",
+        "rule_page1_registration_block_all",
+        "rule_business_sentence_trades_on_exchange",
+        "rule_business_sentence_under_symbol",
+        "rule_exact_symbol_values",
+        "rule_page1_topmatter_short_values_after_common_stock",
+        "rule_cover_page_embedded_symbol_exchange",
+        "rule_page1_symbol_then_exchange_adjacent",
+        "rule_page1_h2_h3_registration_headers",
+        "rule_page1_major_exchange_names",
+        "rule_page1_title_trading_exchange_cluster",
+        "rule_page1_security_registration_cluster",
+        "rule_page1_near_title_of_each_class",
+        "rule_jnj_multi_symbol_exchange_table",
+        "rule_page1_exchange_keyword",
+        "rule_jnj_multi_symbol_exchange_cover",
+        "rule_inline_registered_under_symbol",
+        "rule_page1_body_spans_with_exchange_or_symbol",
+        "rule_item1_business_exchange_sentence",
+        "rule_item1_business_page3_symbol_exchange",
+        "rule_item1_business_symbol_sentence",
+        "rule_page1_after_trading_symbol_header"
+      ],
+      "added_rule": "rule_page1_after_trading_symbol_header",
+      "rule_cov": 0.3,
+      "rule_avg_cost": 0.000813
+    },
+    {
+      "cost": 0.013859,
+      "accuracy_match": 1.0,
+      "rules_admitted": [
+        "rule_page1_symbol_exchange_split_across_adjacent_spans",
+        "rule_page1_bold_smallfont_registration_values",
+        "rule_table_cells_symbol_exchange",
+        "rule_page1_registration_block_with_symbol_and_exchange_same_span",
+        "rule_page1_near_trading_symbol_label",
+        "rule_page1_registration_block_all",
+        "rule_business_sentence_trades_on_exchange",
+        "rule_business_sentence_under_symbol",
+        "rule_exact_symbol_values",
+        "rule_page1_topmatter_short_values_after_common_stock",
+        "rule_cover_page_embedded_symbol_exchange",
+        "rule_page1_symbol_then_exchange_adjacent",
+        "rule_page1_h2_h3_registration_headers",
+        "rule_page1_major_exchange_names",
+        "rule_page1_title_trading_exchange_cluster",
+        "rule_page1_security_registration_cluster",
+        "rule_page1_near_title_of_each_class",
+        "rule_jnj_multi_symbol_exchange_table",
+        "rule_page1_exchange_keyword",
+        "rule_jnj_multi_symbol_exchange_cover",
+        "rule_inline_registered_under_symbol",
+        "rule_page1_body_spans_with_exchange_or_symbol",
+        "rule_item1_business_exchange_sentence",
+        "rule_item1_business_page3_symbol_exchange",
+        "rule_item1_business_symbol_sentence",
+        "rule_page1_after_trading_symbol_header",
+        "rule_page1_topmatter_with_common_stock_and_exchange"
+      ],
+      "added_rule": "rule_page1_topmatter_with_common_stock_and_exchange",
+      "rule_cov": 0.1,
+      "rule_avg_cost": 0.000293
+    },
+    {
+      "cost": 0.014759,
+      "accuracy_match": 1.0,
+      "rules_admitted": [
+        "rule_page1_symbol_exchange_split_across_adjacent_spans",
+        "rule_page1_bold_smallfont_registration_values",
+        "rule_table_cells_symbol_exchange",
+        "rule_page1_registration_block_with_symbol_and_exchange_same_span",
+        "rule_page1_near_trading_symbol_label",
+        "rule_page1_registration_block_all",
+        "rule_business_sentence_trades_on_exchange",
+        "rule_business_sentence_under_symbol",
+        "rule_exact_symbol_values",
+        "rule_page1_topmatter_short_values_after_common_stock",
+        "rule_cover_page_embedded_symbol_exchange",
+        "rule_page1_symbol_then_exchange_adjacent",
+        "rule_page1_h2_h3_registration_headers",
+        "rule_page1_major_exchange_names",
+        "rule_page1_title_trading_exchange_cluster",
+        "rule_page1_security_registration_cluster",
+        "rule_page1_near_title_of_each_class",
+        "rule_jnj_multi_symbol_exchange_table",
+        "rule_page1_exchange_keyword",
+        "rule_jnj_multi_symbol_exchange_cover",
+        "rule_inline_registered_under_symbol",
+        "rule_page1_body_spans_with_exchange_or_symbol",
+        "rule_item1_business_exchange_sentence",
+        "rule_item1_business_page3_symbol_exchange",
+        "rule_item1_business_symbol_sentence",
+        "rule_page1_after_trading_symbol_header",
+        "rule_page1_topmatter_with_common_stock_and_exchange",
+        "rule_page1_near_exchange_label"
+      ],
+      "added_rule": "rule_page1_near_exchange_label",
+      "rule_cov": 0.3,
+      "rule_avg_cost": 0.0009
+    }
+  ],
+  "query_table": {
+    "0.50": {
+      "cost": 0.000902,
+      "n_rules": 5
+    },
+    "0.80": {
+      "cost": 0.002748,
+      "n_rules": 7
+    },
+    "0.90": {
+      "cost": 0.002748,
+      "n_rules": 7
+    },
+    "0.95": {
+      "cost": 0.004368,
+      "n_rules": 8
+    },
+    "1.00": {
+      "cost": 0.004368,
+      "n_rules": 8
+    }
+  },
+  "knee_point": {
+    "cost": 0.004368,
+    "accuracy_match": 1.0,
+    "n_rules": 8,
+    "rules": [
+      "rule_page1_symbol_exchange_split_across_adjacent_spans",
+      "rule_page1_bold_smallfont_registration_values",
+      "rule_table_cells_symbol_exchange",
+      "rule_page1_registration_block_with_symbol_and_exchange_same_span",
+      "rule_page1_near_trading_symbol_label",
+      "rule_page1_registration_block_all",
+      "rule_business_sentence_trades_on_exchange",
+      "rule_business_sentence_under_symbol"
+    ]
+  },
+  "knee_lambda": 10.0,
+  "extras_added_phase_b": [
+    {
+      "iter": 1,
+      "added": "rule_exact_symbol_values",
+      "gained": [],
+      "acc_after": 0.9
+    },
+    {
+      "iter": 2,
+      "added": "rule_page1_topmatter_short_values_after_common_stock",
+      "gained": [],
+      "acc_after": 0.9
+    },
+    {
+      "iter": 3,
+      "added": "rule_cover_page_embedded_symbol_exchange",
+      "gained": [],
+      "acc_after": 0.9
+    },
+    {
+      "iter": 4,
+      "added": "rule_page1_symbol_then_exchange_adjacent",
+      "gained": [],
+      "acc_after": 0.9
+    },
+    {
+      "iter": 5,
+      "added": "rule_page1_h2_h3_registration_headers",
+      "gained": [],
+      "acc_after": 0.9
+    },
+    {
+      "iter": 6,
+      "added": "rule_page1_major_exchange_names",
+      "gained": [],
+      "acc_after": 0.9
+    },
+    {
+      "iter": 7,
+      "added": "rule_page1_title_trading_exchange_cluster",
+      "gained": [],
+      "acc_after": 0.9
+    },
+    {
+      "iter": 8,
+      "added": "rule_page1_security_registration_cluster",
+      "gained": [],
+      "acc_after": 0.9
+    },
+    {
+      "iter": 9,
+      "added": "rule_page1_near_title_of_each_class",
+      "gained": [],
+      "acc_after": 0.9
+    },
+    {
+      "iter": 10,
+      "added": "rule_jnj_multi_symbol_exchange_table",
+      "gained": [],
+      "acc_after": 0.9
+    },
+    {
+      "iter": 11,
+      "added": "rule_page1_exchange_keyword",
+      "gained": [],
+      "acc_after": 0.9
+    },
+    {
+      "iter": 12,
+      "added": "rule_jnj_multi_symbol_exchange_cover",
+      "gained": [],
+      "acc_after": 0.9
+    },
+    {
+      "iter": 13,
+      "added": "rule_inline_registered_under_symbol",
+      "gained": [],
+      "acc_after": 0.9
+    },
+    {
+      "iter": 14,
+      "added": "rule_page1_body_spans_with_exchange_or_symbol",
+      "gained": [],
+      "acc_after": 0.9
+    },
+    {
+      "iter": 15,
+      "added": "rule_item1_business_exchange_sentence",
+      "gained": [],
+      "acc_after": 0.9
+    },
+    {
+      "iter": 16,
+      "added": "rule_item1_business_page3_symbol_exchange",
+      "gained": [],
+      "acc_after": 0.9
+    },
+    {
+      "iter": 17,
+      "added": "rule_item1_business_symbol_sentence",
+      "gained": [],
+      "acc_after": 0.9
+    },
+    {
+      "iter": 18,
+      "added": "rule_page1_after_trading_symbol_header",
+      "gained": [],
+      "acc_after": 0.9
+    },
+    {
+      "iter": 19,
+      "added": "rule_page1_topmatter_with_common_stock_and_exchange",
+      "gained": [],
+      "acc_after": 0.9
+    },
+    {
+      "iter": 20,
+      "added": "rule_page1_near_exchange_label",
+      "gained": [],
+      "acc_after": 0.9
+    }
+  ],
+  "phase_b_prime_iters": [
+    {
+      "iter": 1,
+      "k": 1,
+      "added_n": 1,
+      "acc_after": 0.9
+    },
+    {
+      "iter": 2,
+      "k": 2,
+      "added_n": 2,
+      "acc_after": 0.9
+    },
+    {
+      "iter": 3,
+      "k": 4,
+      "added_n": 4,
+      "acc_after": 0.9
+    },
+    {
+      "iter": 4,
+      "k": 8,
+      "added_n": 8,
+      "acc_after": 0.9
+    },
+    {
+      "iter": 5,
+      "k": 16,
+      "added_n": 16,
+      "acc_after": 0.9
+    },
+    {
+      "iter": 6,
+      "k": 32,
+      "added_n": 32,
+      "acc_after": 0.9
+    },
+    {
+      "iter": 7,
+      "k": 37,
+      "added_n": 37,
+      "acc_after": 0.9
+    }
+  ],
+  "pruned_phase_c": [],
+  "phase_a_rules_count": 8,
+  "phase_b_extras_count": 20,
+  "phase_b_prime_iters_count": 7,
+  "phase_c_pruned_count": 0,
+  "llm_calls": {
+    "qa": 673,
+    "judge": 673
+  },
+  "token_usage": {
+    "total_input_tokens": 570919,
+    "total_output_tokens": 14217
+  }
+}

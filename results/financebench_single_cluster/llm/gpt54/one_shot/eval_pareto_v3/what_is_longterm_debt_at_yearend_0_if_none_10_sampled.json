@@ -1,0 +1,104 @@
+{
+  "question": "What is long-term debt at year-end (0 if none)?",
+  "question_slug": "what_is_longterm_debt_at_yearend_0_if_none_10_llm",
+  "eval_model": "gpt54",
+  "selection_source": "results/financebench_single_cluster/llm/gpt54/one_shot/selected_rules_pareto_v3/what_is_longterm_debt_at_yearend_0_if_none_10_llm.json",
+  "selected_rules": [
+    "rule_debt_table_with_liabilities_and_equity_context"
+  ],
+  "accuracy": 0.7,
+  "avg_cost_ratio": 0.024185,
+  "num_documents": 10,
+  "per_doc": [
+    {
+      "doc_name": "AMCOR_2019_10K",
+      "predicted": "5,309.0",
+      "ground_truth": "5,314.4 million",
+      "correct": false,
+      "retrieved_tokens": 3469,
+      "total_doc_tokens": 84134,
+      "cost_ratio": 0.041232
+    },
+    {
+      "doc_name": "COSTCO_2017_10K",
+      "predicted": "6,573",
+      "ground_truth": "6,573",
+      "correct": true,
+      "retrieved_tokens": 2502,
+      "total_doc_tokens": 50565,
+      "cost_ratio": 0.049481
+    },
+    {
+      "doc_name": "BOEING_2018_10K",
+      "predicted": "10,657",
+      "ground_truth": "$10,657 million",
+      "correct": true,
+      "retrieved_tokens": 1519,
+      "total_doc_tokens": 88449,
+      "cost_ratio": 0.017174
+    },
+    {
+      "doc_name": "AMAZON_2018_10K",
+      "predicted": "23,495",
+      "ground_truth": "$50,708 million",
+      "correct": false,
+      "retrieved_tokens": 1805,
+      "total_doc_tokens": 67659,
+      "cost_ratio": 0.026678
+    },
+    {
+      "doc_name": "EBAY_2021_10K",
+      "predicted": "7,727",
+      "ground_truth": "$7,727 million",
+      "correct": true,
+      "retrieved_tokens": 1940,
+      "total_doc_tokens": 104188,
+      "cost_ratio": 0.01862
+    },
+    {
+      "doc_name": "AMAZON_2016_10K",
+      "predicted": "7,694",
+      "ground_truth": "$7,694 million",
+      "correct": true,
+      "retrieved_tokens": 1505,
+      "total_doc_tokens": 63358,
+      "cost_ratio": 0.023754
+    },
+    {
+      "doc_name": "CORNING_2022_10K",
+      "predicted": "6,687",
+      "ground_truth": "6,687 million",
+      "correct": true,
+      "retrieved_tokens": 3027,
+      "total_doc_tokens": 107052,
+      "cost_ratio": 0.028276
+    },
+    {
+      "doc_name": "NIKE_2021_10K",
+      "predicted": "9,413",
+      "ground_truth": "$9,413 million",
+      "correct": true,
+      "retrieved_tokens": 886,
+      "total_doc_tokens": 89991,
+      "cost_ratio": 0.009845
+    },
+    {
+      "doc_name": "LOCKHEEDMARTIN_2022_10K",
+      "predicted": "15,429",
+      "ground_truth": "$15,547 million",
+      "correct": false,
+      "retrieved_tokens": 1171,
+      "total_doc_tokens": 105703,
+      "cost_ratio": 0.011078
+    },
+    {
+      "doc_name": "JOHNSON_JOHNSON_2022_10K",
+      "predicted": "26,888",
+      "ground_truth": "$26.9 billion",
+      "correct": true,
+      "retrieved_tokens": 1936,
+      "total_doc_tokens": 123226,
+      "cost_ratio": 0.015711
+    }
+  ]
+}

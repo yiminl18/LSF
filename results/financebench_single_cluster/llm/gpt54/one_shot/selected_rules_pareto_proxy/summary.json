@@ -1,0 +1,304 @@
+[
+  {
+    "question": "What is long-term debt at year-end (0 if none)?",
+    "question_slug": "what_is_longterm_debt_at_yearend_0_if_none_10_llm",
+    "selected_rules": [
+      "rule_balance_sheet_header_followed_by_table"
+    ],
+    "selector_accuracy": 0.1,
+    "baseline_accuracy": 0.6,
+    "selected_avg_cost_ratio_sum": 0.007588,
+    "frontier_points": 2,
+    "knee_point": {
+      "cost": 0.007588,
+      "accuracy_match": 0.1667,
+      "n_rules": 1,
+      "rules": [
+        "rule_balance_sheet_header_followed_by_table"
+      ]
+    },
+    "query_table": {
+      "0.50": null,
+      "0.80": null,
+      "0.90": null,
+      "0.95": null,
+      "1.00": null
+    }
+  },
+  {
+    "question": "What is net income (loss) for the most recent fiscal year?",
+    "question_slug": "what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm",
+    "selected_rules": [
+      "rule_first_table_after_statement_of_income_header",
+      "rule_mda_results_of_operations_net_income_text"
+    ],
+    "selector_accuracy": 0.2,
+    "baseline_accuracy": 0.9,
+    "selected_avg_cost_ratio_sum": 0.010236,
+    "frontier_points": 3,
+    "knee_point": {
+      "cost": 0.010236,
+      "accuracy_match": 0.2222,
+      "n_rules": 2,
+      "rules": [
+        "rule_first_table_after_statement_of_income_header",
+        "rule_mda_results_of_operations_net_income_text"
+      ]
+    },
+    "query_table": {
+      "0.50": null,
+      "0.80": null,
+      "0.90": null,
+      "0.95": null,
+      "1.00": null
+    }
+  },
+  {
+    "question": "What is total revenue for the most recent fiscal year (from the audited income statement)?",
+    "question_slug": "what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm",
+    "selected_rules": [],
+    "selector_accuracy": 0.0,
+    "baseline_accuracy": 0.9,
+    "selected_avg_cost_ratio_sum": 0,
+    "frontier_points": 1,
+    "knee_point": null,
+    "query_table": {
+      "0.50": null,
+      "0.80": null,
+      "0.90": null,
+      "0.95": null,
+      "1.00": null
+    }
+  },
+  {
+    "question": "What is total assets at year-end (from the audited balance sheet)?",
+    "question_slug": "what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm",
+    "selected_rules": [
+      "rule_tables_with_total_assets_and_no_revenue"
+    ],
+    "selector_accuracy": 0.1,
+    "baseline_accuracy": 1.0,
+    "selected_avg_cost_ratio_sum": 0.009017,
+    "frontier_points": 2,
+    "knee_point": {
+      "cost": 0.009017,
+      "accuracy_match": 0.1,
+      "n_rules": 1,
+      "rules": [
+        "rule_tables_with_total_assets_and_no_revenue"
+      ]
+    },
+    "query_table": {
+      "0.50": null,
+      "0.80": null,
+      "0.90": null,
+      "0.95": null,
+      "1.00": null
+    }
+  },
+  {
+    "question": "What is the registrant's telephone number?",
+    "question_slug": "what_is_the_registrants_telephone_number_10_llm",
+    "selected_rules": [
+      "rule_exact_phone_only_span",
+      "rule_registrant_phone_following_zip_parent",
+      "rule_page1_phone_with_parenthetical_area_code_label",
+      "rule_page1_phone_number_pattern"
+    ],
+    "selector_accuracy": 1.0,
+    "baseline_accuracy": 1.0,
+    "selected_avg_cost_ratio_sum": 0.000453,
+    "frontier_points": 5,
+    "knee_point": {
+      "cost": 0.000453,
+      "accuracy_match": 1.0,
+      "n_rules": 4,
+      "rules": [
+        "rule_exact_phone_only_span",
+        "rule_registrant_phone_following_zip_parent",
+        "rule_page1_phone_with_parenthetical_area_code_label",
+        "rule_page1_phone_number_pattern"
+      ]
+    },
+    "query_table": {
+      "0.50": {
+        "cost": 5.9e-05,
+        "n_rules": 2
+      },
+      "0.80": {
+        "cost": 0.000224,
+        "n_rules": 3
+      },
+      "0.90": {
+        "cost": 0.000453,
+        "n_rules": 4
+      },
+      "0.95": {
+        "cost": 0.000453,
+        "n_rules": 4
+      },
+      "1.00": {
+        "cost": 0.000453,
+        "n_rules": 4
+      }
+    }
+  },
+  {
+    "question": "How many shares of common stock were outstanding as of the cover-page reference date?",
+    "question_slug": "how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm",
+    "selected_rules": [
+      "rule_page1_numeric_after_phrase_as_of_january",
+      "rule_page1_cover_text_with_multiple_large_numbers",
+      "rule_page1_shares_outstanding_issued_and_outstanding",
+      "rule_page2_cover_page_numeric_sentence",
+      "rule_page1_sentence_with_there_were_and_common_stock",
+      "rule_page1_shares_outstanding_as_of_february",
+      "rule_page1_outstanding_as_of_january_or_february"
+    ],
+    "selector_accuracy": 0.9,
+    "baseline_accuracy": 0.9,
+    "selected_avg_cost_ratio_sum": 0.000431,
+    "frontier_points": 8,
+    "knee_point": {
+      "cost": 0.000431,
+      "accuracy_match": 1.0,
+      "n_rules": 7,
+      "rules": [
+        "rule_page1_numeric_after_phrase_as_of_january",
+        "rule_page1_cover_text_with_multiple_large_numbers",
+        "rule_page1_shares_outstanding_issued_and_outstanding",
+        "rule_page2_cover_page_numeric_sentence",
+        "rule_page1_sentence_with_there_were_and_common_stock",
+        "rule_page1_shares_outstanding_as_of_february",
+        "rule_page1_outstanding_as_of_january_or_february"
+      ]
+    },
+    "query_table": {
+      "0.50": {
+        "cost": 0.000134,
+        "n_rules": 4
+      },
+      "0.80": {
+        "cost": 0.00024,
+        "n_rules": 6
+      },
+      "0.90": {
+        "cost": 0.000431,
+        "n_rules": 7
+      },
+      "0.95": {
+        "cost": 0.000431,
+        "n_rules": 7
+      },
+      "1.00": {
+        "cost": 0.000431,
+        "n_rules": 7
+      }
+    }
+  },
+  {
+    "question": "What is the registrant's exact name?",
+    "question_slug": "what_is_the_registrants_exact_name_10_llm",
+    "selected_rules": [
+      "rule_exact_name_caption_parent"
+    ],
+    "selector_accuracy": 0.9,
+    "baseline_accuracy": 0.9,
+    "selected_avg_cost_ratio_sum": 6.7e-05,
+    "frontier_points": 2,
+    "knee_point": {
+      "cost": 6.7e-05,
+      "accuracy_match": 1.0,
+      "n_rules": 1,
+      "rules": [
+        "rule_exact_name_caption_parent"
+      ]
+    },
+    "query_table": {
+      "0.50": {
+        "cost": 6.7e-05,
+        "n_rules": 1
+      },
+      "0.80": {
+        "cost": 6.7e-05,
+        "n_rules": 1
+      },
+      "0.90": {
+        "cost": 6.7e-05,
+        "n_rules": 1
+      },
+      "0.95": {
+        "cost": 6.7e-05,
+        "n_rules": 1
+      },
+      "1.00": {
+        "cost": 6.7e-05,
+        "n_rules": 1
+      }
+    }
+  },
+  {
+    "question": "What is the state (or other jurisdiction) of incorporation and the IRS Employer Identification Number?",
+    "question_slug": "what_is_the_state_or_other_jurisdiction_of_incorporation_and_10_llm",
+    "selected_rules": [],
+    "selector_accuracy": 0.0,
+    "baseline_accuracy": 1.0,
+    "selected_avg_cost_ratio_sum": 0,
+    "frontier_points": 1,
+    "knee_point": null,
+    "query_table": {
+      "0.50": null,
+      "0.80": null,
+      "0.90": null,
+      "0.95": null,
+      "1.00": null
+    }
+  },
+  {
+    "question": "What is the address of principal executive offices and ZIP code?",
+    "question_slug": "what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm",
+    "selected_rules": [
+      "rule_address_header_text_itself",
+      "rule_page1_bold_short_address_fragments",
+      "rule_page1_address_label_and_phone_cluster"
+    ],
+    "selector_accuracy": 0.3,
+    "baseline_accuracy": 0.9,
+    "selected_avg_cost_ratio_sum": 0.001699,
+    "frontier_points": 4,
+    "knee_point": {
+      "cost": 0.001699,
+      "accuracy_match": 0.3333,
+      "n_rules": 3,
+      "rules": [
+        "rule_address_header_text_itself",
+        "rule_page1_bold_short_address_fragments",
+        "rule_page1_address_label_and_phone_cluster"
+      ]
+    },
+    "query_table": {
+      "0.50": null,
+      "0.80": null,
+      "0.90": null,
+      "0.95": null,
+      "1.00": null
+    }
+  },
+  {
+    "question": "What is/are the trading symbol(s) and listing exchange(s)?",
+    "question_slug": "what_isare_the_trading_symbols_and_listing_exchanges_10_llm",
+    "selected_rules": [],
+    "selector_accuracy": 0.0,
+    "baseline_accuracy": 1.0,
+    "selected_avg_cost_ratio_sum": 0,
+    "frontier_points": 1,
+    "knee_point": null,
+    "query_table": {
+      "0.50": null,
+      "0.80": null,
+      "0.90": null,
+      "0.95": null,
+      "1.00": null
+    }
+  }
+]

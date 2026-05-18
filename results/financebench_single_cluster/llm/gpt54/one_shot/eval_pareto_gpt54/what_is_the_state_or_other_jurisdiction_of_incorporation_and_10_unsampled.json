@@ -1,0 +1,467 @@
+{
+  "question": "What is the state (or other jurisdiction) of incorporation and the IRS Employer Identification Number?",
+  "question_slug": "what_is_the_state_or_other_jurisdiction_of_incorporation_and_10_llm",
+  "eval_model": "gpt54",
+  "selection_source": "results/financebench_single_cluster/llm/gpt54/one_shot/selected_rules_pareto_gpt54/what_is_the_state_or_other_jurisdiction_of_incorporation_and_10_llm.json",
+  "selected_rules": [
+    "rule_page1_combined_state_and_ein_same_text",
+    "rule_page1_short_numeric_or_state_h2s",
+    "rule_page1_ein_or_incorporation_keywords",
+    "rule_page1_short_bold_text_values"
+  ],
+  "accuracy": 0.98,
+  "avg_cost_ratio": 0.0008,
+  "num_documents": 50,
+  "per_doc": [
+    {
+      "doc_name": "AMCOR_2023_10K",
+      "predicted": "Jersey, 98-1455367",
+      "ground_truth": "Jersey, 98-1455367",
+      "correct": true,
+      "retrieved_tokens": 46,
+      "total_doc_tokens": 105951,
+      "cost_ratio": 0.000434
+    },
+    {
+      "doc_name": "APPLE_2016_10K",
+      "predicted": "California, 94-2404110",
+      "ground_truth": "California, 94-2404110",
+      "correct": true,
+      "retrieved_tokens": 90,
+      "total_doc_tokens": 79177,
+      "cost_ratio": 0.001137
+    },
+    {
+      "doc_name": "BESTBUY_2020_10K",
+      "predicted": "Minnesota; 41-0907483",
+      "ground_truth": "Minnesota, 41-0907483",
+      "correct": true,
+      "retrieved_tokens": 76,
+      "total_doc_tokens": 66489,
+      "cost_ratio": 0.001143
+    },
+    {
+      "doc_name": "INTEL_2016_10K",
+      "predicted": "Delaware; 94-1672743",
+      "ground_truth": "Delaware, 94-1672743",
+      "correct": true,
+      "retrieved_tokens": 60,
+      "total_doc_tokens": 110197,
+      "cost_ratio": 0.000544
+    },
+    {
+      "doc_name": "ACTIVISIONBLIZZARD_2017_10K",
+      "predicted": "Delaware; 95-4803544",
+      "ground_truth": "Delaware, 95-4803544",
+      "correct": true,
+      "retrieved_tokens": 52,
+      "total_doc_tokens": 102120,
+      "cost_ratio": 0.000509
+    },
+    {
+      "doc_name": "ACTIVISIONBLIZZARD_2020_10K",
+      "predicted": "Delaware, 95-4803544",
+      "ground_truth": "Delaware, 95-4803544",
+      "correct": true,
+      "retrieved_tokens": 55,
+      "total_doc_tokens": 101336,
+      "cost_ratio": 0.000543
+    },
+    {
+      "doc_name": "ADOBE_2015_10K",
+      "predicted": "Delaware; 77-0019522",
+      "ground_truth": "Delaware, 77-0019522",
+      "correct": true,
+      "retrieved_tokens": 73,
+      "total_doc_tokens": 94768,
+      "cost_ratio": 0.00077
+    },
+    {
+      "doc_name": "ADOBE_2016_10K",
+      "predicted": "Delaware; 77-0019522",
+      "ground_truth": "Delaware, 77-0019522",
+      "correct": true,
+      "retrieved_tokens": 73,
+      "total_doc_tokens": 88600,
+      "cost_ratio": 0.000824
+    },
+    {
+      "doc_name": "ADOBE_2017_10K",
+      "predicted": "Delaware; 77-0019522",
+      "ground_truth": "Delaware, 77-0019522",
+      "correct": true,
+      "retrieved_tokens": 73,
+      "total_doc_tokens": 86150,
+      "cost_ratio": 0.000847
+    },
+    {
+      "doc_name": "ADOBE_2018_10K",
+      "predicted": "Delaware; 77-0019522",
+      "ground_truth": "Delaware, 77-0019522",
+      "correct": true,
+      "retrieved_tokens": 67,
+      "total_doc_tokens": 89326,
+      "cost_ratio": 0.00075
+    },
+    {
+      "doc_name": "ADOBE_2019_10K",
+      "predicted": "Delaware; 77-0019522",
+      "ground_truth": "Delaware, 77-0019522",
+      "correct": true,
+      "retrieved_tokens": 69,
+      "total_doc_tokens": 91798,
+      "cost_ratio": 0.000752
+    },
+    {
+      "doc_name": "ADOBE_2020_10K",
+      "predicted": "Delaware; 77-0019522",
+      "ground_truth": "Delaware, 77-0019522",
+      "correct": true,
+      "retrieved_tokens": 73,
+      "total_doc_tokens": 91087,
+      "cost_ratio": 0.000801
+    },
+    {
+      "doc_name": "ADOBE_2021_10K",
+      "predicted": "Delaware; 77-0019522",
+      "ground_truth": "Delaware, 77-0019522",
+      "correct": true,
+      "retrieved_tokens": 69,
+      "total_doc_tokens": 77147,
+      "cost_ratio": 0.000894
+    },
+    {
+      "doc_name": "ADOBE_2022_10K",
+      "predicted": "Delaware; 77-0019522",
+      "ground_truth": "Delaware, 77-0019522",
+      "correct": true,
+      "retrieved_tokens": 69,
+      "total_doc_tokens": 75604,
+      "cost_ratio": 0.000913
+    },
+    {
+      "doc_name": "AMAZON_2015_10K",
+      "predicted": "Delaware; 91-1646860",
+      "ground_truth": "Delaware, 91-1646860",
+      "correct": true,
+      "retrieved_tokens": 57,
+      "total_doc_tokens": 63146,
+      "cost_ratio": 0.000903
+    },
+    {
+      "doc_name": "AMAZON_2017_10K",
+      "predicted": "Delaware; 91-1646860",
+      "ground_truth": "Delaware, 91-1646860",
+      "correct": true,
+      "retrieved_tokens": 55,
+      "total_doc_tokens": 65757,
+      "cost_ratio": 0.000836
+    },
+    {
+      "doc_name": "AMAZON_2019_10K",
+      "predicted": "Delaware; 91-1646860",
+      "ground_truth": "Delaware, 91-1646860",
+      "correct": true,
+      "retrieved_tokens": 60,
+      "total_doc_tokens": 62208,
+      "cost_ratio": 0.000965
+    },
+    {
+      "doc_name": "AMAZON_2020_10K",
+      "predicted": "Delaware; 91-1646860",
+      "ground_truth": "Delaware, 91-1646860",
+      "correct": true,
+      "retrieved_tokens": 55,
+      "total_doc_tokens": 58831,
+      "cost_ratio": 0.000935
+    },
+    {
+      "doc_name": "AMAZON_2022_10K",
+      "predicted": "Delaware; 91-1646860",
+      "ground_truth": "Delaware, 91-1646860",
+      "correct": true,
+      "retrieved_tokens": 64,
+      "total_doc_tokens": 61806,
+      "cost_ratio": 0.001035
+    },
+    {
+      "doc_name": "AMCOR_2021_10K",
+      "predicted": "Jersey, 98-1455367",
+      "ground_truth": "Jersey, 98-1455367",
+      "correct": true,
+      "retrieved_tokens": 46,
+      "total_doc_tokens": 107976,
+      "cost_ratio": 0.000426
+    },
+    {
+      "doc_name": "AMCOR_2022_10K",
+      "predicted": "Jersey, 98-1455367",
+      "ground_truth": "Jersey, 98-1455367",
+      "correct": true,
+      "retrieved_tokens": 46,
+      "total_doc_tokens": 101405,
+      "cost_ratio": 0.000454
+    },
+    {
+      "doc_name": "AMD_2019_10K",
+      "predicted": "Delaware, 94-1692300",
+      "ground_truth": "Delaware, 94-1692300",
+      "correct": true,
+      "retrieved_tokens": 83,
+      "total_doc_tokens": 83800,
+      "cost_ratio": 0.00099
+    },
+    {
+      "doc_name": "AMD_2020_10K",
+      "predicted": "Delaware, 94-1692300",
+      "ground_truth": "Delaware, 94-1692300",
+      "correct": true,
+      "retrieved_tokens": 64,
+      "total_doc_tokens": 105729,
+      "cost_ratio": 0.000605
+    },
+    {
+      "doc_name": "AMD_2021_10K",
+      "predicted": "Delaware, 94-1692300",
+      "ground_truth": "Delaware, 94-1692300",
+      "correct": true,
+      "retrieved_tokens": 64,
+      "total_doc_tokens": 79875,
+      "cost_ratio": 0.000801
+    },
+    {
+      "doc_name": "AMD_2022_10K",
+      "predicted": "Delaware; 94-1692300",
+      "ground_truth": "Delaware, 94-1692300",
+      "correct": true,
+      "retrieved_tokens": 34,
+      "total_doc_tokens": 86624,
+      "cost_ratio": 0.000393
+    },
+    {
+      "doc_name": "APPLE_2015_10K",
+      "predicted": "California, 94-2404110",
+      "ground_truth": "California, 94-2404110",
+      "correct": true,
+      "retrieved_tokens": 84,
+      "total_doc_tokens": 69341,
+      "cost_ratio": 0.001211
+    },
+    {
+      "doc_name": "APPLE_2017_10K",
+      "predicted": "California, 94-2404110",
+      "ground_truth": "California, 94-2404110",
+      "correct": true,
+      "retrieved_tokens": 110,
+      "total_doc_tokens": 95206,
+      "cost_ratio": 0.001155
+    },
+    {
+      "doc_name": "APPLE_2018_10K",
+      "predicted": "California, 94-2404110",
+      "ground_truth": "California, 94-2404110",
+      "correct": true,
+      "retrieved_tokens": 110,
+      "total_doc_tokens": 77309,
+      "cost_ratio": 0.001423
+    },
+    {
+      "doc_name": "APPLE_2019_10K",
+      "predicted": "California, 94-2404110",
+      "ground_truth": "California, 94-2404110",
+      "correct": true,
+      "retrieved_tokens": 48,
+      "total_doc_tokens": 78621,
+      "cost_ratio": 0.000611
+    },
+    {
+      "doc_name": "APPLE_2020_10K",
+      "predicted": "California, 94-2404110",
+      "ground_truth": "California, 94-2404110",
+      "correct": true,
+      "retrieved_tokens": 56,
+      "total_doc_tokens": 81919,
+      "cost_ratio": 0.000684
+    },
+    {
+      "doc_name": "APPLE_2021_10K",
+      "predicted": "California, 94-2404110",
+      "ground_truth": "California, 94-2404110",
+      "correct": true,
+      "retrieved_tokens": 54,
+      "total_doc_tokens": 64998,
+      "cost_ratio": 0.000831
+    },
+    {
+      "doc_name": "APPLE_2022_10K",
+      "predicted": "California, 94-2404110",
+      "ground_truth": "California, 94-2404110",
+      "correct": true,
+      "retrieved_tokens": 56,
+      "total_doc_tokens": 63642,
+      "cost_ratio": 0.00088
+    },
+    {
+      "doc_name": "BESTBUY_2015_10K",
+      "predicted": "NOT FOUND",
+      "ground_truth": "Minnesota, 41-0907483",
+      "correct": false,
+      "retrieved_tokens": 0,
+      "total_doc_tokens": 102184,
+      "cost_ratio": 0.0
+    },
+    {
+      "doc_name": "BESTBUY_2021_10K",
+      "predicted": "Minnesota, 41-0907483",
+      "ground_truth": "Minnesota, 41-0907483",
+      "correct": true,
+      "retrieved_tokens": 89,
+      "total_doc_tokens": 87076,
+      "cost_ratio": 0.001022
+    },
+    {
+      "doc_name": "BESTBUY_2022_10K",
+      "predicted": "Minnesota, 41-0907483",
+      "ground_truth": "Minnesota, 41-0907483",
+      "correct": true,
+      "retrieved_tokens": 68,
+      "total_doc_tokens": 87772,
+      "cost_ratio": 0.000775
+    },
+    {
+      "doc_name": "BESTBUY_2023_10K",
+      "predicted": "Minnesota, 41-0907483",
+      "ground_truth": "Minnesota, 41-0907483",
+      "correct": true,
+      "retrieved_tokens": 81,
+      "total_doc_tokens": 64621,
+      "cost_ratio": 0.001253
+    },
+    {
+      "doc_name": "BOEING_2017_10K",
+      "predicted": "Delaware; 91-0425694",
+      "ground_truth": "Delaware, 91-0425694",
+      "correct": true,
+      "retrieved_tokens": 58,
+      "total_doc_tokens": 82849,
+      "cost_ratio": 0.0007
+    },
+    {
+      "doc_name": "BOEING_2019_10K",
+      "predicted": "Delaware; 91-0425694",
+      "ground_truth": "Delaware, 91-0425694",
+      "correct": true,
+      "retrieved_tokens": 58,
+      "total_doc_tokens": 91888,
+      "cost_ratio": 0.000631
+    },
+    {
+      "doc_name": "BOEING_2020_10K",
+      "predicted": "Delaware; 91-0425694",
+      "ground_truth": "Delaware, 91-0425694",
+      "correct": true,
+      "retrieved_tokens": 42,
+      "total_doc_tokens": 104434,
+      "cost_ratio": 0.000402
+    },
+    {
+      "doc_name": "BOEING_2022_10K",
+      "predicted": "Delaware, 91-0425694",
+      "ground_truth": "Delaware, 91-0425694",
+      "correct": true,
+      "retrieved_tokens": 25,
+      "total_doc_tokens": 114226,
+      "cost_ratio": 0.000219
+    },
+    {
+      "doc_name": "CORNING_2022_10K",
+      "predicted": "New York; 16-0393470",
+      "ground_truth": "New York, 16-0393470",
+      "correct": true,
+      "retrieved_tokens": 31,
+      "total_doc_tokens": 107052,
+      "cost_ratio": 0.00029
+    },
+    {
+      "doc_name": "COSTCO_2015_10K",
+      "predicted": "Washington; 91-1223280",
+      "ground_truth": "Washington, 91-1223280",
+      "correct": true,
+      "retrieved_tokens": 56,
+      "total_doc_tokens": 58179,
+      "cost_ratio": 0.000963
+    },
+    {
+      "doc_name": "COSTCO_2016_10K",
+      "predicted": "Washington; 91-1223280",
+      "ground_truth": "Washington, 91-1223280",
+      "correct": true,
+      "retrieved_tokens": 56,
+      "total_doc_tokens": 51931,
+      "cost_ratio": 0.001078
+    },
+    {
+      "doc_name": "COSTCO_2018_10K",
+      "predicted": "Washington; 91-1223280",
+      "ground_truth": "Washington, 91-1223280",
+      "correct": true,
+      "retrieved_tokens": 56,
+      "total_doc_tokens": 48852,
+      "cost_ratio": 0.001146
+    },
+    {
+      "doc_name": "GENERALMILLS_2022_10K",
+      "predicted": "Delaware; 41-0274440",
+      "ground_truth": "Delaware, 41-0274440",
+      "correct": true,
+      "retrieved_tokens": 72,
+      "total_doc_tokens": 96530,
+      "cost_ratio": 0.000746
+    },
+    {
+      "doc_name": "INTEL_2022_10K",
+      "predicted": "Delaware, 94-1672743",
+      "ground_truth": "Delaware, 94-1672743",
+      "correct": true,
+      "retrieved_tokens": 83,
+      "total_doc_tokens": 105373,
+      "cost_ratio": 0.000788
+    },
+    {
+      "doc_name": "KRAFTHEINZ_2021_10K",
+      "predicted": "Delaware, 46-2078182",
+      "ground_truth": "Delaware, 46-2078182",
+      "correct": true,
+      "retrieved_tokens": 64,
+      "total_doc_tokens": 120020,
+      "cost_ratio": 0.000533
+    },
+    {
+      "doc_name": "FOOTLOCKER_2023_10K",
+      "predicted": "New York; 13-3513936",
+      "ground_truth": "New York, 13-3513936",
+      "correct": true,
+      "retrieved_tokens": 39,
+      "total_doc_tokens": 74645,
+      "cost_ratio": 0.000522
+    },
+    {
+      "doc_name": "NIKE_2019_10K",
+      "predicted": "OREGON, 93-0584541",
+      "ground_truth": "Oregon, 93-0584541",
+      "correct": true,
+      "retrieved_tokens": 121,
+      "total_doc_tokens": 84424,
+      "cost_ratio": 0.001433
+    },
+    {
+      "doc_name": "LOCKHEEDMARTIN_2021_10K",
+      "predicted": "Maryland; 52-1893632",
+      "ground_truth": "Maryland, 52-1893632",
+      "correct": true,
+      "retrieved_tokens": 166,
+      "total_doc_tokens": 110448,
+      "cost_ratio": 0.001503
+    }
+  ]
+}

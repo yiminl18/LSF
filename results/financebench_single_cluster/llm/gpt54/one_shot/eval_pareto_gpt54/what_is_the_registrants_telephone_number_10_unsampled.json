@@ -1,0 +1,467 @@
+{
+  "question": "What is the registrant's telephone number?",
+  "question_slug": "what_is_the_registrants_telephone_number_10_llm",
+  "eval_model": "gpt54",
+  "selection_source": "results/financebench_single_cluster/llm/gpt54/one_shot/selected_rules_pareto_gpt54/what_is_the_registrants_telephone_number_10_llm.json",
+  "selected_rules": [
+    "rule_exact_phone_only_span",
+    "rule_registrant_phone_following_zip_parent",
+    "rule_page1_phone_with_parenthetical_area_code_label",
+    "rule_page1_phone_number_pattern"
+  ],
+  "accuracy": 0.92,
+  "avg_cost_ratio": 0.00057,
+  "num_documents": 50,
+  "per_doc": [
+    {
+      "doc_name": "AMCOR_2023_10K",
+      "predicted": "+44 117 9753200",
+      "ground_truth": "+44 117 9753200",
+      "correct": true,
+      "retrieved_tokens": 28,
+      "total_doc_tokens": 105951,
+      "cost_ratio": 0.000264
+    },
+    {
+      "doc_name": "APPLE_2016_10K",
+      "predicted": "(408) 996-1010",
+      "ground_truth": "(408) 996-1010",
+      "correct": true,
+      "retrieved_tokens": 8,
+      "total_doc_tokens": 79177,
+      "cost_ratio": 0.000101
+    },
+    {
+      "doc_name": "BESTBUY_2020_10K",
+      "predicted": "(612) 291-1000",
+      "ground_truth": "(612) 291-1000",
+      "correct": true,
+      "retrieved_tokens": 8,
+      "total_doc_tokens": 66489,
+      "cost_ratio": 0.00012
+    },
+    {
+      "doc_name": "INTEL_2016_10K",
+      "predicted": "(408) 765-8080",
+      "ground_truth": "(408) 765-8080",
+      "correct": true,
+      "retrieved_tokens": 555,
+      "total_doc_tokens": 110197,
+      "cost_ratio": 0.005036
+    },
+    {
+      "doc_name": "ACTIVISIONBLIZZARD_2017_10K",
+      "predicted": "(310) 255-2000",
+      "ground_truth": "(310) 255-2000",
+      "correct": true,
+      "retrieved_tokens": 261,
+      "total_doc_tokens": 102120,
+      "cost_ratio": 0.002556
+    },
+    {
+      "doc_name": "ACTIVISIONBLIZZARD_2020_10K",
+      "predicted": "(310) 255-2000",
+      "ground_truth": "(310) 255-2000",
+      "correct": true,
+      "retrieved_tokens": 642,
+      "total_doc_tokens": 101336,
+      "cost_ratio": 0.006335
+    },
+    {
+      "doc_name": "ADOBE_2015_10K",
+      "predicted": "(408) 536-6000",
+      "ground_truth": "(408) 536-6000",
+      "correct": true,
+      "retrieved_tokens": 8,
+      "total_doc_tokens": 94768,
+      "cost_ratio": 8.4e-05
+    },
+    {
+      "doc_name": "ADOBE_2016_10K",
+      "predicted": "(408) 536-6000",
+      "ground_truth": "(408) 536-6000",
+      "correct": true,
+      "retrieved_tokens": 8,
+      "total_doc_tokens": 88600,
+      "cost_ratio": 9e-05
+    },
+    {
+      "doc_name": "ADOBE_2017_10K",
+      "predicted": "(408) 536-6000",
+      "ground_truth": "(408) 536-6000",
+      "correct": true,
+      "retrieved_tokens": 8,
+      "total_doc_tokens": 86150,
+      "cost_ratio": 9.3e-05
+    },
+    {
+      "doc_name": "ADOBE_2018_10K",
+      "predicted": "(408) 536-6000",
+      "ground_truth": "(408) 536-6000",
+      "correct": true,
+      "retrieved_tokens": 8,
+      "total_doc_tokens": 89326,
+      "cost_ratio": 9e-05
+    },
+    {
+      "doc_name": "ADOBE_2019_10K",
+      "predicted": "(408) 536-6000",
+      "ground_truth": "(408) 536-6000",
+      "correct": true,
+      "retrieved_tokens": 8,
+      "total_doc_tokens": 91798,
+      "cost_ratio": 8.7e-05
+    },
+    {
+      "doc_name": "ADOBE_2020_10K",
+      "predicted": "(408) 536-6000",
+      "ground_truth": "(408) 536-6000",
+      "correct": true,
+      "retrieved_tokens": 8,
+      "total_doc_tokens": 91087,
+      "cost_ratio": 8.8e-05
+    },
+    {
+      "doc_name": "ADOBE_2021_10K",
+      "predicted": "(408) 536-6000",
+      "ground_truth": "(408) 536-6000",
+      "correct": true,
+      "retrieved_tokens": 8,
+      "total_doc_tokens": 77147,
+      "cost_ratio": 0.000104
+    },
+    {
+      "doc_name": "ADOBE_2022_10K",
+      "predicted": "(408) 536-6000",
+      "ground_truth": "(408) 536-6000",
+      "correct": true,
+      "retrieved_tokens": 8,
+      "total_doc_tokens": 75604,
+      "cost_ratio": 0.000106
+    },
+    {
+      "doc_name": "AMAZON_2015_10K",
+      "predicted": "(206) 266-1000",
+      "ground_truth": "(206) 266-1000",
+      "correct": true,
+      "retrieved_tokens": 21,
+      "total_doc_tokens": 63146,
+      "cost_ratio": 0.000333
+    },
+    {
+      "doc_name": "AMAZON_2017_10K",
+      "predicted": "(206) 266-1000",
+      "ground_truth": "(206) 266-1000",
+      "correct": true,
+      "retrieved_tokens": 21,
+      "total_doc_tokens": 65757,
+      "cost_ratio": 0.000319
+    },
+    {
+      "doc_name": "AMAZON_2019_10K",
+      "predicted": "(206) 266-1000",
+      "ground_truth": "(206) 266-1000",
+      "correct": true,
+      "retrieved_tokens": 21,
+      "total_doc_tokens": 62208,
+      "cost_ratio": 0.000338
+    },
+    {
+      "doc_name": "AMAZON_2020_10K",
+      "predicted": "(206) 266-1000",
+      "ground_truth": "(206) 266-1000",
+      "correct": true,
+      "retrieved_tokens": 21,
+      "total_doc_tokens": 58831,
+      "cost_ratio": 0.000357
+    },
+    {
+      "doc_name": "AMAZON_2022_10K",
+      "predicted": "(206) 266-1000",
+      "ground_truth": "(206) 266-1000",
+      "correct": true,
+      "retrieved_tokens": 21,
+      "total_doc_tokens": 61806,
+      "cost_ratio": 0.00034
+    },
+    {
+      "doc_name": "AMCOR_2021_10K",
+      "predicted": "+44 117 9753200",
+      "ground_truth": "+44 117 9753200",
+      "correct": true,
+      "retrieved_tokens": 8,
+      "total_doc_tokens": 107976,
+      "cost_ratio": 7.4e-05
+    },
+    {
+      "doc_name": "AMCOR_2022_10K",
+      "predicted": "+44 117 9753200",
+      "ground_truth": "+44 117 9753200",
+      "correct": true,
+      "retrieved_tokens": 28,
+      "total_doc_tokens": 101405,
+      "cost_ratio": 0.000276
+    },
+    {
+      "doc_name": "AMD_2019_10K",
+      "predicted": "(408) 749-4000",
+      "ground_truth": "(408) 749-4000",
+      "correct": true,
+      "retrieved_tokens": 8,
+      "total_doc_tokens": 83800,
+      "cost_ratio": 9.5e-05
+    },
+    {
+      "doc_name": "AMD_2020_10K",
+      "predicted": "(408) 749-4000",
+      "ground_truth": "(408) 749-4000",
+      "correct": true,
+      "retrieved_tokens": 8,
+      "total_doc_tokens": 105729,
+      "cost_ratio": 7.6e-05
+    },
+    {
+      "doc_name": "AMD_2021_10K",
+      "predicted": "(408) 749-4000",
+      "ground_truth": "(408) 749-4000",
+      "correct": true,
+      "retrieved_tokens": 8,
+      "total_doc_tokens": 79875,
+      "cost_ratio": 0.0001
+    },
+    {
+      "doc_name": "AMD_2022_10K",
+      "predicted": "(408) 749-4000",
+      "ground_truth": "(408) 749-4000",
+      "correct": true,
+      "retrieved_tokens": 38,
+      "total_doc_tokens": 86624,
+      "cost_ratio": 0.000439
+    },
+    {
+      "doc_name": "APPLE_2015_10K",
+      "predicted": "(408) 996-1010",
+      "ground_truth": "(408) 996-1010",
+      "correct": true,
+      "retrieved_tokens": 8,
+      "total_doc_tokens": 69341,
+      "cost_ratio": 0.000115
+    },
+    {
+      "doc_name": "APPLE_2017_10K",
+      "predicted": "(408) 996-1010",
+      "ground_truth": "(408) 996-1010",
+      "correct": true,
+      "retrieved_tokens": 8,
+      "total_doc_tokens": 95206,
+      "cost_ratio": 8.4e-05
+    },
+    {
+      "doc_name": "APPLE_2018_10K",
+      "predicted": "(408) 996-1010",
+      "ground_truth": "(408) 996-1010",
+      "correct": true,
+      "retrieved_tokens": 8,
+      "total_doc_tokens": 77309,
+      "cost_ratio": 0.000103
+    },
+    {
+      "doc_name": "APPLE_2019_10K",
+      "predicted": "(408) 996-1010",
+      "ground_truth": "(408) 996-1010",
+      "correct": true,
+      "retrieved_tokens": 8,
+      "total_doc_tokens": 78621,
+      "cost_ratio": 0.000102
+    },
+    {
+      "doc_name": "APPLE_2020_10K",
+      "predicted": "(408) 996-1010",
+      "ground_truth": "(408) 996-1010",
+      "correct": true,
+      "retrieved_tokens": 8,
+      "total_doc_tokens": 81919,
+      "cost_ratio": 9.8e-05
+    },
+    {
+      "doc_name": "APPLE_2021_10K",
+      "predicted": "(408) 996-1010",
+      "ground_truth": "(408) 996-1010",
+      "correct": true,
+      "retrieved_tokens": 8,
+      "total_doc_tokens": 64998,
+      "cost_ratio": 0.000123
+    },
+    {
+      "doc_name": "APPLE_2022_10K",
+      "predicted": "(408) 996-1010",
+      "ground_truth": "(408) 996-1010",
+      "correct": true,
+      "retrieved_tokens": 8,
+      "total_doc_tokens": 63642,
+      "cost_ratio": 0.000126
+    },
+    {
+      "doc_name": "BESTBUY_2015_10K",
+      "predicted": "NOT FOUND",
+      "ground_truth": "612-291-1000",
+      "correct": false,
+      "retrieved_tokens": 10,
+      "total_doc_tokens": 102184,
+      "cost_ratio": 9.8e-05
+    },
+    {
+      "doc_name": "BESTBUY_2021_10K",
+      "predicted": "(612) 291-1000",
+      "ground_truth": "(612) 291-1000",
+      "correct": true,
+      "retrieved_tokens": 19,
+      "total_doc_tokens": 87076,
+      "cost_ratio": 0.000218
+    },
+    {
+      "doc_name": "BESTBUY_2022_10K",
+      "predicted": "(612) 291-1000",
+      "ground_truth": "(612) 291-1000",
+      "correct": true,
+      "retrieved_tokens": 19,
+      "total_doc_tokens": 87772,
+      "cost_ratio": 0.000216
+    },
+    {
+      "doc_name": "BESTBUY_2023_10K",
+      "predicted": "(612) 291-1000",
+      "ground_truth": "(612) 291-1000",
+      "correct": true,
+      "retrieved_tokens": 8,
+      "total_doc_tokens": 64621,
+      "cost_ratio": 0.000124
+    },
+    {
+      "doc_name": "BOEING_2017_10K",
+      "predicted": "(312) 544-2000",
+      "ground_truth": "(312) 544-2000",
+      "correct": true,
+      "retrieved_tokens": 30,
+      "total_doc_tokens": 82849,
+      "cost_ratio": 0.000362
+    },
+    {
+      "doc_name": "BOEING_2019_10K",
+      "predicted": "NOT FOUND",
+      "ground_truth": "(312) 544-2000",
+      "correct": false,
+      "retrieved_tokens": 0,
+      "total_doc_tokens": 91888,
+      "cost_ratio": 0.0
+    },
+    {
+      "doc_name": "BOEING_2020_10K",
+      "predicted": "NOT FOUND",
+      "ground_truth": "(312)-544-2000",
+      "correct": false,
+      "retrieved_tokens": 0,
+      "total_doc_tokens": 104434,
+      "cost_ratio": 0.0
+    },
+    {
+      "doc_name": "BOEING_2022_10K",
+      "predicted": "NOT FOUND",
+      "ground_truth": "(703)-414-6338",
+      "correct": false,
+      "retrieved_tokens": 0,
+      "total_doc_tokens": 114226,
+      "cost_ratio": 0.0
+    },
+    {
+      "doc_name": "CORNING_2022_10K",
+      "predicted": "607-974-9000",
+      "ground_truth": "607-974-9000",
+      "correct": true,
+      "retrieved_tokens": 6,
+      "total_doc_tokens": 107052,
+      "cost_ratio": 5.6e-05
+    },
+    {
+      "doc_name": "COSTCO_2015_10K",
+      "predicted": "(425) 313-8100",
+      "ground_truth": "(425) 313-8100",
+      "correct": true,
+      "retrieved_tokens": 18,
+      "total_doc_tokens": 58179,
+      "cost_ratio": 0.000309
+    },
+    {
+      "doc_name": "COSTCO_2016_10K",
+      "predicted": "(425) 313-8100",
+      "ground_truth": "(425) 313-8100",
+      "correct": true,
+      "retrieved_tokens": 18,
+      "total_doc_tokens": 51931,
+      "cost_ratio": 0.000347
+    },
+    {
+      "doc_name": "COSTCO_2018_10K",
+      "predicted": "(425) 313-8100",
+      "ground_truth": "(425) 313-8100",
+      "correct": true,
+      "retrieved_tokens": 18,
+      "total_doc_tokens": 48852,
+      "cost_ratio": 0.000368
+    },
+    {
+      "doc_name": "GENERALMILLS_2022_10K",
+      "predicted": "(763)764-7600",
+      "ground_truth": "(763) 764-7600",
+      "correct": true,
+      "retrieved_tokens": 7,
+      "total_doc_tokens": 96530,
+      "cost_ratio": 7.3e-05
+    },
+    {
+      "doc_name": "INTEL_2022_10K",
+      "predicted": "(408) 765-8080",
+      "ground_truth": "(408) 765-8080",
+      "correct": true,
+      "retrieved_tokens": 590,
+      "total_doc_tokens": 105373,
+      "cost_ratio": 0.005599
+    },
+    {
+      "doc_name": "KRAFTHEINZ_2021_10K",
+      "predicted": "(412) 456-5700",
+      "ground_truth": "(412) 456-5700",
+      "correct": true,
+      "retrieved_tokens": 18,
+      "total_doc_tokens": 120020,
+      "cost_ratio": 0.00015
+    },
+    {
+      "doc_name": "FOOTLOCKER_2023_10K",
+      "predicted": "(212) 720-3700",
+      "ground_truth": "(212) 720-3700",
+      "correct": true,
+      "retrieved_tokens": 31,
+      "total_doc_tokens": 74645,
+      "cost_ratio": 0.000415
+    },
+    {
+      "doc_name": "NIKE_2019_10K",
+      "predicted": "(503) 671-6453",
+      "ground_truth": "(503) 671-6453",
+      "correct": true,
+      "retrieved_tokens": 8,
+      "total_doc_tokens": 84424,
+      "cost_ratio": 9.5e-05
+    },
+    {
+      "doc_name": "LOCKHEEDMARTIN_2021_10K",
+      "predicted": "(301) 897-6000",
+      "ground_truth": "(301) 897-6000",
+      "correct": true,
+      "retrieved_tokens": 154,
+      "total_doc_tokens": 110448,
+      "cost_ratio": 0.001394
+    }
+  ]
+}

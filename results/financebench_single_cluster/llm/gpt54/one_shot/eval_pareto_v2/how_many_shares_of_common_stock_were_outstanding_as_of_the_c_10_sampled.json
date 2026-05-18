@@ -1,0 +1,107 @@
+{
+  "question": "How many shares of common stock were outstanding as of the cover-page reference date?",
+  "question_slug": "how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm",
+  "eval_model": "gpt54",
+  "selection_source": "results/financebench_single_cluster/llm/gpt54/one_shot/selected_rules_pareto_v2/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm.json",
+  "selected_rules": [
+    "rule_page1_numeric_after_phrase_as_of_january",
+    "rule_page1_cover_text_with_multiple_large_numbers",
+    "rule_page2_cover_page_numeric_sentence",
+    "rule_page1_outstanding_as_of_january_or_february"
+  ],
+  "accuracy": 0.9,
+  "avg_cost_ratio": 0.000307,
+  "num_documents": 10,
+  "per_doc": [
+    {
+      "doc_name": "AMCOR_2019_10K",
+      "predicted": "1,625,907,855",
+      "ground_truth": "1,625,907,855",
+      "correct": true,
+      "retrieved_tokens": 27,
+      "total_doc_tokens": 84134,
+      "cost_ratio": 0.000321
+    },
+    {
+      "doc_name": "COSTCO_2017_10K",
+      "predicted": "436,989,606",
+      "ground_truth": "436,989,606",
+      "correct": true,
+      "retrieved_tokens": 29,
+      "total_doc_tokens": 50565,
+      "cost_ratio": 0.000574
+    },
+    {
+      "doc_name": "BOEING_2018_10K",
+      "predicted": "564,985,109",
+      "ground_truth": "564,985,109",
+      "correct": true,
+      "retrieved_tokens": 29,
+      "total_doc_tokens": 88449,
+      "cost_ratio": 0.000328
+    },
+    {
+      "doc_name": "AMAZON_2018_10K",
+      "predicted": "491,202,890",
+      "ground_truth": "491,202,890",
+      "correct": true,
+      "retrieved_tokens": 30,
+      "total_doc_tokens": 67659,
+      "cost_ratio": 0.000443
+    },
+    {
+      "doc_name": "EBAY_2021_10K",
+      "predicted": "587,528,915",
+      "ground_truth": "587,528,915",
+      "correct": true,
+      "retrieved_tokens": 22,
+      "total_doc_tokens": 104188,
+      "cost_ratio": 0.000211
+    },
+    {
+      "doc_name": "AMAZON_2016_10K",
+      "predicted": "477,170,618",
+      "ground_truth": "477,170,618",
+      "correct": true,
+      "retrieved_tokens": 30,
+      "total_doc_tokens": 63358,
+      "cost_ratio": 0.000473
+    },
+    {
+      "doc_name": "CORNING_2022_10K",
+      "predicted": "846,563,422",
+      "ground_truth": "846,563,422",
+      "correct": true,
+      "retrieved_tokens": 23,
+      "total_doc_tokens": 107052,
+      "cost_ratio": 0.000215
+    },
+    {
+      "doc_name": "NIKE_2021_10K",
+      "predicted": "NOT FOUND",
+      "ground_truth": "1,581,801,224",
+      "correct": false,
+      "retrieved_tokens": 0,
+      "total_doc_tokens": 89991,
+      "cost_ratio": 0.0
+    },
+    {
+      "doc_name": "LOCKHEEDMARTIN_2022_10K",
+      "predicted": "255,297,298",
+      "ground_truth": "255,297,298",
+      "correct": true,
+      "retrieved_tokens": 32,
+      "total_doc_tokens": 105703,
+      "cost_ratio": 0.000303
+    },
+    {
+      "doc_name": "JOHNSON_JOHNSON_2022_10K",
+      "predicted": "2,604,286,303",
+      "ground_truth": "2,604,286,303",
+      "correct": true,
+      "retrieved_tokens": 25,
+      "total_doc_tokens": 123226,
+      "cost_ratio": 0.000203
+    }
+  ]
+}

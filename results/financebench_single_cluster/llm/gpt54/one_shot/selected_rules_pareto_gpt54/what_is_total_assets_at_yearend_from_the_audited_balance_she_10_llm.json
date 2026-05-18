@@ -1,0 +1,127 @@
+{
+  "question": "What is total assets at year-end (from the audited balance sheet)?",
+  "question_slug": "what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm",
+  "mode": "pareto",
+  "baseline_accuracy": 1.0,
+  "selected_rules": [
+    "rule_tables_with_total_assets_and_no_revenue",
+    "rule_item8_balance_sheet_from_toc",
+    "rule_tables_with_total_assets_in_item8_path",
+    "rule_tables_with_total_assets_and_total_liabilities_and_equity"
+  ],
+  "selected_avg_cost_ratio_sum": 0.029031,
+  "covered_docs": [
+    "AMAZON_2016_10K",
+    "AMAZON_2018_10K",
+    "AMCOR_2019_10K",
+    "BOEING_2018_10K",
+    "CORNING_2022_10K",
+    "COSTCO_2017_10K",
+    "EBAY_2021_10K",
+    "JOHNSON_JOHNSON_2022_10K",
+    "LOCKHEEDMARTIN_2022_10K",
+    "NIKE_2021_10K"
+  ],
+  "uncovered_docs": [],
+  "selector_accuracy": 1.0,
+  "tau_safety_floor": 0.0,
+  "banned_rules": [],
+  "frontier": [
+    {
+      "cost": 0.0,
+      "accuracy_match": 0.0,
+      "rules_admitted": [],
+      "added_rule": null,
+      "rule_cov": null,
+      "rule_avg_cost": null
+    },
+    {
+      "cost": 0.009017,
+      "accuracy_match": 0.6,
+      "rules_admitted": [
+        "rule_tables_with_total_assets_and_no_revenue"
+      ],
+      "added_rule": "rule_tables_with_total_assets_and_no_revenue",
+      "rule_cov": 0.8,
+      "rule_avg_cost": 0.009017
+    },
+    {
+      "cost": 0.015331,
+      "accuracy_match": 0.8,
+      "rules_admitted": [
+        "rule_tables_with_total_assets_and_no_revenue",
+        "rule_item8_balance_sheet_from_toc"
+      ],
+      "added_rule": "rule_item8_balance_sheet_from_toc",
+      "rule_cov": 0.5,
+      "rule_avg_cost": 0.006314
+    },
+    {
+      "cost": 0.020457,
+      "accuracy_match": 0.9,
+      "rules_admitted": [
+        "rule_tables_with_total_assets_and_no_revenue",
+        "rule_item8_balance_sheet_from_toc",
+        "rule_tables_with_total_assets_in_item8_path"
+      ],
+      "added_rule": "rule_tables_with_total_assets_in_item8_path",
+      "rule_cov": 0.4,
+      "rule_avg_cost": 0.005126
+    },
+    {
+      "cost": 0.029031,
+      "accuracy_match": 1.0,
+      "rules_admitted": [
+        "rule_tables_with_total_assets_and_no_revenue",
+        "rule_item8_balance_sheet_from_toc",
+        "rule_tables_with_total_assets_in_item8_path",
+        "rule_tables_with_total_assets_and_total_liabilities_and_equity"
+      ],
+      "added_rule": "rule_tables_with_total_assets_and_total_liabilities_and_equity",
+      "rule_cov": 0.5,
+      "rule_avg_cost": 0.008574
+    }
+  ],
+  "query_table": {
+    "0.50": {
+      "cost": 0.009017,
+      "n_rules": 1
+    },
+    "0.80": {
+      "cost": 0.015331,
+      "n_rules": 2
+    },
+    "0.90": {
+      "cost": 0.020457,
+      "n_rules": 3
+    },
+    "0.95": {
+      "cost": 0.029031,
+      "n_rules": 4
+    },
+    "1.00": {
+      "cost": 0.029031,
+      "n_rules": 4
+    }
+  },
+  "knee_point": {
+    "cost": 0.029031,
+    "accuracy_match": 1.0,
+    "n_rules": 4,
+    "rules": [
+      "rule_tables_with_total_assets_and_no_revenue",
+      "rule_item8_balance_sheet_from_toc",
+      "rule_tables_with_total_assets_in_item8_path",
+      "rule_tables_with_total_assets_and_total_liabilities_and_equity"
+    ]
+  },
+  "knee_lambda": 10.0,
+  "llm_calls": {
+    "phase_2_incremental": 37,
+    "phase_2_judge": 37
+  },
+  "token_usage": {
+    "total_input_tokens": 50160,
+    "total_output_tokens": 573
+  }
+}

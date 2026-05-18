@@ -1,0 +1,27 @@
+Questions: 10  |  Unsampled docs: 50
+
+
+Question: What is long-term debt at year-end (0 if none)?
+  selected rules: 2  | unsampled docs: 50
+  ERROR rule_apply on BESTBUY_2023_10K: [Errno 28] No space left on device
+  ERROR rule_apply on BOEING_2017_10K: Unterminated string starting at: line 52604 column 15 (char 1679250)
+  ERROR rule_apply on BOEING_2019_10K: Unterminated string starting at: line 52604 column 15 (char 1679250)
+  ERROR rule_apply on BOEING_2020_10K: Unterminated string starting at: line 52604 column 15 (char 1679250)
+  ERROR rule_apply on BOEING_2022_10K: Unterminated string starting at: line 52604 column 15 (char 1679250)
+  ERROR rule_apply on CORNING_2022_10K: Unterminated string starting at: line 52604 column 15 (char 1679250)
+  ERROR rule_apply on COSTCO_2015_10K: Unterminated string starting at: line 52604 column 15 (char 1679250)
+  ERROR rule_apply on COSTCO_2016_10K: Unterminated string starting at: line 52604 column 15 (char 1679250)
+  ERROR rule_apply on COSTCO_2018_10K: Unterminated string starting at: line 52604 column 15 (char 1679250)
+  ERROR rule_apply on GENERALMILLS_2022_10K: Unterminated string starting at: line 52604 column 15 (char 1679250)
+  ERROR rule_apply on INTEL_2022_10K: Unterminated string starting at: line 52604 column 15 (char 1679250)
+  ERROR rule_apply on KRAFTHEINZ_2021_10K: Unterminated string starting at: line 52604 column 15 (char 1679250)
+  ERROR rule_apply on FOOTLOCKER_2023_10K: Unterminated string starting at: line 52604 column 15 (char 1679250)
+  ERROR rule_apply on NIKE_2019_10K: Unterminated string starting at: line 52604 column 15 (char 1679250)
+  ERROR rule_apply on LOCKHEEDMARTIN_2021_10K: Unterminated string starting at: line 52604 column 15 (char 1679250)
+Traceback (most recent call last):
+  File "/home/yiminglin/LSF/test/eval_pareto_gpt54_unsampled.py", line 204, in <module>
+    out_file.write_text(json.dumps(out, indent=2, ensure_ascii=False), encoding="utf-8")
+  File "/usr/lib/python3.11/pathlib.py", line 1080, in write_text
+    return f.write(data)
+           ^^^^^^^^^^^^^
+OSError: [Errno 28] No space left on device

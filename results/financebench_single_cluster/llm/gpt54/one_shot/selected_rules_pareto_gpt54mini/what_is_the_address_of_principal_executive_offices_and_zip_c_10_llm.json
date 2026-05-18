@@ -1,0 +1,142 @@
+{
+  "question": "What is the address of principal executive offices and ZIP code?",
+  "question_slug": "what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm",
+  "mode": "pareto",
+  "baseline_accuracy": 0.9,
+  "selected_rules": [
+    "rule_address_header_text_itself",
+    "rule_page1_bold_short_address_fragments",
+    "rule_page1_address_like_excluding_long_narrative",
+    "rule_page1_address_block_from_split_lines",
+    "rule_page1_main_company_path_text"
+  ],
+  "selected_avg_cost_ratio_sum": 0.001397,
+  "covered_docs": [
+    "AMAZON_2016_10K",
+    "AMAZON_2018_10K",
+    "AMCOR_2019_10K",
+    "CORNING_2022_10K",
+    "COSTCO_2017_10K",
+    "EBAY_2021_10K",
+    "JOHNSON_JOHNSON_2022_10K",
+    "LOCKHEEDMARTIN_2022_10K",
+    "NIKE_2021_10K"
+  ],
+  "uncovered_docs": [],
+  "selector_accuracy": 0.9,
+  "tau_safety_floor": 0.0,
+  "banned_rules": [],
+  "frontier": [
+    {
+      "cost": 0.0,
+      "accuracy_match": 0.0,
+      "rules_admitted": [],
+      "added_rule": null,
+      "rule_cov": null,
+      "rule_avg_cost": null
+    },
+    {
+      "cost": 4.4e-05,
+      "accuracy_match": 0.3333,
+      "rules_admitted": [
+        "rule_address_header_text_itself"
+      ],
+      "added_rule": "rule_address_header_text_itself",
+      "rule_cov": 0.2,
+      "rule_avg_cost": 4.4e-05
+    },
+    {
+      "cost": 0.000205,
+      "accuracy_match": 0.6667,
+      "rules_admitted": [
+        "rule_address_header_text_itself",
+        "rule_page1_bold_short_address_fragments"
+      ],
+      "added_rule": "rule_page1_bold_short_address_fragments",
+      "rule_cov": 0.7,
+      "rule_avg_cost": 0.000161
+    },
+    {
+      "cost": 0.000328,
+      "accuracy_match": 0.7778,
+      "rules_admitted": [
+        "rule_address_header_text_itself",
+        "rule_page1_bold_short_address_fragments",
+        "rule_page1_address_like_excluding_long_narrative"
+      ],
+      "added_rule": "rule_page1_address_like_excluding_long_narrative",
+      "rule_cov": 0.5,
+      "rule_avg_cost": 0.000123
+    },
+    {
+      "cost": 0.00085,
+      "accuracy_match": 0.8889,
+      "rules_admitted": [
+        "rule_address_header_text_itself",
+        "rule_page1_bold_short_address_fragments",
+        "rule_page1_address_like_excluding_long_narrative",
+        "rule_page1_address_block_from_split_lines"
+      ],
+      "added_rule": "rule_page1_address_block_from_split_lines",
+      "rule_cov": 0.7,
+      "rule_avg_cost": 0.000522
+    },
+    {
+      "cost": 0.001397,
+      "accuracy_match": 1.0,
+      "rules_admitted": [
+        "rule_address_header_text_itself",
+        "rule_page1_bold_short_address_fragments",
+        "rule_page1_address_like_excluding_long_narrative",
+        "rule_page1_address_block_from_split_lines",
+        "rule_page1_main_company_path_text"
+      ],
+      "added_rule": "rule_page1_main_company_path_text",
+      "rule_cov": 0.7,
+      "rule_avg_cost": 0.000547
+    }
+  ],
+  "query_table": {
+    "0.50": {
+      "cost": 0.000205,
+      "n_rules": 2
+    },
+    "0.80": {
+      "cost": 0.00085,
+      "n_rules": 4
+    },
+    "0.90": {
+      "cost": 0.001397,
+      "n_rules": 5
+    },
+    "0.95": {
+      "cost": 0.001397,
+      "n_rules": 5
+    },
+    "1.00": {
+      "cost": 0.001397,
+      "n_rules": 5
+    }
+  },
+  "knee_point": {
+    "cost": 0.001397,
+    "accuracy_match": 1.0,
+    "n_rules": 5,
+    "rules": [
+      "rule_address_header_text_itself",
+      "rule_page1_bold_short_address_fragments",
+      "rule_page1_address_like_excluding_long_narrative",
+      "rule_page1_address_block_from_split_lines",
+      "rule_page1_main_company_path_text"
+    ]
+  },
+  "knee_lambda": 10.0,
+  "llm_calls": {
+    "phase_2_incremental": 69,
+    "phase_2_judge": 69
+  },
+  "token_usage": {
+    "total_input_tokens": 21184,
+    "total_output_tokens": 1161
+  }
+}

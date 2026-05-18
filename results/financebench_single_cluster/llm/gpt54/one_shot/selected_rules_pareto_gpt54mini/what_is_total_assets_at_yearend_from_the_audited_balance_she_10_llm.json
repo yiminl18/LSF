@@ -1,0 +1,98 @@
+{
+  "question": "What is total assets at year-end (from the audited balance sheet)?",
+  "question_slug": "what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm",
+  "mode": "pareto",
+  "baseline_accuracy": 1.0,
+  "selected_rules": [
+    "rule_tables_with_total_assets_and_no_revenue",
+    "rule_tables_with_total_assets_and_receivables"
+  ],
+  "selected_avg_cost_ratio_sum": 0.018495,
+  "covered_docs": [
+    "AMAZON_2016_10K",
+    "AMAZON_2018_10K",
+    "AMCOR_2019_10K",
+    "BOEING_2018_10K",
+    "CORNING_2022_10K",
+    "COSTCO_2017_10K",
+    "EBAY_2021_10K",
+    "JOHNSON_JOHNSON_2022_10K",
+    "LOCKHEEDMARTIN_2022_10K",
+    "NIKE_2021_10K"
+  ],
+  "uncovered_docs": [],
+  "selector_accuracy": 1.0,
+  "tau_safety_floor": 0.0,
+  "banned_rules": [],
+  "frontier": [
+    {
+      "cost": 0.0,
+      "accuracy_match": 0.0,
+      "rules_admitted": [],
+      "added_rule": null,
+      "rule_cov": null,
+      "rule_avg_cost": null
+    },
+    {
+      "cost": 0.009017,
+      "accuracy_match": 0.9,
+      "rules_admitted": [
+        "rule_tables_with_total_assets_and_no_revenue"
+      ],
+      "added_rule": "rule_tables_with_total_assets_and_no_revenue",
+      "rule_cov": 0.8,
+      "rule_avg_cost": 0.009017
+    },
+    {
+      "cost": 0.018495,
+      "accuracy_match": 1.0,
+      "rules_admitted": [
+        "rule_tables_with_total_assets_and_no_revenue",
+        "rule_tables_with_total_assets_and_receivables"
+      ],
+      "added_rule": "rule_tables_with_total_assets_and_receivables",
+      "rule_cov": 0.7,
+      "rule_avg_cost": 0.009478
+    }
+  ],
+  "query_table": {
+    "0.50": {
+      "cost": 0.009017,
+      "n_rules": 1
+    },
+    "0.80": {
+      "cost": 0.009017,
+      "n_rules": 1
+    },
+    "0.90": {
+      "cost": 0.009017,
+      "n_rules": 1
+    },
+    "0.95": {
+      "cost": 0.018495,
+      "n_rules": 2
+    },
+    "1.00": {
+      "cost": 0.018495,
+      "n_rules": 2
+    }
+  },
+  "knee_point": {
+    "cost": 0.018495,
+    "accuracy_match": 1.0,
+    "n_rules": 2,
+    "rules": [
+      "rule_tables_with_total_assets_and_no_revenue",
+      "rule_tables_with_total_assets_and_receivables"
+    ]
+  },
+  "knee_lambda": 10.0,
+  "llm_calls": {
+    "phase_2_incremental": 15,
+    "phase_2_judge": 15
+  },
+  "token_usage": {
+    "total_input_tokens": 14858,
+    "total_output_tokens": 207
+  }
+}

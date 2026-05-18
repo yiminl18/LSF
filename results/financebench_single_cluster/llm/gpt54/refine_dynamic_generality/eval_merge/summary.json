@@ -3,6 +3,11 @@
     "question": "What is long-term debt at year-end (0 if none)?",
     "question_slug": "what_is_longterm_debt_at_yearend_0_if_none_10",
     "sampled": {
+      "rule_slug": "what_is_longterm_debt_at_yearend_0_if_none_10_refdyn",
+      "selected_rules": [
+        "rule_debt_table_under_notes_or_mda"
+      ],
+      "split": "sampled",
       "n": 10,
       "n_correct": 3,
       "accuracy": 0.3,
@@ -13,6 +18,11 @@
       "total_eval_latency_seconds": 16.82
     },
     "unsampled": {
+      "rule_slug": "what_is_longterm_debt_at_yearend_0_if_none_10_refdyn",
+      "selected_rules": [
+        "rule_debt_table_under_notes_or_mda"
+      ],
+      "split": "unsampled",
       "n": 50,
       "n_correct": 4,
       "accuracy": 0.08,
@@ -27,6 +37,12 @@
     "question": "What is net income (loss) for the most recent fiscal year?",
     "question_slug": "what_is_net_income_loss_for_the_most_recent_fiscal_year_10",
     "sampled": {
+      "rule_slug": "what_is_net_income_loss_for_the_most_recent_fiscal_year_10_refdyn",
+      "selected_rules": [
+        "rule_mda_results_of_operations_net_income_text",
+        "rule_selected_financial_data_net_income_table"
+      ],
+      "split": "sampled",
       "n": 10,
       "n_correct": 6,
       "accuracy": 0.6,
@@ -35,12 +51,31 @@
       "avg_input_tok": 816.8,
       "avg_cost_ratio": 0.008962,
       "total_eval_latency_seconds": 14.96
+    },
+    "unsampled": {
+      "n": 50,
+      "n_correct": 38,
+      "accuracy": 0.76,
+      "avg_latency": 0.878,
+      "avg_retrieved": 4601.9,
+      "avg_input_tok": 4683.3,
+      "avg_output_tok": 8.5,
+      "avg_cost_ratio": 0.05545,
+      "total_input_tokens": 244145,
+      "total_output_tokens": 737,
+      "cost_usd": 0.6214,
+      "total_eval_latency_seconds": 91.92
     }
   },
   {
     "question": "What is total assets at year-end (from the audited balance sheet)?",
     "question_slug": "what_is_total_assets_at_yearend_from_the_audited_balance_she_10",
     "sampled": {
+      "rule_slug": "what_is_total_assets_at_yearend_from_the_audited_balance_she_10_refdyn",
+      "selected_rules": [
+        "rule_tables_with_total_assets_and_audited_year_end_context"
+      ],
+      "split": "sampled",
       "n": 10,
       "n_correct": 2,
       "accuracy": 0.2,
@@ -51,6 +86,11 @@
       "total_eval_latency_seconds": 15.51
     },
     "unsampled": {
+      "rule_slug": "what_is_total_assets_at_yearend_from_the_audited_balance_she_10_refdyn",
+      "selected_rules": [
+        "rule_tables_with_total_assets_and_audited_year_end_context"
+      ],
+      "split": "unsampled",
       "n": 50,
       "n_correct": 5,
       "accuracy": 0.1,
@@ -65,6 +105,16 @@
     "question": "What is the registrant's telephone number?",
     "question_slug": "what_is_the_registrants_telephone_number_10",
     "sampled": {
+      "rule_slug": "what_is_the_registrants_telephone_number_10_refdyn",
+      "selected_rules": [
+        "rule_page1_phone_number_pattern",
+        "rule_page1_phone_preceded_by_address_neighbor",
+        "rule_page1_phone_with_registrant_label_neighbor",
+        "rule_page1_small_body_phone",
+        "rule_page1_text_phone",
+        "rule_phone_in_text_label"
+      ],
+      "split": "sampled",
       "n": 10,
       "n_correct": 10,
       "accuracy": 1.0,
@@ -75,6 +125,16 @@
       "total_eval_latency_seconds": 16.07
     },
     "unsampled": {
+      "rule_slug": "what_is_the_registrants_telephone_number_10_refdyn",
+      "selected_rules": [
+        "rule_page1_phone_number_pattern",
+        "rule_page1_phone_preceded_by_address_neighbor",
+        "rule_page1_phone_with_registrant_label_neighbor",
+        "rule_page1_small_body_phone",
+        "rule_page1_text_phone",
+        "rule_phone_in_text_label"
+      ],
+      "split": "unsampled",
       "n": 50,
       "n_correct": 46,
       "accuracy": 0.92,
@@ -89,6 +149,17 @@
     "question": "How many shares of common stock were outstanding as of the cover-page reference date?",
     "question_slug": "how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10",
     "sampled": {
+      "rule_slug": "how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_refdyn",
+      "selected_rules": [
+        "rule_page1_cover_numeric_candidates",
+        "rule_page1_cover_span_with_as_of_and_issued_outstanding",
+        "rule_page1_phrase_shares_of_common_stock_issued_and_outstanding",
+        "rule_page1_registrant_common_stock_outstanding",
+        "rule_page1_sentence_with_there_were_and_common_stock",
+        "rule_page1_shares_outstanding_as_of_february",
+        "rule_page2_cover_page_numeric_sentence"
+      ],
+      "split": "sampled",
       "n": 10,
       "n_correct": 9,
       "accuracy": 0.9,
@@ -99,6 +170,17 @@
       "total_eval_latency_seconds": 15.32
     },
     "unsampled": {
+      "rule_slug": "how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_refdyn",
+      "selected_rules": [
+        "rule_page1_cover_numeric_candidates",
+        "rule_page1_cover_span_with_as_of_and_issued_outstanding",
+        "rule_page1_phrase_shares_of_common_stock_issued_and_outstanding",
+        "rule_page1_registrant_common_stock_outstanding",
+        "rule_page1_sentence_with_there_were_and_common_stock",
+        "rule_page1_shares_outstanding_as_of_february",
+        "rule_page2_cover_page_numeric_sentence"
+      ],
+      "split": "unsampled",
       "n": 50,
       "n_correct": 47,
       "accuracy": 0.94,
@@ -113,6 +195,12 @@
     "question": "What is the registrant's exact name?",
     "question_slug": "what_is_the_registrants_exact_name_10",
     "sampled": {
+      "rule_slug": "what_is_the_registrants_exact_name_10_refdyn",
+      "selected_rules": [
+        "rule_exact_name_caption_parent",
+        "rule_page1_first_non_boilerplate_after_commission_file"
+      ],
+      "split": "sampled",
       "n": 10,
       "n_correct": 10,
       "accuracy": 1.0,
@@ -123,6 +211,12 @@
       "total_eval_latency_seconds": 14.76
     },
     "unsampled": {
+      "rule_slug": "what_is_the_registrants_exact_name_10_refdyn",
+      "selected_rules": [
+        "rule_exact_name_caption_parent",
+        "rule_page1_first_non_boilerplate_after_commission_file"
+      ],
+      "split": "unsampled",
       "n": 50,
       "n_correct": 48,
       "accuracy": 0.96,
@@ -137,6 +231,13 @@
     "question": "What is the address of principal executive offices and ZIP code?",
     "question_slug": "what_is_the_address_of_principal_executive_offices_and_zip_c_10",
     "sampled": {
+      "rule_slug": "what_is_the_address_of_principal_executive_offices_and_zip_c_10_refdyn",
+      "selected_rules": [
+        "rule_address_header_text_itself",
+        "rule_page1_address_label_and_phone_cluster",
+        "rule_split_address_then_zip_consecutive"
+      ],
+      "split": "sampled",
       "n": 10,
       "n_correct": 8,
       "accuracy": 0.8,
@@ -147,6 +248,13 @@
       "total_eval_latency_seconds": 16.32
     },
     "unsampled": {
+      "rule_slug": "what_is_the_address_of_principal_executive_offices_and_zip_c_10_refdyn",
+      "selected_rules": [
+        "rule_address_header_text_itself",
+        "rule_page1_address_label_and_phone_cluster",
+        "rule_split_address_then_zip_consecutive"
+      ],
+      "split": "unsampled",
       "n": 50,
       "n_correct": 31,
       "accuracy": 0.62,
@@ -155,6 +263,70 @@
       "avg_input_tok": 193.4,
       "avg_cost_ratio": 0.001245,
       "total_eval_latency_seconds": 77.1
+    }
+  },
+  {
+    "question": "What is total revenue for the most recent fiscal year (from the audited income statement)?",
+    "question_slug": "what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10",
+    "sampled": {
+      "n": 10,
+      "n_correct": 9,
+      "accuracy": 0.9,
+      "avg_latency": 0.981,
+      "avg_retrieved": 7171,
+      "avg_input_tok": 7249.6,
+      "avg_output_tok": 9.2,
+      "avg_cost_ratio": 0.084193,
+      "total_input_tokens": 74529,
+      "total_output_tokens": 153,
+      "cost_usd": 0.1886,
+      "total_eval_latency_seconds": 18.06
+    },
+    "unsampled": {
+      "n": 50,
+      "n_correct": 41,
+      "accuracy": 0.82,
+      "avg_latency": 0.86,
+      "avg_retrieved": 5602.7,
+      "avg_input_tok": 5689.9,
+      "avg_output_tok": 8.9,
+      "avg_cost_ratio": 0.067185,
+      "total_input_tokens": 294658,
+      "total_output_tokens": 754,
+      "cost_usd": 0.748,
+      "total_eval_latency_seconds": 95.18
+    }
+  },
+  {
+    "question": "What is the state (or other jurisdiction) of incorporation and the IRS Employer Identification Number?",
+    "question_slug": "what_is_the_state_or_other_jurisdiction_of_incorporation_and_10",
+    "sampled": {
+      "n": 10,
+      "n_correct": 10,
+      "accuracy": 1.0,
+      "avg_latency": 0.833,
+      "avg_retrieved": 158,
+      "avg_input_tok": 253.3,
+      "avg_output_tok": 13.2,
+      "avg_cost_ratio": 0.002002,
+      "total_input_tokens": 4643,
+      "total_output_tokens": 192,
+      "cost_usd": 0.0145,
+      "total_eval_latency_seconds": 14.89
+    },
+    "unsampled": {
+      "n": 50,
+      "n_correct": 49,
+      "accuracy": 0.98,
+      "avg_latency": 1.057,
+      "avg_retrieved": 154.9,
+      "avg_input_tok": 250.3,
+      "avg_output_tok": 12.7,
+      "avg_cost_ratio": 0.001971,
+      "total_input_tokens": 23017,
+      "total_output_tokens": 934,
+      "cost_usd": 0.0716,
+      "total_eval_latency_seconds": 97.84
     }
   }
 ]

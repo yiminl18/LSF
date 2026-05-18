@@ -1,0 +1,127 @@
+{
+  "question": "What is the registrant's telephone number?",
+  "question_slug": "what_is_the_registrants_telephone_number_10_llm",
+  "mode": "pareto",
+  "baseline_accuracy": 1.0,
+  "selected_rules": [
+    "rule_exact_phone_only_span",
+    "rule_registrant_phone_following_zip_parent",
+    "rule_page1_phone_with_parenthetical_area_code_label",
+    "rule_page1_phone_number_pattern"
+  ],
+  "selected_avg_cost_ratio_sum": 0.000453,
+  "covered_docs": [
+    "AMAZON_2016_10K",
+    "AMAZON_2018_10K",
+    "AMCOR_2019_10K",
+    "BOEING_2018_10K",
+    "CORNING_2022_10K",
+    "COSTCO_2017_10K",
+    "EBAY_2021_10K",
+    "JOHNSON_JOHNSON_2022_10K",
+    "LOCKHEEDMARTIN_2022_10K",
+    "NIKE_2021_10K"
+  ],
+  "uncovered_docs": [],
+  "selector_accuracy": 1.0,
+  "tau_safety_floor": 0.0,
+  "banned_rules": [],
+  "frontier": [
+    {
+      "cost": 0.0,
+      "accuracy_match": 0.0,
+      "rules_admitted": [],
+      "added_rule": null,
+      "rule_cov": null,
+      "rule_avg_cost": null
+    },
+    {
+      "cost": 2.2e-05,
+      "accuracy_match": 0.3,
+      "rules_admitted": [
+        "rule_exact_phone_only_span"
+      ],
+      "added_rule": "rule_exact_phone_only_span",
+      "rule_cov": 0.3,
+      "rule_avg_cost": 2.2e-05
+    },
+    {
+      "cost": 5.9e-05,
+      "accuracy_match": 0.5,
+      "rules_admitted": [
+        "rule_exact_phone_only_span",
+        "rule_registrant_phone_following_zip_parent"
+      ],
+      "added_rule": "rule_registrant_phone_following_zip_parent",
+      "rule_cov": 0.2,
+      "rule_avg_cost": 3.7e-05
+    },
+    {
+      "cost": 0.000224,
+      "accuracy_match": 0.8,
+      "rules_admitted": [
+        "rule_exact_phone_only_span",
+        "rule_registrant_phone_following_zip_parent",
+        "rule_page1_phone_with_parenthetical_area_code_label"
+      ],
+      "added_rule": "rule_page1_phone_with_parenthetical_area_code_label",
+      "rule_cov": 0.8,
+      "rule_avg_cost": 0.000165
+    },
+    {
+      "cost": 0.000453,
+      "accuracy_match": 1.0,
+      "rules_admitted": [
+        "rule_exact_phone_only_span",
+        "rule_registrant_phone_following_zip_parent",
+        "rule_page1_phone_with_parenthetical_area_code_label",
+        "rule_page1_phone_number_pattern"
+      ],
+      "added_rule": "rule_page1_phone_number_pattern",
+      "rule_cov": 1.0,
+      "rule_avg_cost": 0.000229
+    }
+  ],
+  "query_table": {
+    "0.50": {
+      "cost": 5.9e-05,
+      "n_rules": 2
+    },
+    "0.80": {
+      "cost": 0.000224,
+      "n_rules": 3
+    },
+    "0.90": {
+      "cost": 0.000453,
+      "n_rules": 4
+    },
+    "0.95": {
+      "cost": 0.000453,
+      "n_rules": 4
+    },
+    "1.00": {
+      "cost": 0.000453,
+      "n_rules": 4
+    }
+  },
+  "knee_point": {
+    "cost": 0.000453,
+    "accuracy_match": 1.0,
+    "n_rules": 4,
+    "rules": [
+      "rule_exact_phone_only_span",
+      "rule_registrant_phone_following_zip_parent",
+      "rule_page1_phone_with_parenthetical_area_code_label",
+      "rule_page1_phone_number_pattern"
+    ]
+  },
+  "knee_lambda": 10.0,
+  "llm_calls": {
+    "phase_2_incremental": 35,
+    "phase_2_judge": 35
+  },
+  "token_usage": {
+    "total_input_tokens": 10150,
+    "total_output_tokens": 503
+  }
+}

@@ -1,0 +1,127 @@
+{
+  "question": "What is the state (or other jurisdiction) of incorporation and the IRS Employer Identification Number?",
+  "question_slug": "what_is_the_state_or_other_jurisdiction_of_incorporation_and_10_llm",
+  "mode": "pareto",
+  "baseline_accuracy": 1.0,
+  "selected_rules": [
+    "rule_page1_combined_state_and_ein_same_text",
+    "rule_page1_short_numeric_or_state_h2s",
+    "rule_page1_ein_or_incorporation_keywords",
+    "rule_page1_short_bold_text_values"
+  ],
+  "selected_avg_cost_ratio_sum": 0.000726,
+  "covered_docs": [
+    "AMAZON_2016_10K",
+    "AMAZON_2018_10K",
+    "AMCOR_2019_10K",
+    "BOEING_2018_10K",
+    "CORNING_2022_10K",
+    "COSTCO_2017_10K",
+    "EBAY_2021_10K",
+    "JOHNSON_JOHNSON_2022_10K",
+    "LOCKHEEDMARTIN_2022_10K",
+    "NIKE_2021_10K"
+  ],
+  "uncovered_docs": [],
+  "selector_accuracy": 1.0,
+  "tau_safety_floor": 0.0,
+  "banned_rules": [],
+  "frontier": [
+    {
+      "cost": 0.0,
+      "accuracy_match": 0.0,
+      "rules_admitted": [],
+      "added_rule": null,
+      "rule_cov": null,
+      "rule_avg_cost": null
+    },
+    {
+      "cost": 1.4e-05,
+      "accuracy_match": 0.1,
+      "rules_admitted": [
+        "rule_page1_combined_state_and_ein_same_text"
+      ],
+      "added_rule": "rule_page1_combined_state_and_ein_same_text",
+      "rule_cov": 0.1,
+      "rule_avg_cost": 1.4e-05
+    },
+    {
+      "cost": 7.9e-05,
+      "accuracy_match": 0.4,
+      "rules_admitted": [
+        "rule_page1_combined_state_and_ein_same_text",
+        "rule_page1_short_numeric_or_state_h2s"
+      ],
+      "added_rule": "rule_page1_short_numeric_or_state_h2s",
+      "rule_cov": 0.3,
+      "rule_avg_cost": 6.5e-05
+    },
+    {
+      "cost": 0.000385,
+      "accuracy_match": 0.5,
+      "rules_admitted": [
+        "rule_page1_combined_state_and_ein_same_text",
+        "rule_page1_short_numeric_or_state_h2s",
+        "rule_page1_ein_or_incorporation_keywords"
+      ],
+      "added_rule": "rule_page1_ein_or_incorporation_keywords",
+      "rule_cov": 0.5,
+      "rule_avg_cost": 0.000306
+    },
+    {
+      "cost": 0.000726,
+      "accuracy_match": 1.0,
+      "rules_admitted": [
+        "rule_page1_combined_state_and_ein_same_text",
+        "rule_page1_short_numeric_or_state_h2s",
+        "rule_page1_ein_or_incorporation_keywords",
+        "rule_page1_short_bold_text_values"
+      ],
+      "added_rule": "rule_page1_short_bold_text_values",
+      "rule_cov": 0.5,
+      "rule_avg_cost": 0.000341
+    }
+  ],
+  "query_table": {
+    "0.50": {
+      "cost": 0.000385,
+      "n_rules": 3
+    },
+    "0.80": {
+      "cost": 0.000726,
+      "n_rules": 4
+    },
+    "0.90": {
+      "cost": 0.000726,
+      "n_rules": 4
+    },
+    "0.95": {
+      "cost": 0.000726,
+      "n_rules": 4
+    },
+    "1.00": {
+      "cost": 0.000726,
+      "n_rules": 4
+    }
+  },
+  "knee_point": {
+    "cost": 0.000726,
+    "accuracy_match": 1.0,
+    "n_rules": 4,
+    "rules": [
+      "rule_page1_combined_state_and_ein_same_text",
+      "rule_page1_short_numeric_or_state_h2s",
+      "rule_page1_ein_or_incorporation_keywords",
+      "rule_page1_short_bold_text_values"
+    ]
+  },
+  "knee_lambda": 10.0,
+  "llm_calls": {
+    "phase_2_incremental": 48,
+    "phase_2_judge": 48
+  },
+  "token_usage": {
+    "total_input_tokens": 15191,
+    "total_output_tokens": 689
+  }
+}

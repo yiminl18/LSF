@@ -1,0 +1,229 @@
+{
+  "question": "What is net income (loss) for the most recent fiscal year?",
+  "question_slug": "what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm",
+  "mode": "pareto_v2",
+  "baseline_accuracy": 0.9,
+  "selected_rules": [
+    "rule_mda_results_of_operations_net_income_text",
+    "rule_toc_statement_of_income_page",
+    "rule_mda_item7_net_income_text",
+    "rule_income_statement_named_in_toc_table",
+    "rule_tables_with_row_net_and_column_years"
+  ],
+  "selected_avg_cost_ratio_sum": 0.082343,
+  "covered_docs": [
+    "CORNING_2022_10K"
+  ],
+  "uncovered_docs": [
+    "AMAZON_2016_10K",
+    "AMAZON_2018_10K",
+    "BOEING_2018_10K",
+    "COSTCO_2017_10K",
+    "EBAY_2021_10K",
+    "JOHNSON_JOHNSON_2022_10K",
+    "LOCKHEEDMARTIN_2022_10K",
+    "NIKE_2021_10K"
+  ],
+  "selector_accuracy": 0.8,
+  "final_merge_accuracy": 0.8,
+  "matches_base": false,
+  "frontier": [
+    {
+      "cost": 0.0,
+      "accuracy_match": 0.0,
+      "rules_admitted": [],
+      "added_rule": null,
+      "rule_cov": null,
+      "rule_avg_cost": null
+    },
+    {
+      "cost": 0.004396,
+      "accuracy_match": 0.1111,
+      "rules_admitted": [
+        "rule_mda_results_of_operations_net_income_text"
+      ],
+      "added_rule": "rule_mda_results_of_operations_net_income_text",
+      "rule_cov": 0.3,
+      "rule_avg_cost": 0.004396
+    },
+    {
+      "cost": 0.01242,
+      "accuracy_match": 0.1111,
+      "rules_admitted": [
+        "rule_mda_results_of_operations_net_income_text",
+        "rule_toc_statement_of_income_page"
+      ],
+      "added_rule": "rule_toc_statement_of_income_page",
+      "rule_cov": 0.4,
+      "rule_avg_cost": 0.008024
+    },
+    {
+      "cost": 0.026768,
+      "accuracy_match": 0.1111,
+      "rules_admitted": [
+        "rule_mda_results_of_operations_net_income_text",
+        "rule_toc_statement_of_income_page",
+        "rule_mda_item7_net_income_text"
+      ],
+      "added_rule": "rule_mda_item7_net_income_text",
+      "rule_cov": 0.5,
+      "rule_avg_cost": 0.014348
+    },
+    {
+      "cost": 0.035447,
+      "accuracy_match": 0.1111,
+      "rules_admitted": [
+        "rule_mda_results_of_operations_net_income_text",
+        "rule_toc_statement_of_income_page",
+        "rule_mda_item7_net_income_text",
+        "rule_income_statement_named_in_toc_table"
+      ],
+      "added_rule": "rule_income_statement_named_in_toc_table",
+      "rule_cov": 0.2,
+      "rule_avg_cost": 0.008679
+    },
+    {
+      "cost": 0.082343,
+      "accuracy_match": 0.1111,
+      "rules_admitted": [
+        "rule_mda_results_of_operations_net_income_text",
+        "rule_toc_statement_of_income_page",
+        "rule_mda_item7_net_income_text",
+        "rule_income_statement_named_in_toc_table",
+        "rule_tables_with_row_net_and_column_years"
+      ],
+      "added_rule": "rule_tables_with_row_net_and_column_years",
+      "rule_cov": 0.9,
+      "rule_avg_cost": 0.046896
+    }
+  ],
+  "query_table": {
+    "0.50": null,
+    "0.80": null,
+    "0.90": null,
+    "0.95": null,
+    "1.00": null
+  },
+  "knee_point": {
+    "cost": 0.004396,
+    "accuracy_match": 0.1111,
+    "n_rules": 1,
+    "rules": [
+      "rule_mda_results_of_operations_net_income_text"
+    ]
+  },
+  "knee_lambda": 10.0,
+  "extras_added_phase_b": [
+    {
+      "iter": 1,
+      "added": "rule_selected_financial_data_net_income_table",
+      "gained": [],
+      "acc_after": 0.8
+    },
+    {
+      "iter": 2,
+      "added": "rule_pages_near_item8_from_toc_and_net_income",
+      "gained": [],
+      "acc_after": 0.8
+    },
+    {
+      "iter": 3,
+      "added": "rule_toc_statement_of_income_page",
+      "gained": [],
+      "acc_after": 0.7
+    },
+    {
+      "iter": 4,
+      "added": "rule_financial_tables_on_pages_from_toc_income_or_item8",
+      "gained": [
+        "COSTCO_2017_10K"
+      ],
+      "acc_after": 0.8
+    },
+    {
+      "iter": 5,
+      "added": "rule_net_income_row_in_income_statement_table",
+      "gained": [],
+      "acc_after": 0.8
+    },
+    {
+      "iter": 6,
+      "added": "rule_mda_item7_net_income_text",
+      "gained": [],
+      "acc_after": 0.7
+    },
+    {
+      "iter": 7,
+      "added": "rule_net_income_row_in_financial_statements_section",
+      "gained": [
+        "COSTCO_2017_10K"
+      ],
+      "acc_after": 0.8
+    },
+    {
+      "iter": 8,
+      "added": "rule_income_statement_named_in_toc_table",
+      "gained": [],
+      "acc_after": 0.8
+    },
+    {
+      "iter": 9,
+      "added": "rule_tables_with_row_net_and_column_years",
+      "gained": [],
+      "acc_after": 0.8
+    },
+    {
+      "iter": 10,
+      "added": "rule_tables_under_part_ii_with_net_income",
+      "gained": [
+        "CORNING_2022_10K"
+      ],
+      "acc_after": 0.9
+    }
+  ],
+  "pruned_phase_c": [
+    {
+      "removed": "rule_tables_under_part_ii_with_net_income",
+      "acc_after": 0.9
+    },
+    {
+      "removed": "rule_net_income_row_in_financial_statements_section",
+      "acc_after": 0.9
+    },
+    {
+      "removed": "rule_net_income_row_in_income_statement_table",
+      "acc_after": 0.9
+    },
+    {
+      "removed": "rule_financial_tables_on_pages_from_toc_income_or_item8",
+      "acc_after": 0.9
+    },
+    {
+      "removed": "rule_pages_near_item8_from_toc_and_net_income",
+      "acc_after": 0.9
+    },
+    {
+      "removed": "rule_selected_financial_data_net_income_table",
+      "acc_after": 0.9
+    },
+    {
+      "removed": "rule_page_after_statement_of_income_header",
+      "acc_after": 0.9
+    },
+    {
+      "removed": "rule_first_table_after_statement_of_income_header",
+      "acc_after": 0.9
+    }
+  ],
+  "phase_a_rules_count": 3,
+  "phase_b_extras_count": 10,
+  "phase_c_pruned_count": 8,
+  "llm_calls": {
+    "qa": 265,
+    "judge": 265
+  },
+  "token_usage": {
+    "total_input_tokens": 1263751,
+    "total_output_tokens": 4011
+  }
+}

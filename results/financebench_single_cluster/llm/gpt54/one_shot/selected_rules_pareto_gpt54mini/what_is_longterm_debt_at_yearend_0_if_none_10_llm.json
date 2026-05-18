@@ -1,0 +1,94 @@
+{
+  "question": "What is long-term debt at year-end (0 if none)?",
+  "question_slug": "what_is_longterm_debt_at_yearend_0_if_none_10_llm",
+  "mode": "pareto",
+  "baseline_accuracy": 0.6,
+  "selected_rules": [
+    "rule_balance_sheet_header_followed_by_table",
+    "rule_balance_sheet_path_followed_by_table"
+  ],
+  "selected_avg_cost_ratio_sum": 0.015828,
+  "covered_docs": [
+    "AMAZON_2016_10K",
+    "CORNING_2022_10K",
+    "COSTCO_2017_10K",
+    "EBAY_2021_10K",
+    "JOHNSON_JOHNSON_2022_10K",
+    "NIKE_2021_10K"
+  ],
+  "uncovered_docs": [],
+  "selector_accuracy": 0.6,
+  "tau_safety_floor": 0.0,
+  "banned_rules": [],
+  "frontier": [
+    {
+      "cost": 0.0,
+      "accuracy_match": 0.0,
+      "rules_admitted": [],
+      "added_rule": null,
+      "rule_cov": null,
+      "rule_avg_cost": null
+    },
+    {
+      "cost": 0.007588,
+      "accuracy_match": 0.8333,
+      "rules_admitted": [
+        "rule_balance_sheet_header_followed_by_table"
+      ],
+      "added_rule": "rule_balance_sheet_header_followed_by_table",
+      "rule_cov": 0.6,
+      "rule_avg_cost": 0.007588
+    },
+    {
+      "cost": 0.015828,
+      "accuracy_match": 1.0,
+      "rules_admitted": [
+        "rule_balance_sheet_header_followed_by_table",
+        "rule_balance_sheet_path_followed_by_table"
+      ],
+      "added_rule": "rule_balance_sheet_path_followed_by_table",
+      "rule_cov": 0.5,
+      "rule_avg_cost": 0.00824
+    }
+  ],
+  "query_table": {
+    "0.50": {
+      "cost": 0.007588,
+      "n_rules": 1
+    },
+    "0.80": {
+      "cost": 0.007588,
+      "n_rules": 1
+    },
+    "0.90": {
+      "cost": 0.015828,
+      "n_rules": 2
+    },
+    "0.95": {
+      "cost": 0.015828,
+      "n_rules": 2
+    },
+    "1.00": {
+      "cost": 0.015828,
+      "n_rules": 2
+    }
+  },
+  "knee_point": {
+    "cost": 0.015828,
+    "accuracy_match": 1.0,
+    "n_rules": 2,
+    "rules": [
+      "rule_balance_sheet_header_followed_by_table",
+      "rule_balance_sheet_path_followed_by_table"
+    ]
+  },
+  "knee_lambda": 10.0,
+  "llm_calls": {
+    "phase_2_incremental": 8,
+    "phase_2_judge": 8
+  },
+  "token_usage": {
+    "total_input_tokens": 8967,
+    "total_output_tokens": 102
+  }
+}
