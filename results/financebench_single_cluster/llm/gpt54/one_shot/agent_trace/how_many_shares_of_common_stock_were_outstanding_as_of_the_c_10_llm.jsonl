@@ -1,0 +1,7 @@
+{"step": 1, "tool": "list_rules", "args": "--question-slug how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm", "result_summary": "100 rules in pool with one-line docstrings"}
+{"step": 2, "tool": "compute_cost", "args": "--all", "result_summary": "sum_avg_cost_ratio=0.018262, max=0.002066"}
+{"step": 3, "tool": "compute_coverage", "args": "--all", "result_summary": "mean_cov=0.239, min_cov=0.0; multiple cov=0.7 rules available"}
+{"step": 4, "tool": "analysis", "args": "per-doc rule coverage from eval_individual", "result_summary": "AMAZON_2016_10K solvable only by rule_page1_cover_text_with_multiple_large_numbers (cov=0.1); NIKE_2021_10K unsolvable by any rule; AMAZON_2018 needs narrow numeric rules"}
+{"step": 5, "tool": "verify_accuracy", "args": "--rules rule_page1_or_2_cover_page_outstanding rule_page1_cover_text_with_multiple_large_numbers rule_page1_numeric_after_phrase_as_of_january", "result_summary": "match_rate=1.0, missed_in_D_star=[], hard_constraint_satisfied=true; tokens qa_in=1288 qa_out=92 j_in=2047 j_out=61"}
+{"step": 6, "tool": "compute_cost", "args": "--rules rule_page1_or_2_cover_page_outstanding rule_page1_cover_text_with_multiple_large_numbers rule_page1_numeric_after_phrase_as_of_january", "result_summary": "sum_avg_cost_ratio=0.000404 (2.2% of pool)"}
+{"step": 7, "tool": "compute_coverage", "args": "--rules rule_page1_or_2_cover_page_outstanding rule_page1_cover_text_with_multiple_large_numbers rule_page1_numeric_after_phrase_as_of_january", "result_summary": "min_cov=0.1, mean_cov=0.3"}

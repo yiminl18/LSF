@@ -1,0 +1,7 @@
+{"step": 1, "tool": "list_rules", "args": "--all", "result_summary": "118 rules in pool"}
+{"step": 2, "tool": "compute_cost", "args": "--all", "result_summary": "sum_cost=1.921"}
+{"step": 3, "tool": "compute_coverage", "args": "--all", "result_summary": "mean_cov=0.55; JNJ covered by only 3 rules"}
+{"step": 4, "tool": "verify_accuracy", "args": "rule_total_assets_with_numeric_same_row + rule_tables_with_total_assets_and_few_columns", "result_summary": "match_rate=0.9; missed=JOHNSON_JOHNSON_2022_10K (predicted 187378 but judge said no)"}
+{"step": 5, "tool": "verify_accuracy", "args": "+rule_tables_with_total_assets_and_long_term_debt", "result_summary": "still missed JNJ, predicted $187,378 without million unit"}
+{"step": 6, "tool": "verify_accuracy", "args": "rule_total_assets_with_numeric_same_row + rule_tables_with_total_assets_and_few_columns + rule_consolidated_balance_sheet_phrase", "result_summary": "match_rate=1.0; hard_constraint satisfied"}
+{"step": 7, "tool": "write_output", "args": "selected_rules=3", "result_summary": "sum_cost=0.0753 min_cov=0.9 match=1.0"}

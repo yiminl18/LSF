@@ -1,0 +1,20 @@
+{
+  "question": "What is the address of principal executive offices and ZIP code?",
+  "question_slug": "what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm",
+  "mode": "agentic",
+  "model": "opus47",
+  "selected_rules": [
+    "rule_page1_address_near_exact_name_of_registrant"
+  ],
+  "selected_avg_cost_ratio_sum": 0.001323,
+  "min_cov": 1.0,
+  "mean_cov": 1.0,
+  "match_rate_on_sampled": 1.0,
+  "iterations": 1,
+  "verify_calls": 1,
+  "tool_llm_calls": 20,
+  "tool_input_tokens": 4168,
+  "tool_output_tokens": 233,
+  "latency_seconds": 78.58925366401672,
+  "rationale": "Selected the single broadest rule (cov=1.0 on all 10 sampled docs, cost=0.001323, well below cheaper alternatives at cov=1.0). Verified once: match_rate=1.0, missed_in_D_star=[], and it even correctly solves BOEING_2018_10K which the full pool misses. All soft targets met (|S|=1, min_cov=1.0, sum_cost ~2.7% of full pool), so no further edits warranted."
+}

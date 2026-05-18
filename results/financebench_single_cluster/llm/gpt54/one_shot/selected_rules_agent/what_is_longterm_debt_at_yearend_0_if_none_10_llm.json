@@ -1,0 +1,22 @@
+{
+  "question": "What is long-term debt at year-end (0 if none)?",
+  "question_slug": "what_is_longterm_debt_at_yearend_0_if_none_10_llm",
+  "mode": "agentic",
+  "model": "opus47",
+  "selected_rules": [
+    "rule_balance_sheet_long_term_debt_row",
+    "rule_debt_in_consolidated_statements_path",
+    "rule_balance_sheet_header_followed_by_table"
+  ],
+  "selected_avg_cost_ratio_sum": 0.065181,
+  "min_cov": 0.6,
+  "mean_cov": 0.6333,
+  "match_rate_on_sampled": 1.0,
+  "iterations": 3,
+  "verify_calls": 5,
+  "tool_llm_calls": 100,
+  "tool_input_tokens": 193466,
+  "tool_output_tokens": 687,
+  "latency_seconds": 299.418,
+  "rationale": "Started from cov/cost heuristic: rule_balance_sheet_long_term_debt_row (cov 0.7, cost 0.022) covers 7 of 10 docs alone. Added rule_debt_in_consolidated_statements_path (cov 0.6, cost 0.035) since individual eval showed it is the sole rule that solves AMCOR_2019. A first 3-rule set including rule_text_span_long_term_debt_numeric (cov 0.3) passed the hard constraint; replacing it with the broader rule_balance_sheet_header_followed_by_table (cov 0.6, cost 0.008) preserved match_rate=1.0 on D* while raising min_cov to 0.6. Drop-test on the 2-rule set missed JOHNSON_JOHNSON, so 3 rules is the minimum. Sum cost 0.065 << 0.5 * 0.578 full-pool budget."
+}

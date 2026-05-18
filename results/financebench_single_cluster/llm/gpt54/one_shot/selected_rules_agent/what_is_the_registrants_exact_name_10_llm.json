@@ -1,0 +1,18 @@
+{
+  "question": "What is the registrant's exact name?",
+  "question_slug": "what_is_the_registrants_exact_name_10_llm",
+  "mode": "agentic",
+  "model": "opus47",
+  "selected_rules": ["rule_exact_name_caption_parent"],
+  "selected_avg_cost_ratio_sum": 6.7e-05,
+  "min_cov": 1.0,
+  "mean_cov": 1.0,
+  "match_rate_on_sampled": 1.0,
+  "iterations": 3,
+  "verify_calls": 3,
+  "tool_llm_calls": 60,
+  "tool_input_tokens": 8642,
+  "tool_output_tokens": 462,
+  "latency_seconds": 88.39,
+  "rationale": "The pool had many cov=1.0 rules around the page-1 'Exact name of registrant' caption. I picked the cheapest such broad rule (rule_exact_name_caption_parent: cost 6.7e-05, cov 1.0) plus two redundant siblings as an initial S, all cov=1.0; verify showed match_rate=1.0 with no missed docs. Drop-tests at |S|=2 and |S|=1 both preserved accuracy, so the single rule is retained. It even rescues EBAY_2021_10K which the full pool misses."
+}

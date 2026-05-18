@@ -1,0 +1,21 @@
+{
+  "question": "What is/are the trading symbol(s) and listing exchange(s)?",
+  "question_slug": "what_isare_the_trading_symbols_and_listing_exchanges_10_llm",
+  "mode": "agentic",
+  "model": "opus47",
+  "selected_rules": [
+    "rule_cover_page_registration_sequence",
+    "rule_page1_near_trading_symbol_label"
+  ],
+  "selected_avg_cost_ratio_sum": 0.183465,
+  "min_cov": 0.5,
+  "mean_cov": 0.7,
+  "match_rate_on_sampled": 1.0,
+  "iterations": 5,
+  "verify_calls": 10,
+  "tool_llm_calls": 200,
+  "tool_input_tokens": 153628,
+  "tool_output_tokens": 2212,
+  "latency_seconds": 737.39,
+  "rationale": "BOEING_2018_10K only has its ticker (BA) in the business-description sentence or in the long cover-page registration sweep; AMCOR_2019_10K is dual-listed (NYSE + ASX), so any rule that pulls in the business sentence makes the QA emit both listings and fail the judge. The only individually high-coverage rule that retrieves BOEING's ticker WITHOUT triggering AMCOR's dual-listing answer is rule_cover_page_registration_sequence (cov=0.9; returns NOT FOUND on AMCOR so it doesn't introduce ASX text). Pairing it with the cheap rule_page1_near_trading_symbol_label (cov=0.5) supplies the AMCR-NYSE clue and yields 100% match on D*. Tried 4 cheaper alternatives stacking page1 NYSE-only rules, but all failed AMCOR because the QA always echoes dual-listing whenever the business sentence is in retrieval. Cost sum (0.183) exceeds the half-pool soft target (0.131) but |S|=2 and min_cov=0.5 satisfy the other two soft targets, and the hard constraint is met."
+}

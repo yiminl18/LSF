@@ -1,0 +1,126 @@
+{
+  "question": "What is/are the trading symbol(s) and listing exchange(s)?",
+  "question_slug": "what_isare_the_trading_symbols_and_listing_exchanges_10_llm",
+  "eval_model": "gpt54",
+  "selection_source": "results/financebench_single_cluster/llm/gpt54/one_shot/selected_rules_agent/what_isare_the_trading_symbols_and_listing_exchanges_10_llm.json",
+  "selected_rules": [
+    "rule_cover_page_registration_sequence",
+    "rule_page1_near_trading_symbol_label"
+  ],
+  "accuracy": 1.0,
+  "avg_cost_ratio": 0.101179,
+  "num_documents": 10,
+  "per_doc": [
+    {
+      "doc_name": "AMCOR_2019_10K",
+      "predicted": "AMCR — The New York Stock Exchange",
+      "ground_truth": "AMCR, The New York Stock Exchange",
+      "correct": true,
+      "retrieved_tokens": 2809,
+      "total_doc_tokens": 84134,
+      "cost_ratio": 0.033387
+    },
+    {
+      "doc_name": "COSTCO_2017_10K",
+      "predicted": "COST; The NASDAQ Global Select Market",
+      "ground_truth": "COST, The NASDAQ Global Select Market",
+      "correct": true,
+      "retrieved_tokens": 6501,
+      "total_doc_tokens": 50565,
+      "cost_ratio": 0.128567
+    },
+    {
+      "doc_name": "BOEING_2018_10K",
+      "predicted": "BA — New York Stock Exchange",
+      "ground_truth": "BA, New York Stock Exchange",
+      "correct": true,
+      "retrieved_tokens": 13105,
+      "total_doc_tokens": 88449,
+      "cost_ratio": 0.148164
+    },
+    {
+      "doc_name": "AMAZON_2018_10K",
+      "predicted": "AMZN — Nasdaq Global Select Market",
+      "ground_truth": "AMZN, Nasdaq Global Select Market",
+      "correct": true,
+      "retrieved_tokens": 8930,
+      "total_doc_tokens": 67659,
+      "cost_ratio": 0.131985
+    },
+    {
+      "doc_name": "EBAY_2021_10K",
+      "predicted": "EBAY — The Nasdaq Global Select Market",
+      "ground_truth": "EBAY, The Nasdaq Global Select Market",
+      "correct": true,
+      "retrieved_tokens": 19796,
+      "total_doc_tokens": 104188,
+      "cost_ratio": 0.190003
+    },
+    {
+      "doc_name": "AMAZON_2016_10K",
+      "predicted": "AMZN — NASDAQ Global Select Market",
+      "ground_truth": "AMZN, NASDAQ Global Select Market",
+      "correct": true,
+      "retrieved_tokens": 4570,
+      "total_doc_tokens": 63358,
+      "cost_ratio": 0.07213
+    },
+    {
+      "doc_name": "CORNING_2022_10K",
+      "predicted": "GLW — New York Stock Exchange (NYSE)",
+      "ground_truth": "GLW, New York Stock Exchange (NYSE)",
+      "correct": true,
+      "retrieved_tokens": 10597,
+      "total_doc_tokens": 107052,
+      "cost_ratio": 0.098989
+    },
+    {
+      "doc_name": "NIKE_2021_10K",
+      "predicted": "NKE — New York Stock Exchange",
+      "ground_truth": "NKE, New York Stock Exchange",
+      "correct": true,
+      "retrieved_tokens": 7144,
+      "total_doc_tokens": 89991,
+      "cost_ratio": 0.079386
+    },
+    {
+      "doc_name": "LOCKHEEDMARTIN_2022_10K",
+      "predicted": "LMT — New York Stock Exchange",
+      "ground_truth": "LMT, New York Stock Exchange",
+      "correct": true,
+      "retrieved_tokens": 5471,
+      "total_doc_tokens": 105703,
+      "cost_ratio": 0.051758
+    },
+    {
+      "doc_name": "JOHNSON_JOHNSON_2022_10K",
+      "predicted": "JNJ — New York Stock Exchange; JNJ24C — New York Stock Exchange; JNJ24BP — New York Stock Exchange; JNJ28 — New York Stock Exchange; JNJ35 — New York Stock Exchange",
+      "ground_truth": [
+        {
+          "Trading Symbol": "JNJ",
+          "Exchange": "New York Stock Exchange"
+        },
+        {
+          "Trading Symbol": "JNJ24C",
+          "Exchange": "New York Stock Exchange"
+        },
+        {
+          "Trading Symbol": "JNJ24BP",
+          "Exchange": "New York Stock Exchange"
+        },
+        {
+          "Trading Symbol": "JNJ28",
+          "Exchange": "New York Stock Exchange"
+        },
+        {
+          "Trading Symbol": "JNJ35",
+          "Exchange": "New York Stock Exchange"
+        }
+      ],
+      "correct": true,
+      "retrieved_tokens": 9540,
+      "total_doc_tokens": 123226,
+      "cost_ratio": 0.077419
+    }
+  ]
+}

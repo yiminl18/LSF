@@ -1,0 +1,21 @@
+{
+  "question": "What is total revenue for the most recent fiscal year (from the audited income statement)?",
+  "question_slug": "what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm",
+  "mode": "agentic",
+  "model": "opus47",
+  "selected_rules": [
+    "rule_statement_heading_and_following_numeric_table",
+    "rule_tables_with_million_units_and_revenue"
+  ],
+  "selected_avg_cost_ratio_sum": 0.055044,
+  "min_cov": 0.9,
+  "mean_cov": 0.9,
+  "match_rate_on_sampled": 1.0,
+  "iterations": 3,
+  "verify_calls": 3,
+  "tool_llm_calls": 60,
+  "tool_input_tokens": 137380,
+  "tool_output_tokens": 449,
+  "latency_seconds": 108.88,
+  "rationale": "Both rules have cov=0.9 (only COSTCO_2017_10K missed, and no rule in the pool solves it, so D*=9). Picked the two cheapest cov=0.9 rules: statement_heading_and_following_numeric_table (cost=0.0248) and tables_with_million_units_and_revenue (cost=0.0303). Hard constraint verified at 3, 2, and 1 rule levels; chose 2 to retain redundancy on unseen layouts while keeping sum_cost at 0.055 (2.2% of full pool 2.522)."
+}

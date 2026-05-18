@@ -1,0 +1,90 @@
+Questions to process: 10  model=opus47  budget=20
+
+========================================================================
+Question: What is long-term debt at year-end (0 if none)?
+Slug:     what_is_longterm_debt_at_yearend_0_if_none_10_llm
+  status=ok  elapsed=Nones
+  AGENTIC_SELECTION_DONE slug=what_is_longterm_debt_at_yearend_0_if_none_10_llm n_rules=3 sum_cost=0.065181 min_cov=0.6 match_rate=1.0 tool_calls=100 latency_s=299.418
+  rules=3  match_rate=1.0
+
+========================================================================
+Question: What is net income (loss) for the most recent fiscal year?
+Slug:     what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm
+  status=ok  elapsed=Nones
+  AGENTIC_SELECTION_DONE slug=what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm n_rules=1 sum_cost=0.022902 min_cov=0.9 match_rate=1.0 tool_calls=20 latency_s=125.432
+  rules=1  match_rate=1.0
+
+========================================================================
+Question: What is total revenue for the most recent fiscal year (from the audited income statement)?
+Slug:     what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm
+  status=ok  elapsed=Nones
+  AGENTIC_SELECTION_DONE slug=what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm n_rules=2 sum_cost=0.055044 min_cov=0.9 match_rate=1.0 tool_calls=60 latency_s=108.88
+  rules=2  match_rate=1.0
+
+========================================================================
+Question: What is total assets at year-end (from the audited balance sheet)?
+Slug:     what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm
+  status=ok  elapsed=Nones
+  AGENTIC_SELECTION_DONE slug=what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm n_rules=3 sum_cost=0.075302 min_cov=0.9 match_rate=1.0 tool_calls=60 latency_s=139.15
+  rules=3  match_rate=1.0
+
+========================================================================
+Question: What is the registrant's telephone number?
+Slug:     what_is_the_registrants_telephone_number_10_llm
+  status=ok  elapsed=Nones
+  rules=1  match_rate=1.0
+
+========================================================================
+Question: How many shares of common stock were outstanding as of the cover-page reference date?
+Slug:     how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm
+  status=ok  elapsed=Nones
+  AGENTIC_SELECTION_DONE slug=how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm n_rules=3 sum_cost=0.000404 min_cov=0.1 match_rate=1.0 tool_calls=20 latency_s=128.86
+  rules=3  match_rate=1.0
+
+========================================================================
+Question: What is the registrant's exact name?
+Slug:     what_is_the_registrants_exact_name_10_llm
+  status=ok  elapsed=Nones
+  AGENTIC_SELECTION_DONE slug=what_is_the_registrants_exact_name_10_llm n_rules=1 sum_cost=0.000067 min_cov=1.0 match_rate=1.0 tool_calls=60 latency_s=88.39
+  rules=1  match_rate=1.0
+
+========================================================================
+Question: What is the state (or other jurisdiction) of incorporation and the IRS Employer Identification Number?
+Slug:     what_is_the_state_or_other_jurisdiction_of_incorporation_and_10_llm
+  status=ok  elapsed=Nones
+  AGENTIC_SELECTION_DONE slug=what_is_the_state_or_other_jurisdiction_of_incorporation_and_10_llm n_rules=3 sum_cost=0.002798 min_cov=0.8 match_rate=1.0 tool_calls=40 latency_s=125.26
+  rules=3  match_rate=1.0
+
+========================================================================
+Question: What is the address of principal executive offices and ZIP code?
+Slug:     what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm
+  status=ok  elapsed=Nones
+  AGENTIC_SELECTION_DONE slug=what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm n_rules=1 sum_cost=0.001323 min_cov=1.0 match_rate=1.0 tool_calls=20 latency_s=78.59
+  rules=1  match_rate=1.0
+
+========================================================================
+Question: What is/are the trading symbol(s) and listing exchange(s)?
+Slug:     what_isare_the_trading_symbols_and_listing_exchanges_10_llm
+  status=ok  elapsed=Nones
+  AGENTIC_SELECTION_DONE slug=what_isare_the_trading_symbols_and_listing_exchanges_10_llm n_rules=2 sum_cost=0.183465 min_cov=0.5 match_rate=1.0 tool_calls=200 latency_s=737.39
+  rules=2  match_rate=1.0
+
+========================================================================
+Driver summary:
+  what_is_longterm_debt_at_yearend_0_if_none_10_llm   status=ok          rules= 3  match=  1.0  opus_in=680578  opus_out=15059  tool_in=193466  tool_out= 687  wall=  315s
+  what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm  status=ok          rules= 1  match=  1.0  opus_in=496591  opus_out=11329  tool_in= 22913  tool_out= 149  wall=  162s
+  what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm  status=ok          rules= 2  match=  1.0  opus_in=618278  opus_out= 9888  tool_in=137380  tool_out= 449  wall=  186s
+  what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm  status=ok          rules= 3  match=  1.0  opus_in=1108319  opus_out=12732  tool_in= 77461  tool_out= 441  wall=  253s
+  what_is_the_registrants_telephone_number_10_llm     status=ok          rules= 1  match=  1.0  opus_in=390027  opus_out= 3728  tool_in=  3069  tool_out= 178  wall=   81s
+  how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm  status=ok          rules= 3  match=  1.0  opus_in=846469  opus_out=11581  tool_in=  3335  tool_out= 153  wall=  170s
+  what_is_the_registrants_exact_name_10_llm           status=ok          rules= 1  match=  1.0  opus_in=332718  opus_out= 4855  tool_in=  8642  tool_out= 462  wall=  124s
+  what_is_the_state_or_other_jurisdiction_of_incorporation_and_10_llm  status=ok          rules= 3  match=  1.0  opus_in=900353  opus_out= 8952  tool_in=  9032  tool_out= 384  wall=  195s
+  what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm  status=ok          rules= 1  match=  1.0  opus_in=361150  opus_out= 5306  tool_in=  4168  tool_out= 233  wall=   94s
+  what_isare_the_trading_symbols_and_listing_exchanges_10_llm  status=ok          rules= 2  match=  1.0  opus_in=2912769  opus_out=46825  tool_in=153628  tool_out=2212  wall=  792s
+
+========================================================================
+Totals across 10 question(s):
+  Opus tokens:       in=8,647,252  out=130,255
+  Tool gpt54 tokens: in=613,094  out=5,348  (calls=600)
+  Wallclock total:   2372s (39.5m)
+  Opus cost (reported by CLI): $10.7466

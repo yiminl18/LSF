@@ -1,0 +1,6 @@
+{"step": 1, "tool": "list_rules", "args": "--question-slug what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm", "result_summary": "33 rules in pool"}
+{"step": 2, "tool": "compute_cost", "args": "--all", "result_summary": "sum_avg_cost_ratio=1.003238, max=0.07582 (rule_any_span_with_net_income_loss_phrase); cheapest broad rule rule_first_table_after_statement_of_income_header=0.00584"}
+{"step": 3, "tool": "compute_coverage", "args": "--all", "result_summary": "min_cov=0.0 (6 useless rules with cov=0); mean=0.5152; 7 rules with cov=0.9 (best individual)"}
+{"step": 4, "tool": "inspect_eval_individual_cache", "args": "(local read of cache dir)", "result_summary": "Built per-doc accuracy matrix. rule_net_income_row_in_income_statement_table covers exactly 9 docs: all except AMCOR_2019_10K. Matches D* (full pool also fails on AMCOR per eval_merge cache)."}
+{"step": 5, "tool": "verify_accuracy", "args": "--rules rule_net_income_row_in_income_statement_table", "result_summary": "hard_constraint_satisfied=true, D_star_size=9, correct_S_size=9, match_rate=1.0, missed_in_D_star=[]. tokens qa_in=20914 qa_out=88 j_in=1999 j_out=61."}
+{"step": 6, "tool": "write_output", "args": "selected_rules_agent/...json", "result_summary": "S={rule_net_income_row_in_income_statement_table}, cost=0.022902, min_cov=0.9, all 3 soft targets met."}

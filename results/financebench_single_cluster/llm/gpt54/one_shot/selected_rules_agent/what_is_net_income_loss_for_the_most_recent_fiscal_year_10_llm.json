@@ -1,0 +1,18 @@
+{
+  "question": "What is net income (loss) for the most recent fiscal year?",
+  "question_slug": "what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm",
+  "mode": "agentic",
+  "model": "opus47",
+  "selected_rules": ["rule_net_income_row_in_income_statement_table"],
+  "selected_avg_cost_ratio_sum": 0.022902,
+  "min_cov": 0.9,
+  "mean_cov": 0.9,
+  "match_rate_on_sampled": 1.0,
+  "iterations": 1,
+  "verify_calls": 1,
+  "tool_llm_calls": 20,
+  "tool_input_tokens": 22913,
+  "tool_output_tokens": 149,
+  "latency_seconds": 125.432,
+  "rationale": "Inspected the per-doc accuracy matrix from the eval_individual cache and the full-pool eval_merge file. D* = 9 docs (full pool also fails on AMCOR_2019_10K). The rule 'rule_net_income_row_in_income_statement_table' has individual accuracy 0.9 matching D* exactly (correct on every D* doc, wrong on AMCOR). One verify_accuracy call confirmed merge accuracy = 1.0 on D* (missed_in_D_star=[]). Single broad rule, cov=0.9, cost=0.023 (~2.3% of full-pool cost). All three soft targets satisfied; no further drop-tests possible."
+}

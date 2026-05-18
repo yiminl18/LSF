@@ -1,0 +1,22 @@
+{
+  "question": "What is the state (or other jurisdiction) of incorporation and the IRS Employer Identification Number?",
+  "question_slug": "what_is_the_state_or_other_jurisdiction_of_incorporation_and_10_llm",
+  "mode": "agentic",
+  "model": "opus47",
+  "selected_rules": [
+    "rule_page1_cover_answer_cluster",
+    "rule_page1_window_after_incorporation_label",
+    "rule_page1_texts_with_parent_h1_company_and_short_value"
+  ],
+  "selected_avg_cost_ratio_sum": 0.002798,
+  "min_cov": 0.8,
+  "mean_cov": 0.9,
+  "match_rate_on_sampled": 1.0,
+  "iterations": 1,
+  "verify_calls": 2,
+  "tool_llm_calls": 40,
+  "tool_input_tokens": 9032,
+  "tool_output_tokens": 384,
+  "latency_seconds": 125.26,
+  "rationale": "Picked the three highest-coverage rules with very low cost: cover_answer_cluster (cov=1.0, individual accuracy=1.0), window_after_incorporation_label (cov=0.9), and texts_with_parent_h1_company_and_short_value (cov=0.8). A single verify call confirmed merge accuracy matches the full pool (missed_in_D*=[]); a second verify was used only to re-parse the top-level result. Total cost (0.0028) is ~5% of the full-pool sum (0.0575), min_cov=0.8 is well above 0.4, and |S|=3 satisfies all stopping criteria."
+}

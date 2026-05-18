@@ -1,0 +1,5 @@
+{"step": 1, "tool": "list_rules", "args": "--question-slug ...", "result_summary": "61 rules listed"}
+{"step": 2, "tool": "compute_cost --all", "args": "--all", "result_summary": "sum_avg_cost_ratio=0.048567, max=0.006727"}
+{"step": 3, "tool": "compute_coverage --all", "args": "--all", "result_summary": "4 rules at cov=1.0; cheapest at cov=1.0 is rule_page1_address_near_exact_name_of_registrant (cost=0.001323)"}
+{"step": 4, "tool": "inspect_rule", "args": "rule_page1_address_near_exact_name_of_registrant", "result_summary": "Broad page-1 rule that grabs spans near 'exact name of registrant' label"}
+{"step": 5, "tool": "verify_accuracy", "args": "rules=[rule_page1_address_near_exact_name_of_registrant]", "result_summary": "match_rate=1.0, D_star=9, correct_S=10, missed=[], extra=BOEING_2018_10K; hard constraint satisfied"}

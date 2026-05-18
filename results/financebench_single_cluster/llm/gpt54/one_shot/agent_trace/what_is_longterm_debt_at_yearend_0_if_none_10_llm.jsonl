@@ -1,0 +1,9 @@
+{"step": 1, "tool": "list_rules", "args": "--all", "result_summary": "40 rules in pool; docstrings reviewed"}
+{"step": 2, "tool": "compute_cost", "args": "--all", "result_summary": "sum_avg_cost_ratio=0.578; 0-cost rules exist but with cov=0"}
+{"step": 3, "tool": "compute_coverage", "args": "--all", "result_summary": "max cov=0.7; several rules at 0.6-0.7; AMCOR/LOCKHEED hard docs"}
+{"step": 4, "tool": "per_doc_coverage_analysis", "args": "local script", "result_summary": "AMCOR only covered by rule_debt_in_consolidated_statements_path; LOCKHEED only by rule_text_span_long_term_debt_numeric"}
+{"step": 5, "tool": "verify_accuracy", "args": "3 rules incl text_span_long_term_debt_numeric", "result_summary": "match_rate=1.0, missed=[], D_star=6, correct_S=8"}
+{"step": 6, "tool": "verify_accuracy", "args": "2 rules (drop text_span)", "result_summary": "match_rate=0.83, missed=[JOHNSON_JOHNSON]; cannot drop"}
+{"step": 7, "tool": "verify_accuracy", "args": "3 rules with header_followed_by_table replacing text_span", "result_summary": "match_rate=1.0, missed=[], D_star=6, correct_S=7; higher min_cov 0.6"}
+{"step": 8, "tool": "verify_accuracy", "args": "final verify of selected set", "result_summary": "match_rate=1.0, missed=[]; tokens captured"}
+{"step": 9, "tool": "verify_accuracy", "args": "re-run 2 rules for token capture", "result_summary": "tokens captured for budget accounting"}

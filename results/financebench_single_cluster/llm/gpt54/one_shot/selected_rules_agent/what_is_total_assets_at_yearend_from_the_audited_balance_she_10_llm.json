@@ -1,0 +1,22 @@
+{
+  "question": "What is total assets at year-end (from the audited balance sheet)?",
+  "question_slug": "what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm",
+  "mode": "agentic",
+  "model": "opus47",
+  "selected_rules": [
+    "rule_total_assets_with_numeric_same_row",
+    "rule_tables_with_total_assets_and_few_columns",
+    "rule_consolidated_balance_sheet_phrase"
+  ],
+  "selected_avg_cost_ratio_sum": 0.075302,
+  "min_cov": 0.9,
+  "mean_cov": 0.9,
+  "match_rate_on_sampled": 1.0,
+  "iterations": 3,
+  "verify_calls": 3,
+  "tool_llm_calls": 60,
+  "tool_input_tokens": 77461,
+  "tool_output_tokens": 441,
+  "latency_seconds": 139.15,
+  "rationale": "Only 3 rules in the pool cover JOHNSON_JOHNSON_2022_10K (rule_total_assets_with_numeric_same_row, rule_tables_with_total_assets_and_long_term_debt, rule_consolidated_balance_sheet_phrase). The first two predicted the JNJ value without the 'million' unit, and the judge marked the merge wrong against ground truth '$187.4 billion'. rule_consolidated_balance_sheet_phrase retrieves enough context for the merged answer to include 'million', satisfying the judge. Final S pairs rule_total_assets_with_numeric_same_row (covers JNJ, misses EBAY) with rule_tables_with_total_assets_and_few_columns (covers EBAY, misses JNJ) for breadth, plus rule_consolidated_balance_sheet_phrase for unit context on JNJ; all three have cov=0.9 (min_cov soft target = 0.9 >= 0.4) and total cost 0.0753 vs full-pool 1.921 (~3.9%)."
+}
