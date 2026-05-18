@@ -251,21 +251,23 @@ cat ~/.ssh/id_ed25519.pub          # paste into github.com/settings/keys
 git -C ~/LSF remote set-url origin git@github.com:yiminl18/LSF.git
 ```
 
-### 9.4 Copy secrets and data from `doc-structure` &rarr; `lsf`
+### 9.4 Copy secrets from `doc-structure` &rarr; `lsf`
 
-These are large or sensitive files not stored in git. Run from your local machine; `gcloud scp` proxies through IAP.
+The Azure API keys for `gpt54` / `gpt54mini` live in `~/api_keys/azure_cloudbank/` (one file per model, read by `src/models/gpt54.py` and `src/models/gpt54mini.py`). They are NOT in git. `~/LSF/local/` also holds helper scripts that are not in git.
+
+The FinanceBench processed-doc JSONs (`data/financebench/processing/`, ~267 MB / 60 docs) **are** in git as of yiming-dev, so they come with `git clone`; no scp needed.
 
 ```bash
-# Secrets: ~716 KB
+# Azure API keys (~16 KB)
+gcloud compute scp --recurse \
+    doc-structure:~/api_keys \
+    lsf:~/ \
+    --zone=us-central1-a --project=doc-structure --tunnel-through-iap
+
+# Local helper scripts (~few hundred KB)
 gcloud compute scp --recurse \
     doc-structure:~/LSF/local \
     lsf:~/LSF/ \
-    --zone=us-central1-a --project=doc-structure --tunnel-through-iap
-
-# FinanceBench processed docs (the only large data not in git): ~500 MB
-gcloud compute scp --recurse \
-    doc-structure:~/LSF/data/financebench/processing \
-    lsf:~/LSF/data/financebench/ \
     --zone=us-central1-a --project=doc-structure --tunnel-through-iap
 ```
 
