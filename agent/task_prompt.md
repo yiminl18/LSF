@@ -67,9 +67,26 @@ LOOP (suggested; deviate if you have a better idea)
      Drop if accuracy preserved.
   7. Stop when soft targets feel reasonable or budget exhausted.
 
+COST AND LATENCY TRACKING (mandatory)
+
+Record `time.time()` immediately when you start working. Every time you invoke
+`verify_accuracy.py`, parse its stdout JSON — the `tokens` field contains
+exact gpt54 input/output token counts for that call. Accumulate across calls:
+
+    tool_input_tokens   += result["tokens"]["qa_input"]  + result["tokens"]["j_input"]
+    tool_output_tokens  += result["tokens"]["qa_output"] + result["tokens"]["j_output"]
+    tool_llm_calls      += 2 * (len(result["per_doc"]) - errors)   # QA + judge per doc
+    verify_calls        += 1
+
+Other paid tools (refine_rule) also report tokens; include them. Free tools
+(list_rules, compute_cost, compute_coverage, inspect_rule) report no tokens.
+
+Just before writing the final JSON, record `time.time()` again as `t_end` and
+compute `latency_seconds = t_end - t_start`.
+
 OUTPUT (the final step before exiting)
 
-Write a JSON file to {output_path} with this exact schema (no extra fields):
+Write a JSON file to {output_path} with this exact schema:
 {{
   "question":              "{question}",
   "question_slug":         "{question_slug}",
@@ -82,14 +99,22 @@ Write a JSON file to {output_path} with this exact schema (no extra fields):
   "match_rate_on_sampled": <float>,
   "iterations":            <int>,    // number of edit cycles
   "verify_calls":          <int>,    // number of verify_accuracy invocations
+  "tool_llm_calls":        <int>,    // total gpt54 calls across all verify_accuracy invocations
+  "tool_input_tokens":     <int>,    // cumulative gpt54 input tokens
+  "tool_output_tokens":    <int>,    // cumulative gpt54 output tokens
+  "latency_seconds":       <float>,  // your own self-reported wall-clock
   "rationale":             "<2-4 sentence explanation of decisions made>"
 }}
+
+Note: Opus 4.7 reasoning tokens (the model running you) are tracked separately
+by the driver via `claude --output-format json`. Don't try to count them
+yourself; just track gpt54 tool-call tokens as specified above.
 
 Also append a per-step JSONL trace to {trace_path} (one object per tool call):
 {{ "step": <int>, "tool": "<tool_name>", "args": "...", "result_summary": "..." }}
 
 Then print to stdout a single line in this format:
-  AGENTIC_SELECTION_DONE slug={question_slug} n_rules=<N> sum_cost=<F> min_cov=<F> match_rate=<F>
+  AGENTIC_SELECTION_DONE slug={question_slug} n_rules=<N> sum_cost=<F> min_cov=<F> match_rate=<F> tool_calls=<N> latency_s=<F>
 
 GUIDELINES
   - Prefer broad rules (cov >= 0.5) over narrow rules (cov < 0.3).

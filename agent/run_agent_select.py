@@ -91,25 +91,48 @@ def run_agent_for_question(
     SELECTED_RULES_AGENT_DIR.mkdir(parents=True, exist_ok=True)
     AGENT_TRACE_DIR.mkdir(parents=True, exist_ok=True)
 
+    # Use --output-format json so we get Opus usage stats back
+    cmd = [
+        "claude", "--model", resolved_model,
+        "--output-format", "json",
+        "--dangerously-skip-permissions",
+        "-p", prompt,
+    ]
+
     t0 = time.time()
     try:
         res = subprocess.run(
-            ["claude", "--model", resolved_model, "-p", prompt],
-            capture_output=True, text=True, cwd=str(_ROOT), timeout=timeout,
+            cmd, capture_output=True, text=True,
+            cwd=str(_ROOT), timeout=timeout,
         )
     except subprocess.TimeoutExpired as exc:
         return {
             "status":    "timeout",
             "question":  question,
             "question_slug": question_slug,
-            "elapsed":   round(time.time() - t0, 1),
-            "stdout":    (exc.stdout or "")[-2000:],
-            "stderr":    (exc.stderr or "")[-2000:],
+            "wallclock_seconds": round(time.time() - t0, 1),
+            "stdout":    ((exc.stdout or "").decode() if isinstance(exc.stdout, bytes) else (exc.stdout or ""))[-2000:],
+            "stderr":    ((exc.stderr or "").decode() if isinstance(exc.stderr, bytes) else (exc.stderr or ""))[-2000:],
         }
 
-    elapsed = round(time.time() - t0, 1)
-    summary_line = ""
-    for line in (res.stdout or "").splitlines():
+    wallclock = round(time.time() - t0, 1)
+
+    # Parse claude JSON output (contains usage + cost + the agent's text)
+    opus_usage      = {}
+    opus_total_cost = None
+    agent_text      = res.stdout or ""
+    summary_line    = ""
+
+    try:
+        claude_payload = json.loads(res.stdout or "{}")
+        opus_usage      = claude_payload.get("usage", {}) or {}
+        opus_total_cost = claude_payload.get("total_cost_usd")
+        agent_text      = claude_payload.get("result", "") or ""
+    except json.JSONDecodeError:
+        # Older claude versions may not emit valid JSON; fall back to raw text
+        pass
+
+    for line in agent_text.splitlines():
         if line.startswith("AGENTIC_SELECTION_DONE"):
             summary_line = line.strip()
             break
@@ -123,16 +146,18 @@ def run_agent_for_question(
             output_data = None
 
     return {
-        "status":       "ok" if res.returncode == 0 else f"exit_{res.returncode}",
-        "question":     question,
-        "question_slug": question_slug,
-        "elapsed_seconds": elapsed,
-        "model":        resolved_model,
-        "summary_line": summary_line,
-        "output_json":  str(output_json),
-        "output_data":  output_data,
-        "stdout_tail":  (res.stdout or "")[-1000:],
-        "stderr_tail":  (res.stderr or "")[-1000:],
+        "status":             "ok" if res.returncode == 0 else f"exit_{res.returncode}",
+        "question":           question,
+        "question_slug":      question_slug,
+        "wallclock_seconds":  wallclock,
+        "model":              resolved_model,
+        "summary_line":       summary_line,
+        "opus_usage":         opus_usage,
+        "opus_total_cost_usd": opus_total_cost,
+        "output_json":        str(output_json),
+        "output_data":        output_data,
+        "stdout_tail":        agent_text[-1000:],
+        "stderr_tail":        (res.stderr or "")[-1000:],
     }
 
 
@@ -179,11 +204,38 @@ def main():
 
     # Driver summary
     print(f"\n{'='*72}\nDriver summary:")
+    total_opus_in = total_opus_out = 0
+    total_tool_in = total_tool_out = 0
+    total_tool_calls = 0
+    total_wallclock = 0.0
+    total_cost_usd = 0.0
     for r in results:
-        d = r.get("output_data") or {}
-        print(f"  {r['question_slug']:<55}  status={r['status']:<12}  "
-              f"n_rules={len(d.get('selected_rules', []))}  "
-              f"match={d.get('match_rate_on_sampled', '?')}")
+        d   = r.get("output_data") or {}
+        opu = r.get("opus_usage")  or {}
+        opus_in_tok  = (opu.get("input_tokens", 0) or 0) + (opu.get("cache_read_input_tokens", 0) or 0)
+        opus_out_tok = opu.get("output_tokens", 0) or 0
+        total_opus_in    += opus_in_tok
+        total_opus_out   += opus_out_tok
+        total_tool_in    += d.get("tool_input_tokens", 0) or 0
+        total_tool_out   += d.get("tool_output_tokens", 0) or 0
+        total_tool_calls += d.get("tool_llm_calls", 0) or 0
+        total_wallclock  += r.get("wallclock_seconds", 0) or 0
+        if r.get("opus_total_cost_usd") is not None:
+            total_cost_usd += r["opus_total_cost_usd"]
+        print(f"  {r['question_slug']:<50}  status={r['status']:<10}  "
+              f"rules={len(d.get('selected_rules', [])):>2}  "
+              f"match={str(d.get('match_rate_on_sampled', '?')):>5}  "
+              f"opus_in={opus_in_tok:>6}  opus_out={opus_out_tok:>5}  "
+              f"tool_in={d.get('tool_input_tokens', 0):>6}  "
+              f"tool_out={d.get('tool_output_tokens', 0):>4}  "
+              f"wall={r.get('wallclock_seconds', 0):>5.0f}s")
+
+    print(f"\n{'='*72}\nTotals across {len(results)} question(s):")
+    print(f"  Opus tokens:       in={total_opus_in:,}  out={total_opus_out:,}")
+    print(f"  Tool gpt54 tokens: in={total_tool_in:,}  out={total_tool_out:,}  (calls={total_tool_calls})")
+    print(f"  Wallclock total:   {total_wallclock:.0f}s ({total_wallclock/60:.1f}m)")
+    if total_cost_usd > 0:
+        print(f"  Opus cost (reported by CLI): ${total_cost_usd:.4f}")
 
 
 if __name__ == "__main__":
