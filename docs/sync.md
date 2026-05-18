@@ -6,21 +6,22 @@ This document describes how to (a) connect to the GCP servers that run the LSF p
 
 ## 0. Servers
 
-Two GCP VMs are available. Both live in project `doc-structure`, zone `us-central1-a`.
+Two GCP VMs are available. Both live in project `doc-structure`, zone `us-central1-a`. **Whenever this doc says "the server", it means `lsf`.**
 
-| Alias (this doc) | VM instance name | Role | Status |
-|------------------|-----------------|------|--------|
-| **`doc-structure`** | `doc-structure` | Primary — fully provisioned, has rule pool, eval results, secrets, FinanceBench processed docs | Active |
-| **`lsf`** | `lsf` | Secondary — fresh Debian 12 VM; bootstrap pending (no git / pip / `~/LSF`) | Standby |
+| Priority | VM instance name | Role | Disk | Status |
+|----------|-----------------|------|------|--------|
+| **`lsf`** ⭐ | `lsf` | **Default** — primary working server | 9.7 G root + **100 G `/mnt/data`** (where `~/LSF` lives) | Active, fully provisioned |
+| `doc-structure` | `doc-structure` | Secondary — older box, kept for historical runs | 9.7 G root only | Active but space-constrained; prefer `lsf` for new work |
 
-Pick the server you want by substituting the alias into the `gcloud compute ssh <SERVER>` template throughout this doc. Examples below use `doc-structure` by default; for `lsf` replace the instance name.
+Both share the same GitHub auth and the same Azure API keys (mirrored). To target the non-default server, pass the instance name explicitly:
 
 ```bash
-# Choose the server at the top of your shell session
-SERVER=doc-structure       # or:  SERVER=lsf
-```
+# Default (lsf) — these forms are interchangeable
+gcloud compute ssh lsf --project=doc-structure --zone=us-central1-a --tunnel-through-iap
 
-Then later commands become `gcloud compute ssh "$SERVER" ...`.
+# Target doc-structure explicitly when you need to
+gcloud compute ssh doc-structure --project=doc-structure --zone=us-central1-a --tunnel-through-iap
+```
 
 ---
 
@@ -84,32 +85,31 @@ A browser window will open; complete the OAuth flow. The token is cached on disk
 
 ## 4. SSH into the server
 
-Interactive SSH session (drops you at a shell on the box). Replace `doc-structure` with `lsf` to target the secondary VM.
+Interactive SSH session (drops you at a shell on `lsf`):
 
 ```bash
-# Primary server (doc-structure)
-gcloud compute ssh doc-structure \
-    --zone=us-central1-a \
-    --project=doc-structure \
-    --tunnel-through-iap
-
-# Secondary server (lsf)
 gcloud compute ssh lsf \
     --zone=us-central1-a \
     --project=doc-structure \
     --tunnel-through-iap
 ```
 
-Server-side, the project lives at `~/LSF/` (on `doc-structure`; not yet bootstrapped on `lsf`).
+Server-side, the project lives at `~/LSF/` — a symlink to `/mnt/data/LSF` on the 100 GB extra disk, so there's plenty of room for intermediates.
+
+To target the secondary `doc-structure` VM (e.g. to compare against an older run that lives there), swap the instance name:
+
+```bash
+gcloud compute ssh doc-structure --zone=us-central1-a --project=doc-structure --tunnel-through-iap
+```
 
 ---
 
 ## 5. Run a command remotely (no interactive shell)
 
-Examples below target `doc-structure`. For `lsf` just swap the instance name; everything else (project, zone, IAP flag) is identical.
+Default target is `lsf`. Swap the instance name to target `doc-structure`.
 
 ```bash
-gcloud compute ssh doc-structure \
+gcloud compute ssh lsf \
     --zone=us-central1-a \
     --project=doc-structure \
     --tunnel-through-iap \
@@ -121,7 +121,7 @@ gcloud compute ssh doc-structure \
 Stays running after the SSH session ends. Captures stdout/stderr to a log file under `~/LSF/logs/`:
 
 ```bash
-gcloud compute ssh doc-structure \
+gcloud compute ssh lsf \
     --zone=us-central1-a \
     --project=doc-structure \
     --tunnel-through-iap \
@@ -133,7 +133,7 @@ Note the escaped `\$!` — the `$` must be passed through to the remote shell, s
 ### Check the log
 
 ```bash
-gcloud compute ssh doc-structure \
+gcloud compute ssh lsf \
     --zone=us-central1-a \
     --project=doc-structure \
     --tunnel-through-iap \
@@ -152,14 +152,14 @@ Two options.
 
 ```bash
 gcloud compute scp --recurse \
-    doc-structure:~/LSF/results/<folder> \
+    lsf:~/LSF/results/<folder> \
     /Users/yiminglin/Documents/Codebase/LSF/results/ \
     --zone=us-central1-a \
     --project=doc-structure \
     --tunnel-through-iap
 ```
 
-Replace `<folder>` with the specific subdirectory (e.g. `financebench_single_cluster/llm/gpt54/one_shot/eval_merge`). The trailing slash on the destination keeps the source folder name intact under the local `results/` directory.
+Replace `<folder>` with the specific subdirectory (e.g. `financebench_single_cluster/llm/gpt54/one_shot/eval_merge`). The trailing slash on the destination keeps the source folder name intact under the local `results/` directory. Substitute `doc-structure:` for `lsf:` to pull from the secondary VM instead.
 
 ### Option B — `git pull` (when the server commits results)
 
@@ -181,19 +181,19 @@ git add -A
 git commit -m "tweak selector cost threshold"
 git push origin yiming-dev
 
-# 2. Server — pull and kick off a long-running job
-gcloud compute ssh doc-structure --zone=us-central1-a --project=doc-structure --tunnel-through-iap \
+# 2. Server (lsf) — pull and kick off a long-running job
+gcloud compute ssh lsf --zone=us-central1-a --project=doc-structure --tunnel-through-iap \
     --command="cd ~/LSF && git pull origin yiming-dev && nohup python3 test/run_eval_merge_sampled.py > logs/eval_merge_sampled.log 2>&1 & echo PID:\$!"
 
 # 3. Monitor
-gcloud compute ssh doc-structure --zone=us-central1-a --project=doc-structure --tunnel-through-iap \
+gcloud compute ssh lsf --zone=us-central1-a --project=doc-structure --tunnel-through-iap \
     --command="tail -30 ~/LSF/logs/eval_merge_sampled.log"
 
 # 4. Pull results back (pick one)
 git pull origin yiming-dev                 # if the job committed outputs
 # OR
 gcloud compute scp --recurse \
-    doc-structure:~/LSF/results/financebench_single_cluster/llm/gpt54/one_shot/eval_merge \
+    lsf:~/LSF/results/financebench_single_cluster/llm/gpt54/one_shot/eval_merge \
     /Users/yiminglin/Documents/Codebase/LSF/results/financebench_single_cluster/llm/gpt54/one_shot/ \
     --zone=us-central1-a --project=doc-structure --tunnel-through-iap
 ```
@@ -210,15 +210,38 @@ gcloud compute scp --recurse \
 
 ---
 
-## 9. Bootstrapping a fresh VM (the `lsf` recipe)
+## 9. Bootstrapping a fresh VM (the `lsf` recipe — completed for `lsf` on 2026-05-18)
 
-Recorded for when you bring up `lsf` (or any new VM) from a clean Debian 12 image. Not yet executed.
+This is the recipe used to bootstrap `lsf` from a clean Debian 12 image, and the recipe to use for any future fresh VM. Each step is annotated with the actual `lsf` provisioning outcome where applicable.
 
-### 9.1 Prereqs on the VM
+### 9.1 Prereqs on a fresh VM
 
-The fresh image already has: Python 3.11, `nohup`, the `yiminglin` user with passwordless sudo, the SSH IAP entry point. It is missing: `git`, `pip`, all Python packages, Claude CLI, `~/LSF`, and any secrets / processed-doc data.
+A clean Debian 12 image typically has: Python 3.11, `nohup`, the `yiminglin` user with passwordless sudo, the SSH IAP entry point. It is missing: `git`, `pip`, all Python packages, Claude CLI, `~/LSF`, secrets, and (if applicable) the extra data disk is not mounted.
 
-### 9.2 One-shot bootstrap (run as `yiminglin` on the new VM)
+### 9.2 Mount the extra disk (do this **before** anything else if the VM has a separate data volume)
+
+`lsf` ships with a 9.7 GB root partition (`/dev/sda1`) and a 100 GB extra disk (`/dev/sdb`) that is unformatted and unmounted out of the box. Format, mount, and symlink `~/LSF` to the big disk so all heavy intermediates (logs, eval merge runs, agent traces, selector_run dirs) land there instead of fighting with the OS for space.
+
+```bash
+# Format /dev/sdb as ext4 (destructive — confirm the device name first with lsblk!)
+sudo mkfs.ext4 -F -L lsf-data /dev/sdb
+
+# Mount at /mnt/data, give ownership to your user
+sudo mkdir -p /mnt/data
+sudo mount /dev/sdb /mnt/data
+sudo chown $USER:$USER /mnt/data
+
+# Persist across reboot via fstab (nofail = boot proceeds even if disk missing)
+echo "/dev/sdb  /mnt/data  ext4  defaults,nofail  0  2" | sudo tee -a /etc/fstab
+
+# Symlink so ~/LSF transparently lives on the big disk
+mkdir /mnt/data/LSF
+ln -s /mnt/data/LSF ~/LSF
+```
+
+After this step, `~/LSF` is a symlink to `/mnt/data/LSF` with ~93 GB free. Scripts and `sync.md` use `~/LSF` unchanged.
+
+### 9.3 System + Python packages (run as `yiminglin` on the new VM)
 
 ```bash
 # System packages
@@ -227,38 +250,68 @@ sudo apt-get install -y git python3-pip python3-venv
 
 # Python packages — Debian 12 needs --break-system-packages outside a venv
 pip3 install --user --break-system-packages openai tiktoken
-
-# Clone the repo (HTTPS with GitHub Personal Access Token — see §9.3)
-git clone https://github.com/yiminl18/LSF.git ~/LSF
-cd ~/LSF && git checkout yiming-dev
 ```
 
-### 9.3 GitHub authentication
+### 9.4 GitHub authentication
 
-Two options. Use whichever matches the existing `doc-structure` setup.
+Two options. The path used for `lsf` was option B (mirror the existing SSH key from `doc-structure`).
 
-**HTTPS + Personal Access Token (PAT)** — cache once with the credential helper:
+**Option A — generate a new SSH key on the VM and add to GitHub:**
 ```bash
-git config --global credential.helper store
-# First push or pull will prompt for username (your GitHub login) and password (paste PAT, not actual password).
-# Subsequent operations read from ~/.git-credentials.
-```
-
-**SSH key** — generate a new key pair on `lsf` and add the public half to your GitHub account:
-```bash
-ssh-keygen -t ed25519 -C "yiminglin@lsf"
+ssh-keygen -t ed25519 -C "yiminglin@<vm-name>"
 cat ~/.ssh/id_ed25519.pub          # paste into github.com/settings/keys
-git -C ~/LSF remote set-url origin git@github.com:yiminl18/LSF.git
+# Then add this to ~/.ssh/config:
+#   Host github.com
+#     IdentityFile ~/.ssh/id_ed25519
+#     IdentitiesOnly yes
 ```
 
-### 9.4 Copy secrets from `doc-structure` &rarr; `lsf`
+**Option B — copy the existing key from another provisioned VM** (the `lsf` path):
+```bash
+# From your local machine, with both VMs reachable:
+TMPDIR=$(mktemp -d)
+gcloud compute scp --project=doc-structure --zone=us-central1-a --tunnel-through-iap \
+    doc-structure:~/.ssh/github_ed25519 \
+    doc-structure:~/.ssh/github_ed25519.pub \
+    "$TMPDIR/"
+gcloud compute scp --project=doc-structure --zone=us-central1-a --tunnel-through-iap \
+    "$TMPDIR/github_ed25519" "$TMPDIR/github_ed25519.pub" \
+    lsf:~/.ssh/
+rm -rf "$TMPDIR"
+
+# Then on the new VM:
+chmod 600 ~/.ssh/github_ed25519
+chmod 644 ~/.ssh/github_ed25519.pub
+cat >> ~/.ssh/config <<EOF
+Host github.com
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/github_ed25519
+  IdentitiesOnly yes
+  StrictHostKeyChecking accept-new
+EOF
+chmod 600 ~/.ssh/config
+
+# Verify
+ssh -T git@github.com   # should print: "Hi yiminl18! You've successfully authenticated..."
+```
+
+### 9.5 Clone the repo
+
+```bash
+# If ~/LSF is a symlink (after §9.2), the symlink target dir must be empty or non-existent:
+rmdir /mnt/data/LSF 2>/dev/null
+git clone --branch yiming-dev git@github.com:yiminl18/LSF.git /mnt/data/LSF
+```
+
+### 9.6 Copy secrets from an already-provisioned VM
 
 The Azure API keys for `gpt54` / `gpt54mini` live in `~/api_keys/azure_cloudbank/` (one file per model, read by `src/models/gpt54.py` and `src/models/gpt54mini.py`). They are NOT in git. `~/LSF/local/` also holds helper scripts that are not in git.
 
 The FinanceBench processed-doc JSONs (`data/financebench/processing/`, ~267 MB / 60 docs) **are** in git as of yiming-dev, so they come with `git clone`; no scp needed.
 
 ```bash
-# Azure API keys (~16 KB)
+# Azure API keys (~16 KB) — from local machine
 gcloud compute scp --recurse \
     doc-structure:~/api_keys \
     lsf:~/ \
@@ -271,7 +324,9 @@ gcloud compute scp --recurse \
     --zone=us-central1-a --project=doc-structure --tunnel-through-iap
 ```
 
-### 9.5 Install + authenticate Claude CLI (for agentic pipelines)
+### 9.7 Install + authenticate Claude CLI (only if you need agentic pipelines)
+
+The algorithmic pipelines (Pareto v2, fallback, v1, etc.) only need gpt54 access and DO NOT require Claude CLI. Install only if you want to run agentic rule generation or selection.
 
 ```bash
 # Install (server-side)
@@ -281,13 +336,13 @@ curl -fsSL https://claude.ai/install.sh | bash    # or follow the latest officia
 claude /login                                      # paste the URL into a local browser
 ```
 
-A successful login creates `~/.claude/.credentials.json` matching the `doc-structure` setup. Verify with:
+A successful login creates `~/.claude/.credentials.json`. Verify with:
 ```bash
 ls -la ~/.claude/.credentials.json
 claude --version
 ```
 
-### 9.6 Smoke tests after bootstrap
+### 9.8 Smoke tests after bootstrap
 
 Confirm the new VM can run all three pipeline modes before pushing real workload to it.
 
@@ -307,17 +362,19 @@ git status
 git log --oneline -3
 ```
 
-If all three blocks succeed, the new VM is interchangeable with `doc-structure` for any LSF workload.
+If all three blocks succeed, the new VM is interchangeable with the others for any LSF workload.
 
-### 9.7 Disk planning
+### 9.9 Disk planning
 
-A full bootstrap leaves `~/LSF` at roughly:
+After bootstrap, with everything in place, `~/LSF` totals roughly:
 
 | Component | Size |
 |-----------|-----:|
-| Git checkout (yiming-dev) | ~120 MB (rule files + checked-in results) |
-| `local/` secrets | ~1 MB |
-| `data/financebench/processing/` | ~500 MB |
-| Per-pipeline intermediates (selector_run_*, eval intermediates) — generated during runs | up to 1 GB; clean up after each run |
+| Git checkout (yiming-dev) | ~330 MB (rule files + checked-in results + processed-doc JSONs) |
+| `local/` helper scripts | ~1 MB |
+| `~/api_keys/` Azure keys | ~16 KB |
+| Per-pipeline intermediates (selector_run_*, eval_*/run_*) — generated during runs | up to 1 GB per run; clean up after |
 
-The current Debian 12 image ships with a 9.7 GB root partition. Bootstrap + one or two pipeline runs fits comfortably; after several runs the `selector_run_*` and `eval_*/run_*` intermediate directories should be pruned (see &sect;6 above, or the `disk_watchdog.sh` pattern used on `doc-structure`).
+**On `lsf` (default):** ~330 MB checkout lives on the 100 GB `/mnt/data` partition (via the `~/LSF → /mnt/data/LSF` symlink from §9.2). The 9.7 GB root partition stays for OS + pip cache + `~/.claude/`. Intermediates can accumulate freely without disk pressure.
+
+**On a VM without an extra disk** (e.g., `doc-structure`): the root partition holds everything. Periodic cleanup of `selector_run_*` and `eval_*/run_*` is required; see `disk_watchdog.sh` for an automated pattern.
