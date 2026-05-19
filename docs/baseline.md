@@ -144,6 +144,7 @@ Strategy 1.
 **Measured sampled results:**
 - `sAcc = 0.940`
 - `cost_s = 0.6949`
+- `latency_s = 18.46s`
 
 **Invocation:**
 
