@@ -89,9 +89,7 @@ def main() -> None:
                     help="Run only questions whose slug starts with this prefix")
     ap.add_argument("--skip-existing", action="store_true", default=True)
     ap.add_argument("--no-skip-existing", dest="skip_existing", action="store_false")
-    ap.add_argument("--timeout",        type=int, default=300)
-    ap.add_argument("--max-iterations", type=int, default=10,
-                    help="Max agentic iterations per (question, doc) — passed to run_qa if supported")
+    ap.add_argument("--timeout",  type=int, default=300)
     args = ap.parse_args()
 
     baseline_mod = importlib.import_module(f"baseline.{args.baseline}")
@@ -142,7 +140,6 @@ def main() -> None:
                     question=question,
                     model=args.model,
                     timeout=args.timeout,
-                    max_iterations=args.max_iterations,
                 )
             except Exception as e:
                 print(f"  ERROR {doc_name}: {e}")
@@ -172,9 +169,6 @@ def main() -> None:
                 "latency_seconds": result.get("latency_seconds", 0.0),
                 "total_cost_usd":  result.get("total_cost_usd"),
                 "model":           result.get("model", args.model),
-                # strategy-specific extras (None if not returned)
-                "iterations":      result.get("iterations"),
-                "tool_calls":      result.get("tool_calls"),
             }
             out_file.write_text(json.dumps(record, indent=2, ensure_ascii=False),
                                 encoding="utf-8")
@@ -192,33 +186,22 @@ def main() -> None:
         avg_out   = round(mean(r["output_tokens"]   for r in per_doc_results), 1)
         avg_lat   = round(mean(r["latency_seconds"] for r in per_doc_results), 2)
 
-        iters     = [r["iterations"] for r in per_doc_results if r.get("iterations") is not None]
-        tcalls    = [r["tool_calls"]  for r in per_doc_results if r.get("tool_calls")  is not None]
-
         q_summary = {
-            "question":            question,
-            "question_slug":       slug,
-            "split":               args.split,
-            "model":               args.model,
-            "n":                   n,
-            "n_correct":           n_correct,
-            "accuracy":            accuracy,
-            "avg_input_tokens":    avg_in,
-            "avg_output_tokens":   avg_out,
+            "question":        question,
+            "question_slug":   slug,
+            "split":           args.split,
+            "model":           args.model,
+            "n":               n,
+            "n_correct":       n_correct,
+            "accuracy":        accuracy,
+            "avg_input_tokens":  avg_in,
+            "avg_output_tokens": avg_out,
             "avg_latency_seconds": avg_lat,
         }
-        if iters:
-            q_summary["avg_iterations"] = round(mean(iters), 2)
-        if tcalls:
-            q_summary["avg_tool_calls"] = round(mean(tcalls), 2)
-
         all_summaries.append(q_summary)
-        extra = ""
-        if iters:
-            extra = f"  avg_iter={mean(iters):.1f}  avg_tools={mean(tcalls):.1f}"
         print(f"\nQuestion: {question[:70]}")
         print(f"  accuracy={accuracy:.2f} ({n_correct}/{n})  "
-              f"avg_in={avg_in:.0f}  avg_out={avg_out:.0f}  avg_lat={avg_lat:.1f}s{extra}\n")
+              f"avg_in={avg_in:.0f}  avg_out={avg_out:.0f}  avg_lat={avg_lat:.1f}s\n")
 
     summary_path = out_base / "summary.json"
     # Merge with any existing summary entries for other splits/runs
@@ -238,15 +221,10 @@ def main() -> None:
 
     if all_summaries:
         print(f"\n{'='*60}")
-        print(f"  mean accuracy  : {mean(s['accuracy'] for s in all_summaries):.4f}")
-        print(f"  mean in-tokens : {mean(s['avg_input_tokens'] for s in all_summaries):.0f}")
-        print(f"  mean latency   : {mean(s['avg_latency_seconds'] for s in all_summaries):.1f}s")
-        iters_all = [s["avg_iterations"] for s in all_summaries if "avg_iterations" in s]
-        if iters_all:
-            print(f"  mean iterations: {mean(iters_all):.1f}")
-            tcalls_all = [s["avg_tool_calls"] for s in all_summaries if "avg_tool_calls" in s]
-            print(f"  mean tool calls: {mean(tcalls_all):.1f}")
-        print(f"  results in     : {out_base}/")
+        print(f"  mean accuracy : {mean(s['accuracy'] for s in all_summaries):.4f}")
+        print(f"  mean in-tokens: {mean(s['avg_input_tokens'] for s in all_summaries):.0f}")
+        print(f"  mean latency  : {mean(s['avg_latency_seconds'] for s in all_summaries):.1f}s")
+        print(f"  results in    : {out_base}/")
 
 
 if __name__ == "__main__":
