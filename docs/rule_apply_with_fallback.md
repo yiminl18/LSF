@@ -1,8 +1,14 @@
 # Refined Rules with Full-Pool Fallback — Application Strategy
 
-**Status:** Proposal
-**Companion to:** `docs/pareto_versions.md` (selection), `src/rule_apply_merge.py` (existing single-mode application)
+**Status:** Implemented and evaluated
+**Companion to:** `docs/rule_refinement_versions.md` (selection), `src/rule_apply_merge.py` (existing single-mode application)
 **Use case:** apply a refined rule set (e.g. p_v2 output) to an *unsampled* document at inference time, with a safety fallback to the full rule pool when the refined retrieval is insufficient.
+
+**Benchmarked configuration:**
+- **Rule-gen source:** LLM-coarse (gpt54, one-shot) — `rules/financebench_single_cluster/llm/gpt54/one_shot/<slug>_10_llm/`
+- **Refined subset S:** p_v2 selection over that pool — `results/.../selected_rules_pareto_v2/<slug>.json` (~5.1 rules/Q)
+- **Full pool R:** all ~63 LLM-coarse rules per question
+- **Dataset:** single-cluster, 50 unsampled docs, 10 questions
 
 ---
 

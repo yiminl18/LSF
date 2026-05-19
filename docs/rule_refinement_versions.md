@@ -147,11 +147,13 @@ The agent's "less-is-more" effect: small, clean rule sets retrieve focused text 
 
 ### fallback (deployment-time, not selection) — `src/default_rule.py`
 
+**Rule source:** both the refined subset and the full-pool fallback are drawn from the **LLM-coarse (gpt54, one-shot)** rule pool (`rules/financebench_single_cluster/llm/gpt54/one_shot/<slug>_10_llm/`). The refined subset is specifically the **p_v2** selection over that pool (`selected_rules_pareto_v2/<slug>.json`), averaging 5.1 rules per question out of the ~63-rule pool.
+
 **Algorithm:** at inference on each unsampled doc:
-1. Apply refined rules (e.g. p_v2's output) → retrieved text
+1. Apply **p_v2 refined rules** → retrieved text
 2. Ask **gpt54mini** "does this text contain the answer?"
 3. If YES → answer with gpt54 on refined retrieval
-4. If NO → fall back to full rule pool, then answer with gpt54
+4. If NO → fall back to **full LLM-coarse pool** (~63 rules), then answer with gpt54
 
 **Result:** **uAcc = 0.892 (matches base exactly), cost_u = 0.0302 (only 18% of base's 0.169 retrieval cost)**. Mean fallback rate 11.8% — the gate triggers on ~6 of 50 unsampled docs per question. Recovers the entire p_v2→base generalization gap at ~3× the refined retrieval cost (still 5.6× cheaper than always-full).
 
