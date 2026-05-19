@@ -10,6 +10,11 @@ from core.pipeline.e2e_utils.cache import CacheResult
 from gt_gen import generator
 
 
+@pytest.fixture(autouse=True)
+def _isolate_default_log_dir(tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)
+
+
 def _make_dataset(tmp_path: Path, names: tuple[str, ...] = ("doc_a",)) -> Path:
     root = tmp_path / "court" / "latest"
     raw = root / "raw"
@@ -62,6 +67,9 @@ def test_generate_ground_truth_defaults_to_native_pdf_mini(tmp_path, monkeypatch
     assert summary.generated_count == 1
     assert summary.results[0].cached_input_tokens == 6
     assert summary.results[0].cost_usd == pytest.approx(0.00003)
+    assert summary.log_path is not None
+    assert summary.log_path.parent == Path(generator.DEFAULT_LOG_DIR)
+    assert summary.log_path.exists()
     assert seen["llm_provider"] == "azure"
     assert seen["model"] == "gpt-5.4-mini"
     assert seen["pdf_path"] == root / "raw" / "doc_a.pdf"
@@ -152,6 +160,7 @@ def test_cli_parser_defaults_to_native_pdf_mini():
     assert args.input_mode == "auto"
     assert args.generation_mode == "single"
     assert args.progress_cost is True
+    assert args.log_dir == generator.DEFAULT_LOG_DIR
 
 
 def test_cli_parser_accepts_query_indices():
@@ -387,6 +396,161 @@ def test_generation_mode_all_answers_selected_queries_once_per_doc(tmp_path, mon
         )
     ) == {"1": "docket", "2": "judge"}
     assert generator._api_usage_totals(summary.results)[:4] == (200, 100, 40, 0.02)
+
+
+def test_generate_ground_truth_writes_latency_cost_log(tmp_path, monkeypatch):
+    root = _make_dataset(tmp_path)
+
+    def fake_call(self, **kwargs):
+        return CacheResult(
+            response='{"answer":"23-35560","support":"cover page"}',
+            input_tokens=10,
+            cached_input_tokens=6,
+            output_tokens=5,
+            latency_ms=1.0,
+            cache_hit=False,
+            cost_usd=0.00003,
+        )
+
+    monkeypatch.setattr(generator.NativePDFCacheCaller, "call", fake_call)
+
+    summary = generator.generate_ground_truth(
+        target_dir=root,
+        query_idx=1,
+        num_doc=1,
+        cache_db=str(tmp_path / "cache.db"),
+        log_dir=tmp_path / "logs",
+    )
+
+    assert summary.log_path is not None
+    log_text = summary.log_path.read_text(encoding="utf-8")
+    assert "event=llm_call" in log_text
+    assert "latency_ms=1.000" in log_text
+    assert "cost_usd=0.000030" in log_text
+    assert "event=run_summary" in log_text
+    assert "api_latency_ms=1.000" in log_text
+    assert "run_latency_ms=" in log_text
+
+
+def test_post_call_parse_failure_keeps_latency_cost_in_log(tmp_path, monkeypatch):
+    root = _make_dataset(tmp_path)
+
+    def fake_call(self, **kwargs):
+        return CacheResult(
+            response="not json",
+            input_tokens=10,
+            cached_input_tokens=6,
+            output_tokens=5,
+            latency_ms=1.0,
+            cache_hit=False,
+            cost_usd=0.00003,
+        )
+
+    monkeypatch.setattr(generator.NativePDFCacheCaller, "call", fake_call)
+
+    summary = generator.generate_ground_truth(
+        target_dir=root,
+        query_idx=1,
+        num_doc=1,
+        cache_db=str(tmp_path / "cache.db"),
+        log_dir=tmp_path / "logs",
+    )
+
+    assert summary.failed_count == 1
+    result = summary.results[0]
+    assert result.status == "failed"
+    assert result.input_tokens == 10
+    assert result.cached_input_tokens == 6
+    assert result.output_tokens == 5
+    assert result.latency_ms == pytest.approx(1.0)
+    assert result.cost_usd == pytest.approx(0.00003)
+    assert generator._api_usage_totals(summary.results)[:4] == (
+        10,
+        6,
+        5,
+        0.00003,
+    )
+
+    assert summary.log_path is not None
+    log_text = summary.log_path.read_text(encoding="utf-8")
+    assert "event=llm_call" in log_text
+    assert "status=failed" in log_text
+    assert "latency_ms=1.000" in log_text
+    assert "cost_usd=0.000030" in log_text
+    assert "api_latency_ms=1.000" in log_text
+
+
+def test_generation_mode_all_logs_one_llm_call_per_doc(tmp_path, monkeypatch):
+    root = _make_dataset(tmp_path)
+
+    def fake_call(self, **kwargs):
+        return CacheResult(
+            response=json.dumps(
+                {
+                    "answers": [
+                        {"query_idx": 1, "answer": "docket", "support": "page 1"},
+                        {"query_idx": 2, "answer": "judge", "support": "page 2"},
+                    ]
+                }
+            ),
+            input_tokens=100,
+            cached_input_tokens=50,
+            output_tokens=20,
+            latency_ms=7.5,
+            cache_hit=False,
+            cost_usd=0.01,
+        )
+
+    monkeypatch.setattr(generator.NativePDFCacheCaller, "call", fake_call)
+
+    summary = generator.generate_ground_truth_for_queries(
+        target_dir=root,
+        query_indices=[1, 2],
+        generation_mode="all",
+        cache_db=str(tmp_path / "cache.db"),
+        log_dir=tmp_path / "logs",
+    )
+
+    assert summary.log_path is not None
+    log_text = summary.log_path.read_text(encoding="utf-8")
+    assert log_text.count("event=llm_call") == 1
+    assert "query_ids=1,2" in log_text
+    assert "api_latency_ms=7.500" in log_text
+    assert "cost_usd=0.010000" in log_text
+
+
+def test_print_summary_includes_final_latency_cost_and_log_path(tmp_path, capsys):
+    summary = generator.GenerationSummary(
+        dataset_root=tmp_path / "court" / "latest",
+        query=generator.QuerySpec(idx=1, text="Q1", answer_type="string"),
+        selected_count=1,
+        generated_count=1,
+        skipped_existing_count=0,
+        failed_count=0,
+        run_latency_ms=12.34,
+        log_path=tmp_path / "logs" / "run.log",
+        results=(
+            generator.DocRunResult(
+                doc_id="doc_a",
+                output_path=tmp_path / "doc_a.txt_answers.json",
+                status="generated",
+                query_idx=1,
+                input_tokens=10,
+                cached_input_tokens=6,
+                output_tokens=5,
+                cost_usd=0.00003,
+                latency_ms=1.0,
+            ),
+        ),
+    )
+
+    generator._print_summary(summary)
+    out = capsys.readouterr().out
+
+    assert "Run Latency:  12.340 ms" in out
+    assert "API Latency:  1.000 ms" in out
+    assert "API Cost:     $0.000030" in out
+    assert f"Log File:     {summary.log_path}" in out
 
 
 def test_generation_mode_all_skips_existing_queries(tmp_path, monkeypatch):

@@ -6,6 +6,7 @@ import argparse
 import base64
 import hashlib
 import json
+import logging
 import os
 import random
 import sqlite3
@@ -14,6 +15,7 @@ import tempfile
 import threading
 import time
 from dataclasses import dataclass, field
+from datetime import datetime
 from pathlib import Path
 from typing import Any, Literal, Sequence
 
@@ -31,6 +33,7 @@ DEFAULT_MODEL = "gpt-5.4-mini"
 DEFAULT_CLAUDE_MODEL = "sonnet"
 DEFAULT_INPUT_MODE = "auto"
 DEFAULT_GENERATION_MODE = "single"
+DEFAULT_LOG_DIR = "logs/gt_gen"
 DEFAULT_MAX_TOKENS = 1200
 DEFAULT_CLAUDE_TIMEOUT_SEC = 600
 
@@ -77,6 +80,7 @@ class DocRunResult:
     cached_input_tokens: int = 0
     output_tokens: int = 0
     cost_usd: float = 0.0
+    latency_ms: float = 0.0
     api_call_id: str = ""
     error: str = ""
 
@@ -91,6 +95,8 @@ class GenerationSummary:
     generated_count: int
     skipped_existing_count: int
     failed_count: int
+    run_latency_ms: float = 0.0
+    log_path: Path | None = None
     results: tuple[DocRunResult, ...] = field(default_factory=tuple)
 
 
@@ -104,6 +110,8 @@ class BatchGenerationSummary:
     generated_count: int
     skipped_existing_count: int
     failed_count: int
+    run_latency_ms: float = 0.0
+    log_path: Path | None = None
     results: tuple[DocRunResult, ...] = field(default_factory=tuple)
 
 
@@ -116,6 +124,18 @@ class AzureResponsesCallResult:
     cached_input_tokens: int
     output_tokens: int
     cost_usd: float
+
+
+@dataclass(frozen=True)
+class RunMetrics:
+    """Deduplicated runtime metrics across generated result rows."""
+
+    input_tokens: int
+    cached_input_tokens: int
+    output_tokens: int
+    cost_usd: float
+    local_cache_hits: int
+    api_latency_ms: float
 
 
 def generate_ground_truth(
@@ -132,6 +152,7 @@ def generate_ground_truth(
     max_tokens: int = DEFAULT_MAX_TOKENS,
     claude_timeout_sec: int = DEFAULT_CLAUDE_TIMEOUT_SEC,
     progress_cost: bool = False,
+    log_dir: str | Path | None = DEFAULT_LOG_DIR,
 ) -> GenerationSummary:
     """Generate ground-truth answers for sampled PDFs.
 
@@ -151,7 +172,9 @@ def generate_ground_truth(
         max_tokens: Max output tokens.
         claude_timeout_sec: Timeout for each Claude Code CLI call.
         progress_cost: Print per-call API usage/cost as the run progresses.
+        log_dir: Optional directory for run log files.
     """
+    run_t0 = time.perf_counter()
     resolved_provider = normalize_llm_provider(llm_provider)
     resolved_model = resolve_model_for_provider(resolved_provider, model)
     resolved_input_mode = resolve_input_mode(resolved_provider, input_mode)
@@ -161,6 +184,12 @@ def generate_ground_truth(
     pdf_paths = sample_pdf_paths(dataset_root / "raw", num_doc=num_doc, seed=seed)
     gt_dir = dataset_root / "ground_truth"
     gt_dir.mkdir(parents=True, exist_ok=True)
+    run_logger = _make_run_logger(
+        log_dir=log_dir,
+        dataset_root=dataset_root,
+        input_mode=resolved_input_mode,
+        generation_mode=resolved_generation_mode,
+    )
 
     native_caller = (
         NativePDFCacheCaller(cache_db) if resolved_input_mode == "native-pdf" else None
@@ -192,8 +221,15 @@ def generate_ground_truth(
             )
             continue
 
+        response: CacheResult | None = None
+        api_call_id = ""
         try:
             if resolved_generation_mode == "all":
+                api_call_id = _build_result_api_call_id(
+                    pdf_path=pdf_path,
+                    queries=[query],
+                    generation_mode=resolved_generation_mode,
+                )
                 response = _call_model_for_queries_for_doc(
                     pdf_path=pdf_path,
                     queries=[query],
@@ -207,11 +243,6 @@ def generate_ground_truth(
                     claude_timeout_sec=claude_timeout_sec,
                 )
                 answer = parse_answers_response(response.response, [query])[query.idx]
-                api_call_id = _build_result_api_call_id(
-                    pdf_path=pdf_path,
-                    queries=[query],
-                    generation_mode=resolved_generation_mode,
-                )
             else:
                 response = _call_model_for_doc(
                     pdf_path=pdf_path,
@@ -230,43 +261,48 @@ def generate_ground_truth(
             _merge_ground_truth(output_path, gt_key, answer)
             _record_result(
                 results,
-                DocRunResult(
+                _doc_run_result(
                     doc_id=doc_id,
                     output_path=output_path,
                     status="generated",
                     query_idx=query.idx,
-                    cache_hit=response.cache_hit,
+                    response=response,
                     answer=answer,
-                    input_tokens=response.input_tokens,
-                    cached_input_tokens=response.cached_input_tokens,
-                    output_tokens=response.output_tokens,
-                    cost_usd=response.cost_usd,
                     api_call_id=api_call_id,
                 ),
                 progress_cost=progress_cost,
+                run_logger=run_logger,
             )
         except Exception as exc:  # keep the batch moving across bad PDFs/API failures
             _record_result(
                 results,
-                DocRunResult(
+                _doc_run_result(
                     doc_id=doc_id,
                     output_path=output_path,
                     status="failed",
                     query_idx=query.idx,
+                    response=response,
+                    api_call_id=api_call_id,
                     error=f"{type(exc).__name__}: {exc}",
                 ),
                 progress_cost=progress_cost,
+                run_logger=run_logger,
             )
-
-    return GenerationSummary(
+    summary = GenerationSummary(
         dataset_root=dataset_root,
         query=query,
         selected_count=len(pdf_paths),
         generated_count=sum(r.status == "generated" for r in results),
         skipped_existing_count=sum(r.status == "skipped_existing" for r in results),
         failed_count=sum(r.status == "failed" for r in results),
+        run_latency_ms=_elapsed_ms(run_t0),
+        log_path=run_logger.log_path if run_logger is not None else None,
         results=tuple(results),
     )
+    if run_logger is not None:
+        run_logger.log_run_summary(summary.results, summary.run_latency_ms)
+        run_logger.close()
+    return summary
 
 
 def generate_ground_truth_for_queries(
@@ -283,6 +319,7 @@ def generate_ground_truth_for_queries(
     max_tokens: int = DEFAULT_MAX_TOKENS,
     claude_timeout_sec: int = DEFAULT_CLAUDE_TIMEOUT_SEC,
     progress_cost: bool = False,
+    log_dir: str | Path | None = DEFAULT_LOG_DIR,
 ) -> BatchGenerationSummary:
     """Generate ground-truth answers for multiple queries using doc-major order.
 
@@ -292,7 +329,9 @@ def generate_ground_truth_for_queries(
 
     Args:
         progress_cost: Print per-call API usage/cost as the run progresses.
+        log_dir: Optional directory for run log files.
     """
+    run_t0 = time.perf_counter()
     resolved_provider = normalize_llm_provider(llm_provider)
     resolved_model = resolve_model_for_provider(resolved_provider, model)
     resolved_input_mode = resolve_input_mode(resolved_provider, input_mode)
@@ -302,6 +341,12 @@ def generate_ground_truth_for_queries(
     pdf_paths = sample_pdf_paths(dataset_root / "raw", num_doc=num_doc, seed=seed)
     gt_dir = dataset_root / "ground_truth"
     gt_dir.mkdir(parents=True, exist_ok=True)
+    run_logger = _make_run_logger(
+        log_dir=log_dir,
+        dataset_root=dataset_root,
+        input_mode=resolved_input_mode,
+        generation_mode=resolved_generation_mode,
+    )
 
     native_caller = (
         NativePDFCacheCaller(cache_db) if resolved_input_mode == "native-pdf" else None
@@ -351,6 +396,7 @@ def generate_ground_truth_for_queries(
                 queries=pending_queries,
                 generation_mode=resolved_generation_mode,
             )
+            response: CacheResult | None = None
             try:
                 response = _call_model_for_queries_for_doc(
                     pdf_path=pdf_path,
@@ -370,34 +416,33 @@ def generate_ground_truth_for_queries(
                 for query in pending_queries:
                     _record_result(
                         results,
-                        DocRunResult(
+                        _doc_run_result(
                             doc_id=doc_id,
                             output_path=output_path,
                             status="generated",
                             query_idx=query.idx,
-                            cache_hit=response.cache_hit,
+                            response=response,
                             answer=answers[query.idx],
-                            input_tokens=response.input_tokens,
-                            cached_input_tokens=response.cached_input_tokens,
-                            output_tokens=response.output_tokens,
-                            cost_usd=response.cost_usd,
                             api_call_id=api_call_id,
                         ),
                         progress_cost=progress_cost,
+                        run_logger=run_logger,
                     )
             except Exception as exc:  # keep the batch moving across bad PDFs/API failures
                 for query in pending_queries:
                     _record_result(
                         results,
-                        DocRunResult(
+                        _doc_run_result(
                             doc_id=doc_id,
                             output_path=output_path,
                             status="failed",
                             query_idx=query.idx,
+                            response=response,
                             api_call_id=api_call_id,
                             error=f"{type(exc).__name__}: {exc}",
                         ),
                         progress_cost=progress_cost,
+                        run_logger=run_logger,
                     )
             continue
 
@@ -416,6 +461,7 @@ def generate_ground_truth_for_queries(
                 )
                 continue
 
+            response: CacheResult | None = None
             try:
                 response = _call_model_for_doc(
                     pdf_path=pdf_path,
@@ -434,42 +480,47 @@ def generate_ground_truth_for_queries(
                 _merge_ground_truth(output_path, gt_key, answer)
                 _record_result(
                     results,
-                    DocRunResult(
+                    _doc_run_result(
                         doc_id=doc_id,
                         output_path=output_path,
                         status="generated",
                         query_idx=query.idx,
-                        cache_hit=response.cache_hit,
+                        response=response,
                         answer=answer,
-                        input_tokens=response.input_tokens,
-                        cached_input_tokens=response.cached_input_tokens,
-                        output_tokens=response.output_tokens,
-                        cost_usd=response.cost_usd,
                     ),
                     progress_cost=progress_cost,
+                    run_logger=run_logger,
                 )
             except Exception as exc:  # keep the batch moving across bad PDFs/API failures
                 _record_result(
                     results,
-                    DocRunResult(
+                    _doc_run_result(
                         doc_id=doc_id,
                         output_path=output_path,
                         status="failed",
                         query_idx=query.idx,
+                        response=response,
                         error=f"{type(exc).__name__}: {exc}",
                     ),
                     progress_cost=progress_cost,
+                    run_logger=run_logger,
                 )
 
-    return BatchGenerationSummary(
+    summary = BatchGenerationSummary(
         dataset_root=dataset_root,
         queries=tuple(queries),
         selected_count=len(pdf_paths),
         generated_count=sum(r.status == "generated" for r in results),
         skipped_existing_count=sum(r.status == "skipped_existing" for r in results),
         failed_count=sum(r.status == "failed" for r in results),
+        run_latency_ms=_elapsed_ms(run_t0),
+        log_path=run_logger.log_path if run_logger is not None else None,
         results=tuple(results),
     )
+    if run_logger is not None:
+        run_logger.log_run_summary(summary.results, summary.run_latency_ms)
+        run_logger.close()
+    return summary
 
 
 class NativePDFCacheCaller:
@@ -1793,6 +1844,11 @@ def _build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Print per-call API token usage and cumulative cost while running.",
     )
+    parser.add_argument(
+        "--log-dir",
+        default=DEFAULT_LOG_DIR,
+        help="Directory for gt_gen latency/cost log files.",
+    )
     return parser
 
 
@@ -1819,6 +1875,7 @@ def main(
             max_tokens=args.max_tokens,
             claude_timeout_sec=args.claude_timeout_sec,
             progress_cost=args.progress_cost,
+            log_dir=args.log_dir,
         )
         _print_batch_summary(summary)
         return summary
@@ -1836,6 +1893,7 @@ def main(
         max_tokens=args.max_tokens,
         claude_timeout_sec=args.claude_timeout_sec,
         progress_cost=args.progress_cost,
+        log_dir=args.log_dir,
     )
     _print_summary(summary)
     return summary
@@ -1863,15 +1921,218 @@ def _parse_query_indices_arg(raw: str) -> list[int] | None:
     return indices
 
 
+class GTGenRunLogger:
+    """File logger for one gt_gen run."""
+
+    def __init__(
+        self,
+        *,
+        log_dir: str | Path,
+        dataset_root: Path,
+        input_mode: ResolvedInputMode,
+        generation_mode: GenerationMode,
+    ) -> None:
+        log_path = _build_run_log_path(
+            log_dir=log_dir,
+            dataset_root=dataset_root,
+            generation_mode=generation_mode,
+        )
+        log_path.parent.mkdir(parents=True, exist_ok=True)
+        self.log_path = log_path
+        self.dataset_root = dataset_root
+        self.input_mode = input_mode
+        self.generation_mode = generation_mode
+        self._seen_call_ids: set[str] = set()
+        self._logger = logging.getLogger(f"gt_gen.run.{time.time_ns()}")
+        self._logger.setLevel(logging.INFO)
+        self._logger.propagate = False
+        self._handler = logging.FileHandler(log_path, encoding="utf-8")
+        self._handler.setFormatter(
+            logging.Formatter("%(asctime)s %(levelname)s %(message)s")
+        )
+        self._logger.addHandler(self._handler)
+        self._logger.info(
+            _format_log_fields(
+                event="run_start",
+                dataset_root=str(dataset_root),
+                input_mode=input_mode,
+                generation_mode=generation_mode,
+            )
+        )
+
+    def log_result(self, result: DocRunResult) -> None:
+        if result.status == "skipped_existing":
+            return
+        call_id = _result_call_id(result)
+        if call_id in self._seen_call_ids:
+            return
+        self._seen_call_ids.add(call_id)
+        event = "llm_call"
+        if result.cache_hit:
+            event = "local_cache_hit"
+        elif result.status == "failed" and not _result_has_call_metrics(result):
+            event = "llm_call_failed"
+        self._logger.info(
+            _format_log_fields(
+                event=event,
+                dataset_root=str(self.dataset_root),
+                doc_id=result.doc_id,
+                query_ids=_result_query_ids(result),
+                input_mode=self.input_mode,
+                generation_mode=self.generation_mode,
+                cache_hit=str(result.cache_hit).lower(),
+                latency_ms=f"{result.latency_ms:.3f}",
+                cost_usd=f"{result.cost_usd:.6f}",
+                input_tokens=result.input_tokens,
+                cached_input_tokens=result.cached_input_tokens,
+                output_tokens=result.output_tokens,
+                status=result.status,
+                error=result.error,
+            )
+        )
+
+    def log_run_summary(
+        self,
+        results: Sequence[DocRunResult],
+        run_latency_ms: float,
+    ) -> None:
+        metrics = _run_metrics(results)
+        self._logger.info(
+            _format_log_fields(
+                event="run_summary",
+                dataset_root=str(self.dataset_root),
+                input_mode=self.input_mode,
+                generation_mode=self.generation_mode,
+                run_latency_ms=f"{run_latency_ms:.3f}",
+                api_latency_ms=f"{metrics.api_latency_ms:.3f}",
+                cost_usd=f"{metrics.cost_usd:.6f}",
+                input_tokens=metrics.input_tokens,
+                cached_input_tokens=metrics.cached_input_tokens,
+                output_tokens=metrics.output_tokens,
+                local_cache_hits=metrics.local_cache_hits,
+            )
+        )
+
+    def close(self) -> None:
+        self._handler.flush()
+        self._logger.removeHandler(self._handler)
+        self._handler.close()
+
+
+def _make_run_logger(
+    *,
+    log_dir: str | Path | None,
+    dataset_root: Path,
+    input_mode: ResolvedInputMode,
+    generation_mode: GenerationMode,
+) -> GTGenRunLogger | None:
+    if log_dir is None:
+        return None
+    return GTGenRunLogger(
+        log_dir=log_dir,
+        dataset_root=dataset_root,
+        input_mode=input_mode,
+        generation_mode=generation_mode,
+    )
+
+
+def _build_run_log_path(
+    *,
+    log_dir: str | Path,
+    dataset_root: Path,
+    generation_mode: GenerationMode,
+) -> Path:
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
+    dataset_slug = _safe_slug(_dataset_name_for_log(dataset_root))
+    return Path(log_dir) / f"gt_gen_{timestamp}_{dataset_slug}_{generation_mode}.log"
+
+
+def _dataset_name_for_log(dataset_root: Path) -> str:
+    return (
+        dataset_root.parent.name
+        if dataset_root.name == "latest"
+        else dataset_root.name
+    )
+
+
+def _safe_slug(value: str) -> str:
+    chars = [char if char.isalnum() or char in {"-", "_"} else "_" for char in value]
+    return "".join(chars).strip("_") or "dataset"
+
+
+def _format_log_fields(**fields: Any) -> str:
+    return " ".join(
+        f"{key}={_format_log_value(value)}" for key, value in fields.items()
+    )
+
+
+def _format_log_value(value: Any) -> str:
+    text = str(value)
+    if not text:
+        return '""'
+    if any(char.isspace() for char in text) or '"' in text:
+        return json.dumps(text, ensure_ascii=False)
+    return text
+
+
+def _elapsed_ms(start: float) -> float:
+    return (time.perf_counter() - start) * 1000.0
+
+
+def _result_call_id(result: DocRunResult) -> str:
+    if result.api_call_id:
+        return result.api_call_id
+    return f"single:{result.doc_id}:{result.query_idx}:{result.output_path}"
+
+
+def _result_query_ids(result: DocRunResult) -> str:
+    if result.api_call_id:
+        return result.api_call_id.rsplit(":", 1)[-1]
+    return str(result.query_idx)
+
+
 def _record_result(
     results: list[DocRunResult],
     result: DocRunResult,
     *,
     progress_cost: bool,
+    run_logger: GTGenRunLogger | None = None,
 ) -> None:
     results.append(result)
+    if run_logger is not None:
+        run_logger.log_result(result)
     if progress_cost:
         _print_progress_cost(result, results)
+
+
+def _doc_run_result(
+    *,
+    doc_id: str,
+    output_path: Path,
+    status: str,
+    query_idx: int,
+    response: CacheResult | None = None,
+    answer: Any = None,
+    api_call_id: str = "",
+    error: str = "",
+) -> DocRunResult:
+    return DocRunResult(
+        doc_id=doc_id,
+        output_path=output_path,
+        status=status,
+        query_idx=query_idx,
+        cache_hit=response.cache_hit if response is not None else False,
+        answer=answer,
+        input_tokens=response.input_tokens if response is not None else 0,
+        cached_input_tokens=(
+            response.cached_input_tokens if response is not None else 0
+        ),
+        output_tokens=response.output_tokens if response is not None else 0,
+        cost_usd=response.cost_usd if response is not None else 0.0,
+        latency_ms=response.latency_ms if response is not None else 0.0,
+        api_call_id=api_call_id,
+        error=error,
+    )
 
 
 def _build_result_api_call_id(
@@ -1887,14 +2148,26 @@ def _build_result_api_call_id(
 def _api_usage_totals(
     results: Sequence[DocRunResult],
 ) -> tuple[int, int, int, float, int]:
+    metrics = _run_metrics(results)
+    return (
+        metrics.input_tokens,
+        metrics.cached_input_tokens,
+        metrics.output_tokens,
+        metrics.cost_usd,
+        metrics.local_cache_hits,
+    )
+
+
+def _run_metrics(results: Sequence[DocRunResult]) -> RunMetrics:
     input_tokens = 0
     cached_input_tokens = 0
     output_tokens = 0
     cost_usd = 0.0
     local_cache_hits = 0
+    api_latency_ms = 0.0
     seen_usage_keys: set[str] = set()
     for position, result in enumerate(results):
-        if result.status != "generated":
+        if result.status not in {"generated", "failed"}:
             continue
         usage_key = result.api_call_id or f"result:{position}"
         if usage_key in seen_usage_keys:
@@ -1907,7 +2180,27 @@ def _api_usage_totals(
         cached_input_tokens += result.cached_input_tokens
         output_tokens += result.output_tokens
         cost_usd += result.cost_usd
-    return input_tokens, cached_input_tokens, output_tokens, cost_usd, local_cache_hits
+        api_latency_ms += result.latency_ms
+    return RunMetrics(
+        input_tokens=input_tokens,
+        cached_input_tokens=cached_input_tokens,
+        output_tokens=output_tokens,
+        cost_usd=cost_usd,
+        local_cache_hits=local_cache_hits,
+        api_latency_ms=api_latency_ms,
+    )
+
+
+def _result_has_call_metrics(result: DocRunResult) -> bool:
+    return any(
+        (
+            result.input_tokens,
+            result.cached_input_tokens,
+            result.output_tokens,
+            result.cost_usd,
+            result.latency_ms,
+        )
+    )
 
 
 def _format_usd(value: float) -> str:
@@ -1927,7 +2220,14 @@ def _print_progress_cost(
     )
     total = _format_usd(cost_usd)
     if result.status == "failed":
-        print(f"[GT_COST] q{result.query_idx} {result.doc_id}: failed total={total}")
+        if _result_has_call_metrics(result):
+            print(
+                f"[GT_COST] q{result.query_idx} {result.doc_id}: "
+                f"failed latency_ms={result.latency_ms:.3f} "
+                f"cost={_format_usd(result.cost_usd)} total={total}"
+            )
+        else:
+            print(f"[GT_COST] q{result.query_idx} {result.doc_id}: failed total={total}")
         return
     if result.status == "skipped_existing":
         print(f"[GT_COST] q{result.query_idx} {result.doc_id}: skipped total={total}")
@@ -1940,6 +2240,7 @@ def _print_progress_cost(
         return
     print(
         f"[GT_COST] q{result.query_idx} {result.doc_id}: "
+        f"latency_ms={result.latency_ms:.3f} "
         f"input={result.input_tokens} "
         f"cached_input={result.cached_input_tokens} "
         f"output={result.output_tokens} "
@@ -1951,15 +2252,23 @@ def _print_progress_cost(
     )
 
 
-def _print_usage_summary(results: Sequence[DocRunResult]) -> None:
-    input_tokens, cached_input_tokens, output_tokens, cost_usd, local_cache_hits = (
-        _api_usage_totals(results)
-    )
-    print(f"API Input:    {input_tokens}")
-    print(f"API Cached:   {cached_input_tokens}")
-    print(f"API Output:   {output_tokens}")
-    print(f"API Cost:     {_format_usd(cost_usd)}")
-    print(f"Local Cache:  {local_cache_hits}")
+def _print_usage_summary(
+    results: Sequence[DocRunResult],
+    *,
+    run_latency_ms: float | None = None,
+    log_path: Path | None = None,
+) -> None:
+    metrics = _run_metrics(results)
+    if run_latency_ms is not None:
+        print(f"Run Latency:  {run_latency_ms:.3f} ms")
+    print(f"API Latency:  {metrics.api_latency_ms:.3f} ms")
+    print(f"API Input:    {metrics.input_tokens}")
+    print(f"API Cached:   {metrics.cached_input_tokens}")
+    print(f"API Output:   {metrics.output_tokens}")
+    print(f"API Cost:     {_format_usd(metrics.cost_usd)}")
+    print(f"Local Cache:  {metrics.local_cache_hits}")
+    if log_path is not None:
+        print(f"Log File:     {log_path}")
 
 
 def _print_summary(summary: GenerationSummary) -> None:
@@ -1970,7 +2279,11 @@ def _print_summary(summary: GenerationSummary) -> None:
     print(f"Generated:    {summary.generated_count}")
     print(f"Skipped:      {summary.skipped_existing_count}")
     print(f"Failed:       {summary.failed_count}")
-    _print_usage_summary(summary.results)
+    _print_usage_summary(
+        summary.results,
+        run_latency_ms=summary.run_latency_ms,
+        log_path=summary.log_path,
+    )
     for result in summary.results:
         suffix = " cache_hit" if result.cache_hit else ""
         if result.status == "failed":
@@ -1990,7 +2303,11 @@ def _print_batch_summary(summary: BatchGenerationSummary) -> None:
     print(f"Generated:    {summary.generated_count}")
     print(f"Skipped:      {summary.skipped_existing_count}")
     print(f"Failed:       {summary.failed_count}")
-    _print_usage_summary(summary.results)
+    _print_usage_summary(
+        summary.results,
+        run_latency_ms=summary.run_latency_ms,
+        log_path=summary.log_path,
+    )
     for result in summary.results:
         suffix = " cache_hit" if result.cache_hit else ""
         if result.status == "failed":
