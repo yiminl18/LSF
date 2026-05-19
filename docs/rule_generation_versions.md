@@ -62,11 +62,17 @@ All numbers come from `eval_merge/<slug>_{sampled,unsampled}.json` produced by `
 - Not yet evaluated. The `rules/financebench_multi_clusters/llm/gpt54/one_shot/` directory exists but eval_merge for it is empty.
 
 ### 6. Agentic-gen (`agent/run_agent_gen.py`)
-- **Approach**: Claude Opus 4.7 generates rules from scratch by inspecting the reconstructed JSON of each sampled doc (via `list_docs` + `read_doc_json`), authoring new Python rule functions (via `write_rule`), and grounding each rewrite step in the **same five verification tools as `rule_selection_agentic`** (`compute_cost`, `compute_coverage`, `verify_accuracy`, `list_rules`, `inspect_rule`). Hard constraint: `match_rate = 1.0` on every sampled doc, checked via `verify_accuracy --d-star-mode all_labeled`. Budget: 30 verify_accuracy calls per question. **No rule refinement** is applied; the table values are for the raw generated pool.
-- **Spec**: `docs/rule_generation_agentic_from_pdf.md` (title kept; the agent reads the reconstructed JSON, never PDFs).
-- **Task 1 (random sample)**: rules generated from `data/financebench/sample_doc_labels.json` (the original random 10-doc sample). Output dir: `rules/financebench_single_cluster/agent/opus47/agentic/raw/<slug>_10_agentic/`.
-- **Task 2 (FPS sample)**: rules generated from `data/financebench/sample/fps/sample_doc_labels.json` (10 docs selected by Farthest-Point Sampling on document embeddings). Output dir: `rules/financebench_single_cluster/agent/opus47/agentic_fps/raw/<slug>_10_agentic_fps/`. The Task-1 / Task-2 split lets us measure whether FPS diversity in `D_s` produces rules that generalise better to unsampled docs.
-- **Status**: implementation complete; runs scheduled on the `lsf` server. Table values filled in once `test/run_eval_merge_agentic.py` completes on both splits.
+- **Approach**: Claude Opus 4.7 generates rules from scratch by inspecting the reconstructed JSON of each sampled doc (via `list_docs` + `read_doc_json`), authoring new Python rule functions (via `write_rule`), and grounding each rewrite step in the verification tools (`compute_cost`, `verify_accuracy`, `list_rules`, `inspect_rule`). Hard constraint: `match_rate = 1.0` on every sampled doc, checked via `verify_accuracy --d-star-mode all_labeled`. Budget: 30 verify_accuracy calls per question. **No rule refinement** is applied; the table values are for the raw generated pool. Typical output: 1–2 rules per question.
+- **Spec**: `docs/rule_generation_agentic_from_pdf.md` (the agent reads reconstructed JSON, never PDFs).
+- **Task 1 (random sample)**: rules generated from `data/financebench/sample_doc_labels.json` (original random 10-doc sample).
+  - **Result**: **sAcc=0.960, uAcc=0.820**, cost_s=**0.0062**, cost_u=**0.0046**.
+  - Highest sAcc of any single-cluster method. Cost is ~37× cheaper than LLM-coarse on unsampled (0.0046 vs 0.1686).
+  - Output dir: `rules/financebench_single_cluster/agent/opus47/agentic/raw/<slug>_10_agentic/`
+- **Task 2 (FPS sample)**: rules generated from `data/financebench/sample/fps/sample_doc_labels.json` (10 docs selected by Farthest-Point Sampling on document embeddings, chosen to maximise structural diversity).
+  - **Result**: **sAcc=0.960, uAcc=0.786**, cost_s=0.0082, cost_u=0.0079.
+  - Same sAcc as Task 1. FPS did **not** improve unsampled generalisation over the random sample (uAcc 0.786 vs 0.820) — the random sample was already diverse enough for these 10 questions.
+  - Output dir: `rules/financebench_single_cluster/agent/opus47/agentic_fps/raw/<slug>_10_agentic_fps/`
+- **Status**: complete. Both tasks evaluated via `test/run_eval_merge_agentic.py`.
 
 ---
 
@@ -74,35 +80,47 @@ All numbers come from `eval_merge/<slug>_{sampled,unsampled}.json` produced by `
 
 | Question | Winner on sAcc | Winner on uAcc | Winner on cost_u |
 |----------|----------------|----------------|------------------|
-| Single cluster, accuracy | **LLM-coarse gpt54** (0.910) | **LLM-coarse gpt54** (0.892) | **Agent-refined gpt54** (0.036) |
+| Single cluster, accuracy | **Agentic-gen Task 1 & 2** (0.960) | **LLM-coarse gpt54** (0.892) | **Agentic-gen Task 1** (0.0046) |
+| Single cluster, best accuracy+cost joint | **Agentic-gen Task 1** (sAcc 0.960, cost 0.0046) | — | — |
 | Multi cluster, accuracy | LLM-coarse-multi not measured | **Agent-raw multi gpt54** (0.843) | **Agent-raw multi opus47** (0.013) |
-| Best single-cluster generalization gap (sAcc − uAcc) | LLM-coarse: **+0.018** | Agent-raw single gpt54: +0.106 | Multi-cluster gpt54 agent: +0.013 (essentially tied) |
+| Best single-cluster generalization gap (sAcc − uAcc) | LLM-coarse: **+0.018** | Agentic-gen Task 1: **+0.140** | Agentic-gen Task 1 cost_u: **0.0046** |
 
 ### Surprising findings
 
-1. **LLM-coarse beats agent on accuracy** on single cluster — counterintuitive given the agent has access to feedback loops. The agent's iterative refinement saves cost but loses accuracy. Suggests gpt54's single-shot rule synthesis is already strong for this task; agentic refinement helps only on cost.
+1. **Agentic-gen (JSON loop) beats LLM-coarse on sampled accuracy** — sAcc 0.960 vs 0.910, while being ~37× cheaper on retrieval cost (cost_u 0.0046 vs 0.1686). The verify-accuracy feedback loop during generation lets Opus 4.7 write tighter rules that still cover all training docs, rather than the broad over-coverage produced by LLM-coarse's single-shot approach.
 
-2. **Multi-cluster generalizes much better than single-cluster** — Agent-raw multi-gpt54: sAcc 0.856, uAcc 0.843, gap +0.013. The 18-doc diverse sample is enough to learn rules that transfer to other document types. Single-cluster (10 same-type docs) overfits more.
+2. **FPS sampling did not improve unsampled generalization** — Task 2 (FPS) uAcc=0.786 vs Task 1 (random) uAcc=0.820. Farthest-Point Sampling was designed to maximise structural diversity in D_s; for these 10 cover-page / financial-statement questions the random sample was already diverse enough. FPS may help more on questions that require multi-document layout variation.
 
-3. **Opus47 vs gpt54 for agent generation**:
+3. **LLM-coarse beats agent on unsampled accuracy** — LLM-coarse uAcc=0.892 vs Agentic-gen Task 1 uAcc=0.820. The generalization gap for Agentic-gen is larger (0.14 vs 0.018 for LLM-coarse). The hard constraint (`match_rate = 1.0` on all sampled docs) may cause the agent to overfit to the 10 training docs.
+
+4. **Multi-cluster generalizes much better than single-cluster** — Agent-raw multi-gpt54: sAcc 0.856, uAcc 0.843, gap +0.013. The 18-doc diverse sample is enough to learn rules that transfer to other document types. Single-cluster (10 same-type docs) overfits more.
+
+5. **Opus47 vs gpt54 for agent generation**:
    - Single cluster: opus47 slightly better on both accuracy and uAcc, slightly worse on cost.
    - Multi cluster: opus47 much cheaper (10×) but loses 0.14 uAcc to gpt54. Opus produces tighter rules; gpt54 produces more conservative/broader rules.
 
-4. **Agent-refined regresses on unsampled** — refinement at generation time over-prunes. The downstream selection algorithms (Pareto v2, fallback) handle this trade-off better.
+6. **Agent-refined regresses on unsampled** — refinement at generation time over-prunes. The downstream selection algorithms (Pareto v2, fallback) handle this trade-off better.
 
 ---
 
 ## Dataset details
 
-| Cluster | # Sampled docs | # Unsampled docs | # Questions | Total |
-|---------|--------------:|----------------:|------------:|------:|
-| `financebench_single_cluster` | 10 | 50 | 10 | 600 doc-question pairs |
-| `financebench_multi_clusters` | 18 | 96 | 12 | 1,368 doc-question pairs |
+| Cluster | Sample set | # Sampled docs | # Unsampled docs | # Questions | Total |
+|---------|------------|---------------:|-----------------:|------------:|------:|
+| `financebench_single_cluster` | random | 10 | 50 | 10 | 600 doc-question pairs |
+| `financebench_single_cluster` | FPS | 10 | 50 | 10 | 600 doc-question pairs |
+| `financebench_multi_clusters` | — | 18 | 96 | 12 | 1,368 doc-question pairs |
 
 - **Single cluster** = all docs are 10-K filings.
 - **Multi cluster** = mixed: 10-K, 10-Q, 8-K, earnings releases.
+- **FPS sample** = 10 docs selected by Farthest-Point Sampling on document embeddings to maximise structural diversity; unsampled set is the remaining 50 docs not in the FPS sample.
 
-Sampled docs (with ground truth) live in `data/financebench/sample_doc_labels.json`. Unsampled docs (held-out) in `data/financebench/unsampled_doc_labels.json`.
+| Split | Labels file |
+|-------|-------------|
+| Random sampled | `data/financebench/sample_doc_labels.json` |
+| Random unsampled | `data/financebench/unsampled_doc_labels.json` |
+| FPS sampled | `data/financebench/sample/fps/sample_doc_labels.json` |
+| FPS unsampled | `data/financebench/sample/fps/unsampled_doc_labels.json` |
 
 ---
 
