@@ -21,6 +21,8 @@ All numbers come from `eval_merge/<slug>_{sampled,unsampled}.json` produced by `
 | **Agent-refined** | (agent post-process) | single | gpt54 | 10 | 0.880 | **0.0363** | 10 | 0.734 | **0.0364** |
 | **Agent-raw** | `src/rule_gen_agent_claude.py` | **multi** | gpt54 | 12 | 0.856 | 0.0679 | 12 | **0.843** | 0.0869 |
 | **Agent-raw** | `src/rule_gen_agent_claude.py` | **multi** | opus47 | 12 | 0.852 | **0.0127** | 12 | 0.705 | **0.0125** |
+| **Task 1 — Agentic-gen (random)** | `agent/run_agent_gen.py --sample-set random` | single | opus47 | 10 | — | — | 10 | — | — |
+| **Task 2 — Agentic-gen (FPS)** | `agent/run_agent_gen.py --sample-set fps` | single (FPS) | opus47 | 10 | — | — | 10 | — | — |
 | LLM-coarse | `src/rule_gen_llm_coarse.py` | multi | gpt54 | — | — | — | — | — | — (not yet evaluated) |
 
 > Dataset: FinanceBench. "single cluster" = sample drawn from 60 FinanceBench docs (10 sampled, 50 unsampled). "multi cluster" = 18 sampled, 96 unsampled (12 questions instead of 10).
@@ -58,6 +60,13 @@ All numbers come from `eval_merge/<slug>_{sampled,unsampled}.json` produced by `
 
 ### 5. (Future) Multi-cluster LLM-coarse
 - Not yet evaluated. The `rules/financebench_multi_clusters/llm/gpt54/one_shot/` directory exists but eval_merge for it is empty.
+
+### 6. Agentic-gen (`agent/run_agent_gen.py`)
+- **Approach**: Claude Opus 4.7 generates rules from scratch by inspecting the reconstructed JSON of each sampled doc (via `list_docs` + `read_doc_json`), authoring new Python rule functions (via `write_rule`), and grounding each rewrite step in the **same five verification tools as `rule_selection_agentic`** (`compute_cost`, `compute_coverage`, `verify_accuracy`, `list_rules`, `inspect_rule`). Hard constraint: `match_rate = 1.0` on every sampled doc, checked via `verify_accuracy --d-star-mode all_labeled`. Budget: 30 verify_accuracy calls per question. **No rule refinement** is applied; the table values are for the raw generated pool.
+- **Spec**: `docs/rule_generation_agentic_from_pdf.md` (title kept; the agent reads the reconstructed JSON, never PDFs).
+- **Task 1 (random sample)**: rules generated from `data/financebench/sample_doc_labels.json` (the original random 10-doc sample). Output dir: `rules/financebench_single_cluster/agent/opus47/agentic/raw/<slug>_10_agentic/`.
+- **Task 2 (FPS sample)**: rules generated from `data/financebench/sample/fps/sample_doc_labels.json` (10 docs selected by Farthest-Point Sampling on document embeddings). Output dir: `rules/financebench_single_cluster/agent/opus47/agentic_fps/raw/<slug>_10_agentic_fps/`. The Task-1 / Task-2 split lets us measure whether FPS diversity in `D_s` produces rules that generalise better to unsampled docs.
+- **Status**: implementation complete; runs scheduled on the `lsf` server. Table values filled in once `test/run_eval_merge_agentic.py` completes on both splits.
 
 ---
 

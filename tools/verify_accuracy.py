@@ -50,22 +50,29 @@ def main():
     ap.add_argument("--output-dir",  default=str(SELECTOR_RUN_AGENT_DIR),
                     help="where per-call rule_apply_merge intermediates land")
     ap.add_argument("--model-name",  default="gpt54")
+    ap.add_argument("--d-star-mode", choices=("file", "all_labeled"), default="file",
+                    help="how to define D* (target docs the rule set must cover). "
+                         "'file' (default) reads eval_merge/<slug>_sampled.json. "
+                         "'all_labeled' uses every doc in --labels-file (use this for "
+                         "the agentic-generation pipeline where no full-pool baseline exists).")
     ap.add_argument("--format", choices=("text", "json"), default="json")
     args = ap.parse_args()
-
-    # eval_merge file naming uses the slug WITHOUT the "_llm" suffix
-    output_slug = args.question_slug.replace("_llm", "")
-    eval_merge_path = Path(args.eval_merge_dir) / f"{output_slug}_sampled.json"
-    if not eval_merge_path.exists():
-        print(f"ERROR: no eval_merge file at {eval_merge_path}", file=sys.stderr)
-        sys.exit(2)
-
-    # D* = docs where full-pool merge solves correctly
-    D_star = load_target_docs(eval_merge_path)
 
     # Load labels and sampled docs
     labels = json.loads(Path(args.labels_file).read_text(encoding="utf-8"))
     doc_names = [k.replace(".pdf", "") for k in labels.keys()]
+
+    if args.d_star_mode == "all_labeled":
+        # Agentic-generation case: D* = every labeled doc (= D_s, the sampled set).
+        D_star = set(doc_names)
+    else:
+        # Selection case: D* = docs where the full-pool merge solves correctly.
+        output_slug = args.question_slug.replace("_llm", "")
+        eval_merge_path = Path(args.eval_merge_dir) / f"{output_slug}_sampled.json"
+        if not eval_merge_path.exists():
+            print(f"ERROR: no eval_merge file at {eval_merge_path}", file=sys.stderr)
+            sys.exit(2)
+        D_star = load_target_docs(eval_merge_path)
 
     Path(args.output_dir).mkdir(parents=True, exist_ok=True)
 
