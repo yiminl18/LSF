@@ -36,8 +36,8 @@ PROCESSING_DIR        = "data/financebench/processing"
 OUT_DIR               = Path("data/financebench/sample/fps")
 
 L_BINS     = 50      # per-doc chunks (FPS spec §2 step 3)
-STOP_RATIO = 0.5     # elbow rule (FPS spec §5)
-MAX_K      = None    # let elbow decide
+STOP_RATIO = 0.5     # elbow rule (FPS spec §5) — won't fire on a single-cluster pool
+MAX_K      = 10      # hard cap: take the top-10 most-diverse picks
 SEED       = 0
 
 
