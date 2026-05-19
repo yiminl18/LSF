@@ -58,6 +58,29 @@ def _make_slug(q: str) -> str:
     return s[:60]
 
 
+def _active_question_slugs(questions: list[str], question_slug_prefix: str | None) -> list[str]:
+    slugs: list[str] = []
+    for question in questions:
+        slug = _make_slug(question)
+        if question_slug_prefix and not slug.startswith(question_slug_prefix):
+            continue
+        slugs.append(slug)
+    return slugs
+
+
+def _completed_docs_for_questions(out_base: Path, question_slugs: list[str]) -> set[str]:
+    if not question_slugs:
+        return set()
+
+    per_question_docs: list[set[str]] = []
+    for slug in question_slugs:
+        q_dir = out_base / slug
+        docs = {p.stem for p in q_dir.glob("*.json")} if q_dir.exists() else set()
+        per_question_docs.append(docs)
+
+    return set.intersection(*per_question_docs) if per_question_docs else set()
+
+
 def _judge(question: str, ground_truth, predicted, gpt54_mod) -> bool:
     if ground_truth is None or predicted is None:
         return False
@@ -85,8 +108,14 @@ def main() -> None:
     ap.add_argument("--model",    default="opus47",
                     help="Model alias (default: opus47)")
     ap.add_argument("--split",    choices=("sampled", "unsampled"), default="sampled")
+    ap.add_argument("--labels-file", default=None,
+                    help="Optional path to a labels JSON file; overrides --split")
     ap.add_argument("--question-slug", default=None,
                     help="Run only questions whose slug starts with this prefix")
+    ap.add_argument("--output-name", default=None,
+                    help="Optional custom output directory name under baseline_results/<dataset>/")
+    ap.add_argument("--max-docs", type=int, default=None,
+                    help="Run at most N not-yet-completed docs from the selected labels set")
     ap.add_argument("--skip-existing", action="store_true", default=True)
     ap.add_argument("--no-skip-existing", dest="skip_existing", action="store_false")
     ap.add_argument("--timeout",  type=int, default=300)
@@ -95,14 +124,49 @@ def main() -> None:
     baseline_mod = importlib.import_module(f"baseline.{args.baseline}")
     gpt54_mod    = importlib.import_module("models.gpt54")
 
-    labels: dict[str, dict] = json.loads(_SPLIT_LABELS[args.split].read_text(encoding="utf-8"))
     questions    = [l.strip() for l in QUERIES_FILE.read_text().splitlines() if l.strip()]
+    labels_path  = Path(args.labels_file) if args.labels_file else _SPLIT_LABELS[args.split]
+    labels: dict[str, dict] = json.loads(labels_path.read_text(encoding="utf-8"))
 
-    out_base = _ROOT / "baseline_results" / DATASET / f"{args.baseline}_{args.model}"
+    out_name = args.output_name or f"{args.baseline}_{args.model}"
+    out_base = _ROOT / "baseline_results" / DATASET / out_name
     out_base.mkdir(parents=True, exist_ok=True)
 
+    active_slugs = _active_question_slugs(questions, args.question_slug)
+    completed_docs = _completed_docs_for_questions(out_base, active_slugs)
+
+    selected_items = sorted(labels.items())
+    if args.max_docs is not None:
+        selected_items = [
+            (pdf_key, doc_labels)
+            for pdf_key, doc_labels in selected_items
+            if pdf_key.replace(".pdf", "") not in completed_docs
+        ][:args.max_docs]
+        labels = dict(selected_items)
+
+    if args.max_docs is not None:
+        metadata = {
+            "baseline": args.baseline,
+            "model": args.model,
+            "split": args.split,
+            "labels_file": str(labels_path.relative_to(_ROOT)) if labels_path.is_relative_to(_ROOT) else str(labels_path),
+            "output_name": out_name,
+            "question_slug_prefix": args.question_slug,
+            "max_docs": args.max_docs,
+            "selected_docs": [pdf_key.replace(".pdf", "") for pdf_key, _ in selected_items],
+            "completed_docs_skipped": sorted(completed_docs),
+        }
+        (out_base / "run_metadata.json").write_text(
+            json.dumps(metadata, indent=2, ensure_ascii=False) + "\n",
+            encoding="utf-8",
+        )
+
     print(f"baseline={args.baseline}  model={args.model}  split={args.split}")
-    print(f"questions={len(questions)}  docs={len(labels)}  output={out_base}\n")
+    print(f"questions={len(questions)}  docs={len(labels)}  output={out_base}")
+    print(f"labels_file={labels_path}")
+    if args.max_docs is not None:
+        print(f"completed_docs_skipped={len(completed_docs)}  selected_docs={len(labels)}")
+    print()
 
     all_summaries: list[dict] = []
 
