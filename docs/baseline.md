@@ -47,61 +47,85 @@ No rule pool, no span retrieval — the agent works directly from the raw docume
 ### Usage
 
 ```bash
-# Single (question, doc) pair — dry run
-python src/baseline/agentic_claude_qa.py \
-    --doc data/financebench/processing/JPMORGAN_2023_10K_reconstructed.json \
-    --question "What is the registrant's telephone number?" \
-    --model opus47
-
 # Run all questions × all sampled docs
-python src/baseline/run_baseline_eval.py --strategy agentic --split sampled --model opus47
+python src/baseline/run_eval.py --baseline agentic_claude_qa --model opus47 --split sampled
 
 # Run all questions × all unsampled docs
-python src/baseline/run_baseline_eval.py --strategy agentic --split unsampled --model gpt54
+python src/baseline/run_eval.py --baseline agentic_claude_qa --model gpt54 --split unsampled
+
+# Single question
+python src/baseline/run_eval.py --baseline agentic_claude_qa --model opus47 --split sampled \
+    --question-slug what_is_the_registrants_telephone_number
 ```
 
 ### Output layout
 
 ```
-results/financebench_single_cluster/baseline/
-└── agentic_claude_qa/
-    └── <model>/
-        ├── eval_sampled/
-        │   ├── <slug>_sampled.json    # per-question results
-        │   └── summary.json
-        └── eval_unsampled/
-            ├── <slug>_unsampled.json
-            └── summary.json
+baseline_results/
+└── <dataset>/                              e.g. financebench
+    └── <baseline>_<model>/                 e.g. agentic_claude_qa_opus47
+        ├── <question_slug>/                one folder per question
+        │   ├── <doc_name>.json             one file per (question, doc) pair
+        │   └── ...
+        └── summary.json                    mean accuracy, tokens, latency across questions
 ```
 
-### Per-question JSON schema
+**Example (FinanceBench, opus47):**
+
+```
+baseline_results/
+└── financebench/
+    └── agentic_claude_qa_opus47/
+        ├── what_is_the_registrants_telephone_number/
+        │   ├── JPMORGAN_2023_10K.json
+        │   ├── APPLE_2022_10K.json
+        │   └── ...                         (one file per doc in the split)
+        ├── what_is_total_assets_at_yearend_from_the_audited_balance_she/
+        │   └── ...
+        └── summary.json
+```
+
+### Per-doc JSON schema (`<question_slug>/<doc_name>.json`)
+
+One file per (question, document) pair — the atomic unit of results.
 
 ```json
 {
-  "question": "...",
-  "question_slug": "...",
-  "split": "sampled",
-  "model": "claude-opus-4-7",
-  "n": 10,
-  "n_correct": 8,
-  "accuracy": 0.800,
-  "avg_latency": 12.3,
-  "avg_input_tokens": 4500,
-  "avg_output_tokens": 120,
-  "avg_cost_usd": 0.045,
-  "per_doc": [
-    {
-      "doc_name": "JPMORGAN_2023_10K",
-      "answer": "(212) 270-6000",
-      "ground_truth": "(212) 270-6000",
-      "correct": true,
-      "input_tokens": 4821,
-      "output_tokens": 98,
-      "latency_seconds": 11.4,
-      "total_cost_usd": 0.042
-    }
-  ]
+  "doc_name":        "JPMORGAN_2023_10K",
+  "question":        "What is the registrant's telephone number?",
+  "question_slug":   "what_is_the_registrants_telephone_number",
+  "split":           "sampled",
+  "ground_truth":    "(212) 270-6000",
+  "answer":          "(212) 270-6000",
+  "correct":         true,
+  "status":          "ok",
+  "input_tokens":    4821,
+  "output_tokens":   98,
+  "latency_seconds": 11.4,
+  "total_cost_usd":  0.042,
+  "model":           "claude-opus-4-7"
 }
+```
+
+### Summary JSON schema (`summary.json`)
+
+One entry per question, aggregated over all docs in the split.
+
+```json
+[
+  {
+    "question":              "What is the registrant's telephone number?",
+    "question_slug":         "what_is_the_registrants_telephone_number",
+    "split":                 "sampled",
+    "model":                 "opus47",
+    "n":                     10,
+    "n_correct":             9,
+    "accuracy":              0.9,
+    "avg_input_tokens":      4650.3,
+    "avg_output_tokens":     102.1,
+    "avg_latency_seconds":   12.8
+  }
+]
 ```
 
 ---
@@ -111,4 +135,4 @@ results/financebench_single_cluster/baseline/
 1. Create `src/baseline/<strategy_name>.py` with a `run_qa(doc, question, **kwargs) -> dict` function.
 2. Add a row to the summary table above.
 3. Add a method-description section below.
-4. Run `src/baseline/run_baseline_eval.py --strategy <name>` to populate results.
+4. Run `src/baseline/run_eval.py --baseline <name>` to populate results.
