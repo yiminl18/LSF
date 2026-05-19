@@ -14,9 +14,10 @@ Baselines are the comparison floor for the LSF rule-based retrieval pipeline.
 | # | Strategy | Model | sAcc | cost_s | uAcc | cost_u | Notes |
 |---|----------|-------|-----:|-------:|-----:|-------:|-------|
 | 1 | **Agentic Claude QA** | opus47 | 0.920 | 1.3484 | — | — | Claude agent reads full doc with tools |
-| 2 | **Agentic Codex QA** | gpt54 | 0.940 | 0.6949 | — | — | Codex agent reads full doc with default tools |
+| 2 | **Agentic Codex QA** | gpt54 | 0.940 | 1.1807 | — | — | Codex agent reads full doc with default tools |
 
 `cost` = mean over docs of `input_tokens / total_doc_tokens` (retrieval proxy).
+For Agentic Codex QA, `input_tokens` includes cached input tokens for parity with Claude.
 
 ---
 
@@ -143,7 +144,7 @@ Strategy 1.
 
 **Measured sampled results:**
 - `sAcc = 0.940`
-- `cost_s = 0.6949`
+- `cost_s = 1.1807`
 - `latency_s = 18.46s`
 
 **Invocation:**
@@ -166,9 +167,9 @@ The baseline logs the common fields from Strategy 1 plus Codex-specific metadata
 | Field | Description |
 |-------|-------------|
 | `answer` | The model's answer string |
-| `input_tokens` | Total input tokens from Codex `turn.completed.usage` |
+| `input_tokens` | Total input tokens from Codex `turn.completed.usage`, including cached input tokens |
 | `output_tokens` | Total output tokens from Codex `turn.completed.usage` |
-| `cached_input_tokens` | Cached input tokens reported by Codex |
+| `cached_input_tokens` | Cached-input subset of `input_tokens` reported by Codex |
 | `reasoning_output_tokens` | Reasoning tokens reported by Codex |
 | `latency_seconds` | Wall-clock time from call to answer |
 | `total_cost_usd` | Always `null` unless Codex CLI starts reporting cost |
@@ -223,7 +224,7 @@ baseline_results/
   "answer": "(212) 270-6000",
   "correct": true,
   "status": "ok",
-  "input_tokens": 11842,
+  "input_tokens": 22466,
   "output_tokens": 311,
   "cached_input_tokens": 10624,
   "reasoning_output_tokens": 108,

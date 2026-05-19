@@ -207,7 +207,9 @@ def run_codex_gpt54(
     usage = parsed["usage"]
     answer = _parse_answer(last_text) or _parse_answer(jsonl_text)
 
-    input_tokens = int(usage.get("input_tokens") or 0)
+    direct_input_tokens = int(usage.get("input_tokens") or 0)
+    cached_input_tokens = int(usage.get("cached_input_tokens") or 0)
+    input_tokens = direct_input_tokens + cached_input_tokens
     output_tokens = int(usage.get("output_tokens") or 0)
 
     return {
@@ -218,7 +220,7 @@ def run_codex_gpt54(
         "latency_seconds": latency,
         "total_cost_usd": None,
         "model": resolved_model,
-        "cached_input_tokens": int(usage.get("cached_input_tokens") or 0),
+        "cached_input_tokens": cached_input_tokens,
         "reasoning_output_tokens": int(usage.get("reasoning_output_tokens") or 0),
         "codex_thread_id": parsed["thread_id"],
         "codex_event_count": parsed["event_count"],
