@@ -38,7 +38,7 @@ QUESTIONS = [
 ]
 
 SPLITS = [
-    ("sampled", "data/financebench/sample_doc_labels.json", "results/financebench_single_cluster/llm/gpt54/one_shot/eval_individual"),
+    ("sampled", "data/financebench/sample/single_cluster/random/sample_doc_labels.json", "results/financebench_single_cluster/llm/gpt54/one_shot/eval_individual"),
 ]
 
 CORRECT_LABELS = "data/financebench/correct_labels.json"

@@ -15,8 +15,8 @@ os.chdir(_ROOT)
 from rule_apply_merge import rule_apply_merge
 
 QUERIES_FILE     = "data/financebench/sample_queries.txt"
-SAMPLE_LABELS    = "data/financebench/sample_doc_labels.json"
-UNSAMPLED_LABELS = "data/financebench/unsampled_doc_labels.json"
+SAMPLE_LABELS    = "data/financebench/sample/single_cluster/random/sample_doc_labels.json"
+UNSAMPLED_LABELS = "data/financebench/sample/single_cluster/random/unsampled_doc_labels.json"
 PROCESSING_DIR   = "data/financebench/processing"
 RULES_DIR        = "rules/financebench_single_cluster/llm/gpt54/one_shot"
 SAMPLED_OUT_DIR  = "results/financebench_single_cluster/llm/gpt54/one_shot/rule_run_merge"

@@ -64,7 +64,7 @@ All numbers come from `eval_merge/<slug>_{sampled,unsampled}.json` produced by `
 ### 6. Agentic-gen (`agent/run_agent_gen.py`)
 - **Approach**: Claude Opus 4.7 generates rules from scratch by inspecting the reconstructed JSON of each sampled doc (via `list_docs` + `read_doc_json`), authoring new Python rule functions (via `write_rule`), and grounding each rewrite step in the verification tools (`compute_cost`, `verify_accuracy`, `list_rules`, `inspect_rule`). Hard constraint: `match_rate = 1.0` on every sampled doc, checked via `verify_accuracy --d-star-mode all_labeled`. Budget: 30 verify_accuracy calls per question. **No rule refinement** is applied; the table values are for the raw generated pool. Typical output: 1–2 rules per question.
 - **Spec**: `docs/rule_generation_agentic_from_pdf.md` (the agent reads reconstructed JSON, never PDFs).
-- **Task 1 (random sample)**: rules generated from `data/financebench/sample_doc_labels.json` (original random 10-doc sample).
+- **Task 1 (random sample)**: rules generated from `data/financebench/sample/single_cluster/random/sample_doc_labels.json` (original random 10-doc sample).
   - **Result**: **sAcc=0.960, uAcc=0.820**, cost_s=**0.0062**, cost_u=**0.0046**.
   - Highest sAcc of any single-cluster method. Cost is ~37× cheaper than LLM-coarse on unsampled (0.0046 vs 0.1686).
   - Output dir: `rules/financebench_single_cluster/agent/opus47/agentic/raw/<slug>_10_agentic/`
@@ -117,8 +117,8 @@ All numbers come from `eval_merge/<slug>_{sampled,unsampled}.json` produced by `
 
 | Split | Labels file |
 |-------|-------------|
-| Random sampled | `data/financebench/sample_doc_labels.json` |
-| Random unsampled | `data/financebench/unsampled_doc_labels.json` |
+| Random sampled | `data/financebench/sample/single_cluster/random/sample_doc_labels.json` |
+| Random unsampled | `data/financebench/sample/single_cluster/random/unsampled_doc_labels.json` |
 | FPS sampled | `data/financebench/sample/single_cluster/fps/sample_doc_labels.json` |
 | FPS unsampled | `data/financebench/sample/single_cluster/fps/unsampled_doc_labels.json` |
 

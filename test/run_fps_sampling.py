@@ -30,8 +30,8 @@ from models.embedding3small import embed, AZURE_DEPLOYMENT      # noqa: E402
 from sampling.fps          import farthest_point_sampling       # noqa: E402
 
 # ── Config ────────────────────────────────────────────────────────────────────
-SAMPLED_LABELS_FILE   = "data/financebench/sample_doc_labels.json"
-UNSAMPLED_LABELS_FILE = "data/financebench/unsampled_doc_labels.json"
+SAMPLED_LABELS_FILE   = "data/financebench/sample/single_cluster/random/sample_doc_labels.json"
+UNSAMPLED_LABELS_FILE = "data/financebench/sample/single_cluster/random/unsampled_doc_labels.json"
 PROCESSING_DIR        = "data/financebench/processing"
 OUT_DIR               = Path("data/financebench/sample/single_cluster/fps")
 

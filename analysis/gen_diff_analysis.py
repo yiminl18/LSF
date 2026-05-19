@@ -22,9 +22,9 @@ sys.path.insert(0, str(ROOT / "src"))
 SAMPLED_REFINE_DIR   = ROOT / "results/financebench_single_cluster/llm/gpt54/refine/rule_refine"
 UNSAMPLED_REFINE_DIR = ROOT / "rules/financebench_single_cluster/llm/gpt54mini/refine_unsampled"
 ONE_SHOT_RULES_DIR   = ROOT / "rules/financebench_single_cluster/llm/gpt54/one_shot"
-LABELS_FILE          = ROOT / "data/financebench/unsampled_doc_labels.json"
+LABELS_FILE          = ROOT / "data/financebench/sample/single_cluster/random/unsampled_doc_labels.json"
 PROCESSING_DIR       = ROOT / "data/financebench/processing"
-SAMPLED_LABELS_FILE  = ROOT / "data/financebench/sample_doc_labels.json"
+SAMPLED_LABELS_FILE  = ROOT / "data/financebench/sample/single_cluster/random/sample_doc_labels.json"
 SAMPLED_PROC_DIR     = ROOT / "data/financebench/processing"  # same dir
 OUT_FILE             = ROOT / "analysis/rule_diff_analysis.txt"
 

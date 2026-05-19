@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 RULES_BASE_DIR = ROOT / "rules/financebench_single_cluster/llm/gpt54/one_shot"
 
 # Where ground-truth labels live
-SAMPLED_LABELS_FILE = ROOT / "data/financebench/sample_doc_labels.json"
+SAMPLED_LABELS_FILE = ROOT / "data/financebench/sample/single_cluster/random/sample_doc_labels.json"
 
 # Where doc JSONs live
 PROCESSING_DIR = ROOT / "data/financebench/processing"

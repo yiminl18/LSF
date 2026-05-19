@@ -28,8 +28,8 @@ SAMPLED_REFINE   = ROOT / "results/financebench_single_cluster/llm/gpt54/refine/
 UNSAMPLED_REFINE = ROOT / "rules/financebench_single_cluster/llm/gpt54mini/refine_unsampled"
 ONE_SHOT_RULES   = ROOT / "rules/financebench_single_cluster/llm/gpt54/one_shot"
 CACHE_DIR        = ROOT / "analysis/rule_eval_cache"
-UNSAMPLED_LABELS = ROOT / "data/financebench/unsampled_doc_labels.json"
-SAMPLED_LABELS   = ROOT / "data/financebench/sample_doc_labels.json"
+UNSAMPLED_LABELS = ROOT / "data/financebench/sample/single_cluster/random/unsampled_doc_labels.json"
+SAMPLED_LABELS   = ROOT / "data/financebench/sample/single_cluster/random/sample_doc_labels.json"
 PROCESSING_DIR   = ROOT / "data/financebench/processing"
 OUT_FILE         = ROOT / "analysis/overfit_report.txt"
 

@@ -22,7 +22,7 @@ from rule_apply_merge import rule_apply_merge
 QUESTION       = "What is the registrant's exact name?"
 QUESTION_SLUG  = "what_is_the_registrants_exact_name_10"
 RULES_DIR      = "rules/financebench_single_cluster/llm/gpt54/one_shot"
-LABELS_FILE    = "data/financebench/unsampled_doc_labels.json"
+LABELS_FILE    = "data/financebench/sample/single_cluster/random/unsampled_doc_labels.json"
 PROCESSING_DIR = "data/financebench/processing"
 OUTPUT_DIR     = "results/financebench_single_cluster/llm/gpt54/one_shot/rule_run_merge_unsampled"
 EVAL_OUTPUT_DIR = "results/financebench_single_cluster/llm/gpt54/one_shot/eval_merge"

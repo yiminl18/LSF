@@ -24,7 +24,7 @@ from rule_refinement.cost_profile         import load_or_compute_cost_profile
 from rule_refinement.select_rules_pareto_v2  import run_selection_pareto_v2
 
 QUERIES_FILE        = "data/financebench/sample_queries.txt"
-LABELS_FILE         = "data/financebench/sample_doc_labels.json"
+LABELS_FILE         = "data/financebench/sample/single_cluster/random/sample_doc_labels.json"
 PROCESSING_DIR      = "data/financebench/processing"
 RULES_BASE_DIR      = "rules/financebench_single_cluster/llm/gpt54/one_shot"
 EVAL_MERGE_DIR      = "results/financebench_single_cluster/llm/gpt54/one_shot/eval_merge"

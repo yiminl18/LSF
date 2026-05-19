@@ -14,8 +14,8 @@ Use Claude Code with the Opus 4.7 model as an agent that selects rules for each 
 
 The corpus is split into two sets:
 
-- **Sampled docs** `D_s`: 10 documents per question (in `data/financebench/sample_doc_labels.json`). Used both as the "training" set for rule generation and as the calibration set for selection.
-- **Unsampled docs** `D_u`: 50 documents per question (in `data/financebench/unsampled_doc_labels.json`). Used as the held-out generalisation set.
+- **Sampled docs** `D_s`: 10 documents per question (in `data/financebench/sample/single_cluster/random/sample_doc_labels.json`). Used both as the "training" set for rule generation and as the calibration set for selection.
+- **Unsampled docs** `D_u`: 50 documents per question (in `data/financebench/sample/single_cluster/random/unsampled_doc_labels.json`). Used as the held-out generalisation set.
 
 The agent's job is to select, from a pre-generated rule pool in `rules/financebench_single_cluster/llm/gpt54/one_shot/<question_slug>_10_llm/`, a small subset `S` that:
 
@@ -234,7 +234,7 @@ low and per-rule coverage high.
 QUESTION   : {question}
 SLUG       : {question_slug}
 RULE POOL  : rules/financebench_single_cluster/llm/gpt54/one_shot/{question_slug}_10_llm/
-SAMPLED    : data/financebench/sample_doc_labels.json (10 docs)
+SAMPLED    : data/financebench/sample/single_cluster/random/sample_doc_labels.json (10 docs)
 COST CACHE : results/financebench_single_cluster/llm/gpt54/one_shot/cost_profile/{question_slug}_10_llm.json
 COV CACHE  : results/financebench_single_cluster/llm/gpt54/one_shot/eval_individual/{question_slug}_10_llm/
 OUTPUT     : results/financebench_single_cluster/llm/gpt54/one_shot/selected_rules_agent/{question_slug}_10_llm.json

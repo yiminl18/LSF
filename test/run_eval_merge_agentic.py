@@ -47,8 +47,8 @@ PROCESSING_DIR = "data/financebench/processing"
 def sample_set_config(name: str) -> dict:
     if name == "random":
         return {
-            "sampled_labels":   "data/financebench/sample_doc_labels.json",
-            "unsampled_labels": "data/financebench/unsampled_doc_labels.json",
+            "sampled_labels":   "data/financebench/sample/single_cluster/random/sample_doc_labels.json",
+            "unsampled_labels": "data/financebench/sample/single_cluster/random/unsampled_doc_labels.json",
             "slug_suffix":      "_10_agentic",
             "rules_dir":        "rules/financebench_single_cluster/agent/opus47/agentic/raw",
             "results_dir":      "results/financebench_single_cluster/agent/opus47/agentic/raw",

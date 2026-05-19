@@ -142,7 +142,7 @@ DESIGN HINTS
 
 def build_prompt(
     question: str,
-    labels_file: str = "data/financebench/sample_doc_labels.json",
+    labels_file: str = "data/financebench/sample/single_cluster/random/sample_doc_labels.json",
     processing_dir: str = "data/financebench/processing",
     rules_dir: str = "rules/agent/financebench_agent",
 ) -> str:
@@ -163,7 +163,7 @@ def build_prompt(
 
 def run(
     question: str,
-    labels_file: str = "data/financebench/sample_doc_labels.json",
+    labels_file: str = "data/financebench/sample/single_cluster/random/sample_doc_labels.json",
     processing_dir: str = "data/financebench/processing",
     rules_dir: str = "rules/agent/financebench_agent",
     model: str = "claude-opus-4-5",
@@ -193,7 +193,7 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="Generate rules via claude -p.")
     parser.add_argument("question")
-    parser.add_argument("--labels-file",    default="data/financebench/sample_doc_labels.json")
+    parser.add_argument("--labels-file",    default="data/financebench/sample/single_cluster/random/sample_doc_labels.json")
     parser.add_argument("--processing-dir", default="data/financebench/processing")
     parser.add_argument("--rules-dir",      default="rules/agent/financebench_agent")
     parser.add_argument("--model",          default="claude-opus-4-5")

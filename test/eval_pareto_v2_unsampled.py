@@ -24,7 +24,7 @@ from rule_apply_merge import rule_apply_merge
 
 # ── Config ────────────────────────────────────────────────────────────────────
 QUERIES_FILE    = "data/financebench/sample_queries.txt"
-LABELS_FILE     = "data/financebench/unsampled_doc_labels.json"
+LABELS_FILE     = "data/financebench/sample/single_cluster/random/unsampled_doc_labels.json"
 PROCESSING_DIR  = "data/financebench/processing"
 RULES_BASE_DIR  = "rules/financebench_single_cluster/llm/gpt54/one_shot"
 SELECTED_DIR    = "results/financebench_single_cluster/llm/gpt54/one_shot/selected_rules_pareto_v2"

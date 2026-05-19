@@ -319,7 +319,7 @@ _MODEL_ALIASES = {
 def build_prompt(
     question: str,
     docs: list[str],                    # list of DOC_NAMEs (no .pdf suffix)
-    labels_file: str = "data/financebench/sample_doc_labels.json",
+    labels_file: str = "data/financebench/sample/single_cluster/random/sample_doc_labels.json",
     processing_dir: str = "data/financebench/processing",
     rules_dir: str = "rules/financebench_single_cluster/agent/opus47/raw",
     model: str = "opus",
@@ -344,7 +344,7 @@ def build_prompt(
 def run(
     question: str,
     docs: list[str],                    # list of DOC_NAMEs (no .pdf suffix)
-    labels_file: str = "data/financebench/sample_doc_labels.json",
+    labels_file: str = "data/financebench/sample/single_cluster/random/sample_doc_labels.json",
     processing_dir: str = "data/financebench/processing",
     rules_dir: str = "rules/financebench_single_cluster/agent/opus47/raw",
     model: str = "opus",
@@ -385,7 +385,7 @@ if __name__ == "__main__":
                         metavar="DOC_NAME",
                         help="One or more sampled document names (no .pdf suffix).\n"
                              "Example: --docs AMCOR_2019_10K BOEING_2018_10K")
-    parser.add_argument("--labels-file",    default="data/financebench/sample_doc_labels.json")
+    parser.add_argument("--labels-file",    default="data/financebench/sample/single_cluster/random/sample_doc_labels.json")
     parser.add_argument("--processing-dir", default="data/financebench/processing")
     parser.add_argument("--rules-dir",      default="rules/financebench_single_cluster/agent/opus47/raw")
     parser.add_argument("--model",          default="opus",

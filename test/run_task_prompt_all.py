@@ -17,7 +17,7 @@ from rule_gen_agent_claude import run
 # ── CLI args ──────────────────────────────────────────────────────────────────
 
 parser = argparse.ArgumentParser(description="Run claude agent rule gen for all queries.")
-parser.add_argument("--labels-file",    default="data/financebench/sample_doc_labels.json")
+parser.add_argument("--labels-file",    default="data/financebench/sample/single_cluster/random/sample_doc_labels.json")
 parser.add_argument("--queries-file",   default=None,
                     help="Path to queries txt. If omitted, questions are derived from labels-file.")
 parser.add_argument("--processing-dir", default="data/financebench/processing")

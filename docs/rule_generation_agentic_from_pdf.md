@@ -32,7 +32,7 @@ The output rules follow the same signature and downstream-compatibility contract
 |------|--------|
 | The question text | `data/financebench/sample_queries.txt` (one line, passed to the agent in its prompt) |
 | The reconstructed JSON for each sampled doc (10 files) | `data/financebench/processing/<stem>_reconstructed.json` (offline-built; cached) |
-| Ground-truth labels for the sampled docs | `data/financebench/sample_doc_labels.json` (read by `verify_accuracy`, not directly by the agent) |
+| Ground-truth labels for the sampled docs | `data/financebench/sample/single_cluster/random/sample_doc_labels.json` (read by `verify_accuracy`, not directly by the agent) |
 | The hard constraint and soft targets | Spelled out in the task prompt |
 | The set of tools | JSON inspection + rule authoring + rule testing — see §4 |
 
@@ -149,7 +149,7 @@ The five tools above are shared. Generation adds these because the agent needs t
 Returns the list of reconstructed-JSON paths for every doc in the given labels file (the agent's "sampled set"), with per-doc span count and page count.
 
 ```bash
-python tools/list_docs.py --labels-file data/financebench/sample_doc_labels.json
+python tools/list_docs.py --labels-file data/financebench/sample/single_cluster/random/sample_doc_labels.json
 ```
 
 ### 4.7 `read_doc_json(stem, page|pages|filter)` — free

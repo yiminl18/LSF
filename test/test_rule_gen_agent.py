@@ -13,7 +13,7 @@ os.chdir(_ROOT)
 
 from rule_gen_agent import rule_gen_agent
 
-LABELS_FILE    = "data/financebench/sample_doc_labels.json"
+LABELS_FILE    = "data/financebench/sample/single_cluster/random/sample_doc_labels.json"
 PROCESSING_DIR = "data/financebench/processing"
 QUERIES_FILE   = "data/financebench/sample_queries.txt"
 

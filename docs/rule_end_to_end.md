@@ -32,8 +32,8 @@ This script runs the full rule-based QA pipeline for a set of questions on sampl
 python test/rule_end_to_end.py \
     --rule-gen-module   src/rule_gen_llm_coarse.py \
     --queries-file      data/financebench/sample_queries.txt \
-    --sample-labels     data/financebench/sample_doc_labels.json \
-    --unsampled-labels  data/financebench/unsampled_doc_labels.json \
+    --sample-labels     data/financebench/sample/single_cluster/random/sample_doc_labels.json \
+    --unsampled-labels  data/financebench/sample/single_cluster/random/unsampled_doc_labels.json \
     --processing-dir    data/financebench/processing \
     --rules-dir         rules/llm/financebench \
     --output-dir        results/e2e \
@@ -47,8 +47,8 @@ python test/rule_end_to_end.py \
 |---|---|---|
 | `--rule-gen-module` | `src/rule_gen_llm_coarse.py` | Path to any `src/rule_gen_*.py` file — the pipeline dynamically imports its `rule_gen_*` function |
 | `--queries-file` | `data/financebench/sample_queries.txt` | Questions to run |
-| `--sample-labels` | `data/financebench/sample_doc_labels.json` | Sampled doc labels (`"DOCNAME.pdf" → {q: a}`) |
-| `--unsampled-labels` | `data/financebench/unsampled_doc_labels.json` | Unsampled doc labels |
+| `--sample-labels` | `data/financebench/sample/single_cluster/random/sample_doc_labels.json` | Sampled doc labels (`"DOCNAME.pdf" → {q: a}`) |
+| `--unsampled-labels` | `data/financebench/sample/single_cluster/random/unsampled_doc_labels.json` | Unsampled doc labels |
 | `--processing-dir` | `data/financebench/processing` | Directory of `*_reconstructed.json` files |
 | `--rules-dir` | `rules/llm/financebench` | Where generated rule `.py` files are stored |
 | `--output-dir` | `results/e2e` | Root output directory for this pipeline run |

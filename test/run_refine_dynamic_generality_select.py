@@ -30,7 +30,7 @@ from rule_refinement.select_rules_auto_tighten import run_selection_auto_tighten
 
 # ── Paths ──────────────────────────────────────────────────────────────────────
 QUERIES_FILE         = "data/financebench/sample_queries.txt"
-LABELS_FILE          = "data/financebench/sample_doc_labels.json"
+LABELS_FILE          = "data/financebench/sample/single_cluster/random/sample_doc_labels.json"
 PROCESSING_DIR       = "data/financebench/processing"
 
 ONE_SHOT_RULES_DIR   = "rules/financebench_single_cluster/llm/gpt54/one_shot"
