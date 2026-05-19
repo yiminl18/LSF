@@ -1,0 +1,123 @@
+[1/5] Building pool ...
+  pool size: 59 unique docs (after dedup, with processing JSON)
+  questions: 30
+    - What is the registrant's exact name?
+    - What is the state (or other jurisdiction) of incorporation and the IRS Employer Identifica
+    - What is the address of principal executive offices and ZIP code?
+    - What is the registrant's telephone number?
+    - What is the fiscal year-end date stated on the cover?
+    - What is/are the trading symbol(s) and listing exchange(s)?
+    - How many shares of common stock were outstanding as of the cover-page reference date?
+    - What are the reportable operating segments (list names; if none, record "single segment")?
+    - What principal products/services are named in Item 1 (list top categories named)?
+    - What principal markets/geographies are named in Item 1 (list regions/countries named)?
+    - Are any "significant subsidiaries" identified (list names; "none" if not listed)?
+    - What is the location of principal properties (city/state/country as presented; "not disclo
+    - Does Item 1A (Risk Factors) appear (Yes/No; if No, record "not required" for SRCs)?
+    - How many distinct risk factor captions are presented in Item 1A (count captions; "not disc
+    - Does Item 1B (Unresolved Staff Comments) disclose any comments (Yes/No or "not applicable"
+    - Does Item 3 (Legal Proceedings) disclose any material proceedings (Yes/No)?
+    - Does Item 7 discuss liquidity and capital resources (Yes/No — MD&A must address it)?
+    - Does Item 7 discuss off-balance-sheet arrangements (Yes/No or "not applicable" if none)?
+    - Does Item 7A (Quantitative and Qualitative Disclosures about Market Risk) appear (Yes/No; 
+    - If Item 7A appears, which market risks are quantified (select all that appear: interest ra
+    - Who is the independent registered public accounting firm named in Item 8?
+    - What audit opinion type is expressed for the consolidated financial statements (Unqualifie
+    - What is total revenue for the most recent fiscal year (from the audited income statement)?
+    - What is net income (loss) for the most recent fiscal year?
+    - What is total assets at year-end (from the audited balance sheet)?
+    - What is long-term debt at year-end (0 if none)?
+    - Did management report any material weaknesses in internal control over financial reporting
+    - Is Part III information (directors, executive officers, compensation, ownership, etc.) inc
+    - If Part III is incorporated by reference, what is the proxy filing deadline stated on the 
+    - List one material agreement or other exhibit number explicitly identified in the Exhibit I
+[2/5] Embedding (cache=data/financebench/sample/fps/embeddings.npz) ...
+  [embed] 2950 chunks to embed
+    64/2950 chunks (2s)
+    320/2950 chunks (7s)
+    576/2950 chunks (11s)
+    832/2950 chunks (67s)
+    1088/2950 chunks (72s)
+    1344/2950 chunks (126s)
+    1600/2950 chunks (132s)
+    1856/2950 chunks (136s)
+    2112/2950 chunks (192s)
+    2368/2950 chunks (197s)
+    2624/2950 chunks (247s)
+    2880/2950 chunks (254s)
+  [embed] chunks done in 257s
+  [embed] 30 queries to embed
+  [cache] saved → data/financebench/sample/fps/embeddings.npz  (18.1 MB chunks)
+[3/5] Building v_d feature matrix (L=50 per query × 30 queries) ...
+  shape: (59, 1500)
+[4/5] Estimating separation (heuristic on company×form clusters) ...
+  δ_intra=1.0857493877410889  δ_inter=0.4825582504272461  ratio=0.4444471771070604  guarantee_holds=False
+[5/5] FPS (stop_ratio=0.5, max_K=None, seed=0) ...
+  K = 59 picked
+  gap sequence: [None, 1.0112, 0.9673, 0.9576, 0.9393, 0.9251, 0.8735, 0.8486, 0.8041, 0.7876, 0.7864, 0.767, 0.7431, 0.7254, 0.7241, 0.7182, 0.7169, 0.7065, 0.6979, 0.675, 0.6726, 0.671, 0.6697, 0.6522, 0.6521, 0.6416, 0.6403, 0.6352, 0.6293, 0.6214, 0.6209, 0.6114, 0.6088, 0.5944, 0.5887, 0.581, 0.5743, 0.5561, 0.548, 0.5278, 0.5167, 0.4983, 0.4876, 0.4826, 0.4679, 0.4583, 0.4432, 0.4015, 0.3818, 0.3813, 0.3743, 0.3671, 0.3521, 0.3444, 0.2692, 0.2631, 0.2599, 0.238, 0.1963]
+  sampled docs:
+    - GENERALMILLS_2022_10K
+    - AMD_2019_10K
+    - BESTBUY_2015_10K
+    - JOHNSON_JOHNSON_2022_10K
+    - APPLE_2021_10K
+    - APPLE_2018_10K
+    - APPLE_2017_10K
+    - AMAZON_2015_10K
+    - AMCOR_2021_10K
+    - CORNING_2022_10K
+    - BESTBUY_2022_10K
+    - BOEING_2022_10K
+    - BOEING_2017_10K
+    - APPLE_2020_10K
+    - AMD_2022_10K
+    - APPLE_2019_10K
+    - ACTIVISIONBLIZZARD_2017_10K
+    - NIKE_2019_10K
+    - AMCOR_2022_10K
+    - ADOBE_2020_10K
+    - COSTCO_2016_10K
+    - LOCKHEEDMARTIN_2021_10K
+    - KRAFTHEINZ_2021_10K
+    - APPLE_2022_10K
+    - INTEL_2022_10K
+    - AMCOR_2019_10K
+    - FOOTLOCKER_2023_10K
+    - BOEING_2020_10K
+    - BESTBUY_2020_10K
+    - LOCKHEEDMARTIN_2022_10K
+    - ACTIVISIONBLIZZARD_2020_10K
+    - EBAY_2021_10K
+    - APPLE_2016_10K
+    - INTEL_2016_10K
+    - COSTCO_2017_10K
+    - BESTBUY_2021_10K
+    - APPLE_2015_10K
+    - AMAZON_2018_10K
+    - NIKE_2021_10K
+    - AMD_2020_10K
+    - COSTCO_2018_10K
+    - BOEING_2019_10K
+    - AMAZON_2022_10K
+    - BESTBUY_2023_10K
+    - AMAZON_2017_10K
+    - ADOBE_2019_10K
+    - COSTCO_2015_10K
+    - AMD_2021_10K
+    - BOEING_2018_10K
+    - AMCOR_2023_10K
+    - ADOBE_2016_10K
+    - ADOBE_2022_10K
+    - AMAZON_2016_10K
+    - AMAZON_2019_10K
+    - ADOBE_2018_10K
+    - AMAZON_2020_10K
+    - ADOBE_2021_10K
+    - ADOBE_2015_10K
+    - ADOBE_2017_10K
+
+Saved:
+  data/financebench/sample/fps/sample_doc_labels.json    (59 docs)
+  data/financebench/sample/fps/unsampled_doc_labels.json  (0 docs)
+  data/financebench/sample/fps/fps_run.json
+  data/financebench/sample/fps/embeddings.npz            (cache, reusable)
