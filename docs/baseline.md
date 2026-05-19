@@ -14,7 +14,7 @@ Baselines are the comparison floor for the LSF rule-based retrieval pipeline.
 | # | Strategy | Model | sAcc | cost_s | uAcc | cost_u | Notes |
 |---|----------|-------|-----:|-------:|-----:|-------:|-------|
 | 1 | **Agentic Claude QA** | opus47 | 0.920 | 1.3484 | — | — | Claude agent reads full doc with tools |
-| 2 | **Agentic Codex QA** | gpt54 | TBD | TBD | TBD | TBD | Codex agent reads full doc with default tools |
+| 2 | **Agentic Codex QA** | gpt54 | 0.940 | 0.6949 | — | — | Codex agent reads full doc with default tools |
 
 `cost` = mean over docs of `input_tokens / total_doc_tokens` (retrieval proxy).
 
@@ -140,6 +140,10 @@ Strategy 1.
 
 **Model:**
 - `gpt54` — alias resolved by the wrapper to the Codex model id `gpt-5.4`
+
+**Measured sampled results:**
+- `sAcc = 0.940`
+- `cost_s = 0.6949`
 
 **Invocation:**
 
