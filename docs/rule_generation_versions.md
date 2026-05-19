@@ -21,8 +21,8 @@ All numbers come from `eval_merge/<slug>_{sampled,unsampled}.json` produced by `
 | **Agent-refined** | (agent post-process) | single | gpt54 | 10 | 0.880 | **0.0363** | 10 | 0.734 | **0.0364** |
 | **Agent-raw** | `src/rule_gen_agent_claude.py` | **multi** | gpt54 | 12 | 0.856 | 0.0679 | 12 | **0.843** | 0.0869 |
 | **Agent-raw** | `src/rule_gen_agent_claude.py` | **multi** | opus47 | 12 | 0.852 | **0.0127** | 12 | 0.705 | **0.0125** |
-| **Task 1 — Agentic-gen (random)** | `agent/run_agent_gen.py --sample-set random` | single | opus47 | 10 | — | — | 10 | — | — |
-| **Task 2 — Agentic-gen (FPS)** | `agent/run_agent_gen.py --sample-set fps` | single (FPS) | opus47 | 10 | — | — | 10 | — | — |
+| **Task 1 — Agentic-gen (random)** | `agent/run_agent_gen.py --sample-set random` | single | opus47 | 10 | 0.960 | 0.0062 | 10 | 0.820 | 0.0046 |
+| **Task 2 — Agentic-gen (FPS)** | `agent/run_agent_gen.py --sample-set fps` | single (FPS) | opus47 | 10 | 0.960 | 0.0082 | 10 | 0.786 | 0.0079 |
 | LLM-coarse | `src/rule_gen_llm_coarse.py` | multi | gpt54 | — | — | — | — | — | — (not yet evaluated) |
 
 > Dataset: FinanceBench. "single cluster" = sample drawn from 60 FinanceBench docs (10 sampled, 50 unsampled). "multi cluster" = 18 sampled, 96 unsampled (12 questions instead of 10).
