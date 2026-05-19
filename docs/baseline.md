@@ -13,8 +13,7 @@ Baselines are the comparison floor for the LSF rule-based retrieval pipeline.
 
 | # | Strategy | Model | sAcc | cost_s | uAcc | cost_u | Notes |
 |---|----------|-------|-----:|-------:|-----:|-------:|-------|
-| 1 | **Agentic Claude QA** | opus47 | — | — | — | — | Not yet evaluated |
-| 1 | **Agentic Claude QA** | gpt54 | — | — | — | — | Not yet evaluated |
+| 1 | **Agentic Claude QA** | opus47 | 0.920 | 1.3484 | — | — | Claude agent reads full doc with tools |
 
 `cost` = mean over docs of `input_tokens / total_doc_tokens` (retrieval proxy).
 
@@ -28,9 +27,8 @@ Given a question and a reconstructed document JSON, spawn a `claude -p` (Claude 
 The agent uses all default tools (Read, Bash, etc.) to inspect the document and answer the question.
 No rule pool, no span retrieval — the agent works directly from the raw document.
 
-**Model options:**
+**Model:**
 - `opus47` — Claude Opus 4.7 (`claude-opus-4-7`) as the agent brain
-- `gpt54` — GPT-4.5 (Azure) via a single direct chat-completion call (non-agentic)
 
 ### Metrics logged per (question, doc) pair
 
@@ -40,7 +38,7 @@ No rule pool, no span retrieval — the agent works directly from the raw docume
 | `input_tokens` | Total input tokens consumed (agent outer loop) |
 | `output_tokens` | Total output tokens consumed |
 | `latency_seconds` | Wall-clock time from call to answer |
-| `total_cost_usd` | Reported by claude CLI (opus47 only) |
+| `total_cost_usd` | Reported by claude CLI |
 | `model` | Model identifier used |
 | `status` | `ok`, `timeout`, `exit_N`, or `error` |
 
@@ -49,9 +47,6 @@ No rule pool, no span retrieval — the agent works directly from the raw docume
 ```bash
 # Run all questions × all sampled docs
 python src/baseline/run_eval.py --baseline agentic_claude_qa --model opus47 --split sampled
-
-# Run all questions × all unsampled docs
-python src/baseline/run_eval.py --baseline agentic_claude_qa --model gpt54 --split unsampled
 
 # Single question
 python src/baseline/run_eval.py --baseline agentic_claude_qa --model opus47 --split sampled \

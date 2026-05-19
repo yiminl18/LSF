@@ -1,21 +1,17 @@
 """Baseline strategy 1: Agentic Claude QA.
 
-Two modes depending on --model:
-  opus47  — spawn a claude -p (Claude Code) session; agent uses Read/Bash tools
-            to inspect the reconstructed JSON and answer the question.
-  gpt54   — single direct chat-completion call with the full document text.
+Spawns a claude -p (Claude Code) session; agent uses Read/Bash tools
+to inspect the reconstructed JSON and answer the question.
 
 Usage (single pair):
     python src/baseline/agentic_claude_qa.py \
         --doc data/financebench/processing/JPMORGAN_2023_10K_reconstructed.json \
-        --question "What is the registrant's telephone number?" \
-        --model opus47
+        --question "What is the registrant's telephone number?"
 """
 
 from __future__ import annotations
 
 import argparse
-import importlib
 import json
 import subprocess
 import sys
@@ -51,16 +47,6 @@ Rules:
   AGENTIC_QA_DONE answer=NOT_FOUND
 - Do not output anything else after the AGENTIC_QA_DONE line.
 """
-
-_DIRECT_SYSTEM = """\
-You are a financial document QA assistant. Given the full text of a document and a question,
-return only the answer — a short string (number, name, date, address, etc.).
-If the answer is not present in the document, reply with exactly: NOT_FOUND"""
-
-
-def _doc_text(doc_path: str | Path) -> str:
-    doc = json.loads(Path(doc_path).read_text(encoding="utf-8"))
-    return "\n".join(s.get("text", "") for s in doc.get("texts", []))
 
 
 def run_opus47(doc_path: str | Path, question: str, timeout: int = 300) -> dict:
@@ -127,44 +113,9 @@ def run_opus47(doc_path: str | Path, question: str, timeout: int = 300) -> dict:
     }
 
 
-def run_gpt54(doc_path: str | Path, question: str) -> dict:
-    gpt54 = importlib.import_module("models.gpt54")
-    text  = _doc_text(doc_path)
-    user_msg = f"Document:\n{text}\n\nQuestion: {question}"
-
-    t0 = time.time()
-    resp = gpt54.client.chat.completions.create(
-        model=gpt54.AZURE_DEPLOYMENT,
-        messages=[
-            {"role": "system",  "content": _DIRECT_SYSTEM},
-            {"role": "user",    "content": user_msg},
-        ],
-        temperature=0.0,
-    )
-    latency = round(time.time() - t0, 2)
-
-    answer        = (resp.choices[0].message.content or "").strip()
-    input_tokens  = resp.usage.prompt_tokens     if resp.usage else 0
-    output_tokens = resp.usage.completion_tokens if resp.usage else 0
-
-    return {
-        "status": "ok",
-        "answer": answer,
-        "input_tokens": input_tokens,
-        "output_tokens": output_tokens,
-        "latency_seconds": latency,
-        "total_cost_usd": None,
-        "model": gpt54.AZURE_DEPLOYMENT,
-    }
-
-
 def run_qa(doc_path: str | Path, question: str, model: str = "opus47",
-           timeout: int = 300) -> dict:
-    if model in _MODEL_ALIASES or model.startswith("claude"):
-        return run_opus47(doc_path, question, timeout=timeout)
-    if "gpt" in model or model == "gpt54":
-        return run_gpt54(doc_path, question)
-    raise ValueError(f"Unknown model: {model!r}. Use one of: {list(_MODEL_ALIASES)} or 'gpt54'")
+           timeout: int = 300, **_) -> dict:
+    return run_opus47(doc_path, question, timeout=timeout)
 
 
 def main() -> None:
@@ -172,7 +123,7 @@ def main() -> None:
     ap.add_argument("--doc",      required=True, help="Path to reconstructed JSON")
     ap.add_argument("--question", required=True, help="Question to answer")
     ap.add_argument("--model",    default="opus47",
-                    help="Model alias: opus47 (default), gpt54, sonnet, haiku")
+                    help="Model alias: opus47 (default), sonnet, haiku")
     ap.add_argument("--timeout",  type=int, default=300,
                     help="Timeout in seconds for claude sessions (default 300)")
     args = ap.parse_args()
