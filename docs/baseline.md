@@ -14,6 +14,7 @@ Baselines are the comparison floor for the LSF rule-based retrieval pipeline.
 | # | Strategy | Model | sAcc | cost_s | uAcc | cost_u | Notes |
 |---|----------|-------|-----:|-------:|-----:|-------:|-------|
 | 1 | **Agentic Claude QA** | opus47 | 0.920 | 1.3484 | — | — | Claude agent reads full doc with tools |
+| 2 | **Agentic Codex QA** | gpt54 | TBD | TBD | TBD | TBD | Codex agent reads full doc with default tools |
 
 `cost` = mean over docs of `input_tokens / total_doc_tokens` (retrieval proxy).
 
@@ -121,6 +122,115 @@ One entry per question, aggregated over all docs in the split.
     "avg_latency_seconds":   12.8
   }
 ]
+```
+
+---
+
+## Strategy 2 — Agentic Codex QA (`src/baseline/agentic_codex_qa.py`)
+
+### Approach
+
+Given a question and a reconstructed document JSON, spawn a non-interactive
+`codex exec` session. The Codex agent runs from the repo root with its default
+tool environment, reads/searches the raw reconstructed document, and answers the
+question directly.
+
+No rule pool, no span retrieval — this is the GPT-5.4/Codex analogue of
+Strategy 1.
+
+**Model:**
+- `gpt54` — alias resolved by the wrapper to the Codex model id `gpt-5.4`
+
+**Invocation:**
+
+```bash
+codex --ask-for-approval never exec \
+  --json \
+  --color never \
+  --model gpt-5.4 \
+  --cd <repo-root> \
+  --sandbox danger-full-access \
+  --output-last-message <path> \
+  <prompt>
+```
+
+### Metrics logged per (question, doc) pair
+
+The baseline logs the common fields from Strategy 1 plus Codex-specific metadata:
+
+| Field | Description |
+|-------|-------------|
+| `answer` | The model's answer string |
+| `input_tokens` | Total input tokens from Codex `turn.completed.usage` |
+| `output_tokens` | Total output tokens from Codex `turn.completed.usage` |
+| `cached_input_tokens` | Cached input tokens reported by Codex |
+| `reasoning_output_tokens` | Reasoning tokens reported by Codex |
+| `latency_seconds` | Wall-clock time from call to answer |
+| `total_cost_usd` | Always `null` unless Codex CLI starts reporting cost |
+| `model` | Resolved model id, normally `gpt-5.4` |
+| `status` | `ok`, `timeout`, `exit_N`, or `error` |
+| `codex_thread_id` | Codex session/thread id from JSONL events |
+| `codex_event_count` | Count of parseable Codex JSONL events |
+| `codex_error_message` | Error payload if Codex reports one |
+| `codex_log_path` | Path to saved Codex JSONL event log |
+| `codex_last_message_path` | Path to saved final Codex message |
+
+### Usage
+
+```bash
+# Run all questions × all sampled docs
+python src/baseline/run_eval.py --baseline agentic_codex_qa --model gpt54 --split sampled
+
+# Single question
+python src/baseline/run_eval.py --baseline agentic_codex_qa --model gpt54 --split sampled \
+    --question-slug what_is_the_registrants_telephone_number
+
+# Single document/question smoke test
+python src/baseline/agentic_codex_qa.py \
+    --doc data/financebench/processing/JPMORGAN_2023_10K_reconstructed.json \
+    --question "What is the registrant's telephone number?"
+```
+
+### Output layout
+
+```
+baseline_results/
+└── financebench/
+    └── agentic_codex_qa_gpt54/
+        ├── <question_slug>/
+        │   ├── <doc_name>.json
+        │   ├── logs/
+        │   │   ├── <doc_name>.codex.jsonl
+        │   │   └── <doc_name>.codex.last.txt
+        │   └── ...
+        └── summary.json
+```
+
+### Per-doc JSON schema (`<question_slug>/<doc_name>.json`)
+
+```json
+{
+  "doc_name": "JPMORGAN_2023_10K",
+  "question": "What is the registrant's telephone number?",
+  "question_slug": "what_is_the_registrants_telephone_number",
+  "split": "sampled",
+  "ground_truth": "(212) 270-6000",
+  "answer": "(212) 270-6000",
+  "correct": true,
+  "status": "ok",
+  "input_tokens": 11842,
+  "output_tokens": 311,
+  "cached_input_tokens": 10624,
+  "reasoning_output_tokens": 108,
+  "latency_seconds": 18.6,
+  "total_cost_usd": null,
+  "model": "gpt-5.4",
+  "codex_thread_id": "019e...",
+  "codex_event_count": 12,
+  "codex_error_message": null,
+  "codex_log_path": "baseline_results/financebench/agentic_codex_qa_gpt54/.../logs/JPMORGAN_2023_10K.codex.jsonl",
+  "codex_last_message_path": "baseline_results/financebench/agentic_codex_qa_gpt54/.../logs/JPMORGAN_2023_10K.codex.last.txt"
+}
 ```
 
 ---

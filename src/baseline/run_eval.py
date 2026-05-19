@@ -10,7 +10,7 @@ Usage:
     python src/baseline/run_eval.py --baseline agentic_claude_qa --model opus47 --split sampled
 
     # GPT-54 direct, unsampled docs
-    python src/baseline/run_eval.py --baseline agentic_claude_qa --model gpt54 --split unsampled
+    python src/baseline/run_eval.py --baseline agentic_codex_qa --model gpt54 --split unsampled
 
     # Single question (by slug prefix)
     python src/baseline/run_eval.py --baseline agentic_claude_qa --model opus47 --split sampled \
@@ -140,6 +140,8 @@ def main() -> None:
                     question=question,
                     model=args.model,
                     timeout=args.timeout,
+                    log_dir=q_dir / "logs",
+                    log_stem=doc_name,
                 )
             except Exception as e:
                 print(f"  ERROR {doc_name}: {e}")
@@ -170,6 +172,9 @@ def main() -> None:
                 "total_cost_usd":  result.get("total_cost_usd"),
                 "model":           result.get("model", args.model),
             }
+            for k, v in result.items():
+                if k not in record and k != "answer":
+                    record[k] = v
             out_file.write_text(json.dumps(record, indent=2, ensure_ascii=False),
                                 encoding="utf-8")
             per_doc_results.append(record)
