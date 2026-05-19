@@ -1,16 +1,57 @@
 # Agentic Rule Generation from PDFs
 
-This document specifies a Claude Code–driven agentic approach to **rule generation** where the input is **PDF files directly**, with no pre-existing reconstructed-JSON intermediate required. It is the generation-side counterpart of `docs/rule_selection_agentic.md` (which covers selection over an already-generated rule pool).
+This document specifies a Claude Code–driven agentic approach to **rule generation from scratch**. The agent receives **only PDFs, the question, and ground-truth labels** — no pre-existing rules of any kind. Its task is to **invent the rule set** by inspecting PDFs and writing new Python rule functions, iterating against the constraints until the merge accuracy target is met.
 
-The driver mirrors `agent/run_agent_select.py`'s pattern: spawn one Claude Opus 4.7 session per question, expose a fixed set of tools the agent invokes via Bash, capture the result + trace per session. The only differences from rule-selection-agentic are the **inputs** (PDFs instead of reconstructed JSON + a pre-built rule pool), the **tools** (PDF inspection tools instead of `list_rules`/`inspect_rule`), and the **output** (rule `.py` files instead of a selected-rules JSON).
+It is the generation-side counterpart of `docs/rule_selection_agentic.md`. The two specs differ in input and output:
+
+| | `rule_selection_agentic.md` | **this spec** |
+|---|------------------------------|----------------|
+| Input | Pre-generated rule pool + reconstructed JSON | **Only PDFs + question + labels (no rules at all)** |
+| Agent's job | Pick a subset from the existing pool | **Write new rule code from scratch** |
+| Output | A list of rule names already in the pool | **New `.py` files containing rule functions** |
+
+The driver mirrors `agent/run_agent_select.py`'s pattern: spawn one Claude Opus 4.7 session per question, expose a fixed set of tools the agent invokes via Bash, capture the result + trace per session. The differences are the **inputs**, the **tools** (PDF inspection + rule authoring instead of pool browsing), and the **output** (rule `.py` files instead of a selection JSON).
 
 ---
 
 ## 1. Goal
 
-Use Claude Code with Opus 4.7 as an agent that generates a minimal set of Python span-retrieval rules for each question, given **PDFs as the only document input**. The agent decides what rules to write, when to broaden or specialize them, and when to stop, subject to a hard merge-accuracy constraint and soft cost / rule-count targets.
+Use Claude Code with Opus 4.7 as an agent that **generates a minimal set of Python span-retrieval rules from scratch** for each question. The agent's session starts with **no rules of any kind** — its only inputs are the PDFs, the question text, and the ground-truth labels. It must inspect the PDFs, identify where the answer lives, and write Python rule functions that retrieve that content. The hard merge-accuracy constraint and the soft cost / rule-count targets define when it can stop.
 
 The output rules follow the same signature and downstream-compatibility contract as the existing LLM-coarse and agent-raw pipelines: a Python file per rule, each exporting a `def rule_<name>(doc: dict) -> list[dict]` that retrieves spans matching some pattern. This means the generated rules plug into the existing `rule_apply_merge` / `eval_judge` / Pareto-selection / agentic-selection pipelines unchanged.
+
+---
+
+## 1.5. Inputs and outputs (explicit)
+
+### What the agent has at session start
+
+| Item | Source |
+|------|--------|
+| The question text | `data/financebench/sample_queries.txt` (one line, passed to the agent in its prompt) |
+| The sampled PDFs (10 files) | `data/financebench/pdf/sampled/*.pdf` |
+| Ground-truth labels for the sampled docs | `data/financebench/sample_doc_labels.json` (read by `verify_accuracy` and `compute_coverage`, not directly by the agent) |
+| The hard constraint and soft targets | Spelled out in the task prompt |
+| The set of tools | PDF inspection + rule authoring + rule testing — see §4 |
+
+### What the agent does NOT have at session start
+
+| Item | Why excluded |
+|------|--------------|
+| Any rule files | The agent generates them. The output directory starts empty. |
+| Any pre-built rule pool | This is the key distinction from `rule_selection_agentic.md`. |
+| Reconstructed JSON spans (unless it explicitly requests one via `reconstruct_pdf`) | Reconstruction is a tool, not a free input. Cached after first use. |
+| Coverage / cost statistics | No `cov(r)` to look up — these only exist after a rule is written and tested. |
+
+### What the agent produces
+
+| Output | Path |
+|--------|------|
+| Generated rule files (one per rule) | `rules/.../agent/opus47_pdf/raw/<slug>_10_agent_pdf/rule_<name>.py` |
+| Session summary | `results/.../selected_rules_gen/<slug>.json` (rule list, metrics, rationale) |
+| Per-tool-call trace | `results/.../agent_trace/<slug>.jsonl` |
+
+The output rule files are the only artifact downstream pipelines need. They drop straight into existing infrastructure (`rule_apply_merge`, Pareto selection, agentic selection, etc.).
 
 ---
 
@@ -30,153 +71,187 @@ The rule pool is **created**, not chosen from. The agent starts with the empty s
 
 ## 3. Hard vs soft constraints
 
+**These match `docs/rule_selection_agentic.md` §3 exactly.** The only difference is the underlying rule set: in selection it's a subset `S` chosen from a pre-existing pool; here it's a set `R` the agent has generated so far in this session. The formulas, the targets, and the tools that verify them are identical.
+
 | Type | Constraint | How the agent checks it |
 |---|---|---|
-| Hard | Merge accuracy on `D_s` ≥ `target_accuracy` (default 0.95) | Call the `test_union` tool (LLM-as-judge over merged retrieval of all rules in the current set) |
-| Soft target | Minimise `Σ_{r∈R} avg_cost_ratio(r)` (retrieved tokens / total tokens) | Call the `test_rule` tool, which reports per-rule cost |
-| Soft target | Minimise `|R|` — prefer one broad rule over three narrow ones | Track in the agent's working memory |
-| Soft target | Per-rule coverage (fraction of `D_s` the rule fires on correctly) ≥ 0.2 | `test_rule` reports per-rule per-doc retrieval; agent computes coverage |
+| Hard | `A(R, d) = 1` for every `d ∈ D*_s` | Call the `verify_accuracy` tool (LLM-as-judge over merged retrieval, gpt54) |
+| Soft target | Minimise `Σ_{r∈R} avg_cost_ratio(r)` | Call the `compute_cost` tool |
+| Soft target | Maximise `min_{r∈R} cov(r)` (or mean / median, depending on emphasis) | Call the `compute_coverage` tool |
+| Soft target | Keep `|R|` small (avoid rule bloat) | Track in the agent's working memory |
 
-The hard constraint is the only one the agent cannot finalize without satisfying. Soft targets are negotiated against each other; the agent should aim for a defensible trade-off and explain its choice in the final report.
+`A(R, d)` denotes the merge accuracy of rule set `R` on doc `d` — apply every rule in `R`, union the retrieved spans, send the concatenated text + question to gpt54, judge with gpt54. `D*_s` is the set of docs answerable from the corpus; in the generation setting where no pre-existing pool defines a ceiling, **`D*_s = D_s` (all 10 sampled docs)** — the agent is expected to cover every sampled doc that has a ground-truth label. `cov(r)` is the fraction of sampled docs that rule `r` alone retrieves the correct answer for.
 
-A rule's cost is `retrieved_tokens / total_doc_tokens` per doc, averaged across `D_s`. Lower = more selective retrieval. Coverage is measured by a fast substring proxy against ground truth; only the final union accuracy is judged by LLM.
+The agent must not return a final `R` until the hard constraint is satisfied. Soft targets are negotiated against each other; the agent should aim for a defensible trade-off and explain its choice in the final report.
 
 ---
 
 ## 4. Tools the agent needs
 
-The five tools below wrap primitives already in `src/tools/` plus a couple of new ones for the PDF-side workflow. Each is a thin CLI invoked via the `Bash` tool.
+The agent uses the **same five constraint-verification tools as `docs/rule_selection_agentic.md` §4**, plus a small set of PDF inspection tools and a `write_rule` tool to author new rule files. The constraint-verification tools (compute_cost, compute_coverage, verify_accuracy) operate on whatever rule names the agent passes — selection-agentic passes names from a pre-built pool; generation-from-PDF passes names of rules it has just written this session.
 
-### 4.1 `list_pdfs(directory)` — free, no LLM
+### 4.1 `compute_cost(rule_names)` — free, no LLM
 
-Returns the list of PDF paths in the sampled or unsampled directory, plus per-doc metadata (page count, file size). The agent uses this to know what documents are available.
+**Same tool as selection §4.1.** Computes `avg_cost_ratio(r)` for each named rule across the sampled docs by applying the rule, tokenising the retrieved text, and dividing by total doc tokens. Returns per-rule cost + sum + max. No LLM.
+
+```bash
+python tools/compute_cost.py --question-slug <slug> --rules <r1> <r2> ...
+```
+
+For generation, the agent passes names of rules it has already written this session (`compute_cost --rules rule_a rule_b`); for selection, names from the pre-existing pool. Both invocations are identical — the tool just reads whichever rule `.py` files exist.
+
+### 4.2 `compute_coverage(rule_names)` — free, no LLM
+
+**Same tool as selection §4.2.** Returns `cov(r)` for each named rule (fraction of sampled docs where the rule alone retrieves the GT answer correctly). For pre-existing rules this looks up `eval_individual/<slug>/<r>_eval.json`; for newly-generated rules with no cached eval, computes via the substring proxy and (optionally) the LLM judge.
+
+```bash
+python tools/compute_coverage.py --question-slug <slug> --rules <r1> <r2> ...
+```
+
+### 4.3 `verify_accuracy(rule_names)` — paid (gpt54 QA + judge, ~20 calls per invocation)
+
+**Same tool as selection §4.3.** The hard-constraint verifier. Applies the rule union to each sampled doc, runs gpt54 QA on the merged retrieved text, runs gpt54 judge against ground truth, reports per-doc verdicts + overall `match_rate`. The agent cannot finalize until `match_rate = 1.0` on `D*_s`.
+
+```bash
+python tools/verify_accuracy.py --question-slug <slug> \
+                                 --question "..." \
+                                 --rules <r1> <r2> ...
+```
+
+This is the single source of truth for the hard constraint, used identically by both selection and generation agents.
+
+### 4.4 `list_rules(question_slug)` — free
+
+**Same tool as selection §4.4.** Returns the rules currently in the question's rule folder, with one-line docstrings. For selection-agentic the folder is pre-populated; for generation-from-PDF it starts empty and grows as the agent calls `write_rule`. Either way, the tool's behaviour is identical.
+
+```bash
+python tools/list_rules.py --question-slug <slug>
+```
+
+### 4.5 `inspect_rule(rule_name)` — free
+
+**Same tool as selection §4.5.** Returns the full source of one rule file. Used after `list_rules` to read a rule's code — typically to verify what it does, or to use it as a template for writing a related rule.
+
+```bash
+python tools/inspect_rule.py --question-slug <slug> --rule <name>
+```
+
+---
+
+### Additional tools needed by generation-from-PDF (not in selection-agentic)
+
+The five tools above are shared. Generation adds these because the agent needs to inspect PDFs (rather than browse a pre-built rule pool) and must persist new rule files.
+
+### 4.6 `list_pdfs(directory)` — free
+
+Returns the list of PDF paths in the sampled directory, with per-doc page count and size. Used to know what documents are available.
 
 ```bash
 python tools/list_pdfs.py --dir data/financebench/pdf/sampled
 ```
 
-Output (JSON):
-```json
-{
-  "directory": "...",
-  "pdfs": [
-    {"name": "AMCOR_2019_10K.pdf", "pages": 138, "size_mb": 2.4},
-    ...
-  ]
-}
-```
+### 4.7 `read_pdf_pages(pdf, pages)` — free
 
-### 4.2 `read_pdf_pages(pdf, pages=[1,2,3])` — free, no LLM
-
-Renders the requested page range as **text** (extracted via PyMuPDF or pdfplumber), preserving rough layout (line breaks, table structure). For the agent to inspect what a page contains.
+Extracts text from a page range (via PyMuPDF / pdfplumber), preserving rough layout.
 
 ```bash
 python tools/read_pdf_pages.py --pdf <path> --pages 1-3
 ```
 
-Output: concatenated page text with `---PAGE 1---` separators.
+### 4.8 `read_pdf_vision(pdf, page, query)` — paid (multimodal LLM)
 
-### 4.3 `read_pdf_vision(pdf, page=N)` — paid (uses Opus / gpt-4o vision)
-
-Renders a PDF page as an image and asks a multimodal model to describe layout, fonts, tables. Use sparingly; useful when text extraction misses visual structure (e.g. complex tables, marginalia, charts).
+Renders a page as an image and asks gpt-4o-vision (or similar) about layout, fonts, tables. Use sparingly — text extraction is usually sufficient.
 
 ```bash
 python tools/read_pdf_vision.py --pdf <path> --page 1 --query "What sections appear on this page?"
 ```
 
-Wraps the existing `src/tools/process_page_image.py`.
+Wraps `src/tools/process_page_image.py`.
 
-### 4.4 `reconstruct_pdf(pdf)` — free (deterministic), cached
+### 4.9 `reconstruct_pdf(pdf)` — free, deterministic, cached
 
-Runs the standard PDF→JSON reconstruction pipeline to produce a span-level structured JSON (the same format `data/financebench/processing/*.json` uses). Required for testing rules — rules operate on JSON spans, not on PDFs directly.
-
-```bash
-python tools/reconstruct_pdf.py --pdf <path> --out /tmp/recon/<name>.json
-```
-
-This step is deterministic and cacheable. The first agent that touches a given PDF reconstructs once; subsequent tool calls read the cache.
-
-### 4.5 `test_rule(rule_path, sampled_pdfs)` — paid (substring proxy, no LLM unless `--judge` flag set)
-
-Loads a single rule `.py` file, applies it across the sampled docs (via the reconstructed JSONs), and reports per-doc:
-
-- `retrieved_text` (truncated)
-- `retrieved_tokens / total_tokens` (cost ratio)
-- `ground_truth_substring_present` (fast proxy for correctness)
-- Optionally: `llm_judge_result` if `--judge` is passed (the only LLM call here)
+Runs the PDF → JSON reconstruction pipeline to produce span-level structured data. Required for `compute_cost` / `compute_coverage` / `verify_accuracy` to test newly-written rules. The first call on a PDF reconstructs; subsequent calls read the cache.
 
 ```bash
-python tools/test_rule.py --rule rules/<question_slug>/<rule_name>.py \
-                          --sampled-dir data/financebench/pdf/sampled \
-                          [--judge]
+python tools/reconstruct_pdf.py --pdf <path>
 ```
 
-The substring proxy is the cheap inner-loop signal; the agent reserves `--judge` for final validation.
+### 4.10 `write_rule(name, code)` — free
 
-### 4.6 `test_union(rule_paths, sampled_pdfs)` — paid (LLM judge)
-
-Like `test_rule` but for the **union** of multiple rules: applies all listed rules to each doc, concatenates the retrieved spans, sends to gpt54 with the question, judges the answer against ground truth. Returns per-doc verdicts and the overall merge accuracy.
-
-```bash
-python tools/test_union.py --rules rule_a.py rule_b.py rule_c.py \
-                            --question-slug what_is_...
-```
-
-This is the **hard-constraint verifier**: the agent cannot finalize until `test_union` reports `merge_accuracy ≥ target_accuracy`.
-
-### 4.7 `write_rule(name, code)` — free
-
-The agent writes a candidate rule to `rules/<question_slug>/<name>.py`. The tool validates the rule's signature (`def rule_<name>(doc: dict) -> list[dict]`), runs a smoke import to catch syntax errors, and writes the file.
+Persists a new rule to `rules/<question_slug>/<name>.py`. Validates the `def rule_<name>(doc: dict) -> list[dict]` signature and runs a smoke import to catch syntax errors.
 
 ```bash
 python tools/write_rule.py --question-slug <slug> --name <rule_name> --code-file /tmp/proposed_rule.py
 ```
 
-Alternatively, the agent can write the file directly with the standard `Write` tool — `write_rule.py` just adds the signature check.
+After this call, the rule is visible to `list_rules`, `inspect_rule`, `compute_cost`, `compute_coverage`, and `verify_accuracy` — all five constraint-verification tools operate on it identically to how they'd operate on a pre-existing pool rule.
 
-The first six tools are sufficient for the inner loop. `write_rule` is the persistence step.
+---
+
+### Tool tiers (cost discipline)
+
+| Tier | Tools |
+|------|-------|
+| Free, no LLM | `compute_cost`, `compute_coverage` (when cached), `list_rules`, `inspect_rule`, `list_pdfs`, `read_pdf_pages`, `reconstruct_pdf`, `write_rule` |
+| Paid, cheap | `read_pdf_vision` (one page at a time), `compute_coverage` (when not cached — runs LLM per missing rule) |
+| Paid, expensive | `verify_accuracy` (~20 gpt54 calls per invocation; budget-capped, default 30/Q) |
+
+`verify_accuracy` is the **only** tool capped by the per-question budget, matching selection-agentic's policy.
 
 ---
 
 ## 5. Agent loop
 
-The high-level pseudocode per question:
+Mirrors `docs/rule_selection_agentic.md` §5 — same constraint/objective formulation, same verification tools. The only differences are (a) the rule set starts empty and grows via `write_rule`, (b) the inspection step uses PDF tools instead of `list_rules`/`inspect_rule` on a pre-built pool. After a rule is written, the constraint-checking tools (`compute_cost`, `compute_coverage`, `verify_accuracy`) work identically to the selection case.
+
+High-level loop per question:
 
 ```
-1. list_pdfs(sampled_dir)                          # see the corpus
-2. read_pdf_pages(pdf_a, [1, 2])                   # inspect a representative doc
-3. (optional) read_pdf_vision(pdf_a, page=N)       # if text extraction is unclear
-4. propose initial rule based on observed patterns
-5. write_rule(<name>, <code>)
-6. test_rule(<rule>, sampled_pdfs)                 # substring proxy across all sampled
-7. Loop:
-       If individual coverage too low → inspect more PDFs, refine the rule
-       If individual coverage acceptable but some docs not covered →
-           propose an additional rule targeted at the missed docs
-           (read those PDFs first to understand their structure)
-       Update rule set, call test_union to check the hard constraint
-       If hard constraint met AND soft targets settled → exit
-8. Report final rule set with rationale.
+1. list_pdfs(sampled_dir)                            # see what's available
+2. read_pdf_pages(pdf_a, [1, 2])                     # inspect representative PDFs
+   (optional) read_pdf_vision(pdf_a, page=N, query)  # vision if text is insufficient
+3. reconstruct_pdf(pdf_a)                            # PDF → JSON (cached); needed
+                                                     # so constraint tools can run
+
+4. Propose an initial rule based on observed patterns
+5. write_rule(<name>, <code>)                        # rule now persisted
+
+6. compute_cost(rules=[<name>])                      # free; per-rule cost
+   compute_coverage(rules=[<name>])                  # free if cached; cov(r)
+
+7. While hard constraint not met OR soft targets unsatisfied:
+       verify_accuracy(rules=R)                      # paid; the hard-constraint check
+       inspect missed docs (read_pdf_pages on docs
+           where match_rate < 1)
+       Decide: write a new rule, modify an existing rule,
+           or drop a rule
+       (write_rule / inspect_rule / overwrite via Write)
+       Re-check soft targets via compute_cost / compute_coverage
+
+8. Report final R with cost / coverage / accuracy summary
 ```
 
-The agent's freedom (vs a hand-coded greedy):
+The agent's freedom — same as the selection-agentic version, with two additions:
 
-- **Visual inspection**: it can call `read_pdf_vision` on a confusing page and use the model's description to decide what features matter.
-- **Cross-doc reasoning**: after seeing two PDFs, it can write a rule that generalizes (e.g., "first bold span on page 1 whose font is in the Helvetica family") rather than overfitting to one layout.
-- **Adaptive specificity**: it can start with broad rules and only specialize when broad ones miss specific docs.
-- **Explanation**: each rule's docstring is written by the agent, capturing intent for downstream review.
+- **Visual inspection**: `read_pdf_vision` for a confusing page → describes layout, fonts, tables.
+- **Cross-doc reasoning**: read 2–3 PDFs before writing a rule, so the rule generalises rather than overfits one layout.
+- **Adaptive specificity**: start broad, specialise only for docs not yet covered.
+- **Explanation**: each rule's docstring is written by the agent, captured in `inspect_rule`'s output.
 
-The cost-controlled loop: `test_rule` with substring proxy is the cheap inner loop. `test_union` with LLM judge is the expensive outer check, used only when the agent thinks the rule set is complete.
+Cost-controlled inner / outer loop, matching selection-agentic:
+
+- **Cheap inner loop**: `compute_cost`, `compute_coverage` (with cache), `list_rules`, `read_pdf_pages`, `reconstruct_pdf`, `write_rule`. The agent iterates here freely.
+- **Expensive outer check**: `verify_accuracy` (gpt54 QA + judge over the merged retrieval). Used only when the agent thinks the rule set is complete. Budget-capped at 30 calls/Q (matching selection §4.3).
 
 ---
 
 ## 6. Termination
 
-The agent stops when either:
+**Same as `docs/rule_selection_agentic.md` §6.** The agent stops when either:
 
-- **Success**: `test_union` reports `merge_accuracy ≥ target_accuracy` (default 0.95), *and* the soft targets are at a reasonable trade-off. Reasonable can be operationalized as: (a) `|R| ≤ 10`, (b) `sum_avg_cost_ratio(R) ≤ 0.05` (5% of doc tokens), (c) per-rule coverage `≥ 0.2`. If all three soft conditions hold and accuracy is met, return.
-- **Stuck**: 5 consecutive iterations with no improvement in merge accuracy. Return the best `R` seen so far with a "could not improve further" note.
-- **Budget exhausted**: total `test_union` calls exceed a configured budget (default 20 per question, so ~200 LLM-judge invocations across the 10 sampled docs × 20 union evals).
+- **Success**: `verify_accuracy(R)` returns `match_rate = 1.00` on `D*_s`, *and* the agent judges the soft targets to be at a reasonable trade-off. Reasonable can be operationalised as: (a) `min_cov(R) ≥ 0.4`, (b) `sum_avg_cost_ratio(R) ≤ 0.5 × cost_of_naive_full_retrieval` (i.e. retrieved tokens ≤ 50% of the doc), (c) `|R| ≤ 10`. If all three soft conditions hold and accuracy matches, return.
+- **Stuck**: 5 consecutive iterations with no progress on either accuracy or cost. Return the best `R` seen so far with a "could not improve further" note.
+- **Budget exhausted**: total `verify_accuracy` calls exceed the configured budget (default 30 per question — same as selection-agentic).
 
 The agent must produce a final report including the rule list, all three metric values, and a one-paragraph rationale.
 
@@ -188,13 +263,19 @@ The agent must produce a final report including the rule list, all three metric 
 
 ```
 tools/
-  list_pdfs.py             # 4.1 — scan directory, gather metadata
-  read_pdf_pages.py        # 4.2 — extract text from a page range
-  read_pdf_vision.py       # 4.3 — wraps src/tools/process_page_image.py
-  reconstruct_pdf.py       # 4.4 — wraps the PDF→JSON reconstruction pipeline
-  test_rule.py             # 4.5 — applies one rule, substring proxy + optional LLM judge
-  test_union.py            # 4.6 — applies a rule set, full LLM judge
-  write_rule.py            # 4.7 — validates signature + writes the .py file
+  # shared with rule_selection_agentic (§4.1–§4.5 of that spec)
+  compute_cost.py          # avg_cost_ratio(r) per rule — free
+  compute_coverage.py      # cov(r) per rule — free if cached, else paid (cheap)
+  verify_accuracy.py       # the hard-constraint verifier — paid (gpt54 QA + judge)
+  list_rules.py            # list rules currently in the question's rule folder
+  inspect_rule.py          # read one rule's source
+
+  # added by generation-from-PDF
+  list_pdfs.py             # scan directory, gather metadata
+  read_pdf_pages.py        # extract text from a page range
+  read_pdf_vision.py       # wraps src/tools/process_page_image.py
+  reconstruct_pdf.py       # wraps the PDF→JSON reconstruction pipeline (cached)
+  write_rule.py            # validate signature + persist a new rule .py file
 
 agent/
   run_agent_gen_from_pdf.py    # outer driver: spawns one Claude session per question
@@ -228,26 +309,26 @@ The driver fills in `{question}`, `{question_slug}`, `{pdf_sampled_dir}`, `{outp
 
 ### 7.3 Output schema
 
-`selected_rules_gen/<slug>.json`:
+`selected_rules_gen/<slug>.json` — same field names as `rule_selection_agentic.md` §7.3, so downstream summary scripts can read both:
 
 ```json
 {
-  "question":               "...",
-  "question_slug":          "...",
-  "mode":                   "agentic_gen_from_pdf",
-  "model":                  "claude-opus-4-7",
-  "rule_files":             ["rule_<name>.py", "rule_<name>.py", ...],
-  "num_rules":              3,
-  "merge_accuracy":         0.95,
-  "avg_cost_ratio":         0.032,
-  "min_per_rule_coverage":  0.6,
-  "iterations":             7,
-  "test_union_calls":       4,
-  "tool_llm_calls":         X,
-  "tool_input_tokens":      X,
-  "tool_output_tokens":     X,
-  "latency_seconds":        X,
-  "rationale":              "After inspecting AMCOR p1 + p2 (rendered with read_pdf_vision), wrote a broad rule for cover-page bold spans. test_union failed on EBAY; inspected EBAY p1 — added a sibling rule for the alternative right-column layout. Final 2 rules cover all sampled docs at avg cost 0.032."
+  "question":                     "...",
+  "question_slug":                "...",
+  "mode":                         "agentic_gen_from_pdf",
+  "model":                        "claude-opus-4-7",
+  "selected_rules":               ["rule_a", "rule_b", "rule_c"],
+  "selected_avg_cost_ratio_sum":  0.032,
+  "min_cov":                      0.6,
+  "mean_cov":                     0.78,
+  "match_rate_on_sampled":        1.0,
+  "iterations":                   7,
+  "verify_calls":                 4,
+  "tool_llm_calls":               X,
+  "tool_input_tokens":            X,
+  "tool_output_tokens":           X,
+  "latency_seconds":              X,
+  "rationale":                    "After inspecting AMCOR p1 + p2 (rendered with read_pdf_vision), wrote a broad rule for cover-page bold spans. verify_accuracy failed on EBAY; inspected EBAY p1 — added a sibling rule for the alternative right-column layout. Final 2 rules cover all sampled docs at sum cost 0.032."
 }
 ```
 
@@ -257,106 +338,138 @@ The companion `agent_trace/<slug>.jsonl` records each tool call and its result.
 
 ## 8. Task-prompt template (`agent/task_prompt_gen_from_pdf.md`)
 
+Mirrors `agent/task_prompt.md` (the selection prompt) — same hard / soft constraint wording, same verification tools — with the rule-pool browsing block replaced by a PDF-inspection block and a `write_rule` step.
+
 ```
-You are working inside the LSF project root. Your task is to generate a minimal
-set of Python span-retrieval rules for the following question, by inspecting
-the sampled PDF documents directly.
+You are working inside the LSF project root. Your task is to GENERATE a small
+set of Python span-retrieval rules from scratch for the following question,
+by inspecting the sampled PDF documents and writing new rule files.
 
 QUESTION   : {question}
 SLUG       : {question_slug}
-SAMPLED PDFs: {pdf_sampled_dir}    (10 PDFs)
-LABELS     : data/financebench/sample_doc_labels.json  (ground truth per doc)
+SAMPLED PDFs: {pdf_sampled_dir}     (10 PDFs)
+LABELS     : data/financebench/sample_doc_labels.json
 OUTPUT DIR : {output_dir}/{question_slug}_10_agent_pdf/   (write rules here)
 TRACE      : {trace_path}
 
 HARD CONSTRAINT (must be satisfied before you finish)
-  Merge accuracy of the union of your rules, judged by gpt54 against ground
-  truth, must reach {target_accuracy} on the sampled docs.
-  Verifier: python tools/test_union.py --rules <r1>.py <r2>.py ... \
-                --question-slug {question_slug}
+  Merge accuracy of your generated rule set R must equal the merge accuracy of
+  perfect retrieval on every sampled doc:
+        A(R, d) = 1 for every d in D*_s
+  D*_s = the set of sampled docs that have ground-truth labels (= all 10).
+  Verifier:
+    python tools/verify_accuracy.py --question-slug {question_slug} \
+        --question "{question}" --rules <r1> <r2> ...
 
 SOFT TARGETS (negotiate against each other)
-  1. Minimise sum(avg_cost_ratio) across your rules.
-  2. Keep |R| small. Prefer one broad rule over three narrow ones.
-  3. Each rule should fire correctly on ≥ 20% of sampled docs (per-rule cov).
+  1. Minimise sum(avg_cost_ratio) across R         — tool: compute_cost.py
+  2. Maximise min cov(r) across r in R             — tool: compute_coverage.py
+  3. Keep |R| small. Prefer one broad rule over three narrow ones.
 
 REASONABLE STOPPING CRITERIA (subjective, optional):
-  - merge_accuracy ≥ {target_accuracy}
-  - sum_avg_cost_ratio ≤ 0.05
-  - |R| ≤ 10
-  Stop when accuracy is met AND any two of (1), (2), (3) hold above.
+  - min_cov(R) >= 0.4
+  - sum_avg_cost_ratio(R) <= 0.5 * cost_of_naive_full_retrieval
+  - |R| <= 10
+  Stop when accuracy is met AND any two of these three hold, or when budget
+  is exhausted.
 
 TOOLS YOU HAVE (invoke via the Bash tool)
 
-  # Free / cheap:
+  # Constraint-verification tools — SAME AS rule_selection_agentic
+  python tools/compute_cost.py     --question-slug {question_slug} --rules <r1> ...
+  python tools/compute_coverage.py --question-slug {question_slug} --rules <r1> ...
+  python tools/verify_accuracy.py  --question-slug {question_slug} \
+                                    --question "{question}" --rules <r1> ...
+  python tools/list_rules.py       --question-slug {question_slug}
+  python tools/inspect_rule.py     --question-slug {question_slug} --rule <name>
+
+  # PDF inspection tools — specific to this generation pipeline
   python tools/list_pdfs.py        --dir {pdf_sampled_dir}
   python tools/read_pdf_pages.py   --pdf <path> --pages <range>
-  python tools/reconstruct_pdf.py  --pdf <path>           # PDF → JSON; cached
-  python tools/test_rule.py        --rule <path>          # substring proxy
-  python tools/write_rule.py       --name <name> --code-file <path>
+  python tools/read_pdf_vision.py  --pdf <path> --page <N> --query "..."   (paid)
+  python tools/reconstruct_pdf.py  --pdf <path>                            (cached)
 
-  # Paid (use sparingly):
-  python tools/read_pdf_vision.py  --pdf <path> --page <N> --query "..."
-  python tools/test_rule.py        --rule <path> --judge   # adds gpt54 judge
-  python tools/test_union.py       --rules <r1>.py <r2>.py ...
+  # Rule authoring tool — specific to this generation pipeline
+  python tools/write_rule.py       --question-slug {question_slug} \
+                                    --name <rule_name> --code-file <path>
 
-BUDGET: at most {budget} test_union calls per question (default 20).
+BUDGET: at most {budget} verify_accuracy calls per question (default 30).
 
 LOOP
   1. list_pdfs to see what's available.
-  2. Pick a representative doc; read_pdf_pages on its first few pages to
-     understand structure. If the text extraction looks garbled or you need to
-     see layout, use read_pdf_vision (paid).
-  3. Form a hypothesis about where the answer to {question} lives in a typical
-     filing (page band, section header, font properties).
-  4. write_rule with a first-draft rule expressing that hypothesis.
-  5. test_rule against the sampled set (substring proxy is free; use it).
-     - If coverage is low (< 0.5), inspect a doc the rule missed; revise.
-     - If coverage is decent (≥ 0.5) but some docs aren't covered, add an
-       additional rule targeting those.
-  6. When you think the rule set is complete, call test_union to validate.
-     If merge_accuracy < target, the per-doc verdicts tell you which docs
-     are still wrong — inspect those, refine, retry.
-  7. Stop when accuracy is met AND soft targets are reasonable, or budget
-     exhausted.
+  2. Read the first few pages of 2-3 representative PDFs with read_pdf_pages.
+     Use read_pdf_vision (paid, sparingly) only if text extraction is unclear.
+  3. Form a hypothesis about where the answer lives in a typical filing
+     (page band, section header, font properties, table row label).
+  4. Reconstruct one PDF first so the downstream tools have JSON to operate on:
+        reconstruct_pdf.py --pdf <path>
+  5. Author your first rule with write_rule (give it a descriptive name and a
+     one-line docstring; signature must be `def rule_<name>(doc: dict) -> list[dict]`).
+  6. compute_coverage and compute_cost on your new rule to see how it behaves.
+  7. If accuracy not yet at target on D*_s, call verify_accuracy. The per-doc
+     verdicts tell you which docs are still missed. Read those PDFs, decide
+     whether to:
+        - write a new rule for the missed layout (write_rule)
+        - revise an existing rule (overwrite with write_rule or the Write tool)
+        - drop a rule that's purely overhead
+  8. Stop when accuracy is at 1.0 on D*_s AND your soft targets feel reasonable,
+     or budget exhausted.
 
 COST AND LATENCY TRACKING (mandatory)
 
-Record time.time() at start. Accumulate gpt54 token counts from every
-test_rule --judge and test_union call (each tool prints a `tokens` field in
-its JSON output). Just before writing the final summary, compute
-latency_seconds = t_end - t_start.
+Record time.time() at start. Every verify_accuracy call returns a `tokens`
+field; accumulate:
+    tool_input_tokens   += result["tokens"]["qa_input"]  + result["tokens"]["j_input"]
+    tool_output_tokens  += result["tokens"]["qa_output"] + result["tokens"]["j_output"]
+    tool_llm_calls      += 2 * (correct + wrong per doc)
+    verify_calls        += 1
+
+Just before writing the final summary, latency_seconds = time.time() - t_start.
 
 OUTPUT
 
-When done, write rule files to {output_dir}/{question_slug}_10_agent_pdf/
-(use write_rule.py, one file per rule). Then write the session summary JSON
-to {output_dir}/selected_rules_gen/{question_slug}.json with this schema:
-  { "rule_files": [...], "num_rules": N, "merge_accuracy": F,
-    "avg_cost_ratio": F, "min_per_rule_coverage": F, "iterations": N,
-    "test_union_calls": N, "tool_llm_calls": N, "tool_input_tokens": N,
-    "tool_output_tokens": N, "latency_seconds": F, "rationale": "..." }
+When done, your generated rule .py files already live in
+  {output_dir}/{question_slug}_10_agent_pdf/
 
-Append per-tool-call trace to {trace_path} (one JSON line per call):
+Write the session summary JSON to
+  {output_dir}/selected_rules_gen/{question_slug}.json
+with this schema:
+{
+  "question":              "{question}",
+  "question_slug":         "{question_slug}",
+  "mode":                  "agentic_gen_from_pdf",
+  "model":                 "{model}",
+  "selected_rules":        ["rule_a", "rule_b", "..."],
+  "selected_avg_cost_ratio_sum": <float>,
+  "min_cov":               <float>,
+  "mean_cov":              <float>,
+  "match_rate_on_sampled": <float>,
+  "iterations":            <int>,
+  "verify_calls":          <int>,
+  "tool_llm_calls":        <int>,
+  "tool_input_tokens":     <int>,
+  "tool_output_tokens":    <int>,
+  "latency_seconds":       <float>,
+  "rationale":             "<2-4 sentence explanation>"
+}
+
+Append per-tool-call trace to {trace_path}, one JSON line per call:
   { "step": N, "tool": "...", "args": "...", "result_summary": "..." }
 
-Then print a single AGENTIC_GEN_DONE line to stdout:
-  AGENTIC_GEN_DONE slug={question_slug} num_rules=N merge_acc=F \
-                   avg_cost=F latency_s=F
+Then print to stdout:
+  AGENTIC_GEN_DONE slug={question_slug} n_rules=N sum_cost=F \
+                   min_cov=F match_rate=F tool_calls=N latency_s=F
 
 GUIDELINES
-  - PREFER rules whose docstring describes a layout-invariant signal (e.g.
-    "first H1 span on page 1 with font size > 14") OVER hardcoded position
-    (e.g. "span at index 17 on page 1"). The hardcoded version overfits.
-  - Read at least 2-3 different PDFs before writing your first rule. Different
-    filers use different templates; rules built from one doc rarely transfer.
-  - Use read_pdf_vision ONLY when text extraction is insufficient. It costs
-    LLM tokens; the text tools are free.
-  - When test_union fails, prefer "add a new rule for the missed layout" over
-    "broaden an existing rule" — broadening tends to inflate retrieval cost.
-  - Do not refuse to finish. If you cannot meet target accuracy within budget,
-    return the best rule set, set merge_accuracy to the actual value, and
-    explain in the rationale why.
+  - Prefer broad rules whose docstring describes a layout-invariant signal
+    over hardcoded position. The hardcoded version overfits.
+  - Read at least 2-3 different PDFs before writing your first rule.
+  - Use read_pdf_vision ONLY when text extraction is insufficient.
+  - When verify_accuracy fails, prefer "add a new rule for the missed layout"
+    over "broaden an existing rule" — broadening inflates retrieval cost.
+  - Do not refuse to finish. If you cannot satisfy the hard constraint within
+    budget, return the best R you have, set match_rate_on_sampled to the actual
+    value, and explain in the rationale why.
 ```
 
 ---
@@ -380,8 +493,8 @@ The new variant is most useful for **new datasets** where the PDF→JSON reconst
 
 - **Concurrency.** One Claude Code session per question; sessions are independent and parallelizable subject to model rate limits.
 - **Reproducibility.** Even though Opus is non-deterministic, the trace at `agent_trace/<slug>.jsonl` records every tool call. Replaying the same tool sequence is deterministic; only the agent's choices are not.
-- **Cost control.** Cap `test_union` calls per session (default 20). The expensive tools are `read_pdf_vision`, `test_rule --judge`, and `test_union`; the rest are free. Persist the PDF→JSON reconstruction cache so the same PDF is never reconstructed twice.
-- **Failure mode.** If the agent finishes without meeting target accuracy, the output JSON should still be written with `merge_accuracy < target` and the rationale explaining why. Downstream pipelines can detect and either fall back to the algorithmic gen or re-run with a larger budget.
+- **Cost control.** Cap `verify_accuracy` calls per session (default 30, matching `rule_selection_agentic.md` §4.3). The expensive tools are `read_pdf_vision`, uncached `compute_coverage` (one LLM call per missing rule eval), and `verify_accuracy` (~20 gpt54 calls per invocation); the rest are free. Persist the PDF→JSON reconstruction cache so the same PDF is never reconstructed twice.
+- **Failure mode.** If the agent finishes without satisfying the hard constraint, the output JSON should still be written with `match_rate_on_sampled < 1.0` and the rationale explaining why. Downstream pipelines can detect and either fall back to the algorithmic gen or re-run with a larger budget.
 - **Comparison runs.** Persist outputs to `rules/.../agent/opus47_pdf/raw/` separately from `rules/.../agent/opus47/raw/` so the JSON-input and PDF-input variants can be compared per question on both `D_s` and `D_u`.
 
 ---
@@ -405,8 +518,8 @@ Not yet implemented. The two markdown specs (this one and `docs/rule_selection_a
 
 The deltas vs `agent/run_agent_select.py`:
 
-1. Tools change: drop `list_rules`/`inspect_rule`/`compute_cost`/`compute_coverage`/`verify_accuracy`; add `list_pdfs`/`read_pdf_pages`/`read_pdf_vision`/`reconstruct_pdf`/`test_rule`/`test_union`/`write_rule`.
-2. Task prompt template changes accordingly (different hard constraint, different toolset, different output schema).
+1. Tools change: **keep** all five constraint-verification tools (`compute_cost`, `compute_coverage`, `verify_accuracy`, `list_rules`, `inspect_rule`) — they operate on whatever rule files exist in the question folder, whether pre-built or just-written. **Add** five PDF/authoring tools (`list_pdfs`, `read_pdf_pages`, `read_pdf_vision`, `reconstruct_pdf`, `write_rule`).
+2. Task prompt template changes accordingly: same hard constraint (`A(R,d)=1` on `D*_s`) and same three soft targets as selection-agentic, but with a PDF-inspection + `write_rule` block in place of the pool-browsing block. Output schema mirrors selection-agentic's so downstream summary scripts can read both.
 3. Output directory tree changes: rules land in `rules/.../agent/opus47_pdf/raw/<slug>_10_agent_pdf/`, summary lands in `results/.../selected_rules_gen/<slug>.json`.
 
 Everything else (driver structure, subprocess call, token capture, trace JSONL, AGENTIC_*_DONE summary line) is reused verbatim.
@@ -415,6 +528,6 @@ Everything else (driver structure, subprocess call, token capture, trace JSONL, 
 
 ## 13. Summary
 
-Agentic rule generation from PDFs replicates the structure of agentic rule selection — Claude Opus 4.7 as the outer-loop optimizer, tool-mediated interaction via Bash, per-question session, captured trace — but the **inputs are PDFs** (with on-demand reconstruction to JSON for testing) and the **outputs are Python rule files** (not a selected-rules JSON). The toolset shifts from rule-pool-inspection tools to PDF-inspection tools, and the hard constraint shifts from "match `D*` coverage" to "merge_accuracy ≥ target on `D_s`."
+Agentic rule generation from PDFs replicates `rule_selection_agentic.md` exactly — same Claude Opus 4.7 outer loop, same per-question session, same captured trace, **same hard / soft constraints** (`A(R,d)=1` for `d∈D*_s`; minimise `Σ avg_cost_ratio`, maximise `min cov`, keep `|R|` small), and **the same five verification tools** (`compute_cost`, `compute_coverage`, `verify_accuracy`, `list_rules`, `inspect_rule`). The only differences are the **inputs** (PDFs instead of a pre-built rule pool, with on-demand reconstruction to JSON for testing), the **added tools** (PDF inspection + `write_rule`), and the **outputs** (newly-authored Python rule files in addition to the session-summary JSON).
 
 The expected niche is **new datasets where no reconstructed JSON yet exists**, or hard questions where **visual layout inspection** (`read_pdf_vision`) helps the agent generalize across template families that JSON-only inspection misses.
