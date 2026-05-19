@@ -11,7 +11,7 @@ This document describes how to generate performance and rule-generation status t
 | You say | Sampled labels | Unsampled labels |
 |---|---|---|
 | **single cluster doc** | `data/financebench/sample/single_cluster/random/sample_doc_labels.json` | `data/financebench/sample/single_cluster/random/unsampled_doc_labels.json` |
-| **mix doc case** | `data/financebench/sample_mix_doc_labels.json` | `data/financebench/unsampled_mix_doc_labels.json` |
+| **mix doc case** | `data/financebench/sample/multi_cluster/random/sample_doc_labels.json` | `data/financebench/sample/multi_cluster/random/unsampled_doc_labels.json` |
 
 ### Rule type
 
