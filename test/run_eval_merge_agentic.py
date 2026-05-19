@@ -55,8 +55,8 @@ def sample_set_config(name: str) -> dict:
         }
     if name == "fps":
         return {
-            "sampled_labels":   "data/financebench/sample/fps/sample_doc_labels.json",
-            "unsampled_labels": "data/financebench/sample/fps/unsampled_doc_labels.json",
+            "sampled_labels":   "data/financebench/sample/single_cluster/fps/sample_doc_labels.json",
+            "unsampled_labels": "data/financebench/sample/single_cluster/fps/unsampled_doc_labels.json",
             "slug_suffix":      "_10_agentic_fps",
             "rules_dir":        "rules/financebench_single_cluster/agent/opus47/agentic_fps/raw",
             "results_dir":      "results/financebench_single_cluster/agent/opus47/agentic_fps/raw",

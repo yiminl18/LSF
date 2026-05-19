@@ -68,7 +68,7 @@ All numbers come from `eval_merge/<slug>_{sampled,unsampled}.json` produced by `
   - **Result**: **sAcc=0.960, uAcc=0.820**, cost_s=**0.0062**, cost_u=**0.0046**.
   - Highest sAcc of any single-cluster method. Cost is ~37× cheaper than LLM-coarse on unsampled (0.0046 vs 0.1686).
   - Output dir: `rules/financebench_single_cluster/agent/opus47/agentic/raw/<slug>_10_agentic/`
-- **Task 2 (FPS sample)**: rules generated from `data/financebench/sample/fps/sample_doc_labels.json` (10 docs selected by Farthest-Point Sampling on document embeddings, chosen to maximise structural diversity).
+- **Task 2 (FPS sample)**: rules generated from `data/financebench/sample/single_cluster/fps/sample_doc_labels.json` (10 docs selected by Farthest-Point Sampling on document embeddings, chosen to maximise structural diversity).
   - **Result**: **sAcc=0.960, uAcc=0.786**, cost_s=0.0082, cost_u=0.0079.
   - Same sAcc as Task 1. FPS did **not** improve unsampled generalisation over the random sample (uAcc 0.786 vs 0.820) — the random sample was already diverse enough for these 10 questions.
   - Output dir: `rules/financebench_single_cluster/agent/opus47/agentic_fps/raw/<slug>_10_agentic_fps/`
@@ -119,8 +119,8 @@ All numbers come from `eval_merge/<slug>_{sampled,unsampled}.json` produced by `
 |-------|-------------|
 | Random sampled | `data/financebench/sample_doc_labels.json` |
 | Random unsampled | `data/financebench/unsampled_doc_labels.json` |
-| FPS sampled | `data/financebench/sample/fps/sample_doc_labels.json` |
-| FPS unsampled | `data/financebench/sample/fps/unsampled_doc_labels.json` |
+| FPS sampled | `data/financebench/sample/single_cluster/fps/sample_doc_labels.json` |
+| FPS unsampled | `data/financebench/sample/single_cluster/fps/unsampled_doc_labels.json` |
 
 ---
 

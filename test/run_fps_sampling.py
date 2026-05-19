@@ -33,7 +33,7 @@ from sampling.fps          import farthest_point_sampling       # noqa: E402
 SAMPLED_LABELS_FILE   = "data/financebench/sample_doc_labels.json"
 UNSAMPLED_LABELS_FILE = "data/financebench/unsampled_doc_labels.json"
 PROCESSING_DIR        = "data/financebench/processing"
-OUT_DIR               = Path("data/financebench/sample/fps")
+OUT_DIR               = Path("data/financebench/sample/single_cluster/fps")
 
 L_BINS     = 50      # per-doc chunks (FPS spec §2 step 3)
 STOP_RATIO = 0.5     # elbow rule (FPS spec §5) — won't fire on a single-cluster pool

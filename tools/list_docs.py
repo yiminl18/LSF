@@ -8,7 +8,7 @@ which docs are in scope; this tool just maps each entry to its corresponding
 
 Usage:
     python tools/list_docs.py --labels-file data/financebench/sample_doc_labels.json
-    python tools/list_docs.py --labels-file data/financebench/sample/fps/sample_doc_labels.json
+    python tools/list_docs.py --labels-file data/financebench/sample/single_cluster/fps/sample_doc_labels.json
 """
 
 from __future__ import annotations

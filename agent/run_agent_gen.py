@@ -53,7 +53,7 @@ def sample_set_config(name: str) -> dict:
         }
     if name == "fps":
         return {
-            "labels_file":         _ROOT / "data/financebench/sample/fps/sample_doc_labels.json",
+            "labels_file":         _ROOT / "data/financebench/sample/single_cluster/fps/sample_doc_labels.json",
             "slug_suffix":         "_10_agentic_fps",
             "rules_dir":           _ROOT / "rules/financebench_single_cluster/agent/opus47/agentic_fps/raw",
             "results_dir":         _ROOT / "results/financebench_single_cluster/agent/opus47/agentic_fps/raw",
@@ -194,7 +194,7 @@ def main():
     ap = argparse.ArgumentParser(description="Spawn Claude sessions to generate rules from scratch.")
     ap.add_argument("--sample-set", choices=("random", "fps"), required=True,
                     help="random = data/financebench/sample_doc_labels.json; "
-                         "fps = data/financebench/sample/fps/sample_doc_labels.json")
+                         "fps = data/financebench/sample/single_cluster/fps/sample_doc_labels.json")
     ap.add_argument("--slug", help="run a single question slug (matches the rule folder name)")
     ap.add_argument("--budget", type=int, default=30,
                     help="max verify_accuracy calls per question (default 30)")
