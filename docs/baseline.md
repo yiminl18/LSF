@@ -13,11 +13,13 @@ Baselines are the comparison floor for the LSF rule-based retrieval pipeline.
 
 | # | Strategy | Model | sAcc | cost_s | uAcc | cost_u | Notes |
 |---|----------|-------|-----:|-------:|-----:|-------:|-------|
-| 1 | **Agentic Claude QA** | opus47 | 0.920 | 1.3484 | — | — | Claude agent reads full doc with tools |
-| 2 | **Agentic Codex QA** | gpt54 | 0.940 | 1.1807 | — | — | Codex agent reads full doc with default tools |
+| 1 | **Agentic Claude QA** | opus47 | 0.920 | 1.3484 | — | — | Claude agent reads full doc with tools; `latency_s = 10.33s` |
+| 2 | **Agentic Codex QA** | gpt54 | 0.940 | 1.1807 | 0.800* | 1.3271* | Codex agent reads full doc with default tools; `latency_s = 18.46s` |
 
 `cost` = mean over docs of `input_tokens / total_doc_tokens` (retrieval proxy).
 For Agentic Codex QA, `input_tokens` includes cached input tokens for parity with Claude.
+`*` Agentic Codex QA `uAcc`/`cost_u` currently refer to the additional 10-doc single-cluster unsampled batch
+(`agentic_codex_qa_gpt54_single_cluster_extra`), whose mean latency is `17.15s`, not the full 50-doc unsampled split.
 
 ---
 
