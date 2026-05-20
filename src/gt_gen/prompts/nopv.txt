@@ -13,7 +13,7 @@ NOPV labeling rules:
 
 Before writing the final answer, write a concise evidence-based reasoning string that identifies the decisive document evidence.
 Return exactly one valid JSON object and no markdown:
-{"reasoning": "brief evidence-based rationale", "answer": <answer matching answer_type>, "support": "short evidence quote or page note"}
+{"reasoning": "brief evidence-based rationale", "answer": <answer matching answer_type>}
 
 {{one_shot_example_block}}
 Document id: {{doc_id}}
@@ -37,7 +37,7 @@ NOPV labeling rules:
 
 Before writing the final answer, write a concise evidence-based reasoning string that identifies the decisive document evidence.
 Return exactly one valid JSON object and no markdown:
-{"reasoning": "brief evidence-based rationale", "answer": <answer matching answer_type>, "support": "short evidence quote or page note"}
+{"reasoning": "brief evidence-based rationale", "answer": <answer matching answer_type>}
 
 Document id: {{doc_id}}
 
@@ -66,7 +66,7 @@ NOPV labeling rules:
 
 Before writing each final answer, write a concise evidence-based reasoning string that identifies the decisive document evidence.
 Return exactly one valid JSON object and no markdown:
-{"answers": [{"query_idx": <integer>, "reasoning": "brief evidence-based rationale", "answer": <answer matching answer_type>, "support": "short evidence quote or page note"}]}
+{"answers": [{"query_idx": <integer>, "reasoning": "brief evidence-based rationale", "answer": <answer matching answer_type>}]}
 
 {{one_shot_example_block}}
 Document id: {{doc_id}}
@@ -89,7 +89,7 @@ NOPV labeling rules:
 
 Before writing each final answer, write a concise evidence-based reasoning string that identifies the decisive document evidence.
 Return exactly one valid JSON object and no markdown:
-{"answers": [{"query_idx": <integer>, "reasoning": "brief evidence-based rationale", "answer": <answer matching answer_type>, "support": "short evidence quote or page note"}]}
+{"answers": [{"query_idx": <integer>, "reasoning": "brief evidence-based rationale", "answer": <answer matching answer_type>}]}
 
 Document id: {{doc_id}}
 

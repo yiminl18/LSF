@@ -1235,7 +1235,6 @@ def _format_single_example_block(
         {
             "reasoning": entry["reasoning"],
             "answer": entry["answer"],
-            "support": entry["support"],
         },
         ensure_ascii=False,
     )
@@ -1284,7 +1283,6 @@ def _format_all_example_block(
                     "query_idx": idx,
                     "reasoning": entry["reasoning"],
                     "answer": entry["answer"],
-                    "support": entry["support"],
                 }
                 for idx, entry in selected_entries
             ]
@@ -1467,9 +1465,8 @@ def _answer_response_schema() -> dict[str, Any]:
         "properties": {
             "reasoning": {"type": "string"},
             "answer": _answer_value_schema(),
-            "support": {"type": "string"},
         },
-        "required": ["reasoning", "answer", "support"],
+        "required": ["reasoning", "answer"],
     }
 
 
@@ -1490,9 +1487,8 @@ def _answers_response_schema(queries: Sequence[QuerySpec]) -> dict[str, Any]:
                         "query_idx": {"type": "integer", "enum": allowed_query_indices},
                         "reasoning": {"type": "string"},
                         "answer": _answer_value_schema(),
-                        "support": {"type": "string"},
                     },
-                    "required": ["query_idx", "reasoning", "answer", "support"],
+                    "required": ["query_idx", "reasoning", "answer"],
                 },
             }
         },

@@ -62,7 +62,7 @@ def test_generate_ground_truth_defaults_to_text_mini(tmp_path, monkeypatch):
     def fake_call(self, **kwargs):
         seen.update(kwargs)
         return CacheResult(
-            response='{"answer":"23-35560","support":"cover page"}',
+            response='{"reasoning":"cover page","answer":"23-35560"}',
             input_tokens=10,
             cached_input_tokens=6,
             output_tokens=5,
@@ -95,9 +95,11 @@ def test_generate_ground_truth_defaults_to_text_mini(tmp_path, monkeypatch):
     assert summary.log_path.exists()
     assert seen["llm_provider"] == "azure"
     assert seen["model"] == "gpt-5.4-mini"
-    assert seen["response_schema"]["required"] == ["reasoning", "answer", "support"]
+    assert seen["response_schema"]["required"] == ["reasoning", "answer"]
+    assert "support" not in seen["response_schema"]["properties"]
     assert "[DOCUMENT TEXT START]" in seen["prompt"]
     assert "Answer type: string" in seen["prompt"]
+    assert '"support"' not in seen["prompt"]
     assert "NOPV labeling rules" not in seen["prompt"]
     assert "One-shot" not in seen["prompt"]
 
@@ -114,7 +116,7 @@ def test_generate_ground_truth_merges_existing_keys(tmp_path, monkeypatch):
     _patch_azure_text_caller(
         monkeypatch,
         lambda self, **kwargs: CacheResult(
-            response='{"answer":["23-35560","23-35585"],"support":"cover page"}',
+            response='{"reasoning":"cover page","answer":["23-35560","23-35585"]}',
             input_tokens=10,
             output_tokens=5,
             latency_ms=1.0,
@@ -146,7 +148,7 @@ def test_generate_ground_truth_samples_then_skips_existing(tmp_path, monkeypatch
     def fake_call(self, **kwargs):
         calls.append(_doc_id_from_prompt(kwargs["prompt"]))
         return CacheResult(
-            response='{"answer":"new","support":"page 1"}',
+            response='{"reasoning":"page 1","answer":"new"}',
             input_tokens=10,
             output_tokens=5,
             latency_ms=1.0,
@@ -174,7 +176,7 @@ def test_generate_ground_truth_samples_then_skips_existing(tmp_path, monkeypatch
 
 def test_parse_answer_response_requires_answer_field():
     with pytest.raises(ValueError, match="answer"):
-        generator.parse_answer_response('{"support":"page 1"}')
+        generator.parse_answer_response('{"reasoning":"page 1"}')
 
 
 def test_cli_parser_defaults_to_text_mini():
@@ -231,7 +233,7 @@ def test_claude_code_text_mode_passes_prompt_via_stdin(tmp_path, monkeypatch):
             stdout=json.dumps(
                 {
                     "is_error": False,
-                    "result": '{"answer":"ok","support":"page 1"}',
+                    "result": '{"reasoning":"page 1","answer":"ok"}',
                     "usage": {
                         "input_tokens": 2,
                         "cache_creation_input_tokens": 3,
@@ -280,7 +282,7 @@ def test_claude_code_read_pdf_mode_allows_read_tool(tmp_path, monkeypatch):
             stdout=json.dumps(
                 {
                     "is_error": False,
-                    "result": '{"answer":["23-35560"],"support":"cover"}',
+                    "result": '{"reasoning":"cover","answer":["23-35560"]}',
                     "usage": {"input_tokens": 10, "output_tokens": 3},
                 }
             ),
@@ -318,7 +320,7 @@ def test_claude_code_cache_hit_skips_subprocess(tmp_path, monkeypatch):
             stdout=json.dumps(
                 {
                     "is_error": False,
-                    "result": '{"answer":"cached","support":"page 1"}',
+                    "result": '{"reasoning":"page 1","answer":"cached"}',
                     "usage": {"input_tokens": 2, "output_tokens": 1},
                 }
             ),
@@ -352,7 +354,7 @@ def test_generate_ground_truth_for_queries_uses_doc_major_order(tmp_path, monkey
         query_idx = int(prompt.split("Question index: ", 1)[1].splitlines()[0])
         calls.append((_doc_id_from_prompt(prompt), query_idx))
         return CacheResult(
-            response=f'{{"answer":"answer-{query_idx}","support":"page 1"}}',
+            response=f'{{"reasoning":"page 1","answer":"answer-{query_idx}"}}',
             input_tokens=10,
             output_tokens=5,
             latency_ms=1.0,
@@ -392,8 +394,8 @@ def test_generation_mode_all_answers_selected_queries_once_per_doc(tmp_path, mon
             response=json.dumps(
                 {
                     "answers": [
-                        {"query_idx": 1, "answer": "docket", "support": "page 1"},
-                        {"query_idx": 2, "answer": "judge", "support": "page 2"},
+                        {"query_idx": 1, "reasoning": "page 1", "answer": "docket"},
+                        {"query_idx": 2, "reasoning": "page 2", "answer": "judge"},
                     ]
                 }
             ),
@@ -431,7 +433,7 @@ def test_generate_ground_truth_writes_latency_cost_log(tmp_path, monkeypatch):
 
     def fake_call(self, **kwargs):
         return CacheResult(
-            response='{"answer":"23-35560","support":"cover page"}',
+            response='{"reasoning":"cover page","answer":"23-35560"}',
             input_tokens=10,
             cached_input_tokens=6,
             output_tokens=5,
@@ -521,8 +523,8 @@ def test_generation_mode_all_logs_one_llm_call_per_doc(tmp_path, monkeypatch):
             response=json.dumps(
                 {
                     "answers": [
-                        {"query_idx": 1, "answer": "docket", "support": "page 1"},
-                        {"query_idx": 2, "answer": "judge", "support": "page 2"},
+                        {"query_idx": 1, "reasoning": "page 1", "answer": "docket"},
+                        {"query_idx": 2, "reasoning": "page 2", "answer": "judge"},
                     ]
                 }
             ),
@@ -604,7 +606,7 @@ def test_generation_mode_all_skips_existing_queries(tmp_path, monkeypatch):
             response=json.dumps(
                 {
                     "answers": [
-                        {"query_idx": 2, "answer": "new", "support": "page 2"},
+                        {"query_idx": 2, "reasoning": "page 2", "answer": "new"},
                     ]
                 }
             ),
@@ -643,18 +645,18 @@ def test_parse_answers_response_rejects_missing_duplicate_and_unexpected_queries
 
     with pytest.raises(ValueError, match="Missing answers"):
         generator.parse_answers_response(
-            '{"answers":[{"query_idx":1,"answer":"a","support":"s"}]}',
+            '{"answers":[{"query_idx":1,"reasoning":"s","answer":"a"}]}',
             queries,
         )
     with pytest.raises(ValueError, match="Duplicate answer"):
         generator.parse_answers_response(
-            '{"answers":[{"query_idx":1,"answer":"a","support":"s"},'
-            '{"query_idx":1,"answer":"b","support":"s"}]}',
+            '{"answers":[{"query_idx":1,"reasoning":"s","answer":"a"},'
+            '{"query_idx":1,"reasoning":"s","answer":"b"}]}',
             [queries[0]],
         )
     with pytest.raises(ValueError, match="Unexpected answer"):
         generator.parse_answers_response(
-            '{"answers":[{"query_idx":3,"answer":"a","support":"s"}]}',
+            '{"answers":[{"query_idx":3,"reasoning":"s","answer":"a"}]}',
             [queries[0]],
         )
 
@@ -667,18 +669,19 @@ def test_structured_output_answer_fields_have_types():
 
     assert "type" in single_schema["properties"]["answer"]
     assert single_schema["properties"]["reasoning"]["type"] == "string"
-    assert single_schema["required"] == ["reasoning", "answer", "support"]
+    assert "support" not in single_schema["properties"]
+    assert single_schema["required"] == ["reasoning", "answer"]
     assert (
         "type"
         in multi_schema["properties"]["answers"]["items"]["properties"]["answer"]
     )
     multi_item_schema = multi_schema["properties"]["answers"]["items"]
     assert multi_item_schema["properties"]["reasoning"]["type"] == "string"
+    assert "support" not in multi_item_schema["properties"]
     assert multi_item_schema["required"] == [
         "query_idx",
         "reasoning",
         "answer",
-        "support",
     ]
 
 
@@ -782,6 +785,8 @@ def test_dataset_prompt_template_is_selected_by_dataset_name():
     assert "{{one_shot_example_block}}" not in nopv_all_prompt
     assert nopv_prompt.index('"reasoning"') < nopv_prompt.index('"answer"')
     assert nopv_all_prompt.index('"reasoning"') < nopv_all_prompt.index('"answer"')
+    assert '"support"' not in nopv_prompt
+    assert '"support"' not in nopv_all_prompt
 
 
 def test_nopv_one_shot_example_skipped_when_idx_missing():
@@ -862,7 +867,7 @@ def test_generate_ground_truth_loads_source_prompt_template(tmp_path, monkeypatc
     def fake_call(self, **kwargs):
         seen["prompt"] = kwargs["prompt"]
         return CacheResult(
-            response='{"answer":"ok","support":"page 1"}',
+            response='{"reasoning":"page 1","answer":"ok"}',
             input_tokens=10,
             output_tokens=5,
             latency_ms=1.0,
@@ -886,6 +891,7 @@ def test_generate_ground_truth_loads_source_prompt_template(tmp_path, monkeypatc
     assert "May 8, 2025" in seen["prompt"]
     assert "{{one_shot_example_block}}" not in seen["prompt"]
     assert seen["prompt"].index('"reasoning"') < seen["prompt"].index('"answer"')
+    assert '"support"' not in seen["prompt"]
 
 
 def test_build_azure_call_result_uses_cached_token_usage():
@@ -896,7 +902,7 @@ def test_build_azure_call_result_uses_cached_token_usage():
     )
 
     result = generator._build_azure_call_result(
-        answer='{"answer":"ok","support":"page 1"}',
+        answer='{"reasoning":"page 1","answer":"ok"}',
         usage=usage,
         model="gpt-5.4-mini",
     )
@@ -920,7 +926,7 @@ def test_azure_text_mode_records_exact_responses_usage(tmp_path, monkeypatch):
         generator,
         "_azure_responses_text_call",
         lambda **kwargs: generator.AzureResponsesCallResult(
-            response='{"answer":"ok","support":"page 1"}',
+            response='{"reasoning":"page 1","answer":"ok"}',
             input_tokens=100,
             cached_input_tokens=80,
             output_tokens=10,
@@ -950,7 +956,7 @@ def test_azure_responses_text_call_passes_structured_output(monkeypatch):
         def create(self, **kwargs):
             seen.update(kwargs)
             return SimpleNamespace(
-                output_text='{"answer":"ok","support":"page 1"}',
+                output_text='{"reasoning":"page 1","answer":"ok"}',
                 usage=SimpleNamespace(
                     input_tokens=10,
                     output_tokens=2,
@@ -978,5 +984,5 @@ def test_azure_responses_text_call_passes_structured_output(monkeypatch):
     assert seen["text"]["format"]["schema"]["required"] == [
         "reasoning",
         "answer",
-        "support",
     ]
+    assert "support" not in seen["text"]["format"]["schema"]["properties"]

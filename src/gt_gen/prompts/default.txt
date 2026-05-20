@@ -6,7 +6,7 @@ If the answer is a list, return every distinct answer in document order.
 If the requested information is absent, use an explicit string required by the question such as "not disclosed" or "not applicable"; otherwise use "None".
 Before writing the final answer, write a concise evidence-based reasoning string that identifies the decisive document evidence.
 Return exactly one valid JSON object and no markdown:
-{"reasoning": "brief evidence-based rationale", "answer": <answer matching answer_type>, "support": "short evidence quote or page note"}
+{"reasoning": "brief evidence-based rationale", "answer": <answer matching answer_type>}
 
 Document id: {{doc_id}}
 Question index: {{query_idx}}
@@ -22,7 +22,7 @@ If the answer is a list, return every distinct answer in document order.
 If the requested information is absent, use an explicit string required by the question such as "not disclosed" or "not applicable"; otherwise use "None".
 Before writing the final answer, write a concise evidence-based reasoning string that identifies the decisive document evidence.
 Return exactly one valid JSON object and no markdown:
-{"reasoning": "brief evidence-based rationale", "answer": <answer matching answer_type>, "support": "short evidence quote or page note"}
+{"reasoning": "brief evidence-based rationale", "answer": <answer matching answer_type>}
 
 Document id: {{doc_id}}
 
@@ -43,7 +43,7 @@ If an answer is a list, return every distinct answer in document order.
 If requested information is absent, use an explicit string required by the question such as "not disclosed" or "not applicable"; otherwise use "None".
 Before writing each final answer, write a concise evidence-based reasoning string that identifies the decisive document evidence.
 Return exactly one valid JSON object and no markdown:
-{"answers": [{"query_idx": <integer>, "reasoning": "brief evidence-based rationale", "answer": <answer matching answer_type>, "support": "short evidence quote or page note"}]}
+{"answers": [{"query_idx": <integer>, "reasoning": "brief evidence-based rationale", "answer": <answer matching answer_type>}]}
 
 Document id: {{doc_id}}
 {{queries}}
@@ -58,7 +58,7 @@ If an answer is a list, return every distinct answer in document order.
 If requested information is absent, use an explicit string required by the question such as "not disclosed" or "not applicable"; otherwise use "None".
 Before writing each final answer, write a concise evidence-based reasoning string that identifies the decisive document evidence.
 Return exactly one valid JSON object and no markdown:
-{"answers": [{"query_idx": <integer>, "reasoning": "brief evidence-based rationale", "answer": <answer matching answer_type>, "support": "short evidence quote or page note"}]}
+{"answers": [{"query_idx": <integer>, "reasoning": "brief evidence-based rationale", "answer": <answer matching answer_type>}]}
 
 Document id: {{doc_id}}
 

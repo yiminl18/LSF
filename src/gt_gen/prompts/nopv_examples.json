@@ -1,70 +1,83 @@
 {
   "source": "experiments/gt_gen_rectify/nopv_12025006/rectified_full_fields.json",
   "doc_id": "12025006NOPV_PCO_05082025_(23-272518)",
-  "all_example_query_ids": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
+  "all_example_query_ids": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13
+  ],
   "examples": {
     "1": {
       "query": "On what date was this Notice of Probable Violation issued?",
       "answer_type": "date",
       "reasoning": "The issue date appears in the Notice header immediately before the recipient block.",
-      "answer": "May 8, 2025",
-      "support": "Page 1 header states \"May 8, 2025.\""
+      "answer": "May 8, 2025"
     },
     "2": {
       "query": "On what date or date range did PHMSA conduct the inspection that gave rise to this Notice?",
       "answer_type": "date or date-range",
       "reasoning": "The opening paragraph identifies the inspection date that gave rise to the Notice.",
-      "answer": "May 10, 2023",
-      "support": "Page 1 states, \"On May 10, 2023, an inspector ... inspected the City of Richmond's (City) pipeline facilities in Richmond, Virginia.\""
+      "answer": "May 10, 2023"
     },
     "3": {
       "query": "Under which 49 CFR Part is the operator's regulated activity covered, such as Part 192, Part 195, or Part 199?",
       "answer_type": "string",
       "reasoning": "Both numbered alleged violations cite sections in 49 CFR Part 192.",
-      "answer": "Part 192",
-      "support": "The alleged violation headings cite \"§ 192.605\" and \"§ 192.805.\""
+      "answer": "Part 192"
     },
     "4": {
       "query": "How many distinct alleged violations are enumerated in the body of this Notice?",
       "answer_type": "integer",
       "reasoning": "The Notice body enumerates two numbered probable-violation items.",
-      "answer": 2,
-      "support": "The body begins \"The items inspected and the probable violations are:\" and then lists items 1 and 2."
+      "answer": 2
     },
     "5": {
       "query": "List the specific 49 CFR section numbers that serve as the basis for the numbered alleged violation items in this Notice. Exclude background, procedural, penalty, response-option, and broad Part-only citations.",
       "answer_type": "list of strings",
       "reasoning": "The numbered alleged violation headings provide the specific CFR section bases.",
-      "answer": ["§ 192.605", "§ 192.805"],
-      "support": "Item 1 is headed \"§ 192.605 Procedural manual for operations, maintenance, and emergencies\" and Item 2 is headed \"§ 192.805 Qualification Program.\""
+      "answer": [
+        "§ 192.605",
+        "§ 192.805"
+      ]
     },
     "6": {
       "query": "List the distinct specific facilities, sites, pipeline segments, tank farms, pump stations, asset groups, or physical assets explicitly alleged to be non-compliant in the violation discussion body. Exclude mere inspection scope unless that location or asset is itself alleged non-compliant.",
       "answer_type": "list of strings",
       "reasoning": "The violation discussion explicitly alleges non-compliance for one specific physical asset; broader Richmond pipeline facilities are only the inspection scope, and later references are aliases of the same coupling.",
-      "answer": ["12-inch Dresser Style 63 Type 1 expansion coupling"],
-      "support": "The Notice states the City installed \"a 12-inch Dresser Style 63 Type 1 expansion coupling\" and failed to install support or anchor restraints during assembly and testing of the Dresser expansion coupling."
+      "answer": [
+        "12-inch Dresser Style 63 Type 1 expansion coupling"
+      ]
     },
     "7": {
       "query": "Does at least one alleged violation rely on missing, unproduced, incomplete, or insufficiently detailed operator records as the evidentiary basis for non-compliance?",
       "answer_type": "boolean",
       "reasoning": "Item 2 uses the operator's training records as evidence that the covered-task training lacked special-fittings content.",
-      "answer": true,
-      "support": "The Notice says the inspector requested training records, but training for joining pipe on 10/26/2022, 1/24/2023, and 1/31/2023 \"failed to include training on the installation of special fittings such as Dresser Style 63 Type 1 expansion joint.\""
+      "answer": true
     },
     "8": {
       "query": "How many mandatory corrective action items are listed in the Proposed Compliance Order section? Count only mandatory lettered or numbered remedial requirements, and exclude requested or not-mandated safety-improvement-cost documentation.",
       "answer_type": "integer",
       "reasoning": "The Proposed Compliance Order has two mandatory lettered requirements, A and B; item C is expressly requested, not mandated.",
-      "answer": 2,
-      "support": "Items A and B state that the City \"must\" take action; item C begins, \"It is requested (not mandated) that City of Richmond maintain documentation of the safety improvement costs.\""
+      "answer": 2
     },
     "9": {
       "query": "List the Notice item numbers that the enclosed Proposed Compliance Order remedial requirements explicitly state they address.",
       "answer_type": "list of integers",
       "reasoning": "The mandatory PCO items explicitly map to Notice Item 1 and Notice Item 2.",
-      "answer": [1, 2],
-      "support": "PCO item A begins \"In regard to Item 1 of the Notice\" and PCO item B begins \"In regard to Item 2 of the Notice.\""
+      "answer": [
+        1,
+        2
+      ]
     },
     "10": {
       "query": "Extract the mandatory substantive remedial actions the Proposed Compliance Order directs the operator to perform, as distinct concise action items. Exclude safety-improvement-cost documentation requests and submission-only deliverables unless the submission is part of a substantive remedial action.",
@@ -74,29 +87,29 @@
         "develop and implement a training program focused on special fittings such as Dresser Style",
         "train City gas utility construction and maintenance personnel with the updated content and requalify them for the covered task",
         "update its Operator Qualification training program to specifically include training on the installation of restraining and non-restraining expansion couplings, including special fittings such as Dresser Style 63"
-      ],
-      "support": "PCO item A requires the City to \"develop and implement a training program focused on special fittings such as Dresser Style\" and train/requalify personnel. PCO item B requires the City to update its Operator Qualification training program to include restraining and non-restraining expansion-coupling training."
+      ]
     },
     "11": {
       "query": "What mandatory written submissions or deliverables does the Proposed Compliance Order require the operator to provide to PHMSA? Return deliverable names or concise phrases, not full directive sentences. Exclude requested or not-mandated safety-improvement-cost documentation.",
       "answer_type": "list of strings",
       "reasoning": "The only mandatory PHMSA deliverable is the updated training program; item C's cost documentation is requested, not mandated.",
-      "answer": ["updated training program"],
-      "support": "PCO item B requires the City to \"provide the updated training program to the Director, Eastern Region, within 90 days of receipt of the Final Order.\""
+      "answer": [
+        "updated training program"
+      ]
     },
     "12": {
       "query": "List the distinct finite day-count deadline values, in days, specified for mandatory requirements in the Proposed Compliance Order.",
       "answer_type": "list of integers",
       "reasoning": "Both mandatory PCO requirements use the same finite day-count deadline, so the distinct value is 90.",
-      "answer": [90],
-      "support": "PCO items A and B each require action \"within 90 days of receipt of the Final Order.\""
+      "answer": [
+        90
+      ]
     },
     "13": {
       "query": "Does at least one alleged violation involve a programmatic deficiency (inadequate written plans, procedures, or manuals) as opposed to only specific field/operational findings?",
       "answer_type": "boolean",
       "reasoning": "At least one allegation is programmatic because Item 2 is based on the written qualification/training program lacking required special-fittings training, not only on a one-off field condition.",
-      "answer": true,
-      "support": "Item 2 quotes § 192.805's requirement that each operator have and follow a written qualification program, and states that training for the covered task failed to include installation of special fittings such as the Dresser Style 63 Type 1 expansion joint."
+      "answer": true
     }
   }
 }
