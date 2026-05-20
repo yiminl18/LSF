@@ -147,6 +147,12 @@ Strategy 1.
 - `cost_s = 1.1807`
 - `latency_s = 18.46s`
 
+**Additional 10-doc single-cluster unsampled batch**
+(`baseline_results/financebench/agentic_codex_qa_gpt54_single_cluster_extra`):
+- `Acc = 0.800`
+- `cost = 1.3271`
+- `latency = 17.15s`
+
 **Invocation:**
 
 ```bash
