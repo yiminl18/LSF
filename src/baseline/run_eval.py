@@ -116,8 +116,8 @@ def main() -> None:
                     help="Optional custom output directory name under baseline_results/<dataset>/")
     ap.add_argument("--max-docs", type=int, default=None,
                     help="Run at most N not-yet-completed docs from the selected labels set")
-    ap.add_argument("--skip-docs-in", default=None,
-                    help="Path to an existing results dir; skip any doc already run there")
+    ap.add_argument("--skip-docs-in", default=None, action="append",
+                    help="Path to an existing results dir; skip any doc already run there (repeatable)")
     ap.add_argument("--skip-existing", action="store_true", default=True)
     ap.add_argument("--no-skip-existing", dest="skip_existing", action="store_false")
     ap.add_argument("--timeout",  type=int, default=300)
@@ -137,15 +137,13 @@ def main() -> None:
     active_slugs = _active_question_slugs(questions, args.question_slug)
     completed_docs = _completed_docs_for_questions(out_base, active_slugs)
 
-    # Collect additional docs to skip from a separate results directory
+    # Collect additional docs to skip from one or more existing results directories
     skip_docs: set[str] = set()
-    if args.skip_docs_in:
-        skip_dir = Path(args.skip_docs_in)
-        for q_dir in skip_dir.iterdir():
-            if q_dir.is_dir():
-                skip_docs.update(p.stem for p in q_dir.glob("*.json"))
-        if skip_docs:
-            print(f"skip_docs_in={skip_dir}  docs_to_skip={len(skip_docs)}")
+    for skip_path in (args.skip_docs_in or []):
+        skip_dir = Path(skip_path)
+        found = {p.stem for p in skip_dir.rglob("*.json") if p.name != "summary.json"}
+        skip_docs.update(found)
+        print(f"skip_docs_in={skip_dir}  found={len(found)}  total_skip={len(skip_docs)}")
 
     selected_items = sorted(labels.items())
     if args.max_docs is not None:
