@@ -13,6 +13,8 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
+import shutil
 import subprocess
 import sys
 import time
@@ -49,13 +51,25 @@ Rules:
 """
 
 
+def _find_claude() -> str:
+    # Search PATH plus common npm-global locations
+    extra = [
+        os.path.expanduser("~/.npm-global/bin"),
+        os.path.expanduser("~/.local/bin"),
+        "/usr/local/bin",
+    ]
+    augmented = os.pathsep.join(extra) + os.pathsep + os.environ.get("PATH", "")
+    found = shutil.which("claude", path=augmented)
+    return found or "claude"
+
+
 def run_opus47(doc_path: str | Path, question: str, timeout: int = 300) -> dict:
     prompt = _AGENT_PROMPT_TEMPLATE.format(
         question=question,
         doc_path=str(Path(doc_path).resolve()),
     )
     cmd = [
-        "claude", "--model", _MODEL_ALIASES["opus47"],
+        _find_claude(), "--model", _MODEL_ALIASES["opus47"],
         "--output-format", "json",
         "--dangerously-skip-permissions",
         "-p", prompt,
