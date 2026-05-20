@@ -1,0 +1,101 @@
+[SINGLE]
+You generate gold ground-truth answers for a PDF question-answering benchmark.
+Use only the attached PDF/document content. Do not use outside knowledge.
+Read the entire document before answering. Preserve operator names, facility names, dates, CFR citations, item numbers, deadlines, and numeric values exactly as presented when possible.
+If the answer is a list, return every distinct answer in document order.
+If the requested information is absent, use an explicit string required by the question such as "not disclosed" or "not applicable"; otherwise use "None".
+
+NOPV labeling rules:
+- For Proposed Compliance Order questions, include only mandatory requirements stated with mandatory language such as must, shall, or required.
+- Treat text described as requested, not mandated, or safety-improvement-cost documentation as non-mandatory unless the question explicitly asks for requested items.
+- Keep substantive remedial actions separate from PHMSA written submissions or deliverables when the question distinguishes them.
+- Use concise canonical answer spans. For lists, return distinct items in document order and avoid duplicate aliases or broader inspection-scope phrases when a specific non-compliant asset is named.
+
+Before writing the final answer, write a concise evidence-based reasoning string that identifies the decisive document evidence.
+Return exactly one valid JSON object and no markdown:
+{"reasoning": "brief evidence-based rationale", "answer": <answer matching answer_type>, "support": "short evidence quote or page note"}
+
+{{one_shot_example_block}}
+Document id: {{doc_id}}
+Question index: {{query_idx}}
+Question: {{query_text}}
+Answer type: {{answer_type}}
+[/SINGLE]
+
+[SINGLE_TEXT]
+You generate gold ground-truth answers for a PDF question-answering benchmark.
+Use only the document content below. Do not use outside knowledge.
+Read the entire document before answering. Preserve operator names, facility names, dates, CFR citations, item numbers, deadlines, and numeric values exactly as presented when possible.
+If the answer is a list, return every distinct answer in document order.
+If the requested information is absent, use an explicit string required by the question such as "not disclosed" or "not applicable"; otherwise use "None".
+
+NOPV labeling rules:
+- For Proposed Compliance Order questions, include only mandatory requirements stated with mandatory language such as must, shall, or required.
+- Treat text described as requested, not mandated, or safety-improvement-cost documentation as non-mandatory unless the question explicitly asks for requested items.
+- Keep substantive remedial actions separate from PHMSA written submissions or deliverables when the question distinguishes them.
+- Use concise canonical answer spans. For lists, return distinct items in document order and avoid duplicate aliases or broader inspection-scope phrases when a specific non-compliant asset is named.
+
+Before writing the final answer, write a concise evidence-based reasoning string that identifies the decisive document evidence.
+Return exactly one valid JSON object and no markdown:
+{"reasoning": "brief evidence-based rationale", "answer": <answer matching answer_type>, "support": "short evidence quote or page note"}
+
+Document id: {{doc_id}}
+
+{{document_text}}
+
+{{one_shot_example_block}}
+[QUESTION]
+Question index: {{query_idx}}
+Question: {{query_text}}
+Answer type: {{answer_type}}
+[/SINGLE_TEXT]
+
+[ALL]
+You generate gold ground-truth answers for a PDF question-answering benchmark.
+Use only the attached PDF/document content. Do not use outside knowledge.
+Read the entire document before answering. Preserve operator names, facility names, dates, CFR citations, item numbers, deadlines, and numeric values exactly as presented when possible.
+Answer every listed question exactly once.
+If an answer is a list, return every distinct answer in document order.
+If requested information is absent, use an explicit string required by the question such as "not disclosed" or "not applicable"; otherwise use "None".
+
+NOPV labeling rules:
+- For Proposed Compliance Order questions, include only mandatory requirements stated with mandatory language such as must, shall, or required.
+- Treat text described as requested, not mandated, or safety-improvement-cost documentation as non-mandatory unless the question explicitly asks for requested items.
+- Keep substantive remedial actions separate from PHMSA written submissions or deliverables when the question distinguishes them.
+- Use concise canonical answer spans. For lists, return distinct items in document order and avoid duplicate aliases or broader inspection-scope phrases when a specific non-compliant asset is named.
+
+Before writing each final answer, write a concise evidence-based reasoning string that identifies the decisive document evidence.
+Return exactly one valid JSON object and no markdown:
+{"answers": [{"query_idx": <integer>, "reasoning": "brief evidence-based rationale", "answer": <answer matching answer_type>, "support": "short evidence quote or page note"}]}
+
+{{one_shot_example_block}}
+Document id: {{doc_id}}
+{{queries}}
+[/ALL]
+
+[ALL_TEXT]
+You generate gold ground-truth answers for a PDF question-answering benchmark.
+Use only the document content below. Do not use outside knowledge.
+Read the entire document before answering. Preserve operator names, facility names, dates, CFR citations, item numbers, deadlines, and numeric values exactly as presented when possible.
+Answer every listed question exactly once.
+If an answer is a list, return every distinct answer in document order.
+If requested information is absent, use an explicit string required by the question such as "not disclosed" or "not applicable"; otherwise use "None".
+
+NOPV labeling rules:
+- For Proposed Compliance Order questions, include only mandatory requirements stated with mandatory language such as must, shall, or required.
+- Treat text described as requested, not mandated, or safety-improvement-cost documentation as non-mandatory unless the question explicitly asks for requested items.
+- Keep substantive remedial actions separate from PHMSA written submissions or deliverables when the question distinguishes them.
+- Use concise canonical answer spans. For lists, return distinct items in document order and avoid duplicate aliases or broader inspection-scope phrases when a specific non-compliant asset is named.
+
+Before writing each final answer, write a concise evidence-based reasoning string that identifies the decisive document evidence.
+Return exactly one valid JSON object and no markdown:
+{"answers": [{"query_idx": <integer>, "reasoning": "brief evidence-based rationale", "answer": <answer matching answer_type>, "support": "short evidence quote or page note"}]}
+
+Document id: {{doc_id}}
+
+{{document_text}}
+
+{{one_shot_example_block}}
+[QUESTIONS]
+{{queries}}
+[/ALL_TEXT]

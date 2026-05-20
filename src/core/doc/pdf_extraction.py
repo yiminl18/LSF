@@ -2,7 +2,7 @@
 PDF phrase extraction and visual pattern recognition.
 
 Extracts phrases and their visual attributes (font, size, bold, centering, etc.)
-from PDF documents. Supports both native PDFs and scanned PDFs (via OCR).
+from PDF documents. Supports both text-layer PDFs and scanned PDFs (via OCR).
 """
 
 import re
@@ -206,8 +206,8 @@ def phrase_visual_pattern_extraction(
     """
     Extract phrases and their visual patterns from a PDF file.
 
-    Automatically detects the PDF type (native or scanned) and selects
-    the appropriate extraction method. Scanned PDFs use OCR; native PDFs
+    Automatically detects the PDF type (text-layer or scanned) and selects
+    the appropriate extraction method. Scanned PDFs use OCR; text-layer PDFs
     use pdfplumber.
 
     Args:
@@ -348,7 +348,7 @@ def phrase_visual_pattern_extraction(
         if not doc:
             raise ValueError("Could not open PDF file")
 
-        # Determine whether the PDF is scanned or native
+        # Determine whether the PDF is scanned or text-layer
         scanned = is_scanned_pdf(doc)
 
         if scanned:
@@ -358,7 +358,7 @@ def phrase_visual_pattern_extraction(
         else:
             if verbose:
                 print("Detected normal PDF - using pdfplumber")
-            # Use pdfplumber for native PDFs
+            # Use pdfplumber for text-layer PDFs
             phrases = extract_phrases_with_pdfplumber(file_path, verbose=verbose)
 
         # Clean up resources

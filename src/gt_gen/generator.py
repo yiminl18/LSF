@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import argparse
-import base64
 import hashlib
 import json
 import logging
@@ -31,14 +30,16 @@ from core.pipeline.e2e_utils.cache import (
 DEFAULT_LLM_PROVIDER = "azure"
 DEFAULT_MODEL = "gpt-5.4-mini"
 DEFAULT_CLAUDE_MODEL = "sonnet"
-DEFAULT_INPUT_MODE = "auto"
+DEFAULT_INPUT_MODE = "text"
 DEFAULT_GENERATION_MODE = "single"
 DEFAULT_LOG_DIR = "logs/gt_gen"
 DEFAULT_MAX_TOKENS = 1200
 DEFAULT_CLAUDE_TIMEOUT_SEC = 600
+GT_PROMPT_DIR = Path(__file__).with_name("prompts")
+DEFAULT_GT_PROMPT_NAME = "default.txt"
 
-InputMode = Literal["auto", "native-pdf", "text", "claude-read-pdf"]
-ResolvedInputMode = Literal["native-pdf", "text", "claude-read-pdf"]
+InputMode = Literal["auto", "text", "claude-read-pdf"]
+ResolvedInputMode = Literal["text", "claude-read-pdf"]
 GenerationMode = Literal["single", "all"]
 
 _CACHE_CREATE_TABLE_SQL = """
@@ -160,12 +161,11 @@ def generate_ground_truth(
         target_dir: Dataset directory, either datasets/<name> or datasets/<name>/latest.
         query_idx: 1-based query index from queries.json.
         num_doc: Number of PDFs to sample before skipping existing GT; None means all.
-        llm_provider: LLM provider. Native PDF mode currently supports azure.
+        llm_provider: LLM provider.
         model: Model identifier, default gpt-5.4-mini.
         seed: Random sampling seed.
-        input_mode: auto chooses provider default; native-pdf uses Azure Responses
-            input_file; text uses extracted text; claude-read-pdf asks Claude Code
-            to read the local PDF path.
+        input_mode: auto resolves to text; text uses extracted text;
+            claude-read-pdf asks Claude Code to read the local PDF path.
         generation_mode: single answers this query with the single-answer schema;
             all answers the selected query set with the multi-answer schema.
         cache_db: SQLite LLM cache path.
@@ -187,13 +187,12 @@ def generate_ground_truth(
     run_logger = _make_run_logger(
         log_dir=log_dir,
         dataset_root=dataset_root,
+        llm_provider=resolved_provider,
+        model=resolved_model,
         input_mode=resolved_input_mode,
         generation_mode=resolved_generation_mode,
     )
 
-    native_caller = (
-        NativePDFCacheCaller(cache_db) if resolved_input_mode == "native-pdf" else None
-    )
     text_caller = (
         AzureResponsesTextCacheCaller(cache_db)
         if resolved_provider == "azure" and resolved_input_mode == "text"
@@ -236,7 +235,6 @@ def generate_ground_truth(
                     llm_provider=resolved_provider,
                     model=resolved_model,
                     input_mode=resolved_input_mode,
-                    native_caller=native_caller,
                     text_caller=text_caller,
                     claude_caller=claude_caller,
                     max_tokens=max_tokens,
@@ -250,7 +248,6 @@ def generate_ground_truth(
                     llm_provider=resolved_provider,
                     model=resolved_model,
                     input_mode=resolved_input_mode,
-                    native_caller=native_caller,
                     text_caller=text_caller,
                     claude_caller=claude_caller,
                     max_tokens=max_tokens,
@@ -344,13 +341,12 @@ def generate_ground_truth_for_queries(
     run_logger = _make_run_logger(
         log_dir=log_dir,
         dataset_root=dataset_root,
+        llm_provider=resolved_provider,
+        model=resolved_model,
         input_mode=resolved_input_mode,
         generation_mode=resolved_generation_mode,
     )
 
-    native_caller = (
-        NativePDFCacheCaller(cache_db) if resolved_input_mode == "native-pdf" else None
-    )
     text_caller = (
         AzureResponsesTextCacheCaller(cache_db)
         if resolved_provider == "azure" and resolved_input_mode == "text"
@@ -404,7 +400,6 @@ def generate_ground_truth_for_queries(
                     llm_provider=resolved_provider,
                     model=resolved_model,
                     input_mode=resolved_input_mode,
-                    native_caller=native_caller,
                     text_caller=text_caller,
                     claude_caller=claude_caller,
                     max_tokens=max_tokens,
@@ -469,7 +464,6 @@ def generate_ground_truth_for_queries(
                     llm_provider=resolved_provider,
                     model=resolved_model,
                     input_mode=resolved_input_mode,
-                    native_caller=native_caller,
                     text_caller=text_caller,
                     claude_caller=claude_caller,
                     max_tokens=max_tokens,
@@ -521,123 +515,6 @@ def generate_ground_truth_for_queries(
         run_logger.log_run_summary(summary.results, summary.run_latency_ms)
         run_logger.close()
     return summary
-
-
-class NativePDFCacheCaller:
-    """Azure Responses API caller with the shared SQLite LLM cache."""
-
-    def __init__(self, db_path: str = DEFAULT_CACHE_DB_PATH) -> None:
-        Path(db_path).parent.mkdir(parents=True, exist_ok=True)
-        self._db_path = db_path
-        self._local = threading.local()
-        conn = self._get_conn()
-        conn.execute(_CACHE_CREATE_TABLE_SQL)
-        conn.commit()
-
-    def _get_conn(self) -> sqlite3.Connection:
-        if not hasattr(self._local, "conn"):
-            self._local.conn = sqlite3.connect(self._db_path)
-            self._local.conn.execute(_CACHE_CREATE_TABLE_SQL)
-        return self._local.conn
-
-    def call(
-        self,
-        *,
-        pdf_path: Path,
-        prompt: str,
-        llm_provider: str,
-        model: str,
-        max_tokens: int,
-        response_schema: dict[str, Any] | None = None,
-        temperature: float = 0,
-    ) -> CacheResult:
-        if llm_provider != "azure":
-            raise ValueError(
-                "native-pdf input mode currently supports only llm_provider='azure'"
-            )
-        resolved_model = _require_model(model)
-        normalized_temperature = float(temperature)
-        pdf_hash = _sha256_file(pdf_path)
-        cache_key = _build_native_pdf_cache_key(
-            pdf_hash=pdf_hash,
-            prompt=prompt,
-            llm_provider=llm_provider,
-            model=resolved_model,
-            max_tokens=max_tokens,
-            response_schema=response_schema,
-            temperature=normalized_temperature,
-        )
-
-        conn = self._get_conn()
-        if normalized_temperature == 0.0:
-            row = conn.execute(
-                "SELECT response, input_tokens, output_tokens, latency_ms "
-                "FROM llm_cache WHERE cache_key = ?",
-                (cache_key,),
-            ).fetchone()
-            if row is not None:
-                response, input_tokens, output_tokens, latency_ms = row
-                return CacheResult(
-                    response=response,
-                    input_tokens=input_tokens,
-                    output_tokens=output_tokens,
-                    latency_ms=latency_ms,
-                    cache_hit=True,
-                )
-
-        t0 = time.perf_counter()
-        call_result = _azure_responses_pdf_call(
-            pdf_path=pdf_path,
-            prompt=prompt,
-            model=resolved_model,
-            max_tokens=max_tokens,
-            response_schema=response_schema,
-            temperature=normalized_temperature,
-        )
-        latency_ms = (time.perf_counter() - t0) * 1000.0
-
-        if normalized_temperature == 0.0:
-            metadata = json.dumps(
-                {
-                    "mode": "gt_gen_native_pdf_v1",
-                    "pdf_name": pdf_path.name,
-                    "pdf_sha256": pdf_hash,
-                    "prompt": prompt,
-                    "response_schema": response_schema,
-                },
-                ensure_ascii=False,
-                sort_keys=True,
-            )
-            conn.execute(
-                """
-                INSERT OR IGNORE INTO llm_cache
-                    (cache_key, prompt_text, response, input_tokens, output_tokens,
-                     latency_ms, model, llm_provider, max_tokens)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-                """,
-                (
-                    cache_key,
-                    metadata,
-                    call_result.response,
-                    call_result.input_tokens,
-                    call_result.output_tokens,
-                    latency_ms,
-                    resolved_model,
-                    llm_provider,
-                    max_tokens,
-                ),
-            )
-            conn.commit()
-
-        return CacheResult(
-            response=call_result.response,
-            input_tokens=call_result.input_tokens,
-            output_tokens=call_result.output_tokens,
-            latency_ms=latency_ms,
-            cache_hit=False,
-            cached_input_tokens=call_result.cached_input_tokens,
-            cost_usd=call_result.cost_usd,
-        )
 
 
 class AzureResponsesTextCacheCaller:
@@ -883,11 +760,7 @@ def resolve_input_mode(llm_provider: str, input_mode: InputMode) -> ResolvedInpu
     resolved_provider = normalize_llm_provider(llm_provider)
     mode = str(input_mode).strip().lower().replace("_", "-")
     if mode == "auto":
-        return "native-pdf" if resolved_provider == "azure" else "text"
-    if mode == "native-pdf":
-        if resolved_provider != "azure":
-            raise ValueError("input_mode='native-pdf' is supported only for azure")
-        return "native-pdf"
+        return "text"
     if mode == "text":
         return "text"
     if mode == "claude-read-pdf":
@@ -896,7 +769,7 @@ def resolve_input_mode(llm_provider: str, input_mode: InputMode) -> ResolvedInpu
                 "input_mode='claude-read-pdf' is supported only for claude-code"
             )
         return "claude-read-pdf"
-    raise ValueError("input_mode must be one of: auto, native-pdf, text, claude-read-pdf")
+    raise ValueError("input_mode must be one of: auto, text, claude-read-pdf")
 
 
 def resolve_generation_mode(generation_mode: str) -> GenerationMode:
@@ -1043,27 +916,22 @@ def _call_model_for_doc(
     llm_provider: str,
     model: str,
     input_mode: ResolvedInputMode,
-    native_caller: NativePDFCacheCaller | None,
     text_caller: AzureResponsesTextCacheCaller | None,
     claude_caller: ClaudeCodeCacheCaller | None,
     max_tokens: int,
     claude_timeout_sec: int,
     document_text: str | None = None,
 ) -> CacheResult:
-    prompt = build_ground_truth_prompt(query=query, doc_id=pdf_path.stem)
+    dataset_name = _dataset_name_for_log(_dataset_root_from_pdf_path(pdf_path))
+    prompt_template = _load_gt_prompt_template(dataset_name)
+    examples = _load_gt_examples(dataset_name)
+    prompt = build_ground_truth_prompt(
+        query=query,
+        doc_id=pdf_path.stem,
+        prompt_template=prompt_template,
+        examples=examples,
+    )
     response_schema = _answer_response_schema()
-    if input_mode == "native-pdf":
-        if native_caller is None:
-            raise RuntimeError("native PDF caller is not initialized")
-        return native_caller.call(
-            pdf_path=pdf_path,
-            prompt=prompt,
-            llm_provider=llm_provider,
-            model=model,
-            max_tokens=max_tokens,
-            response_schema=response_schema,
-            temperature=0,
-        )
     if input_mode == "text":
         resolved_document_text = (
             document_text
@@ -1074,6 +942,8 @@ def _call_model_for_doc(
             query=query,
             doc_id=pdf_path.stem,
             document_text=resolved_document_text,
+            prompt_template=prompt_template,
+            examples=examples,
         )
         if llm_provider == "claude-code":
             if claude_caller is None:
@@ -1127,27 +997,22 @@ def _call_model_for_queries_for_doc(
     llm_provider: str,
     model: str,
     input_mode: ResolvedInputMode,
-    native_caller: NativePDFCacheCaller | None,
     text_caller: AzureResponsesTextCacheCaller | None,
     claude_caller: ClaudeCodeCacheCaller | None,
     max_tokens: int,
     claude_timeout_sec: int,
     document_text: str | None = None,
 ) -> CacheResult:
-    prompt = build_ground_truth_all_prompt(queries=queries, doc_id=pdf_path.stem)
+    dataset_name = _dataset_name_for_log(_dataset_root_from_pdf_path(pdf_path))
+    prompt_template = _load_gt_prompt_template(dataset_name)
+    examples = _load_gt_examples(dataset_name)
+    prompt = build_ground_truth_all_prompt(
+        queries=queries,
+        doc_id=pdf_path.stem,
+        prompt_template=prompt_template,
+        examples=examples,
+    )
     response_schema = _answers_response_schema(queries)
-    if input_mode == "native-pdf":
-        if native_caller is None:
-            raise RuntimeError("native PDF caller is not initialized")
-        return native_caller.call(
-            pdf_path=pdf_path,
-            prompt=prompt,
-            llm_provider=llm_provider,
-            model=model,
-            max_tokens=max_tokens,
-            response_schema=response_schema,
-            temperature=0,
-        )
     if input_mode == "text":
         resolved_document_text = (
             document_text
@@ -1158,6 +1023,8 @@ def _call_model_for_queries_for_doc(
             queries=queries,
             doc_id=pdf_path.stem,
             document_text=resolved_document_text,
+            prompt_template=prompt_template,
+            examples=examples,
         )
         if llm_provider == "claude-code":
             if claude_caller is None:
@@ -1204,83 +1071,240 @@ def _call_model_for_queries_for_doc(
     raise ValueError(f"Unsupported input_mode={input_mode!r}")
 
 
-def build_ground_truth_prompt(*, query: QuerySpec, doc_id: str) -> str:
-    return (
-        _ground_truth_instructions()
-        + "\n\n"
-        f"Document id: {doc_id}\n"
-        f"Question index: {query.idx}\n"
-        f"Question: {query.text}\n"
-        f"Answer type: {query.answer_type}\n"
+def build_ground_truth_prompt(
+    *,
+    query: QuerySpec,
+    doc_id: str,
+    prompt_template: str | None = None,
+    examples: dict[str, Any] | None = None,
+) -> str:
+    return _render_gt_prompt(
+        prompt_template=prompt_template,
+        section="SINGLE",
+        doc_id=doc_id,
+        query_idx=query.idx,
+        query_text=query.text,
+        answer_type=query.answer_type,
+        one_shot_example_block=_format_single_example_block(
+            examples, query_idx=query.idx, live_doc_id=doc_id
+        ),
     )
 
 
 def build_ground_truth_text_prompt(
-    *, query: QuerySpec, doc_id: str, document_text: str
+    *,
+    query: QuerySpec,
+    doc_id: str,
+    document_text: str,
+    prompt_template: str | None = None,
+    examples: dict[str, Any] | None = None,
 ) -> str:
     """Build a cache-friendly text prompt with document before query details."""
-    return (
-        _ground_truth_instructions()
-        + "\n\n"
-        f"Document id: {doc_id}\n\n"
-        + document_text
-        + "\n\n"
-        + "[QUESTION]\n"
-        f"Question index: {query.idx}\n"
-        f"Question: {query.text}\n"
-        f"Answer type: {query.answer_type}\n"
+    return _render_gt_prompt(
+        prompt_template=prompt_template,
+        section="SINGLE_TEXT",
+        doc_id=doc_id,
+        document_text=document_text,
+        query_idx=query.idx,
+        query_text=query.text,
+        answer_type=query.answer_type,
+        one_shot_example_block=_format_single_example_block(
+            examples, query_idx=query.idx, live_doc_id=doc_id
+        ),
     )
 
 
-def build_ground_truth_all_prompt(*, queries: Sequence[QuerySpec], doc_id: str) -> str:
-    return (
-        _ground_truth_all_instructions()
-        + "\n\n"
-        f"Document id: {doc_id}\n"
-        + _format_query_list(queries)
+def build_ground_truth_all_prompt(
+    *,
+    queries: Sequence[QuerySpec],
+    doc_id: str,
+    prompt_template: str | None = None,
+    examples: dict[str, Any] | None = None,
+) -> str:
+    return _render_gt_prompt(
+        prompt_template=prompt_template,
+        section="ALL",
+        doc_id=doc_id,
+        queries=_format_query_list(queries),
+        one_shot_example_block=_format_all_example_block(
+            examples, live_doc_id=doc_id
+        ),
     )
 
 
 def build_ground_truth_all_text_prompt(
-    *, queries: Sequence[QuerySpec], doc_id: str, document_text: str
+    *,
+    queries: Sequence[QuerySpec],
+    doc_id: str,
+    document_text: str,
+    prompt_template: str | None = None,
+    examples: dict[str, Any] | None = None,
 ) -> str:
     """Build a cache-friendly multi-query text prompt with document before queries."""
-    return (
-        _ground_truth_all_instructions()
-        + "\n\n"
-        f"Document id: {doc_id}\n\n"
-        + document_text
-        + "\n\n"
-        + "[QUESTIONS]\n"
-        + _format_query_list(queries)
+    return _render_gt_prompt(
+        prompt_template=prompt_template,
+        section="ALL_TEXT",
+        doc_id=doc_id,
+        document_text=document_text,
+        queries=_format_query_list(queries),
+        one_shot_example_block=_format_all_example_block(
+            examples, live_doc_id=doc_id
+        ),
     )
 
 
-def _ground_truth_instructions() -> str:
+def _render_gt_prompt(
+    *,
+    prompt_template: str | None,
+    section: str,
+    **values: Any,
+) -> str:
+    template = prompt_template or _load_gt_prompt_template(None)
+    prompt = _gt_prompt_section(template, section)
+    for key, value in values.items():
+        prompt = prompt.replace(f"{{{{{key}}}}}", str(value))
+    return prompt.strip() + "\n"
+
+
+def _load_gt_prompt_template(dataset_name: str | None) -> str:
+    prompt_path = _gt_prompt_path(dataset_name)
+    return prompt_path.read_text(encoding="utf-8")
+
+
+def _gt_prompt_path(dataset_name: str | None) -> Path:
+    if dataset_name:
+        candidate = GT_PROMPT_DIR / f"{_safe_slug(dataset_name).lower()}.txt"
+        if candidate.is_file():
+            return candidate
+    default_path = GT_PROMPT_DIR / DEFAULT_GT_PROMPT_NAME
+    if not default_path.is_file():
+        raise FileNotFoundError(f"Missing default GT prompt template: {default_path}")
+    return default_path
+
+
+def _gt_prompt_section(prompt_template: str, section: str) -> str:
+    section_name = section.strip().upper()
+    start_marker = f"[{section_name}]"
+    end_marker = f"[/{section_name}]"
+    start = prompt_template.find(start_marker)
+    if start < 0:
+        raise ValueError(f"GT prompt template is missing section {start_marker}")
+    start += len(start_marker)
+    end = prompt_template.find(end_marker, start)
+    if end < 0:
+        raise ValueError(f"GT prompt template is missing section {end_marker}")
+    prompt = prompt_template[start:end].strip()
+    if not prompt:
+        raise ValueError(f"GT prompt template section {start_marker} is empty")
+    return prompt
+
+
+def _load_gt_examples(dataset_name: str | None) -> dict[str, Any] | None:
+    """Load optional per-query gold examples for ``dataset_name``."""
+    if not dataset_name:
+        return None
+    candidate = GT_PROMPT_DIR / f"{_safe_slug(dataset_name).lower()}_examples.json"
+    if not candidate.is_file():
+        return None
+    return json.loads(candidate.read_text(encoding="utf-8"))
+
+
+def _example_block_applies(
+    examples: dict[str, Any] | None, live_doc_id: str
+) -> bool:
+    if not examples or not isinstance(examples.get("examples"), dict):
+        return False
+    # Guard against feeding the model the literal answer key for the same doc.
+    if examples.get("doc_id") == live_doc_id:
+        return False
+    return True
+
+
+def _format_single_example_block(
+    examples: dict[str, Any] | None,
+    *,
+    query_idx: int,
+    live_doc_id: str,
+) -> str:
+    if not _example_block_applies(examples, live_doc_id):
+        return ""
+    entry = examples["examples"].get(str(query_idx))
+    if not entry:
+        return ""
+    response_json = json.dumps(
+        {
+            "reasoning": entry["reasoning"],
+            "answer": entry["answer"],
+            "support": entry["support"],
+        },
+        ensure_ascii=False,
+    )
     return (
-        "You generate gold ground-truth answers for a PDF question-answering benchmark.\n"
-        "Use only the attached PDF/document content. Do not use outside knowledge.\n"
-        "Read the entire document before answering. Preserve names, docket numbers, dates, "
-        "statutes, and numeric values exactly as presented when possible.\n"
-        "If the answer is a list, return every distinct answer in document order. "
-        "If the requested information is absent, use an explicit string required by the "
-        "question such as \"not disclosed\" or \"not applicable\"; otherwise use \"None\".\n"
-        "Return exactly one valid JSON object and no markdown:\n"
-        "{\"answer\": <answer matching answer_type>, \"support\": \"short evidence quote or page note\"}"
+        "One-shot example (from a reference NOPV document; apply analogous"
+        " reasoning to the current document, do not copy verbatim):\n"
+        f"Document id: {examples['doc_id']}\n"
+        f"Question index: {query_idx}\n"
+        f"Question: {entry['query']}\n"
+        f"Answer type: {entry['answer_type']}\n"
+        "Response:\n"
+        f"{response_json}\n"
+        "End of example."
     )
 
 
-def _ground_truth_all_instructions() -> str:
-    return (
-        "You generate gold ground-truth answers for a PDF question-answering benchmark.\n"
-        "Use only the attached PDF/document content. Do not use outside knowledge.\n"
-        "Read the entire document before answering. Preserve names, docket numbers, dates, "
-        "statutes, and numeric values exactly as presented when possible.\n"
-        "Answer every listed question exactly once. If an answer is a list, return every "
-        "distinct answer in document order. If requested information is absent, use an "
-        "explicit string required by the question such as \"not disclosed\" or "
-        "\"not applicable\"; otherwise use \"None\"."
+def _format_all_example_block(
+    examples: dict[str, Any] | None,
+    *,
+    live_doc_id: str,
+) -> str:
+    if not _example_block_applies(examples, live_doc_id):
+        return ""
+    all_ids = examples.get("all_example_query_ids") or []
+    selected_specs: list[QuerySpec] = []
+    selected_entries: list[tuple[int, dict[str, Any]]] = []
+    for idx in all_ids:
+        entry = examples["examples"].get(str(idx))
+        if not entry:
+            continue
+        selected_specs.append(
+            QuerySpec(
+                idx=int(idx),
+                text=entry["query"],
+                answer_type=entry["answer_type"],
+            )
+        )
+        selected_entries.append((int(idx), entry))
+    if not selected_entries:
+        return ""
+    question_block = _format_query_list(selected_specs).rstrip()
+    response_json = json.dumps(
+        {
+            "answers": [
+                {
+                    "query_idx": idx,
+                    "reasoning": entry["reasoning"],
+                    "answer": entry["answer"],
+                    "support": entry["support"],
+                }
+                for idx, entry in selected_entries
+            ]
+        },
+        ensure_ascii=False,
     )
+    return (
+        "One-shot example (from a reference NOPV document; apply analogous"
+        " reasoning, do not copy verbatim):\n"
+        f"Document id: {examples['doc_id']}\n"
+        "[QUESTIONS]\n"
+        f"{question_block}\n"
+        "Response:\n"
+        f"{response_json}\n"
+        "End of example."
+    )
+
+
+def _dataset_root_from_pdf_path(pdf_path: Path) -> Path:
+    return pdf_path.parent.parent
 
 
 def _format_query_list(queries: Sequence[QuerySpec]) -> str:
@@ -1305,47 +1329,6 @@ def _extract_pdf_text_for_prompt(pdf_path: Path) -> str:
                 parts.append(f"[Page {page_index}]\n{text}")
     parts.append("[DOCUMENT TEXT END]")
     return "\n\n".join(parts)
-
-
-def _azure_responses_pdf_call(
-    *,
-    pdf_path: Path,
-    prompt: str,
-    model: str,
-    max_tokens: int,
-    response_schema: dict[str, Any] | None,
-    temperature: float,
-) -> AzureResponsesCallResult:
-    client, deployment = _azure_responses_client_and_deployment(model)
-    file_data = base64.b64encode(pdf_path.read_bytes()).decode("utf-8")
-    response = client.responses.create(
-        model=deployment,
-        input=[
-            {
-                "role": "user",
-                "content": [
-                    {
-                        "type": "input_file",
-                        "filename": pdf_path.name,
-                        "file_data": f"data:application/pdf;base64,{file_data}",
-                    },
-                    {"type": "input_text", "text": prompt},
-                ],
-            }
-        ],
-        max_output_tokens=max_tokens,
-        text=_responses_text_config(response_schema, name="gt_gen_single_answer"),
-        temperature=temperature,
-    )
-    answer = str(getattr(response, "output_text", "")).strip()
-    if not answer:
-        raise ValueError("Azure Responses API returned empty output_text")
-    usage = getattr(response, "usage", None)
-    return _build_azure_call_result(
-        answer=answer,
-        usage=usage,
-        model=model,
-    )
 
 
 def _azure_responses_text_call(
@@ -1482,10 +1465,11 @@ def _answer_response_schema() -> dict[str, Any]:
         "type": "object",
         "additionalProperties": False,
         "properties": {
-            "answer": {},
+            "reasoning": {"type": "string"},
+            "answer": _answer_value_schema(),
             "support": {"type": "string"},
         },
-        "required": ["answer", "support"],
+        "required": ["reasoning", "answer", "support"],
     }
 
 
@@ -1504,14 +1488,23 @@ def _answers_response_schema(queries: Sequence[QuerySpec]) -> dict[str, Any]:
                     "additionalProperties": False,
                     "properties": {
                         "query_idx": {"type": "integer", "enum": allowed_query_indices},
-                        "answer": {},
+                        "reasoning": {"type": "string"},
+                        "answer": _answer_value_schema(),
                         "support": {"type": "string"},
                     },
-                    "required": ["query_idx", "answer", "support"],
+                    "required": ["query_idx", "reasoning", "answer", "support"],
                 },
             }
         },
         "required": ["answers"],
+    }
+
+
+def _answer_value_schema() -> dict[str, Any]:
+    scalar_types = ["string", "integer", "number", "boolean", "null"]
+    return {
+        "type": scalar_types + ["array"],
+        "items": {"type": scalar_types},
     }
 
 
@@ -1611,34 +1604,6 @@ def _require_model(model: str) -> str:
     if resolved_model == "unspec" + "ified":
         raise ValueError("model uses a reserved invalid name")
     return resolved_model
-
-
-def _build_native_pdf_cache_key(
-    *,
-    pdf_hash: str,
-    prompt: str,
-    llm_provider: str,
-    model: str,
-    max_tokens: int,
-    response_schema: dict[str, Any] | None,
-    temperature: float,
-) -> str:
-    payload = json.dumps(
-        {
-            "mode": "gt_gen_native_pdf_v1",
-            "pdf_sha256": pdf_hash,
-            "prompt": prompt,
-            "llm_provider": llm_provider,
-            "model": model,
-            "max_tokens": max_tokens,
-            "response_schema": _schema_identity(response_schema),
-            "temperature": temperature,
-        },
-        ensure_ascii=False,
-        sort_keys=True,
-        separators=(",", ":"),
-    )
-    return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
 
 def _build_azure_text_cache_key(
@@ -1820,7 +1785,7 @@ def _build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument(
         "--input-mode",
-        choices=["auto", "native-pdf", "text", "claude-read-pdf"],
+        choices=["auto", "text", "claude-read-pdf"],
         default=DEFAULT_INPUT_MODE,
     )
     parser.add_argument(
@@ -1929,6 +1894,8 @@ class GTGenRunLogger:
         *,
         log_dir: str | Path,
         dataset_root: Path,
+        llm_provider: str,
+        model: str,
         input_mode: ResolvedInputMode,
         generation_mode: GenerationMode,
     ) -> None:
@@ -1940,6 +1907,8 @@ class GTGenRunLogger:
         log_path.parent.mkdir(parents=True, exist_ok=True)
         self.log_path = log_path
         self.dataset_root = dataset_root
+        self.llm_provider = llm_provider
+        self.model = model
         self.input_mode = input_mode
         self.generation_mode = generation_mode
         self._seen_call_ids: set[str] = set()
@@ -1955,6 +1924,8 @@ class GTGenRunLogger:
             _format_log_fields(
                 event="run_start",
                 dataset_root=str(dataset_root),
+                llm_provider=llm_provider,
+                model=model,
                 input_mode=input_mode,
                 generation_mode=generation_mode,
             )
@@ -1978,6 +1949,8 @@ class GTGenRunLogger:
                 dataset_root=str(self.dataset_root),
                 doc_id=result.doc_id,
                 query_ids=_result_query_ids(result),
+                llm_provider=self.llm_provider,
+                model=self.model,
                 input_mode=self.input_mode,
                 generation_mode=self.generation_mode,
                 cache_hit=str(result.cache_hit).lower(),
@@ -2001,6 +1974,8 @@ class GTGenRunLogger:
             _format_log_fields(
                 event="run_summary",
                 dataset_root=str(self.dataset_root),
+                llm_provider=self.llm_provider,
+                model=self.model,
                 input_mode=self.input_mode,
                 generation_mode=self.generation_mode,
                 run_latency_ms=f"{run_latency_ms:.3f}",
@@ -2023,6 +1998,8 @@ def _make_run_logger(
     *,
     log_dir: str | Path | None,
     dataset_root: Path,
+    llm_provider: str,
+    model: str,
     input_mode: ResolvedInputMode,
     generation_mode: GenerationMode,
 ) -> GTGenRunLogger | None:
@@ -2031,6 +2008,8 @@ def _make_run_logger(
     return GTGenRunLogger(
         log_dir=log_dir,
         dataset_root=dataset_root,
+        llm_provider=llm_provider,
+        model=model,
         input_mode=input_mode,
         generation_mode=generation_mode,
     )

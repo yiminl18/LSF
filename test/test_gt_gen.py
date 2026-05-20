@@ -15,8 +15,12 @@ def _isolate_default_log_dir(tmp_path, monkeypatch):
     monkeypatch.chdir(tmp_path)
 
 
-def _make_dataset(tmp_path: Path, names: tuple[str, ...] = ("doc_a",)) -> Path:
-    root = tmp_path / "court" / "latest"
+def _make_dataset(
+    tmp_path: Path,
+    names: tuple[str, ...] = ("doc_a",),
+    dataset_name: str = "court",
+) -> Path:
+    root = tmp_path / dataset_name / "latest"
     raw = root / "raw"
     raw.mkdir(parents=True)
     (root / "queries.json").write_text(
@@ -33,7 +37,25 @@ def _make_dataset(tmp_path: Path, names: tuple[str, ...] = ("doc_a",)) -> Path:
     return root
 
 
-def test_generate_ground_truth_defaults_to_native_pdf_mini(tmp_path, monkeypatch):
+def _patch_text_extraction(
+    monkeypatch: pytest.MonkeyPatch,
+    text: str = "[DOCUMENT TEXT START]\nmock document text",
+) -> None:
+    monkeypatch.setattr(generator, "_extract_pdf_text_for_prompt", lambda pdf_path: text)
+
+
+def _patch_azure_text_caller(monkeypatch: pytest.MonkeyPatch, fake_call) -> None:
+    def wrapped_call(self, prompt, **kwargs):
+        return fake_call(self, prompt=prompt, **kwargs)
+
+    monkeypatch.setattr(generator.AzureResponsesTextCacheCaller, "call", wrapped_call)
+
+
+def _doc_id_from_prompt(prompt: str) -> str:
+    return prompt.split("Document id: ", 1)[1].splitlines()[0]
+
+
+def test_generate_ground_truth_defaults_to_text_mini(tmp_path, monkeypatch):
     root = _make_dataset(tmp_path)
     seen = {}
 
@@ -49,7 +71,8 @@ def test_generate_ground_truth_defaults_to_native_pdf_mini(tmp_path, monkeypatch
             cost_usd=0.00003,
         )
 
-    monkeypatch.setattr(generator.NativePDFCacheCaller, "call", fake_call)
+    _patch_text_extraction(monkeypatch)
+    _patch_azure_text_caller(monkeypatch, fake_call)
 
     summary = generator.generate_ground_truth(
         target_dir=root.parent,
@@ -72,9 +95,11 @@ def test_generate_ground_truth_defaults_to_native_pdf_mini(tmp_path, monkeypatch
     assert summary.log_path.exists()
     assert seen["llm_provider"] == "azure"
     assert seen["model"] == "gpt-5.4-mini"
-    assert seen["pdf_path"] == root / "raw" / "doc_a.pdf"
-    assert seen["response_schema"]["required"] == ["answer", "support"]
+    assert seen["response_schema"]["required"] == ["reasoning", "answer", "support"]
+    assert "[DOCUMENT TEXT START]" in seen["prompt"]
     assert "Answer type: string" in seen["prompt"]
+    assert "NOPV labeling rules" not in seen["prompt"]
+    assert "One-shot" not in seen["prompt"]
 
 
 def test_generate_ground_truth_merges_existing_keys(tmp_path, monkeypatch):
@@ -85,9 +110,9 @@ def test_generate_ground_truth_merges_existing_keys(tmp_path, monkeypatch):
         json.dumps({"2": "old answer"}), encoding="utf-8"
     )
 
-    monkeypatch.setattr(
-        generator.NativePDFCacheCaller,
-        "call",
+    _patch_text_extraction(monkeypatch)
+    _patch_azure_text_caller(
+        monkeypatch,
         lambda self, **kwargs: CacheResult(
             response='{"answer":["23-35560","23-35585"],"support":"cover page"}',
             input_tokens=10,
@@ -119,7 +144,7 @@ def test_generate_ground_truth_samples_then_skips_existing(tmp_path, monkeypatch
     calls = []
 
     def fake_call(self, **kwargs):
-        calls.append(kwargs["pdf_path"].stem)
+        calls.append(_doc_id_from_prompt(kwargs["prompt"]))
         return CacheResult(
             response='{"answer":"new","support":"page 1"}',
             input_tokens=10,
@@ -128,7 +153,8 @@ def test_generate_ground_truth_samples_then_skips_existing(tmp_path, monkeypatch
             cache_hit=False,
         )
 
-    monkeypatch.setattr(generator.NativePDFCacheCaller, "call", fake_call)
+    _patch_text_extraction(monkeypatch)
+    _patch_azure_text_caller(monkeypatch, fake_call)
 
     summary = generator.generate_ground_truth(
         target_dir=root,
@@ -151,13 +177,13 @@ def test_parse_answer_response_requires_answer_field():
         generator.parse_answer_response('{"support":"page 1"}')
 
 
-def test_cli_parser_defaults_to_native_pdf_mini():
+def test_cli_parser_defaults_to_text_mini():
     args = generator._build_parser().parse_args(
         ["--target-dir", "datasets/court", "--query-idx", "1", "--progress-cost"]
     )
     assert args.llm_provider == "azure"
     assert args.model == "gpt-5.4-mini"
-    assert args.input_mode == "auto"
+    assert args.input_mode == "text"
     assert args.generation_mode == "single"
     assert args.progress_cost is True
     assert args.log_dir == generator.DEFAULT_LOG_DIR
@@ -182,7 +208,7 @@ def test_cli_parser_accepts_query_indices():
 
 
 def test_provider_auto_input_mode_resolution():
-    assert generator.resolve_input_mode("azure", "auto") == "native-pdf"
+    assert generator.resolve_input_mode("azure", "auto") == "text"
     assert generator.resolve_input_mode("claude-code", "auto") == "text"
     assert generator.resolve_model_for_provider("claude-code", "gpt-5.4-mini") == "sonnet"
 
@@ -324,7 +350,7 @@ def test_generate_ground_truth_for_queries_uses_doc_major_order(tmp_path, monkey
     def fake_call(self, **kwargs):
         prompt = kwargs["prompt"]
         query_idx = int(prompt.split("Question index: ", 1)[1].splitlines()[0])
-        calls.append((kwargs["pdf_path"].stem, query_idx))
+        calls.append((_doc_id_from_prompt(prompt), query_idx))
         return CacheResult(
             response=f'{{"answer":"answer-{query_idx}","support":"page 1"}}',
             input_tokens=10,
@@ -333,7 +359,8 @@ def test_generate_ground_truth_for_queries_uses_doc_major_order(tmp_path, monkey
             cache_hit=False,
         )
 
-    monkeypatch.setattr(generator.NativePDFCacheCaller, "call", fake_call)
+    _patch_text_extraction(monkeypatch)
+    _patch_azure_text_caller(monkeypatch, fake_call)
 
     summary = generator.generate_ground_truth_for_queries(
         target_dir=root,
@@ -357,7 +384,7 @@ def test_generation_mode_all_answers_selected_queries_once_per_doc(tmp_path, mon
 
     def fake_call(self, **kwargs):
         prompt = kwargs["prompt"]
-        calls.append(kwargs["pdf_path"].stem)
+        calls.append(_doc_id_from_prompt(prompt))
         assert "Question index: 1" in prompt
         assert "Question index: 2" in prompt
         assert "answers" in kwargs["response_schema"]["properties"]
@@ -378,7 +405,8 @@ def test_generation_mode_all_answers_selected_queries_once_per_doc(tmp_path, mon
             cost_usd=0.01,
         )
 
-    monkeypatch.setattr(generator.NativePDFCacheCaller, "call", fake_call)
+    _patch_text_extraction(monkeypatch)
+    _patch_azure_text_caller(monkeypatch, fake_call)
 
     summary = generator.generate_ground_truth_for_queries(
         target_dir=root,
@@ -412,7 +440,8 @@ def test_generate_ground_truth_writes_latency_cost_log(tmp_path, monkeypatch):
             cost_usd=0.00003,
         )
 
-    monkeypatch.setattr(generator.NativePDFCacheCaller, "call", fake_call)
+    _patch_text_extraction(monkeypatch)
+    _patch_azure_text_caller(monkeypatch, fake_call)
 
     summary = generator.generate_ground_truth(
         target_dir=root,
@@ -424,6 +453,9 @@ def test_generate_ground_truth_writes_latency_cost_log(tmp_path, monkeypatch):
 
     assert summary.log_path is not None
     log_text = summary.log_path.read_text(encoding="utf-8")
+    assert "event=run_start" in log_text
+    assert "llm_provider=azure" in log_text
+    assert "model=gpt-5.4-mini" in log_text
     assert "event=llm_call" in log_text
     assert "latency_ms=1.000" in log_text
     assert "cost_usd=0.000030" in log_text
@@ -446,7 +478,8 @@ def test_post_call_parse_failure_keeps_latency_cost_in_log(tmp_path, monkeypatch
             cost_usd=0.00003,
         )
 
-    monkeypatch.setattr(generator.NativePDFCacheCaller, "call", fake_call)
+    _patch_text_extraction(monkeypatch)
+    _patch_azure_text_caller(monkeypatch, fake_call)
 
     summary = generator.generate_ground_truth(
         target_dir=root,
@@ -501,7 +534,8 @@ def test_generation_mode_all_logs_one_llm_call_per_doc(tmp_path, monkeypatch):
             cost_usd=0.01,
         )
 
-    monkeypatch.setattr(generator.NativePDFCacheCaller, "call", fake_call)
+    _patch_text_extraction(monkeypatch)
+    _patch_azure_text_caller(monkeypatch, fake_call)
 
     summary = generator.generate_ground_truth_for_queries(
         target_dir=root,
@@ -514,6 +548,8 @@ def test_generation_mode_all_logs_one_llm_call_per_doc(tmp_path, monkeypatch):
     assert summary.log_path is not None
     log_text = summary.log_path.read_text(encoding="utf-8")
     assert log_text.count("event=llm_call") == 1
+    assert "llm_provider=azure" in log_text
+    assert "model=gpt-5.4-mini" in log_text
     assert "query_ids=1,2" in log_text
     assert "api_latency_ms=7.500" in log_text
     assert "cost_usd=0.010000" in log_text
@@ -578,7 +614,8 @@ def test_generation_mode_all_skips_existing_queries(tmp_path, monkeypatch):
             cache_hit=False,
         )
 
-    monkeypatch.setattr(generator.NativePDFCacheCaller, "call", fake_call)
+    _patch_text_extraction(monkeypatch)
+    _patch_azure_text_caller(monkeypatch, fake_call)
 
     summary = generator.generate_ground_truth_for_queries(
         target_dir=root,
@@ -622,6 +659,29 @@ def test_parse_answers_response_rejects_missing_duplicate_and_unexpected_queries
         )
 
 
+def test_structured_output_answer_fields_have_types():
+    single_schema = generator._answer_response_schema()
+    multi_schema = generator._answers_response_schema(
+        [generator.QuerySpec(idx=1, text="Q1", answer_type="string")]
+    )
+
+    assert "type" in single_schema["properties"]["answer"]
+    assert single_schema["properties"]["reasoning"]["type"] == "string"
+    assert single_schema["required"] == ["reasoning", "answer", "support"]
+    assert (
+        "type"
+        in multi_schema["properties"]["answers"]["items"]["properties"]["answer"]
+    )
+    multi_item_schema = multi_schema["properties"]["answers"]["items"]
+    assert multi_item_schema["properties"]["reasoning"]["type"] == "string"
+    assert multi_item_schema["required"] == [
+        "query_idx",
+        "reasoning",
+        "answer",
+        "support",
+    ]
+
+
 def test_text_prompt_puts_document_before_query_for_prefix_cache():
     query = generator.QuerySpec(
         idx=2,
@@ -636,6 +696,196 @@ def test_text_prompt_puts_document_before_query_for_prefix_cache():
 
     assert prompt.index("shared document text") < prompt.index("[QUESTION]")
     assert "Question index: 2" in prompt
+
+
+def test_nopv_text_prompt_puts_document_before_one_shot_for_prefix_cache():
+    query = generator.QuerySpec(
+        idx=11,
+        text="What mandatory written submissions are required?",
+        answer_type="list of strings",
+    )
+    nopv_template = generator._load_gt_prompt_template("nopv")
+    nopv_examples = generator._load_gt_examples("nopv")
+
+    single_prompt = generator.build_ground_truth_text_prompt(
+        query=query,
+        doc_id="some_other_doc",
+        document_text="[DOCUMENT TEXT START]\nshared document text",
+        prompt_template=nopv_template,
+        examples=nopv_examples,
+    )
+    all_prompt = generator.build_ground_truth_all_text_prompt(
+        queries=[query],
+        doc_id="some_other_doc",
+        document_text="[DOCUMENT TEXT START]\nshared document text",
+        prompt_template=nopv_template,
+        examples=nopv_examples,
+    )
+
+    assert single_prompt.index("shared document text") < single_prompt.index("One-shot")
+    assert single_prompt.index("One-shot") < single_prompt.index("[QUESTION]")
+    assert all_prompt.index("shared document text") < all_prompt.index("One-shot")
+    assert all_prompt.index("One-shot") < all_prompt.index("[QUESTIONS]")
+
+
+def test_dataset_prompt_template_is_selected_by_dataset_name():
+    query = generator.QuerySpec(
+        idx=11,
+        text="What mandatory written submissions are required?",
+        answer_type="list of strings",
+    )
+    nopv_template = generator._load_gt_prompt_template("nopv")
+    nopv_examples = generator._load_gt_examples("nopv")
+    court_template = generator._load_gt_prompt_template("court")
+
+    nopv_prompt = generator.build_ground_truth_prompt(
+        query=query,
+        doc_id="doc_a",
+        prompt_template=nopv_template,
+        examples=nopv_examples,
+    )
+    court_prompt = generator.build_ground_truth_prompt(
+        query=query,
+        doc_id="doc_a",
+        prompt_template=court_template,
+    )
+    nopv_all_prompt = generator.build_ground_truth_all_prompt(
+        queries=[query],
+        doc_id="doc_a",
+        prompt_template=nopv_template,
+        examples=nopv_examples,
+    )
+    court_all_prompt = generator.build_ground_truth_all_prompt(
+        queries=[query],
+        doc_id="doc_a",
+        prompt_template=court_template,
+    )
+
+    assert "NOPV labeling rules:" in nopv_prompt
+    assert "not mandated" in nopv_prompt
+    assert "NOPV labeling rules:" in nopv_all_prompt
+    assert "NOPV labeling rules" not in court_prompt
+    assert "NOPV labeling rules" not in court_all_prompt
+    assert "not mandated" not in court_prompt
+    assert "not mandated" not in court_all_prompt
+    assert "One-shot" in nopv_prompt
+    assert "12025006NOPV_PCO_05082025" in nopv_prompt
+    assert "updated training program" in nopv_prompt
+    assert "End of example." in nopv_prompt
+    assert "One-shot" in nopv_all_prompt
+    assert "Dresser Style 63" in nopv_all_prompt
+    for expected_idx in range(1, 14):
+        assert f"Question index: {expected_idx}" in nopv_all_prompt
+    assert "One-shot" not in court_prompt
+    assert "One-shot" not in court_all_prompt
+    assert "{{one_shot_example_block}}" not in nopv_prompt
+    assert "{{one_shot_example_block}}" not in nopv_all_prompt
+    assert nopv_prompt.index('"reasoning"') < nopv_prompt.index('"answer"')
+    assert nopv_all_prompt.index('"reasoning"') < nopv_all_prompt.index('"answer"')
+
+
+def test_nopv_one_shot_example_skipped_when_idx_missing():
+    query = generator.QuerySpec(
+        idx=999,
+        text="Hypothetical query not present in the example bank.",
+        answer_type="string",
+    )
+    nopv_template = generator._load_gt_prompt_template("nopv")
+    nopv_examples = generator._load_gt_examples("nopv")
+
+    prompt = generator.build_ground_truth_prompt(
+        query=query,
+        doc_id="some_other_doc",
+        prompt_template=nopv_template,
+        examples=nopv_examples,
+    )
+
+    assert "One-shot" not in prompt
+    assert "{{one_shot_example_block}}" not in prompt
+    assert "Question index: 999" in prompt
+    assert "Document id: some_other_doc" in prompt
+
+
+def test_nopv_one_shot_example_skipped_when_doc_id_matches():
+    nopv_examples = generator._load_gt_examples("nopv")
+    assert nopv_examples is not None
+    same_doc_id = nopv_examples["doc_id"]
+    query = generator.QuerySpec(idx=8, text="?", answer_type="integer")
+    nopv_template = generator._load_gt_prompt_template("nopv")
+
+    prompt = generator.build_ground_truth_prompt(
+        query=query,
+        doc_id=same_doc_id,
+        prompt_template=nopv_template,
+        examples=nopv_examples,
+    )
+
+    assert "One-shot" not in prompt
+    assert f"Document id: {same_doc_id}" in prompt
+
+
+def test_nopv_all_example_lists_designated_query_ids():
+    nopv_template = generator._load_gt_prompt_template("nopv")
+    nopv_examples = generator._load_gt_examples("nopv")
+    live_queries = [
+        generator.QuerySpec(idx=1, text="Live Q1", answer_type="string"),
+        generator.QuerySpec(idx=2, text="Live Q2", answer_type="string"),
+    ]
+
+    prompt = generator.build_ground_truth_all_prompt(
+        queries=live_queries,
+        doc_id="some_other_doc",
+        prompt_template=nopv_template,
+        examples=nopv_examples,
+    )
+
+    assert "One-shot" in prompt
+    one_shot_start = prompt.index("One-shot")
+    one_shot_end = prompt.index("End of example.", one_shot_start)
+    one_shot_block = prompt[one_shot_start:one_shot_end]
+    assert nopv_examples["all_example_query_ids"] == list(range(1, 14))
+    for expected_idx in range(1, 14):
+        assert f"Question index: {expected_idx}" in one_shot_block
+        assert f'"query_idx": {expected_idx}' in one_shot_block
+    assert "§ 192.605" in one_shot_block
+    assert "Dresser Style 63" in one_shot_block
+    assert "updated training program" in one_shot_block
+    # Live queries appear only after the example block.
+    assert "Live Q1" not in one_shot_block
+    assert "Question index: 1" in prompt[one_shot_end:]
+
+
+def test_generate_ground_truth_loads_source_prompt_template(tmp_path, monkeypatch):
+    root = _make_dataset(tmp_path, dataset_name="nopv")
+    seen = {}
+
+    def fake_call(self, **kwargs):
+        seen["prompt"] = kwargs["prompt"]
+        return CacheResult(
+            response='{"answer":"ok","support":"page 1"}',
+            input_tokens=10,
+            output_tokens=5,
+            latency_ms=1.0,
+            cache_hit=False,
+        )
+
+    _patch_text_extraction(monkeypatch)
+    _patch_azure_text_caller(monkeypatch, fake_call)
+
+    summary = generator.generate_ground_truth(
+        target_dir=root.parent,
+        query_idx=1,
+        num_doc=1,
+        cache_db=str(tmp_path / "cache.db"),
+    )
+
+    assert summary.generated_count == 1
+    assert "NOPV labeling rules" in seen["prompt"]
+    assert "safety-improvement-cost" in seen["prompt"]
+    assert "One-shot" in seen["prompt"]
+    assert "May 8, 2025" in seen["prompt"]
+    assert "{{one_shot_example_block}}" not in seen["prompt"]
+    assert seen["prompt"].index('"reasoning"') < seen["prompt"].index('"answer"')
 
 
 def test_build_azure_call_result_uses_cached_token_usage():
@@ -725,4 +975,8 @@ def test_azure_responses_text_call_passes_structured_output(monkeypatch):
 
     assert seen["text"]["format"]["type"] == "json_schema"
     assert seen["text"]["format"]["name"] == "gt_gen_single_answer"
-    assert seen["text"]["format"]["schema"]["required"] == ["answer", "support"]
+    assert seen["text"]["format"]["schema"]["required"] == [
+        "reasoning",
+        "answer",
+        "support",
+    ]
