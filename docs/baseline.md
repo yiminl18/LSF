@@ -11,15 +11,13 @@ Baselines are the comparison floor for the LSF rule-based retrieval pipeline.
 
 ## Summary table
 
-| # | Strategy | Model | sAcc | cost_s | uAcc | cost_u | Notes |
-|---|----------|-------|-----:|-------:|-----:|-------:|-------|
-| 1 | **Agentic Claude QA** | opus47 | 0.920 | 1.3484 | — | — | Claude agent reads full doc with tools; `latency_s = 10.33s` |
-| 2 | **Agentic Codex QA** | gpt54 | 0.940 | 1.1807 | 0.800* | 1.3271* | Codex agent reads full doc with default tools; `latency_s = 18.46s` |
+| # | Strategy | Model | Split | Docs | Acc | Cost | Latency | Notes |
+|---|----------|-------|-------|-----:|----:|-----:|--------:|-------|
+| 1 | **Agentic Claude QA** | opus47 | sampled | 10 | 0.920 | 1.3484 | 10.33s | Claude agent reads full doc with tools |
+| 2 | **Agentic Codex QA** | gpt54 | single_cluster (`batch_0 + batch_1`) | 20 | 0.870 | 1.2539 | 17.80s | Averaged over all 20 docs run so far |
 
 `cost` = mean over docs of `input_tokens / total_doc_tokens` (retrieval proxy).
 For Agentic Codex QA, `input_tokens` includes cached input tokens for parity with Claude.
-`*` Agentic Codex QA `uAcc`/`cost_u` currently refer to the additional 10-doc single-cluster unsampled batch
-(`agentic_codex_qa_gpt54_single_cluster_extra`), whose mean latency is `17.15s`, not the full 50-doc unsampled split.
 
 ---
 
@@ -149,8 +147,11 @@ Strategy 1.
 - `cost_s = 1.1807`
 - `latency_s = 18.46s`
 
-**Additional 10-doc single-cluster unsampled batch**
-(`baseline_results/financebench/agentic_codex_qa_gpt54_single_cluster_extra`):
+Checked-in sampled artifacts now live under
+`baseline_results/financebench/agentic_codex_qa_gpt54/single_cluster/batch_0`.
+
+**Additional 10-doc single-cluster random batch**
+(`baseline_results/financebench/agentic_codex_qa_gpt54/single_cluster/batch_1`):
 - `Acc = 0.800`
 - `cost = 1.3271`
 - `latency = 17.15s`
@@ -207,17 +208,30 @@ python src/baseline/agentic_codex_qa.py \
 
 ### Output layout
 
+Current checked-in Codex baseline artifacts are organized by single-cluster batch:
+
 ```
 baseline_results/
 └── financebench/
     └── agentic_codex_qa_gpt54/
-        ├── <question_slug>/
-        │   ├── <doc_name>.json
-        │   ├── logs/
-        │   │   ├── <doc_name>.codex.jsonl
-        │   │   └── <doc_name>.codex.last.txt
-        │   └── ...
-        └── summary.json
+        └── single_cluster/
+            ├── batch_0/                    sampled 10-doc run
+            │   ├── <question_slug>/
+            │   │   ├── <doc_name>.json
+            │   │   ├── logs/
+            │   │   │   ├── <doc_name>.codex.jsonl
+            │   │   │   └── <doc_name>.codex.last.txt
+            │   │   └── ...
+            │   └── summary.json
+            └── batch_1/                    another 10-doc random run
+                ├── <question_slug>/
+                │   ├── <doc_name>.json
+                │   ├── logs/
+                │   │   ├── <doc_name>.codex.jsonl
+                │   │   └── <doc_name>.codex.last.txt
+                │   └── ...
+                ├── run_metadata.json
+                └── summary.json
 ```
 
 ### Per-doc JSON schema (`<question_slug>/<doc_name>.json`)
@@ -242,8 +256,8 @@ baseline_results/
   "codex_thread_id": "019e...",
   "codex_event_count": 12,
   "codex_error_message": null,
-  "codex_log_path": "baseline_results/financebench/agentic_codex_qa_gpt54/.../logs/JPMORGAN_2023_10K.codex.jsonl",
-  "codex_last_message_path": "baseline_results/financebench/agentic_codex_qa_gpt54/.../logs/JPMORGAN_2023_10K.codex.last.txt"
+  "codex_log_path": "baseline_results/financebench/agentic_codex_qa_gpt54/single_cluster/batch_0/.../logs/JPMORGAN_2023_10K.codex.jsonl",
+  "codex_last_message_path": "baseline_results/financebench/agentic_codex_qa_gpt54/single_cluster/batch_0/.../logs/JPMORGAN_2023_10K.codex.last.txt"
 }
 ```
 
