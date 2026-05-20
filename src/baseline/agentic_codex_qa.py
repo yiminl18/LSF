@@ -1,8 +1,8 @@
 """Baseline strategy 2: Agentic Codex QA.
 
-Spawns a non-interactive Codex CLI session driven by GPT-5.4. The agent uses
-Codex's default tool environment to inspect the reconstructed JSON and answer
-the question.
+Spawns a non-interactive Codex CLI session driven by a GPT-5.4-family model.
+The agent uses Codex's default tool environment to inspect the reconstructed
+JSON and answer the question.
 
 Usage (single pair):
     python src/baseline/agentic_codex_qa.py \
@@ -27,7 +27,9 @@ sys.path.insert(0, str(_ROOT / "src"))
 
 _MODEL_ALIASES: dict[str, str] = {
     "gpt54": "gpt-5.4",
+    "gpt54mini": "gpt-5.4-mini",
     "gpt-5.4": "gpt-5.4",
+    "gpt-5.4-mini": "gpt-5.4-mini",
 }
 
 _AGENT_PROMPT_TEMPLATE = """\
@@ -254,7 +256,11 @@ def main() -> None:
     ap = argparse.ArgumentParser(description="Agentic Codex QA - single pair")
     ap.add_argument("--doc", required=True, help="Path to reconstructed JSON")
     ap.add_argument("--question", required=True, help="Question to answer")
-    ap.add_argument("--model", default="gpt54", help="Model alias: gpt54 (default)")
+    ap.add_argument(
+        "--model",
+        default="gpt54",
+        help="Model alias: gpt54 or gpt54mini (default: gpt54)",
+    )
     ap.add_argument("--timeout", type=int, default=300,
                     help="Timeout in seconds for Codex sessions (default 300)")
     args = ap.parse_args()
