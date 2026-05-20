@@ -63,13 +63,15 @@ def _find_claude() -> str:
     return found or "claude"
 
 
-def run_opus47(doc_path: str | Path, question: str, timeout: int = 300) -> dict:
+def run_opus47(doc_path: str | Path, question: str, timeout: int = 300,
+               model_alias: str = "opus47") -> dict:
     prompt = _AGENT_PROMPT_TEMPLATE.format(
         question=question,
         doc_path=str(Path(doc_path).resolve()),
     )
+    model_id = _MODEL_ALIASES.get(model_alias, _MODEL_ALIASES["opus47"])
     cmd = [
-        _find_claude(), "--model", _MODEL_ALIASES["opus47"],
+        _find_claude(), "--model", model_id,
         "--output-format", "json",
         "--dangerously-skip-permissions",
         "-p", prompt,
@@ -123,13 +125,13 @@ def run_opus47(doc_path: str | Path, question: str, timeout: int = 300) -> dict:
         "output_tokens": output_tokens,
         "latency_seconds": latency,
         "total_cost_usd": cost_usd,
-        "model": _MODEL_ALIASES["opus47"],
+        "model": model_id,
     }
 
 
 def run_qa(doc_path: str | Path, question: str, model: str = "opus47",
            timeout: int = 300, **_) -> dict:
-    return run_opus47(doc_path, question, timeout=timeout)
+    return run_opus47(doc_path, question, timeout=timeout, model_alias=model)
 
 
 def main() -> None:
