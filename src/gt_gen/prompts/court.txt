@@ -67,3 +67,75 @@ Document id: {{doc_id}}
 [QUESTIONS]
 {{queries}}
 [/ALL_TEXT]
+
+[JUDGE]
+You are an arbiter selecting the best ground-truth answer for one court-document question-answering benchmark question.
+Use only the attached PDF/document content. Do not use outside knowledge.
+Preserve case captions, docket numbers, court names, judge names, attorney names, dates, legal citations, and numeric values exactly as presented when possible.
+You are not obligated to pick a candidate: if every candidate is wrong, produce a corrected answer, set picked_index to -1, and set picked_source to "judge".
+Before writing the final answer, write a concise evidence-based reasoning string that identifies the decisive document evidence and explains your selection across candidates.
+Return exactly one valid JSON object and no markdown:
+{"reasoning": "brief evidence-based rationale comparing candidates", "picked_index": <integer index of picked candidate, or -1 if you produced a corrected answer not matching any candidate>, "picked_source": "source label of picked candidate, or \"judge\" if -1", "answer": <final answer matching answer_type>}
+
+Document id: {{doc_id}}
+Question index: {{query_idx}}
+Question: {{query_text}}
+Answer type: {{answer_type}}
+
+Candidates:
+{{candidates_block}}
+[/JUDGE]
+
+[JUDGE_TEXT]
+You are an arbiter selecting the best ground-truth answer for one court-document question-answering benchmark question.
+Use only the document content below. Do not use outside knowledge.
+Preserve case captions, docket numbers, court names, judge names, attorney names, dates, legal citations, and numeric values exactly as presented when possible.
+You are not obligated to pick a candidate: if every candidate is wrong, produce a corrected answer, set picked_index to -1, and set picked_source to "judge".
+Before writing the final answer, write a concise evidence-based reasoning string that identifies the decisive document evidence and explains your selection across candidates.
+Return exactly one valid JSON object and no markdown:
+{"reasoning": "brief evidence-based rationale comparing candidates", "picked_index": <integer index of picked candidate, or -1 if you produced a corrected answer not matching any candidate>, "picked_source": "source label of picked candidate, or \"judge\" if -1", "answer": <final answer matching answer_type>}
+
+Document id: {{doc_id}}
+
+{{document_text}}
+
+[QUESTION]
+Question index: {{query_idx}}
+Question: {{query_text}}
+Answer type: {{answer_type}}
+
+Candidates:
+{{candidates_block}}
+[/JUDGE_TEXT]
+
+[JUDGE_ALL]
+You are an arbiter selecting the best ground-truth answer for every listed court-document question-answering benchmark question.
+Use only the attached PDF/document content. Do not use outside knowledge.
+Answer every listed question exactly once.
+Preserve case captions, docket numbers, court names, judge names, attorney names, dates, legal citations, and numeric values exactly as presented when possible.
+You are not obligated to pick a candidate per question: if every candidate for a question is wrong, produce a corrected answer for that question, set picked_index to -1, and set picked_source to "judge".
+Before writing each final answer, write a concise evidence-based reasoning string that identifies the decisive document evidence and explains your selection across candidates.
+Return exactly one valid JSON object and no markdown:
+{"judgments": [{"query_idx": <integer>, "reasoning": "brief evidence-based rationale comparing candidates", "picked_index": <integer or -1>, "picked_source": "source label or \"judge\"", "answer": <answer matching answer_type>}]}
+
+Document id: {{doc_id}}
+{{candidates_blocks}}
+[/JUDGE_ALL]
+
+[JUDGE_ALL_TEXT]
+You are an arbiter selecting the best ground-truth answer for every listed court-document question-answering benchmark question.
+Use only the document content below. Do not use outside knowledge.
+Answer every listed question exactly once.
+Preserve case captions, docket numbers, court names, judge names, attorney names, dates, legal citations, and numeric values exactly as presented when possible.
+You are not obligated to pick a candidate per question: if every candidate for a question is wrong, produce a corrected answer for that question, set picked_index to -1, and set picked_source to "judge".
+Before writing each final answer, write a concise evidence-based reasoning string that identifies the decisive document evidence and explains your selection across candidates.
+Return exactly one valid JSON object and no markdown:
+{"judgments": [{"query_idx": <integer>, "reasoning": "brief evidence-based rationale comparing candidates", "picked_index": <integer or -1>, "picked_source": "source label or \"judge\"", "answer": <answer matching answer_type>}]}
+
+Document id: {{doc_id}}
+
+{{document_text}}
+
+[QUESTIONS]
+{{candidates_blocks}}
+[/JUDGE_ALL_TEXT]

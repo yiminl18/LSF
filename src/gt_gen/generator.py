@@ -151,6 +151,7 @@ def generate_ground_truth(
     generation_mode: GenerationMode = DEFAULT_GENERATION_MODE,
     cache_db: str = DEFAULT_CACHE_DB_PATH,
     max_tokens: int = DEFAULT_MAX_TOKENS,
+    temperature: float = 0.0,
     claude_timeout_sec: int = DEFAULT_CLAUDE_TIMEOUT_SEC,
     progress_cost: bool = False,
     log_dir: str | Path | None = DEFAULT_LOG_DIR,
@@ -170,6 +171,7 @@ def generate_ground_truth(
             all answers the selected query set with the multi-answer schema.
         cache_db: SQLite LLM cache path.
         max_tokens: Max output tokens.
+        temperature: Sampling temperature for Azure text-mode calls.
         claude_timeout_sec: Timeout for each Claude Code CLI call.
         progress_cost: Print per-call API usage/cost as the run progresses.
         log_dir: Optional directory for run log files.
@@ -238,6 +240,7 @@ def generate_ground_truth(
                     text_caller=text_caller,
                     claude_caller=claude_caller,
                     max_tokens=max_tokens,
+                    temperature=temperature,
                     claude_timeout_sec=claude_timeout_sec,
                 )
                 answer = parse_answers_response(response.response, [query])[query.idx]
@@ -251,6 +254,7 @@ def generate_ground_truth(
                     text_caller=text_caller,
                     claude_caller=claude_caller,
                     max_tokens=max_tokens,
+                    temperature=temperature,
                     claude_timeout_sec=claude_timeout_sec,
                 )
                 answer = parse_answer_response(response.response)
@@ -314,6 +318,7 @@ def generate_ground_truth_for_queries(
     generation_mode: GenerationMode = DEFAULT_GENERATION_MODE,
     cache_db: str = DEFAULT_CACHE_DB_PATH,
     max_tokens: int = DEFAULT_MAX_TOKENS,
+    temperature: float = 0.0,
     claude_timeout_sec: int = DEFAULT_CLAUDE_TIMEOUT_SEC,
     progress_cost: bool = False,
     log_dir: str | Path | None = DEFAULT_LOG_DIR,
@@ -403,6 +408,7 @@ def generate_ground_truth_for_queries(
                     text_caller=text_caller,
                     claude_caller=claude_caller,
                     max_tokens=max_tokens,
+                    temperature=temperature,
                     claude_timeout_sec=claude_timeout_sec,
                     document_text=document_text,
                 )
@@ -467,6 +473,7 @@ def generate_ground_truth_for_queries(
                     text_caller=text_caller,
                     claude_caller=claude_caller,
                     max_tokens=max_tokens,
+                    temperature=temperature,
                     claude_timeout_sec=claude_timeout_sec,
                     document_text=document_text,
                 )
@@ -920,6 +927,7 @@ def _call_model_for_doc(
     claude_caller: ClaudeCodeCacheCaller | None,
     max_tokens: int,
     claude_timeout_sec: int,
+    temperature: float = 0.0,
     document_text: str | None = None,
 ) -> CacheResult:
     dataset_name = _dataset_name_for_log(_dataset_root_from_pdf_path(pdf_path))
@@ -966,7 +974,7 @@ def _call_model_for_doc(
             model=model,
             max_tokens=max_tokens,
             response_schema=response_schema,
-            temperature=0,
+            temperature=temperature,
         )
     if input_mode == "claude-read-pdf":
         if claude_caller is None:
@@ -1001,6 +1009,7 @@ def _call_model_for_queries_for_doc(
     claude_caller: ClaudeCodeCacheCaller | None,
     max_tokens: int,
     claude_timeout_sec: int,
+    temperature: float = 0.0,
     document_text: str | None = None,
 ) -> CacheResult:
     dataset_name = _dataset_name_for_log(_dataset_root_from_pdf_path(pdf_path))
@@ -1047,7 +1056,7 @@ def _call_model_for_queries_for_doc(
             model=model,
             max_tokens=max_tokens,
             response_schema=response_schema,
-            temperature=0,
+            temperature=temperature,
         )
     if input_mode == "claude-read-pdf":
         if claude_caller is None:
@@ -1796,6 +1805,12 @@ def _build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--cache-db", default=DEFAULT_CACHE_DB_PATH)
     parser.add_argument("--max-tokens", type=int, default=DEFAULT_MAX_TOKENS)
     parser.add_argument(
+        "--temperature",
+        type=float,
+        default=0.0,
+        help="Sampling temperature for Azure text-mode calls; default 0.0.",
+    )
+    parser.add_argument(
         "--claude-timeout-sec",
         type=int,
         default=DEFAULT_CLAUDE_TIMEOUT_SEC,
@@ -1834,6 +1849,7 @@ def main(
             generation_mode=args.generation_mode,
             cache_db=args.cache_db,
             max_tokens=args.max_tokens,
+            temperature=args.temperature,
             claude_timeout_sec=args.claude_timeout_sec,
             progress_cost=args.progress_cost,
             log_dir=args.log_dir,
@@ -1852,6 +1868,7 @@ def main(
         generation_mode=args.generation_mode,
         cache_db=args.cache_db,
         max_tokens=args.max_tokens,
+        temperature=args.temperature,
         claude_timeout_sec=args.claude_timeout_sec,
         progress_cost=args.progress_cost,
         log_dir=args.log_dir,
@@ -1893,12 +1910,14 @@ class GTGenRunLogger:
         llm_provider: str,
         model: str,
         input_mode: ResolvedInputMode,
-        generation_mode: GenerationMode,
+        generation_mode: str,
+        tag: str = "gt_gen",
     ) -> None:
         log_path = _build_run_log_path(
             log_dir=log_dir,
             dataset_root=dataset_root,
             generation_mode=generation_mode,
+            tag=tag,
         )
         log_path.parent.mkdir(parents=True, exist_ok=True)
         self.log_path = log_path
@@ -1997,7 +2016,8 @@ def _make_run_logger(
     llm_provider: str,
     model: str,
     input_mode: ResolvedInputMode,
-    generation_mode: GenerationMode,
+    generation_mode: str,
+    tag: str = "gt_gen",
 ) -> GTGenRunLogger | None:
     if log_dir is None:
         return None
@@ -2008,6 +2028,7 @@ def _make_run_logger(
         model=model,
         input_mode=input_mode,
         generation_mode=generation_mode,
+        tag=tag,
     )
 
 
@@ -2015,11 +2036,12 @@ def _build_run_log_path(
     *,
     log_dir: str | Path,
     dataset_root: Path,
-    generation_mode: GenerationMode,
+    generation_mode: str,
+    tag: str = "gt_gen",
 ) -> Path:
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
     dataset_slug = _safe_slug(_dataset_name_for_log(dataset_root))
-    return Path(log_dir) / f"gt_gen_{timestamp}_{dataset_slug}_{generation_mode}.log"
+    return Path(log_dir) / f"{tag}_{timestamp}_{dataset_slug}_{generation_mode}.log"
 
 
 def _dataset_name_for_log(dataset_root: Path) -> str:

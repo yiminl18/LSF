@@ -428,6 +428,42 @@ def test_generation_mode_all_answers_selected_queries_once_per_doc(tmp_path, mon
     assert generator._api_usage_totals(summary.results)[:4] == (200, 100, 40, 0.02)
 
 
+def test_generation_mode_all_passes_temperature(tmp_path, monkeypatch):
+    root = _make_dataset(tmp_path)
+    seen_temperatures = []
+
+    def fake_call(self, **kwargs):
+        seen_temperatures.append(kwargs["temperature"])
+        return CacheResult(
+            response=json.dumps(
+                {
+                    "answers": [
+                        {"query_idx": 1, "reasoning": "page 1", "answer": "docket"},
+                        {"query_idx": 2, "reasoning": "page 2", "answer": "judge"},
+                    ]
+                }
+            ),
+            input_tokens=100,
+            output_tokens=20,
+            latency_ms=1.0,
+            cache_hit=False,
+        )
+
+    _patch_text_extraction(monkeypatch)
+    _patch_azure_text_caller(monkeypatch, fake_call)
+
+    summary = generator.generate_ground_truth_for_queries(
+        target_dir=root,
+        query_indices=[1, 2],
+        generation_mode="all",
+        temperature=0.2,
+        cache_db=str(tmp_path / "cache.db"),
+    )
+
+    assert summary.generated_count == 2
+    assert seen_temperatures == [0.2]
+
+
 def test_generate_ground_truth_writes_latency_cost_log(tmp_path, monkeypatch):
     root = _make_dataset(tmp_path)
 
