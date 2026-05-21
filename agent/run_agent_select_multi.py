@@ -81,8 +81,20 @@ def run_agent_for_question(
     SELECTED_AGENT_DIR.mkdir(parents=True, exist_ok=True)
     AGENT_TRACE_DIR.mkdir(parents=True, exist_ok=True)
 
+    # Resolve claude binary — may not be on PATH in non-interactive shells
+    _CLAUDE_CANDIDATES = [
+        "claude",
+        "/home/yiminglin/.npm-global/bin/claude",
+        "/usr/local/bin/claude",
+    ]
+    claude_bin = next(
+        (c for c in _CLAUDE_CANDIDATES
+         if subprocess.run(["which", c], capture_output=True).returncode == 0
+         or Path(c).exists()),
+        "claude",
+    )
     cmd = [
-        "claude", "--model", resolved_model,
+        claude_bin, "--model", resolved_model,
         "--output-format", "json",
         "--dangerously-skip-permissions",
         "-p", prompt,
