@@ -12,6 +12,7 @@ import logging
 import re
 import time
 import traceback
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import Any
 
@@ -99,6 +100,7 @@ def run_baseline_sweep(
     mdocagent_max_pages: int | None = None,
     embedding_provider: str | None = None,
     embedding_model: str | None = None,
+    max_workers: int = 1,
 ) -> None:
     """Run the baseline sweep and write output_root/<dataset>/<experiment>/q<idx>/.
 
@@ -147,8 +149,7 @@ def run_baseline_sweep(
             print(f"  [dry-run] would process: {doc_ids}")
             continue
 
-        rows: list[DeployedRow] = []
-        for doc_id in doc_ids:
+        def _process_cell(doc_id: str) -> DeployedRow:
             wrapper_t0 = time.perf_counter()
             result_latency_ms: float | None = None
             try:
@@ -199,11 +200,30 @@ def run_baseline_sweep(
                 else (time.perf_counter() - wrapper_t0) * 1000.0
             )
             status = "pass" if row["judge_result"] is True else "fail"
+            gen_cost = float(row.get("gen_cost_usd", 0.0) or 0.0)
+            judge_cost = float(row.get("judge_cost_usd", 0.0) or 0.0)
             print(
-                f"  {doc_id}: {status} cost=${row['actual_cost_usd']:.4f} "
+                f"  {doc_id}: {status} "
+                f"gen=${gen_cost:.4f} judge=${judge_cost:.4f} "
+                f"cost=${row['actual_cost_usd']:.4f} "
                 f"latency={latency_ms:.0f}ms"
             )
-            rows.append(row)
+            return row
+
+        rows: list[DeployedRow] = []
+        if max_workers <= 1:
+            for doc_id in doc_ids:
+                rows.append(_process_cell(doc_id))
+        else:
+            # Parallelise the (query, doc) cells of one query. Different cells
+            # write to independent run_name dirs in upstream MDocAgent; the
+            # only shared path is the prepare_inputs critical section, which
+            # is guarded by a lock in extractor.py.
+            n_workers = min(max_workers, len(doc_ids))
+            with ThreadPoolExecutor(max_workers=n_workers) as pool:
+                futures = {pool.submit(_process_cell, d): d for d in doc_ids}
+                for future in as_completed(futures):
+                    rows.append(future.result())
 
         # Write rows and summary
         rows_path = out_dir / "baseline_rows.jsonl"

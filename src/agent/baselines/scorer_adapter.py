@@ -65,8 +65,9 @@ def score_and_build_row(
         llm_model=llm_model,
     )
 
-    judge_cost = score.metadata.get("judge", {}).get("cost_usd", 0.0)
-    total_cost = result.cost_usd + judge_cost
+    judge_cost = float(score.metadata.get("judge", {}).get("cost_usd", 0.0) or 0.0)
+    gen_cost = float(result.cost_usd or 0.0)
+    total_cost = gen_cost + judge_cost
 
     return DeployedRow(
         query_idx=query_idx,
@@ -80,6 +81,9 @@ def score_and_build_row(
         gen_calls=int(getattr(result, "gen_calls", 1) or 1),
         judge_calls=1,
         actual_cost_usd=total_cost,
+        gen_cost_usd=gen_cost,
+        judge_cost_usd=judge_cost,
+        latency_ms=float(getattr(result, "latency_ms", 0.0) or 0.0),
     )
 
 
@@ -103,4 +107,7 @@ def error_row(
         gen_calls=0,
         judge_calls=0,
         actual_cost_usd=0.0,
+        gen_cost_usd=0.0,
+        judge_cost_usd=0.0,
+        latency_ms=0.0,
     )

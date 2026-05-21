@@ -1,0 +1,44 @@
+# 5 docs x 13 queries on nopv. Docs were drawn with random.Random(42).sample
+# from sorted(datasets/nopv/latest/raw/*.pdf stems) — see
+# scripts/convert_nopv_gt_to_labels.py for the GT schema this run consumes.
+dataset: nopv
+dataset_root: datasets/nopv/latest
+parser: docling
+
+# Same 5 docs are repeated under each query_idx so the baseline sweep yields
+# 5 x 13 = 65 (doc, query) cells. parser=docling: no processing/*.json exists
+# for nopv, so loader.build_doc_inputs falls back to PyMuPDF text extraction.
+_sampled_docs: &sampled_docs
+  - "42025029NOPV_PCO_05082025_(24-296566)"
+  - "32021087NOPV_PCP PCO_12132021_(21-210505)"
+  - "12025006NOPV_PCO_05082025_(23-272518)"
+  - "52022028NOPV_PCO_09072022_(21-201439)"
+  - "32024016NOPV_PCO_02132024_(23-264316)"
+
+queries:
+  - query_idx: 0
+    documents: *sampled_docs
+  - query_idx: 1
+    documents: *sampled_docs
+  - query_idx: 2
+    documents: *sampled_docs
+  - query_idx: 3
+    documents: *sampled_docs
+  - query_idx: 4
+    documents: *sampled_docs
+  - query_idx: 5
+    documents: *sampled_docs
+  - query_idx: 6
+    documents: *sampled_docs
+  - query_idx: 7
+    documents: *sampled_docs
+  - query_idx: 8
+    documents: *sampled_docs
+  - query_idx: 9
+    documents: *sampled_docs
+  - query_idx: 10
+    documents: *sampled_docs
+  - query_idx: 11
+    documents: *sampled_docs
+  - query_idx: 12
+    documents: *sampled_docs

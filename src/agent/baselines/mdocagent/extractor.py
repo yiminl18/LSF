@@ -42,11 +42,18 @@ import logging
 import os
 import subprocess
 import sys
+import threading
 import time
 import uuid
 from hashlib import sha256
 from pathlib import Path
 from typing import Any
+
+# Concurrent extract() calls share the upstream `data/lsf/samples.json` and
+# `tmp/lsf/<doc>_<page>.png` filesystem state. A module-level lock serialises
+# the prepare_inputs critical section; subprocess execution still runs in
+# parallel afterwards.
+_PREPARE_INPUTS_LOCK = threading.Lock()
 
 from agent.baselines.base import BaselineExtractor, DocInputs, ExtractionResult
 from agent.baselines.defaults import DEFAULT_LLM_MODEL, DEFAULT_LLM_PROVIDER
@@ -121,22 +128,25 @@ class MDocAgentExtractor:
         runtime_model = _resolve_runtime_model(llm_provider, llm_model)
         model_config_name = _model_config_name(runtime_model)
 
-        # Generate lsf.yaml dataset config and runtime model config into upstream.
-        generate_lsf_dataset_config()
-        model_config_name = generate_lsf_openai_model_config(
-            runtime_model,
-            config_name=model_config_name,
-        )
-
-        # Prepare data layout (render pages, write samples.json + retrieval JSON)
-        info = prepare_inputs(
-            doc_inputs,
-            doc_id=doc_id,
-            dataset_name=_DEFAULT_DATASET_NAME,
-            query_idx=query_idx,
-            query_text=query_text,
-            max_pages=self._max_pages,
-        )
+        # All three writes target shared paths under
+        # upstream/MDocAgent/{configs,data,tmp}/, so concurrent extract()
+        # calls must serialise this critical section to avoid races on
+        # samples.json and per-page PNG renders. The subprocess itself, run
+        # later, has its own per-run output dir and stays parallel.
+        with _PREPARE_INPUTS_LOCK:
+            generate_lsf_dataset_config()
+            model_config_name = generate_lsf_openai_model_config(
+                runtime_model,
+                config_name=model_config_name,
+            )
+            info = prepare_inputs(
+                doc_inputs,
+                doc_id=doc_id,
+                dataset_name=_DEFAULT_DATASET_NAME,
+                query_idx=query_idx,
+                query_text=query_text,
+                max_pages=self._max_pages,
+            )
 
         # Unique run name so parallel runs don't clobber each other.
         # Sanitize to [a-zA-Z0-9_-] — Hydra's override grammar rejects parens and dots.
@@ -144,16 +154,24 @@ class MDocAgentExtractor:
         _safe = _re.sub(r"[^a-zA-Z0-9_-]", "_", _doc_name_from_doc_id(doc_id))
         run_name = f"lsf-q{query_idx}-{_safe}-{uuid.uuid4().hex[:6]}"
 
+        # Sidecar usage log: openai_model.MyOpenAI appends one JSONL row per
+        # chat.completions.create call; the extractor reads + sums after the
+        # subprocess returns to populate ExtractionResult.cost_usd.
+        _LOG_DIR.mkdir(parents=True, exist_ok=True)
+        usage_log_path = _LOG_DIR / f"{run_name}.usage.jsonl"
+        # Pre-truncate so a stale file from a previous run is never aggregated.
+        usage_log_path.write_text("", encoding="utf-8")
+
         # Run subprocess
         stdout, stderr, returncode = _run_predict_subprocess(
             run_name,
             llm_provider=llm_provider,
             llm_model=llm_model,
             model_config_name=model_config_name,
+            usage_log_path=str(usage_log_path),
         )
 
         # Log output
-        _LOG_DIR.mkdir(parents=True, exist_ok=True)
         log_file = _LOG_DIR / f"{run_name}.log"
         log_file.write_text(
             f"=== stdout ===\n{stdout}\n\n=== stderr ===\n{stderr}\n",
@@ -179,18 +197,56 @@ class MDocAgentExtractor:
             stdout=stdout,
         )
 
-        # Upstream MultiAgentSystem never surfaces token usage, so we report
-        # cost_usd=0.0 here (see review notes: this is an upstream gap). The
-        # pipeline has 3 agents + a sum_agent, plus a critique pass, so each
-        # (query, doc) is at least 5 generation calls. If save_message=true
-        # was set, the trace's combined_messages string preserves them.
+        # Aggregate per-call usage written by openai_model.MyOpenAI._record_usage.
+        # Falls back to (0, 0, 5) when no rows were captured (e.g. provider
+        # didn't return usage, or the wrapper was disabled).
+        cost_usd, total_input_tokens, total_output_tokens, gen_calls = (
+            _aggregate_usage_log(usage_log_path)
+        )
+        trace["usage"] = {
+            "usage_log": str(usage_log_path),
+            "gen_calls": gen_calls,
+            "input_tokens": total_input_tokens,
+            "output_tokens": total_output_tokens,
+            "cost_usd": cost_usd,
+        }
+
         return ExtractionResult(
             generated_answer=answer,
             trace=trace,
-            cost_usd=0.0,
+            cost_usd=cost_usd,
             latency_ms=latency_ms,
-            gen_calls=5,
+            gen_calls=gen_calls or 5,
         )
+
+
+def _aggregate_usage_log(path: Path) -> tuple[float, int, int, int]:
+    """Sum cost_usd / input_tokens / output_tokens / row_count from a JSONL log.
+
+    Returns (cost_usd, input_tokens, output_tokens, gen_calls). Missing file
+    or unparseable lines degrade silently to zeros so telemetry never
+    masks a real failure in the extractor.
+    """
+    if not path.exists():
+        return 0.0, 0, 0, 0
+    cost = 0.0
+    in_tok = 0
+    out_tok = 0
+    rows = 0
+    with path.open("r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                record = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            cost += float(record.get("cost_usd", 0.0) or 0.0)
+            in_tok += int(record.get("input_tokens", 0) or 0)
+            out_tok += int(record.get("output_tokens", 0) or 0)
+            rows += 1
+    return cost, in_tok, out_tok, rows
 
 
 def _run_predict_subprocess(
@@ -199,6 +255,7 @@ def _run_predict_subprocess(
     llm_provider: str = DEFAULT_LLM_PROVIDER,
     llm_model: str = DEFAULT_LLM_MODEL,
     model_config_name: str = "lsf_openai",
+    usage_log_path: str | None = None,
 ) -> tuple[str, str, int]:
     """Invoke MDocAgent's scripts/predict.py via subprocess with Hydra overrides.
 
@@ -215,6 +272,13 @@ def _run_predict_subprocess(
 
     env = os.environ.copy()
     _configure_openai_compatible_env(env, llm_provider, llm_model)
+    # The subprocess's openai_model.MyOpenAI reads these to emit per-call
+    # cost telemetry. LOGICAL_MODEL is the canonical name (e.g. "gpt-5.4-mini")
+    # used for `core.llm.cost.compute_cost`, since on Azure `self.model`
+    # becomes the deployment name and won't match the cost table.
+    env["LSF_MDOCAGENT_LOGICAL_MODEL"] = llm_model
+    if usage_log_path is not None:
+        env["LSF_MDOCAGENT_USAGE_LOG"] = usage_log_path
 
     repo_src = Path(__file__).resolve().parents[3]
     env["PYTHONPATH"] = (

@@ -47,7 +47,13 @@ class DeployedRow(TypedDict):
     blocker: str | None
     gen_calls: int
     judge_calls: int
+    # actual_cost_usd is gen_cost_usd + judge_cost_usd. The split fields let
+    # callers compare reader spend against judge spend without re-parsing
+    # ExtractionResult.trace.
     actual_cost_usd: float
+    gen_cost_usd: float
+    judge_cost_usd: float
+    latency_ms: float
 
 
 def _empty_row(
@@ -69,6 +75,9 @@ def _empty_row(
         gen_calls=0,
         judge_calls=0,
         actual_cost_usd=0.0,
+        gen_cost_usd=0.0,
+        judge_cost_usd=0.0,
+        latency_ms=0.0,
     )
 
 
@@ -81,18 +90,30 @@ def summarize_rows(rows: list[DeployedRow], policy_name: str = _POLICY_NAME) -> 
             "n_docs": 0,
             "deployed_acc": 0.0,
             "total_cost_usd": 0.0,
+            "total_gen_cost_usd": 0.0,
+            "total_judge_cost_usd": 0.0,
             "n_judge_pass": 0,
             "mean_gen_calls": 0.0,
             "mean_judge_calls": 0.0,
             "p50_gen_calls": 0.0,
             "p95_gen_calls": 0.0,
+            "total_latency_ms": 0.0,
+            "mean_latency_ms": 0.0,
+            "p50_latency_ms": 0.0,
+            "p95_latency_ms": 0.0,
         }
     n_pass = sum(1 for r in rows if r["judge_result"] is True)
     total_cost = sum(r["actual_cost_usd"] for r in rows)
+    # gen/judge cost split fields are recent additions (see DeployedRow).
+    # Legacy rows from older runs lack them; treat missing as 0.0 so this
+    # function still produces a payload when applied to mixed data.
+    gen_cost = sum(float(r.get("gen_cost_usd", 0.0) or 0.0) for r in rows)
+    judge_cost = sum(float(r.get("judge_cost_usd", 0.0) or 0.0) for r in rows)
     gen_calls = sorted(r["gen_calls"] for r in rows)
     judge_calls = sorted(r["judge_calls"] for r in rows)
+    latencies = sorted(float(r.get("latency_ms", 0.0) or 0.0) for r in rows)
 
-    def _percentile(sorted_xs: list[int], p: float) -> float:
+    def _percentile(sorted_xs: list[float], p: float) -> float:
         if not sorted_xs:
             return 0.0
         k = max(0, min(len(sorted_xs) - 1, int(round(p * (len(sorted_xs) - 1)))))
@@ -104,10 +125,16 @@ def summarize_rows(rows: list[DeployedRow], policy_name: str = _POLICY_NAME) -> 
         "n_judge_pass": n_pass,
         "deployed_acc": round(n_pass / n, 4),
         "total_cost_usd": round(total_cost, 6),
+        "total_gen_cost_usd": round(gen_cost, 6),
+        "total_judge_cost_usd": round(judge_cost, 6),
         "mean_gen_calls": round(sum(gen_calls) / n, 3),
         "mean_judge_calls": round(sum(judge_calls) / n, 3),
         "p50_gen_calls": _percentile(gen_calls, 0.5),
         "p95_gen_calls": _percentile(gen_calls, 0.95),
+        "total_latency_ms": round(sum(latencies), 3),
+        "mean_latency_ms": round(sum(latencies) / n, 3),
+        "p50_latency_ms": round(_percentile(latencies, 0.5), 3),
+        "p95_latency_ms": round(_percentile(latencies, 0.95), 3),
     }
 
 
@@ -209,6 +236,9 @@ def evaluate_cascade(
                 gen_calls=gen_calls,
                 judge_calls=0,
                 actual_cost_usd=cum_cost,
+                gen_cost_usd=cum_cost,
+                judge_cost_usd=0.0,
+                latency_ms=0.0,
             ))
             continue
 
@@ -232,6 +262,9 @@ def evaluate_cascade(
             gen_calls=gen_calls,
             judge_calls=1,
             actual_cost_usd=cum_cost + judge_cost,
+            gen_cost_usd=cum_cost,
+            judge_cost_usd=judge_cost,
+            latency_ms=0.0,
         ))
     return rows
 

@@ -173,6 +173,13 @@ def _build_parser() -> argparse.ArgumentParser:
         "--ocr-provider", default=None,
         help="Override DeepRead OCR provider (default: azure)",
     )
+    parser.add_argument(
+        "--max-workers", type=int, default=1,
+        help=(
+            "Concurrent (doc, query) cells per query for baseline sweeps. "
+            "Default 1 (sequential). >1 uses ThreadPoolExecutor."
+        ),
+    )
     return parser
 
 
@@ -410,6 +417,7 @@ def _run_baseline(args: argparse.Namespace, experiment_key: str) -> None:
         mdocagent_max_pages=getattr(args, "mdocagent_max_pages", None),
         embedding_provider=args.embed_provider,
         embedding_model=args.embed_model,
+        max_workers=args.max_workers,
     )
 
 
