@@ -1,0 +1,21 @@
+{
+  "question": "What is the exact name of the company (registrant) this document relates to?",
+  "question_slug": "what_is_the_exact_name_of_the_company_registrant_this_docume_18_llm",
+  "mode": "agentic",
+  "model": "opus47",
+  "selected_rules": [
+    "rule_h1_page1_after_form_header",
+    "rule_page1_exact_name_following_text"
+  ],
+  "selected_avg_cost_ratio_sum": 0.001182,
+  "min_cov": 0.8333,
+  "mean_cov": 0.8889,
+  "match_rate_on_sampled": 1.0,
+  "iterations": 1,
+  "verify_calls": 1,
+  "tool_llm_calls": 36,
+  "tool_input_tokens": 5464,
+  "tool_output_tokens": 278,
+  "latency_seconds": 111.99,
+  "rationale": "Coverage analysis showed 12 rules tied at cov=0.9444, all missing the same single doc (EBAY_2022_10K). Picked rule_h1_page1_after_form_header (broad H1-after-form-header pattern, cheap at 0.00067) plus rule_page1_exact_name_following_text (covers EBAY via the 'Exact name of registrant' caption, cheap at 0.000512). Together they hit all 18 D_star docs in a single verify call with sum_cost=0.001182 (~5% of full pool's 0.022959) and min_cov=0.8333, satisfying the hard constraint and all three soft targets."
+}

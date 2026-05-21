@@ -1,0 +1,7 @@
+{"step": 1, "tool": "list_rules", "args": "--all", "result_summary": "58 rules in pool"}
+{"step": 2, "tool": "compute_cost", "args": "--all", "result_summary": "sum_avg_cost_ratio=0.083423, max=0.007435"}
+{"step": 3, "tool": "compute_coverage", "args": "--all", "result_summary": "mean_cov=0.2768; top: near_phone=0.833, near_irs_ein=0.778, company_block_children_address_like=0.778, near_exact_name_of_registrant=0.722, address_with_postal_code_anywhere=0.722"}
+{"step": 4, "tool": "verify_accuracy", "args": "rules=[near_phone, company_block_children_address_like, address_with_postal_code_anywhere, after_ein_before_phone, bold_address_line_without_label]", "result_summary": "missed_in_D_star=[]; match_rate=1.0; tokens qa_in=2207,qa_out=314,j_in=3918,j_out=109"}
+{"step": 5, "tool": "verify_accuracy", "args": "rules=[same 5 — re-run for parsing]", "result_summary": "missed_in_D_star=[]; match_rate=1.0 (cached); tokens qa_in=2207,qa_out=314,j_in=3918,j_out=109"}
+{"step": 6, "tool": "verify_accuracy", "args": "drop-test: rules=[company_block_children_address_like, address_with_postal_code_anywhere, after_ein_before_phone, bold_address_line_without_label] (dropped near_phone)", "result_summary": "missed_in_D_star=['3M_2023Q2_10Q']; match_rate=0.9412 — keep near_phone"}
+{"step": 7, "tool": "write_output", "args": "final selection", "result_summary": "5 rules, sum_cost=0.0117, min_cov=0.667, mean_cov=0.733, match_rate=1.0"}

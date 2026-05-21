@@ -1,0 +1,4 @@
+{"step": 1, "tool": "list_rules", "args": "--all", "result_summary": "57 rules in pool; many page1-cover and item1-business variants"}
+{"step": 2, "tool": "compute_cost", "args": "--all", "result_summary": "sum_avg_cost_ratio=0.065013, max=0.005371"}
+{"step": 3, "tool": "compute_coverage", "args": "--all", "result_summary": "mean_cov=0.2622; cov=1.0 rules: cover_page_phone_pattern[_excluding_market_values], after_address_before_securities, cover_block_before_securities_registered; cov=0.9444: body_under_company_header_phone, cover_page_first_40_spans_phone"}
+{"step": 4, "tool": "verify_accuracy", "args": "rules=[rule_page1_cover_page_phone_pattern_excluding_market_values, rule_page1_body_under_company_header_phone]", "result_summary": "match_rate=1.0, D_star=18, correct=18, missed=[], hard_constraint_satisfied=true; tokens qa_in=1901 qa_out=211 j_in=3613 j_out=108"}

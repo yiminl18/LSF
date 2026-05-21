@@ -1,0 +1,21 @@
+{
+  "question": "List one material agreement or other exhibit number explicitly identified in the Exhibit Index (e.g., \"Exhibit 10.1: Credit Agreement\")\u2014or record \"none listed\" if no material agreements are identified.",
+  "question_slug": "list_one_material_agreement_or_other_exhibit_number_explicit_18_llm",
+  "mode": "agentic",
+  "model": "opus47",
+  "selected_rules": [
+    "rule_exhibit_description_same_span",
+    "rule_exhibit_item_neighbor_window"
+  ],
+  "selected_avg_cost_ratio_sum": 0.102416,
+  "min_cov": 0.1667,
+  "mean_cov": 0.25,
+  "match_rate_on_sampled": 1.0,
+  "iterations": 4,
+  "verify_calls": 4,
+  "tool_llm_calls": 144,
+  "tool_input_tokens": 269677,
+  "tool_output_tokens": 1468,
+  "latency_seconds": 315.058,
+  "rationale": "Started from a greedy set-cover analysis of per-rule individually-solved docs (union=10/18). Initial 4-rule subset satisfied the hard constraint on the first verify. Drop-tests removed rule_8k_exhibit_bylaws then rule_10q_item_6_exhibits while preserving match_rate=1.0; removing the final rule (description_same_span alone) lost 3M_2023Q2_10Q, so 2 rules is the minimum. Final S keeps the two broadest cross-form rules (same-span and item-neighbor-window) covering 10-K/10-Q/8-K patterns."
+}

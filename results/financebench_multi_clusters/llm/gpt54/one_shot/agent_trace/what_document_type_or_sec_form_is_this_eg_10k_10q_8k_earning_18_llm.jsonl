@@ -1,0 +1,4 @@
+{"step": 1, "tool": "list_rules", "args": "slug=what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning_18_llm", "result_summary": "47 rules in pool; many cover-page/form-heading rules with broad applicability."}
+{"step": 2, "tool": "compute_cost", "args": "--all", "result_summary": "sum_avg_cost_ratio=0.476983; cheapest cov=1.0 rules ~0.0004; expensive outliers (form_type_keywords_in_path_text=0.0755, path_text_form_fixed=0.0739)."}
+{"step": 3, "tool": "compute_coverage", "args": "--all", "result_summary": "20 rules with cov=1.0; min_cov=0.0 for several; mean_cov=0.7045."}
+{"step": 4, "tool": "verify_accuracy", "args": "rules=[rule_company_header_with_form_in_text, rule_cover_page_first_form_after_sec_header, rule_form_heading_top_of_doc]", "result_summary": "match_rate=1.0, missed_in_D_star=[], D_star_size=18, all 18 sampled docs correctly classified (10-K/10-Q/8-K); tokens qa_in=2058 qa_out=108 j_in=3834 j_out=108."}

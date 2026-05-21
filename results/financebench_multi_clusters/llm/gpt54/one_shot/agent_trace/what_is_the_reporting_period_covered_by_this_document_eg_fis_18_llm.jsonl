@@ -1,0 +1,5 @@
+{"step": 1, "tool": "list_rules", "args": "--all", "result_summary": "35 rules in pool"}
+{"step": 2, "tool": "compute_cost", "args": "--all", "result_summary": "sum_avg_cost_ratio=0.059888, max=0.004691 (rule_page1_company_header_next_spans)"}
+{"step": 3, "tool": "compute_coverage", "args": "--all", "result_summary": "mean_cov=0.454; cov=1.0 rules: rule_page1_period_phrases, rule_page1_top_headers_with_period_in_text_or_span, rule_page1_first_20_spans_period, rule_page1_near_form_header_next_spans"}
+{"step": 4, "tool": "verify_accuracy", "args": "--rules rule_page1_period_phrases rule_10k_or_10q_cover_period_body_lines", "result_summary": "match_rate=1.0, missed_in_D_star=[], hard_constraint_satisfied=true; tokens qa_in=2369 qa_out=253 j_in=3938 j_out=108"}
+{"step": 5, "tool": "verify_accuracy", "args": "--rules rule_page1_period_phrases", "result_summary": "drop-test success: match_rate=1.0, missed_in_D_star=[], hard_constraint_satisfied=true; tokens qa_in=2369 qa_out=253 j_in=3938 j_out=108"}

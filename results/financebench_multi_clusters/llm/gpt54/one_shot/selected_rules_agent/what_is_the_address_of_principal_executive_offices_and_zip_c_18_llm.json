@@ -1,0 +1,24 @@
+{
+  "question": "What is the address of principal executive offices and ZIP code?",
+  "question_slug": "what_is_the_address_of_principal_executive_offices_and_zip_c_18_llm",
+  "mode": "agentic",
+  "model": "opus47",
+  "selected_rules": [
+    "rule_page1_address_near_phone",
+    "rule_page1_company_block_children_address_like",
+    "rule_page1_address_with_postal_code_anywhere",
+    "rule_page1_after_ein_before_phone",
+    "rule_page1_bold_address_line_without_label"
+  ],
+  "selected_avg_cost_ratio_sum": 0.011743,
+  "min_cov": 0.6667,
+  "mean_cov": 0.7333,
+  "match_rate_on_sampled": 1.0,
+  "iterations": 3,
+  "verify_calls": 3,
+  "tool_llm_calls": 96,
+  "tool_input_tokens": 18314,
+  "tool_output_tokens": 1261,
+  "latency_seconds": 248.07,
+  "rationale": "Selected 5 broad page-1 rules whose coverage spans 0.667-0.833 on the 18 sampled multi-cluster docs (10-K, 10-Q, 8-K). Started with cov/cost-descending heuristic targeting diverse signals (proximity to phone, IRS EIN/company block, postal code, EIN-phone positional, bold-line). Initial verify achieved match_rate=1.0 and missed_in_D_star=[]. Drop-test of the most expensive rule (near_phone, cov=0.833) regressed 3M_2023Q2_10Q, so kept it. Final S has sum_cost=0.0117 (14% of full pool 0.0834), min_cov=0.667, |S|=5; all soft targets met."
+}

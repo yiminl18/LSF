@@ -1,0 +1,23 @@
+{
+  "question": "What is the state (or other jurisdiction) of incorporation and the IRS Employer Identification Number?",
+  "question_slug": "what_is_the_state_or_other_jurisdiction_of_incorporation_and_18_llm",
+  "mode": "agentic",
+  "model": "opus47",
+  "selected_rules": [
+    "rule_page1_incorporation_or_irs_label",
+    "rule_page1_first_state_label_and_neighbors",
+    "rule_any_span_with_both_state_value_and_ein_value",
+    "rule_coverpage_sequence_before_irs_label"
+  ],
+  "selected_avg_cost_ratio_sum": 0.010636,
+  "min_cov": 0.0,
+  "mean_cov": 0.0,
+  "match_rate_on_sampled": 1.0,
+  "iterations": 9,
+  "verify_calls": 9,
+  "tool_llm_calls": 324,
+  "tool_input_tokens": 61256,
+  "tool_output_tokens": 2991,
+  "latency_seconds": 490.84,
+  "rationale": "Coverage cache was missing for this multi-cluster slug, so selection relied on rule docstrings and cost. Started from 6 broad, cheap label/neighbor rules (incorporation/IRS label, state-label neighbors, EIN-state-in-same-span, before-state/before-IRS sequences, first-EIN neighbors) and verified accuracy = 1.0 with missed_in_D_star=[]. Drop-tests showed rule_page1_first_state_label_and_neighbors is critical for AMCOR (8-K), rule_coverpage_sequence_before_irs_label is critical for BOEING/EBAY (10-Ks), while rule_page1_first_ein_and_neighbors and rule_coverpage_sequence_before_state_label are redundant. Final S has 4 rules covering ~2.8% of pool cost while preserving full pool accuracy on all 18 D* docs."
+}

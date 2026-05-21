@@ -1,0 +1,8 @@
+{"step": 1, "tool": "list_rules", "args": "--all", "result_summary": "29 rules in pool covering 10-K/10-Q/8-K exhibit-index patterns"}
+{"step": 2, "tool": "compute_cost", "args": "--all", "result_summary": "sum_avg_cost_ratio=0.7279, max=0.1076 (rule_material_agreement_keywords)"}
+{"step": 3, "tool": "compute_coverage", "args": "--all", "result_summary": "max cov=0.3333 (rule_exhibit_description_same_span), min_cov=0, mean=0.1035"}
+{"step": 4, "tool": "inspect_eval_individual", "args": "all rules", "result_summary": "Union of individually-solved docs = 10/18. Set cover suggests 4 rules: exhibit_description_same_span + 8k_exhibit_bylaws + exhibit_item_neighbor_window + 10q_item_6_exhibits"}
+{"step": 5, "tool": "verify_accuracy", "args": "exhibit_description_same_span, 8k_exhibit_bylaws, exhibit_item_neighbor_window, 10q_item_6_exhibits", "result_summary": "match_rate=1.0, missed_in_D_star=[], hard constraint satisfied, D_star_size=4"}
+{"step": 6, "tool": "verify_accuracy", "args": "drop 8k_exhibit_bylaws (3 rules)", "result_summary": "match_rate=1.0, hard constraint still satisfied"}
+{"step": 7, "tool": "verify_accuracy", "args": "drop 10q_item_6_exhibits (2 rules)", "result_summary": "match_rate=1.0, hard constraint still satisfied, sum_cost=0.1024"}
+{"step": 8, "tool": "verify_accuracy", "args": "exhibit_description_same_span only (1 rule)", "result_summary": "match_rate=0.75, missed 3M_2023Q2_10Q -> 2 rules is minimum"}

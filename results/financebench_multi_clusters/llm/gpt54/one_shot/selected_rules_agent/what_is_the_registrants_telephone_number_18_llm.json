@@ -1,0 +1,21 @@
+{
+  "question": "What is the registrant's telephone number?",
+  "question_slug": "what_is_the_registrants_telephone_number_18_llm",
+  "mode": "agentic",
+  "model": "opus47",
+  "selected_rules": [
+    "rule_page1_cover_page_phone_pattern_excluding_market_values",
+    "rule_page1_body_under_company_header_phone"
+  ],
+  "selected_avg_cost_ratio_sum": 0.003333,
+  "min_cov": 0.9444,
+  "mean_cov": 0.9722,
+  "match_rate_on_sampled": 1.0,
+  "iterations": 4,
+  "verify_calls": 1,
+  "tool_llm_calls": 36,
+  "tool_input_tokens": 5514,
+  "tool_output_tokens": 319,
+  "latency_seconds": 114.84,
+  "rationale": "Selected two broad, complementary page-1 cover-page rules. rule_page1_cover_page_phone_pattern_excluding_market_values has cov=1.0 across all 18 sampled docs (10-K, 10-Q, 8-K) and excludes market-value false positives. rule_page1_body_under_company_header_phone (cov=0.9444) adds redundancy via a different anchor (company header) at low cost. Single verify_accuracy call confirmed hard constraint with match_rate=1.0 and missed_in_D_star=[]. Cost is 5.1% of full pool with |S|=2 and min_cov=0.94, so all three soft stopping criteria are satisfied."
+}

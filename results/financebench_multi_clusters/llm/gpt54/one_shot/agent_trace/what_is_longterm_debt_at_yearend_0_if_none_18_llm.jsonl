@@ -1,0 +1,7 @@
+{"step": 1, "tool": "list_rules", "args": "--all", "result_summary": "34 rules in pool"}
+{"step": 2, "tool": "compute_cost", "args": "--all", "result_summary": "sum_avg_cost_ratio=0.683043, max=0.137 (page_with_balance_sheet_header)"}
+{"step": 3, "tool": "compute_coverage", "args": "--all", "result_summary": "max single-rule cov=0.3889 (long_term_debt_numeric_text, long_term_debt_text_span); mean=0.193"}
+{"step": 4, "tool": "analyze_per_doc", "args": "from eval_individual", "result_summary": "9 of 18 docs covered by >=1 rule; D_star likely contains 4 docs (later confirmed)"}
+{"step": 5, "tool": "verify_accuracy", "args": "5 rules: first_financial_statement_balance_sheet + long_term_debt_on_balance_sheet_pages + long_term_debt_text_span + long_term_debt_numeric_text + balance_sheet_liabilities_block", "result_summary": "hard_constraint OK; D_star=4, S=6 correct; tokens qa=48523/130 j=3350/113"}
+{"step": 6, "tool": "verify_accuracy", "args": "2 rules: long_term_debt_numeric_text + balance_sheet_liabilities_block", "result_summary": "hard_constraint FAIL; missed ACTIVISIONBLIZZARD_2020_10K; tokens qa=31545/128"}
+{"step": 7, "tool": "verify_accuracy", "args": "3 rules: long_term_debt_numeric_text + long_term_debt_text_span + balance_sheet_liabilities_block", "result_summary": "hard_constraint OK; D_star=4, S=6 correct; final selection; tokens qa=32701/128"}

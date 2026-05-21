@@ -1,0 +1,7 @@
+{"step": 1, "tool": "list_rules", "args": "--all", "result_summary": "34 rules in pool covering page1 cover-page patterns and Item 1 Business sentence patterns."}
+{"step": 2, "tool": "compute_cost", "args": "--all", "result_summary": "Full pool sum_avg_cost_ratio=0.064351; max cost rule is rule_page1_address_of_principal_executive_offices_window=0.01712."}
+{"step": 3, "tool": "compute_coverage", "args": "--all", "result_summary": "Top covs: window=0.9444, after_exact_name=0.8889, address_label_following=0.8333, top_half=0.8333, bold_address=0.7778, near_telephone=0.6667."}
+{"step": 4, "tool": "inspect_eval_individual", "args": "rule_to_docs", "result_summary": "All 18 sampled docs solved by at least one rule. ACTIVISIONBLIZZARD_2020_10K only covered by rule_page1_near_telephone_number (mandatory)."}
+{"step": 5, "tool": "set_cover_analysis", "args": "high-cov rules", "result_summary": "after_exact_name (16/18) + near_telephone (covers ACTIVISIONBLIZZARD_2020_10K) leaves only AMCOR_2023Q2_10Q uncovered; top_half covers that with cov=0.8333."}
+{"step": 6, "tool": "verify_accuracy", "args": "rules=[after_exact_name, near_telephone, top_half]", "result_summary": "hard_constraint_satisfied=true, missed_in_D_star=[], match_rate=1.0, D*=17, correct_S=17. Tokens: qa_in=3168 qa_out=158 j_in=3715 j_out=109."}
+{"step": 7, "tool": "verify_accuracy", "args": "rules=[after_exact_name, near_telephone, top_half] (re-run)", "result_summary": "hard_constraint_satisfied=true, missed_in_D_star=[], match_rate=1.0. Tokens: qa_in=3168 qa_out=154 j_in=3711 j_out=109."}

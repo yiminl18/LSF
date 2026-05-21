@@ -1,0 +1,13 @@
+{"step": 1, "tool": "list_rules", "args": "pool", "result_summary": "39 rules in pool"}
+{"step": 2, "tool": "compute_cost --all", "args": "all", "result_summary": "sum_avg_cost_ratio=0.376071, max=0.054227"}
+{"step": 3, "tool": "compute_coverage --all", "args": "all", "result_summary": "no eval_individual cache for this slug; all cov=0 (unmeasurable)"}
+{"step": 4, "tool": "verify_accuracy", "args": "S1=6 rules (incorp_or_irs, first_ein_neighbors, first_state_neighbors, both_state_ein_span, before_irs_label, before_state_label)", "result_summary": "missed=[], match_rate=1.0, D*=18; tokens qa_in=3611 qa_out=234 j_in=3788 j_out=108"}
+{"step": 5, "tool": "verify_accuracy", "args": "S1 re-run (cached) for parsing", "result_summary": "missed=[], match_rate=1.0; tokens qa_in=3611 qa_out=234 j_in=3788 j_out=108"}
+{"step": 6, "tool": "verify_accuracy", "args": "drop first_ein and first_state (4 rules)", "result_summary": "missed=[AMCOR_2022_8K]; tokens qa_in=2892 qa_out=230 j_in=3784 j_out=109"}
+{"step": 7, "tool": "verify_accuracy", "args": "drop first_ein only (5 rules)", "result_summary": "missed=[], match_rate=1.0; tokens qa_in=3400 qa_out=234 j_in=3788 j_out=108"}
+{"step": 8, "tool": "verify_accuracy", "args": "minimal 3-rule probe (no neighbors, no before_state)", "result_summary": "missed=8 docs; tokens qa_in=2325 qa_out=187 j_in=3746 j_out=116"}
+{"step": 9, "tool": "verify_accuracy", "args": "drop before_state_label from 5-rule set (4 rules)", "result_summary": "missed=[], match_rate=1.0; tokens qa_in=2977 qa_out=234 j_in=3788 j_out=108"}
+{"step": 10, "tool": "verify_accuracy", "args": "drop first_state_neighbors keep before_state_label", "result_summary": "missed=[AMCOR_2022_8K]; tokens qa_in=2892 qa_out=230 j_in=3784 j_out=109"}
+{"step": 11, "tool": "verify_accuracy", "args": "drop before_irs_label too (3 rules)", "result_summary": "missed=[BOEING_2019_10K, EBAY_2022_10K]; tokens qa_in=2914 qa_out=223 j_in=3778 j_out=110"}
+{"step": 12, "tool": "verify_accuracy", "args": "replace first_state_neighbors with label_text_near_state_phrase", "result_summary": "missed=8 docs; tokens qa_in=2638 qa_out=193 j_in=3752 j_out=116"}
+{"step": 13, "tool": "decision", "args": "lock S=[incorp_or_irs, first_state_neighbors, both_state_ein_span, before_irs_label]", "result_summary": "sum_cost=0.010636 (~2.8% of pool); |S|=4; hard constraint met"}

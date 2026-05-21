@@ -1,0 +1,5 @@
+{"step": 1, "tool": "list_rules", "args": "slug=what_is_the_exact_name_of_the_company_registrant_this_docume_18_llm", "result_summary": "26 rules in pool; most target page-1 H1/headers with company name"}
+{"step": 2, "tool": "compute_cost", "args": "--all", "result_summary": "sum_avg_cost_ratio=0.022959; cheapest cov-able rules ~0.0005-0.00067"}
+{"step": 3, "tool": "compute_coverage", "args": "--all", "result_summary": "12 rules at cov=0.9444; min_cov=0.0; mean_cov=0.7393"}
+{"step": 4, "tool": "inspect_eval_individual", "args": "high-cov rules", "result_summary": "All cov=0.9444 rules miss exactly EBAY_2022_10K; only 4 rules cover EBAY at cov=0.8333"}
+{"step": 5, "tool": "verify_accuracy", "args": "rules=[rule_h1_page1_after_form_header, rule_page1_exact_name_following_text]", "result_summary": "match_rate=1.0, missed_in_D_star=[], hard constraint satisfied; tokens qa_in=1834 qa_out=170 j_in=3630 j_out=108"}

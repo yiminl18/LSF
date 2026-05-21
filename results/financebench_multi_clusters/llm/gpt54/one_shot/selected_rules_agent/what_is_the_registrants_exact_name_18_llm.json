@@ -1,0 +1,18 @@
+{
+  "question": "What is the registrant's exact name?",
+  "question_slug": "what_is_the_registrants_exact_name_18_llm",
+  "mode": "agentic",
+  "model": "opus47",
+  "selected_rules": ["rule_parent_of_exact_name_caption"],
+  "selected_avg_cost_ratio_sum": 0.000673,
+  "min_cov": 1.0,
+  "mean_cov": 1.0,
+  "match_rate_on_sampled": 1.0,
+  "iterations": 2,
+  "verify_calls": 2,
+  "tool_llm_calls": 72,
+  "tool_input_tokens": 10348,
+  "tool_output_tokens": 556,
+  "latency_seconds": 235.49,
+  "rationale": "The exact-name caption '(Exact name of registrant as specified in its charter)' is a standardized SEC requirement appearing on the first page of every 10-K, 10-Q, and 8-K filing, making 'rule_parent_of_exact_name_caption' a broad, form-agnostic anchor. It achieves cov=1.0 across the 18 sampled docs at cost=0.000673 (1.2% of the full pool's 0.05764). Two verify_accuracy calls confirmed the single-rule selection preserves merge accuracy (match_rate=1.0, missed_in_D_star=[]). All three soft targets are met: min_cov >> 0.4, cost is 1.2% of the pool (<< 50%), and |S|=1 (<< 10)."
+}

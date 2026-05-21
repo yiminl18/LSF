@@ -1,0 +1,1328 @@
+{
+  "question": "What is/are the trading symbol(s) and listing exchange(s)?",
+  "question_slug": "what_isare_the_trading_symbols_and_listing_exchanges_18_llm",
+  "refined_rules_count": 4,
+  "full_pool_count": 38,
+  "num_documents": 68,
+  "accuracy": 0.7647,
+  "fallback_rate": 0.2647,
+  "models": {
+    "relevance": "gpt54mini",
+    "qa": "gpt54"
+  },
+  "total_tokens": {
+    "gpt54mini_in": 57054,
+    "gpt54mini_out": 340,
+    "gpt54_in": 71792,
+    "gpt54_out": 1655
+  },
+  "per_doc": [
+    {
+      "doc_name": "ACTIVISIONBLIZZARD_2017_10K",
+      "predicted": "ATVI — The Nasdaq Stock Market",
+      "ground_truth": "ATVI, The Nasdaq Global Select Market",
+      "correct": true,
+      "fallback_triggered": false,
+      "relevance_verdict": "yes",
+      "retrieved_tokens_refined": 534,
+      "retrieved_tokens_full": 0,
+      "retrieved_tokens_used": 534,
+      "tokens": {
+        "mini_in": 659,
+        "mini_out": 5,
+        "gpt54_in": 623,
+        "gpt54_out": 11
+      }
+    },
+    {
+      "doc_name": "ADOBE_2015_10K",
+      "predicted": "Common Stock — The NASDAQ Stock Market LLC (NASDAQ Global Select Market)",
+      "ground_truth": "NASDAQ: ADBE",
+      "correct": false,
+      "fallback_triggered": true,
+      "relevance_verdict": "no",
+      "retrieved_tokens_refined": 937,
+      "retrieved_tokens_full": 1372,
+      "retrieved_tokens_used": 1372,
+      "tokens": {
+        "mini_in": 1054,
+        "mini_out": 5,
+        "gpt54_in": 1456,
+        "gpt54_out": 19
+      }
+    },
+    {
+      "doc_name": "ADOBE_2016_10K",
+      "predicted": "ADBE — The NASDAQ Stock Market LLC (NASDAQ Global Select Market)",
+      "ground_truth": "ADBE, NASDAQ Global Select Market",
+      "correct": true,
+      "fallback_triggered": true,
+      "relevance_verdict": "no",
+      "retrieved_tokens_refined": 931,
+      "retrieved_tokens_full": 1389,
+      "retrieved_tokens_used": 1389,
+      "tokens": {
+        "mini_in": 1048,
+        "mini_out": 5,
+        "gpt54_in": 1472,
+        "gpt54_out": 19
+      }
+    },
+    {
+      "doc_name": "ADOBE_2017_10K",
+      "predicted": "Common Stock, $0.0001 par value per share — The NASDAQ Stock Market LLC (NASDAQ Global Select Market)",
+      "ground_truth": "ADBE, NASDAQ Global Select Market",
+      "correct": false,
+      "fallback_triggered": true,
+      "relevance_verdict": "no",
+      "retrieved_tokens_refined": 935,
+      "retrieved_tokens_full": 1737,
+      "retrieved_tokens_used": 1737,
+      "tokens": {
+        "mini_in": 1054,
+        "mini_out": 5,
+        "gpt54_in": 1816,
+        "gpt54_out": 29
+      }
+    },
+    {
+      "doc_name": "ADOBE_2018_10K",
+      "predicted": "Common Stock, $0.0001 par value per share — The NASDAQ Stock Market LLC (NASDAQ Global Select Market)",
+      "ground_truth": "ADBE, NASDAQ Global Select Market",
+      "correct": false,
+      "fallback_triggered": false,
+      "relevance_verdict": "yes",
+      "retrieved_tokens_refined": 909,
+      "retrieved_tokens_full": 0,
+      "retrieved_tokens_used": 909,
+      "tokens": {
+        "mini_in": 1027,
+        "mini_out": 5,
+        "gpt54_in": 991,
+        "gpt54_out": 29
+      }
+    },
+    {
+      "doc_name": "ADOBE_2022_10K",
+      "predicted": "ADBE — NASDAQ",
+      "ground_truth": [
+        {
+          "Trading Symbol": "ADBE",
+          "Listing Exchange": "NASDAQ"
+        }
+      ],
+      "correct": true,
+      "fallback_triggered": false,
+      "relevance_verdict": "yes",
+      "retrieved_tokens_refined": 975,
+      "retrieved_tokens_full": 0,
+      "retrieved_tokens_used": 975,
+      "tokens": {
+        "mini_in": 1096,
+        "mini_out": 5,
+        "gpt54_in": 1060,
+        "gpt54_out": 9
+      }
+    },
+    {
+      "doc_name": "AMAZON_2015_10K",
+      "predicted": "AMZN — NASDAQ Global Select Market",
+      "ground_truth": "AMZN, NASDAQ Global Select Market",
+      "correct": true,
+      "fallback_triggered": false,
+      "relevance_verdict": "yes",
+      "retrieved_tokens_refined": 880,
+      "retrieved_tokens_full": 0,
+      "retrieved_tokens_used": 880,
+      "tokens": {
+        "mini_in": 998,
+        "mini_out": 5,
+        "gpt54_in": 962,
+        "gpt54_out": 12
+      }
+    },
+    {
+      "doc_name": "AMAZON_2016_10K",
+      "predicted": "AMZN — NASDAQ Global Select Market",
+      "ground_truth": "AMZN, NASDAQ Global Select Market",
+      "correct": true,
+      "fallback_triggered": false,
+      "relevance_verdict": "yes",
+      "retrieved_tokens_refined": 844,
+      "retrieved_tokens_full": 0,
+      "retrieved_tokens_used": 844,
+      "tokens": {
+        "mini_in": 962,
+        "mini_out": 5,
+        "gpt54_in": 926,
+        "gpt54_out": 12
+      }
+    },
+    {
+      "doc_name": "AMAZON_2017_10K",
+      "predicted": "AMZN — Nasdaq Global Select Market",
+      "ground_truth": "AMZN, Nasdaq Global Select Market",
+      "correct": true,
+      "fallback_triggered": false,
+      "relevance_verdict": "yes",
+      "retrieved_tokens_refined": 903,
+      "retrieved_tokens_full": 0,
+      "retrieved_tokens_used": 903,
+      "tokens": {
+        "mini_in": 1019,
+        "mini_out": 5,
+        "gpt54_in": 983,
+        "gpt54_out": 11
+      }
+    },
+    {
+      "doc_name": "AMAZON_2018_10K",
+      "predicted": "AMZN — Nasdaq Global Select Market",
+      "ground_truth": "AMZN, Nasdaq Global Select Market",
+      "correct": true,
+      "fallback_triggered": false,
+      "relevance_verdict": "yes",
+      "retrieved_tokens_refined": 908,
+      "retrieved_tokens_full": 0,
+      "retrieved_tokens_used": 908,
+      "tokens": {
+        "mini_in": 1027,
+        "mini_out": 5,
+        "gpt54_in": 991,
+        "gpt54_out": 11
+      }
+    },
+    {
+      "doc_name": "AMAZON_2022_10K",
+      "predicted": "AMZN — Nasdaq Global Select Market",
+      "ground_truth": "AMZN, Nasdaq Global Select Market",
+      "correct": true,
+      "fallback_triggered": false,
+      "relevance_verdict": "yes",
+      "retrieved_tokens_refined": 819,
+      "retrieved_tokens_full": 0,
+      "retrieved_tokens_used": 819,
+      "tokens": {
+        "mini_in": 941,
+        "mini_out": 5,
+        "gpt54_in": 905,
+        "gpt54_out": 11
+      }
+    },
+    {
+      "doc_name": "AMCOR_2021_10K",
+      "predicted": "AMCR — New York Stock Exchange; AUKF/27 — New York Stock Exchange",
+      "ground_truth": [
+        {
+          "Trading Symbol": "AMCR",
+          "Exchange": "New York Stock Exchange"
+        },
+        {
+          "Trading Symbol": "AUKF/27",
+          "Exchange": "New York Stock Exchange"
+        }
+      ],
+      "correct": true,
+      "fallback_triggered": false,
+      "relevance_verdict": "yes",
+      "retrieved_tokens_refined": 316,
+      "retrieved_tokens_full": 0,
+      "retrieved_tokens_used": 316,
+      "tokens": {
+        "mini_in": 442,
+        "mini_out": 5,
+        "gpt54_in": 406,
+        "gpt54_out": 22
+      }
+    },
+    {
+      "doc_name": "AMCOR_2022_10K",
+      "predicted": "AMCR — New York Stock Exchange; AUKF/27 — New York Stock Exchange",
+      "ground_truth": [
+        {
+          "symbol": "AMCR",
+          "exchange": "New York Stock Exchange"
+        },
+        {
+          "symbol": "AUKF/27",
+          "exchange": "New York Stock Exchange"
+        }
+      ],
+      "correct": true,
+      "fallback_triggered": false,
+      "relevance_verdict": "yes",
+      "retrieved_tokens_refined": 314,
+      "retrieved_tokens_full": 0,
+      "retrieved_tokens_used": 314,
+      "tokens": {
+        "mini_in": 441,
+        "mini_out": 5,
+        "gpt54_in": 405,
+        "gpt54_out": 22
+      }
+    },
+    {
+      "doc_name": "AMCOR_2023_10K",
+      "predicted": "AMCR — New York Stock Exchange; AUKF/27 — New York Stock Exchange",
+      "ground_truth": [
+        {
+          "Trading Symbol": "AMCR",
+          "Exchange": "New York Stock Exchange"
+        },
+        {
+          "Trading Symbol": "AUKF/27",
+          "Exchange": "New York Stock Exchange"
+        }
+      ],
+      "correct": true,
+      "fallback_triggered": false,
+      "relevance_verdict": "yes",
+      "retrieved_tokens_refined": 314,
+      "retrieved_tokens_full": 0,
+      "retrieved_tokens_used": 314,
+      "tokens": {
+        "mini_in": 441,
+        "mini_out": 5,
+        "gpt54_in": 405,
+        "gpt54_out": 22
+      }
+    },
+    {
+      "doc_name": "AMD_2019_10K",
+      "predicted": "AMD — The NASDAQ Global Select Market",
+      "ground_truth": "AMD, The NASDAQ Global Select Market",
+      "correct": true,
+      "fallback_triggered": false,
+      "relevance_verdict": "yes",
+      "retrieved_tokens_refined": 891,
+      "retrieved_tokens_full": 0,
+      "retrieved_tokens_used": 891,
+      "tokens": {
+        "mini_in": 1007,
+        "mini_out": 5,
+        "gpt54_in": 971,
+        "gpt54_out": 12
+      }
+    },
+    {
+      "doc_name": "AMD_2020_10K",
+      "predicted": "AMD — The NASDAQ Global Select Market",
+      "ground_truth": "AMD, The NASDAQ Global Select Market",
+      "correct": true,
+      "fallback_triggered": false,
+      "relevance_verdict": "yes",
+      "retrieved_tokens_refined": 825,
+      "retrieved_tokens_full": 0,
+      "retrieved_tokens_used": 825,
+      "tokens": {
+        "mini_in": 943,
+        "mini_out": 5,
+        "gpt54_in": 907,
+        "gpt54_out": 12
+      }
+    },
+    {
+      "doc_name": "AMD_2021_10K",
+      "predicted": "AMD — The NASDAQ Global Select Market",
+      "ground_truth": "AMD, The NASDAQ Global Select Market",
+      "correct": true,
+      "fallback_triggered": false,
+      "relevance_verdict": "yes",
+      "retrieved_tokens_refined": 883,
+      "retrieved_tokens_full": 0,
+      "retrieved_tokens_used": 883,
+      "tokens": {
+        "mini_in": 999,
+        "mini_out": 5,
+        "gpt54_in": 963,
+        "gpt54_out": 12
+      }
+    },
+    {
+      "doc_name": "AMD_2022_10K",
+      "predicted": "AMD — The NASDAQ Global Select Market",
+      "ground_truth": "AMD, The NASDAQ Global Select Market",
+      "correct": true,
+      "fallback_triggered": false,
+      "relevance_verdict": "yes",
+      "retrieved_tokens_refined": 1084,
+      "retrieved_tokens_full": 0,
+      "retrieved_tokens_used": 1084,
+      "tokens": {
+        "mini_in": 1204,
+        "mini_out": 5,
+        "gpt54_in": 1168,
+        "gpt54_out": 12
+      }
+    },
+    {
+      "doc_name": "APPLE_2015_10K",
+      "predicted": "NOT FOUND",
+      "ground_truth": "AAPL, NASDAQ Stock Market LLC",
+      "correct": false,
+      "fallback_triggered": true,
+      "relevance_verdict": "no",
+      "retrieved_tokens_refined": 1003,
+      "retrieved_tokens_full": 1003,
+      "retrieved_tokens_used": 1003,
+      "tokens": {
+        "mini_in": 1120,
+        "mini_out": 5,
+        "gpt54_in": 1084,
+        "gpt54_out": 6
+      }
+    },
+    {
+      "doc_name": "APPLE_2016_10K",
+      "predicted": "Common Stock, $0.00001 par value per share — The NASDAQ Stock Market LLC; 1.000% Notes due 2022 — New York Stock Exchange LLC; 1.375% Notes due 2024 — New York Stock Exchange LLC; 1.625% Notes due 2026 — New York Stock Exchange LLC; 2.000% Notes due 2027 — New York Stock Exchange LLC; 3.050% Notes due 2029 — New York Stock Exchange LLC; 3.600% Notes due 2042 — New York Stock Exchange LLC",
+      "ground_truth": "AAPL, NASDAQ",
+      "correct": false,
+      "fallback_triggered": true,
+      "relevance_verdict": "no",
+      "retrieved_tokens_refined": 730,
+      "retrieved_tokens_full": 730,
+      "retrieved_tokens_used": 730,
+      "tokens": {
+        "mini_in": 848,
+        "mini_out": 5,
+        "gpt54_in": 812,
+        "gpt54_out": 125
+      }
+    },
+    {
+      "doc_name": "APPLE_2017_10K",
+      "predicted": "AAPL — The Nasdaq Stock Market LLC; 1.000% Notes due 2022 — New York Stock Exchange LLC; 1.375% Notes due 2024 — New York Stock Exchange LLC; 0.875% Notes due 2025 — New York Stock Exchange LLC; 1.625% Notes due 2026 — New York Stock Exchange LLC; 2.000% Notes due 2027 — New York Stock Exchange LLC; 1.375% Notes due 2029 — New York Stock Exchange LLC; 3.050% Notes due 2029 — New York Stock Exchange LLC; 3.600% Notes due 2042 — New York Stock Exchange LLC",
+      "ground_truth": "AAPL, The Nasdaq Stock Market LLC",
+      "correct": false,
+      "fallback_triggered": true,
+      "relevance_verdict": "no",
+      "retrieved_tokens_refined": 773,
+      "retrieved_tokens_full": 780,
+      "retrieved_tokens_used": 780,
+      "tokens": {
+        "mini_in": 890,
+        "mini_out": 5,
+        "gpt54_in": 862,
+        "gpt54_out": 148
+      }
+    },
+    {
+      "doc_name": "APPLE_2018_10K",
+      "predicted": "NOT FOUND",
+      "ground_truth": "AAPL, The Nasdaq Stock Market LLC",
+      "correct": false,
+      "fallback_triggered": true,
+      "relevance_verdict": "no",
+      "retrieved_tokens_refined": 771,
+      "retrieved_tokens_full": 778,
+      "retrieved_tokens_used": 778,
+      "tokens": {
+        "mini_in": 888,
+        "mini_out": 5,
+        "gpt54_in": 860,
+        "gpt54_out": 6
+      }
+    },
+    {
+      "doc_name": "APPLE_2019_10K",
+      "predicted": "AAPL — The Nasdaq Stock Market LLC",
+      "ground_truth": "AAPL, The Nasdaq Stock Market LLC",
+      "correct": true,
+      "fallback_triggered": false,
+      "relevance_verdict": "yes",
+      "retrieved_tokens_refined": 657,
+      "retrieved_tokens_full": 0,
+      "retrieved_tokens_used": 657,
+      "tokens": {
+        "mini_in": 772,
+        "mini_out": 5,
+        "gpt54_in": 736,
+        "gpt54_out": 12
+      }
+    },
+    {
+      "doc_name": "APPLE_2020_10K",
+      "predicted": "AAPL — The Nasdaq Stock Market LLC",
+      "ground_truth": "AAPL, The Nasdaq Stock Market LLC",
+      "correct": true,
+      "fallback_triggered": false,
+      "relevance_verdict": "yes",
+      "retrieved_tokens_refined": 652,
+      "retrieved_tokens_full": 0,
+      "retrieved_tokens_used": 652,
+      "tokens": {
+        "mini_in": 768,
+        "mini_out": 5,
+        "gpt54_in": 732,
+        "gpt54_out": 12
+      }
+    },
+    {
+      "doc_name": "APPLE_2021_10K",
+      "predicted": "AAPL — The Nasdaq Stock Market LLC",
+      "ground_truth": "AAPL, The Nasdaq Stock Market LLC",
+      "correct": true,
+      "fallback_triggered": false,
+      "relevance_verdict": "yes",
+      "retrieved_tokens_refined": 656,
+      "retrieved_tokens_full": 0,
+      "retrieved_tokens_used": 656,
+      "tokens": {
+        "mini_in": 772,
+        "mini_out": 5,
+        "gpt54_in": 736,
+        "gpt54_out": 12
+      }
+    },
+    {
+      "doc_name": "APPLE_2022_10K",
+      "predicted": "AAPL — The Nasdaq Stock Market LLC",
+      "ground_truth": {
+        "Common Stock": {
+          "Trading Symbol": "AAPL",
+          "Exchange": "The Nasdaq Stock Market LLC"
+        },
+        "1.000% Notes due 2022": {
+          "Exchange": "The Nasdaq Stock Market LLC"
+        },
+        "1.375% Notes due 2024": {
+          "Exchange": "The Nasdaq Stock Market LLC"
+        },
+        "0.000% Notes due 2025": {
+          "Exchange": "The Nasdaq Stock Market LLC"
+        },
+        "0.875% Notes due 2025": {
+          "Exchange": "The Nasdaq Stock Market LLC"
+        },
+        "1.625% Notes due 2026": {
+          "Exchange": "The Nasdaq Stock Market LLC"
+        },
+        "2.000% Notes due 2027": {
+          "Exchange": "The Nasdaq Stock Market LLC"
+        },
+        "1.375% Notes due 2029": {
+          "Exchange": "The Nasdaq Stock Market LLC"
+        },
+        "3.050% Notes due 2029": {
+          "Exchange": "The Nasdaq Stock Market LLC"
+        },
+        "0.500% Notes due 2031": {
+          "Exchange": "The Nasdaq Stock Market LLC"
+        },
+        "3.600% Notes due 2042": {
+          "Exchange": "The Nasdaq Stock Market LLC"
+        }
+      },
+      "correct": false,
+      "fallback_triggered": false,
+      "relevance_verdict": "yes",
+      "retrieved_tokens_refined": 513,
+      "retrieved_tokens_full": 0,
+      "retrieved_tokens_used": 513,
+      "tokens": {
+        "mini_in": 630,
+        "mini_out": 5,
+        "gpt54_in": 594,
+        "gpt54_out": 12
+      }
+    },
+    {
+      "doc_name": "BESTBUY_2015_10K",
+      "predicted": "BBY",
+      "ground_truth": "BBY, New York Stock Exchange",
+      "correct": false,
+      "fallback_triggered": true,
+      "relevance_verdict": "no",
+      "retrieved_tokens_refined": 112,
+      "retrieved_tokens_full": 112,
+      "retrieved_tokens_used": 112,
+      "tokens": {
+        "mini_in": 241,
+        "mini_out": 5,
+        "gpt54_in": 205,
+        "gpt54_out": 6
+      }
+    },
+    {
+      "doc_name": "BESTBUY_2020_10K",
+      "predicted": "BBY — New York Stock Exchange",
+      "ground_truth": "BBY, New York Stock Exchange",
+      "correct": true,
+      "fallback_triggered": false,
+      "relevance_verdict": "yes",
+      "retrieved_tokens_refined": 854,
+      "retrieved_tokens_full": 0,
+      "retrieved_tokens_used": 854,
+      "tokens": {
+        "mini_in": 969,
+        "mini_out": 5,
+        "gpt54_in": 933,
+        "gpt54_out": 11
+      }
+    },
+    {
+      "doc_name": "BESTBUY_2021_10K",
+      "predicted": "BBY — New York Stock Exchange",
+      "ground_truth": "BBY, New York Stock Exchange",
+      "correct": true,
+      "fallback_triggered": false,
+      "relevance_verdict": "yes",
+      "retrieved_tokens_refined": 989,
+      "retrieved_tokens_full": 0,
+      "retrieved_tokens_used": 989,
+      "tokens": {
+        "mini_in": 1101,
+        "mini_out": 5,
+        "gpt54_in": 1065,
+        "gpt54_out": 11
+      }
+    },
+    {
+      "doc_name": "BESTBUY_2022_10K",
+      "predicted": "BBY — New York Stock Exchange",
+      "ground_truth": "BBY, New York Stock Exchange",
+      "correct": true,
+      "fallback_triggered": false,
+      "relevance_verdict": "yes",
+      "retrieved_tokens_refined": 987,
+      "retrieved_tokens_full": 0,
+      "retrieved_tokens_used": 987,
+      "tokens": {
+        "mini_in": 1099,
+        "mini_out": 5,
+        "gpt54_in": 1063,
+        "gpt54_out": 11
+      }
+    },
+    {
+      "doc_name": "BESTBUY_2023_10K",
+      "predicted": "BBY — New York Stock Exchange",
+      "ground_truth": "BBY, New York Stock Exchange",
+      "correct": true,
+      "fallback_triggered": false,
+      "relevance_verdict": "yes",
+      "retrieved_tokens_refined": 1015,
+      "retrieved_tokens_full": 0,
+      "retrieved_tokens_used": 1015,
+      "tokens": {
+        "mini_in": 1134,
+        "mini_out": 5,
+        "gpt54_in": 1098,
+        "gpt54_out": 11
+      }
+    },
+    {
+      "doc_name": "BOEING_2017_10K",
+      "predicted": "Common Stock, $5 par value — New York Stock Exchange",
+      "ground_truth": "BA, New York Stock Exchange",
+      "correct": false,
+      "fallback_triggered": true,
+      "relevance_verdict": "no",
+      "retrieved_tokens_refined": 867,
+      "retrieved_tokens_full": 871,
+      "retrieved_tokens_used": 871,
+      "tokens": {
+        "mini_in": 985,
+        "mini_out": 5,
+        "gpt54_in": 952,
+        "gpt54_out": 16
+      }
+    },
+    {
+      "doc_name": "BOEING_2018_10K",
+      "predicted": "Common Stock, $5 par value — New York Stock Exchange",
+      "ground_truth": "BA, New York Stock Exchange",
+      "correct": false,
+      "fallback_triggered": true,
+      "relevance_verdict": "no",
+      "retrieved_tokens_refined": 822,
+      "retrieved_tokens_full": 826,
+      "retrieved_tokens_used": 826,
+      "tokens": {
+        "mini_in": 940,
+        "mini_out": 5,
+        "gpt54_in": 907,
+        "gpt54_out": 16
+      }
+    },
+    {
+      "doc_name": "AMERICANWATERWORKS_2023Q2_10Q",
+      "predicted": "AWK — New York Stock Exchange",
+      "ground_truth": "AWK, New York Stock Exchange",
+      "correct": true,
+      "fallback_triggered": false,
+      "relevance_verdict": "yes",
+      "retrieved_tokens_refined": 578,
+      "retrieved_tokens_full": 0,
+      "retrieved_tokens_used": 578,
+      "tokens": {
+        "mini_in": 699,
+        "mini_out": 5,
+        "gpt54_in": 663,
+        "gpt54_out": 11
+      }
+    },
+    {
+      "doc_name": "APPLE_2023Q3_10Q",
+      "predicted": "AAPL — The Nasdaq Stock Market LLC",
+      "ground_truth": [
+        {
+          "symbol": "AAPL",
+          "exchange": "The Nasdaq Stock Market LLC"
+        },
+        {
+          "symbol": "1.375% Notes due 2024",
+          "exchange": "The Nasdaq Stock Market LLC"
+        },
+        {
+          "symbol": "0.000% Notes due 2025",
+          "exchange": "The Nasdaq Stock Market LLC"
+        },
+        {
+          "symbol": "0.875% Notes due 2025",
+          "exchange": "The Nasdaq Stock Market LLC"
+        },
+        {
+          "symbol": "1.625% Notes due 2026",
+          "exchange": "The Nasdaq Stock Market LLC"
+        },
+        {
+          "symbol": "2.000% Notes due 2027",
+          "exchange": "The Nasdaq Stock Market LLC"
+        },
+        {
+          "symbol": "1.375% Notes due 2029",
+          "exchange": "The Nasdaq Stock Market LLC"
+        },
+        {
+          "symbol": "3.050% Notes due 2029",
+          "exchange": "The Nasdaq Stock Market LLC"
+        },
+        {
+          "symbol": "0.500% Notes due 2031",
+          "exchange": "The Nasdaq Stock Market LLC"
+        },
+        {
+          "symbol": "3.600% Notes due 2042",
+          "exchange": "The Nasdaq Stock Market LLC"
+        }
+      ],
+      "correct": false,
+      "fallback_triggered": true,
+      "relevance_verdict": "no",
+      "retrieved_tokens_refined": 654,
+      "retrieved_tokens_full": 677,
+      "retrieved_tokens_used": 677,
+      "tokens": {
+        "mini_in": 764,
+        "mini_out": 5,
+        "gpt54_in": 747,
+        "gpt54_out": 12
+      }
+    },
+    {
+      "doc_name": "BESTBUY_2024Q2_10Q",
+      "predicted": "BBY — New York Stock Exchange",
+      "ground_truth": "BBY, New York Stock Exchange",
+      "correct": true,
+      "fallback_triggered": false,
+      "relevance_verdict": "yes",
+      "retrieved_tokens_refined": 686,
+      "retrieved_tokens_full": 0,
+      "retrieved_tokens_used": 686,
+      "tokens": {
+        "mini_in": 807,
+        "mini_out": 5,
+        "gpt54_in": 771,
+        "gpt54_out": 11
+      }
+    },
+    {
+      "doc_name": "CORNING_2023Q2_10Q",
+      "predicted": "GLW — New York Stock Exchange; GLW26 — New York Stock Exchange; GLW31 — New York Stock Exchange",
+      "ground_truth": [
+        {
+          "Trading Symbol": "GLW",
+          "Exchange": "New York Stock Exchange"
+        },
+        {
+          "Trading Symbol": "GLW26",
+          "Exchange": "New York Stock Exchange"
+        },
+        {
+          "Trading Symbol": "GLW31",
+          "Exchange": "New York Stock Exchange"
+        }
+      ],
+      "correct": true,
+      "fallback_triggered": false,
+      "relevance_verdict": "yes",
+      "retrieved_tokens_refined": 595,
+      "retrieved_tokens_full": 0,
+      "retrieved_tokens_used": 595,
+      "tokens": {
+        "mini_in": 715,
+        "mini_out": 5,
+        "gpt54_in": 679,
+        "gpt54_out": 29
+      }
+    },
+    {
+      "doc_name": "FOOTLOCKER_2022_10Q",
+      "predicted": "FL — New York Stock Exchange",
+      "ground_truth": "Common Stock, par value $0.01, FL, New York Stock Exchange",
+      "correct": true,
+      "fallback_triggered": false,
+      "relevance_verdict": "yes",
+      "retrieved_tokens_refined": 553,
+      "retrieved_tokens_full": 0,
+      "retrieved_tokens_used": 553,
+      "tokens": {
+        "mini_in": 670,
+        "mini_out": 5,
+        "gpt54_in": 634,
+        "gpt54_out": 10
+      }
+    },
+    {
+      "doc_name": "FOOTLOCKER_2023Q3_10Q",
+      "predicted": "FL — New York Stock Exchange",
+      "ground_truth": "Common Stock, par value $0.01, FL, New York Stock Exchange",
+      "correct": true,
+      "fallback_triggered": false,
+      "relevance_verdict": "yes",
+      "retrieved_tokens_refined": 553,
+      "retrieved_tokens_full": 0,
+      "retrieved_tokens_used": 553,
+      "tokens": {
+        "mini_in": 670,
+        "mini_out": 5,
+        "gpt54_in": 634,
+        "gpt54_out": 10
+      }
+    },
+    {
+      "doc_name": "LOCKHEEDMARTIN_2022Q2_10Q",
+      "predicted": "LMT — New York Stock Exchange",
+      "ground_truth": "LMT, New York Stock Exchange",
+      "correct": true,
+      "fallback_triggered": false,
+      "relevance_verdict": "yes",
+      "retrieved_tokens_refined": 592,
+      "retrieved_tokens_full": 0,
+      "retrieved_tokens_used": 592,
+      "tokens": {
+        "mini_in": 711,
+        "mini_out": 5,
+        "gpt54_in": 675,
+        "gpt54_out": 11
+      }
+    },
+    {
+      "doc_name": "LOCKHEEDMARTIN_2023Q1_10Q",
+      "predicted": "NYSE: LMT",
+      "ground_truth": "LMT (NYSE)",
+      "correct": true,
+      "fallback_triggered": false,
+      "relevance_verdict": "yes",
+      "retrieved_tokens_refined": 518,
+      "retrieved_tokens_full": 0,
+      "retrieved_tokens_used": 518,
+      "tokens": {
+        "mini_in": 650,
+        "mini_out": 5,
+        "gpt54_in": 614,
+        "gpt54_out": 8
+      }
+    },
+    {
+      "doc_name": "LOCKHEEDMARTIN_2023Q2_10Q",
+      "predicted": "NYSE: LMT",
+      "ground_truth": "LMT (NYSE)",
+      "correct": true,
+      "fallback_triggered": false,
+      "relevance_verdict": "yes",
+      "retrieved_tokens_refined": 809,
+      "retrieved_tokens_full": 0,
+      "retrieved_tokens_used": 809,
+      "tokens": {
+        "mini_in": 937,
+        "mini_out": 5,
+        "gpt54_in": 901,
+        "gpt54_out": 8
+      }
+    },
+    {
+      "doc_name": "AMCOR_2022_8K_dated-2022-07-01",
+      "predicted": "AMCR — New York Stock Exchange; AUKF/27 — New York Stock Exchange",
+      "ground_truth": [
+        {
+          "Trading Symbol": "AMCR",
+          "Exchange": "New York Stock Exchange"
+        },
+        {
+          "Trading Symbol": "AUKF/27",
+          "Exchange": "New York Stock Exchange"
+        }
+      ],
+      "correct": true,
+      "fallback_triggered": false,
+      "relevance_verdict": "yes",
+      "retrieved_tokens_refined": 390,
+      "retrieved_tokens_full": 0,
+      "retrieved_tokens_used": 390,
+      "tokens": {
+        "mini_in": 516,
+        "mini_out": 5,
+        "gpt54_in": 480,
+        "gpt54_out": 22
+      }
+    },
+    {
+      "doc_name": "BESTBUY_2023_8K_dated-2023-04-24",
+      "predicted": "BBY — New York Stock Exchange",
+      "ground_truth": "BBY, New York Stock Exchange",
+      "correct": true,
+      "fallback_triggered": false,
+      "relevance_verdict": "yes",
+      "retrieved_tokens_refined": 382,
+      "retrieved_tokens_full": 0,
+      "retrieved_tokens_used": 382,
+      "tokens": {
+        "mini_in": 510,
+        "mini_out": 5,
+        "gpt54_in": 474,
+        "gpt54_out": 11
+      }
+    },
+    {
+      "doc_name": "BLOCK_2022_8K_dated-2022-01-28",
+      "predicted": "SQ — New York Stock Exchange",
+      "ground_truth": "SQ, New York Stock Exchange",
+      "correct": true,
+      "fallback_triggered": false,
+      "relevance_verdict": "yes",
+      "retrieved_tokens_refined": 341,
+      "retrieved_tokens_full": 0,
+      "retrieved_tokens_used": 341,
+      "tokens": {
+        "mini_in": 467,
+        "mini_out": 5,
+        "gpt54_in": 431,
+        "gpt54_out": 10
+      }
+    },
+    {
+      "doc_name": "EBAY_2023Q1_8K",
+      "predicted": "EBAY — The Nasdaq Global Select Market",
+      "ground_truth": "EBAY, The Nasdaq Global Select Market",
+      "correct": true,
+      "fallback_triggered": false,
+      "relevance_verdict": "yes",
+      "retrieved_tokens_refined": 366,
+      "retrieved_tokens_full": 0,
+      "retrieved_tokens_used": 366,
+      "tokens": {
+        "mini_in": 490,
+        "mini_out": 5,
+        "gpt54_in": 454,
+        "gpt54_out": 12
+      }
+    },
+    {
+      "doc_name": "EBAY_2023Q2_8K",
+      "predicted": "EBAY — The Nasdaq Global Select Market",
+      "ground_truth": "EBAY, The Nasdaq Global Select Market",
+      "correct": true,
+      "fallback_triggered": false,
+      "relevance_verdict": "yes",
+      "retrieved_tokens_refined": 366,
+      "retrieved_tokens_full": 0,
+      "retrieved_tokens_used": 366,
+      "tokens": {
+        "mini_in": 490,
+        "mini_out": 5,
+        "gpt54_in": 454,
+        "gpt54_out": 12
+      }
+    },
+    {
+      "doc_name": "FOOTLOCKER_2022_8K_dated_2023-02-21",
+      "predicted": "to — New York Stock Exchange",
+      "ground_truth": "FL, New York Stock Exchange",
+      "correct": false,
+      "fallback_triggered": true,
+      "relevance_verdict": "no",
+      "retrieved_tokens_refined": 376,
+      "retrieved_tokens_full": 499,
+      "retrieved_tokens_used": 499,
+      "tokens": {
+        "mini_in": 503,
+        "mini_out": 5,
+        "gpt54_in": 589,
+        "gpt54_out": 10
+      }
+    },
+    {
+      "doc_name": "JOHNSON_JOHNSON_2023_8K_dated-2023-08-23",
+      "predicted": "JNJ — New York Stock Exchange; JNJ24C — New York Stock Exchange; JNJ24BP — New York Stock Exchange; JNJ28 — New York Stock Exchange; JNJ35 — New York Stock Exchange",
+      "ground_truth": "JNJ (New York Stock Exchange), JNJ24C (New York Stock Exchange), JNJ24BP (New York Stock Exchange), JNJ28 (New York Stock Exchange), JNJ35 (New York Stock Exchange)",
+      "correct": true,
+      "fallback_triggered": false,
+      "relevance_verdict": "yes",
+      "retrieved_tokens_refined": 573,
+      "retrieved_tokens_full": 0,
+      "retrieved_tokens_used": 573,
+      "tokens": {
+        "mini_in": 700,
+        "mini_out": 5,
+        "gpt54_in": 664,
+        "gpt54_out": 49
+      }
+    },
+    {
+      "doc_name": "JOHNSON_JOHNSON_2023_8K_dated-2023-08-30",
+      "predicted": "JNJ — New York Stock Exchange; JNJ24C — New York Stock Exchange; JNJ24BP — New York Stock Exchange; JNJ28 — New York Stock Exchange; JNJ35 — New York Stock Exchange",
+      "ground_truth": [
+        {
+          "symbol": "JNJ",
+          "exchange": "New York Stock Exchange"
+        },
+        {
+          "symbol": "JNJ24C",
+          "exchange": "New York Stock Exchange"
+        },
+        {
+          "symbol": "JNJ24BP",
+          "exchange": "New York Stock Exchange"
+        },
+        {
+          "symbol": "JNJ28",
+          "exchange": "New York Stock Exchange"
+        },
+        {
+          "symbol": "JNJ35",
+          "exchange": "New York Stock Exchange"
+        }
+      ],
+      "correct": true,
+      "fallback_triggered": false,
+      "relevance_verdict": "yes",
+      "retrieved_tokens_refined": 573,
+      "retrieved_tokens_full": 0,
+      "retrieved_tokens_used": 573,
+      "tokens": {
+        "mini_in": 700,
+        "mini_out": 5,
+        "gpt54_in": 664,
+        "gpt54_out": 49
+      }
+    },
+    {
+      "doc_name": "BOEING_2020_10K",
+      "predicted": "BA; New York Stock Exchange",
+      "ground_truth": "BA — New York Stock Exchange",
+      "correct": true,
+      "fallback_triggered": true,
+      "relevance_verdict": "no",
+      "retrieved_tokens_refined": 835,
+      "retrieved_tokens_full": 835,
+      "retrieved_tokens_used": 835,
+      "tokens": {
+        "mini_in": 954,
+        "mini_out": 5,
+        "gpt54_in": 918,
+        "gpt54_out": 10
+      }
+    },
+    {
+      "doc_name": "BOEING_2022_10K",
+      "predicted": "BA — New York Stock Exchange",
+      "ground_truth": "BA — New York Stock Exchange",
+      "correct": true,
+      "fallback_triggered": false,
+      "relevance_verdict": "yes",
+      "retrieved_tokens_refined": 833,
+      "retrieved_tokens_full": 0,
+      "retrieved_tokens_used": 833,
+      "tokens": {
+        "mini_in": 952,
+        "mini_out": 5,
+        "gpt54_in": 916,
+        "gpt54_out": 10
+      }
+    },
+    {
+      "doc_name": "CORNING_2022_10K",
+      "predicted": "GLW — New York Stock Exchange (NYSE)",
+      "ground_truth": "GLW — New York Stock Exchange (NYSE)",
+      "correct": true,
+      "fallback_triggered": false,
+      "relevance_verdict": "yes",
+      "retrieved_tokens_refined": 924,
+      "retrieved_tokens_full": 0,
+      "retrieved_tokens_used": 924,
+      "tokens": {
+        "mini_in": 1039,
+        "mini_out": 5,
+        "gpt54_in": 1003,
+        "gpt54_out": 14
+      }
+    },
+    {
+      "doc_name": "COSTCO_2015_10K",
+      "predicted": "COST — The NASDAQ Global Select Market",
+      "ground_truth": "COST — The NASDAQ Global Select Market",
+      "correct": true,
+      "fallback_triggered": false,
+      "relevance_verdict": "yes",
+      "retrieved_tokens_refined": 889,
+      "retrieved_tokens_full": 0,
+      "retrieved_tokens_used": 889,
+      "tokens": {
+        "mini_in": 1002,
+        "mini_out": 5,
+        "gpt54_in": 966,
+        "gpt54_out": 13
+      }
+    },
+    {
+      "doc_name": "COSTCO_2016_10K",
+      "predicted": "COST — NASDAQ Global Select Market",
+      "ground_truth": "COST — The NASDAQ Global Select Market",
+      "correct": true,
+      "fallback_triggered": false,
+      "relevance_verdict": "yes",
+      "retrieved_tokens_refined": 932,
+      "retrieved_tokens_full": 0,
+      "retrieved_tokens_used": 932,
+      "tokens": {
+        "mini_in": 1045,
+        "mini_out": 5,
+        "gpt54_in": 1009,
+        "gpt54_out": 12
+      }
+    },
+    {
+      "doc_name": "COSTCO_2017_10K",
+      "predicted": "COST — The NASDAQ Global Select Market",
+      "ground_truth": "COST — The NASDAQ Global Select Market",
+      "correct": true,
+      "fallback_triggered": false,
+      "relevance_verdict": "yes",
+      "retrieved_tokens_refined": 979,
+      "retrieved_tokens_full": 0,
+      "retrieved_tokens_used": 979,
+      "tokens": {
+        "mini_in": 1097,
+        "mini_out": 5,
+        "gpt54_in": 1061,
+        "gpt54_out": 13
+      }
+    },
+    {
+      "doc_name": "COSTCO_2019_10K",
+      "predicted": "COST — The NASDAQ Global Select Market",
+      "ground_truth": "COST — The NASDAQ Global Select Market",
+      "correct": true,
+      "fallback_triggered": false,
+      "relevance_verdict": "yes",
+      "retrieved_tokens_refined": 902,
+      "retrieved_tokens_full": 0,
+      "retrieved_tokens_used": 902,
+      "tokens": {
+        "mini_in": 1021,
+        "mini_out": 5,
+        "gpt54_in": 985,
+        "gpt54_out": 13
+      }
+    },
+    {
+      "doc_name": "COSTCO_2020_10K",
+      "predicted": "COST — The NASDAQ Global Select Market",
+      "ground_truth": "COST — The NASDAQ Global Select Market",
+      "correct": true,
+      "fallback_triggered": false,
+      "relevance_verdict": "yes",
+      "retrieved_tokens_refined": 994,
+      "retrieved_tokens_full": 0,
+      "retrieved_tokens_used": 994,
+      "tokens": {
+        "mini_in": 1111,
+        "mini_out": 5,
+        "gpt54_in": 1075,
+        "gpt54_out": 13
+      }
+    },
+    {
+      "doc_name": "COSTCO_2021_10K",
+      "predicted": "COST — The NASDAQ Global Select Market",
+      "ground_truth": "COST — The NASDAQ Global Select Market",
+      "correct": true,
+      "fallback_triggered": false,
+      "relevance_verdict": "yes",
+      "retrieved_tokens_refined": 1019,
+      "retrieved_tokens_full": 0,
+      "retrieved_tokens_used": 1019,
+      "tokens": {
+        "mini_in": 1137,
+        "mini_out": 5,
+        "gpt54_in": 1101,
+        "gpt54_out": 13
+      }
+    },
+    {
+      "doc_name": "COSTCO_2022_10K",
+      "predicted": "COST — The NASDAQ Global Select Market",
+      "ground_truth": "COST — The NASDAQ Global Select Market",
+      "correct": true,
+      "fallback_triggered": false,
+      "relevance_verdict": "yes",
+      "retrieved_tokens_refined": 1013,
+      "retrieved_tokens_full": 0,
+      "retrieved_tokens_used": 1013,
+      "tokens": {
+        "mini_in": 1131,
+        "mini_out": 5,
+        "gpt54_in": 1095,
+        "gpt54_out": 13
+      }
+    },
+    {
+      "doc_name": "EBAY_2015_10K",
+      "predicted": "Common stock — The Nasdaq Global Select Market",
+      "ground_truth": "Common stock — The Nasdaq Global Select Market",
+      "correct": true,
+      "fallback_triggered": true,
+      "relevance_verdict": "no",
+      "retrieved_tokens_refined": 420,
+      "retrieved_tokens_full": 456,
+      "retrieved_tokens_used": 456,
+      "tokens": {
+        "mini_in": 547,
+        "mini_out": 5,
+        "gpt54_in": 547,
+        "gpt54_out": 12
+      }
+    },
+    {
+      "doc_name": "EBAY_2016_10K",
+      "predicted": "Common stock — The Nasdaq Global Select Market",
+      "ground_truth": "Common stock — The Nasdaq Global Select Market",
+      "correct": true,
+      "fallback_triggered": true,
+      "relevance_verdict": "no",
+      "retrieved_tokens_refined": 689,
+      "retrieved_tokens_full": 689,
+      "retrieved_tokens_used": 689,
+      "tokens": {
+        "mini_in": 803,
+        "mini_out": 5,
+        "gpt54_in": 767,
+        "gpt54_out": 12
+      }
+    },
+    {
+      "doc_name": "EBAY_2017_10K",
+      "predicted": "EBAY — The Nasdaq Global Select Market; 6.00% Notes due 2056 — The NASDAQ Stock Market LLC",
+      "ground_truth": "Common stock — The Nasdaq Global Select Market; 6.00% Notes due 2056 — The NASDAQ Stock Market LLC",
+      "correct": false,
+      "fallback_triggered": true,
+      "relevance_verdict": "no",
+      "retrieved_tokens_refined": 557,
+      "retrieved_tokens_full": 557,
+      "retrieved_tokens_used": 557,
+      "tokens": {
+        "mini_in": 682,
+        "mini_out": 5,
+        "gpt54_in": 646,
+        "gpt54_out": 30
+      }
+    },
+    {
+      "doc_name": "EBAY_2020_10K",
+      "predicted": "EBAY — The Nasdaq Global Select Market; EBAYL — The Nasdaq Global Select Market",
+      "ground_truth": "EBAY — The Nasdaq Global Select Market; EBAYL — The Nasdaq Global Select Market",
+      "correct": true,
+      "fallback_triggered": false,
+      "relevance_verdict": "yes",
+      "retrieved_tokens_refined": 419,
+      "retrieved_tokens_full": 0,
+      "retrieved_tokens_used": 419,
+      "tokens": {
+        "mini_in": 545,
+        "mini_out": 5,
+        "gpt54_in": 509,
+        "gpt54_out": 22
+      }
+    },
+    {
+      "doc_name": "EBAY_2021_10K",
+      "predicted": "eBay — The Nasdaq Global Select Market",
+      "ground_truth": "EBAY — The Nasdaq Global Select Market",
+      "correct": true,
+      "fallback_triggered": false,
+      "relevance_verdict": "yes",
+      "retrieved_tokens_refined": 571,
+      "retrieved_tokens_full": 0,
+      "retrieved_tokens_used": 571,
+      "tokens": {
+        "mini_in": 691,
+        "mini_out": 5,
+        "gpt54_in": 655,
+        "gpt54_out": 12
+      }
+    },
+    {
+      "doc_name": "FOOTLOCKER_2022_10K",
+      "predicted": "FL — New York Stock Exchange",
+      "ground_truth": "FL — New York Stock Exchange",
+      "correct": true,
+      "fallback_triggered": false,
+      "relevance_verdict": "yes",
+      "retrieved_tokens_refined": 862,
+      "retrieved_tokens_full": 0,
+      "retrieved_tokens_used": 862,
+      "tokens": {
+        "mini_in": 981,
+        "mini_out": 5,
+        "gpt54_in": 945,
+        "gpt54_out": 10
+      }
+    },
+    {
+      "doc_name": "FOOTLOCKER_2023_10K",
+      "predicted": "NOT FOUND",
+      "ground_truth": "FL — New York Stock Exchange",
+      "correct": false,
+      "fallback_triggered": true,
+      "relevance_verdict": "no",
+      "retrieved_tokens_refined": 859,
+      "retrieved_tokens_full": 893,
+      "retrieved_tokens_used": 893,
+      "tokens": {
+        "mini_in": 977,
+        "mini_out": 5,
+        "gpt54_in": 975,
+        "gpt54_out": 6
+      }
+    },
+    {
+      "doc_name": "GENERALMILLS_2015_10K",
+      "predicted": "Common Stock, $.10 par value — New York Stock Exchange",
+      "ground_truth": "GIS — New York Stock Exchange",
+      "correct": false,
+      "fallback_triggered": true,
+      "relevance_verdict": "no",
+      "retrieved_tokens_refined": 700,
+      "retrieved_tokens_full": 803,
+      "retrieved_tokens_used": 803,
+      "tokens": {
+        "mini_in": 821,
+        "mini_out": 5,
+        "gpt54_in": 887,
+        "gpt54_out": 16
+      }
+    }
+  ]
+}

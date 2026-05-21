@@ -1,0 +1,22 @@
+{
+  "question": "What is long-term debt at year-end (0 if none)?",
+  "question_slug": "what_is_longterm_debt_at_yearend_0_if_none_18_llm",
+  "mode": "agentic",
+  "model": "opus47",
+  "selected_rules": [
+    "rule_long_term_debt_numeric_text",
+    "rule_long_term_debt_text_span",
+    "rule_balance_sheet_liabilities_block"
+  ],
+  "selected_avg_cost_ratio_sum": 0.055927,
+  "min_cov": 0.3333,
+  "mean_cov": 0.3704,
+  "match_rate_on_sampled": 1.0,
+  "iterations": 3,
+  "verify_calls": 3,
+  "tool_llm_calls": 96,
+  "tool_input_tokens": 122819,
+  "tool_output_tokens": 725,
+  "latency_seconds": 425.15,
+  "rationale": "Started by analyzing per-doc rule coverage from eval_individual cache. Of 18 docs, only 4 are in D_star (correctly solved by full pool). All 4 D_star docs (ADOBE_2020/2021_10K, ACTIVISIONBLIZZARD_2020_10K, COSTCO_2018_10K) are 10-K balance-sheet style filings, so I focused on broad balance-sheet-debt rules. A 2-rule trial missed ACTIVISIONBLIZZARD_2020_10K; adding rule_long_term_debt_text_span as a third recovered it. Final set: 3 broad, multi-doc-type rules with sum_cost=0.056 (~8% of full pool 0.683) and min_cov=0.333 (max possible single-rule cov is 0.389, so >=0.4 unreachable)."
+}

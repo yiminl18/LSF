@@ -1,0 +1,22 @@
+{
+  "question": "What document type or SEC form is this (e.g. 10-K, 10-Q, 8-K, earnings release, annual report)?",
+  "question_slug": "what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning_18_llm",
+  "mode": "agentic",
+  "model": "opus47",
+  "selected_rules": [
+    "rule_company_header_with_form_in_text",
+    "rule_cover_page_first_form_after_sec_header",
+    "rule_form_heading_top_of_doc"
+  ],
+  "selected_avg_cost_ratio_sum": 0.001244,
+  "min_cov": 1.0,
+  "mean_cov": 1.0,
+  "match_rate_on_sampled": 1.0,
+  "iterations": 1,
+  "verify_calls": 1,
+  "tool_llm_calls": 32,
+  "tool_input_tokens": 5892,
+  "tool_output_tokens": 216,
+  "latency_seconds": 99.58,
+  "rationale": "Picked the three cheapest rules in the pool that each have cov=1.0 across all 18 sampled docs (10-K, 10-Q, 8-K mix). All three are broad cover-page/form-heading rules that generalise across form types, not page- or month-specific. Initial verify confirmed match_rate=1.0 with missed_in_D_star=[], so no further iterations were needed; sum cost is 0.26% of the full-pool sum, well under the 50% target."
+}

@@ -1,0 +1,23 @@
+{
+  "question": "What is/are the trading symbol(s) and listing exchange(s)?",
+  "question_slug": "what_isare_the_trading_symbols_and_listing_exchanges_18_llm",
+  "mode": "agentic",
+  "model": "opus47",
+  "selected_rules": [
+    "rule_page1_first_page_only_listing_cluster",
+    "rule_page1_exchange_or_symbol_in_same_path",
+    "rule_page1_near_title_of_each_class",
+    "rule_item1_business_exchange_symbol_sentence"
+  ],
+  "selected_avg_cost_ratio_sum": 0.049493,
+  "min_cov": 0.2778,
+  "mean_cov": 0.6389,
+  "match_rate_on_sampled": 1.0,
+  "iterations": 3,
+  "verify_calls": 3,
+  "tool_llm_calls": 108,
+  "tool_input_tokens": 41697,
+  "tool_output_tokens": 1046,
+  "latency_seconds": 245.808,
+  "rationale": "Three broad page-1 cover-block rules cover most 10-K/10-Q/8-K filings (first_page_only_listing_cluster, exchange_or_symbol_in_same_path, near_title_of_each_class). Added rule_item1_business_exchange_symbol_sentence to cover COSTCO_2018_10K which has the listing only in the Item 1 narrative \u2014 it was the cheapest of the only two rules solving that doc. Drop-test confirmed first_page_only_listing_cluster (the costliest) is load-bearing; removing it loses 3 docs (3M_2023Q2_10Q, AMCOR_2022_8K, EBAY_2022_10K). Final S has sum_cost 24% of pool, |S|=4, all 17 solvable docs matched."
+}

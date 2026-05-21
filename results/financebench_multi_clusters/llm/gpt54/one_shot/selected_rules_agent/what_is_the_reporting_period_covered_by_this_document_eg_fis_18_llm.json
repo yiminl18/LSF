@@ -1,0 +1,18 @@
+{
+  "question": "What is the reporting period covered by this document (e.g. fiscal year ended, quarter ended, or event date)?",
+  "question_slug": "what_is_the_reporting_period_covered_by_this_document_eg_fis_18_llm",
+  "mode": "agentic",
+  "model": "opus47",
+  "selected_rules": ["rule_page1_period_phrases"],
+  "selected_avg_cost_ratio_sum": 0.002362,
+  "min_cov": 1.0,
+  "mean_cov": 1.0,
+  "match_rate_on_sampled": 1.0,
+  "iterations": 2,
+  "verify_calls": 2,
+  "tool_llm_calls": 72,
+  "tool_input_tokens": 12614,
+  "tool_output_tokens": 722,
+  "latency_seconds": 146.697,
+  "rationale": "Selected the single broadest rule rule_page1_period_phrases (cov=1.0, cost=0.002362) which alone satisfies the hard constraint: merge accuracy matches the full pool on every solvable doc (missed_in_D_star=[]). Initial 2-rule subset with rule_10k_or_10q_cover_period_body_lines also worked but the drop-test showed the single rule is sufficient across 10-K, 10-Q, and 8-K filings. Final sum_cost is ~4% of the full pool (0.0024 vs 0.0599), min_cov=1.0, far exceeding all soft targets with |S|=1."
+}

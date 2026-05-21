@@ -1,0 +1,22 @@
+{
+  "question": "What is the company's principal executive offices address (city and state/country) as stated in this document?",
+  "question_slug": "what_is_the_companys_principal_executive_offices_address_cit_18_llm",
+  "mode": "agentic",
+  "model": "opus47",
+  "selected_rules": [
+    "rule_page1_after_exact_name_of_registrant",
+    "rule_page1_near_telephone_number",
+    "rule_page1_top_half_address_candidates"
+  ],
+  "selected_avg_cost_ratio_sum": 0.010038,
+  "min_cov": 0.6667,
+  "mean_cov": 0.7963,
+  "match_rate_on_sampled": 1.0,
+  "iterations": 1,
+  "verify_calls": 2,
+  "tool_llm_calls": 64,
+  "tool_input_tokens": 13762,
+  "tool_output_tokens": 530,
+  "latency_seconds": 334.038,
+  "rationale": "Greedy set-cover analysis on per-doc eval showed ACTIVISIONBLIZZARD_2020_10K is covered ONLY by rule_page1_near_telephone_number (mandatory). Pairing it with the highest-coverage broad rule rule_page1_after_exact_name_of_registrant (cov=0.8889) left AMCOR_2023Q2_10Q uncovered; rule_page1_top_half_address_candidates (cov=0.8333) fills that gap. Verified in one call: hard constraint satisfied (missed_in_D_star=[], match_rate=1.0). The 3-rule set cuts cost to 15.6% of pool while keeping min_cov=0.667."
+}
