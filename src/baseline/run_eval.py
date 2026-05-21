@@ -13,6 +13,10 @@ Usage:
     python src/baseline/run_eval.py --baseline agentic_mdocagent --model gpt54 --dataset nopv \
         --max-docs 3
 
+    # DeepRead on nopv, capped to first 3 pages for a cheap smoke
+    python src/baseline/run_eval.py --baseline agentic_deepread --model gpt54mini --dataset nopv \
+        --max-docs 1 --max-pages 3
+
     # Single question (by slug prefix)
     python src/baseline/run_eval.py --baseline agentic_claude_qa --model opus47 --split sampled \
         --question-slug what_is_the_registrants_telephone_number
@@ -22,6 +26,7 @@ from __future__ import annotations
 
 import argparse
 import importlib
+import inspect
 import json
 import re
 import sys
@@ -128,6 +133,19 @@ _DATASET_LOADERS: dict[str, Callable[[argparse.Namespace], DatasetSpec]] = {
     "financebench": _load_financebench,
     "nopv": _load_nopv,
 }
+
+
+def _run_baseline(baseline_mod, kwargs: dict) -> dict:
+    """Call run_qa while only passing kwargs the baseline can accept."""
+    sig = inspect.signature(baseline_mod.run_qa)
+    accepts_kwargs = any(
+        p.kind == inspect.Parameter.VAR_KEYWORD
+        for p in sig.parameters.values()
+    )
+    if accepts_kwargs:
+        return baseline_mod.run_qa(**kwargs)
+    accepted = {k: v for k, v in kwargs.items() if k in sig.parameters}
+    return baseline_mod.run_qa(**accepted)
 
 
 def _resolve_dataset(args) -> DatasetSpec:
@@ -256,6 +274,14 @@ def main() -> None:
     ap.add_argument("--skip-existing", action="store_true", default=True)
     ap.add_argument("--no-skip-existing", dest="skip_existing", action="store_false")
     ap.add_argument("--timeout",  type=int, default=300)
+    ap.add_argument("--max-pages", type=int, default=None,
+                    help="Optional page cap for PDF baselines that support it")
+    ap.add_argument("--ocr-model", default=None,
+                    help="DeepRead OCR model override (default: gpt-5.4-mini)")
+    ap.add_argument("--ocr-provider", default=None,
+                    help="DeepRead OCR provider override (default: azure)")
+    ap.add_argument("--provider", default="azure",
+                    help="Reader provider for baselines that use direct LLM calls")
     args = ap.parse_args()
 
     baseline_mod = importlib.import_module(f"baseline.{args.baseline}")
@@ -308,6 +334,10 @@ def main() -> None:
             "output_name": out_name,
             "question_slug_prefix": args.question_slug,
             "max_docs": args.max_docs,
+            "max_pages": args.max_pages,
+            "provider": args.provider,
+            "ocr_model": args.ocr_model,
+            "ocr_provider": args.ocr_provider,
             "selected_docs": [pdf_key.replace(".pdf", "") for pdf_key, _ in selected_items],
             "completed_docs_skipped": sorted(completed_docs),
         }
@@ -357,14 +387,22 @@ def main() -> None:
             ground_truth = doc_labels.get(question)
 
             try:
-                result = baseline_mod.run_qa(
-                    doc_path=doc_path,
-                    question=question,
-                    model=args.model,
-                    timeout=args.timeout,
-                    log_dir=q_dir / "logs",
-                    log_stem=doc_name,
-                )
+                baseline_kwargs = {
+                    "doc_path": doc_path,
+                    "question": question,
+                    "model": args.model,
+                    "timeout": args.timeout,
+                    "log_dir": q_dir / "logs",
+                    "log_stem": doc_name,
+                    "provider": args.provider,
+                }
+                if args.max_pages is not None:
+                    baseline_kwargs["max_pages"] = args.max_pages
+                if args.ocr_model is not None:
+                    baseline_kwargs["ocr_model"] = args.ocr_model
+                if args.ocr_provider is not None:
+                    baseline_kwargs["ocr_provider"] = args.ocr_provider
+                result = _run_baseline(baseline_mod, baseline_kwargs)
             except Exception as e:
                 print(f"  ERROR {doc_name}: {e}")
                 result = {
