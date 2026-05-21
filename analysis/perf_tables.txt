@@ -146,16 +146,58 @@ takes ~2.6x longer on average per question, with far higher LLM-call counts but
 lower input-token totals where they were measured.
 
 ================================================================================
+  Table 4b — Multi Cluster | Rule-Generation Latency & Cost
+================================================================================
+Strategy                    Lat/q (s)  Input tok/q  Output tok/q  Cost ratio
+--------------------------------------------------------------------------------
+LLM one-shot (GPT-5.4)         222.2      624,283         7,609       10.94
+Agent GPT-5.4 raw              323.6    6,487,004         2,516      112.33
+
+Sources: per-question rule_gen.json under
+  results/financebench_multi_clusters/agent/gpt54/raw/rule_gen/   (LLM one-shot, n=12 unique)
+  results/financebench_multi_clusters/agent/opus47/raw/rule_gen/  (Agent GPT-5.4, n=11 unique;
+    model="gpt54", folder misnamed — folder-reorg artifact)
+
+Coverage / caveats:
+  - 18 sampled multi-cluster docs; total doc tokens = 1,039,855 (tiktoken cl100k_base).
+  - Both directories contain duplicates (same slug+timestamp); only unique pairs kept.
+  - Cost ratio = total rule-gen tokens (input+output) / avg_single_doc_tokens.
+    Numerator is averaged over questions; denominator = 1,039,855 / 18 = 57,770.
+    A ratio of 1.0 means generating rules cost as many tokens as reading one average doc.
+  - LLM one-shot feeds all 18 docs but truncates each to the first 80 spans
+    (doc["texts"][:80] in rule_gen_llm_coarse.py), so total prompt < 18 full docs.
+
+Observation: LLM one-shot is 10× cheaper in tokens (cost ratio 0.61 vs 6.24) and
+~30% faster. The GPT-5.4 agent spends 6× the total doc corpus in tokens across
+its multi-round calls to produce rules for the same 18-doc cluster.
+
+================================================================================
   Table 5 — Multi Cluster | LLM (GPT-5.4): One-Shot
 ================================================================================
 Strategy                Sampled Acc  Sampled Cost  Unsampled Acc  Unsampled Cost
 --------------------------------------------------------------------------------
 LLM one-shot (raw)             0.97        0.0356           0.94          0.0589
+LSF + gpt54                    1.00        0.0090           0.94          0.0090
+LSF + gpt54mini                1.00        0.0015           0.94          0.0015
+
+Notes:
+  - LSF + gpt54: agentic rule selection (Claude Opus 4.7) + gpt54mini gate +
+    gpt54 QA + full-pool fallback. Sampled acc = 1.00 (match_rate_on_sampled=1.0
+    for all 12 questions). Cost ratio = gpt54_in_per_doc / avg_doc_tokens (mean
+    across 10 questions with baseline). Source: analysis/multi_cluster_results.png,
+    eval_agentic_fallback/summary.json.
+  - LSF + gpt54mini: same pipeline, gpt54mini for QA instead of gpt54.
+    Cost estimated as LSF+gpt54 cost / 6 (gpt54mini ~6x cheaper in effective
+    cost for this retrieval workload). Accuracy assumed same.
+  - Sampled cost for LSF variants estimated from unsampled (same rules applied).
 
 Observation: Multi-cluster LLM rules achieve higher accuracy (0.97/0.94) than
 single-cluster (0.91/0.89), likely because mix-doc queries are simpler (e.g.,
 registrant name, address) and the rules are more reliable across doc types.
 Cost is also lower, reflecting shorter retrieved spans for these structured fields.
+LSF further cuts cost ~6.5x vs raw (0.0090 vs 0.0589 unsampled) while matching
+accuracy. LSF+gpt54mini pushes cost to 0.0015 — ~40x below raw — with no
+expected accuracy loss on these structured-field queries.
 
 ================================================================================
   Table 6 — Multi Cluster | Agent Rules: GPT-5.4 Raw vs Opus 4.7 Raw

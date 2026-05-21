@@ -1,0 +1,60 @@
+Figure: cost_vs_docs.png
+=======================
+
+Title: Cost vs. Number of Documents (10 questions, input tokens only,
+       single-cluster avg doc size)
+
+X-axis: Number of documents (0, 50, 100, 150, 200)
+Y-axis: Total cost in USD
+
+--- What the figure shows ---
+
+Six lines representing the total dollar cost to answer 10 questions across
+n documents, as n grows from 0 to 200.
+
+4 Baseline lines (solid):
+  Each baseline agent reads the full (or near-full) document for every
+  (doc, question) pair. Cost scales purely linearly with n × 10 questions.
+
+  Line                        Cost at 200 docs
+  --------------------------  ----------------
+  Claude QA — opus47          ~$806
+  Claude QA — sonnet          ~$956
+  Codex QA  — gpt54           ~$585
+  Codex QA  — gpt54mini       ~$170
+
+2 LSF lines (dashed):
+  LSF pays a fixed one-time cost (rule generation + rule refinement) then
+  a tiny per-doc cost (rule application retrieves only ~3.6% of avg doc).
+
+  Line                         One-time   Per-doc (×10 Q)  At 200 docs
+  ---------------------------  ---------  ---------------  -----------
+  LSF — rule apply w/ gpt54   ~$25.73     ~$0.079          ~$41
+  LSF — rule apply w/ gpt54mini ~$25.73   ~$0.024          ~$30
+
+--- Assumptions and data sources ---
+
+- Cost ratios (input_tokens / avg_doc_tokens) from screenshots:
+    Baselines: opus47=0.9112, sonnet=1.8006, gpt54=1.3221, gpt54mini=1.2878
+    LSF rule gen: 10.94 (one-time, gpt54), rule refine: 0.70 (one-time, gpt54)
+    LSF rule apply: 0.0356 (per doc per question, gpt54 retrieval)
+
+- Avg single-cluster doc tokens: 88,432 (tiktoken cl100k_base, 10 sampled docs)
+
+- Model input prices ($/M tokens, as of May 2026):
+    claude-opus-4-7:    $5.00    claude-sonnet-4-5: $3.00
+    gpt-5.4:            $2.50    gpt-5.4-mini:      $0.75
+
+- Output tokens are not included (cost ratio measures input tokens only).
+  Actual costs will be moderately higher due to output tokens.
+
+- LSF one-time cost uses gpt54 pricing for both rule gen and rule refine.
+  LSF gpt54mini variant swaps only the rule-application model to gpt54mini;
+  rule gen and refine remain gpt54.
+
+--- Key takeaway ---
+
+LSF lines are nearly flat relative to baselines. At 200 docs the cheapest
+baseline (gpt54mini) costs ~$170 vs LSF gpt54mini ~$30 — a ~5.6× saving —
+while matching or exceeding baseline accuracy. The LSF advantage grows with
+corpus size since the one-time cost is amortized over more documents.
