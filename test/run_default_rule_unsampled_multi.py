@@ -1,10 +1,10 @@
-"""Driver: apply p_v2 refined rules with full-pool fallback on multi-cluster unsampled docs.
+"""Driver: apply agentic-selected rules with full-pool fallback on multi-cluster unsampled docs.
 
-Reads selected rule sets from selected_rules_pareto_v2/<slug>.json.
+Reads selected rule sets from selected_rules_agent/<slug>.json.
 For each unsampled doc, calls default_rule.apply_with_fallback (gpt54mini gate
 + gpt54 QA), then judges the prediction with gpt54.
 
-Writes per-question JSON + summary to eval_pareto_v2_fallback/.
+Writes per-question JSON + summary to eval_agentic_fallback/.
 """
 
 from __future__ import annotations
@@ -29,8 +29,8 @@ QUERIES_FILE    = "data/financebench/mix_doc_queries.txt"
 LABELS_FILE     = "data/financebench/sample/multi_cluster/random/unsampled_doc_labels.json"
 PROCESSING_DIR  = "data/financebench/processing"
 RULES_BASE_DIR  = "rules/financebench_multi_clusters/llm/gpt54/one_shot"
-SELECTED_DIR    = "results/financebench_multi_clusters/llm/gpt54/one_shot/selected_rules_pareto_v2"
-OUTPUT_DIR      = "results/financebench_multi_clusters/llm/gpt54/one_shot/eval_pareto_v2_fallback"
+SELECTED_DIR    = "results/financebench_multi_clusters/llm/gpt54/one_shot/selected_rules_agent"
+OUTPUT_DIR      = "results/financebench_multi_clusters/llm/gpt54/one_shot/eval_agentic_fallback"
 RELEVANCE_MODEL = "gpt54mini"
 QA_MODEL        = "gpt54"
 
