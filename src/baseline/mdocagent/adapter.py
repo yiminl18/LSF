@@ -59,7 +59,7 @@ _RENDER_DPI = 144
 # ``retrieval.top_k=_R_MAX_PAGES`` Hydra override in
 # ``agentic_mdocagent._agent_model_overrides`` — without that, upstream would
 # interpolate against its default top_k=10 and our keys would drift.
-_R_MAX_PAGES = 5
+_R_MAX_PAGES = 10
 _R_TEXT_KEY = f"text-top-{_R_MAX_PAGES}-question"
 _R_IMAGE_KEY = f"image-top-{_R_MAX_PAGES}-question"
 
