@@ -91,7 +91,7 @@ def main() -> None:
     if args.max_docs:
         labels = dict(sorted(labels.items())[:args.max_docs])
 
-    out_base = _ROOT / "baseline_results" / DATASET / f"{args.baseline}_{args.model}"
+    out_base = _ROOT / "baseline_results" / DATASET / f"{args.baseline}_{args.model}" / "single_cluster" / "all_docs"
     out_base.mkdir(parents=True, exist_ok=True)
 
     print(f"baseline={args.baseline}  model={args.model}  questions={len(questions)}  docs={len(labels)}")
