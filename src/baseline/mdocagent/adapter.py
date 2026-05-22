@@ -108,6 +108,105 @@ def _bm25_top_k(
     return ranked[:k]
 
 
+# pylate ColBERT singleton — loaded lazily so BM25-only runs don't pay the
+# ~50s model load. Reused across all (doc, query) pairs in the parent process
+# (prepare_inputs runs in the run_eval driver, not the subprocess).
+_COLBERT_MODEL = None
+
+
+def _get_colbert_model():
+    """Return a cached pylate ColBERT model, or None if pylate isn't installed.
+
+    Model id is overridable via ``LSF_MDOCAGENT_COLBERT_MODEL`` (defaults to
+    ``answerdotai/answerai-colbert-small-v1``, ~100MB, CPU/MPS-friendly).
+    """
+    global _COLBERT_MODEL
+    if _COLBERT_MODEL is not None:
+        return _COLBERT_MODEL
+    try:
+        from pylate import models  # type: ignore[import]
+    except ImportError:
+        return None
+    model_name = os.environ.get(
+        "LSF_MDOCAGENT_COLBERT_MODEL",
+        "answerdotai/answerai-colbert-small-v1",
+    )
+    _COLBERT_MODEL = models.ColBERT(model_name_or_path=model_name)
+    return _COLBERT_MODEL
+
+
+def _colbert_top_k(
+    extract_dir: Path,
+    doc_name: str,
+    n_pages: int,
+    query_text: str,
+    k: int,
+) -> list[int] | None:
+    """Return top-K page indices by ColBERT MaxSim (late-interaction) score.
+
+    Returns ``None`` if pylate isn't importable so the caller can fall back to
+    BM25. Per-doc embeddings are cached to ``<extract_dir>/<doc>.colbert.pt``
+    keyed by ``n_pages``; subsequent queries on the same doc only pay the
+    cheap query-encoding pass (~50ms).
+    """
+    import torch  # local: avoid global torch import for BM25-only runs
+
+    model = _get_colbert_model()
+    if model is None:
+        return None
+
+    cache_file = extract_dir / f"{doc_name}.colbert.pt"
+    doc_embeds = None
+    if cache_file.exists():
+        try:
+            saved = torch.load(cache_file, map_location=model.device, weights_only=False)
+            if saved.get("n_pages") == n_pages and saved.get("model") == model.model_card_data.model_id:
+                doc_embeds = saved["embeddings"]
+        except Exception:
+            doc_embeds = None  # corrupt or schema-changed → re-encode
+
+    if doc_embeds is None:
+        pages: list[str] = []
+        for page_idx in range(n_pages):
+            txt = (extract_dir / f"{doc_name}_{page_idx}.txt").read_text(encoding="utf-8")
+            pages.append(txt)
+        doc_embeds = model.encode(
+            sentences=pages,
+            batch_size=16,
+            is_query=False,
+            show_progress_bar=False,
+            convert_to_tensor=True,
+        )
+        try:
+            tmp = cache_file.with_suffix(cache_file.suffix + f".tmp.{os.getpid()}")
+            torch.save(
+                {
+                    "n_pages": n_pages,
+                    "model": model.model_card_data.model_id,
+                    "embeddings": doc_embeds,
+                },
+                tmp,
+            )
+            os.replace(tmp, cache_file)
+        except OSError:
+            pass
+
+    q_embed = model.encode(
+        sentences=[query_text],
+        batch_size=1,
+        is_query=True,
+        show_progress_bar=False,
+        convert_to_tensor=True,
+    )
+    q_tensor = q_embed[0] if isinstance(q_embed, list) else q_embed
+
+    scores: list[float] = []
+    for d in doc_embeds:
+        sim = q_tensor @ d.T  # (n_q, n_d)
+        scores.append(sim.max(dim=-1).values.sum().item())
+    return sorted(range(n_pages), key=lambda i: scores[i], reverse=True)[:k]
+
+
 _UNSAFE_DOC_NAME_RE = re.compile(r"[^A-Za-z0-9_.-]")
 
 # Minimal valid 1x1 transparent PNG. Upstream's base_dataset.py:132 page loop
@@ -184,10 +283,21 @@ def prepare_inputs(
     page_indices: list[int] | None = None
     retrieval_mode = "first_k"
     if query_text.strip():
-        ranked = _bm25_top_k(extract_dir, doc_name, n_pages, query_text, k)
-        if ranked is not None:
-            page_indices = ranked
-            retrieval_mode = "bm25"
+        # LSF_MDOCAGENT_RETRIEVAL chooses the ranker. "colbert" loads pylate
+        # lazily and falls through to BM25 if pylate isn't importable in this
+        # environment; "bm25" (default) skips ColBERT entirely so BM25-only
+        # users don't pay the import / model-load cost.
+        retriever = os.environ.get("LSF_MDOCAGENT_RETRIEVAL", "bm25").strip().lower()
+        if retriever == "colbert":
+            ranked = _colbert_top_k(extract_dir, doc_name, n_pages, query_text, k)
+            if ranked is not None:
+                page_indices = ranked
+                retrieval_mode = "colbert"
+        if page_indices is None:
+            ranked = _bm25_top_k(extract_dir, doc_name, n_pages, query_text, k)
+            if ranked is not None:
+                page_indices = ranked
+                retrieval_mode = "bm25"
     if page_indices is None:
         page_indices = list(range(k))
 
