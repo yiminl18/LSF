@@ -4,9 +4,7 @@ rules_old_sample/
 data/financebench/raw/
 data/CUAD_v1/
 data/civic_report/
-# nopv raw PDFs and labels are symlinks to datasets/nopv/latest/{raw,label}
-data/nopv/raw
-data/nopv/label
+data/officeqa/docs/
 
 # PDF files
 *.pdf
@@ -28,7 +26,3 @@ rule_run_unsampled/
 
 # Local environment config (API key paths differ per machine)
 local/azure.json
-local/azure_*.txt
-
-# MDocAgent per-model Hydra overrides (regenerated per run, hash keyed by model name)
-src/baseline/mdocagent/config_overrides/model/
