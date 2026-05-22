@@ -50,17 +50,23 @@ class MyOpenAI(BaseModel):
             or self.config.model
         )
         self._usage_log_path = os.environ.get("LSF_MDOCAGENT_USAGE_LOG", "").strip()
+        # Five attempts give the SDK ~7-15s of backoff on transient 429/5xx/timeouts —
+        # a single subprocess in our wrapper has no outer retry, so this is the only
+        # line standing between a flaky API and a lost (doc, query) pair.
+        _MAX_RETRIES = 5
         if self._is_azure:
             self.client = AzureOpenAI(
                 azure_endpoint=os.environ["LSF_MDOCAGENT_AZURE_API_BASE"],
                 api_key=os.environ["OPENAI_API_KEY"],
                 api_version=os.environ["LSF_MDOCAGENT_AZURE_API_VERSION"],
+                max_retries=_MAX_RETRIES,
             )
             self.model = os.environ.get("LSF_MDOCAGENT_AZURE_DEPLOYMENT", self.model)
         else:
             self.client = OpenAI(
                 api_key=os.environ["OPENAI_API_KEY"],
                 base_url=os.environ.get("OPENAI_BASE_URL"),
+                max_retries=_MAX_RETRIES,
             )
 
     def create_ask_message(self, question: str) -> dict[str, Any]:
