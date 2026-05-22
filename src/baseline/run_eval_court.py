@@ -3,7 +3,7 @@
 Supports: agentic_claude_qa_txt, agentic_codex_qa_txt
 
 Output layout:
-    baseline_results/court/<baseline>_<model>/all_docs/
+    baseline_results/court/<baseline>_<model>/single_cluster/all_docs/
         <question_slug>/<doc_name>.json
         summary.json
 
@@ -76,6 +76,10 @@ def main() -> None:
     ap.add_argument("--model",    default="sonnet", help="Model alias (default: sonnet)")
     ap.add_argument("--question-slug", default=None)
     ap.add_argument("--max-docs", type=int, default=None)
+    ap.add_argument("--output-name", default=None,
+                    help="Optional custom output directory name under baseline_results/court/")
+    ap.add_argument("--split-name", default="all_docs",
+                    help="Label written into records and summary rows (default: all_docs)")
     ap.add_argument("--timeout",  type=int, default=300)
     ap.add_argument("--skip-existing",    action="store_true",  default=True)
     ap.add_argument("--no-skip-existing", dest="skip_existing", action="store_false")
@@ -88,11 +92,29 @@ def main() -> None:
     questions   = [q["text"] for q in queries_raw]
     labels: dict = json.loads(LABELS_FILE.read_text(encoding="utf-8"))
 
+    selected_items = sorted(labels.items())
     if args.max_docs:
-        labels = dict(sorted(labels.items())[:args.max_docs])
+        selected_items = selected_items[:args.max_docs]
+        labels = dict(selected_items)
 
-    out_base = _ROOT / "baseline_results" / DATASET / f"{args.baseline}_{args.model}" / "single_cluster" / "all_docs"
+    out_name = args.output_name or f"{args.baseline}_{args.model}/single_cluster/all_docs"
+    out_base = _ROOT / "baseline_results" / DATASET / out_name
     out_base.mkdir(parents=True, exist_ok=True)
+
+    if args.max_docs is not None:
+        metadata = {
+            "baseline": args.baseline,
+            "model": args.model,
+            "split": args.split_name,
+            "output_name": out_name,
+            "question_slug_prefix": args.question_slug,
+            "max_docs": args.max_docs,
+            "selected_docs": [pdf_key.replace(".pdf", "") for pdf_key, _ in selected_items],
+        }
+        (out_base / "run_metadata.json").write_text(
+            json.dumps(metadata, indent=2, ensure_ascii=False) + "\n",
+            encoding="utf-8",
+        )
 
     print(f"baseline={args.baseline}  model={args.model}  questions={len(questions)}  docs={len(labels)}")
     print(f"output={out_base}\n")
@@ -146,6 +168,7 @@ def main() -> None:
                 "doc_name":        doc_name,
                 "question":        question,
                 "question_slug":   slug,
+                "split":           args.split_name,
                 "ground_truth":    ground_truth,
                 "answer":          result.get("answer"),
                 "correct":         correct,
@@ -176,7 +199,7 @@ def main() -> None:
         avg_lat   = round(mean(r["latency_seconds"] for r in per_doc_results), 2)
 
         q_summary = {
-            "question": question, "question_slug": slug, "model": args.model,
+            "question": question, "question_slug": slug, "split": args.split_name, "model": args.model,
             "n": n, "n_correct": n_correct, "accuracy": accuracy,
             "avg_input_tokens": avg_in, "avg_output_tokens": avg_out,
             "avg_latency_seconds": avg_lat,
