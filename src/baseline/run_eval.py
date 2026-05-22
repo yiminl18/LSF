@@ -24,6 +24,7 @@ import argparse
 import importlib
 import inspect
 import json
+import random
 import re
 import sys
 import warnings
@@ -344,6 +345,8 @@ def main() -> None:
                     help="Optional custom output directory name under baseline_results/<dataset>/")
     ap.add_argument("--max-docs", type=int, default=None,
                     help="Run at most N not-yet-completed docs from the selected labels set")
+    ap.add_argument("--seed", type=int, default=0,
+                    help="Random seed for sampling docs when --max-docs is set (default: 0)")
     ap.add_argument("--skip-docs-in", default=None, action="append",
                     help="Path to an existing results dir; skip any doc already run there (repeatable)")
     ap.add_argument("--skip-existing", action="store_true", default=True)
@@ -388,11 +391,19 @@ def main() -> None:
 
     selected_items = sorted(labels.items())
     if args.max_docs is not None:
-        selected_items = [
+        # Filter out completed docs first, then randomly sample max_docs from
+        # the remaining pool with the user-provided seed. We re-sort the
+        # sample alphabetically so iteration order is stable across reruns
+        # with the same seed — the seed only determines *which* docs get
+        # picked, not the order they're processed in.
+        eligible = [
             (pdf_key, doc_labels)
             for pdf_key, doc_labels in selected_items
             if pdf_key.replace(".pdf", "") not in completed_docs
-        ][:args.max_docs]
+        ]
+        rng = random.Random(args.seed)
+        k = min(args.max_docs, len(eligible))
+        selected_items = sorted(rng.sample(eligible, k))
         labels = dict(selected_items)
 
     if args.max_docs is not None:
@@ -406,6 +417,7 @@ def main() -> None:
             "question_slug_prefix": args.question_slug,
             "max_docs": args.max_docs,
             "max_pages": args.max_pages,
+            "seed": args.seed,
             "provider": args.provider,
             "selected_docs": [pdf_key.replace(".pdf", "") for pdf_key, _ in selected_items],
             "completed_docs_skipped": sorted(completed_docs),
