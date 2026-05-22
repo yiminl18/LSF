@@ -1,7 +1,7 @@
 """Zero-cost placeholder model for agents that should not call an LLM.
 
-Used by image_agent in the LSF MDocAgent integration: with retrieval downgraded
-to BM25 over per-page text (ColPali bypassed), the image agent has no
+Used by image_agent in the LSF MDocAgent integration: with retrieval running
+over per-page text only (ColBERT; ColPali bypassed), the image agent has no
 visual-modality signal to add — its inputs are the same pages the text agent
 already saw, just rendered as PNGs. Routing it through this NoOp avoids paying
 for a redundant vision LLM call while preserving the upstream orchestrator's

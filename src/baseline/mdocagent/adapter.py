@@ -27,14 +27,16 @@ The caller passes explicit ``data_dir`` and ``extract_dir``. Convention used by
   contains exactly one sample, so the upstream ``predict_dataset`` loop runs
   on this (doc, question) pair only — no accumulation, no concurrency races.
 
-Retrieval strategy: ColBERT/ColPali is bypassed. When ``rank_bm25`` is
-installed and a non-empty ``query_text`` is given, we BM25-rank all per-page
-TXTs and supply the top-K page indices to the text retrieval key (CPU-only,
-no model download). When BM25 is unavailable we fall back to the first-N
-pages. The image retrieval key is intentionally left empty: the LSF
-integration routes ``image_agent`` to ``NoOpModel`` (see
-``baseline.mdocagent.noop_model``), so populating it would just be a
-misleading duplicate of the text rank.
+Retrieval strategy: ColPali (upstream's vision-side ColBERT) is bypassed and
+the text retriever is pylate's small ColBERT (``answerdotai/answerai-
+colbert-small-v1`` by default, overridable via ``LSF_MDOCAGENT_COLBERT_MODEL``).
+Late-interaction MaxSim handles table-heavy parsed_json far better than
+surface-token BM25 — see the commit history for the officeqa accuracy delta.
+Per-doc embeddings cache to ``<extract_dir>/<doc>.colbert.pt`` keyed by
+``(n_pages, model_id)``; the model itself is a process-wide singleton. The
+image retrieval key is intentionally left empty: the LSF integration routes
+``image_agent`` to ``NoOpModel`` (see ``baseline.mdocagent.noop_model``), so
+populating it would just be a misleading duplicate of the text rank.
 """
 
 from __future__ import annotations
@@ -50,7 +52,7 @@ from typing import Any
 _UPSTREAM_DIR = Path(__file__).parent / "upstream" / "MDocAgent"
 _RENDER_DPI = 144
 
-# Single source of truth for the BM25 top-K page count. The key names mirror
+# Single source of truth for the top-K page count. The key names mirror
 # upstream's retrieval template (``text-top-${retrieval.top_k}-${...}``); we
 # build them with the same K via f-string so changing _R_MAX_PAGES alone keeps
 # both sides aligned. The matching upstream side is the
@@ -61,72 +63,31 @@ _R_MAX_PAGES = 5
 _R_TEXT_KEY = f"text-top-{_R_MAX_PAGES}-question"
 _R_IMAGE_KEY = f"image-top-{_R_MAX_PAGES}-question"
 
-_TOKEN_RE = re.compile(r"[a-z0-9]+")
 
-
-def _tokenize(text: str) -> list[str]:
-    """Lower-case alphanumeric tokenizer used for both the per-page corpus and
-    the query during BM25 ranking. Numbers survive — Treasury Bulletin tables
-    contain a lot of meaningful numeric tokens."""
-    return _TOKEN_RE.findall(text.lower())
-
-
-def _bm25_top_k(
-    extract_dir: Path,
-    doc_name: str,
-    n_pages: int,
-    query_text: str,
-    k: int,
-) -> list[int] | None:
-    """Return the page indices of the top-K BM25 matches for ``query_text``.
-
-    Returns ``None`` if ``rank_bm25`` isn't installed (the caller should fall
-    back to the first-K pages). Pages whose text file is missing or empty
-    contribute an empty token list — they can still be selected if no better
-    page exists, but rank lower than any page with overlapping terms.
-    """
-    try:
-        from rank_bm25 import BM25Okapi  # type: ignore[import]
-    except ImportError:
-        return None
-
-    page_tokens: list[list[str]] = []
-    for page_idx in range(n_pages):
-        txt_file = extract_dir / f"{doc_name}_{page_idx}.txt"
-        try:
-            page_tokens.append(_tokenize(txt_file.read_text(encoding="utf-8")))
-        except OSError:
-            page_tokens.append([])
-
-    # BM25Okapi requires every doc to be non-empty for the IDF computation;
-    # substitute a single placeholder token for empty pages so the indexer
-    # builds, but those pages get a uniform near-zero score.
-    safe_pages = [tokens or ["_empty_"] for tokens in page_tokens]
-    bm25 = BM25Okapi(safe_pages)
-    scores = bm25.get_scores(_tokenize(query_text))
-    ranked = sorted(range(n_pages), key=lambda i: scores[i], reverse=True)
-    return ranked[:k]
-
-
-# pylate ColBERT singleton — loaded lazily so BM25-only runs don't pay the
-# ~50s model load. Reused across all (doc, query) pairs in the parent process
-# (prepare_inputs runs in the run_eval driver, not the subprocess).
+# pylate ColBERT singleton — loaded lazily on the first retrieval call so
+# module-level imports stay cheap. Reused across all (doc, query) pairs in
+# the parent process (prepare_inputs runs in the run_eval driver, not the
+# subprocess).
 _COLBERT_MODEL = None
 
 
 def _get_colbert_model():
-    """Return a cached pylate ColBERT model, or None if pylate isn't installed.
+    """Return the cached pylate ColBERT model. Loads on first call.
 
     Model id is overridable via ``LSF_MDOCAGENT_COLBERT_MODEL`` (defaults to
     ``answerdotai/answerai-colbert-small-v1``, ~100MB, CPU/MPS-friendly).
+    Raises ``ImportError`` with an actionable hint if pylate isn't installed.
     """
     global _COLBERT_MODEL
     if _COLBERT_MODEL is not None:
         return _COLBERT_MODEL
     try:
         from pylate import models  # type: ignore[import]
-    except ImportError:
-        return None
+    except ImportError as exc:
+        raise ImportError(
+            "MDocAgent retrieval requires pylate. Install with: "
+            "uv pip install pylate --python <venv>/bin/python"
+        ) from exc
     model_name = os.environ.get(
         "LSF_MDOCAGENT_COLBERT_MODEL",
         "answerdotai/answerai-colbert-small-v1",
@@ -141,20 +102,16 @@ def _colbert_top_k(
     n_pages: int,
     query_text: str,
     k: int,
-) -> list[int] | None:
+) -> list[int]:
     """Return top-K page indices by ColBERT MaxSim (late-interaction) score.
 
-    Returns ``None`` if pylate isn't importable so the caller can fall back to
-    BM25. Per-doc embeddings are cached to ``<extract_dir>/<doc>.colbert.pt``
-    keyed by ``n_pages``; subsequent queries on the same doc only pay the
-    cheap query-encoding pass (~50ms).
+    Per-doc embeddings are cached to ``<extract_dir>/<doc>.colbert.pt`` keyed
+    by ``(n_pages, model_id)``; subsequent queries on the same doc only pay
+    the cheap query-encoding pass (~50ms).
     """
-    import torch  # local: avoid global torch import for BM25-only runs
+    import torch
 
     model = _get_colbert_model()
-    if model is None:
-        return None
-
     cache_file = extract_dir / f"{doc_name}.colbert.pt"
     doc_embeds = None
     if cache_file.exists():
@@ -245,10 +202,10 @@ def prepare_inputs(
 
     ``data_dir`` is overwritten with a single-sample ``samples.json`` and a
     matching ``sample-with-retrieval-results.json``. ``extract_dir`` is
-    populated with the doc's per-page extracts (cache-aware: existing files are
-    not re-written). When ``query_text`` is non-empty and ``rank_bm25`` is
-    importable, the retrieval keys are populated with the BM25 top-K pages
-    instead of the first K; otherwise it falls back to the first K.
+    populated with the doc's per-page extracts (cache-aware: existing files
+    are not re-written). When ``query_text`` is non-empty, ColBERT ranks all
+    pages and the retrieval keys are populated with its top-K; an empty
+    query short-circuits to the first-K pages (used by test paths).
 
     ``doc_path`` may be a ``.pdf`` (pymupdf path) or a ``.json`` parsed_json
     file (officeqa-style page-element schema). See module docstring for the
@@ -280,26 +237,12 @@ def prepare_inputs(
         )
 
     k = min(top_k, n_pages)
-    page_indices: list[int] | None = None
-    retrieval_mode = "first_k"
     if query_text.strip():
-        # LSF_MDOCAGENT_RETRIEVAL chooses the ranker. "colbert" loads pylate
-        # lazily and falls through to BM25 if pylate isn't importable in this
-        # environment; "bm25" (default) skips ColBERT entirely so BM25-only
-        # users don't pay the import / model-load cost.
-        retriever = os.environ.get("LSF_MDOCAGENT_RETRIEVAL", "bm25").strip().lower()
-        if retriever == "colbert":
-            ranked = _colbert_top_k(extract_dir, doc_name, n_pages, query_text, k)
-            if ranked is not None:
-                page_indices = ranked
-                retrieval_mode = "colbert"
-        if page_indices is None:
-            ranked = _bm25_top_k(extract_dir, doc_name, n_pages, query_text, k)
-            if ranked is not None:
-                page_indices = ranked
-                retrieval_mode = "bm25"
-    if page_indices is None:
+        page_indices = _colbert_top_k(extract_dir, doc_name, n_pages, query_text, k)
+        retrieval_mode = "colbert"
+    else:
         page_indices = list(range(k))
+        retrieval_mode = "first_k"
 
     _write_sample(
         data_dir=data_dir,

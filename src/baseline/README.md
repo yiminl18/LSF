@@ -16,7 +16,7 @@ Each file `agentic_<name>.py` exports a `run_qa(doc_path, question, *, model, ti
 
 Credentials live at `local/azure.json` (gpt-5.4 inline + optional `key_file_cheap` pointer for gpt-5.4-mini). Both files are gitignored.
 
-For MDocAgent: `git submodule update --init src/baseline/mdocagent/upstream/MDocAgent` and run a one-time install (see upstream `install.sh`). BM25 page selection needs `rank-bm25` in the active environment.
+For MDocAgent: `git submodule update --init src/baseline/mdocagent/upstream/MDocAgent` and run a one-time install (see upstream `install.sh`). Retrieval needs `pylate` (ColBERT-small ~100MB on first run).
 
 ## Quick start
 

@@ -195,13 +195,13 @@ def _agent_model_overrides(model_config_name: str) -> list[str]:
     # otherwise resets the env var we cleared in the subprocess shell back to
     # the default "0,1,2,3" before our model code runs.
     #
-    # agents.0 (image_agent) is routed to NoOpModel: with retrieval downgraded
-    # to BM25 text-only, the image path has no visual signal to add (it would
-    # just re-see the same pages as PNG renders). NoOpModel preserves the
-    # hardcoded ``self.agents[0]`` index in upstream/agents/mdoc_agent.py while
-    # skipping the LLM call. agents.2 (general_agent) keeps the LSF model but
-    # switches to a text-only variant — it still drives self_reflect, just
-    # without vision input.
+    # agents.0 (image_agent) is routed to NoOpModel: with retrieval running
+    # over per-page text only (ColBERT), the image path has no visual signal
+    # to add (it would just re-see the same pages as PNG renders). NoOpModel
+    # preserves the hardcoded ``self.agents[0]`` index in
+    # upstream/agents/mdoc_agent.py while skipping the LLM call. agents.2
+    # (general_agent) keeps the LSF model but switches to a text-only variant
+    # — it still drives self_reflect, just without vision input.
     from baseline.mdocagent.adapter import _R_MAX_PAGES as _ADAPTER_MAX_PAGES
     return [
         "mdoc_agent.agents.0.model=noop",
