@@ -66,9 +66,10 @@ _COURT_RAW_DIR          = _ROOT / "datasets" / "court" / "latest" / "raw"
 _OFFICEQA_ROOT             = _ROOT / "data/officeqa"
 _OFFICEQA_QUERIES_FILE     = _OFFICEQA_ROOT / "queries.json"
 _OFFICEQA_ALL_LABELS_FILE  = _OFFICEQA_ROOT / "all_labels.json"
-# officeqa source data ships text only (no PDFs); build_text_pdfs.py synthesises
-# multi-page PDFs from parsed_json so PDF-only baselines (e.g. MDocAgent) work.
-_OFFICEQA_PDF_DIR          = _OFFICEQA_ROOT / "synthesized_pdf"
+# officeqa source data ships parsed_json (per-page element schema) under the
+# repo-external datasets/ tree. MDocAgent's adapter reads .json directly — no
+# PDF synthesis needed since image_agent runs through NoOpModel.
+_OFFICEQA_PARSED_JSON_DIR  = _ROOT / "datasets/officeqa/latest/parsed_json"
 
 
 class DatasetSpec:
@@ -165,7 +166,7 @@ def _load_court(args) -> DatasetSpec:
 
 
 def _load_officeqa(args) -> DatasetSpec:
-    """Load officeqa labels; PDF-only baselines look up synthesized PDFs.
+    """Load officeqa labels; MDocAgent ingests parsed_json directly.
 
     Honours ``--labels-file`` (e.g. plan-D subsets at
     ``data/officeqa/all_labels_planD.json``). Questions are intersected with
@@ -191,7 +192,7 @@ def _load_officeqa(args) -> DatasetSpec:
     questions = [q["text"] for q in queries if q["text"] in present_questions]
 
     def doc_path_for(doc_name: str) -> Path:
-        return _OFFICEQA_PDF_DIR / f"{doc_name}.pdf"
+        return _OFFICEQA_PARSED_JSON_DIR / f"{doc_name}.json"
 
     return DatasetSpec(
         name="officeqa",
@@ -199,6 +200,9 @@ def _load_officeqa(args) -> DatasetSpec:
         labels=labels,
         doc_path_for=doc_path_for,
         labels_file_path=labels_path,
+        # "pdf" gates non-PDF-aware baselines from this dataset via the
+        # SUPPORTS_PDF_INPUT check; mdocagent declares it and accepts both
+        # .pdf and .json inputs via the adapter dispatch.
         doc_kind="pdf",
     )
 

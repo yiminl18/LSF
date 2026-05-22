@@ -1,16 +1,27 @@
-"""Adapter: render PDF pages and write MDocAgent's expected sample layout.
+"""Adapter: extract per-page text from PDF or parsed_json and write
+MDocAgent's expected sample layout.
 
 MDocAgent's ``BaseDataset`` (mydatasets/base_dataset.py) reads:
-    extract_path/<doc_name>_<page_idx>.png   -- 0-indexed PNG
+    extract_path/<doc_name>_<page_idx>.png   -- 0-indexed PNG (existence-checked only)
     extract_path/<doc_name>_<page_idx>.txt   -- 0-indexed per-page text
     data_dir/samples.json                    -- list of sample dicts
     data_dir/sample-with-retrieval-results.json  -- samples + retrieval keys
+
+Input dispatch (by file suffix in ``doc_path``):
+- ``.pdf``: pymupdf renders one PNG per page and ``page.get_text("text")``
+  per page TXT.
+- ``.json``: parsed_json schema (``data["document"]["elements"]`` grouped by
+  ``bbox[0].page_id``). We write the per-page TXT directly from that, plus a
+  51-byte 1x1 placeholder PNG per page — upstream uses PNG file existence at
+  ``base_dataset.py:132`` as a page-loop terminator, but the bytes are never
+  loaded (image_agent runs through NoOpModel and ``disable_load_image=True``
+  on the read path).
 
 The caller passes explicit ``data_dir`` and ``extract_dir``. Convention used by
 ``baseline.agentic_mdocagent``:
 
 - ``extract_dir`` is SHARED across calls (`<upstream>/tmp/lsf/`), since the
-  page renders are deterministic per ``(doc_name, page_idx)`` and benefit from
+  page extracts are deterministic per ``(doc_name, page_idx)`` and benefit from
   caching across queries on the same doc.
 - ``data_dir`` is PER-CALL (`<upstream>/data/run-<run_name>/`) and always
   contains exactly one sample, so the upstream ``predict_dataset`` loop runs
@@ -22,16 +33,17 @@ TXTs and supply the top-K page indices to the text retrieval key (CPU-only,
 no model download). When BM25 is unavailable we fall back to the first-N
 pages. The image retrieval key is intentionally left empty: the LSF
 integration routes ``image_agent`` to ``NoOpModel`` (see
-``baseline.mdocagent.noop_model``), so populating image-top-10 would just be
-a misleading duplicate of the text rank. The "top-10" key name mirrors
-upstream's ``top_k=10`` retrieval config.
+``baseline.mdocagent.noop_model``), so populating it would just be a
+misleading duplicate of the text rank.
 """
 
 from __future__ import annotations
 
+import base64
 import json
 import os
 import re
+from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
@@ -98,18 +110,29 @@ def _bm25_top_k(
 
 _UNSAFE_DOC_NAME_RE = re.compile(r"[^A-Za-z0-9_.-]")
 
+# Minimal valid 1x1 transparent PNG. Upstream's base_dataset.py:132 page loop
+# terminates on the first missing ``<doc>_<page>.png`` — so the parsed_json
+# extraction path writes this sentinel per page to satisfy that existence
+# check. The bytes are never decoded: image_agent runs through NoOpModel and
+# upstream's read path uses ``disable_load_image=True``, so ``load_image()``
+# is never invoked.
+_PLACEHOLDER_PNG_BYTES = base64.b64decode(
+    "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
+)
+
 
 def _doc_name_from_doc_id(doc_id: str) -> str:
-    """Strip ``.pdf``, take the basename, and replace any chars that aren't
-    safe in filenames or Hydra interpolation. Upstream's BaseDataset uses
-    ``doc_id`` raw to build PNG/TXT paths, so this prefix must survive shells,
-    POSIX filesystems, and OmegaConf ``${...}`` evaluation."""
-    raw = Path(re.sub(r"\.pdf$", "", doc_id, flags=re.IGNORECASE)).name
+    """Strip ``.pdf`` or ``.json``, take the basename, and replace any chars
+    that aren't safe in filenames or Hydra interpolation. Upstream's
+    BaseDataset uses ``doc_id`` raw to build PNG/TXT paths, so this prefix
+    must survive shells, POSIX filesystems, and OmegaConf ``${...}``
+    evaluation."""
+    raw = Path(re.sub(r"\.(pdf|json)$", "", doc_id, flags=re.IGNORECASE)).name
     return _UNSAFE_DOC_NAME_RE.sub("_", raw)
 
 
 def prepare_inputs(
-    pdf_path: Path | str,
+    doc_path: Path | str,
     doc_id: str,
     *,
     data_dir: Path,
@@ -123,26 +146,39 @@ def prepare_inputs(
 
     ``data_dir`` is overwritten with a single-sample ``samples.json`` and a
     matching ``sample-with-retrieval-results.json``. ``extract_dir`` is
-    populated with the doc's page renders (cache-aware: existing files are
-    not re-rendered). When ``query_text`` is non-empty and ``rank_bm25`` is
+    populated with the doc's per-page extracts (cache-aware: existing files are
+    not re-written). When ``query_text`` is non-empty and ``rank_bm25`` is
     importable, the retrieval keys are populated with the BM25 top-K pages
     instead of the first K; otherwise it falls back to the first K.
+
+    ``doc_path`` may be a ``.pdf`` (pymupdf path) or a ``.json`` parsed_json
+    file (officeqa-style page-element schema). See module docstring for the
+    dispatch contract.
     """
-    pdf_path = Path(pdf_path)
-    if not pdf_path.exists():
-        raise FileNotFoundError(f"PDF not found for MDocAgent prep: {pdf_path}")
+    doc_path = Path(doc_path)
+    if not doc_path.exists():
+        raise FileNotFoundError(f"Source not found for MDocAgent prep: {doc_path}")
 
     data_dir.mkdir(parents=True, exist_ok=True)
     extract_dir.mkdir(parents=True, exist_ok=True)
 
     doc_name = _doc_name_from_doc_id(doc_id)
     # The samples.json doc_id is what upstream's BaseDataset.EXTRACT_DOCUMENT_ID
-    # parses back into the PNG/TXT filename prefix; it must match ``doc_name``
-    # exactly, so use the sanitised form here too.
+    # parses (regex-stripping ``.pdf``) back into the PNG/TXT filename prefix.
+    # We always emit a ``.pdf`` suffix here regardless of the actual input
+    # source so upstream's strip produces the right doc_name.
     sanitized_doc_id = f"{doc_name}.pdf"
     sample_id = f"{query_idx}_{doc_name}"
 
-    n_pages = _render_pages(pdf_path, doc_name, extract_dir, max_pages=max_pages)
+    suffix = doc_path.suffix.lower()
+    if suffix == ".pdf":
+        n_pages = _extract_pages_from_pdf(doc_path, doc_name, extract_dir, max_pages=max_pages)
+    elif suffix == ".json":
+        n_pages = _extract_pages_from_parsed_json(doc_path, doc_name, extract_dir, max_pages=max_pages)
+    else:
+        raise ValueError(
+            f"Unsupported doc_path suffix {doc_path.suffix!r}; expected .pdf or .json"
+        )
 
     k = min(top_k, n_pages)
     page_indices: list[int] | None = None
@@ -198,7 +234,7 @@ def _atomic_write_text(target: Path, text: str) -> None:
     _atomic_write_bytes(target, text.encode("utf-8"))
 
 
-def _render_pages(
+def _extract_pages_from_pdf(
     pdf_path: Path,
     doc_name: str,
     extract_path: Path,
@@ -227,6 +263,59 @@ def _render_pages(
             if not txt_file.exists():
                 _atomic_write_text(txt_file, page.get_text("text"))
             n_pages += 1
+    return n_pages
+
+
+def _extract_pages_from_parsed_json(
+    parsed_path: Path,
+    doc_name: str,
+    extract_path: Path,
+    max_pages: int | None,
+) -> int:
+    """Extract per-page text from an officeqa-style parsed_json file.
+
+    Groups ``data["document"]["elements"]`` by ``el["bbox"][0]["page_id"]``
+    (1-indexed in the source) and writes ``<doc_name>_<page_idx>.txt`` with
+    0-indexed page_idx, mirroring the PDF flow's filename convention. Also
+    writes a 1x1 placeholder PNG per page — see ``_PLACEHOLDER_PNG_BYTES``
+    for why upstream needs the PNG to exist.
+
+    Returns the number of pages written.
+    """
+    data = json.loads(parsed_path.read_text(encoding="utf-8"))
+    elements = data.get("document", {}).get("elements", [])
+    pages: dict[int, list[str]] = defaultdict(list)
+    for el in elements:
+        content = el.get("content")
+        if not content:
+            continue
+        bbox_list = el.get("bbox") or []
+        if not bbox_list:
+            continue
+        page_id = bbox_list[0].get("page_id")
+        if page_id is None:
+            continue
+        pages[page_id].append(str(content))
+    if not pages:
+        raise RuntimeError(f"No page-tagged text extracted from {parsed_path}")
+
+    sorted_page_ids = sorted(pages.keys())
+    effective = (
+        min(len(sorted_page_ids), max_pages)
+        if max_pages is not None
+        else len(sorted_page_ids)
+    )
+
+    n_pages = 0
+    for page_idx in range(effective):
+        page_id = sorted_page_ids[page_idx]
+        txt_file = extract_path / f"{doc_name}_{page_idx}.txt"
+        if not txt_file.exists():
+            _atomic_write_text(txt_file, "\n".join(pages[page_id]))
+        img_file = extract_path / f"{doc_name}_{page_idx}.png"
+        if not img_file.exists():
+            _atomic_write_bytes(img_file, _PLACEHOLDER_PNG_BYTES)
+        n_pages += 1
     return n_pages
 
 

@@ -73,23 +73,33 @@ _PDF_DIR_DEFAULTS: dict[str, Path] = {
 }
 
 # Each run_qa call gets its OWN data_dir under upstream/data/run-<run_name>/, so
-# samples.json is never shared. The extract_dir (PDF→PNG renders) IS shared and
-# keyed by doc_name; concurrent writes for the same page would just race on
-# identical bytes, which is harmless.
+# samples.json is never shared. The extract_dir (per-page TXT extracts; see
+# adapter._extract_pages_from_pdf / _extract_pages_from_parsed_json) IS shared
+# and keyed by doc_name; concurrent writes for the same page would just race
+# on identical bytes, which is harmless.
 
 
 def _resolve_model(model: str) -> str:
     return _MODEL_ALIASES.get(model, model)
 
 
-def _resolve_pdf_path(doc_path: Path, pdf_dir: Path | None) -> Path:
-    """Map either a PDF path (returned as-is) or a reconstructed JSON path
-    (-> ``<pdf_dir>/<doc_stem>.pdf``) to a PDF on disk.
+def _resolve_doc_path(doc_path: Path, pdf_dir: Path | None) -> Path:
+    """Resolve to a path the adapter can ingest (``.pdf`` or ``.json``).
 
-    When ``pdf_dir`` is not given, the default lookup order is the financebench
-    raw dir then the nopv raw dir.
+    Dispatch:
+    - ``.pdf``: returned as-is.
+    - ``.json`` that exists on disk: returned as-is (parsed_json source, e.g.
+      officeqa's ``datasets/officeqa/latest/parsed_json/<doc>.json``).
+    - ``_reconstructed.json`` whose direct path doesn't exist: strip the
+      ``_reconstructed`` suffix and look up the matching ``.pdf`` under
+      ``pdf_dir`` then ``_PDF_DIR_DEFAULTS`` (financebench-era flow).
+
+    Raises ``FileNotFoundError`` if no candidate resolves.
     """
     if doc_path.suffix.lower() == ".pdf":
+        return doc_path
+
+    if doc_path.suffix.lower() == ".json" and doc_path.exists():
         return doc_path
 
     doc_stem = re.sub(r"_reconstructed$", "", doc_path.stem)
@@ -105,7 +115,7 @@ def _resolve_pdf_path(doc_path: Path, pdf_dir: Path | None) -> Path:
             return candidate
 
     raise FileNotFoundError(
-        f"No PDF found for doc_stem={doc_stem!r}. Searched: "
+        f"No PDF or parsed_json found for doc_path={doc_path!r}. Searched: "
         + ", ".join(str(d) for d in ([pdf_dir] if pdf_dir else []) + list(_PDF_DIR_DEFAULTS.values()))
     )
 
@@ -394,7 +404,7 @@ def run_qa(
         }
 
     try:
-        pdf = _resolve_pdf_path(Path(doc_path), Path(pdf_dir) if pdf_dir else None)
+        source = _resolve_doc_path(Path(doc_path), Path(pdf_dir) if pdf_dir else None)
     except FileNotFoundError as exc:
         return {
             "status": "error",
@@ -407,7 +417,7 @@ def run_qa(
             "error_message": str(exc),
         }
 
-    doc_id = pdf.name
+    doc_id = source.name
     safe_doc = re.sub(r"[^a-zA-Z0-9_-]", "_", _doc_name_from_doc_id(doc_id))
     run_name = f"lsf-q{query_idx}-{safe_doc}-{uuid.uuid4().hex[:6]}"
 
@@ -420,7 +430,7 @@ def run_qa(
 
     model_config_name = _model_config_name(resolved_model)
 
-    # Per-run private sample dir, shared cache dir for page renders.
+    # Per-run private sample dir, shared cache dir for page extracts.
     data_dir = _UPSTREAM_DIR / "data" / f"run-{run_name}"
     extract_dir = _UPSTREAM_DIR / "tmp" / _UPSTREAM_DATASET_NAME
     # Hydra paths are interpreted relative to the subprocess cwd (= _UPSTREAM_DIR),
@@ -435,7 +445,7 @@ def run_qa(
         generate_noop_model_config()
         generate_lsf_openai_model_config(resolved_model, config_name=model_config_name)
         info = prepare_inputs(
-            pdf,
+            source,
             doc_id=doc_id,
             data_dir=data_dir,
             extract_dir=extract_dir,
