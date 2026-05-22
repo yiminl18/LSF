@@ -9,6 +9,7 @@ Output layout:
 
 Usage:
     python src/baseline/run_eval_nopv.py --baseline agentic_codex_qa_txt --model gpt54 --max-docs 50
+    python src/baseline/run_eval_nopv.py --baseline agentic_codex_qa_txt --model gpt54 --start-doc 50 --max-docs 50
 """
 
 from __future__ import annotations
@@ -78,6 +79,7 @@ def main() -> None:
     )
     ap.add_argument("--model", default="sonnet", help="Model alias (default: sonnet)")
     ap.add_argument("--question-slug", default=None)
+    ap.add_argument("--start-doc", type=int, default=0, help="0-based starting doc offset after sorting labels")
     ap.add_argument("--max-docs", type=int, default=None)
     ap.add_argument(
         "--output-name",
@@ -102,9 +104,11 @@ def main() -> None:
     labels: dict = json.loads(LABELS_FILE.read_text(encoding="utf-8"))
 
     selected_items = sorted(labels.items())
+    if args.start_doc:
+        selected_items = selected_items[args.start_doc :]
     if args.max_docs:
         selected_items = selected_items[: args.max_docs]
-        labels = dict(selected_items)
+    labels = dict(selected_items)
 
     out_name = args.output_name or f"{args.baseline}_{args.model}/single_cluster/all_docs"
     out_base = _ROOT / "baseline_results" / DATASET / out_name
@@ -117,6 +121,7 @@ def main() -> None:
             "split": args.split_name,
             "output_name": out_name,
             "question_slug_prefix": args.question_slug,
+            "start_doc": args.start_doc,
             "max_docs": args.max_docs,
             "selected_docs": [pdf_key.replace(".pdf", "") for pdf_key, _ in selected_items],
         }
