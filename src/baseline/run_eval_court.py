@@ -1,13 +1,16 @@
-"""Run agentic Codex QA baseline on the court dataset.
+"""Run QA baselines on the court dataset (plain-text docs).
+
+Supports: agentic_claude_qa_txt, agentic_codex_qa_txt
 
 Output layout:
-    baseline_results/court/agentic_codex_qa_<model>/all_docs/
+    baseline_results/court/<baseline>_<model>/all_docs/
         <question_slug>/<doc_name>.json
         summary.json
 
 Usage:
-    python src/baseline/run_eval_court.py --model gpt54
-    python src/baseline/run_eval_court.py --model gpt54mini
+    python src/baseline/run_eval_court.py --baseline agentic_claude_qa_txt --model sonnet --max-docs 50
+    python src/baseline/run_eval_court.py --baseline agentic_claude_qa_txt --model opus47 --max-docs 50
+    python src/baseline/run_eval_court.py --baseline agentic_codex_qa_txt  --model gpt54  --max-docs 50
 """
 
 from __future__ import annotations
@@ -16,11 +19,7 @@ import argparse
 import importlib
 import json
 import re
-import shutil
-import subprocess
 import sys
-import tempfile
-import time
 import warnings
 from pathlib import Path
 from statistics import mean
@@ -28,38 +27,10 @@ from statistics import mean
 _ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(_ROOT / "src"))
 
-DATASET       = "court"
-QUERIES_FILE  = _ROOT / "data/court/queries.json"
-TEXT_DIR      = _ROOT / "data/court/text"
-LABELS_FILE   = _ROOT / "data/court/all_labels.json"
-
-_MODEL_ALIASES: dict[str, str] = {
-    "gpt54":     "gpt-5.4",
-    "gpt54mini": "gpt-5.4-mini",
-}
-
-_AGENT_PROMPT_TEMPLATE = """\
-Answer the following question about the document at the path below.
-
-QUESTION : {question}
-DOCUMENT : {doc_path}
-
-You are running as a Codex agent. Use your default tools to read DOCUMENT.
-It is a plain-text file containing the full text of a court filing.
-
-Steps:
-1. Read and search the document as needed.
-2. Locate the shortest document-supported answer to QUESTION.
-3. Output exactly one line:
-   AGENTIC_QA_DONE answer=<your answer>
-
-Rules:
-- Give a short, direct answer (a name, date, number, etc.) with no explanation.
-- If the answer is not found in the document, output:
-  AGENTIC_QA_DONE answer=NOT_FOUND
-- Do not edit files.
-- Do not output anything else after the AGENTIC_QA_DONE line.
-"""
+DATASET      = "court"
+QUERIES_FILE = _ROOT / "data/court/queries.json"
+TEXT_DIR     = _ROOT / "data/court/text"
+LABELS_FILE  = _ROOT / "data/court/all_labels.json"
 
 _JUDGE_SYSTEM = """\
 You are an answer equivalence judge for a legal document QA system.
@@ -76,111 +47,6 @@ def _make_slug(q: str) -> str:
     s = re.sub(r"[^\w\s]", "", s)
     s = re.sub(r"\s+", "_", s)
     return s[:60]
-
-
-def _parse_answer(text: str) -> str | None:
-    for line in text.splitlines():
-        line = line.strip()
-        if line.startswith("AGENTIC_QA_DONE"):
-            rest = line[len("AGENTIC_QA_DONE"):].strip()
-            if rest.startswith("answer="):
-                return rest[len("answer="):].strip()
-    return None
-
-
-def _parse_codex_events(jsonl_text: str) -> dict:
-    usage: dict[str, int] = {}
-    thread_id = None
-    error_message = None
-    event_count = 0
-    for raw_line in jsonl_text.splitlines():
-        raw_line = raw_line.strip()
-        if not raw_line:
-            continue
-        try:
-            event = json.loads(raw_line)
-        except json.JSONDecodeError:
-            continue
-        event_count += 1
-        if event.get("type") == "thread.started":
-            thread_id = event.get("thread_id")
-        elif event.get("type") == "turn.completed":
-            usage = event.get("usage") or {}
-        elif event.get("type") in {"error", "turn.failed"}:
-            error_message = event.get("message") or str(event.get("error") or "")
-    return {"usage": usage, "thread_id": thread_id, "error_message": error_message, "event_count": event_count}
-
-
-def _run_codex(doc_path: Path, question: str, model: str, timeout: int, log_dir: Path | None, log_stem: str | None) -> dict:
-    codex_bin = shutil.which("codex")
-    resolved_model = _MODEL_ALIASES.get(model, model)
-    if not codex_bin:
-        return {"status": "error", "answer": None, "input_tokens": 0, "output_tokens": 0,
-                "latency_seconds": 0.0, "model": resolved_model, "error_message": "codex CLI not found"}
-
-    prompt = _AGENT_PROMPT_TEMPLATE.format(question=question, doc_path=str(doc_path.resolve()))
-
-    log_path = last_message_path = None
-    if log_dir and log_stem:
-        log_dir.mkdir(parents=True, exist_ok=True)
-        log_path = log_dir / f"{log_stem}.codex.jsonl"
-        last_message_path = log_dir / f"{log_stem}.codex.last.txt"
-
-    with tempfile.NamedTemporaryFile("w+", delete=False) as tmp:
-        tmp_last_path = Path(tmp.name)
-
-    cmd = [
-        codex_bin, "--ask-for-approval", "never", "exec",
-        "--json", "--color", "never", "--model", resolved_model,
-        "--cd", str(_ROOT), "--sandbox", "danger-full-access",
-        "--output-last-message", str(tmp_last_path), prompt,
-    ]
-
-    t0 = time.time()
-    try:
-        res = subprocess.run(cmd, input="", capture_output=True, text=True, cwd=str(_ROOT), timeout=timeout)
-    except subprocess.TimeoutExpired:
-        tmp_last_path.unlink(missing_ok=True)
-        return {"status": "timeout", "answer": None, "input_tokens": 0, "output_tokens": 0,
-                "latency_seconds": round(time.time() - t0, 2), "model": resolved_model}
-
-    latency = round(time.time() - t0, 2)
-    jsonl_text = res.stdout or ""
-    last_text = ""
-    try:
-        last_text = tmp_last_path.read_text(encoding="utf-8", errors="replace")
-    finally:
-        tmp_last_path.unlink(missing_ok=True)
-
-    if log_path:
-        log_path.write_text(jsonl_text, encoding="utf-8")
-    if last_message_path:
-        last_message_path.write_text(last_text, encoding="utf-8")
-
-    parsed = _parse_codex_events(jsonl_text)
-    usage = parsed["usage"]
-    answer = _parse_answer(last_text) or _parse_answer(jsonl_text)
-
-    cached = int(usage.get("cached_input_tokens") or 0)
-    input_tokens = int(usage.get("input_tokens") or 0) + cached
-    output_tokens = int(usage.get("output_tokens") or 0)
-
-    return {
-        "status": "ok" if res.returncode == 0 else f"exit_{res.returncode}",
-        "answer": answer,
-        "input_tokens": input_tokens,
-        "output_tokens": output_tokens,
-        "latency_seconds": latency,
-        "model": resolved_model,
-        "cached_input_tokens": cached,
-        "reasoning_output_tokens": int(usage.get("reasoning_output_tokens") or 0),
-        "codex_thread_id": parsed["thread_id"],
-        "codex_event_count": parsed["event_count"],
-        "codex_error_message": parsed["error_message"],
-        "codex_log_path": str(log_path.relative_to(_ROOT)) if log_path else None,
-        "codex_last_message_path": str(last_message_path.relative_to(_ROOT)) if last_message_path else None,
-        "stderr": (res.stderr or "")[:500],
-    }
 
 
 def _judge(question: str, ground_truth, predicted, gpt54_mod) -> bool:
@@ -205,29 +71,31 @@ def _judge(question: str, ground_truth, predicted, gpt54_mod) -> bool:
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--model", default="gpt54", help="gpt54 or gpt54mini")
+    ap.add_argument("--baseline", default="agentic_claude_qa_txt",
+                    help="Module under src/baseline/ (default: agentic_claude_qa_txt)")
+    ap.add_argument("--model",    default="sonnet", help="Model alias (default: sonnet)")
     ap.add_argument("--question-slug", default=None)
-    ap.add_argument("--timeout", type=int, default=300)
     ap.add_argument("--max-docs", type=int, default=None)
-    ap.add_argument("--skip-existing", action="store_true", default=True)
+    ap.add_argument("--timeout",  type=int, default=300)
+    ap.add_argument("--skip-existing",    action="store_true",  default=True)
     ap.add_argument("--no-skip-existing", dest="skip_existing", action="store_false")
     args = ap.parse_args()
 
-    gpt54_mod = importlib.import_module("models.gpt54")
+    baseline_mod = importlib.import_module(f"baseline.{args.baseline}")
+    gpt54_mod    = importlib.import_module("models.gpt54")
 
     queries_raw = json.loads(QUERIES_FILE.read_text(encoding="utf-8"))
-    questions = [q["text"] for q in queries_raw]
+    questions   = [q["text"] for q in queries_raw]
     labels: dict = json.loads(LABELS_FILE.read_text(encoding="utf-8"))
 
-    out_base = _ROOT / "baseline_results" / DATASET / f"agentic_codex_qa_{args.model}" / "all_docs"
+    if args.max_docs:
+        labels = dict(sorted(labels.items())[:args.max_docs])
+
+    out_base = _ROOT / "baseline_results" / DATASET / f"{args.baseline}_{args.model}" / "all_docs"
     out_base.mkdir(parents=True, exist_ok=True)
 
-    if args.max_docs:
-        items = sorted(labels.items())[:args.max_docs]
-        labels = dict(items)
-
-    print(f"model={args.model}  questions={len(questions)}  docs={len(labels)}  output={out_base}")
-    print()
+    print(f"baseline={args.baseline}  model={args.model}  questions={len(questions)}  docs={len(labels)}")
+    print(f"output={out_base}\n")
 
     all_summaries: list[dict] = []
 
@@ -259,8 +127,14 @@ def main() -> None:
             ground_truth = doc_labels.get(question)
 
             try:
-                result = _run_codex(doc_path, question, args.model, args.timeout,
-                                    log_dir=q_dir / "logs", log_stem=doc_name)
+                result = baseline_mod.run_qa(
+                    doc_path=doc_path,
+                    question=question,
+                    model=args.model,
+                    timeout=args.timeout,
+                    log_dir=q_dir / "logs",
+                    log_stem=doc_name,
+                )
             except Exception as e:
                 print(f"  ERROR {doc_name}: {e}")
                 result = {"status": "error", "answer": None, "input_tokens": 0,
@@ -279,6 +153,7 @@ def main() -> None:
                 "input_tokens":    result.get("input_tokens", 0),
                 "output_tokens":   result.get("output_tokens", 0),
                 "latency_seconds": result.get("latency_seconds", 0.0),
+                "total_cost_usd":  result.get("total_cost_usd"),
                 "model":           result.get("model", args.model),
             }
             for k, v in result.items():
@@ -288,7 +163,7 @@ def main() -> None:
             out_file.write_text(json.dumps(record, indent=2, ensure_ascii=False), encoding="utf-8")
             per_doc_results.append(record)
             status = "✓" if correct else "✗"
-            print(f"  {status} {doc_name}: {record['answer']!r}  in={record['input_tokens']}  lat={record['latency_seconds']:.1f}s")
+            print(f"  {status} {doc_name:<55} {record['answer']!r}  in={record['input_tokens']}  lat={record['latency_seconds']:.1f}s")
 
         if not per_doc_results:
             continue
@@ -303,7 +178,8 @@ def main() -> None:
         q_summary = {
             "question": question, "question_slug": slug, "model": args.model,
             "n": n, "n_correct": n_correct, "accuracy": accuracy,
-            "avg_input_tokens": avg_in, "avg_output_tokens": avg_out, "avg_latency_seconds": avg_lat,
+            "avg_input_tokens": avg_in, "avg_output_tokens": avg_out,
+            "avg_latency_seconds": avg_lat,
         }
         all_summaries.append(q_summary)
         print(f"\nQuestion: {question[:70]}")
