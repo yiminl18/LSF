@@ -8,7 +8,6 @@ Each file `agentic_<name>.py` exports a `run_qa(doc_path, question, *, model, ti
 | --- | --- | --- |
 | `agentic_codex_qa` | reconstructed JSON | Codex CLI agent |
 | `agentic_claude_qa` | reconstructed JSON | Claude API agent |
-| `agentic_deepread` | PDF | OCR + locate/read baseline adapted from chiyu-dev DeepRead, caches OCR under `.cache/deepread_ocr/` |
 | `agentic_mdocagent` | PDF | Multi-modal multi-agent ([arXiv:2503.13964](https://arxiv.org/abs/2503.13964)), runs the upstream submodule in `mdocagent/upstream/MDocAgent/` as a subprocess |
 
 `run_eval.py` auto-discovers a baseline via `--baseline <module_name>`. PDF-only baselines must export `SUPPORTS_PDF_INPUT = True`.
@@ -17,9 +16,7 @@ Each file `agentic_<name>.py` exports a `run_qa(doc_path, question, *, model, ti
 
 Credentials live at `local/azure.json` (gpt-5.4 inline + optional `key_file_cheap` pointer for gpt-5.4-mini). Both files are gitignored.
 
-For MDocAgent: `git submodule update --init src/baseline/mdocagent/upstream/MDocAgent` and run a one-time install (see upstream `install.sh`).
-
-For DeepRead: install `pypdfium2`, `pypdf`, `scikit-learn`, `numpy`, and `Pillow` in the active environment. OCR uses `gpt-5.4-mini` by default unless `--ocr-model` is passed.
+For MDocAgent: `git submodule update --init src/baseline/mdocagent/upstream/MDocAgent` and run a one-time install (see upstream `install.sh`). BM25 page selection needs `rank-bm25` in the active environment.
 
 ## Quick start
 
@@ -30,14 +27,6 @@ $ENV src/baseline/agentic_mdocagent.py \
     --doc data/nopv/raw/<doc>.pdf \
     --question "On what date was this Notice issued?" \
     --model gpt54mini
-```
-
-```bash
-$ENV src/baseline/agentic_deepread.py \
-    --doc data/nopv/raw/<doc>.pdf \
-    --question "On what date was this Notice issued?" \
-    --model gpt54mini \
-    --max-pages 3
 ```
 
 **Batch sweep** — every (doc, question) pair, judged, persisted:
@@ -60,8 +49,6 @@ Common flags:
 | `--split` | `sampled` / `unsampled` (financebench only) | `sampled` |
 | `--max-docs N` | alphabetically first N docs not yet completed | all |
 | `--max-pages N` | cap PDF pages for baselines that support it | all |
-| `--ocr-model MODEL` | DeepRead OCR model override | `gpt-5.4-mini` |
-| `--ocr-provider NAME` | DeepRead OCR provider override | `azure` |
 | `--question-slug PREFIX` | run only questions whose slug starts with PREFIX | all |
 | `--timeout SEC` | per (doc, q) subprocess cap | 300 |
 | `--no-skip-existing` | force re-run docs that have a saved JSON | off |
@@ -79,8 +66,7 @@ baseline_results/<dataset>/<baseline>_<model>/
     ├── <doc_name>.json              # one (doc, q) record (answer, correct, all telemetry)
     └── logs/
         ├── <doc_name>.mdocagent.log         # subprocess stdout/stderr (mdocagent only)
-        ├── <doc_name>.mdocagent.jsonl       # per-agent-call token/cost (mdocagent only)
-        └── <doc_name>.deepread.json         # retrieve/read trace (deepread only)
+        └── <doc_name>.mdocagent.jsonl       # per-agent-call token/cost (mdocagent only)
 ```
 
 Each per-doc record splits gen / judge / total cost & latency:
@@ -101,9 +87,8 @@ Each per-doc record splits gen / judge / total cost & latency:
 | Symptom | Likely cause | Fix |
 | --- | --- | --- |
 | `Azure deployment name missing` | mini key file lacks `deployment:` | add `deployment: gpt-5.4-mini` to `local/azure_gpt54mini.txt` |
-| `does not declare SUPPORTS_PDF_INPUT` | tried codex/claude on nopv | nopv is PDF-only — use `agentic_mdocagent` or `agentic_deepread` |
+| `does not declare SUPPORTS_PDF_INPUT` | tried codex/claude on nopv | nopv is PDF-only — use `agentic_mdocagent` |
 | `MDocAgent upstream not initialised` | submodule not cloned | `git submodule update --init src/baseline/mdocagent/upstream/MDocAgent` |
-| DeepRead OCR imports fail | OCR dependencies missing | install `pypdfium2 pypdf scikit-learn numpy Pillow` in `$ENV` |
 | `nopv labels not found at all_labels.json` | GT not generated | run `data/nopv/generate_labels.py [--max-docs N]` |
 | subprocess `timeout` status | default 300s too tight | pass `--timeout 900` |
 | leftover `src/baseline/mdocagent/upstream/MDocAgent/data/run-*` | a previous mdocagent run failed/timed out (kept for debugging) | `rm -rf` them when done debugging |

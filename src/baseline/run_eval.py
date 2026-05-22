@@ -13,10 +13,6 @@ Usage:
     python src/baseline/run_eval.py --baseline agentic_mdocagent --model gpt54 --dataset nopv \
         --max-docs 3
 
-    # DeepRead on nopv, capped to first 3 pages for a cheap smoke
-    python src/baseline/run_eval.py --baseline agentic_deepread --model gpt54mini --dataset nopv \
-        --max-docs 1 --max-pages 3
-
     # Single question (by slug prefix)
     python src/baseline/run_eval.py --baseline agentic_claude_qa --model opus47 --split sampled \
         --question-slug what_is_the_registrants_telephone_number
@@ -59,6 +55,19 @@ _NOPV_ROOT             = _ROOT / "data/nopv"
 _NOPV_QUERIES_FILE     = _NOPV_ROOT / "queries.json"
 _NOPV_RAW_DIR          = _NOPV_ROOT / "raw"
 _NOPV_ALL_LABELS_FILE  = _NOPV_ROOT / "all_labels.json"
+
+_COURT_ROOT             = _ROOT / "data/court"
+_COURT_QUERIES_FILE     = _COURT_ROOT / "queries.json"
+_COURT_ALL_LABELS_FILE  = _COURT_ROOT / "all_labels.json"
+# Court PDFs live under datasets/, not data/, so they can be browsed independently of labels.
+_COURT_RAW_DIR          = _ROOT / "datasets" / "court" / "latest" / "raw"
+
+_OFFICEQA_ROOT             = _ROOT / "data/officeqa"
+_OFFICEQA_QUERIES_FILE     = _OFFICEQA_ROOT / "queries.json"
+_OFFICEQA_ALL_LABELS_FILE  = _OFFICEQA_ROOT / "all_labels.json"
+# officeqa source data ships text only (no PDFs); build_text_pdfs.py synthesises
+# multi-page PDFs from parsed_json so PDF-only baselines (e.g. MDocAgent) work.
+_OFFICEQA_PDF_DIR          = _OFFICEQA_ROOT / "synthesized_pdf"
 
 
 class DatasetSpec:
@@ -129,9 +138,75 @@ def _load_nopv(args) -> DatasetSpec:
     )
 
 
+def _load_court(args) -> DatasetSpec:
+    """Load court labels (PDF-only baselines look up raw PDFs under datasets/court/)."""
+    queries: list[dict] = json.loads(_COURT_QUERIES_FILE.read_text(encoding="utf-8"))
+    questions = [q["text"] for q in queries]
+
+    if not _COURT_ALL_LABELS_FILE.exists():
+        raise FileNotFoundError(
+            f"court labels not found at {_COURT_ALL_LABELS_FILE}. "
+            "Pull data/court/ from origin/yiming-dev or run data/court/generate_labels.py."
+        )
+    labels: dict[str, dict] = json.loads(_COURT_ALL_LABELS_FILE.read_text(encoding="utf-8"))
+
+    def doc_path_for(doc_name: str) -> Path:
+        return _COURT_RAW_DIR / f"{doc_name}.pdf"
+
+    return DatasetSpec(
+        name="court",
+        questions=questions,
+        labels=labels,
+        doc_path_for=doc_path_for,
+        labels_file_path=_COURT_ALL_LABELS_FILE,
+        doc_kind="pdf",
+    )
+
+
+def _load_officeqa(args) -> DatasetSpec:
+    """Load officeqa labels; PDF-only baselines look up synthesized PDFs.
+
+    Honours ``--labels-file`` (e.g. plan-D subsets at
+    ``data/officeqa/all_labels_planD.json``). Questions are intersected with
+    whatever labels survive so dropped query texts don't show up in the run.
+    """
+    queries: list[dict] = json.loads(_OFFICEQA_QUERIES_FILE.read_text(encoding="utf-8"))
+
+    labels_path = Path(args.labels_file) if args.labels_file else _OFFICEQA_ALL_LABELS_FILE
+    if not labels_path.exists():
+        raise FileNotFoundError(
+            f"officeqa labels not found at {labels_path}. "
+            "Pull data/officeqa/ from origin/yiming-dev, or generate a subset "
+            "via data/officeqa/make_plan_d.py."
+        )
+    labels: dict[str, dict] = json.loads(labels_path.read_text(encoding="utf-8"))
+
+    # Intersect queries with the question keys actually present in the labels
+    # so subset files (e.g. plan-D) don't ask questions whose ground truth was
+    # dropped by the filter.
+    present_questions: set[str] = set()
+    for doc_labels in labels.values():
+        present_questions.update(doc_labels.keys())
+    questions = [q["text"] for q in queries if q["text"] in present_questions]
+
+    def doc_path_for(doc_name: str) -> Path:
+        return _OFFICEQA_PDF_DIR / f"{doc_name}.pdf"
+
+    return DatasetSpec(
+        name="officeqa",
+        questions=questions,
+        labels=labels,
+        doc_path_for=doc_path_for,
+        labels_file_path=labels_path,
+        doc_kind="pdf",
+    )
+
+
 _DATASET_LOADERS: dict[str, Callable[[argparse.Namespace], DatasetSpec]] = {
     "financebench": _load_financebench,
     "nopv": _load_nopv,
+    "court": _load_court,
+    "officeqa": _load_officeqa,
 }
 
 
@@ -276,10 +351,6 @@ def main() -> None:
     ap.add_argument("--timeout",  type=int, default=300)
     ap.add_argument("--max-pages", type=int, default=None,
                     help="Optional page cap for PDF baselines that support it")
-    ap.add_argument("--ocr-model", default=None,
-                    help="DeepRead OCR model override (default: gpt-5.4-mini)")
-    ap.add_argument("--ocr-provider", default=None,
-                    help="DeepRead OCR provider override (default: azure)")
     ap.add_argument("--provider", default="azure",
                     help="Reader provider for baselines that use direct LLM calls")
     args = ap.parse_args()
@@ -336,8 +407,6 @@ def main() -> None:
             "max_docs": args.max_docs,
             "max_pages": args.max_pages,
             "provider": args.provider,
-            "ocr_model": args.ocr_model,
-            "ocr_provider": args.ocr_provider,
             "selected_docs": [pdf_key.replace(".pdf", "") for pdf_key, _ in selected_items],
             "completed_docs_skipped": sorted(completed_docs),
         }
@@ -398,10 +467,6 @@ def main() -> None:
                 }
                 if args.max_pages is not None:
                     baseline_kwargs["max_pages"] = args.max_pages
-                if args.ocr_model is not None:
-                    baseline_kwargs["ocr_model"] = args.ocr_model
-                if args.ocr_provider is not None:
-                    baseline_kwargs["ocr_provider"] = args.ocr_provider
                 result = _run_baseline(baseline_mod, baseline_kwargs)
             except Exception as e:
                 print(f"  ERROR {doc_name}: {e}")
