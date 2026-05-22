@@ -86,33 +86,39 @@ def _resolve_model(model: str) -> str:
 def _resolve_doc_path(doc_path: Path, pdf_dir: Path | None) -> Path:
     """Resolve to a path the adapter can ingest (``.pdf`` or ``.json``).
 
-    Dispatch:
+    Dispatch (order matters — the ``_reconstructed.json`` filename hint takes
+    precedence over the file's actual existence so financebench inputs always
+    map to PDFs, never to the parsed_json reader):
     - ``.pdf``: returned as-is.
+    - ``*_reconstructed.json``: strip the ``_reconstructed`` suffix and look
+      up the matching ``.pdf`` under ``pdf_dir`` then ``_PDF_DIR_DEFAULTS``
+      (financebench flow — the reconstructed.json file may or may not exist,
+      we always go via the PDF).
     - ``.json`` that exists on disk: returned as-is (parsed_json source, e.g.
       officeqa's ``datasets/officeqa/latest/parsed_json/<doc>.json``).
-    - ``_reconstructed.json`` whose direct path doesn't exist: strip the
-      ``_reconstructed`` suffix and look up the matching ``.pdf`` under
-      ``pdf_dir`` then ``_PDF_DIR_DEFAULTS`` (financebench-era flow).
 
     Raises ``FileNotFoundError`` if no candidate resolves.
     """
     if doc_path.suffix.lower() == ".pdf":
         return doc_path
 
+    if doc_path.stem.endswith("_reconstructed"):
+        doc_stem = doc_path.stem.removesuffix("_reconstructed")
+        if pdf_dir is not None:
+            candidate = Path(pdf_dir) / f"{doc_stem}.pdf"
+            if candidate.exists():
+                return candidate
+        for default_dir in _PDF_DIR_DEFAULTS.values():
+            candidate = default_dir / f"{doc_stem}.pdf"
+            if candidate.exists():
+                return candidate
+        raise FileNotFoundError(
+            f"No PDF found for reconstructed.json doc_stem={doc_stem!r}. Searched: "
+            + ", ".join(str(d) for d in ([pdf_dir] if pdf_dir else []) + list(_PDF_DIR_DEFAULTS.values()))
+        )
+
     if doc_path.suffix.lower() == ".json" and doc_path.exists():
         return doc_path
-
-    doc_stem = re.sub(r"_reconstructed$", "", doc_path.stem)
-
-    if pdf_dir is not None:
-        candidate = Path(pdf_dir) / f"{doc_stem}.pdf"
-        if candidate.exists():
-            return candidate
-
-    for default_dir in _PDF_DIR_DEFAULTS.values():
-        candidate = default_dir / f"{doc_stem}.pdf"
-        if candidate.exists():
-            return candidate
 
     raise FileNotFoundError(
         f"No PDF or parsed_json found for doc_path={doc_path!r}. Searched: "
