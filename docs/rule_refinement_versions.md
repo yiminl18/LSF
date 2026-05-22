@@ -132,6 +132,12 @@ uAcc  ▲
 - Cost: ~$1.16 per question (Opus reasoning + gpt54 verification)
 - 7/10 questions at sAcc = 1.00 perfect; 3 at sAcc = 0.90; 1 at sAcc = 0.70 (long-term debt, the structurally hard one)
 
+**Token usage & cost (selection process, per question, averaged over 10 questions):**
+- Avg latency: **186.2s**
+- Avg gpt54 verify tokens (input + output): **61,844** → cost ratio **0.70** (vs avg single-doc tokens 88,432)
+- Opus 4.7 reasoning tokens: **not logged** — only the gpt54 verification tool calls are recorded in `selected_rules_agent/<slug>.json` (`tool_input_tokens`, `tool_output_tokens`); the Opus outer-loop tokens are not captured
+- The 0.70 cost ratio covers the verification side only; total cost including Opus reasoning accounts for the ~$1.16/Q figure above
+
 The agent's "less-is-more" effect: small, clean rule sets retrieve focused text that gpt54 extracts from more reliably than the full pool's union.
 
 **Why agentic beats algorithmic variants:**
@@ -182,9 +188,72 @@ The agent's "less-is-more" effect: small, clean rule sets retrieve focused text 
 
 ---
 
-## Multi-cluster results (TBD)
+## Multi-cluster results
 
-None of the refinement variants have been run against the multi-cluster rule pool yet. The base full-pool numbers are in `docs/rule_generation_versions.md`. Selection performance on multi-cluster is an open follow-up.
+Dataset: **18 sampled docs, 68 unsampled docs, 12 questions** (10-K, 10-Q, 8-K filings mixed).
+Rule pool: `rules/financebench_multi_clusters/llm/gpt54/one_shot/`, `_18_llm` slug suffix.
+Strategy run: **agentic selection** (Claude Opus 4.7) → **fallback deployment** (gpt54mini gate + full-pool fallback).
+
+> Note: eval_merge/perf_summary.json covers 10 of the 12 questions (long-term debt and exhibit listing
+> were added after the initial sampled eval). The agentic+fallback summary covers all 12.
+
+### Summary table
+
+| Variant | Phase | sAcc (18) | cost_ratio_s | uAcc (68) | cost_ratio_u | Mean rules |
+|---------|-------|----------:|-------------:|----------:|-------------:|-----------:|
+| **Full pool (base)** | — | **0.972** | 0.0356 | 0.935 | 0.0589 | ~35 avg |
+| **Agentic+fallback** | selection+deploy | — | — | **0.940** | **0.0090** | 2.7 + on-demand |
+
+Cost ratio = gpt54 input tokens retrieved per doc / total doc tokens (lower = cheaper).
+Agentic+fallback cost ratio uses `gpt54_in_per_doc / avg_doc_tokens` (avg_doc_tokens ≈ 47,819).
+
+### Per-question breakdown (10 questions with full-pool baseline)
+
+| Question | sAcc (full pool) | uAcc (full pool) | uAcc (agentic+fb) | fbRate | cost_ratio_s | cost_ratio_u | cost_ratio_fb |
+|----------|----------------:|----------------:|------------------:|-------:|-------------:|-------------:|--------------:|
+| Office address (city/state) | 0.944 | 1.000 | **1.000** | 5.9% | 0.0198 | 0.0212 | 0.0083 |
+| Doc type (form) | 1.000 | 1.000 | 0.985 | 2.9% | 0.1294 | 0.3754 | **0.0070** |
+| Phone number | 1.000 | 0.956 | 0.971 | 4.4% | 0.0085 | 0.0071 | 0.0064 |
+| State / IRS EIN | 1.000 | 0.971 | 0.971 | 5.9% | 0.0890 | 0.0778 | 0.0094 |
+| Stock exchange | 1.000 | 0.956 | 0.956 | 14.7% | 0.0030 | 0.0059 | 0.0069 |
+| Reporting period | 0.889 | 0.941 | **0.956** | 5.9% | 0.0079 | 0.0113 | 0.0086 |
+| Registrant name | 1.000 | 0.941 | 0.941 | 10.3% | 0.0230 | 0.0181 | 0.0065 |
+| Office address (ZIP) | 0.944 | 0.912 | **0.941** | 20.6% | 0.0125 | 0.0150 | 0.0084 |
+| Company name (exact) | 1.000 | 0.912 | 0.912 | 14.7% | 0.0059 | 0.0039 | 0.0065 |
+| Trading symbols | 0.944 | 0.765 | 0.765 | 26.5% | 0.0571 | 0.0529 | 0.0221 |
+| **MEAN** | **0.972** | **0.935** | **0.940** | **11.2%** | **0.0356** | **0.0589** | **0.0090** |
+
+Additional 2 questions (no full-pool baseline):
+
+| Question | uAcc (agentic+fb) | fbRate |
+|----------|------------------:|-------:|
+| Long-term debt | 0.500 | 16.2% |
+| Exhibit listing | 0.279 | 20.6% |
+
+### Key findings
+
+1. **Agentic+fallback marginally beats the full pool on unsampled (0.940 vs 0.935)** while using only 2.7 selected rules per question (vs ~35 in the full pool).
+
+2. **Cost ratio drops 6.5× vs full pool unsampled (0.0090 vs 0.0589)**. Most dramatic case: "Doc type (form)" cost_ratio falls from 0.375 → 0.007 — the agentic agent correctly identified that the full pool was retrieving large, redundant spans for this question.
+
+3. **Mean fallback rate 11.2%** — the gpt54mini gate triggers on ~7 of 68 unsampled docs per question, recovering from rule misses at modest cost.
+
+4. **Trading symbols and exhibit listing remain hard** (uAcc 0.765 and 0.279). Trading symbols suffer from format diversity across 10-K/10-Q/8-K forms; exhibit listing requires free-form extraction across heterogeneous indices.
+
+5. **Long-term debt at 0.500** — structurally hard across both single-cluster (base 0.66) and multi-cluster; the question requires numeric extraction across varied table formats.
+
+### Outputs
+
+All under `results/financebench_multi_clusters/llm/gpt54/one_shot/`:
+
+| Folder | Contents |
+|--------|----------|
+| `selected_rules_agent/` | 12 per-question agentic selection JSONs (`_18_llm` slugs) |
+| `agent_trace/` | 12 JSONL step-by-step agent traces |
+| `eval_agentic_fallback/` | 12 per-question unsampled eval JSONs + `summary.json` |
+| `eval_merge/` | Full-pool baseline (`perf_summary.json`, 10 questions) |
+
+Plot: `analysis/multi_cluster_results.png` — accuracy + cost ratio + $/doc comparison.
 
 ---
 
@@ -271,4 +340,4 @@ Same as `docs/rule_generation_versions.md`:
 | Cluster | Sampled | Unsampled | Questions | Rule pool size (avg) |
 |---------|--------:|----------:|----------:|---------------------:|
 | Single | 10 | 50 | 10 | 63 |
-| Multi | 18 | 96 | 12 | n/a (rules generated, refinement TBD) |
+| Multi | 18 | 68 | 12 | ~35 avg (agentic+fallback run completed 2026-05-21) |

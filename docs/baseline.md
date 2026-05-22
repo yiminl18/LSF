@@ -11,13 +11,16 @@ Baselines are the comparison floor for the LSF rule-based retrieval pipeline.
 
 ## Summary table
 
-| # | Strategy | Model | Split | Docs | Acc | Cost | Latency | Notes |
-|---|----------|-------|-------|-----:|----:|-----:|--------:|-------|
-| 1 | **Agentic Claude QA** | opus47 | sampled | 10 | 0.920 | 1.3484 | 10.33s | Claude agent reads full doc with tools |
-| 2 | **Agentic Codex QA** | gpt54 | single_cluster (`batch_0 + batch_1`) | 20 | 0.870 | 1.2539 | 17.80s | Averaged over all 20 docs run so far |
+| # | Strategy | Model | Acc | Latency | CostRatio |
+|---|----------|-------|----:|--------:|----------:|
+| 1 | **Agentic Claude QA** | opus47 | 0.9466 | 10.3s | 0.9112 |
+| 2 | **Agentic Claude QA** | sonnet | 0.8788 | 41.3s | 1.8006 |
+| 3 | **Agentic Codex QA** | gpt54 | 0.9102 | 20.3s | 1.3221 |
+| 4 | **Agentic Codex QA** | gpt54mini | 0.8800 | 15.1s | 1.2878 |
 
-`cost` = mean over docs of `input_tokens / total_doc_tokens` (retrieval proxy).
-For Agentic Codex QA, `input_tokens` includes cached input tokens for parity with Claude.
+- `Acc` = fraction correct over all completed (question, doc) pairs; judge: gpt54
+- `CostRatio` = mean(input_tokens / total_doc_tokens) per pair; total_doc_tokens approximated as chars÷4 from reconstructed JSON text spans
+- Rows 2 and 4 are based on partial runs (in progress)
 
 ---
 
