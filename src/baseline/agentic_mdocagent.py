@@ -47,8 +47,11 @@ from baseline.mdocagent.adapter import (
 # Also used as the shared extract_path subdir and the results subdir lookup.
 _UPSTREAM_DATASET_NAME = "lsf"
 from baseline.mdocagent.dataset_config import (
+    CONFIG_OVERRIDES_ROOT,
+    _purge_legacy_upstream_writes,
     generate_lsf_dataset_config,
     generate_lsf_openai_model_config,
+    generate_noop_model_config,
 )
 
 _UPSTREAM_DIR = _ROOT / "src" / "baseline" / "mdocagent" / "upstream" / "MDocAgent"
@@ -178,14 +181,27 @@ def _build_subprocess_env(resolved_model: str, usage_log_path: Path) -> dict[str
 def _agent_model_overrides(model_config_name: str) -> list[str]:
     # Upstream's default dataset.top_k=1 makes each reader see only page 0;
     # raise to match the "top-10" retrieval keys populated in adapter.py.
+    # Also override mdoc_agent.cuda_visible_devices="" — predict.py line 10
+    # otherwise resets the env var we cleared in the subprocess shell back to
+    # the default "0,1,2,3" before our model code runs.
+    #
+    # agents.0 (image_agent) is routed to NoOpModel: with retrieval downgraded
+    # to BM25 text-only, the image path has no visual signal to add (it would
+    # just re-see the same pages as PNG renders). NoOpModel preserves the
+    # hardcoded ``self.agents[0]`` index in upstream/agents/mdoc_agent.py while
+    # skipping the LLM call. agents.2 (general_agent) keeps the LSF model but
+    # switches to a text-only variant — it still drives self_reflect, just
+    # without vision input.
     from baseline.mdocagent.adapter import _R_MAX_PAGES as _ADAPTER_MAX_PAGES
     return [
-        f"mdoc_agent.agents.0.model={model_config_name}",
+        "mdoc_agent.agents.0.model=noop",
         f"mdoc_agent.agents.1.model={model_config_name}",
+        "mdoc_agent.agents.2.agent=general_agent_text_only",
         f"mdoc_agent.agents.2.model={model_config_name}",
         f"mdoc_agent.sum_agent.model={model_config_name}",
         "mdoc_agent.save_message=true",
         f"dataset.top_k={_ADAPTER_MAX_PAGES}",
+        'mdoc_agent.cuda_visible_devices=""',
     ]
 
 
@@ -210,7 +226,16 @@ def _run_predict_subprocess(
         f"dataset.sample_path={data_dir_rel}/samples.json",
         f"dataset.sample_with_retrieval_path={data_dir_rel}/sample-with-retrieval-results.json",
     ] + _agent_model_overrides(model_config_name)
-    cmd = [sys.executable, str(predict_script)] + overrides
+    # ``--config-dir`` adds our config_overrides to Hydra's GlobalHydra search
+    # path *before* the @hydra.main composition runs, so it's also visible to
+    # the ``hydra.compose(config_name="model/<name>")`` calls inside predict.py.
+    # ``hydra.searchpath=[...]`` only retroactively edits the primary config and
+    # is silently ignored by subsequent compose calls — we tried, it doesn't
+    # work for our use case.
+    cmd = [
+        sys.executable, str(predict_script),
+        "--config-dir", str(CONFIG_OVERRIDES_ROOT.resolve()),
+    ] + overrides
     try:
         completed = subprocess.run(
             cmd,
@@ -273,13 +298,29 @@ def _parse_result(run_name: str, sample_id: str) -> tuple[str | None, dict[str, 
 
 
 def _compress_answer(raw_answer: str) -> str:
-    """Pass through upstream's already-parsed answer.
+    """Trim whitespace around upstream's already-parsed answer.
 
-    ``MultiAgentSystem.sum`` (upstream) already extracts ``{"Answer": …}`` from
-    the summarizer's response and writes that string into ``ans_<run-name>``.
-    Further splitting risks dropping trailing clauses, so we just trim.
+    ``MultiAgentSystem.sum`` already runs ``json.loads(...).get("Answer")`` and
+    stores the result into ``ans_<run-name>``. When that JSON parse succeeds
+    we just see the Answer string; when it fails, upstream falls back to the
+    raw summarizer response (which may contain prose around the JSON). Either
+    way, no additional post-processing here — only whitespace trimming.
     """
     return raw_answer.strip()
+
+
+def _trim_stderr(stderr: str | None, head: int = 1000, tail: int = 1000) -> str:
+    """Keep both the leading Hydra error preamble and the trailing traceback.
+
+    The full subprocess stderr is still written to ``subprocess_log_path``; this
+    function only shapes what we put into the returned dict.
+    """
+    if not stderr:
+        return ""
+    if len(stderr) <= head + tail + 32:
+        return stderr
+    omitted = len(stderr) - head - tail
+    return f"{stderr[:head]}\n\n... [truncated {omitted} chars] ...\n\n{stderr[-tail:]}"
 
 
 def _aggregate_usage_log(path: Path) -> tuple[float, int, int, int]:
@@ -383,7 +424,9 @@ def run_qa(
     t0 = time.time()
     keep_data_dir = False
     try:
+        _purge_legacy_upstream_writes()
         generate_lsf_dataset_config()
+        generate_noop_model_config()
         generate_lsf_openai_model_config(resolved_model, config_name=model_config_name)
         info = prepare_inputs(
             pdf,
@@ -449,18 +492,26 @@ def run_qa(
             "model": resolved_model,
             "gen_calls": gen_calls,
             "n_pages_used": info["n_pages"],
+            "retrieval_mode": info.get("retrieval_mode"),
+            "retrieved_pages": info.get("retrieved_pages"),
             "run_name": run_name,
             "sample_id": info["sample_id"],
             "mdocagent_log_path": _safe_repo_path(subprocess_log_path),
             "mdocagent_usage_log_path": _safe_repo_path(usage_log_path),
             "mdocagent_trace": parse_trace,
-            "stderr_tail": (stderr or "")[-2000:],
+            "stderr_tail": _trim_stderr(stderr),
         }
     finally:
-        # Drop the per-run sample dir on success so it doesn't accumulate.
-        # On failure / timeout we keep it for debugging.
-        if not keep_data_dir and data_dir.exists():
-            shutil.rmtree(data_dir, ignore_errors=True)
+        # Drop both the per-run sample dir AND the per-run result dir on
+        # success so they don't accumulate. The result dir contains the same
+        # answer we've already parsed into the return value, plus the
+        # save_message trace. On failure / timeout we keep both for debugging.
+        if not keep_data_dir:
+            if data_dir.exists():
+                shutil.rmtree(data_dir, ignore_errors=True)
+            result_dir = _UPSTREAM_DIR / "results" / _UPSTREAM_DATASET_NAME / run_name
+            if result_dir.exists():
+                shutil.rmtree(result_dir, ignore_errors=True)
 
 
 def main() -> None:

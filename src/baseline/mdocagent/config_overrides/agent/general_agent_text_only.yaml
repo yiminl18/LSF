@@ -1,0 +1,21 @@
+defaults:
+  - general_agent
+  - _self_
+
+# LSF integration uses BM25 (text-only) retrieval, so the general_agent has no
+# meaningful vision signal — the only "image" inputs would be PNG renders of
+# pages we already feed as text. Disabling use_image avoids a redundant vision
+# LLM call on every (doc, question). The general_agent still runs LLM calls
+# (it drives self_reflect → critical_info JSON), just text-only.
+use_image: false
+
+# Override critical_prompt to drop the "image" key. image_agent runs through
+# NoOpModel so any image_reflection would be ignored anyway; ``mdoc_agent.py``
+# treats a missing "image" key as ``""`` (line 23-26). Smoke testing on nopv
+# showed the upstream prompt's {"text", "image"} template combined with the
+# cumulative PHMSA enforcement text reliably triggered Azure's jailbreak
+# content filter — a text-only template avoids that without changing downstream
+# behavior.
+critical_prompt: |
+  Provide a Python dictionary with one keypoint that you need to answer the question based on all given information.
+  Respond exclusively in valid Dictionary of str format without any other text. For example, the format should be: {"text": "keypoint for text"}.
