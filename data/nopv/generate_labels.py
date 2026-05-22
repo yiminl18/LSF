@@ -10,6 +10,7 @@ Output:
 
 from __future__ import annotations
 
+import argparse
 import json
 import sys
 import time
@@ -119,9 +120,17 @@ def call_gpt54(document_text: str, question: str, answer_type: str) -> dict:
     }
 
 
+# ── CLI args ──────────────────────────────────────────────────────────────────
+_ap = argparse.ArgumentParser(description=__doc__)
+_ap.add_argument("--max-docs", type=int, default=None,
+                 help="Process at most N docs (alphabetically); resume-safe across runs")
+_args = _ap.parse_args()
+
 # ── Load queries and docs ─────────────────────────────────────────────────────
 queries   = json.loads(QUERIES_FILE.read_text(encoding="utf-8"))
 txt_files = sorted(TEXT_DIR.glob("*.txt"))
+if _args.max_docs is not None:
+    txt_files = txt_files[: _args.max_docs]
 
 print(f"Queries  : {len(queries)}")
 print(f"Documents: {len(txt_files)}")

@@ -1,0 +1,11 @@
+defaults:
+  - base
+  - _self_
+
+# document_path is intentionally inherited from base (`./data/lsf/documents`)
+# but NOT used by this baseline. The LSF entry-point (agentic_mdocagent.py)
+# calls baseline.mdocagent.adapter.prepare_inputs() with an explicit PDF path
+# and writes the rendered PNGs to extract_dir, so upstream's BaseDataset
+# never reads document_path. Anyone running upstream's predict.py directly on
+# our `lsf` dataset config needs to override document_path themselves.
+name: lsf
