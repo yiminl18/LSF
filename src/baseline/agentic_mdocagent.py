@@ -200,7 +200,13 @@ def _agent_model_overrides(model_config_name: str) -> list[str]:
         f"mdoc_agent.agents.2.model={model_config_name}",
         f"mdoc_agent.sum_agent.model={model_config_name}",
         "mdoc_agent.save_message=true",
+        # dataset.top_k controls how many retrieved pages each reader actually
+        # uses; retrieval.top_k is interpolated into upstream's r_text_key
+        # template ``text-top-${retrieval.top_k}-${...}`` so it must match the
+        # K our adapter f-strings into _R_TEXT_KEY / _R_IMAGE_KEY. Both flow
+        # from _R_MAX_PAGES — change once, propagates everywhere.
         f"dataset.top_k={_ADAPTER_MAX_PAGES}",
+        f"retrieval.top_k={_ADAPTER_MAX_PAGES}",
         'mdoc_agent.cuda_visible_devices=""',
     ]
 

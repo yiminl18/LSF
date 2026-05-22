@@ -38,9 +38,16 @@ from typing import Any
 _UPSTREAM_DIR = Path(__file__).parent / "upstream" / "MDocAgent"
 _RENDER_DPI = 144
 
-_R_TEXT_KEY = "text-top-10-question"
-_R_IMAGE_KEY = "image-top-10-question"
-_R_MAX_PAGES = 10
+# Single source of truth for the BM25 top-K page count. The key names mirror
+# upstream's retrieval template (``text-top-${retrieval.top_k}-${...}``); we
+# build them with the same K via f-string so changing _R_MAX_PAGES alone keeps
+# both sides aligned. The matching upstream side is the
+# ``retrieval.top_k=_R_MAX_PAGES`` Hydra override in
+# ``agentic_mdocagent._agent_model_overrides`` — without that, upstream would
+# interpolate against its default top_k=10 and our keys would drift.
+_R_MAX_PAGES = 5
+_R_TEXT_KEY = f"text-top-{_R_MAX_PAGES}-question"
+_R_IMAGE_KEY = f"image-top-{_R_MAX_PAGES}-question"
 
 _TOKEN_RE = re.compile(r"[a-z0-9]+")
 
