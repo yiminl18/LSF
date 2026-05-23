@@ -1,7 +1,8 @@
 # Baseline Strategies — Version Tracking
 
 This document indexes every baseline QA strategy implemented under `src/baseline/`.
-Each baseline takes a **question + document** and produces an answer, logging tokens and latency.
+Most baselines take a **question + document** and produce an answer, logging tokens and latency.
+Some planned variants change the execution granularity while keeping the same final per-pair result format.
 Baselines are the comparison floor for the LSF rule-based retrieval pipeline.
 
 **Dataset:** FinanceBench single-cluster (10 sampled docs, 50 unsampled docs, 10 questions).
@@ -17,6 +18,7 @@ Baselines are the comparison floor for the LSF rule-based retrieval pipeline.
 | 2 | **Agentic Claude QA** | sonnet | 0.8788 | 41.3s | 1.8006 |
 | 3 | **Agentic Codex QA** | gpt54 | 0.9102 | 20.3s | 1.3221 |
 | 4 | **Agentic Codex QA** | gpt54mini | 0.8800 | 15.1s | 1.2878 |
+| 5 | **Agentic Codex QA (All Docs + All Queries)** | gpt54 | — | — | — |
 
 - `Acc` = fraction correct over all completed (question, doc) pairs; judge: gpt54
 - `CostRatio` = mean(input_tokens / total_doc_tokens) per pair; total_doc_tokens approximated as chars÷4 from reconstructed JSON text spans
@@ -263,6 +265,114 @@ baseline_results/
   "codex_last_message_path": "baseline_results/financebench/agentic_codex_qa_gpt54/single_cluster/batch_0/.../logs/JPMORGAN_2023_10K.codex.last.txt"
 }
 ```
+
+---
+
+## Strategy 3 — Agentic Codex QA All (`src/baseline/agentic_codex_qa_gpt54_all.py`)
+
+### Approach
+
+This baseline keeps the same end goal as `agentic_codex_qa_gpt54`: generate one answer
+for every `(question, document)` pair in a dataset, judged the same way and written in
+the same result format.
+
+The difference is execution granularity:
+- `agentic_codex_qa_gpt54`: one Codex agent call per `(question, document)` pair
+- `agentic_codex_qa_gpt54_all`: one Codex agent call over the full dataset scope at once
+
+For `agentic_codex_qa_gpt54_all`, the agent receives:
+- all queries for the dataset
+- all documents for the dataset, including both sampled and unsampled portions when applicable
+- the dataset's `.txt` document files as the source documents
+- the default Codex tool environment from the repo
+
+The agent is then responsible for producing answers for all documents and all queries
+within one baseline execution scope, but it is free to perform whatever internal loops,
+iterations, searches, planning steps, and tool calls it wants in order to get there.
+This is not intended to constrain the agent to a single pass or a single turn.
+
+The checked-in artifacts should still be materialized back into the same external layout
+as the existing Codex baseline.
+
+### Document source
+
+For this baseline, all datasets should use the plain-text document version as the agent
+input source.
+
+That means:
+- use dataset `.txt` files rather than reconstructed JSON files
+- keep the final output schema the same as the existing baseline result folders
+- keep evaluation at the `(question, document)` level after the global run completes
+
+### Output contract
+
+The output schema is intentionally unchanged from `agentic_codex_qa_gpt54` and the court
+baseline layout under `baseline_results/court/agentic_codex_qa_gpt54/first_50`.
+
+Expected layout:
+
+```text
+baseline_results/
+└── <dataset>/
+    └── agentic_codex_qa_gpt54_all/
+        └── <split_or_scope>/
+            ├── <question_slug>/
+            │   ├── <doc_name>.json
+            │   ├── logs/
+            │   │   ├── <doc_name>.codex.jsonl
+            │   │   └── <doc_name>.codex.last.txt
+            │   └── ...
+            ├── run_metadata.json
+            └── summary.json
+```
+
+Each `<question_slug>/<doc_name>.json` should keep the same fields as Strategy 2:
+- answer / correctness fields
+- token / latency fields
+- Codex trace metadata such as `codex_log_path` and `codex_last_message_path`
+
+### Runner
+
+This baseline uses a dedicated dataset-scope runner:
+- `src/baseline/run_eval_all.py`
+
+Example:
+
+```bash
+python src/baseline/run_eval_all.py \
+  --baseline agentic_codex_qa_gpt54_all \
+  --model gpt54 \
+  --split all_docs
+```
+
+### Measurement requirements
+
+This baseline must preserve the same final evaluation target as the existing per-pair
+baseline, but it is especially important to measure the full agent process correctly.
+
+Required accounting:
+- precisely track total input tokens consumed across the whole process
+- precisely track total output tokens consumed across the whole process
+- precisely track reasoning / thinking tokens across the whole process when available
+- precisely track end-to-end latency for the whole process
+
+After the full run finishes, these totals should be propagated into the final checked-in
+results so that:
+- per-pair outputs remain compatible with the existing schema
+- aggregate summaries can report accuracy, token usage, and latency for this baseline
+
+The final reported metric of interest is still accuracy over all `(question, document)`
+pairs, updated after the complete run is materialized into the standard result format.
+
+### Intended use
+
+This baseline is meant to measure whether a single long-running Codex agent with global
+access to the dataset can outperform or behave differently from the per-pair agent setup,
+without changing the evaluation target or downstream artifact format.
+
+### Status
+
+Implemented. Metrics will be filled in after baseline runs are completed.
 
 ---
 
