@@ -168,7 +168,7 @@ def main() -> None:
     ap.add_argument(
         "--rule-gen-output-name",
         required=True,
-        help="Output name previously used by run_eval_rule_full_data.py under rules/court/ and results/court/rule_gen/",
+        help="Output name used by run_eval_rule_full_data.py under both rules/court/ and results/court/",
     )
     ap.add_argument(
         "--question-slug",
@@ -183,7 +183,7 @@ def main() -> None:
     ap.add_argument(
         "--output-name",
         default=None,
-        help="Optional custom output directory name under baseline_results/court/ (default: rule_apply_merge/<rule-gen-output-name>)",
+        help="Optional custom output directory name under results/court/ (default: <rule-gen-output-name>/rule_apply_merge)",
     )
     ap.add_argument("--split-name", default="all_docs")
     ap.add_argument("--max-docs", type=int, default=None)
@@ -198,7 +198,7 @@ def main() -> None:
     labels: dict[str, dict] = json.loads(LABELS_FILE.read_text(encoding="utf-8"))
 
     rules_root = _ROOT / "rules" / DATASET / args.rule_gen_output_name
-    results_root = _ROOT / "results" / DATASET / "rule_gen" / args.rule_gen_output_name
+    results_root = _ROOT / "results" / DATASET / args.rule_gen_output_name
     report, report_path = _find_rule_report(results_root, args.question_slug)
 
     question = report["question"]
@@ -216,13 +216,13 @@ def main() -> None:
     if rule_question_dir is None:
         raise FileNotFoundError(f"No rule directory under {rules_root} matches *_{question_slug}")
 
-    out_name = args.output_name or f"rule_apply_merge/{args.rule_gen_output_name}"
-    out_base = _ROOT / "baseline_results" / DATASET / out_name
+    out_name = args.output_name or f"{args.rule_gen_output_name}/rule_apply_merge"
+    out_base = _ROOT / "results" / DATASET / out_name
     out_base.mkdir(parents=True, exist_ok=True)
     q_dir = out_base / question_slug
     q_dir.mkdir(parents=True, exist_ok=True)
 
-    merge_trace_dir = _ROOT / "results" / DATASET / "rule_apply_merge" / args.rule_gen_output_name
+    merge_trace_dir = out_base / "_trace"
     merge_trace_dir.mkdir(parents=True, exist_ok=True)
 
     selected_items = sorted(labels.items())

@@ -694,7 +694,7 @@ def run_rule_gen(
         question=question,
         question_slug=question_slug,
         manifest_path=str(manifest_path.resolve()),
-        rules_dir=str(rules_dir.resolve()),
+        rules_dir=str(rules_base.resolve()),
         report_path=str(report_path.resolve()),
         ledger_path=str(ledger_path.resolve()),
         verify_budget=_VERIFY_BUDGET,

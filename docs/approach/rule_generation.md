@@ -67,7 +67,7 @@ Rules output: `def rule_<name>(doc: dict) -> list[dict]` — span objects from `
 |-------|-----:|-----:|--------:|--------:|---------------:|
 | gpt54 | 0.910 | 0.892 | 0.172 | 0.169 | ~100 |
 
-**Output:** `rules/financebench_single_cluster/llm/gpt54/one_shot/<slug>_10_llm/`
+**Output:** `rules/financebench/lsf/single_cluster/llm/gpt54/one_shot/<slug>_10_llm/`
 
 ---
 
@@ -138,9 +138,9 @@ Primary objective: `merge_accuracy >= 0.90`. Secondary: minimize `avg_cost_ratio
 | multi | opus47 | 0.852 | 0.705 | **0.013** | **0.013** |
 
 **Output:**
-- `rules/financebench_single_cluster/agent/{gpt54,opus47}/raw/<slug>_10_agent/`
-- `rules/financebench_single_cluster/agent/gpt54/refined/<slug>_10_agent_refined/`
-- `rules/financebench_multi_clusters/agent/{gpt54,opus47}/raw/<slug>_18_agent/`
+- `rules/financebench/lsf/single_cluster/agent/{gpt54,opus47}/raw/<slug>_10_agent/`
+- `rules/financebench/lsf/single_cluster/agent/gpt54/refined/<slug>_10_agent_refined/`
+- `rules/financebench/lsf/multi_clusters/agent/{gpt54,opus47}/raw/<slug>_18_agent/`
 
 ---
 
@@ -201,8 +201,8 @@ def run(
 Highest sAcc of all single-cluster methods. Cost is ~37× cheaper than LLM-coarse on unsampled (0.005 vs 0.169). FPS sampling did not improve unsampled generalization over random — the random 10-doc sample was already diverse enough for these questions.
 
 **Output:**
-- `rules/financebench_single_cluster/agent/opus47/agentic/raw/<slug>_10_agentic/` (Task 1)
-- `rules/financebench_single_cluster/agent/opus47/agentic_fps/raw/<slug>_10_agentic_fps/` (Task 2)
+- `rules/financebench/lsf/single_cluster/agent/opus47/agentic/raw/<slug>_10_agentic/` (Task 1)
+- `rules/financebench/lsf/single_cluster/agent/opus47/agentic_fps/raw/<slug>_10_agentic_fps/` (Task 2)
 - Agent traces: `results/.../agent_trace/<slug>.jsonl`
 
 ---
@@ -292,11 +292,22 @@ rules/<dataset>/agentic_rule_full_data_<model>/<split>/<qNN>_<question_slug>/
 Rule-generation metadata is written to:
 
 ```text
-results/<dataset>/rule_gen/agentic_rule_full_data_<model>/<split>/<qNN>_<question_slug>_rule_gen.json
-results/<dataset>/rule_gen/agentic_rule_full_data_<model>/<split>/<qNN>_<question_slug>.codex.jsonl
-results/<dataset>/rule_gen/agentic_rule_full_data_<model>/<split>/<qNN>_<question_slug>.codex.last.txt
-results/<dataset>/rule_gen/agentic_rule_full_data_<model>/<split>/<qNN>_<question_slug>.manifest.json
-results/<dataset>/rule_gen/agentic_rule_full_data_<model>/<split>/<qNN>_<question_slug>.verify_accuracy_ledger.json
+results/<dataset>/agentic_rule_full_data_<model>/<split>/<qNN>_<question_slug>_rule_gen.json
+results/<dataset>/agentic_rule_full_data_<model>/<split>/<qNN>_<question_slug>.codex.jsonl
+results/<dataset>/agentic_rule_full_data_<model>/<split>/<qNN>_<question_slug>.codex.last.txt
+results/<dataset>/agentic_rule_full_data_<model>/<split>/<qNN>_<question_slug>.manifest.json
+results/<dataset>/agentic_rule_full_data_<model>/<split>/<qNN>_<question_slug>.verify_accuracy_ledger.json
+```
+
+If a downstream rule-application step is run, its outputs should also stay under the
+same strategy root, for example:
+
+```text
+results/<dataset>/agentic_rule_full_data_<model>/<split>/rule_apply_merge/
+  summary.json
+  run_metadata.json
+  <question_slug>/<doc_name>.json
+  _trace/<question_rule_dir>/<rule_set_slug>_merge.json
 ```
 
 The final JSON report contains:

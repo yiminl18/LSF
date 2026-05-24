@@ -115,7 +115,7 @@ def main() -> None:
     ap.add_argument(
         "--output-name",
         default=None,
-        help="Optional custom output name under both rules/<dataset>/ and results/<dataset>/rule_gen/",
+        help="Optional custom output name under both rules/<dataset>/ and results/<dataset>/",
     )
     ap.add_argument("--timeout", type=int, default=3600)
     ap.add_argument("--skip-existing", action="store_true", default=True)
@@ -160,7 +160,7 @@ def main() -> None:
 
     base_name = args.output_name or f"{args.baseline}/{split_name}"
     rules_root = _ROOT / "rules" / args.dataset / base_name
-    results_root = _ROOT / "results" / args.dataset / "rule_gen" / base_name
+    results_root = _ROOT / "results" / args.dataset / base_name
     rules_root.mkdir(parents=True, exist_ok=True)
     results_root.mkdir(parents=True, exist_ok=True)
 
