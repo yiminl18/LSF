@@ -1,0 +1,68 @@
+{
+  "strategy": "agentic_rule_full_data",
+  "phase": "rule_generation",
+  "status": "ok",
+  "dataset": "court",
+  "question": "What is/are the Court of Appeals docket number(s) for this case?",
+  "question_slug": "what_isare_the_court_of_appeals_docket_numbers_for_this_case",
+  "model": "gpt54mini",
+  "split": "all_docs",
+  "doc_count": 294,
+  "question_count": 1,
+  "rules_dir": "rules/court/agentic_rule_full_data_gpt54mini/all_docs_q1/q01_what_isare_the_court_of_appeals_docket_numbers_for_this_case",
+  "results_report_path": "results/court/rule_gen/agentic_rule_full_data_gpt54mini/all_docs_q1/q01_what_isare_the_court_of_appeals_docket_numbers_for_this_case_rule_gen.json",
+  "verify_accuracy_ledger_path": "results/court/rule_gen/agentic_rule_full_data_gpt54mini/all_docs_q1/q01_what_isare_the_court_of_appeals_docket_numbers_for_this_case.verify_accuracy_ledger.json",
+  "rule_files": [
+    "rules/court/agentic_rule_full_data_gpt54mini/all_docs_q1/q01_what_isare_the_court_of_appeals_docket_numbers_for_this_case/rule_court_of_appeals_docket_numbers.py"
+  ],
+  "rules_final": [
+    "rule_court_of_appeals_docket_numbers"
+  ],
+  "num_rules_final": 1,
+  "rule_gen": {
+    "latency_seconds": 202.21,
+    "input_tokens": 1258334,
+    "output_tokens": 29092,
+    "cached_input_tokens": 1198336,
+    "reasoning_tokens": 22873,
+    "working_sample": [
+      "20250723_state_of_washington_v._trump",
+      "20250724_bates_v._pakseresht",
+      "20250729_cedar_park_assembly_of_god_of_kirkland_washington_v._patty_kuderer",
+      "20250731_epic_games_inc._v._google_llc",
+      "20250812_true_health_chiropractic_inc._v._mckesson_corporation",
+      "20250919_trump_v._united_states_district_court_for_the_northern_district_of",
+      "20260304_uber_technologies_inc._v._city_of_seattle",
+      "20260313_san_carlos_apache_tribe_v._united_states_forest_service",
+      "20250801_davis_v._united_states_district_court_for_the_northern_district_of",
+      "20250905_united_states_v._rice",
+      "20250912_pacito_v._trump",
+      "20251021_national_labor_relations_board_v._macys_inc.",
+      "20251216_international_longshore_and_warehouse_union_v._national_labor_relations",
+      "20251223_powers_v._mcdonough",
+      "20260303_talon_diversified_holdings_inc._v._white"
+    ],
+    "num_working_sample": 15,
+    "num_working_sample_iterations": 2,
+    "verify_accuracy_calls": {
+      "total": 2,
+      "input_tokens": 4870,
+      "output_tokens": 373
+    },
+    "num_rules_written": 1,
+    "num_rules_rejected": 0,
+    "rules_final": [
+      "rule_court_of_appeals_docket_numbers"
+    ],
+    "num_rules_final": 1,
+    "avg_cost_ratio_sample": 0.008398,
+    "match_rate_sample": 1.0,
+    "notes": "Single-header rule extracts appellate docket numbers from court-of-appeals caption lines, including multi-number Nos. blocks and continuation lines. Verified at 100% on two mixed samples covering single-docket, consolidated, and late-repeated header formats."
+  },
+  "agent_log_path": "results/court/rule_gen/agentic_rule_full_data_gpt54mini/all_docs_q1/q01_what_isare_the_court_of_appeals_docket_numbers_for_this_case.codex.jsonl",
+  "agent_last_message_path": "results/court/rule_gen/agentic_rule_full_data_gpt54mini/all_docs_q1/q01_what_isare_the_court_of_appeals_docket_numbers_for_this_case.codex.last.txt",
+  "stderr": "2026-05-24T18:23:05.231319Z ERROR codex_models_manager::manager: failed to refresh available models: stream disconnected before completion: failed to decode models response: missing field `models` at line 3243 column 1; body: {\n  \"data\": [\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1772582400\n      },\n      \"id\": \"dall-e-3-3.0\",\n      \"created_at\": 1691712000,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1737936000\n      },\n      \"id\": \"dall-e-2-2.0\",\n      \"created_at\": 1713139200,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": true,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"fine_tune\": 1718323200,\n        \"inference\": 1718323200\n      },\n      \"id\": \"code-cushman-001\",\n      \"created_at\": 1642809600,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": false,\n        \"completion\": true,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"fine_tune\": 1720137600,\n        \"inference\": 1720137600\n      },\n      \"id\": \"code-cushman-fine-tune-002\",\n      \"created_at\": 1677456000,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"generally-available\",\n      \"deprecation\": {\n        \"inference\": 1797292800\n      },\n      \"id\": \"whisper-001\",\n      \"created_at\": 1694649600,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1746057600\n      },\n      \"id\": \"gpt-4-0125-Preview\",\n      \"created_at\": 1706140800,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1746057600\n      },\n      \"id\": \"gpt-4-1106-Preview\",\n      \"created_at\": 1700006400,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycl",
+  "codex_thread_id": "019e5b39-f412-7bd2-9834-38a38dc007c8",
+  "codex_event_count": 83,
+  "codex_error_message": null
+}
