@@ -13,8 +13,8 @@ _ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(_ROOT / "src"))
 
 _FINANCE_SPLITS = {
-    "sampled": _ROOT / "data/financebench/sample/single_cluster/random/sample_doc_labels.json",
-    "unsampled": _ROOT / "data/financebench/sample/single_cluster/random/unsampled_doc_labels.json",
+    "sampled": _ROOT / "data/financebench/sample/multi_cluster/random/sample_doc_labels.json",
+    "unsampled": _ROOT / "data/financebench/sample/multi_cluster/random/unsampled_doc_labels.json",
 }
 
 _DATASET_CONFIG = {
