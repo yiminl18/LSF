@@ -207,136 +207,21 @@ Highest sAcc of all single-cluster methods. Cost is ~37× cheaper than LLM-coars
 
 ---
 
-## Approach 4 — Agentic Rule Full Data (Codex)
+## End-to-End Note
 
-**Code:** `src/baseline/agentic_rule_full_data.py` + wrappers `src/baseline/agentic_rule_full_data_{gpt54,gpt54mini}.py` + runner `src/baseline/run_eval_rule_full_data.py`
+`Agentic Rule Full Data (Codex)` was moved to
+[rule_end_to_end.md](/Users/yiminglin/Documents/Codebase/LSF/docs/approach/rule_end_to_end.md)
+because it is best understood as an end-to-end strategy:
 
-### Description
+- rule generation over the full corpus
+- followed by downstream rule application
+- followed by final QA evaluation
 
-This approach runs one Codex agent session per question over the full `.txt` corpus for a dataset. The agent does **only rule generation**:
-
-- inspect documents on demand
-- choose its own working sample
-- write Python retrieval rules
-- call `verify_accuracy` on the working sample when needed
-- stop with a final rule set plus rule-generation metadata
-
-This is intentionally separated from rule application. After generation, the produced rule set can be consumed by any existing application strategy in the repo, such as:
-
-- `src/rule_apply_merge.py`
-- `src/default_rule.py`
-- `src/rule_apply_individual.py`
-
-So this approach should be evaluated in two phases:
-1. **rule generation**: does the agent discover a compact, high-coverage rule set?
-2. **rule application**: which downstream application strategy performs best with that rule set?
-
-### Core assumption
-
-Documents in the corpus share strong structural regularities for a fixed question, and those regularities can be captured by a small Python rule set general enough to transfer across the full corpus.
-
-### Inputs
-
-| Item | Source |
-|------|--------|
-| Question text | passed in prompt |
-| Full document corpus (`.txt`) | `data/<dataset>/text/` |
-| Ground-truth labels | dataset labels JSON; used only by `verify_accuracy` |
-| Helper tools | `list_docs`, `read_doc_txt`, `compute_cost`, `verify_accuracy`, `inspect_rule` |
-
-The agent is not handed the full corpus in-context. It reads docs on demand and manages its own sampling/iteration loop.
-
-### Objectives
-
-| Type | Target |
-|------|--------|
-| **Hard** | `match_rate >= 0.95` on the agent's chosen working sample, measured by `verify_accuracy` |
-| **Soft 1** | Minimize `avg_cost_ratio(r)` |
-| **Soft 2** | Maximize per-rule coverage |
-| **Soft 3** | Keep `|R|` small |
-
-`verify_accuracy` is the paid tool. Budget: 30 calls per question.
-
-### Interface
-
-```python
-def run_rule_gen(
-    docs: dict[str, str | Path],              # doc_name -> .txt path
-    questions: list[str],                     # exactly one question
-    labels_by_doc: dict[str, dict[str, Any]], # GT for verify_accuracy only
-    model: str = "gpt54",
-    dataset_name: str = "court",
-    split_name: str = "all_docs",
-    rules_dir: str | Path | None = None,
-    results_dir: str | Path | None = None,
-    run_stem: str = "q01",
-) -> dict
-```
-
-Wrappers:
-- `agentic_rule_full_data_gpt54.py`
-- `agentic_rule_full_data_gpt54mini.py`
-
-### Output
-
-The output is a **set of rules**, not baseline QA artifacts.
-
-Rules are written to:
-
-```text
-rules/<dataset>/agentic_rule_full_data_<model>/<split>/<qNN>_<question_slug>/
-  rule_<name>.py
-  ...
-```
-
-Rule-generation metadata is written to:
-
-```text
-results/<dataset>/agentic_rule_full_data_<model>/<split>/<qNN>_<question_slug>_rule_gen.json
-results/<dataset>/agentic_rule_full_data_<model>/<split>/<qNN>_<question_slug>.codex.jsonl
-results/<dataset>/agentic_rule_full_data_<model>/<split>/<qNN>_<question_slug>.codex.last.txt
-results/<dataset>/agentic_rule_full_data_<model>/<split>/<qNN>_<question_slug>.manifest.json
-results/<dataset>/agentic_rule_full_data_<model>/<split>/<qNN>_<question_slug>.verify_accuracy_ledger.json
-```
-
-If a downstream rule-application step is run, its outputs should also stay under the
-same strategy root, for example:
-
-```text
-results/<dataset>/agentic_rule_full_data_<model>/<split>/rule_apply_merge/
-  summary.json
-  run_metadata.json
-  <question_slug>/<doc_name>.json
-  _trace/<question_rule_dir>/<rule_set_slug>_merge.json
-```
-
-The final JSON report contains:
-- final rule names
-- rule directory
-- working sample
-- number of iterations
-- `verify_accuracy` usage/tokens
-- Codex token usage for the rule-generation session
-- cached/reasoning token counts when available
-- Codex log pointers
-
-### Invocation
-
-```bash
-python src/baseline/run_eval_rule_full_data.py \
-  --dataset court \
-  --baseline agentic_rule_full_data_gpt54mini \
-  --model gpt54mini \
-  --question-slug what_isare_the_court_of_appeals_docket_numbers_for_this_case
-```
-
-### Status
-
-Implemented as rule generation only. No unified end-to-end accuracy row is reported here because downstream rule application is intentionally decoupled.
+It is no longer listed here as a pure rule-generation approach.
 
 ---
 
-## Approach 5 — Agent-Coarse (spec only)
+## Approach 4 — Agent-Coarse (spec only)
 
 **Code:** `src/rule_gen_agent_coarse.py` — **not yet implemented**  
 **Doc:** `docs/rule_gen_agent_coarse.md`
@@ -370,7 +255,7 @@ Spec complete. No results — code not implemented.
 
 ---
 
-## Approach 6 — Agent-Exact (spec only)
+## Approach 5 — Agent-Exact (spec only)
 
 **Code:** `src/rule_gen_agent_exact.py` — **not yet implemented**  
 **Doc:** `docs/rule_gen_agent_exact.md`

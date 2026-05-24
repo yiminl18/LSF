@@ -412,7 +412,7 @@ Implemented. Metrics will be filled in after baseline runs are completed.
 `Agentic Rule Full Data` is no longer described as a baseline here.
 
 It has been split into:
-- **rule generation**: documented in [docs/approach/rule_generation.md](/Users/yiminglin/Documents/Codebase/LSF/docs/approach/rule_generation.md)
+- **rule generation / end-to-end usage**: documented in [docs/approach/rule_end_to_end.md](/Users/yiminglin/Documents/Codebase/LSF/docs/approach/rule_end_to_end.md)
 - **rule application**: use any existing rule-application strategy in the codebase (`rule_apply_merge`, `default_rule`, `rule_apply_individual`, etc.)
 
 The current code under `src/baseline/agentic_rule_full_data*.py` now handles only the rule-generation half and returns a final set of rules plus rule-generation metadata. It does not write per-doc baseline result artifacts.
