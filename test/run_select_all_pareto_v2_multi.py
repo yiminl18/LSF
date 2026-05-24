@@ -23,12 +23,12 @@ from rule_refinement.select_rules_pareto_v2 import run_selection_pareto_v2
 QUERIES_FILE        = "data/financebench/mix_doc_queries.txt"
 LABELS_FILE         = "data/financebench/sample/multi_cluster/random/sample_doc_labels.json"
 PROCESSING_DIR      = "data/financebench/processing"
-RULES_BASE_DIR      = "rules/financebench_multi_clusters/llm/gpt54/one_shot"
-EVAL_MERGE_DIR      = "results/financebench_multi_clusters/llm/gpt54/one_shot/eval_merge"
-EVAL_INDIVIDUAL_DIR = "results/financebench_multi_clusters/llm/gpt54/one_shot/eval_individual"
-COST_PROFILE_DIR    = "results/financebench_multi_clusters/llm/gpt54/one_shot/cost_profile"
-SELECTOR_RUN_DIR    = "results/financebench_multi_clusters/llm/gpt54/one_shot/selector_run_pareto_v2"
-OUTPUT_DIR          = "results/financebench_multi_clusters/llm/gpt54/one_shot/selected_rules_pareto_v2"
+RULES_BASE_DIR      = "rules/financebench/lsf/multi_clusters/llm/gpt54/one_shot"
+EVAL_MERGE_DIR      = "results/financebench/lsf/multi_clusters/llm/gpt54/one_shot/eval_merge"
+EVAL_INDIVIDUAL_DIR = "results/financebench/lsf/multi_clusters/llm/gpt54/one_shot/eval_individual"
+COST_PROFILE_DIR    = "results/financebench/lsf/multi_clusters/llm/gpt54/one_shot/cost_profile"
+SELECTOR_RUN_DIR    = "results/financebench/lsf/multi_clusters/llm/gpt54/one_shot/selector_run_pareto_v2"
+OUTPUT_DIR          = "results/financebench/lsf/multi_clusters/llm/gpt54/one_shot/selected_rules_pareto_v2"
 KNEE_LAMBDA         = 10.0
 MODEL_NAME          = "gpt54"
 

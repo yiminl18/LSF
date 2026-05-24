@@ -28,10 +28,10 @@ from rule_apply_merge import rule_apply_merge
 QUERIES_FILE    = "data/financebench/sample_queries.txt"
 LABELS_FILE     = "data/financebench/sample/single_cluster/random/sample_doc_labels.json"
 PROCESSING_DIR  = "data/financebench/processing"
-RULES_BASE_DIR  = "rules/financebench_single_cluster/llm/gpt54/one_shot"
-SELECTED_DIR    = "results/financebench_single_cluster/llm/gpt54/one_shot/selected_rules_pareto_gpt54mini"
-MERGE_RUN_DIR   = "results/financebench_single_cluster/llm/gpt54/one_shot/eval_pareto_gpt54mini/run_sampled"
-OUTPUT_DIR      = "results/financebench_single_cluster/llm/gpt54/one_shot/eval_pareto_gpt54mini"
+RULES_BASE_DIR  = "rules/financebench/lsf/single_cluster/llm/gpt54/one_shot"
+SELECTED_DIR    = "results/financebench/lsf/single_cluster/llm/gpt54/one_shot/selected_rules_pareto_gpt54mini"
+MERGE_RUN_DIR   = "results/financebench/lsf/single_cluster/llm/gpt54/one_shot/eval_pareto_gpt54mini/run_sampled"
+OUTPUT_DIR      = "results/financebench/lsf/single_cluster/llm/gpt54/one_shot/eval_pareto_gpt54mini"
 EVAL_MODEL_NAME = "gpt54"
 
 model_mod = importlib.import_module(f"models.{EVAL_MODEL_NAME}")

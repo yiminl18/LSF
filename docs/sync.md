@@ -148,7 +148,7 @@ gcloud compute scp --recurse \
     --tunnel-through-iap
 ```
 
-Replace `<folder>` with the specific subdirectory (e.g. `financebench_single_cluster/llm/gpt54/one_shot/eval_merge`). The trailing slash on the destination keeps the source folder name intact under the local `results/` directory.
+Replace `<folder>` with the specific subdirectory (e.g. `financebench/lsf/single_cluster/llm/gpt54/one_shot/eval_merge`). The trailing slash on the destination keeps the source folder name intact under the local `results/` directory.
 
 ### Option B — `git pull` (when the server commits results)
 
@@ -182,8 +182,8 @@ gcloud compute ssh lsf --zone=us-central1-a --project=doc-structure --tunnel-thr
 git pull origin yiming-dev                 # if the job committed outputs
 # OR
 gcloud compute scp --recurse \
-    lsf:~/LSF/results/financebench_single_cluster/llm/gpt54/one_shot/eval_merge \
-    /Users/yiminglin/Documents/Codebase/LSF/results/financebench_single_cluster/llm/gpt54/one_shot/ \
+    lsf:~/LSF/results/financebench/lsf/single_cluster/llm/gpt54/one_shot/eval_merge \
+    /Users/yiminglin/Documents/Codebase/LSF/results/financebench/lsf/single_cluster/llm/gpt54/one_shot/ \
     --zone=us-central1-a --project=doc-structure --tunnel-through-iap
 ```
 

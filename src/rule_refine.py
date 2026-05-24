@@ -223,8 +223,8 @@ def rule_refine(
     question_slug: str,
     documents: list[dict],
     ground_truth: dict,
-    rules_dir: str = "rules/financebench_single_cluster/llm/gpt54/one_shot",
-    output_dir: str = "rules/financebench_single_cluster/llm/gpt54/refine",
+    rules_dir: str = "rules/financebench/lsf/single_cluster/llm/gpt54/one_shot",
+    output_dir: str = "rules/financebench/lsf/single_cluster/llm/gpt54/refine",
     model_name: str = "gpt54",
     target_accuracy: float | None = None,
 ) -> dict:

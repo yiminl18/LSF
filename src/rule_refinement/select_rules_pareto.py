@@ -29,7 +29,7 @@ from rule_refinement.baseline_targets  import load_target_docs
 from rule_refinement.coverage_check    import load_or_compute_coverage, filter_by_tau
 
 _DEFAULT_OUTPUT_DIR = (
-    "results/financebench_single_cluster/llm/gpt54/one_shot/selector_run_pareto"
+    "results/financebench/lsf/single_cluster/llm/gpt54/one_shot/selector_run_pareto"
 )
 
 

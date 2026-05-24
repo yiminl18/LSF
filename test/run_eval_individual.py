@@ -18,9 +18,9 @@ from eval_rule import eval_rule
 QUERIES_FILE   = "data/financebench/sample_queries.txt"
 LABELS_FILE    = "data/financebench/sample/single_cluster/random/sample_doc_labels.json"
 PROCESSING_DIR = "data/financebench/processing"
-RULES_BASE_DIR = "rules/financebench_single_cluster/llm/gpt54/one_shot"
-RULE_RUN_DIR   = "results/financebench_single_cluster/llm/gpt54/one_shot/rule_run_individual"
-OUTPUT_DIR     = "results/financebench_single_cluster/llm/gpt54/one_shot/eval_individual"
+RULES_BASE_DIR = "rules/financebench/lsf/single_cluster/llm/gpt54/one_shot"
+RULE_RUN_DIR   = "results/financebench/lsf/single_cluster/llm/gpt54/one_shot/rule_run_individual"
+OUTPUT_DIR     = "results/financebench/lsf/single_cluster/llm/gpt54/one_shot/eval_individual"
 
 
 def make_slug(q: str) -> str:

@@ -28,9 +28,9 @@ from rule_refinement.eval_judge import judge
 QUERIES_FILE    = "data/financebench/mix_doc_queries.txt"
 LABELS_FILE     = "data/financebench/sample/multi_cluster/random/unsampled_doc_labels.json"
 PROCESSING_DIR  = "data/financebench/processing"
-RULES_BASE_DIR  = "rules/financebench_multi_clusters/llm/gpt54/one_shot"
-SELECTED_DIR    = "results/financebench_multi_clusters/llm/gpt54/one_shot/selected_rules_agent"
-OUTPUT_DIR      = "results/financebench_multi_clusters/llm/gpt54/one_shot/eval_agentic_fallback"
+RULES_BASE_DIR  = "rules/financebench/lsf/multi_clusters/llm/gpt54/one_shot"
+SELECTED_DIR    = "results/financebench/lsf/multi_clusters/llm/gpt54/one_shot/selected_rules_agent"
+OUTPUT_DIR      = "results/financebench/lsf/multi_clusters/llm/gpt54/one_shot/eval_agentic_fallback"
 RELEVANCE_MODEL = "gpt54mini"
 QA_MODEL        = "gpt54"
 

@@ -29,12 +29,12 @@ from rule_refinement.select_rules import run_selection
 QUERIES_FILE        = "data/financebench/sample_queries.txt"
 LABELS_FILE         = "data/financebench/sample/single_cluster/random/sample_doc_labels.json"
 PROCESSING_DIR      = "data/financebench/processing"
-RULES_BASE_DIR      = "rules/financebench_single_cluster/llm/gpt54/one_shot"
-EVAL_MERGE_DIR      = "results/financebench_single_cluster/llm/gpt54/one_shot/eval_merge"
-EVAL_INDIVIDUAL_DIR = "results/financebench_single_cluster/llm/gpt54/one_shot/eval_individual"
-COST_PROFILE_DIR    = "results/financebench_single_cluster/llm/gpt54/one_shot/cost_profile"
-SELECTOR_RUN_DIR    = "results/financebench_single_cluster/llm/gpt54/one_shot/selector_run"
-OUTPUT_DIR          = "results/financebench_single_cluster/llm/gpt54/one_shot/selected_rules"
+RULES_BASE_DIR      = "rules/financebench/lsf/single_cluster/llm/gpt54/one_shot"
+EVAL_MERGE_DIR      = "results/financebench/lsf/single_cluster/llm/gpt54/one_shot/eval_merge"
+EVAL_INDIVIDUAL_DIR = "results/financebench/lsf/single_cluster/llm/gpt54/one_shot/eval_individual"
+COST_PROFILE_DIR    = "results/financebench/lsf/single_cluster/llm/gpt54/one_shot/cost_profile"
+SELECTOR_RUN_DIR    = "results/financebench/lsf/single_cluster/llm/gpt54/one_shot/selector_run"
+OUTPUT_DIR          = "results/financebench/lsf/single_cluster/llm/gpt54/one_shot/selected_rules"
 TAU                 = 0.20
 MODEL_NAME          = "gpt54"
 

@@ -22,9 +22,9 @@ model_mod = importlib.import_module("models.gpt54")
 QUERIES_FILE   = "data/financebench/sample_queries.txt"
 LABELS_FILE    = "data/financebench/sample/single_cluster/random/sample_doc_labels.json"
 PROCESSING_DIR = "data/financebench/processing"
-RULES_BASE_DIR = "rules/financebench_single_cluster/llm/gpt54/one_shot"
-MERGE_RUN_DIR  = "results/financebench_single_cluster/llm/gpt54/one_shot/rule_run_merge"
-OUTPUT_DIR     = "results/financebench_single_cluster/llm/gpt54/one_shot/eval_merge"
+RULES_BASE_DIR = "rules/financebench/lsf/single_cluster/llm/gpt54/one_shot"
+MERGE_RUN_DIR  = "results/financebench/lsf/single_cluster/llm/gpt54/one_shot/rule_run_merge"
+OUTPUT_DIR     = "results/financebench/lsf/single_cluster/llm/gpt54/one_shot/eval_merge"
 
 _JUDGE_SYSTEM = """\
 You are an answer equivalence judge for a financial document QA system.

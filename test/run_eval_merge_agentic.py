@@ -5,7 +5,7 @@ sample set the rules were generated from (random vs FPS) and which split to
 evaluate against (sampled vs unsampled).
 
 Outputs go to <results_dir>/eval_merge_{sampled,unsampled}/<slug>.json,
-where <results_dir> = results/financebench_single_cluster/agent/opus47/
+where <results_dir> = results/financebench/lsf/single_cluster/agent/opus47/
                        {agentic | agentic_fps}/raw/
 
 Usage:
@@ -50,16 +50,16 @@ def sample_set_config(name: str) -> dict:
             "sampled_labels":   "data/financebench/sample/single_cluster/random/sample_doc_labels.json",
             "unsampled_labels": "data/financebench/sample/single_cluster/random/unsampled_doc_labels.json",
             "slug_suffix":      "_10_agentic",
-            "rules_dir":        "rules/financebench_single_cluster/agent/opus47/agentic/raw",
-            "results_dir":      "results/financebench_single_cluster/agent/opus47/agentic/raw",
+            "rules_dir":        "rules/financebench/lsf/single_cluster/agent/opus47/agentic/raw",
+            "results_dir":      "results/financebench/lsf/single_cluster/agent/opus47/agentic/raw",
         }
     if name == "fps":
         return {
             "sampled_labels":   "data/financebench/sample/single_cluster/fps/sample_doc_labels.json",
             "unsampled_labels": "data/financebench/sample/single_cluster/fps/unsampled_doc_labels.json",
             "slug_suffix":      "_10_agentic_fps",
-            "rules_dir":        "rules/financebench_single_cluster/agent/opus47/agentic_fps/raw",
-            "results_dir":      "results/financebench_single_cluster/agent/opus47/agentic_fps/raw",
+            "rules_dir":        "rules/financebench/lsf/single_cluster/agent/opus47/agentic_fps/raw",
+            "results_dir":      "results/financebench/lsf/single_cluster/agent/opus47/agentic_fps/raw",
         }
     raise ValueError(f"unknown sample-set: {name!r}")
 

@@ -17,8 +17,8 @@ from rule_gen_llm_coarse import rule_gen_llm_coarse
 QUERIES_FILE   = "data/financebench/sample_queries.txt"
 LABELS_FILE    = "data/financebench/sample/single_cluster/random/sample_doc_labels.json"
 PROCESSING_DIR = "data/financebench/processing"
-RULES_DIR      = "rules/financebench_single_cluster/llm/gpt54/one_shot"
-OUTPUT_DIR     = "results/financebench_single_cluster/llm/gpt54/one_shot/rule_gen"
+RULES_DIR      = "rules/financebench/lsf/single_cluster/llm/gpt54/one_shot"
+OUTPUT_DIR     = "results/financebench/lsf/single_cluster/llm/gpt54/one_shot/rule_gen"
 
 # ---------------------------------------------------------------------------
 # STEP 1 — Load questions

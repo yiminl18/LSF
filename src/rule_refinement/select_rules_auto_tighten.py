@@ -28,7 +28,7 @@ from rule_refinement.baseline_targets import load_target_docs
 from rule_refinement.coverage_check import filter_by_tau, load_or_compute_coverage
 
 _DEFAULT_OUTPUT_DIR = (
-    "results/financebench_single_cluster/llm/gpt54/refine_dynamic_generality/selector_run_auto"
+    "results/financebench/lsf/single_cluster/llm/gpt54/refine_dynamic_generality/selector_run_auto"
 )
 
 

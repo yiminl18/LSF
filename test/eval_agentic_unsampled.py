@@ -26,10 +26,10 @@ from rule_apply_merge import rule_apply_merge
 QUERIES_FILE    = "data/financebench/sample_queries.txt"
 LABELS_FILE     = "data/financebench/sample/single_cluster/random/unsampled_doc_labels.json"
 PROCESSING_DIR  = "data/financebench/processing"
-RULES_BASE_DIR  = "rules/financebench_single_cluster/llm/gpt54/one_shot"
-SELECTED_DIR    = "results/financebench_single_cluster/llm/gpt54/one_shot/selected_rules_agent"
-MERGE_RUN_DIR   = "results/financebench_single_cluster/llm/gpt54/one_shot/eval_agentic/run_unsampled"
-OUTPUT_DIR      = "results/financebench_single_cluster/llm/gpt54/one_shot/eval_agentic"
+RULES_BASE_DIR  = "rules/financebench/lsf/single_cluster/llm/gpt54/one_shot"
+SELECTED_DIR    = "results/financebench/lsf/single_cluster/llm/gpt54/one_shot/selected_rules_agent"
+MERGE_RUN_DIR   = "results/financebench/lsf/single_cluster/llm/gpt54/one_shot/eval_agentic/run_unsampled"
+OUTPUT_DIR      = "results/financebench/lsf/single_cluster/llm/gpt54/one_shot/eval_agentic"
 EVAL_MODEL_NAME = "gpt54"
 
 model_mod = importlib.import_module(f"models.{EVAL_MODEL_NAME}")

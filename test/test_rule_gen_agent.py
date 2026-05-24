@@ -11,7 +11,7 @@ _ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(_ROOT / "src"))
 os.chdir(_ROOT)
 
-from rule_gen_agent import rule_gen_agent
+from rule_gen_agent_langchain import rule_gen_agent
 
 LABELS_FILE    = "data/financebench/sample/single_cluster/random/sample_doc_labels.json"
 PROCESSING_DIR = "data/financebench/processing"

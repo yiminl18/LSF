@@ -152,8 +152,8 @@ def main():
     parser.add_argument("--sample-labels",    default="data/financebench/sample/single_cluster/random/sample_doc_labels.json")
     parser.add_argument("--unsampled-labels", default="data/financebench/sample/single_cluster/random/unsampled_doc_labels.json")
     parser.add_argument("--processing-dir",   default="data/financebench/processing")
-    parser.add_argument("--rules-dir",        default="rules/financebench_single_cluster/llm/gpt54/one_shot")
-    parser.add_argument("--output-dir",       default="results/financebench_single_cluster/agent/gpt54/raw")
+    parser.add_argument("--rules-dir",        default="rules/financebench/lsf/single_cluster/llm/gpt54/one_shot")
+    parser.add_argument("--output-dir",       default="results/financebench/lsf/single_cluster/agent/gpt54/raw")
     parser.add_argument("--use-refine",        action="store_true")
     parser.add_argument("--skip-existing",     action="store_true")
     parser.add_argument("--agent-rules",       action="store_true",

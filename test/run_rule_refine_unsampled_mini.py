@@ -1,12 +1,12 @@
 """Select minimal-cost rule subsets on unsampled docs using gpt-5.4-mini + rule_refine.py.
 
 For each question:
-  - candidate pool : rules/financebench_single_cluster/llm/gpt54/one_shot/<slug>_10_llm/
+  - candidate pool : rules/financebench/lsf/single_cluster/llm/gpt54/one_shot/<slug>_10_llm/
   - training docs  : all 50 unsampled docs
   - target accuracy: all-rules merge accuracy on unsampled (from one_shot eval_merge)
   - model          : gpt54mini (gpt-5.4-mini)
 
-Output: rules/financebench_single_cluster/llm/gpt54mini/refine_unsampled/
+Output: rules/financebench/lsf/single_cluster/llm/gpt54mini/refine_unsampled/
 """
 
 from __future__ import annotations
@@ -27,8 +27,8 @@ from rule_refine import rule_refine
 QUERIES_FILE        = "data/financebench/sample_queries.txt"
 LABELS_FILE         = "data/financebench/sample/single_cluster/random/unsampled_doc_labels.json"
 PROCESSING_DIR      = "data/financebench/processing"
-ONE_SHOT_RULES_DIR  = "rules/financebench_single_cluster/llm/gpt54/one_shot"
-OUTPUT_DIR          = "rules/financebench_single_cluster/llm/gpt54mini/refine_unsampled"
+ONE_SHOT_RULES_DIR  = "rules/financebench/lsf/single_cluster/llm/gpt54/one_shot"
+OUTPUT_DIR          = "rules/financebench/lsf/single_cluster/llm/gpt54mini/refine_unsampled"
 MODEL_NAME          = "gpt54mini"
 
 

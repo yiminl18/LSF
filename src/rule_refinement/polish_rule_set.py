@@ -22,7 +22,7 @@ from rule_apply_merge import rule_apply_merge
 from rule_refinement.eval_judge import judge
 
 _DEFAULT_OUTPUT_DIR = (
-    "results/financebench_single_cluster/llm/gpt54/one_shot/selector_run"
+    "results/financebench/lsf/single_cluster/llm/gpt54/one_shot/selector_run"
 )
 
 

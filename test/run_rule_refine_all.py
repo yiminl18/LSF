@@ -17,9 +17,9 @@ from rule_refine import rule_refine
 QUERIES_FILE   = "data/financebench/sample_queries.txt"
 LABELS_FILE    = "data/financebench/sample/single_cluster/random/sample_doc_labels.json"
 PROCESSING_DIR = "data/financebench/processing"
-RULES_BASE_DIR = "rules/financebench_single_cluster/llm/gpt54/one_shot"
-EVAL_DIR       = "results/financebench_single_cluster/llm/gpt54/one_shot/eval_merge"
-OUTPUT_DIR     = "rules/financebench_single_cluster/llm/gpt54/refine"
+RULES_BASE_DIR = "rules/financebench/lsf/single_cluster/llm/gpt54/one_shot"
+EVAL_DIR       = "results/financebench/lsf/single_cluster/llm/gpt54/one_shot/eval_merge"
+OUTPUT_DIR     = "rules/financebench/lsf/single_cluster/llm/gpt54/refine"
 
 
 def make_slug(q: str) -> str:

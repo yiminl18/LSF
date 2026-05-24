@@ -40,7 +40,7 @@ from rule_refinement.select_rules_pareto import (
 )
 
 _DEFAULT_OUTPUT_DIR = (
-    "results/financebench_single_cluster/llm/gpt54/one_shot/selector_run_pareto_proxy"
+    "results/financebench/lsf/single_cluster/llm/gpt54/one_shot/selector_run_pareto_proxy"
 )
 
 

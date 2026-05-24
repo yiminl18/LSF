@@ -28,9 +28,9 @@ from rule_refinement.eval_judge    import judge
 QUERIES_FILE    = "data/financebench/sample_queries.txt"
 LABELS_FILE     = "data/financebench/sample/single_cluster/random/unsampled_doc_labels.json"
 PROCESSING_DIR  = "data/financebench/processing"
-RULES_BASE_DIR  = "rules/financebench_single_cluster/llm/gpt54/one_shot"
-SELECTED_DIR    = "results/financebench_single_cluster/llm/gpt54/one_shot/selected_rules_pareto_v2"
-OUTPUT_DIR      = "results/financebench_single_cluster/llm/gpt54/one_shot/eval_pareto_v2_fallback"
+RULES_BASE_DIR  = "rules/financebench/lsf/single_cluster/llm/gpt54/one_shot"
+SELECTED_DIR    = "results/financebench/lsf/single_cluster/llm/gpt54/one_shot/selected_rules_pareto_v2"
+OUTPUT_DIR      = "results/financebench/lsf/single_cluster/llm/gpt54/one_shot/eval_pareto_v2_fallback"
 RELEVANCE_MODEL = "gpt54mini"
 QA_MODEL        = "gpt54"
 

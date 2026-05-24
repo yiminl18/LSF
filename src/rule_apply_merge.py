@@ -43,8 +43,8 @@ def rule_apply_merge(
     question_slug: str,
     question: str,
     model_name: str = "gpt54",
-    rules_dir: str = "rules/financebench_single_cluster/llm/gpt54/one_shot",
-    output_dir: str = "results/financebench_single_cluster/llm/gpt54/one_shot/rule_run_merge",
+    rules_dir: str = "rules/financebench/lsf/single_cluster/llm/gpt54/one_shot",
+    output_dir: str = "results/financebench/lsf/single_cluster/llm/gpt54/one_shot/rule_run_merge",
     system_prompt: str | None = None,
 ) -> dict:
     """Apply a set of rules, union the retrieved spans, and call the LLM to answer."""
@@ -201,9 +201,9 @@ if __name__ == "__main__":
     slug = re.sub(r"\s+", "_", slug)
     question_slug = slug[:60]
 
-    rule_dirs = sorted(_glob.glob(str(_ROOT / "rules/financebench_single_cluster/llm/gpt54/one_shot" / f"{question_slug}*")))
+    rule_dirs = sorted(_glob.glob(str(_ROOT / "rules/financebench/lsf/single_cluster/llm/gpt54/one_shot" / f"{question_slug}*")))
     if not rule_dirs:
-        print(f"No rule folders found matching rules/financebench_single_cluster/llm/gpt54/one_shot/{question_slug}*/")
+        print(f"No rule folders found matching rules/financebench/lsf/single_cluster/llm/gpt54/one_shot/{question_slug}*/")
         sys.exit(1)
     rule_dir = rule_dirs[-1]
     folder_slug = Path(rule_dir).name

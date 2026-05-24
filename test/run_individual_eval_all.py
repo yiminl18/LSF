@@ -38,13 +38,13 @@ QUESTIONS = [
 ]
 
 SPLITS = [
-    ("sampled", "data/financebench/sample/single_cluster/random/sample_doc_labels.json", "results/financebench_single_cluster/llm/gpt54/one_shot/eval_individual"),
+    ("sampled", "data/financebench/sample/single_cluster/random/sample_doc_labels.json", "results/financebench/lsf/single_cluster/llm/gpt54/one_shot/eval_individual"),
 ]
 
 CORRECT_LABELS = "data/financebench/correct_labels.json"
 PROCESSING_DIR = "data/financebench/processing"
-RULES_BASE     = _ROOT / "rules/financebench_single_cluster/llm/gpt54/one_shot"
-RULE_RUN_DIR   = "results/financebench_single_cluster/llm/gpt54/one_shot/rule_run_individual"
+RULES_BASE     = _ROOT / "rules/financebench/lsf/single_cluster/llm/gpt54/one_shot"
+RULE_RUN_DIR   = "results/financebench/lsf/single_cluster/llm/gpt54/one_shot/rule_run_individual"
 
 
 def get_doc_names(labels_file: str) -> list[str]:
@@ -86,7 +86,7 @@ for question, slug in QUESTIONS:
                         rule_name=rule_name,
                         question_slug=slug,
                         question=question,
-                        rules_dir="rules/financebench_single_cluster/llm/gpt54/one_shot",
+                        rules_dir="rules/financebench/lsf/single_cluster/llm/gpt54/one_shot",
                         output_dir=RULE_RUN_DIR,
                     )
                 except Exception as exc:
@@ -162,7 +162,7 @@ for question, slug in QUESTIONS:
                 }
     aggregate.append(entry)
 
-agg_path = Path("results/financebench_single_cluster/llm/gpt54/one_shot/eval_individual/summary.json")
+agg_path = Path("results/financebench/lsf/single_cluster/llm/gpt54/one_shot/eval_individual/summary.json")
 agg_path.parent.mkdir(parents=True, exist_ok=True)
 agg_path.write_text(json.dumps(aggregate, ensure_ascii=False, indent=2), encoding="utf-8")
 print(f"Saved aggregate: {agg_path}")
