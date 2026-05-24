@@ -5,24 +5,49 @@ Most baselines take a **question + document** and produce an answer, logging tok
 Some planned variants change the execution granularity while keeping the same final per-pair result format.
 Baselines are the comparison floor for the LSF rule-based retrieval pipeline.
 
-**Dataset:** FinanceBench single-cluster (10 sampled docs, 50 unsampled docs, 10 questions).
-**Evaluation:** gpt54 judge (same as rule-gen eval).
+**Evaluation:** gpt54 judge for all datasets.
 
 ---
 
 ## Summary table
 
-| # | Strategy | Model | Acc | Latency | CostRatio |
-|---|----------|-------|----:|--------:|----------:|
-| 1 | **Agentic Claude QA** | opus47 | 0.9466 | 10.3s | 0.9112 |
-| 2 | **Agentic Claude QA** | sonnet | 0.8788 | 41.3s | 1.8006 |
-| 3 | **Agentic Codex QA** | gpt54 | 0.9102 | 20.3s | 1.3221 |
-| 4 | **Agentic Codex QA** | gpt54mini | 0.8800 | 15.1s | 1.2878 |
-| 5 | **Agentic Codex QA (All Docs + All Queries)** | gpt54 | — | — | — |
+Results are shown per dataset. `Acc` = fraction correct over all completed (question, doc) pairs. `CostRatio` = mean(input\_tokens / doc\_tokens) where doc\_tokens ≈ chars÷4 from the plain-text file. `n` = total (question, doc) pairs evaluated. Cells marked `†` indicate a compromised run (rate-limited or CLI error — treat as invalid).
 
-- `Acc` = fraction correct over all completed (question, doc) pairs; judge: gpt54
-- `CostRatio` = mean(input_tokens / total_doc_tokens) per pair; total_doc_tokens approximated as chars÷4 from reconstructed JSON text spans
-- Rows 2 and 4 are based on partial runs (in progress)
+**Note on CostRatio for per-pair Codex baselines:** Each Codex session carries a large fixed overhead (~45k tokens) from the CLI's built-in system prompt and tool definitions, paid once per session regardless of doc size. Input token breakdown for a typical court pair: Codex system prompt + tool defs = 93.6%, doc content read = 6.0%, our user prompt = 0.4%. This makes CostRatio highly sensitive to doc size — short docs (court avg 13k tokens, nopv avg 3.6k) produce inflated ratios while long docs (finance avg 95k) produce ratios near 1. The all-docs variant (`Agentic Codex QA All`) amortizes this fixed cost across all docs in one session, giving much lower per-doc cost ratios.
+
+### FinanceBench (10 questions)
+
+| Strategy | Model | Acc | Latency | CostRatio | n | Notes |
+|----------|-------|----:|--------:|----------:|--:|-------|
+| Agentic Claude QA | opus47 | **0.9466** | 10.3s | 0.91 | 431 | avg over 431 completed pairs |
+| Agentic Claude QA | sonnet | 0.8945 | 39.3s | 1.74 | 237 | avg over 237 completed pairs |
+| Agentic Codex QA | gpt54 | 0.9308 | 21.6s | 1.45 | 390 | 39 docs/q |
+| Agentic Codex QA | gpt54mini | 0.8780 | 15.2s | 1.30 | 590 | 59 docs/q (all) |
+
+### Court (13 questions, 50 docs)
+
+| Strategy | Model | Acc | Latency | CostRatio | n | Notes |
+|----------|-------|----:|--------:|----------:|--:|-------|
+| Agentic Claude QA txt | opus47 | 0.9573 | 20.0s | 25.16 | 117 | avg over 117 completed pairs |
+| Agentic Claude QA txt | sonnet | 0.9046 | 13.0s | 15.57 | 650 | 13q × 50 docs |
+| Agentic Codex QA txt | gpt54 | **0.9092** | 15.1s | 33.32 | 650 | 13q × 50 docs |
+| Agentic Codex QA txt | gpt54mini | 0.9062 | 8.4s | 30.80 | 650 | 13q × 50 docs |
+| Agentic Codex QA All txt | gpt54 | 0.8803 | 0.7s | 1.33 | 2,940 | 10q × 294 docs |
+| Agentic Codex QA All txt | gpt54mini | 0.8667 | 0.6s | 1.61 | 2,940 | 10q × 294 docs |
+
+### NOPV (24 questions, 100 docs)
+
+| Strategy | Model | Acc | Latency | CostRatio | n | Notes |
+|----------|-------|----:|--------:|----------:|--:|-------|
+| Agentic Codex QA txt | gpt54 | **0.9217** | 14.5s | 33.89 | 1,200 | 24q × 50 docs × 2 batches |
+| Agentic Codex QA txt | gpt54mini | 0.8800 | 10.1s | 30.47 | 1,200 | 24q × 50 docs × 2 batches |
+
+### OfficeQA (16 questions, 50 latest docs)
+
+| Strategy | Model | Acc | Latency | CostRatio | n | Notes |
+|----------|-------|----:|--------:|----------:|--:|-------|
+| Agentic Codex QA txt | gpt54 | **0.8300** | 25.2s | 160.04 | 800 | 16q × 50 docs |
+| Agentic Codex QA txt | gpt54mini | 0.7963 | 18.5s | 164.41 | 800 | 16q × 50 docs |
 
 ---
 
