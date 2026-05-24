@@ -45,6 +45,7 @@ def rule_apply_merge(
     model_name: str = "gpt54",
     rules_dir: str = "rules/financebench_single_cluster/llm/gpt54/one_shot",
     output_dir: str = "results/financebench_single_cluster/llm/gpt54/one_shot/rule_run_merge",
+    system_prompt: str | None = None,
 ) -> dict:
     """Apply a set of rules, union the retrieved spans, and call the LLM to answer."""
 
@@ -120,13 +121,14 @@ def rule_apply_merge(
     # Step 4 — Call LLM
     model_mod = importlib.import_module(f"models.{model_name}")
 
-    system_prompt = (
-        "You are a financial document QA assistant.\n"
-        "You are given a passage extracted from a financial filing and a question.\n"
-        "Answer the question using only the provided passage.\n"
-        'If the passage does not contain enough information to answer, reply with "NOT FOUND".\n'
-        "Return only the answer — a short value or phrase, not a full sentence."
-    )
+    if system_prompt is None:
+        system_prompt = (
+            "You are a financial document QA assistant.\n"
+            "You are given a passage extracted from a financial filing and a question.\n"
+            "Answer the question using only the provided passage.\n"
+            'If the passage does not contain enough information to answer, reply with "NOT FOUND".\n'
+            "Return only the answer — a short value or phrase, not a full sentence."
+        )
     user_prompt = f"Passage:\n{retrieved_text}\n\nQuestion: {question}"
 
     messages = [
