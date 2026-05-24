@@ -1,0 +1,17 @@
+{"step": 1, "tool": "list_docs", "args": "labels=sample_doc_labels.json", "result_summary": "10 sampled 10-K docs listed (Amazon, Amcor, AMD, Apple x3, BestBuy, Corning, GeneralMills, J&J)"}
+{"step": 2, "tool": "read_doc_json", "args": "doc=AMAZON_2015_10K page=1 max-spans=50", "result_summary": "Found SEC cover: H1 'AMAZON.COM, INC.' directly above span '(Exact Name of Registrant as Specified in its Charter)'"}
+{"step": 3, "tool": "read_doc_json", "args": "doc=AMCOR_2021_10K page=1 filter=Registrant", "result_summary": "Disclaimer present with path_text 'AMCOR PLC'"}
+{"step": 4, "tool": "read_doc_json", "args": "doc=CORNING_2022_10K page=1 filter=Registrant", "result_summary": "Disclaimer present with path_text 'CORNING INCORPORATED'"}
+{"step": 5, "tool": "read_doc_json", "args": "doc=JOHNSON_JOHNSON_2022_10K page=1 filter=Registrant", "result_summary": "Disclaimer present with path_text 'JOHNSON & JOHNSON'"}
+{"step": 6, "tool": "write_rule", "args": "name=rule_registrant_name_cover_page", "result_summary": "Wrote disclaimer-anchored rule: walks back from disclaimer to find preceding H1 section_header on page 1"}
+{"step": 7, "tool": "compute_cost", "args": "rules=[rule_registrant_name_cover_page]", "result_summary": "sum_avg_cost_ratio=5.4e-05"}
+{"step": 8, "tool": "verify_accuracy", "args": "rules=[rule_registrant_name_cover_page]", "result_summary": "match_rate=0.9; missed BESTBUY_2015_10K (no disclaimer on Edgar cover page); tokens qa_in=928 qa_out=87 j_in=1930 j_out=61"}
+{"step": 9, "tool": "read_doc_json", "args": "doc=BESTBUY_2015_10K page=1 filter=Registrant", "result_summary": "0 spans match — confirms no disclaimer present"}
+{"step": 10, "tool": "read_doc_json", "args": "doc=BESTBUY_2015_10K page=1 max-spans=60", "result_summary": "Edgar Online cover: first span is H1 'BEST BUY CO INC' size=28.0; registrant is the largest page-1 H1"}
+{"step": 11, "tool": "write_rule", "args": "name=rule_registrant_name_edgar_cover", "result_summary": "Wrote Edgar fallback rule: largest page-1 H1 when no disclaimer present"}
+{"step": 12, "tool": "compute_cost", "args": "rules=[rule_registrant_name_cover_page, rule_registrant_name_edgar_cover]", "result_summary": "edgar rule not yet profiled; sum=5.4e-05"}
+{"step": 13, "tool": "verify_accuracy", "args": "rules=[rule_registrant_name_cover_page, rule_registrant_name_edgar_cover]", "result_summary": "match_rate=1.0 hard_constraint_satisfied=true; tokens qa_in=933 qa_out=89 j_in=1932 j_out=60"}
+{"step": 14, "tool": "compute_cost", "args": "rebuild cache after deleting it", "result_summary": "per_rule cover_page=5.4e-05 edgar=4e-06 sum=5.8e-05"}
+{"step": 15, "tool": "write_rule", "args": "name=rule_registrant_name_h1 (combined)", "result_summary": "Wrote single combined rule: disclaimer anchor primary + largest-H1 fallback; removed the two narrow rules"}
+{"step": 16, "tool": "compute_cost", "args": "rules=[rule_registrant_name_h1]", "result_summary": "sum_avg_cost_ratio=5.8e-05"}
+{"step": 17, "tool": "verify_accuracy", "args": "rules=[rule_registrant_name_h1]", "result_summary": "match_rate=1.0 hard_constraint_satisfied=true; tokens qa_in=933 qa_out=89 j_in=1932 j_out=60"}

@@ -1,0 +1,28 @@
+{"step": 1, "tool": "list_docs", "args": "labels-file=fps/sample_doc_labels.json", "result_summary": "10 docs across 2015-2022 10-Ks (AMAZON, AMCOR, AMD, APPLE x3, BESTBUY, CORNING, GENERALMILLS, JOHNSON_JOHNSON)"}
+{"step": 2, "tool": "read_doc_json", "args": "AMAZON_2015_10K page 1-2 filter='Common Stock'", "result_summary": "cover has 'Common Stock, par value $.01 per share' + 'NASDAQ Global Select Market', no ticker on cover"}
+{"step": 3, "tool": "read_doc_json", "args": "APPLE_2017_10K page 1-2 filter='Common'", "result_summary": "older Apple cover lacks ticker; has 'Common Stock, $0.00001 par value' + 'The Nasdaq Stock Market LLC'"}
+{"step": 4, "tool": "read_doc_json", "args": "AMAZON_2015_10K page 1 full", "result_summary": "old SEC cover layout: separate spans for class, exchange, no trading symbol column"}
+{"step": 5, "tool": "read_doc_json", "args": "APPLE_2017_10K page 1 full", "result_summary": "Apple 2017 cover: class + exchange in split section_header spans, no ticker"}
+{"step": 6, "tool": "read_doc_json", "args": "APPLE_2021_10K page 1 full", "result_summary": "post-2019 layout: 'Trading symbol(s)' label + 'AAPL' value as adjacent spans"}
+{"step": 7, "tool": "read_doc_json", "args": "AMCOR_2021_10K page 1 full", "result_summary": "modern layout: single table span '| Title of each class | Trading symbol(s) | Name of each exchange ... | AMCR | NYSE |'"}
+{"step": 8, "tool": "read_doc_json", "args": "AMD_2019_10K page 1 full", "result_summary": "cover has '(Trading symbol) AMD' + 'Common Stock, $0.01 par value per share' + 'The NASDAQ Global Select Market'"}
+{"step": 9, "tool": "read_doc_json", "args": "BESTBUY_2015_10K page 1 full", "result_summary": "EDGAR cover wrapper: separate spans 'Symbol' then 'BBY'"}
+{"step": 10, "tool": "read_doc_json", "args": "CORNING_2022_10K page 1 full", "result_summary": "split: 'Trading Symbol(s)', 'Common Stock $0.50 par value', 'Name of each exchange ...', 'GLW', 'New York Stock Exchange (NYSE)' (~3 spans apart)"}
+{"step": 11, "tool": "read_doc_json", "args": "GENERALMILLS_2022_10K page 1 full", "result_summary": "table span with 5-row securities listing (GIS + 4 notes)"}
+{"step": 12, "tool": "read_doc_json", "args": "JOHNSON_JOHNSON_2022_10K page 1 full", "result_summary": "header text span + table span with 5-row securities listing (JNJ + 4 notes)"}
+{"step": 13, "tool": "read_doc_json", "args": "AMAZON_2015_10K pages 16-18 filter='AMZN'", "result_summary": "Item 5 Market Information: 'Our common stock is traded on the NASDAQ Global Select Market under the symbol \"AMZN.\"'"}
+{"step": 14, "tool": "read_doc_json", "args": "APPLE_2017_10K + APPLE_2018_10K pages 1-25 filter='AAPL'", "result_summary": "Item 5 sentence: 'common stock is traded on the Nasdaq Stock Market LLC ... under the symbol AAPL'"}
+{"step": 15, "tool": "read_doc_json", "args": "BESTBUY_2015_10K pages 1-30 filter='BBY'", "result_summary": "page 24 Item 5: 'common stock is traded on the New York Stock Exchange under the ticker symbol BBY'"}
+{"step": 16, "tool": "write_rule", "args": "rule_cover_page_security_listing (v1)", "result_summary": "page-1 regex on class/exchange/trading-symbol keywords + 2-span lookahead after Symbol label"}
+{"step": 17, "tool": "write_rule", "args": "rule_traded_under_symbol (v1)", "result_summary": "any-page regex matching 'traded/listed on ... under the (ticker) symbol'"}
+{"step": 18, "tool": "compute_cost", "args": "both rules", "result_summary": "sum_avg_cost_ratio=0.002208"}
+{"step": 19, "tool": "verify_accuracy", "args": "both rules", "result_summary": "match=0.9; CORNING failed (GLW not captured — 3 spans after 'Trading Symbol(s)' label, beyond lookahead=2)"}
+{"step": 20, "tool": "write_rule", "args": "rule_cover_page_security_listing v2 (lookahead 2->5)", "result_summary": "extend post-Symbol-label lookahead to 5 spans"}
+{"step": 21, "tool": "compute_cost", "args": "both rules v2", "result_summary": "sum_avg_cost_ratio=0.002261"}
+{"step": 22, "tool": "verify_accuracy", "args": "both rules v2", "result_summary": "match=0.9; CORNING fixed, but GENERALMILLS QA returned only 'GIS' instead of all 5 securities"}
+{"step": 23, "tool": "verify_accuracy", "args": "both rules v2 (retry)", "result_summary": "match=0.9 same; GENERALMILLS again only enumerated GIS"}
+{"step": 24, "tool": "verify_accuracy", "args": "rule_cover_page_security_listing only", "result_summary": "match=0.6; older filings (Amazon15, Apple17/18, BestBuy) fail (no ticker on cover); GENERALMILLS now PASSES — Item 5 'GIS only' sentence was biasing QA"}
+{"step": 25, "tool": "write_rule", "args": "rule_traded_under_symbol v2 (conditional)", "result_summary": "only fire when cover lacks 'Trading symbol' string — i.e. older filings only"}
+{"step": 26, "tool": "compute_cost", "args": "both rules v3", "result_summary": "sum_avg_cost_ratio=0.00156 (cheaper since rule 2 fires on only 4 docs)"}
+{"step": 27, "tool": "verify_accuracy", "args": "both rules v3", "result_summary": "match=1.0 — hard constraint satisfied"}
+{"step": 28, "tool": "verify_accuracy", "args": "rule_traded_under_symbol only", "result_summary": "cov=0.4 (passes 4 older docs, NOT FOUND on 6 newer ones)"}

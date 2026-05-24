@@ -1,0 +1,20 @@
+{
+  "question": "What is the registrant's telephone number?",
+  "question_slug": "what_is_the_registrants_telephone_number_10_agentic_fps",
+  "mode": "agentic_gen",
+  "model": "opus47",
+  "selected_rules": [
+    "rule_cover_page_phone"
+  ],
+  "selected_avg_cost_ratio_sum": 0.000118,
+  "min_cov": 1.0,
+  "mean_cov": 1.0,
+  "match_rate_on_sampled": 1.0,
+  "iterations": 1,
+  "verify_calls": 1,
+  "tool_llm_calls": 20,
+  "tool_input_tokens": 2993,
+  "tool_output_tokens": 173,
+  "latency_seconds": 126.991,
+  "rationale": "Inspected page-1 spans of all 10 sampled docs to catalogue telephone-number layouts (parenthesised (xxx) xxx-xxxx, hyphenated xxx-xxx-xxxx, international +cc xxx xxxxxxx, and bare 10-digit Best Buy variant). A single regex-based rule that scans page-1 spans for any of these patterns retrieves the phone number for every doc on the first verify call (match_rate=1.0). Cost ratio is 0.000118 (~one tiny span per doc) and coverage is 1.0, so no sibling rules were needed."
+}

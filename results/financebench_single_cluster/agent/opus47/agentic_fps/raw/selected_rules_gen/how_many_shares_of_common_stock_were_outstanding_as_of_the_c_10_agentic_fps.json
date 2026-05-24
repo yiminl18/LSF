@@ -1,0 +1,18 @@
+{
+  "question": "How many shares of common stock were outstanding as of the cover-page reference date?",
+  "question_slug": "how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_agentic_fps",
+  "mode": "agentic_gen",
+  "model": "opus47",
+  "selected_rules": ["rule_cover_shares_outstanding"],
+  "selected_avg_cost_ratio_sum": 0.000319,
+  "min_cov": 0.9,
+  "mean_cov": 0.9,
+  "match_rate_on_sampled": 0.9,
+  "iterations": 2,
+  "verify_calls": 2,
+  "tool_llm_calls": 40,
+  "tool_input_tokens": 7790,
+  "tool_output_tokens": 322,
+  "latency_seconds": 171.967,
+  "rationale": "Inspected the 10 sampled 10-K cover pages and observed a consistent phrasing pattern: a span containing both 'shares' and 'outstanding' on the cover page (pages 1-5), often co-located with the share count. A first version using a +/-2 sibling window missed Amazon's split layout (label and number 3 spans apart); widening to +/-5 same-page siblings restricted to spans containing a comma-separated number recovered Amazon while keeping retrieval tiny (sum_avg_cost_ratio ~3e-4). The only doc that cannot be satisfied is BESTBUY_2015_10K, whose page 3 (where the cover-page share count of 352,185,626 lives in the original PDF) is entirely absent from the reconstructed JSON, so no rule could retrieve a span containing that number. Stopping with one rule since all three soft targets are easily met and the remaining gap is a data extraction limitation, not a rule design issue."
+}

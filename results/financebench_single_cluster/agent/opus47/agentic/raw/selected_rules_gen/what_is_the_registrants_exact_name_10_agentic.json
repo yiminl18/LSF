@@ -1,0 +1,18 @@
+{
+  "question": "What is the registrant's exact name?",
+  "question_slug": "what_is_the_registrants_exact_name_10_agentic",
+  "mode": "agentic_gen",
+  "model": "opus47",
+  "selected_rules": ["rule_registrant_name_before_exact_marker"],
+  "selected_avg_cost_ratio_sum": 6.7e-05,
+  "min_cov": 1.0,
+  "mean_cov": 1.0,
+  "match_rate_on_sampled": 1.0,
+  "iterations": 1,
+  "verify_calls": 1,
+  "tool_llm_calls": 20,
+  "tool_input_tokens": 2879,
+  "tool_output_tokens": 154,
+  "latency_seconds": 120.0,
+  "rationale": "Inspected 7 of 10 cover pages and observed a uniform 10-K layout: the registrant's exact name appears as the span immediately preceding a span whose text contains '(Exact name of registrant as specified in its charter)' (case-insensitive). A single rule keying on that marker achieves cov=1.0 across all 10 sampled docs with negligible retrieval cost (6.7e-5), so no additional sibling rules were needed."
+}

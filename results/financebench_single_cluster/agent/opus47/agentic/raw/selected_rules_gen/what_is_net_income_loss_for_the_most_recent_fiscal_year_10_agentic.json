@@ -1,0 +1,20 @@
+{
+  "question": "What is net income (loss) for the most recent fiscal year?",
+  "question_slug": "what_is_net_income_loss_for_the_most_recent_fiscal_year_10_agentic",
+  "mode": "agentic_gen",
+  "model": "opus47",
+  "selected_rules": [
+    "rule_net_income_summary_or_income_statement"
+  ],
+  "selected_avg_cost_ratio_sum": 0.006015,
+  "min_cov": 1.0,
+  "mean_cov": 1.0,
+  "match_rate_on_sampled": 1.0,
+  "iterations": 4,
+  "verify_calls": 4,
+  "tool_llm_calls": 80,
+  "tool_input_tokens": 34306,
+  "tool_output_tokens": 592,
+  "latency_seconds": 336.044,
+  "rationale": "Inspected the 10 reconstructed JSONs and observed that net income answers live in two layouts: the canonical Consolidated Statements of Income/Operations/Earnings table, and a smaller MD&A summary (e.g., AMCOR p.24, CORNING p.27, J&J p.38 Liquidity). The income-statement-only rule scored 7/10 because for filers with a separate 'attributable to' row (AMCOR, CORNING) the QA model preferred the wrong row, and J&J's million-scale Net earnings didn't match the billion-scale label. A single two-tier rule that prefers the smallest MD&A summary table (Net income attributable to <X>, or billions-scale Net Earnings) and otherwise falls back to the consolidated income statement gives match_rate=1.0 at sum_avg_cost_ratio=0.006."
+}

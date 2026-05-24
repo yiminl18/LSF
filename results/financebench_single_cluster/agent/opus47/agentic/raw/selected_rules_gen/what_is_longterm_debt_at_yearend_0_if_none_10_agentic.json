@@ -1,0 +1,21 @@
+{
+  "question": "What is long-term debt at year-end (0 if none)?",
+  "question_slug": "what_is_longterm_debt_at_yearend_0_if_none_10_agentic",
+  "mode": "agentic_gen",
+  "model": "opus47",
+  "selected_rules": [
+    "rule_balance_sheet_longterm_debt",
+    "rule_debt_note_longterm_debt"
+  ],
+  "selected_avg_cost_ratio_sum": 0.017937,
+  "min_cov": 0.5,
+  "mean_cov": 0.5,
+  "match_rate_on_sampled": 0.7,
+  "iterations": 4,
+  "verify_calls": 4,
+  "tool_llm_calls": 80,
+  "tool_input_tokens": 57817,
+  "tool_output_tokens": 556,
+  "latency_seconds": 420.68,
+  "rationale": "Inspected the balance-sheet layouts of 4 representative 10-Ks; every filing places long-term debt as a line item in a 'Consolidated Balance Sheet' (or 'Financial Position') table that also carries a 'Total current liabilities' row, motivating rule_balance_sheet_longterm_debt (single broad layout signal, cost 0.009). A second rule was added for debt-note and selected-financial-data tables (Note – Debt, Borrowings, Five-Year Selected Financial Data) to provide secondary year-end values; this rescued AMAZON_2016 (year-picking) and CORNING_2022. Three misses persist: AMCOR (gold 5,314.4 comes from the Five-Year table 'incl. capital lease obligations' but QA prefers balance-sheet 5,309.0), AMAZON_2018 (gold 50,708 = LT debt + other LT liabilities, a non-standard sum), and LOCKHEEDMARTIN (gold 15,547 is 'Total debt, net' not the 'Long-term debt, net' line of 15,429). Stopped here: cost (0.018) and rule count (2) are well within soft targets and the remaining failures are gold-label idiosyncrasies that retrieval alone cannot fix."
+}

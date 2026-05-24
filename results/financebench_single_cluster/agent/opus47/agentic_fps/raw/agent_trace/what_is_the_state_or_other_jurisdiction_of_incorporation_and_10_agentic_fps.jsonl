@@ -1,0 +1,19 @@
+{"step": 1, "tool": "list_docs", "args": "--labels-file data/financebench/sample/fps/sample_doc_labels.json", "result_summary": "10 docs found, all 10-K filings (Amazon 2015, Amcor 2021, AMD 2019, Apple 2017/2018/2021, BestBuy 2015, Corning 2022, GeneralMills 2022, JNJ 2022)."}
+{"step": 2, "tool": "read_doc_json", "args": "--doc AMAZON_2015_10K --page 1", "result_summary": "Cover page: 'Delaware' span followed by '(State or Other Jurisdiction of Incorporation or Organization)'; '91-1646860' followed by '(I.R.S. Employer Identification No.)'."}
+{"step": 3, "tool": "read_doc_json", "args": "--doc APPLE_2017_10K --page 1", "result_summary": "Same cover-page layout; EIN appears in span text and also as leaf of structure.path_text 'Apple Inc. | 94-2404110'."}
+{"step": 4, "tool": "read_doc_json", "args": "--doc CORNING_2022_10K --page 1 --filter Employer", "result_summary": "Single span '(I.R.S. Employer Identification No.)' with path 'CORNING INCORPORATED | 16-0393470'."}
+{"step": 5, "tool": "read_doc_json", "args": "--doc JOHNSON_JOHNSON_2022_10K --page 1 --filter Employer", "result_summary": "Same single label span; path 'JOHNSON & JOHNSON | 22-1024240'."}
+{"step": 6, "tool": "read_doc_json", "args": "--doc BESTBUY_2015_10K --page 1 --filter Employer", "result_summary": "No match on page 1 (BestBuy has an EDGAR cover sheet on page 1)."}
+{"step": 7, "tool": "read_doc_json", "args": "--doc GENERALMILLS_2022_10K --page 1 --filter Employer", "result_summary": "Single table span containing 'Delaware | 41-0274440 | (State or other jurisdiction... | (I.R.S. Employer Identification No.)' on page 1."}
+{"step": 8, "tool": "read_doc_json", "args": "--doc BESTBUY_2015_10K --pages 1-10 --filter Employer", "result_summary": "BestBuy EIN is on page 2 in a combined span: '41-0907483 (I.R.S. Employer Identification No.) 55423 (Zip Code)'."}
+{"step": 9, "tool": "read_doc_json", "args": "--doc AMCOR_2021_10K --page 1 --filter Employer", "result_summary": "Standard cover-page layout; '(I.R.S. Employer Identification No.)' span with path 'AMCOR PLC | 98-1455367'."}
+{"step": 10, "tool": "read_doc_json", "args": "--doc AMD_2019_10K --page 1 --filter Employer", "result_summary": "Standard layout; path 'ADVANCED MICRO DEVICES, INC. | (Exact name of registrant as specified in its charter) | 94-1692300'."}
+{"step": 11, "tool": "read_doc_json", "args": "--doc APPLE_2018_10K --page 1 --filter Employer", "result_summary": "Same as Apple 2017."}
+{"step": 12, "tool": "read_doc_json", "args": "--doc APPLE_2021_10K --page 1 --filter Employer", "result_summary": "Same as Apple 2017."}
+{"step": 13, "tool": "write_rule", "args": "rule_cover_state_ein (v1: 'jurisdiction of incorporation' or 'employer identification' + EIN regex, page<=3, include preceding span)", "result_summary": "Rule written successfully (886 bytes)."}
+{"step": 14, "tool": "compute_cost", "args": "--rules rule_cover_state_ein", "result_summary": "sum_avg_cost_ratio=0.000408, very cheap."}
+{"step": 15, "tool": "verify_accuracy", "args": "--rules rule_cover_state_ein (v1)", "result_summary": "match_rate=0.9; missed JOHNSON_JOHNSON (predicted NOT FOUND). Tokens qa(1336/120) j(2097/61)."}
+{"step": 16, "tool": "read_doc_json", "args": "--doc JOHNSON_JOHNSON_2022_10K --page 1 (full)", "result_summary": "JNJ uses '(State of incorporation)' (no word 'jurisdiction'). The rule's label clause missed this — added 'state of incorporation' alternation."}
+{"step": 17, "tool": "write_rule", "args": "rule_cover_state_ein (v2: added 'state of incorporation' alternation) --overwrite", "result_summary": "Rule overwritten (934 bytes)."}
+{"step": 18, "tool": "compute_cost", "args": "--rules rule_cover_state_ein (v2, cache cleared)", "result_summary": "sum_avg_cost_ratio=0.000414."}
+{"step": 19, "tool": "verify_accuracy", "args": "--rules rule_cover_state_ein (v2)", "result_summary": "match_rate=1.0; all 10 docs correct. Hard constraint satisfied. Tokens qa(1343/127) j(2104/60)."}

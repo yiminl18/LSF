@@ -1,0 +1,21 @@
+{
+  "question": "What is/are the trading symbol(s) and listing exchange(s)?",
+  "question_slug": "what_isare_the_trading_symbols_and_listing_exchanges_10_agentic",
+  "mode": "agentic_gen",
+  "model": "opus47",
+  "selected_rules": [
+    "rule_cover_page_trading_symbol_exchange",
+    "rule_symbol_phrase"
+  ],
+  "selected_avg_cost_ratio_sum": 0.003495,
+  "min_cov": 0.4,
+  "mean_cov": 0.55,
+  "match_rate_on_sampled": 1.0,
+  "iterations": 5,
+  "verify_calls": 3,
+  "tool_llm_calls": 60,
+  "tool_input_tokens": 14749,
+  "tool_output_tokens": 557,
+  "latency_seconds": 1037.01,
+  "rationale": "Inspected 5 representative cover pages (AMCOR, EBAY, BOEING, AMAZON_2016, COSTCO, JJ) and found two complementary layout signals. Post-2019 10-Ks expose the trading symbol and exchange in the page-1 'Securities registered pursuant to Section 12(b)' block (often with a 'Trading Symbol(s)' column or short bold/all-cap ticker token), captured by rule_cover_page_trading_symbol_exchange. Pre-2019 filings omit the ticker on the cover but state it as '...trades on <Exchange> under the symbol XYZ' inside Item 1 (Business) or Item 5 (Market for Common Equity), captured by rule_symbol_phrase. The two-rule union covers all 10 sampled docs with match_rate = 1.0; cover-page alone covers 0.4 and symbol-phrase alone covers 0.7."
+}

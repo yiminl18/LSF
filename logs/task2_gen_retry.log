@@ -1,0 +1,70 @@
+sample_set=fps  questions=10  model=opus47  budget=30
+rules_dir   = /mnt/data/LSF/rules/financebench_single_cluster/agent/opus47/agentic_fps/raw
+results_dir = /mnt/data/LSF/results/financebench_single_cluster/agent/opus47/agentic_fps/raw
+
+SKIP (exists): what_is_longterm_debt_at_yearend_0_if_none_10_agentic_fps
+
+SKIP (exists): what_is_net_income_loss_for_the_most_recent_fiscal_year_10_agentic_fps
+
+SKIP (exists): what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_agentic_fps
+
+SKIP (exists): what_is_total_assets_at_yearend_from_the_audited_balance_she_10_agentic_fps
+
+========================================================================
+Question: What is the registrant's telephone number?
+Slug:     what_is_the_registrants_telephone_number_10_agentic_fps
+  status=ok  wall=297.5s
+  AGENTIC_GEN_DONE slug=what_is_the_registrants_telephone_number_10_agentic_fps n_rules=1 sum_cost=0.000118 min_cov=1.0 match_rate=1.0 tool_calls=20 latency_s=126.991
+  rules=1  match_rate=1.0  sum_cost=0.000118
+
+========================================================================
+Question: How many shares of common stock were outstanding as of the cover-page reference date?
+Slug:     how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_agentic_fps
+  status=ok  wall=391.0s
+  AGENTIC_GEN_DONE slug=how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_agentic_fps n_rules=1 sum_cost=0.000319 min_cov=0.9 match_rate=0.9 tool_calls=40 latency_s=171.967
+  rules=1  match_rate=0.9  sum_cost=0.000319
+
+========================================================================
+Question: What is the registrant's exact name?
+Slug:     what_is_the_registrants_exact_name_10_agentic_fps
+  status=ok  wall=307.9s
+  rules=1  match_rate=1.0  sum_cost=5.8e-05
+
+========================================================================
+Question: What is the state (or other jurisdiction) of incorporation and the IRS Employer Identification Number?
+Slug:     what_is_the_state_or_other_jurisdiction_of_incorporation_and_10_agentic_fps
+  status=ok  wall=246.4s
+  rules=1  match_rate=1.0  sum_cost=0.000414
+
+========================================================================
+Question: What is the address of principal executive offices and ZIP code?
+Slug:     what_is_the_address_of_principal_executive_offices_and_zip_c_10_agentic_fps
+  status=ok  wall=185.3s
+  AGENTIC_GEN_DONE slug=what_is_the_address_of_principal_executive_offices_and_zip_c_10_agentic_fps n_rules=1 sum_cost=0.008175 min_cov=1.0 match_rate=1.0 tool_calls=20 latency_s=360.0
+  rules=1  match_rate=1.0  sum_cost=0.008175
+
+========================================================================
+Question: What is/are the trading symbol(s) and listing exchange(s)?
+Slug:     what_isare_the_trading_symbols_and_listing_exchanges_10_agentic_fps
+  status=ok  wall=831.4s
+  rules=2  match_rate=1.0  sum_cost=0.00156
+
+========================================================================
+Driver summary:
+  what_is_longterm_debt_at_yearend_0_if_none_10_agentic_fps     status=skipped     rules= 1  match=  0.9  sum_cost=0.019766  wall=    0s
+  what_is_net_income_loss_for_the_most_recent_fiscal_year_10_agentic_fps  status=skipped     rules= 2  match=  0.9  sum_cost=0.010991  wall=    0s
+  what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_agentic_fps  status=skipped     rules= 1  match=  1.0  sum_cost=0.011823  wall=    0s
+  what_is_total_assets_at_yearend_from_the_audited_balance_she_10_agentic_fps  status=skipped     rules= 2  match=  1.0  sum_cost=0.007682  wall=    0s
+  what_is_the_registrants_telephone_number_10_agentic_fps       status=ok          rules= 1  match=  1.0  sum_cost=0.000118  wall=  298s
+  how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_agentic_fps  status=ok          rules= 1  match=  0.9  sum_cost=0.000319  wall=  391s
+  what_is_the_registrants_exact_name_10_agentic_fps             status=ok          rules= 1  match=  1.0  sum_cost=5.8e-05  wall=  308s
+  what_is_the_state_or_other_jurisdiction_of_incorporation_and_10_agentic_fps  status=ok          rules= 1  match=  1.0  sum_cost=0.000414  wall=  246s
+  what_is_the_address_of_principal_executive_offices_and_zip_c_10_agentic_fps  status=ok          rules= 1  match=  1.0  sum_cost=0.008175  wall=  185s
+  what_isare_the_trading_symbols_and_listing_exchanges_10_agentic_fps  status=ok          rules= 2  match=  1.0  sum_cost=0.00156  wall=  831s
+
+========================================================================
+Totals across 10 question(s):
+  Opus tokens:       in=17,031,081  out=127,130
+  Tool gpt54 tokens: in=279,710  out=5,210  (calls=620)
+  Wallclock total:   2260s (37.7m)
+  Opus cost (reported by CLI): $15.2995

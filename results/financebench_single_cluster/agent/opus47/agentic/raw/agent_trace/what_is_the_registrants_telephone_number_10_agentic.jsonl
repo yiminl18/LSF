@@ -1,0 +1,19 @@
+{"step": 1, "tool": "list_docs", "args": "--labels-file data/financebench/sample_doc_labels.json", "result_summary": "10 sampled 10-K docs listed; spans 699-1936 each"}
+{"step": 2, "tool": "read_doc_json", "args": "--doc AMCOR_2019_10K --pages 1-2 --filter telephone", "result_summary": "Found: 'Registrant's telephone number, including area code: +44 117 9753200' on page 1"}
+{"step": 3, "tool": "read_doc_json", "args": "--doc COSTCO_2017_10K --pages 1-2 --filter telephone", "result_summary": "Found: '...Registrant's telephone number, including area code: (425) 313-8100'"}
+{"step": 4, "tool": "read_doc_json", "args": "--doc BOEING_2018_10K --pages 1-2 --filter telephone", "result_summary": "Found inline phone (312) 544-2000"}
+{"step": 5, "tool": "read_doc_json", "args": "--doc AMAZON_2018_10K --pages 1-2 --filter telephone", "result_summary": "Label span only; phone in separate address span '...(206) 266-1000'"}
+{"step": 6, "tool": "read_doc_json", "args": "--doc EBAY_2021_10K --pages 1-2 --filter telephone", "result_summary": "Found inline phone (408) 376-7108"}
+{"step": 7, "tool": "read_doc_json", "args": "--doc AMAZON_2016_10K --pages 1-2 --filter telephone", "result_summary": "Same pattern as AMAZON 2018 - phone in address span"}
+{"step": 8, "tool": "read_doc_json", "args": "--doc CORNING_2022_10K --pages 1-2 --filter telephone", "result_summary": "Label span only; phone in adjacent span"}
+{"step": 9, "tool": "read_doc_json", "args": "--doc NIKE_2021_10K --pages 1-2 --filter telephone", "result_summary": "Label span only; phone in adjacent span"}
+{"step": 10, "tool": "read_doc_json", "args": "--doc LOCKHEEDMARTIN_2022_10K --pages 1-2 --filter telephone", "result_summary": "Label span only; phone in adjacent span (301) 897-6000"}
+{"step": 11, "tool": "read_doc_json", "args": "--doc JOHNSON_JOHNSON_2022_10K --pages 1-2 --filter telephone", "result_summary": "Found inline phone (732) 524-0400"}
+{"step": 12, "tool": "read_doc_json", "args": "--doc LOCKHEEDMARTIN_2022_10K --page 1", "result_summary": "Confirmed (301) 897-6000 is its own span on cover page; identified two-variant layout"}
+{"step": 13, "tool": "read_doc_json", "args": "--doc AMAZON_2018_10K --page 1", "result_summary": "Confirmed phone '(206) 266-1000' embedded in address span"}
+{"step": 14, "tool": "read_doc_json", "args": "--doc CORNING_2022_10K --pages 1 --filter 607", "result_summary": "Confirmed '607-974-9000' present as standalone span"}
+{"step": 15, "tool": "read_doc_json", "args": "--doc NIKE_2021_10K --pages 1 --filter 503", "result_summary": "Confirmed '(503) 671-6453' as standalone span"}
+{"step": 16, "tool": "read_doc_json", "args": "--doc AMAZON_2016_10K --pages 1 --filter 206", "result_summary": "Confirmed same address+phone span pattern as 2018"}
+{"step": 17, "tool": "write_rule", "args": "--name rule_registrant_telephone_cover_page", "result_summary": "Wrote rule: page-1 spans containing 'telephone' OR matching US/intl phone regex"}
+{"step": 18, "tool": "compute_cost", "args": "--rules rule_registrant_telephone_cover_page", "result_summary": "sum_avg_cost_ratio = 0.000332"}
+{"step": 19, "tool": "verify_accuracy", "args": "--rules rule_registrant_telephone_cover_page --d-star-mode all_labeled", "result_summary": "match_rate=1.0, missed_in_D_star=[], all 10 docs predicted correctly; tokens qa_in=1138 qa_out=118 j_in=2008 j_out=60"}

@@ -1,0 +1,18 @@
+{
+  "question": "What is long-term debt at year-end (0 if none)?",
+  "question_slug": "what_is_longterm_debt_at_yearend_0_if_none_10_agentic_fps",
+  "mode": "agentic_gen",
+  "model": "opus47",
+  "selected_rules": ["rule_consolidated_balance_sheet_ltd"],
+  "selected_avg_cost_ratio_sum": 0.019766,
+  "min_cov": 0.9,
+  "mean_cov": 0.9,
+  "match_rate_on_sampled": 0.9,
+  "iterations": 3,
+  "verify_calls": 3,
+  "tool_llm_calls": 60,
+  "tool_input_tokens": 60163,
+  "tool_output_tokens": 396,
+  "latency_seconds": 307.09,
+  "rationale": "A single rule retrieves the consolidated balance sheet table (label='table', text containing 'long-term debt' or 'term debt' alongside both 'assets' and 'liabilities'), which is uniformly present across all 10 sampled filings. The first version of the rule (only 'long-term debt') missed Apple 2018/2021 because Apple uses 'Term debt' as their line label; broadening to '(long-?term|term) debt' fixed those. The remaining miss is APPLE_2017_10K, whose dataset label ($103,703M) is the sum of current portion of long-term debt ($6,496M) + long-term debt ($97,207M), but the QA agent (correctly per common GAAP semantics) returns the $97,207M balance-sheet line. Adding a sibling rule for the MD&A 'Total term debt' summary table (which contains 103,703 directly) did not change the QA's preference for the balance-sheet line, so it was dropped to keep |R|=1 and cost minimal. Final: 9/10 match, sum_cost ~0.02, well under soft targets."
+}

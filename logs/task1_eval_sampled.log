@@ -1,0 +1,48 @@
+sample_set=random  split=sampled
+questions=10  docs=10  rules_base=rules/financebench_single_cluster/agent/opus47/agentic/raw
+
+
+Question: What is long-term debt at year-end (0 if none)?
+  rules=2  docs=10
+  accuracy=0.70 (7/10)  cost=0.02439
+
+Question: What is net income (loss) for the most recent fiscal year?
+  rules=1  docs=10
+  accuracy=1.00 (10/10)  cost=0.00812
+
+Question: What is total revenue for the most recent fiscal year (from the audited income statement)?
+  rules=3  docs=10
+  accuracy=1.00 (10/10)  cost=0.01024
+
+Question: What is total assets at year-end (from the audited balance sheet)?
+  rules=2  docs=10
+  accuracy=0.90 (9/10)  cost=0.01189
+
+Question: What is the registrant's telephone number?
+  rules=1  docs=10
+  accuracy=1.00 (10/10)  cost=0.00045
+
+Question: How many shares of common stock were outstanding as of the cover-page reference date?
+  rules=2  docs=10
+  accuracy=1.00 (10/10)  cost=0.00057
+
+Question: What is the registrant's exact name?
+  rules=1  docs=10
+  accuracy=1.00 (10/10)  cost=0.00009
+
+Question: What is the state (or other jurisdiction) of incorporation and the IRS Employer Identification Number?
+  rules=1  docs=10
+  accuracy=1.00 (10/10)  cost=0.00041
+
+Question: What is the address of principal executive offices and ZIP code?
+  rules=1  docs=10
+  accuracy=1.00 (10/10)  cost=0.00131
+
+Question: What is/are the trading symbol(s) and listing exchange(s)?
+  rules=2  docs=10
+  accuracy=1.00 (10/10)  cost=0.00468
+
+========================================================================
+  mean accuracy:   0.96
+  mean cost ratio: 0.006215
+  written to:      results/financebench_single_cluster/agent/opus47/agentic/raw/eval_merge_sampled/

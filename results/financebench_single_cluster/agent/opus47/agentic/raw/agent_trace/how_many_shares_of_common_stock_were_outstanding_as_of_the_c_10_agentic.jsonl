@@ -1,0 +1,26 @@
+{"step": 1, "tool": "list_docs", "args": "--labels-file data/financebench/sample_doc_labels.json", "result_summary": "10 docs listed; span counts 699-1936; pages 74-159"}
+{"step": 2, "tool": "read_doc_json", "args": "--doc AMCOR_2019_10K --pages 1-2 --filter shares", "result_summary": "Found 'As of August 29, 2019, the Registrant had 1,625,907,855 shares issued and outstanding.' on page 2"}
+{"step": 3, "tool": "read_doc_json", "args": "--doc AMAZON_2018_10K --pages 1-2 --filter shares", "result_summary": "Label span 'Number of shares of common stock outstanding as of January 23, 2019' on page 1 (value in separate span)"}
+{"step": 4, "tool": "read_doc_json", "args": "--doc AMAZON_2018_10K --pages 1-2 (full)", "result_summary": "Numeric value 491,202,890 lives in a separate span from the 'outstanding' label"}
+{"step": 5, "tool": "read_doc_json", "args": "--doc COSTCO_2017_10K --pages 1-2 (full)", "result_summary": "Single-sentence pattern 'The number of shares outstanding ... was 436,989,606.' on page 1"}
+{"step": 6, "tool": "read_doc_json", "args": "--doc BOEING_2018_10K --pages 1-3 --filter outstanding", "result_summary": "Single-sentence pattern with number 564,985,109 on page 1"}
+{"step": 7, "tool": "read_doc_json", "args": "--doc EBAY_2021_10K --pages 1-3 --filter outstanding", "result_summary": "Single-sentence pattern with number 587,528,915 on page 2"}
+{"step": 8, "tool": "read_doc_json", "args": "--doc CORNING_2022_10K --pages 1-3 --filter outstanding", "result_summary": "Single-sentence pattern with number 846,563,422 on page 1"}
+{"step": 9, "tool": "read_doc_json", "args": "--doc NIKE_2021_10K --pages 1-3 --filter outstanding", "result_summary": "Label-only span on page 1 (multi-class layout with Class A / Class B / Total columns)"}
+{"step": 10, "tool": "read_doc_json", "args": "--doc LOCKHEEDMARTIN_2022_10K --pages 1-3 --filter outstanding", "result_summary": "Single-sentence pattern with number 255,297,298 on page 1"}
+{"step": 11, "tool": "read_doc_json", "args": "--doc JOHNSON_JOHNSON_2022_10K --pages 1-3 --filter outstanding", "result_summary": "Single-sentence pattern with number 2,604,286,303 on page 2"}
+{"step": 12, "tool": "read_doc_json", "args": "--doc AMAZON_2016_10K --pages 1-3 --filter outstanding", "result_summary": "Label-only span; value lives in combined span '280,129,378,534 477,170,618'"}
+{"step": 13, "tool": "read_doc_json", "args": "--doc NIKE_2021_10K --pages 1-3 (full)", "result_summary": "Saw multi-class table: 6 numeric spans (market values 9.6B/170B/180B + share counts 305M/1.27B/1.58B)"}
+{"step": 14, "tool": "read_doc_json", "args": "--doc AMAZON_2016_10K --pages 1-3 (full)", "result_summary": "Confirmed combined-value span layout on cover page"}
+{"step": 15, "tool": "write_rule", "args": "rule_cover_outstanding_label", "result_summary": "Created R1: cover-page spans containing 'outstanding'"}
+{"step": 16, "tool": "write_rule", "args": "rule_cover_numeric_value", "result_summary": "Created R2: cover-page numeric-only spans with >=2 thousand separators"}
+{"step": 17, "tool": "compute_cost", "args": "rule_cover_outstanding_label rule_cover_numeric_value", "result_summary": "Per-rule cost 0.000364 + 0.00009 = sum 0.000454"}
+{"step": 18, "tool": "verify_accuracy", "args": "rule_cover_outstanding_label rule_cover_numeric_value", "result_summary": "match_rate=0.9, NIKE missed (QA picked aggregate market value 180B)"}
+{"step": 19, "tool": "write_rule", "args": "rule_cover_share_class_context", "result_summary": "Created R3: Class A/B and market-value context labels"}
+{"step": 20, "tool": "verify_accuracy", "args": "R1 R2 R3", "result_summary": "match_rate=0.9 still — context alone didn't redirect QA away from 180B"}
+{"step": 21, "tool": "write_rule", "args": "rule_cover_numeric_value --overwrite", "result_summary": "Tightened R2: require at least one number <= 5e9 to filter out market values"}
+{"step": 22, "tool": "verify_accuracy", "args": "R1 R2(tight) R3", "result_summary": "match_rate=1.0; NIKE now predicts 1,581,801,224"}
+{"step": 23, "tool": "verify_accuracy", "args": "R1 R2(tight) (drop R3)", "result_summary": "match_rate=1.0 — R3 unnecessary; deleted"}
+{"step": 24, "tool": "verify_accuracy", "args": "R1 alone", "result_summary": "cov(R1)=0.7; misses AMAZON_2016, AMAZON_2018, NIKE (label-only layouts)"}
+{"step": 25, "tool": "verify_accuracy", "args": "R2 alone", "result_summary": "cov(R2)=0.2; only the 3 split-layout docs hit"}
+{"step": 26, "tool": "compute_cost", "args": "rule_cover_outstanding_label rule_cover_numeric_value (final)", "result_summary": "sum_avg_cost_ratio = 0.000454"}

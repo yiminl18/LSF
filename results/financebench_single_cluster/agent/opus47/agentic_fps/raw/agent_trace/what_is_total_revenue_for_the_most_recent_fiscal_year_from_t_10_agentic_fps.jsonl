@@ -1,0 +1,23 @@
+{"step": 1, "tool": "list_docs", "args": "--labels-file fps sample", "result_summary": "10 docs listed: AMAZON_2015, AMCOR_2021, AMD_2019, APPLE_2017/2018/2021, BESTBUY_2015, CORNING_2022, GENERALMILLS_2022, JOHNSON_JOHNSON_2022"}
+{"step": 2, "tool": "read_doc_json", "args": "AMAZON_2015_10K filter='Net sales'", "result_summary": "Confirmed CONSOLIDATED STATEMENTS OF OPERATIONS path_text on page 39"}
+{"step": 3, "tool": "read_doc_json", "args": "APPLE_2017_10K filter='Net sales'", "result_summary": "Income statement at page 42, path 'CONSOLIDATED STATEMENTS OF OPERATIONS'"}
+{"step": 4, "tool": "read_doc_json", "args": "AMCOR_2021_10K filter='Net sales'", "result_summary": "Income statement table at page 49 with 'Consolidated Statements of Income' in path"}
+{"step": 5, "tool": "read_doc_json", "args": "AMD_2019_10K filter='Net revenue'", "result_summary": "Income statement at page 46 with 'Consolidated Statements of Operations' in path"}
+{"step": 6, "tool": "read_doc_json", "args": "JOHNSON_JOHNSON_2022_10K filter='Sales to customers'", "result_summary": "CONSOLIDATED STATEMENTS OF EARNINGS at page 47"}
+{"step": 7, "tool": "read_doc_json", "args": "AMCOR_2021_10K filter='CONSOLIDATED STATEMENTS'", "result_summary": "Confirmed section_header structure"}
+{"step": 8, "tool": "read_doc_json", "args": "AMD_2019_10K filter='Consolidated Statements'", "result_summary": "Section_header confirmed"}
+{"step": 9, "tool": "read_doc_json", "args": "APPLE_2018_10K filter='CONSOLIDATED STATEMENTS OF OPERATIONS'", "result_summary": "Same Apple pattern"}
+{"step": 10, "tool": "read_doc_json", "args": "APPLE_2021_10K filter='CONSOLIDATED STATEMENTS OF OPERATIONS'", "result_summary": "Same Apple pattern"}
+{"step": 11, "tool": "read_doc_json", "args": "CORNING_2022_10K filter='Consolidated Statements of'", "result_summary": "Corning's table has 'Consolidated Statements of Income' as first row, path_text does NOT contain it"}
+{"step": 12, "tool": "read_doc_json", "args": "GENERALMILLS_2022_10K filter='Consolidated Statements of'", "result_summary": "Consolidated Statements of Earnings on page 45"}
+{"step": 13, "tool": "read_doc_json", "args": "JOHNSON_JOHNSON_2022_10K filter='CONSOLIDATED STATEMENTS'", "result_summary": "Standard J&J pattern"}
+{"step": 14, "tool": "read_doc_json", "args": "CORNING_2022_10K filter='Net sales |'", "result_summary": "Found Corning income statement on page 58 - table starts with '| Consolidated Statements of Income |'"}
+{"step": 15, "tool": "read_doc_json", "args": "BESTBUY_2015_10K filter='Consolidated Statements of Earnings'", "result_summary": "BestBuy: Consolidated Statements of Earnings on page 61"}
+{"step": 16, "tool": "read_doc_json", "args": "AMD_2019_10K page=46", "result_summary": "Income statement table; path_text 'Consolidated Statements of Operations'"}
+{"step": 17, "tool": "read_doc_json", "args": "AMCOR_2021_10K page=49", "result_summary": "Income statement table 'Consolidated Statements of Income (in millions, except per share data)'"}
+{"step": 18, "tool": "read_doc_json", "args": "AMAZON_2015_10K page=39", "result_summary": "Total net sales row $107,006 in 2015 in CONSOLIDATED STATEMENTS OF OPERATIONS table"}
+{"step": 19, "tool": "read_doc_json", "args": "GENERALMILLS_2022_10K page=45", "result_summary": "Net sales 2022 $18,992.8 in Consolidated Statements of Earnings"}
+{"step": 20, "tool": "read_doc_json", "args": "BESTBUY_2015_10K page=61", "result_summary": "Revenue $40,339 in Consolidated Statements of Earnings"}
+{"step": 21, "tool": "write_rule", "args": "rule_consolidated_income_statement_table", "result_summary": "Wrote single layout-invariant rule keyed on path_text/text containing 'Consolidated Statements of Operations/Earnings/Income'"}
+{"step": 22, "tool": "compute_cost", "args": "rule_consolidated_income_statement_table", "result_summary": "sum_avg_cost_ratio=0.011823"}
+{"step": 23, "tool": "verify_accuracy", "args": "rule_consolidated_income_statement_table", "result_summary": "match_rate=1.0, all 10 docs correct; tokens qa_in=11763 qa_out=85 j_in=2027 j_out=60"}

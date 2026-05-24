@@ -1,0 +1,20 @@
+{
+  "question": "What is total revenue for the most recent fiscal year (from the audited income statement)?",
+  "question_slug": "what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_agentic_fps",
+  "mode": "agentic_gen",
+  "model": "opus47",
+  "selected_rules": [
+    "rule_consolidated_income_statement_table"
+  ],
+  "selected_avg_cost_ratio_sum": 0.011823,
+  "min_cov": 1.0,
+  "mean_cov": 1.0,
+  "match_rate_on_sampled": 1.0,
+  "iterations": 1,
+  "verify_calls": 1,
+  "tool_llm_calls": 20,
+  "tool_input_tokens": 13790,
+  "tool_output_tokens": 145,
+  "latency_seconds": 540.0,
+  "rationale": "Inspected 7 docs and observed a single uniform signal: the audited consolidated income statement always lives in a section whose heading is 'Consolidated Statements of Operations/Earnings/Income'. For 9/10 docs this heading appears in the table's path_text; Corning embeds it as the table's first row instead. A single case-insensitive substring rule matching either path_text or text covered all 10 docs with match_rate=1.0 and sum_cost=0.012, satisfying all three soft targets in one rule."
+}

@@ -1,0 +1,21 @@
+{
+  "question": "How many shares of common stock were outstanding as of the cover-page reference date?",
+  "question_slug": "how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_agentic",
+  "mode": "agentic_gen",
+  "model": "opus47",
+  "selected_rules": [
+    "rule_cover_outstanding_label",
+    "rule_cover_numeric_value"
+  ],
+  "selected_avg_cost_ratio_sum": 0.000454,
+  "min_cov": 0.2,
+  "mean_cov": 0.45,
+  "match_rate_on_sampled": 1.0,
+  "iterations": 5,
+  "verify_calls": 5,
+  "tool_llm_calls": 100,
+  "tool_input_tokens": 16905,
+  "tool_output_tokens": 758,
+  "latency_seconds": 430.646,
+  "rationale": "After inspecting 5 representative cover pages, two layout families emerged: 7 docs embed the share count inside an 'outstanding' sentence on pages 1-3, while 3 docs (AMAZON 2016/2018, NIKE) put a label-only span on the cover page and the numeric value in a separate numeric-only span. R1 (rule_cover_outstanding_label) catches the sentence/label in all 10 docs. R2 (rule_cover_numeric_value) catches numeric-only cover-page spans with >=2 thousand-separator groups, restricted to values <= 5e9 so that aggregate-market-value figures (which run to 10s-100s of billions) are excluded — this was critical for NIKE, whose multi-class table otherwise tempts the QA into the $180B market-value total. A third share-class context rule was tried but proved unnecessary once the numeric threshold filtered the market-value distractors; it was dropped. Final R: 2 rules, sum_cost 0.000454, union match_rate 1.0."
+}

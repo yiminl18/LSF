@@ -1,0 +1,21 @@
+{
+  "question": "What is total assets at year-end (from the audited balance sheet)?",
+  "question_slug": "what_is_total_assets_at_yearend_from_the_audited_balance_she_10_agentic",
+  "mode": "agentic_gen",
+  "model": "opus47",
+  "selected_rules": [
+    "rule_consolidated_balance_sheet_total_assets",
+    "rule_segment_reconciliation_total_assets"
+  ],
+  "selected_avg_cost_ratio_sum": 0.008755,
+  "min_cov": 0.1,
+  "mean_cov": 0.3,
+  "match_rate_on_sampled": 0.5,
+  "iterations": 8,
+  "verify_calls": 8,
+  "tool_llm_calls": 160,
+  "tool_input_tokens": 74392,
+  "tool_output_tokens": 1216,
+  "latency_seconds": 813.0,
+  "rationale": "Two rules: (a) rule_consolidated_balance_sheet_total_assets matches table spans whose path or first lines reference 'Consolidated Balance Sheet' / 'Consolidated Statements of Financial Position' and that contain a '| Total assets |' row — the primary, layout-invariant location for the answer across all 10 docs; (b) rule_segment_reconciliation_total_assets matches segment-reporting tables that reconcile to a consolidated Total-assets row with explicit year-column headers — added because CORNING_2022_10K's audited balance sheet has malformed column headers (the 2022 column is unlabeled while 2021 is labeled) that consistently mislead the QA model into picking the 2021 value. Hard constraint match_rate=1.0 not achieved: across multiple verify runs, match_rate fluctuated between 0.5 and 0.8 with the same rule set and same retrieved spans, indicating dominant QA/judge non-determinism. Persistent failures: JOHNSON_JOHNSON_2022_10K (BS lists $187,378 million; label expects '$187.4 billion' — no narrative in the doc states the figure in billions, so the model cannot produce the billion-formatted answer); LOCKHEEDMARTIN and NIKE (judge non-deterministically flips correct/incorrect on the same '$52,880' / '$37,740 million' predictions); AMAZON_2018/AMAZON_2016 (model sometimes returns both year columns 'X and Y' instead of just the year-end value). Cost is well under the soft target (sum_avg_cost_ratio = 0.0088 << 0.05) and |R|=2 is small."
+}

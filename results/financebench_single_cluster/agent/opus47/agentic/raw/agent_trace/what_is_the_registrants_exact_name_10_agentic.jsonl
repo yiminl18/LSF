@@ -1,0 +1,14 @@
+{"step": 1, "tool": "list_docs", "args": "--labels-file data/financebench/sample_doc_labels.json", "result_summary": "10 docs, all 10-K filings (AMCOR, COSTCO, BOEING, AMAZON x2, EBAY, CORNING, NIKE, LOCKHEEDMARTIN, JOHNSON_JOHNSON)"}
+{"step": 2, "tool": "read_doc_json", "args": "--doc AMCOR_2019_10K --page 1", "result_summary": "Cover page shows 'AMCOR PLC' H1 followed by '(Exact name of Registrant as specified in its charter)'"}
+{"step": 3, "tool": "read_doc_json", "args": "--doc COSTCO_2017_10K --page 1", "result_summary": "Cover page shows 'Costco Wholesale Corporation' H1 followed by '(Exact name of registrant as specified in its charter)'"}
+{"step": 4, "tool": "read_doc_json", "args": "--doc BOEING_2018_10K --page 1 --max-spans 15", "result_summary": "'THE BOEING COMPANY' span at index 9, charter marker at index 10"}
+{"step": 5, "tool": "read_doc_json", "args": "--doc JOHNSON_JOHNSON_2022_10K --page 1 --max-spans 15", "result_summary": "'JOHNSON & JOHNSON' span at index 9, charter marker at index 10"}
+{"step": 6, "tool": "read_doc_json", "args": "--doc EBAY_2021_10K --page 1 --max-spans 15", "result_summary": "'eBay Inc.' span precedes charter marker (path_text 'Form 10-K | eBay Inc.')"}
+{"step": 7, "tool": "read_doc_json", "args": "--doc AMAZON_2018_10K --page 1 --filter 'Exact name'", "result_summary": "Charter marker path_text 'AMAZON.COM, INC.' confirms pattern"}
+{"step": 8, "tool": "read_doc_json", "args": "--doc AMAZON_2016_10K --page 1 --filter 'Exact name'", "result_summary": "Charter marker path_text 'AMAZON.COM, INC.' confirms pattern"}
+{"step": 9, "tool": "read_doc_json", "args": "--doc CORNING_2022_10K --page 1 --filter 'Exact name'", "result_summary": "Charter marker path_text 'CORNING INCORPORATED' confirms pattern"}
+{"step": 10, "tool": "read_doc_json", "args": "--doc NIKE_2021_10K --page 1 --filter 'Exact name'", "result_summary": "Charter marker uses capital 'Registrant'; path_text 'NIKE, Inc.' confirms pattern"}
+{"step": 11, "tool": "read_doc_json", "args": "--doc LOCKHEEDMARTIN_2022_10K --page 1 --filter 'Exact name'", "result_summary": "Charter marker path_text 'FORM 10-K | LOCKHEED MARTIN CORPORATION' confirms pattern"}
+{"step": 12, "tool": "write_rule", "args": "--name rule_registrant_name_before_exact_marker", "result_summary": "Authored single rule that returns span preceding any text containing '(exact name of ... as specified in its charter)' case-insensitive"}
+{"step": 13, "tool": "compute_cost", "args": "--rules rule_registrant_name_before_exact_marker", "result_summary": "sum_avg_cost_ratio=6.7e-05"}
+{"step": 14, "tool": "verify_accuracy", "args": "--rules rule_registrant_name_before_exact_marker --d-star-mode all_labeled", "result_summary": "match_rate=1.0, missed_in_D_star=[], all 10 docs predicted correctly"}

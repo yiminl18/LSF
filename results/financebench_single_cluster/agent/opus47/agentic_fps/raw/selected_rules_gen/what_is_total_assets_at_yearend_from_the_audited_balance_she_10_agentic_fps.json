@@ -1,0 +1,21 @@
+{
+  "question": "What is total assets at year-end (from the audited balance sheet)?",
+  "question_slug": "what_is_total_assets_at_yearend_from_the_audited_balance_she_10_agentic_fps",
+  "mode": "agentic_gen",
+  "model": "opus47",
+  "selected_rules": [
+    "rule_consolidated_balance_sheet_total_assets",
+    "rule_cover_fiscal_year_end"
+  ],
+  "selected_avg_cost_ratio_sum": 0.007682,
+  "min_cov": 0.0,
+  "mean_cov": 0.45,
+  "match_rate_on_sampled": 1.0,
+  "iterations": 3,
+  "verify_calls": 3,
+  "tool_llm_calls": 60,
+  "tool_input_tokens": 28819,
+  "tool_output_tokens": 435,
+  "latency_seconds": 590.94,
+  "rationale": "Two complementary rules suffice. rule_consolidated_balance_sheet_total_assets retrieves the audited Consolidated Balance Sheet table (matched via 'Total assets' + 'Consolidated Balance Sheet' in path_text or text body) along with same-page section headers and '(in millions)' notes so the QA model emits proper units. Singleton coverage is 0.9; it misses CORNING_2022_10K because that filing's parsed table has only one labelled year column. rule_cover_fiscal_year_end pulls the cover-page 'For the fiscal year ended <date>' span (page <= 3), giving the QA an unambiguous anchor for which year is year-end. Combined, the two rules achieve match_rate 1.0 on all 10 sampled docs at sum_avg_cost_ratio 0.0077."
+}

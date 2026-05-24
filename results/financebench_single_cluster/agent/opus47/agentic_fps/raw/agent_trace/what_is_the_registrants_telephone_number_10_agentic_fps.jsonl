@@ -1,0 +1,10 @@
+{"step": 1, "tool": "list_docs", "args": "--labels-file sample/fps/sample_doc_labels.json", "result_summary": "10 docs listed (Amazon, Amcor, AMD, Apple x3, BestBuy, Corning, GeneralMills, J&J)."}
+{"step": 2, "tool": "read_labels", "args": "telephone-number gold answers", "result_summary": "Catalogued gold phones: 4 paren-style (Amazon/AMD/Apples/GenMills/JJ), 1 hyphen (Corning), 1 international (+44 Amcor), 1 bare-10-digit (BestBuy)."}
+{"step": 3, "tool": "read_doc_json", "args": "--doc AMAZON_2015_10K --page 1 --filter 206", "result_summary": "Phone embedded in combined address+phone span."}
+{"step": 4, "tool": "read_doc_json", "args": "--doc AMCOR/AMD/APPLE x3/CORNING/GENERALMILLS/JJ --page 1 --filter <phone>", "result_summary": "Each phone appears on page 1; AMCOR uses +44 international, JJ embeds in 'Registrant's telephone number...' line."}
+{"step": 5, "tool": "read_doc_json", "args": "--doc BESTBUY_2015_10K --pages 1-3", "result_summary": "Phone is bare 10 digits '6122911000' as its own span; CIK '0000764478' also 10 digits."}
+{"step": 6, "tool": "regex-dryrun", "args": "phone pattern over all 10 docs", "result_summary": "1 hit per doc (11 total — BestBuy 2 due to CIK)."}
+{"step": 7, "tool": "write_rule", "args": "rule_cover_page_phone (page-1 + phone regex)", "result_summary": "Rule written to rules-dir."}
+{"step": 8, "tool": "verify_accuracy", "args": "--rules rule_cover_page_phone --d-star-mode all_labeled", "result_summary": "match_rate=1.0; missed=[]; all 10 docs predicted correctly. tokens qa_in=990 qa_out=113 j_in=2003 j_out=60."}
+{"step": 9, "tool": "compute_cost", "args": "--rules rule_cover_page_phone (after cache rebuild)", "result_summary": "avg_cost_ratio=0.000118 (sum=max=0.000118)."}
+{"step": 10, "tool": "write_summary", "args": "results/financebench_single_cluster/agent/opus47/agentic_fps/raw/selected_rules_gen/what_is_the_registrants_telephone_number_10_agentic_fps.json", "result_summary": "Session summary JSON written."}

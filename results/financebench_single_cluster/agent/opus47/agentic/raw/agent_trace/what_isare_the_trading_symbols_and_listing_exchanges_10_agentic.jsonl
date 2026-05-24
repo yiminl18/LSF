@@ -1,0 +1,17 @@
+{"step": 1, "tool": "list_docs", "args": "--labels-file data/financebench/sample_doc_labels.json", "result_summary": "10 sampled 10-K docs listed"}
+{"step": 2, "tool": "read_doc_json", "args": "--doc AMCOR_2019_10K --page 1", "result_summary": "Cover page has Trading Symbol(s) header with AMCR + The New York Stock Exchange"}
+{"step": 3, "tool": "read_doc_json", "args": "--doc EBAY_2021_10K --page 1", "result_summary": "Cover shows Common stock / eBay / The Nasdaq Global Select Market layout"}
+{"step": 4, "tool": "read_doc_json", "args": "--doc BOEING_2018_10K --page 1", "result_summary": "Pre-2019 cover: no trading symbol column; only Common Stock + New York Stock Exchange"}
+{"step": 5, "tool": "read_doc_json", "args": "--doc AMAZON_2016_10K --page 1", "result_summary": "Pre-2019 cover: only Title of Each Class + Name of Each Exchange (NASDAQ)"}
+{"step": 6, "tool": "read_doc_json", "args": "--doc NIKE_2021_10K --page 1 --filter Stock/Trading", "result_summary": "NIKE has NKE ticker and New York Stock Exchange on cover (post-2019 template)"}
+{"step": 7, "tool": "read_doc_json", "args": "--doc COSTCO_2017_10K --page 1", "result_summary": "Pre-2019 cover: NASDAQ Global Select Market but no COST ticker on page 1"}
+{"step": 8, "tool": "write_rule", "args": "rule_cover_page_trading_symbol_exchange v1 (with boilerplate filter)", "result_summary": "First rule written"}
+{"step": 9, "tool": "compute_cost", "args": "--rules rule_cover_page_trading_symbol_exchange", "result_summary": "avg_cost_ratio=0.001007"}
+{"step": 10, "tool": "verify_accuracy", "args": "--rules rule_cover_page_trading_symbol_exchange", "result_summary": "match_rate=0.4; missed pre-2019 docs + EBAY/JJ (table span filtered out by Indicate-by-check-mark regex)"}
+{"step": 11, "tool": "write_rule", "args": "rule_cover_page_trading_symbol_exchange v2 (drop boilerplate filter; add path_text/Trading Symbol ticker heuristic)", "result_summary": "Now captures eBay ticker, JJ table span, AMCR span; pre-2019 still missing tickers"}
+{"step": 12, "tool": "read_doc_json", "args": "--doc AMAZON_2016_10K --filter AMZN", "result_summary": "AMZN appears in Item 1 and Item 5 as 'under the symbol AMZN'"}
+{"step": 13, "tool": "read_doc_json", "args": "--doc BOEING_2018_10K --filter symbol", "result_summary": "BA appears in Item 5: 'trades under the symbol BA'"}
+{"step": 14, "tool": "write_rule", "args": "rule_symbol_phrase (regex for under the symbol / ticker symbol / trades on/under)", "result_summary": "Second rule written"}
+{"step": 15, "tool": "verify_accuracy", "args": "--rules rule_cover_page_trading_symbol_exchange rule_symbol_phrase", "result_summary": "match_rate=1.0 across all 10 docs"}
+{"step": 16, "tool": "verify_accuracy", "args": "--rules rule_symbol_phrase", "result_summary": "match_rate=0.7 alone (misses AMCOR/CORNING/JJ); confirms both rules needed"}
+{"step": 17, "tool": "compute_cost", "args": "--rules rule_cover_page_trading_symbol_exchange rule_symbol_phrase (cache rebuilt)", "result_summary": "sum_avg_cost_ratio=0.003495 (cover=0.000972, symbol=0.002523)"}

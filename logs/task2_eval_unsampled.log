@@ -1,0 +1,33 @@
+sample_set=fps  split=unsampled
+questions=10  docs=49  rules_base=rules/financebench_single_cluster/agent/opus47/agentic_fps/raw
+
+
+Question: What is long-term debt at year-end (0 if none)?
+  rules=1  docs=49
+  accuracy=0.61 (30/49)  cost=0.02151
+
+Question: What is net income (loss) for the most recent fiscal year?
+  rules=2  docs=49
+  accuracy=0.67 (33/49)  cost=0.01640
+
+Question: What is total revenue for the most recent fiscal year (from the audited income statement)?
+  rules=1  docs=49
+  accuracy=0.63 (31/49)  cost=0.01674
+
+Question: What is total assets at year-end (from the audited balance sheet)?
+  rules=2  docs=49
+  accuracy=0.59 (29/49)  cost=0.00870
+
+Question: What is the registrant's telephone number?
+  rules=1  docs=49
+  accuracy=1.00 (49/49)  cost=0.00029
+SKIP (empty): rules/financebench_single_cluster/agent/opus47/agentic_fps/raw/how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_agentic_fps
+SKIP (empty): rules/financebench_single_cluster/agent/opus47/agentic_fps/raw/what_is_the_registrants_exact_name_10_agentic_fps
+SKIP (empty): rules/financebench_single_cluster/agent/opus47/agentic_fps/raw/what_is_the_state_or_other_jurisdiction_of_incorporation_and_10_agentic_fps
+SKIP (empty): rules/financebench_single_cluster/agent/opus47/agentic_fps/raw/what_is_the_address_of_principal_executive_offices_and_zip_c_10_agentic_fps
+SKIP (empty): rules/financebench_single_cluster/agent/opus47/agentic_fps/raw/what_isare_the_trading_symbols_and_listing_exchanges_10_agentic_fps
+
+========================================================================
+  mean accuracy:   0.702
+  mean cost ratio: 0.012728
+  written to:      results/financebench_single_cluster/agent/opus47/agentic_fps/raw/eval_merge_unsampled/

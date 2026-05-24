@@ -1,0 +1,291 @@
+{
+  "rule_name": "rule_item1_business_exchange_symbol_sentence",
+  "question_slug": "what_isare_the_trading_symbols_and_listing_exchanges_18_llm",
+  "question": "What is/are the trading symbol(s) and listing exchange(s)?",
+  "strategy": "individual",
+  "num_documents": 18,
+  "accuracy": 0.2778,
+  "avg_cost_ratio": 0.00047,
+  "avg_retrieved_token_count": 24.78,
+  "total_eval_latency_seconds": 14.47,
+  "avg_rule_apply_latency_seconds": 0.81,
+  "avg_judge_latency_seconds": 0.77,
+  "total_judge_latency_seconds": 13.857,
+  "total_judge_input_tokens": 3771,
+  "total_judge_output_tokens": 121,
+  "per_document": [
+    {
+      "doc_name": "BOEING_2019_10K",
+      "predicted_answer": "NOT FOUND",
+      "ground_truth": "BA, New York Stock Exchange",
+      "correct": false,
+      "retrieved_token_count": 0,
+      "total_doc_tokens": 91888,
+      "cost_ratio": 0.0,
+      "judge_input_tokens": 198,
+      "judge_output_tokens": 7,
+      "judge_latency_seconds": 0.605,
+      "rule_apply_latency_seconds": 0.632
+    },
+    {
+      "doc_name": "ADOBE_2020_10K",
+      "predicted_answer": "NOT FOUND",
+      "ground_truth": "ADBE, NASDAQ",
+      "correct": false,
+      "retrieved_token_count": 0,
+      "total_doc_tokens": 91087,
+      "cost_ratio": 0.0,
+      "judge_input_tokens": 198,
+      "judge_output_tokens": 7,
+      "judge_latency_seconds": 0.657,
+      "rule_apply_latency_seconds": 0.798
+    },
+    {
+      "doc_name": "ACTIVISIONBLIZZARD_2020_10K",
+      "predicted_answer": "NOT FOUND",
+      "ground_truth": "ATVI, The Nasdaq Global Select Market",
+      "correct": false,
+      "retrieved_token_count": 0,
+      "total_doc_tokens": 101336,
+      "cost_ratio": 0.0,
+      "judge_input_tokens": 200,
+      "judge_output_tokens": 7,
+      "judge_latency_seconds": 0.91,
+      "rule_apply_latency_seconds": 0.645
+    },
+    {
+      "doc_name": "COSTCO_2018_10K",
+      "predicted_answer": "COST — NASDAQ Global Select Market",
+      "ground_truth": "COST — The NASDAQ Global Select Market",
+      "correct": true,
+      "retrieved_token_count": 139,
+      "total_doc_tokens": 48852,
+      "cost_ratio": 0.002845,
+      "judge_input_tokens": 205,
+      "judge_output_tokens": 6,
+      "judge_latency_seconds": 0.607,
+      "rule_apply_latency_seconds": 0.824
+    },
+    {
+      "doc_name": "AMCOR_2019_10K",
+      "predicted_answer": "NOT FOUND",
+      "ground_truth": "AMCR, The New York Stock Exchange",
+      "correct": false,
+      "retrieved_token_count": 0,
+      "total_doc_tokens": 84134,
+      "cost_ratio": 0.0,
+      "judge_input_tokens": 200,
+      "judge_output_tokens": 7,
+      "judge_latency_seconds": 0.728,
+      "rule_apply_latency_seconds": 0.679
+    },
+    {
+      "doc_name": "AMAZON_2020_10K",
+      "predicted_answer": "AMZN — Nasdaq Global Select Market",
+      "ground_truth": "AMZN, Nasdaq Global Select Market",
+      "correct": true,
+      "retrieved_token_count": 47,
+      "total_doc_tokens": 58831,
+      "cost_ratio": 0.000799,
+      "judge_input_tokens": 204,
+      "judge_output_tokens": 6,
+      "judge_latency_seconds": 0.556,
+      "rule_apply_latency_seconds": 0.718
+    },
+    {
+      "doc_name": "AMAZON_2019_10K",
+      "predicted_answer": "AMZN — Nasdaq Global Select Market",
+      "ground_truth": "AMZN, Nasdaq Global Select Market",
+      "correct": true,
+      "retrieved_token_count": 72,
+      "total_doc_tokens": 62208,
+      "cost_ratio": 0.001157,
+      "judge_input_tokens": 204,
+      "judge_output_tokens": 6,
+      "judge_latency_seconds": 0.624,
+      "rule_apply_latency_seconds": 0.819
+    },
+    {
+      "doc_name": "ADOBE_2021_10K",
+      "predicted_answer": "NOT FOUND",
+      "ground_truth": "ADBE, NASDAQ",
+      "correct": false,
+      "retrieved_token_count": 0,
+      "total_doc_tokens": 77147,
+      "cost_ratio": 0.0,
+      "judge_input_tokens": 198,
+      "judge_output_tokens": 7,
+      "judge_latency_seconds": 0.893,
+      "rule_apply_latency_seconds": 1.55
+    },
+    {
+      "doc_name": "EBAY_2022_10K",
+      "predicted_answer": "NOT FOUND",
+      "ground_truth": "EBAY — The Nasdaq Global Select Market",
+      "correct": false,
+      "retrieved_token_count": 0,
+      "total_doc_tokens": 91520,
+      "cost_ratio": 0.0,
+      "judge_input_tokens": 200,
+      "judge_output_tokens": 7,
+      "judge_latency_seconds": 0.637,
+      "rule_apply_latency_seconds": 0.964
+    },
+    {
+      "doc_name": "ADOBE_2019_10K",
+      "predicted_answer": "NOT FOUND",
+      "ground_truth": "ADBE, NASDAQ",
+      "correct": false,
+      "retrieved_token_count": 0,
+      "total_doc_tokens": 91798,
+      "cost_ratio": 0.0,
+      "judge_input_tokens": 198,
+      "judge_output_tokens": 7,
+      "judge_latency_seconds": 0.668,
+      "rule_apply_latency_seconds": 0.788
+    },
+    {
+      "doc_name": "AMCOR_2023Q2_10Q",
+      "predicted_answer": "AMCR — New York Stock Exchange; AUKF/27 — New York Stock Exchange",
+      "ground_truth": [
+        {
+          "symbol": "AMCR",
+          "exchange": "New York Stock Exchange"
+        },
+        {
+          "symbol": "AUKF/27",
+          "exchange": "New York Stock Exchange"
+        }
+      ],
+      "correct": true,
+      "retrieved_token_count": 72,
+      "total_doc_tokens": 31964,
+      "cost_ratio": 0.002253,
+      "judge_input_tokens": 243,
+      "judge_output_tokens": 6,
+      "judge_latency_seconds": 0.974,
+      "rule_apply_latency_seconds": 0.998
+    },
+    {
+      "doc_name": "ADOBE_2022Q2_10Q",
+      "predicted_answer": "NOT FOUND",
+      "ground_truth": "ADBE, NASDAQ",
+      "correct": false,
+      "retrieved_token_count": 0,
+      "total_doc_tokens": 42525,
+      "cost_ratio": 0.0,
+      "judge_input_tokens": 198,
+      "judge_output_tokens": 7,
+      "judge_latency_seconds": 0.993,
+      "rule_apply_latency_seconds": 0.792
+    },
+    {
+      "doc_name": "ACTIVSIONBLIZZARD_2023Q2_10Q",
+      "predicted_answer": "NOT FOUND",
+      "ground_truth": "ATVI, The Nasdaq Global Select Market",
+      "correct": false,
+      "retrieved_token_count": 0,
+      "total_doc_tokens": 51389,
+      "cost_ratio": 0.0,
+      "judge_input_tokens": 200,
+      "judge_output_tokens": 7,
+      "judge_latency_seconds": 0.941,
+      "rule_apply_latency_seconds": 0.632
+    },
+    {
+      "doc_name": "3M_2023Q2_10Q",
+      "predicted_answer": "MMM — New York Stock Exchange; Chicago Stock Exchange, Inc.; MMM26 — New York Stock Exchange; MMM30 — New York Stock Exchange; MMM31 — New York Stock Exchange",
+      "ground_truth": [
+        {
+          "symbol": "MMM",
+          "exchange": "New York Stock Exchange"
+        },
+        {
+          "symbol": "MMM",
+          "exchange": "Chicago Stock Exchange, Inc."
+        },
+        {
+          "symbol": "MMM26",
+          "exchange": "New York Stock Exchange"
+        },
+        {
+          "symbol": "MMM30",
+          "exchange": "New York Stock Exchange"
+        },
+        {
+          "symbol": "MMM31",
+          "exchange": "New York Stock Exchange"
+        }
+      ],
+      "correct": true,
+      "retrieved_token_count": 116,
+      "total_doc_tokens": 82851,
+      "cost_ratio": 0.0014,
+      "judge_input_tokens": 306,
+      "judge_output_tokens": 6,
+      "judge_latency_seconds": 0.916,
+      "rule_apply_latency_seconds": 1.223
+    },
+    {
+      "doc_name": "AMCOR_2022_8K_2022-07-01",
+      "predicted_answer": "NOT FOUND",
+      "ground_truth": [
+        {
+          "Trading Symbol": "AMCR",
+          "Exchange": "New York Stock Exchange"
+        },
+        {
+          "Trading Symbol": "AUKF/27",
+          "Exchange": "New York Stock Exchange"
+        }
+      ],
+      "correct": false,
+      "retrieved_token_count": 0,
+      "total_doc_tokens": 5562,
+      "cost_ratio": 0.0,
+      "judge_input_tokens": 229,
+      "judge_output_tokens": 7,
+      "judge_latency_seconds": 0.834,
+      "rule_apply_latency_seconds": 0.585
+    },
+    {
+      "doc_name": "COSTCO_2023_8K_dated-2023-08-09",
+      "predicted_answer": "NOT FOUND",
+      "ground_truth": "COST, NASDAQ",
+      "correct": false,
+      "retrieved_token_count": 0,
+      "total_doc_tokens": 23872,
+      "cost_ratio": 0.0,
+      "judge_input_tokens": 196,
+      "judge_output_tokens": 7,
+      "judge_latency_seconds": 1.007,
+      "rule_apply_latency_seconds": 0.559
+    },
+    {
+      "doc_name": "COSTCO_2023_8K_dated-2023-08-16",
+      "predicted_answer": "NOT FOUND",
+      "ground_truth": "COST, NASDAQ",
+      "correct": false,
+      "retrieved_token_count": 0,
+      "total_doc_tokens": 1087,
+      "cost_ratio": 0.0,
+      "judge_input_tokens": 196,
+      "judge_output_tokens": 7,
+      "judge_latency_seconds": 0.616,
+      "rule_apply_latency_seconds": 0.546
+    },
+    {
+      "doc_name": "FOOTLOCKER_2022_8K_dated-2022-05-20",
+      "predicted_answer": "NOT FOUND",
+      "ground_truth": "FL, New York Stock Exchange",
+      "correct": false,
+      "retrieved_token_count": 0,
+      "total_doc_tokens": 1804,
+      "cost_ratio": 0.0,
+      "judge_input_tokens": 198,
+      "judge_output_tokens": 7,
+      "judge_latency_seconds": 0.691,
+      "rule_apply_latency_seconds": 0.823
+    }
+  ]
+}

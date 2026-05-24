@@ -1,0 +1,20 @@
+{
+  "question": "What is the address of principal executive offices and ZIP code?",
+  "question_slug": "what_is_the_address_of_principal_executive_offices_and_zip_c_10_agentic",
+  "mode": "agentic_gen",
+  "model": "opus47",
+  "selected_rules": [
+    "rule_address_principal_offices"
+  ],
+  "selected_avg_cost_ratio_sum": 0.000966,
+  "min_cov": 1.0,
+  "mean_cov": 1.0,
+  "match_rate_on_sampled": 1.0,
+  "iterations": 1,
+  "verify_calls": 1,
+  "tool_llm_calls": 20,
+  "tool_input_tokens": 3875,
+  "tool_output_tokens": 233,
+  "latency_seconds": 53.23177361488342,
+  "rationale": "Inspected page 1 of 7 diverse filings (AMCOR, COSTCO, BOEING, AMAZON 2018/2016, EBAY, CORNING, NIKE, LOCKHEED, JNJ) and found a layout-invariant signal: each cover page contains a span whose text includes '(Address of principal executive offices)' (with minor wording variations like Amazon's 'Address and telephone number...principal executive offices') and/or '(Zip Code)'. The address itself sits in the preceding spans on the same page (sometimes split across multiple short spans, e.g. Lockheed). A single rule that returns the label spans plus a small backward window on page 1 yields match_rate=1.0 on all 10 sampled docs with sum_avg_cost_ratio=0.000966, so no additional rules are needed."
+}

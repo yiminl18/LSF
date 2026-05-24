@@ -1,0 +1,4740 @@
+[
+  {
+    "question": "What is long-term debt at year-end (0 if none)?",
+    "question_slug": "what_is_longterm_debt_at_yearend_0_if_none_10_agentic",
+    "split": "unsampled",
+    "n": 50,
+    "n_correct": 31,
+    "accuracy": 0.62,
+    "avg_latency": 0.787,
+    "avg_retrieved": 951.6,
+    "avg_input_tok": 1042.9,
+    "avg_cost_ratio": 0.015883,
+    "n_rules": 2,
+    "per_doc": [
+      {
+        "doc_name": "AMCOR_2023_10K",
+        "predicted": "6,653",
+        "ground_truth": "$6,653 million",
+        "correct": true,
+        "latency_seconds": 0.992,
+        "retrieved_tokens": 1800,
+        "input_tokens": 1892
+      },
+      {
+        "doc_name": "APPLE_2016_10K",
+        "predicted": "75,427",
+        "ground_truth": "78,927 million",
+        "correct": false,
+        "latency_seconds": 0.785,
+        "retrieved_tokens": 1757,
+        "input_tokens": 1849
+      },
+      {
+        "doc_name": "BESTBUY_2020_10K",
+        "predicted": "1,257",
+        "ground_truth": "1,257 million",
+        "correct": true,
+        "latency_seconds": 0.838,
+        "retrieved_tokens": 887,
+        "input_tokens": 977
+      },
+      {
+        "doc_name": "INTEL_2016_10K",
+        "predicted": "20,649",
+        "ground_truth": "$25,283 million",
+        "correct": false,
+        "latency_seconds": 0.861,
+        "retrieved_tokens": 1667,
+        "input_tokens": 1761
+      },
+      {
+        "doc_name": "ACTIVISIONBLIZZARD_2017_10K",
+        "predicted": "4,390",
+        "ground_truth": "$4,390 million",
+        "correct": true,
+        "latency_seconds": 0.839,
+        "retrieved_tokens": 1507,
+        "input_tokens": 1601
+      },
+      {
+        "doc_name": "ACTIVISIONBLIZZARD_2020_10K",
+        "predicted": "3,605",
+        "ground_truth": "$3.605 billion",
+        "correct": true,
+        "latency_seconds": 0.901,
+        "retrieved_tokens": 1215,
+        "input_tokens": 1308
+      },
+      {
+        "doc_name": "ADOBE_2015_10K",
+        "predicted": "NOT FOUND",
+        "ground_truth": "1,907,231,000",
+        "correct": false,
+        "latency_seconds": 0.658,
+        "retrieved_tokens": 0,
+        "input_tokens": 92
+      },
+      {
+        "doc_name": "ADOBE_2016_10K",
+        "predicted": "NOT FOUND",
+        "ground_truth": "$1,902,068,000",
+        "correct": false,
+        "latency_seconds": 0.563,
+        "retrieved_tokens": 0,
+        "input_tokens": 92
+      },
+      {
+        "doc_name": "ADOBE_2017_10K",
+        "predicted": "NOT FOUND",
+        "ground_truth": "$1,881,421,000",
+        "correct": false,
+        "latency_seconds": 0.707,
+        "retrieved_tokens": 0,
+        "input_tokens": 92
+      },
+      {
+        "doc_name": "ADOBE_2018_10K",
+        "predicted": "NOT FOUND",
+        "ground_truth": "4,124,800,000",
+        "correct": false,
+        "latency_seconds": 0.656,
+        "retrieved_tokens": 0,
+        "input_tokens": 92
+      },
+      {
+        "doc_name": "ADOBE_2019_10K",
+        "predicted": "988,924",
+        "ground_truth": "$988,924,000",
+        "correct": false,
+        "latency_seconds": 0.705,
+        "retrieved_tokens": 176,
+        "input_tokens": 268
+      },
+      {
+        "doc_name": "ADOBE_2020_10K",
+        "predicted": "$ 4,117",
+        "ground_truth": "$4,117 million",
+        "correct": true,
+        "latency_seconds": 0.951,
+        "retrieved_tokens": 437,
+        "input_tokens": 529
+      },
+      {
+        "doc_name": "ADOBE_2021_10K",
+        "predicted": "$ 4,123",
+        "ground_truth": "$4,123 million",
+        "correct": true,
+        "latency_seconds": 0.719,
+        "retrieved_tokens": 294,
+        "input_tokens": 386
+      },
+      {
+        "doc_name": "ADOBE_2022_10K",
+        "predicted": "$ 3,629",
+        "ground_truth": "$3.629 billion",
+        "correct": true,
+        "latency_seconds": 0.786,
+        "retrieved_tokens": 347,
+        "input_tokens": 439
+      },
+      {
+        "doc_name": "AMAZON_2015_10K",
+        "predicted": "8,235",
+        "ground_truth": "$8,235 million",
+        "correct": true,
+        "latency_seconds": 0.731,
+        "retrieved_tokens": 861,
+        "input_tokens": 955
+      },
+      {
+        "doc_name": "AMAZON_2017_10K",
+        "predicted": "24,743",
+        "ground_truth": "$24,743 million",
+        "correct": true,
+        "latency_seconds": 1.144,
+        "retrieved_tokens": 1059,
+        "input_tokens": 1153
+      },
+      {
+        "doc_name": "AMAZON_2019_10K",
+        "predicted": "23,414",
+        "ground_truth": "$75,376 million",
+        "correct": false,
+        "latency_seconds": 0.733,
+        "retrieved_tokens": 1085,
+        "input_tokens": 1179
+      },
+      {
+        "doc_name": "AMAZON_2020_10K",
+        "predicted": "31,816",
+        "ground_truth": "$101,406 million",
+        "correct": false,
+        "latency_seconds": 0.739,
+        "retrieved_tokens": 1065,
+        "input_tokens": 1160
+      },
+      {
+        "doc_name": "AMAZON_2022_10K",
+        "predicted": "67,150",
+        "ground_truth": "$67,150 million",
+        "correct": true,
+        "latency_seconds": 0.94,
+        "retrieved_tokens": 1192,
+        "input_tokens": 1288
+      },
+      {
+        "doc_name": "AMCOR_2021_10K",
+        "predicted": "6,186",
+        "ground_truth": "$6,186 million",
+        "correct": true,
+        "latency_seconds": 0.839,
+        "retrieved_tokens": 1794,
+        "input_tokens": 1886
+      },
+      {
+        "doc_name": "AMCOR_2022_10K",
+        "predicted": "6,340",
+        "ground_truth": "$6,340 million",
+        "correct": true,
+        "latency_seconds": 0.647,
+        "retrieved_tokens": 1820,
+        "input_tokens": 1912
+      },
+      {
+        "doc_name": "AMD_2019_10K",
+        "predicted": "486",
+        "ground_truth": "$486 million",
+        "correct": true,
+        "latency_seconds": 0.527,
+        "retrieved_tokens": 986,
+        "input_tokens": 1079
+      },
+      {
+        "doc_name": "AMD_2020_10K",
+        "predicted": "$330 million",
+        "ground_truth": "$330 million",
+        "correct": true,
+        "latency_seconds": 1.399,
+        "retrieved_tokens": 1143,
+        "input_tokens": 1234
+      },
+      {
+        "doc_name": "AMD_2021_10K",
+        "predicted": "1",
+        "ground_truth": "$313 million",
+        "correct": false,
+        "latency_seconds": 0.581,
+        "retrieved_tokens": 786,
+        "input_tokens": 878
+      },
+      {
+        "doc_name": "AMD_2022_10K",
+        "predicted": "2,467",
+        "ground_truth": "$2,467 million",
+        "correct": true,
+        "latency_seconds": 0.804,
+        "retrieved_tokens": 926,
+        "input_tokens": 1018
+      },
+      {
+        "doc_name": "APPLE_2015_10K",
+        "predicted": "$53,463",
+        "ground_truth": "$55,963 million",
+        "correct": false,
+        "latency_seconds": 0.728,
+        "retrieved_tokens": 1972,
+        "input_tokens": 2064
+      },
+      {
+        "doc_name": "APPLE_2017_10K",
+        "predicted": "97,207",
+        "ground_truth": "$103,703 million",
+        "correct": false,
+        "latency_seconds": 0.87,
+        "retrieved_tokens": 1650,
+        "input_tokens": 1742
+      },
+      {
+        "doc_name": "APPLE_2018_10K",
+        "predicted": "NOT FOUND",
+        "ground_truth": "$93,735 million",
+        "correct": false,
+        "latency_seconds": 0.643,
+        "retrieved_tokens": 0,
+        "input_tokens": 92
+      },
+      {
+        "doc_name": "APPLE_2019_10K",
+        "predicted": "NOT FOUND",
+        "ground_truth": "$91,807 million",
+        "correct": false,
+        "latency_seconds": 0.639,
+        "retrieved_tokens": 0,
+        "input_tokens": 92
+      },
+      {
+        "doc_name": "APPLE_2020_10K",
+        "predicted": "NOT FOUND",
+        "ground_truth": "$98,667 million",
+        "correct": false,
+        "latency_seconds": 0.738,
+        "retrieved_tokens": 0,
+        "input_tokens": 92
+      },
+      {
+        "doc_name": "APPLE_2021_10K",
+        "predicted": "NOT FOUND",
+        "ground_truth": "$109,106 million",
+        "correct": false,
+        "latency_seconds": 0.64,
+        "retrieved_tokens": 0,
+        "input_tokens": 92
+      },
+      {
+        "doc_name": "APPLE_2022_10K",
+        "predicted": "NOT FOUND",
+        "ground_truth": "$98,959 million",
+        "correct": false,
+        "latency_seconds": 0.824,
+        "retrieved_tokens": 0,
+        "input_tokens": 92
+      },
+      {
+        "doc_name": "BESTBUY_2015_10K",
+        "predicted": "1,580",
+        "ground_truth": "1,580 million",
+        "correct": true,
+        "latency_seconds": 0.801,
+        "retrieved_tokens": 969,
+        "input_tokens": 1057
+      },
+      {
+        "doc_name": "BESTBUY_2021_10K",
+        "predicted": "1,253",
+        "ground_truth": "1,253 million",
+        "correct": true,
+        "latency_seconds": 0.717,
+        "retrieved_tokens": 778,
+        "input_tokens": 868
+      },
+      {
+        "doc_name": "BESTBUY_2022_10K",
+        "predicted": "1,216",
+        "ground_truth": "1,216 million",
+        "correct": true,
+        "latency_seconds": 0.851,
+        "retrieved_tokens": 781,
+        "input_tokens": 871
+      },
+      {
+        "doc_name": "BESTBUY_2023_10K",
+        "predicted": "1,160",
+        "ground_truth": "1,160 million",
+        "correct": true,
+        "latency_seconds": 0.667,
+        "retrieved_tokens": 800,
+        "input_tokens": 890
+      },
+      {
+        "doc_name": "BOEING_2017_10K",
+        "predicted": "9,782",
+        "ground_truth": "$9,782 million",
+        "correct": true,
+        "latency_seconds": 0.868,
+        "retrieved_tokens": 616,
+        "input_tokens": 708
+      },
+      {
+        "doc_name": "BOEING_2019_10K",
+        "predicted": "19,962",
+        "ground_truth": "$19,962 million",
+        "correct": true,
+        "latency_seconds": 0.898,
+        "retrieved_tokens": 641,
+        "input_tokens": 733
+      },
+      {
+        "doc_name": "BOEING_2020_10K",
+        "predicted": "61,890",
+        "ground_truth": "61,890 million",
+        "correct": true,
+        "latency_seconds": 0.75,
+        "retrieved_tokens": 665,
+        "input_tokens": 757
+      },
+      {
+        "doc_name": "BOEING_2022_10K",
+        "predicted": "51,811",
+        "ground_truth": "$51,811 million",
+        "correct": true,
+        "latency_seconds": 0.873,
+        "retrieved_tokens": 661,
+        "input_tokens": 753
+      },
+      {
+        "doc_name": "CORNING_2022_10K",
+        "predicted": "6,687",
+        "ground_truth": "6,687 million",
+        "correct": true,
+        "latency_seconds": 1.001,
+        "retrieved_tokens": 1245,
+        "input_tokens": 1328
+      },
+      {
+        "doc_name": "COSTCO_2015_10K",
+        "predicted": "$ 4,864",
+        "ground_truth": "4,864",
+        "correct": true,
+        "latency_seconds": 0.723,
+        "retrieved_tokens": 2156,
+        "input_tokens": 2245
+      },
+      {
+        "doc_name": "COSTCO_2016_10K",
+        "predicted": "4,061",
+        "ground_truth": "$4,061 million",
+        "correct": true,
+        "latency_seconds": 0.688,
+        "retrieved_tokens": 2143,
+        "input_tokens": 2232
+      },
+      {
+        "doc_name": "COSTCO_2018_10K",
+        "predicted": "6,487",
+        "ground_truth": "$6,487 million",
+        "correct": true,
+        "latency_seconds": 0.898,
+        "retrieved_tokens": 2017,
+        "input_tokens": 2106
+      },
+      {
+        "doc_name": "GENERALMILLS_2022_10K",
+        "predicted": "9,134.8",
+        "ground_truth": "9,134.8 million",
+        "correct": true,
+        "latency_seconds": 0.785,
+        "retrieved_tokens": 1467,
+        "input_tokens": 1558
+      },
+      {
+        "doc_name": "INTEL_2022_10K",
+        "predicted": "38,107",
+        "ground_truth": "$37,684 million",
+        "correct": false,
+        "latency_seconds": 0.733,
+        "retrieved_tokens": 298,
+        "input_tokens": 390
+      },
+      {
+        "doc_name": "KRAFTHEINZ_2021_10K",
+        "predicted": "21,061",
+        "ground_truth": "$21,061 million",
+        "correct": true,
+        "latency_seconds": 0.762,
+        "retrieved_tokens": 1929,
+        "input_tokens": 2019
+      },
+      {
+        "doc_name": "FOOTLOCKER_2023_10K",
+        "predicted": "452",
+        "ground_truth": "452 million",
+        "correct": true,
+        "latency_seconds": 0.602,
+        "retrieved_tokens": 1175,
+        "input_tokens": 1260
+      },
+      {
+        "doc_name": "NIKE_2019_10K",
+        "predicted": "3,464",
+        "ground_truth": "$3,464 million",
+        "correct": true,
+        "latency_seconds": 0.959,
+        "retrieved_tokens": 1889,
+        "input_tokens": 1970
+      },
+      {
+        "doc_name": "LOCKHEEDMARTIN_2021_10K",
+        "predicted": "11,670",
+        "ground_truth": "$11,676 million",
+        "correct": false,
+        "latency_seconds": 0.66,
+        "retrieved_tokens": 922,
+        "input_tokens": 1014
+      }
+    ]
+  },
+  {
+    "question": "What is net income (loss) for the most recent fiscal year?",
+    "question_slug": "what_is_net_income_loss_for_the_most_recent_fiscal_year_10_agentic",
+    "split": "unsampled",
+    "n": 50,
+    "n_correct": 35,
+    "accuracy": 0.7,
+    "avg_latency": 0.824,
+    "avg_retrieved": 435.1,
+    "avg_input_tok": 527.3,
+    "avg_cost_ratio": 0.0073,
+    "n_rules": 1,
+    "per_doc": [
+      {
+        "doc_name": "AMCOR_2023_10K",
+        "predicted": "$1,048 million",
+        "ground_truth": "$1,058 million",
+        "correct": false,
+        "latency_seconds": 0.812,
+        "retrieved_tokens": 117,
+        "input_tokens": 209
+      },
+      {
+        "doc_name": "APPLE_2016_10K",
+        "predicted": "$45,687",
+        "ground_truth": "45,687 million",
+        "correct": true,
+        "latency_seconds": 1.163,
+        "retrieved_tokens": 432,
+        "input_tokens": 524
+      },
+      {
+        "doc_name": "BESTBUY_2020_10K",
+        "predicted": "$1,541",
+        "ground_truth": "1,541 million",
+        "correct": true,
+        "latency_seconds": 0.829,
+        "retrieved_tokens": 1257,
+        "input_tokens": 1347
+      },
+      {
+        "doc_name": "INTEL_2016_10K",
+        "predicted": "NOT FOUND",
+        "ground_truth": "$10,316 million",
+        "correct": false,
+        "latency_seconds": 0.575,
+        "retrieved_tokens": 0,
+        "input_tokens": 93
+      },
+      {
+        "doc_name": "ACTIVISIONBLIZZARD_2017_10K",
+        "predicted": "$ 273",
+        "ground_truth": "$273 million",
+        "correct": true,
+        "latency_seconds": 1.15,
+        "retrieved_tokens": 1135,
+        "input_tokens": 1228
+      },
+      {
+        "doc_name": "ACTIVISIONBLIZZARD_2020_10K",
+        "predicted": "$ 2,197",
+        "ground_truth": "$2.197 billion",
+        "correct": true,
+        "latency_seconds": 0.65,
+        "retrieved_tokens": 1017,
+        "input_tokens": 1110
+      },
+      {
+        "doc_name": "ADOBE_2015_10K",
+        "predicted": "$629,551",
+        "ground_truth": "629,551,000",
+        "correct": false,
+        "latency_seconds": 0.894,
+        "retrieved_tokens": 787,
+        "input_tokens": 877
+      },
+      {
+        "doc_name": "ADOBE_2016_10K",
+        "predicted": "$ 1,168,782",
+        "ground_truth": "$1,168,782,000",
+        "correct": false,
+        "latency_seconds": 0.765,
+        "retrieved_tokens": 722,
+        "input_tokens": 816
+      },
+      {
+        "doc_name": "ADOBE_2017_10K",
+        "predicted": "NOT FOUND",
+        "ground_truth": "$1,693,954,000",
+        "correct": false,
+        "latency_seconds": 0.596,
+        "retrieved_tokens": 0,
+        "input_tokens": 93
+      },
+      {
+        "doc_name": "ADOBE_2018_10K",
+        "predicted": "NOT FOUND",
+        "ground_truth": "2,590,774,000",
+        "correct": false,
+        "latency_seconds": 0.673,
+        "retrieved_tokens": 0,
+        "input_tokens": 93
+      },
+      {
+        "doc_name": "ADOBE_2019_10K",
+        "predicted": "NOT FOUND",
+        "ground_truth": "$2,951,458,000",
+        "correct": false,
+        "latency_seconds": 0.685,
+        "retrieved_tokens": 0,
+        "input_tokens": 93
+      },
+      {
+        "doc_name": "ADOBE_2020_10K",
+        "predicted": "NOT FOUND",
+        "ground_truth": "$5,260 million",
+        "correct": false,
+        "latency_seconds": 0.679,
+        "retrieved_tokens": 0,
+        "input_tokens": 93
+      },
+      {
+        "doc_name": "ADOBE_2021_10K",
+        "predicted": "NOT FOUND",
+        "ground_truth": "$4,822 million",
+        "correct": false,
+        "latency_seconds": 0.678,
+        "retrieved_tokens": 0,
+        "input_tokens": 93
+      },
+      {
+        "doc_name": "ADOBE_2022_10K",
+        "predicted": "NOT FOUND",
+        "ground_truth": "$4.756 billion",
+        "correct": false,
+        "latency_seconds": 0.879,
+        "retrieved_tokens": 0,
+        "input_tokens": 93
+      },
+      {
+        "doc_name": "AMAZON_2015_10K",
+        "predicted": "$ 596",
+        "ground_truth": "$596 million",
+        "correct": true,
+        "latency_seconds": 1.035,
+        "retrieved_tokens": 590,
+        "input_tokens": 681
+      },
+      {
+        "doc_name": "AMAZON_2017_10K",
+        "predicted": "$ 3,033",
+        "ground_truth": "$3,033 million",
+        "correct": true,
+        "latency_seconds": 0.783,
+        "retrieved_tokens": 511,
+        "input_tokens": 603
+      },
+      {
+        "doc_name": "AMAZON_2019_10K",
+        "predicted": "$ 11,588",
+        "ground_truth": "$11,588 million",
+        "correct": true,
+        "latency_seconds": 1.027,
+        "retrieved_tokens": 522,
+        "input_tokens": 614
+      },
+      {
+        "doc_name": "AMAZON_2020_10K",
+        "predicted": "$ 21,331",
+        "ground_truth": "$21,331 million",
+        "correct": true,
+        "latency_seconds": 0.81,
+        "retrieved_tokens": 529,
+        "input_tokens": 621
+      },
+      {
+        "doc_name": "AMAZON_2022_10K",
+        "predicted": "$ (2,722)",
+        "ground_truth": "$(2,722) million",
+        "correct": true,
+        "latency_seconds": 0.712,
+        "retrieved_tokens": 563,
+        "input_tokens": 655
+      },
+      {
+        "doc_name": "AMCOR_2021_10K",
+        "predicted": "$939 million",
+        "ground_truth": "$939 million",
+        "correct": true,
+        "latency_seconds": 0.69,
+        "retrieved_tokens": 113,
+        "input_tokens": 205
+      },
+      {
+        "doc_name": "AMCOR_2022_10K",
+        "predicted": "$805 million",
+        "ground_truth": "$805 million",
+        "correct": true,
+        "latency_seconds": 0.776,
+        "retrieved_tokens": 115,
+        "input_tokens": 207
+      },
+      {
+        "doc_name": "AMD_2019_10K",
+        "predicted": "$341 million",
+        "ground_truth": "$341 million",
+        "correct": true,
+        "latency_seconds": 0.68,
+        "retrieved_tokens": 404,
+        "input_tokens": 497
+      },
+      {
+        "doc_name": "AMD_2020_10K",
+        "predicted": "$2,490 million",
+        "ground_truth": "$2,490 million",
+        "correct": true,
+        "latency_seconds": 0.802,
+        "retrieved_tokens": 405,
+        "input_tokens": 498
+      },
+      {
+        "doc_name": "AMD_2021_10K",
+        "predicted": "$3,162 million",
+        "ground_truth": "$3,162 million",
+        "correct": true,
+        "latency_seconds": 0.868,
+        "retrieved_tokens": 412,
+        "input_tokens": 505
+      },
+      {
+        "doc_name": "AMD_2022_10K",
+        "predicted": "$1,320 million",
+        "ground_truth": "$1,320 million",
+        "correct": true,
+        "latency_seconds": 0.683,
+        "retrieved_tokens": 482,
+        "input_tokens": 575
+      },
+      {
+        "doc_name": "APPLE_2015_10K",
+        "predicted": "$53,394",
+        "ground_truth": "$53,394 million",
+        "correct": true,
+        "latency_seconds": 0.888,
+        "retrieved_tokens": 432,
+        "input_tokens": 524
+      },
+      {
+        "doc_name": "APPLE_2017_10K",
+        "predicted": "$48,351",
+        "ground_truth": "$48,351 million",
+        "correct": true,
+        "latency_seconds": 0.799,
+        "retrieved_tokens": 434,
+        "input_tokens": 526
+      },
+      {
+        "doc_name": "APPLE_2018_10K",
+        "predicted": "$59,531",
+        "ground_truth": "$59,531 million",
+        "correct": true,
+        "latency_seconds": 1.139,
+        "retrieved_tokens": 409,
+        "input_tokens": 501
+      },
+      {
+        "doc_name": "APPLE_2019_10K",
+        "predicted": "$55,256",
+        "ground_truth": "$55,256 million",
+        "correct": true,
+        "latency_seconds": 0.712,
+        "retrieved_tokens": 506,
+        "input_tokens": 598
+      },
+      {
+        "doc_name": "APPLE_2020_10K",
+        "predicted": "$57,411",
+        "ground_truth": "$57,411 million",
+        "correct": true,
+        "latency_seconds": 0.617,
+        "retrieved_tokens": 513,
+        "input_tokens": 605
+      },
+      {
+        "doc_name": "APPLE_2021_10K",
+        "predicted": "$94,680",
+        "ground_truth": "$94,680 million",
+        "correct": true,
+        "latency_seconds": 0.599,
+        "retrieved_tokens": 502,
+        "input_tokens": 594
+      },
+      {
+        "doc_name": "APPLE_2022_10K",
+        "predicted": "$99,803",
+        "ground_truth": "$99,803 million",
+        "correct": true,
+        "latency_seconds": 0.986,
+        "retrieved_tokens": 501,
+        "input_tokens": 593
+      },
+      {
+        "doc_name": "BESTBUY_2015_10K",
+        "predicted": "$1,233",
+        "ground_truth": "1,246 million",
+        "correct": false,
+        "latency_seconds": 0.668,
+        "retrieved_tokens": 1716,
+        "input_tokens": 1808
+      },
+      {
+        "doc_name": "BESTBUY_2021_10K",
+        "predicted": "1,798",
+        "ground_truth": "1,798 million",
+        "correct": true,
+        "latency_seconds": 0.627,
+        "retrieved_tokens": 824,
+        "input_tokens": 915
+      },
+      {
+        "doc_name": "BESTBUY_2022_10K",
+        "predicted": "NOT FOUND",
+        "ground_truth": "2,454 million",
+        "correct": false,
+        "latency_seconds": 0.793,
+        "retrieved_tokens": 0,
+        "input_tokens": 93
+      },
+      {
+        "doc_name": "BESTBUY_2023_10K",
+        "predicted": "$1,419",
+        "ground_truth": "1,419 million",
+        "correct": true,
+        "latency_seconds": 0.968,
+        "retrieved_tokens": 381,
+        "input_tokens": 473
+      },
+      {
+        "doc_name": "BOEING_2017_10K",
+        "predicted": "$8,197 million",
+        "ground_truth": "$8,197 million",
+        "correct": true,
+        "latency_seconds": 1.31,
+        "retrieved_tokens": 457,
+        "input_tokens": 546
+      },
+      {
+        "doc_name": "BOEING_2019_10K",
+        "predicted": "NOT FOUND",
+        "ground_truth": "($636 million)",
+        "correct": false,
+        "latency_seconds": 0.86,
+        "retrieved_tokens": 0,
+        "input_tokens": 93
+      },
+      {
+        "doc_name": "BOEING_2020_10K",
+        "predicted": "($11,941)",
+        "ground_truth": "-11,941 million",
+        "correct": true,
+        "latency_seconds": 0.667,
+        "retrieved_tokens": 533,
+        "input_tokens": 624
+      },
+      {
+        "doc_name": "BOEING_2022_10K",
+        "predicted": "($5,053)",
+        "ground_truth": "($5,053 million)",
+        "correct": true,
+        "latency_seconds": 0.762,
+        "retrieved_tokens": 514,
+        "input_tokens": 606
+      },
+      {
+        "doc_name": "CORNING_2022_10K",
+        "predicted": "$1,316",
+        "ground_truth": "1,316 million",
+        "correct": true,
+        "latency_seconds": 1.387,
+        "retrieved_tokens": 187,
+        "input_tokens": 277
+      },
+      {
+        "doc_name": "COSTCO_2015_10K",
+        "predicted": "$2,377",
+        "ground_truth": "2,377",
+        "correct": true,
+        "latency_seconds": 0.912,
+        "retrieved_tokens": 521,
+        "input_tokens": 614
+      },
+      {
+        "doc_name": "COSTCO_2016_10K",
+        "predicted": "$2,350",
+        "ground_truth": "$2,350 million",
+        "correct": true,
+        "latency_seconds": 0.929,
+        "retrieved_tokens": 523,
+        "input_tokens": 616
+      },
+      {
+        "doc_name": "COSTCO_2018_10K",
+        "predicted": "$3,179",
+        "ground_truth": "$3,134 million",
+        "correct": false,
+        "latency_seconds": 1.066,
+        "retrieved_tokens": 523,
+        "input_tokens": 616
+      },
+      {
+        "doc_name": "GENERALMILLS_2022_10K",
+        "predicted": "$2,707.3 million",
+        "ground_truth": "2,707.3 million",
+        "correct": true,
+        "latency_seconds": 0.903,
+        "retrieved_tokens": 212,
+        "input_tokens": 305
+      },
+      {
+        "doc_name": "INTEL_2022_10K",
+        "predicted": "$8,017 million",
+        "ground_truth": "$8,017 million",
+        "correct": true,
+        "latency_seconds": 0.76,
+        "retrieved_tokens": 639,
+        "input_tokens": 731
+      },
+      {
+        "doc_name": "KRAFTHEINZ_2021_10K",
+        "predicted": "NOT FOUND",
+        "ground_truth": "$1,024 million",
+        "correct": false,
+        "latency_seconds": 0.721,
+        "retrieved_tokens": 0,
+        "input_tokens": 93
+      },
+      {
+        "doc_name": "FOOTLOCKER_2023_10K",
+        "predicted": "$342 million",
+        "ground_truth": "342 million",
+        "correct": true,
+        "latency_seconds": 0.745,
+        "retrieved_tokens": 319,
+        "input_tokens": 412
+      },
+      {
+        "doc_name": "NIKE_2019_10K",
+        "predicted": "$4,029 million",
+        "ground_truth": "$4,029 million",
+        "correct": true,
+        "latency_seconds": 0.622,
+        "retrieved_tokens": 388,
+        "input_tokens": 479
+      },
+      {
+        "doc_name": "LOCKHEEDMARTIN_2021_10K",
+        "predicted": "$ 6,315",
+        "ground_truth": "$6,315 million",
+        "correct": true,
+        "latency_seconds": 0.841,
+        "retrieved_tokens": 608,
+        "input_tokens": 700
+      }
+    ]
+  },
+  {
+    "question": "What is total revenue for the most recent fiscal year (from the audited income statement)?",
+    "question_slug": "what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_agentic",
+    "split": "unsampled",
+    "n": 50,
+    "n_correct": 35,
+    "accuracy": 0.7,
+    "avg_latency": 0.787,
+    "avg_retrieved": 472.5,
+    "avg_input_tok": 567.7,
+    "avg_cost_ratio": 0.007617,
+    "n_rules": 3,
+    "per_doc": [
+      {
+        "doc_name": "AMCOR_2023_10K",
+        "predicted": "$377",
+        "ground_truth": "$14,694 million",
+        "correct": false,
+        "latency_seconds": 1.013,
+        "retrieved_tokens": 297,
+        "input_tokens": 393
+      },
+      {
+        "doc_name": "APPLE_2016_10K",
+        "predicted": "$215,639",
+        "ground_truth": "215,639 million",
+        "correct": true,
+        "latency_seconds": 1.056,
+        "retrieved_tokens": 432,
+        "input_tokens": 527
+      },
+      {
+        "doc_name": "BESTBUY_2020_10K",
+        "predicted": "$43,638",
+        "ground_truth": "43,638 million",
+        "correct": true,
+        "latency_seconds": 0.711,
+        "retrieved_tokens": 1257,
+        "input_tokens": 1350
+      },
+      {
+        "doc_name": "INTEL_2016_10K",
+        "predicted": "NOT FOUND",
+        "ground_truth": "$59,387 million",
+        "correct": false,
+        "latency_seconds": 0.611,
+        "retrieved_tokens": 0,
+        "input_tokens": 96
+      },
+      {
+        "doc_name": "ACTIVISIONBLIZZARD_2017_10K",
+        "predicted": "$7,017",
+        "ground_truth": "$7,017 million",
+        "correct": true,
+        "latency_seconds": 0.976,
+        "retrieved_tokens": 1191,
+        "input_tokens": 1287
+      },
+      {
+        "doc_name": "ACTIVISIONBLIZZARD_2020_10K",
+        "predicted": "$8,086 million",
+        "ground_truth": "$8.1 billion",
+        "correct": true,
+        "latency_seconds": 0.736,
+        "retrieved_tokens": 1073,
+        "input_tokens": 1169
+      },
+      {
+        "doc_name": "ADOBE_2015_10K",
+        "predicted": "$ 4,795,511",
+        "ground_truth": "4,795,511,000",
+        "correct": false,
+        "latency_seconds": 0.668,
+        "retrieved_tokens": 787,
+        "input_tokens": 880
+      },
+      {
+        "doc_name": "ADOBE_2016_10K",
+        "predicted": "$ 5,854,430",
+        "ground_truth": "$5,854,430,000",
+        "correct": false,
+        "latency_seconds": 0.868,
+        "retrieved_tokens": 722,
+        "input_tokens": 819
+      },
+      {
+        "doc_name": "ADOBE_2017_10K",
+        "predicted": "NOT FOUND",
+        "ground_truth": "$7,301,505,000",
+        "correct": false,
+        "latency_seconds": 0.815,
+        "retrieved_tokens": 0,
+        "input_tokens": 96
+      },
+      {
+        "doc_name": "ADOBE_2018_10K",
+        "predicted": "NOT FOUND",
+        "ground_truth": "9,030,008,000",
+        "correct": false,
+        "latency_seconds": 0.698,
+        "retrieved_tokens": 0,
+        "input_tokens": 96
+      },
+      {
+        "doc_name": "ADOBE_2019_10K",
+        "predicted": "NOT FOUND",
+        "ground_truth": "$11,171,297,000",
+        "correct": false,
+        "latency_seconds": 0.762,
+        "retrieved_tokens": 0,
+        "input_tokens": 96
+      },
+      {
+        "doc_name": "ADOBE_2020_10K",
+        "predicted": "NOT FOUND",
+        "ground_truth": "$12,868 million",
+        "correct": false,
+        "latency_seconds": 0.713,
+        "retrieved_tokens": 0,
+        "input_tokens": 96
+      },
+      {
+        "doc_name": "ADOBE_2021_10K",
+        "predicted": "NOT FOUND",
+        "ground_truth": "$15,785 million",
+        "correct": false,
+        "latency_seconds": 0.674,
+        "retrieved_tokens": 0,
+        "input_tokens": 96
+      },
+      {
+        "doc_name": "ADOBE_2022_10K",
+        "predicted": "NOT FOUND",
+        "ground_truth": "$17.606 billion",
+        "correct": false,
+        "latency_seconds": 0.692,
+        "retrieved_tokens": 0,
+        "input_tokens": 96
+      },
+      {
+        "doc_name": "AMAZON_2015_10K",
+        "predicted": "$107,006",
+        "ground_truth": "$107,006 million",
+        "correct": true,
+        "latency_seconds": 0.779,
+        "retrieved_tokens": 590,
+        "input_tokens": 684
+      },
+      {
+        "doc_name": "AMAZON_2017_10K",
+        "predicted": "$177,866",
+        "ground_truth": "$177,866 million",
+        "correct": true,
+        "latency_seconds": 0.743,
+        "retrieved_tokens": 511,
+        "input_tokens": 606
+      },
+      {
+        "doc_name": "AMAZON_2019_10K",
+        "predicted": "$280,522",
+        "ground_truth": "$280,522 million",
+        "correct": true,
+        "latency_seconds": 0.708,
+        "retrieved_tokens": 522,
+        "input_tokens": 617
+      },
+      {
+        "doc_name": "AMAZON_2020_10K",
+        "predicted": "$386,064",
+        "ground_truth": "$386,064 million",
+        "correct": true,
+        "latency_seconds": 1.041,
+        "retrieved_tokens": 529,
+        "input_tokens": 624
+      },
+      {
+        "doc_name": "AMAZON_2022_10K",
+        "predicted": "$ 513,983",
+        "ground_truth": "$513,983 million",
+        "correct": false,
+        "latency_seconds": 0.547,
+        "retrieved_tokens": 563,
+        "input_tokens": 658
+      },
+      {
+        "doc_name": "AMCOR_2021_10K",
+        "predicted": "$12,861",
+        "ground_truth": "$12,861 million",
+        "correct": true,
+        "latency_seconds": 0.745,
+        "retrieved_tokens": 579,
+        "input_tokens": 675
+      },
+      {
+        "doc_name": "AMCOR_2022_10K",
+        "predicted": "NOT FOUND",
+        "ground_truth": "$14,544 million",
+        "correct": false,
+        "latency_seconds": 0.678,
+        "retrieved_tokens": 0,
+        "input_tokens": 96
+      },
+      {
+        "doc_name": "AMD_2019_10K",
+        "predicted": "$6,731 million",
+        "ground_truth": "$6,731 million",
+        "correct": true,
+        "latency_seconds": 0.867,
+        "retrieved_tokens": 404,
+        "input_tokens": 500
+      },
+      {
+        "doc_name": "AMD_2020_10K",
+        "predicted": "$9,763 million",
+        "ground_truth": "$9,763 million",
+        "correct": true,
+        "latency_seconds": 0.782,
+        "retrieved_tokens": 405,
+        "input_tokens": 501
+      },
+      {
+        "doc_name": "AMD_2021_10K",
+        "predicted": "$16,434 million",
+        "ground_truth": "$16,434 million",
+        "correct": true,
+        "latency_seconds": 0.806,
+        "retrieved_tokens": 412,
+        "input_tokens": 508
+      },
+      {
+        "doc_name": "AMD_2022_10K",
+        "predicted": "$23,601 million",
+        "ground_truth": "$23,601 million",
+        "correct": true,
+        "latency_seconds": 0.776,
+        "retrieved_tokens": 482,
+        "input_tokens": 578
+      },
+      {
+        "doc_name": "APPLE_2015_10K",
+        "predicted": "$233,715",
+        "ground_truth": "$233,715 million",
+        "correct": true,
+        "latency_seconds": 0.828,
+        "retrieved_tokens": 432,
+        "input_tokens": 527
+      },
+      {
+        "doc_name": "APPLE_2017_10K",
+        "predicted": "$229,234",
+        "ground_truth": "$229,234 million",
+        "correct": true,
+        "latency_seconds": 0.754,
+        "retrieved_tokens": 434,
+        "input_tokens": 529
+      },
+      {
+        "doc_name": "APPLE_2018_10K",
+        "predicted": "$265,595",
+        "ground_truth": "$265,595 million",
+        "correct": true,
+        "latency_seconds": 0.966,
+        "retrieved_tokens": 409,
+        "input_tokens": 504
+      },
+      {
+        "doc_name": "APPLE_2019_10K",
+        "predicted": "260,174",
+        "ground_truth": "$260,174 million",
+        "correct": true,
+        "latency_seconds": 0.914,
+        "retrieved_tokens": 506,
+        "input_tokens": 601
+      },
+      {
+        "doc_name": "APPLE_2020_10K",
+        "predicted": "274,515",
+        "ground_truth": "$274,515 million",
+        "correct": true,
+        "latency_seconds": 0.874,
+        "retrieved_tokens": 513,
+        "input_tokens": 608
+      },
+      {
+        "doc_name": "APPLE_2021_10K",
+        "predicted": "$365,817",
+        "ground_truth": "$365,817 million",
+        "correct": true,
+        "latency_seconds": 0.942,
+        "retrieved_tokens": 502,
+        "input_tokens": 597
+      },
+      {
+        "doc_name": "APPLE_2022_10K",
+        "predicted": "394,328",
+        "ground_truth": "$394,328 million",
+        "correct": true,
+        "latency_seconds": 0.863,
+        "retrieved_tokens": 501,
+        "input_tokens": 596
+      },
+      {
+        "doc_name": "BESTBUY_2015_10K",
+        "predicted": "$40,339",
+        "ground_truth": "40,339 million",
+        "correct": true,
+        "latency_seconds": 0.642,
+        "retrieved_tokens": 1716,
+        "input_tokens": 1811
+      },
+      {
+        "doc_name": "BESTBUY_2021_10K",
+        "predicted": "47,262",
+        "ground_truth": "47,262 million",
+        "correct": true,
+        "latency_seconds": 0.621,
+        "retrieved_tokens": 824,
+        "input_tokens": 918
+      },
+      {
+        "doc_name": "BESTBUY_2022_10K",
+        "predicted": "NOT FOUND",
+        "ground_truth": "51,761 million",
+        "correct": false,
+        "latency_seconds": 0.651,
+        "retrieved_tokens": 0,
+        "input_tokens": 96
+      },
+      {
+        "doc_name": "BESTBUY_2023_10K",
+        "predicted": "$46,298",
+        "ground_truth": "46,298 million",
+        "correct": true,
+        "latency_seconds": 0.638,
+        "retrieved_tokens": 381,
+        "input_tokens": 476
+      },
+      {
+        "doc_name": "BOEING_2017_10K",
+        "predicted": "$93,392 million",
+        "ground_truth": "$93,392 million",
+        "correct": true,
+        "latency_seconds": 0.752,
+        "retrieved_tokens": 457,
+        "input_tokens": 549
+      },
+      {
+        "doc_name": "BOEING_2019_10K",
+        "predicted": "$76,559 million",
+        "ground_truth": "$76,559 million",
+        "correct": true,
+        "latency_seconds": 0.851,
+        "retrieved_tokens": 478,
+        "input_tokens": 572
+      },
+      {
+        "doc_name": "BOEING_2020_10K",
+        "predicted": "$58,158 million",
+        "ground_truth": "58,158 million",
+        "correct": true,
+        "latency_seconds": 0.904,
+        "retrieved_tokens": 533,
+        "input_tokens": 627
+      },
+      {
+        "doc_name": "BOEING_2022_10K",
+        "predicted": "$66,608",
+        "ground_truth": "$66,608 million",
+        "correct": true,
+        "latency_seconds": 0.771,
+        "retrieved_tokens": 514,
+        "input_tokens": 609
+      },
+      {
+        "doc_name": "CORNING_2022_10K",
+        "predicted": "14,189 million",
+        "ground_truth": "14,189 million",
+        "correct": true,
+        "latency_seconds": 0.849,
+        "retrieved_tokens": 710,
+        "input_tokens": 803
+      },
+      {
+        "doc_name": "COSTCO_2015_10K",
+        "predicted": "$113,666",
+        "ground_truth": "113,666",
+        "correct": true,
+        "latency_seconds": 0.67,
+        "retrieved_tokens": 290,
+        "input_tokens": 389
+      },
+      {
+        "doc_name": "COSTCO_2016_10K",
+        "predicted": "$116,073",
+        "ground_truth": "$116,073 million",
+        "correct": true,
+        "latency_seconds": 0.748,
+        "retrieved_tokens": 288,
+        "input_tokens": 385
+      },
+      {
+        "doc_name": "COSTCO_2018_10K",
+        "predicted": "$138,434",
+        "ground_truth": "$138,434 million",
+        "correct": true,
+        "latency_seconds": 0.84,
+        "retrieved_tokens": 288,
+        "input_tokens": 385
+      },
+      {
+        "doc_name": "GENERALMILLS_2022_10K",
+        "predicted": "$18,992.8 million",
+        "ground_truth": "18,992.8 million",
+        "correct": true,
+        "latency_seconds": 0.824,
+        "retrieved_tokens": 495,
+        "input_tokens": 588
+      },
+      {
+        "doc_name": "INTEL_2022_10K",
+        "predicted": "NOT FOUND",
+        "ground_truth": "$63,054 million",
+        "correct": false,
+        "latency_seconds": 0.814,
+        "retrieved_tokens": 0,
+        "input_tokens": 96
+      },
+      {
+        "doc_name": "KRAFTHEINZ_2021_10K",
+        "predicted": "$26.0 billion",
+        "ground_truth": "$26,042 million",
+        "correct": true,
+        "latency_seconds": 0.647,
+        "retrieved_tokens": 840,
+        "input_tokens": 937
+      },
+      {
+        "doc_name": "FOOTLOCKER_2023_10K",
+        "predicted": "$8,759 million",
+        "ground_truth": "8,747 million",
+        "correct": false,
+        "latency_seconds": 0.781,
+        "retrieved_tokens": 590,
+        "input_tokens": 681
+      },
+      {
+        "doc_name": "NIKE_2019_10K",
+        "predicted": "$39,117 million",
+        "ground_truth": "$39,117 million",
+        "correct": true,
+        "latency_seconds": 0.964,
+        "retrieved_tokens": 388,
+        "input_tokens": 482
+      },
+      {
+        "doc_name": "LOCKHEEDMARTIN_2021_10K",
+        "predicted": "$67,044",
+        "ground_truth": "$67,044 million",
+        "correct": true,
+        "latency_seconds": 0.758,
+        "retrieved_tokens": 780,
+        "input_tokens": 875
+      }
+    ]
+  },
+  {
+    "question": "What is total assets at year-end (from the audited balance sheet)?",
+    "question_slug": "what_is_total_assets_at_yearend_from_the_audited_balance_she_10_agentic",
+    "split": "unsampled",
+    "n": 50,
+    "n_correct": 28,
+    "accuracy": 0.56,
+    "avg_latency": 0.778,
+    "avg_retrieved": 486.4,
+    "avg_input_tok": 579.7,
+    "avg_cost_ratio": 0.008115,
+    "n_rules": 2,
+    "per_doc": [
+      {
+        "doc_name": "AMCOR_2023_10K",
+        "predicted": "$ 15,051",
+        "ground_truth": "$17,003 million",
+        "correct": false,
+        "latency_seconds": 0.663,
+        "retrieved_tokens": 445,
+        "input_tokens": 538
+      },
+      {
+        "doc_name": "APPLE_2016_10K",
+        "predicted": "$321,686",
+        "ground_truth": "321,686 million",
+        "correct": true,
+        "latency_seconds": 0.841,
+        "retrieved_tokens": 597,
+        "input_tokens": 690
+      },
+      {
+        "doc_name": "BESTBUY_2020_10K",
+        "predicted": "$15,591",
+        "ground_truth": "15,591 million",
+        "correct": true,
+        "latency_seconds": 0.868,
+        "retrieved_tokens": 638,
+        "input_tokens": 729
+      },
+      {
+        "doc_name": "INTEL_2016_10K",
+        "predicted": "$113,327 million",
+        "ground_truth": "$113,327 million",
+        "correct": true,
+        "latency_seconds": 0.695,
+        "retrieved_tokens": 1000,
+        "input_tokens": 1095
+      },
+      {
+        "doc_name": "ACTIVISIONBLIZZARD_2017_10K",
+        "predicted": "$18,668",
+        "ground_truth": "$18,668 million",
+        "correct": true,
+        "latency_seconds": 1.065,
+        "retrieved_tokens": 598,
+        "input_tokens": 692
+      },
+      {
+        "doc_name": "ACTIVISIONBLIZZARD_2020_10K",
+        "predicted": "$23,109",
+        "ground_truth": "$23.109 billion",
+        "correct": false,
+        "latency_seconds": 0.855,
+        "retrieved_tokens": 588,
+        "input_tokens": 682
+      },
+      {
+        "doc_name": "ADOBE_2015_10K",
+        "predicted": "NOT FOUND",
+        "ground_truth": "11,726,472,000",
+        "correct": false,
+        "latency_seconds": 0.819,
+        "retrieved_tokens": 0,
+        "input_tokens": 93
+      },
+      {
+        "doc_name": "ADOBE_2016_10K",
+        "predicted": "$12,707,114",
+        "ground_truth": "$12,707,114,000",
+        "correct": false,
+        "latency_seconds": 0.783,
+        "retrieved_tokens": 724,
+        "input_tokens": 816
+      },
+      {
+        "doc_name": "ADOBE_2017_10K",
+        "predicted": "NOT FOUND",
+        "ground_truth": "$14,535,556,000",
+        "correct": false,
+        "latency_seconds": 0.668,
+        "retrieved_tokens": 0,
+        "input_tokens": 93
+      },
+      {
+        "doc_name": "ADOBE_2018_10K",
+        "predicted": "NOT FOUND",
+        "ground_truth": "18,768,682,000",
+        "correct": false,
+        "latency_seconds": 0.885,
+        "retrieved_tokens": 0,
+        "input_tokens": 93
+      },
+      {
+        "doc_name": "ADOBE_2019_10K",
+        "predicted": "NOT FOUND",
+        "ground_truth": "$20,762,400,000",
+        "correct": false,
+        "latency_seconds": 0.619,
+        "retrieved_tokens": 0,
+        "input_tokens": 93
+      },
+      {
+        "doc_name": "ADOBE_2020_10K",
+        "predicted": "NOT FOUND",
+        "ground_truth": "$24,284 million",
+        "correct": false,
+        "latency_seconds": 0.768,
+        "retrieved_tokens": 0,
+        "input_tokens": 93
+      },
+      {
+        "doc_name": "ADOBE_2021_10K",
+        "predicted": "NOT FOUND",
+        "ground_truth": "$27,241 million",
+        "correct": false,
+        "latency_seconds": 0.602,
+        "retrieved_tokens": 0,
+        "input_tokens": 93
+      },
+      {
+        "doc_name": "ADOBE_2022_10K",
+        "predicted": "NOT FOUND",
+        "ground_truth": "$27.165 billion",
+        "correct": false,
+        "latency_seconds": 0.803,
+        "retrieved_tokens": 0,
+        "input_tokens": 93
+      },
+      {
+        "doc_name": "AMAZON_2015_10K",
+        "predicted": "$65,444",
+        "ground_truth": "$65,444 million",
+        "correct": true,
+        "latency_seconds": 0.806,
+        "retrieved_tokens": 534,
+        "input_tokens": 629
+      },
+      {
+        "doc_name": "AMAZON_2017_10K",
+        "predicted": "$ 131,310",
+        "ground_truth": "$131,310 million",
+        "correct": false,
+        "latency_seconds": 0.591,
+        "retrieved_tokens": 534,
+        "input_tokens": 629
+      },
+      {
+        "doc_name": "AMAZON_2019_10K",
+        "predicted": "$225,248",
+        "ground_truth": "$225,248 million",
+        "correct": true,
+        "latency_seconds": 0.654,
+        "retrieved_tokens": 566,
+        "input_tokens": 661
+      },
+      {
+        "doc_name": "AMAZON_2020_10K",
+        "predicted": "$225,248 and $321,195",
+        "ground_truth": "$321,195 million",
+        "correct": false,
+        "latency_seconds": 0.804,
+        "retrieved_tokens": 567,
+        "input_tokens": 662
+      },
+      {
+        "doc_name": "AMAZON_2022_10K",
+        "predicted": "$420,549 and $462,675",
+        "ground_truth": "$462,675 million",
+        "correct": false,
+        "latency_seconds": 0.968,
+        "retrieved_tokens": 548,
+        "input_tokens": 644
+      },
+      {
+        "doc_name": "AMCOR_2021_10K",
+        "predicted": "17,188",
+        "ground_truth": "$17,188 million",
+        "correct": true,
+        "latency_seconds": 0.786,
+        "retrieved_tokens": 691,
+        "input_tokens": 784
+      },
+      {
+        "doc_name": "AMCOR_2022_10K",
+        "predicted": "NOT FOUND",
+        "ground_truth": "$17,426 million",
+        "correct": false,
+        "latency_seconds": 0.671,
+        "retrieved_tokens": 0,
+        "input_tokens": 93
+      },
+      {
+        "doc_name": "AMD_2019_10K",
+        "predicted": "6,028",
+        "ground_truth": "$6,028 million",
+        "correct": true,
+        "latency_seconds": 1.013,
+        "retrieved_tokens": 614,
+        "input_tokens": 709
+      },
+      {
+        "doc_name": "AMD_2020_10K",
+        "predicted": "$8,962 million",
+        "ground_truth": "$8,962 million",
+        "correct": true,
+        "latency_seconds": 0.819,
+        "retrieved_tokens": 580,
+        "input_tokens": 674
+      },
+      {
+        "doc_name": "AMD_2021_10K",
+        "predicted": "$12,419 million",
+        "ground_truth": "$12,419 million",
+        "correct": true,
+        "latency_seconds": 0.728,
+        "retrieved_tokens": 615,
+        "input_tokens": 709
+      },
+      {
+        "doc_name": "AMD_2022_10K",
+        "predicted": "$67,580 million",
+        "ground_truth": "$67,580 million",
+        "correct": true,
+        "latency_seconds": 0.687,
+        "retrieved_tokens": 652,
+        "input_tokens": 746
+      },
+      {
+        "doc_name": "APPLE_2015_10K",
+        "predicted": "$290,479",
+        "ground_truth": "$290,479 million",
+        "correct": true,
+        "latency_seconds": 0.773,
+        "retrieved_tokens": 607,
+        "input_tokens": 700
+      },
+      {
+        "doc_name": "APPLE_2017_10K",
+        "predicted": "$375,319",
+        "ground_truth": "$375,319 million",
+        "correct": true,
+        "latency_seconds": 0.975,
+        "retrieved_tokens": 597,
+        "input_tokens": 690
+      },
+      {
+        "doc_name": "APPLE_2018_10K",
+        "predicted": "$ 365,725",
+        "ground_truth": "$365,725 million",
+        "correct": false,
+        "latency_seconds": 0.97,
+        "retrieved_tokens": 595,
+        "input_tokens": 691
+      },
+      {
+        "doc_name": "APPLE_2019_10K",
+        "predicted": "$ 338,516",
+        "ground_truth": "$338,516 million",
+        "correct": false,
+        "latency_seconds": 0.914,
+        "retrieved_tokens": 581,
+        "input_tokens": 677
+      },
+      {
+        "doc_name": "APPLE_2020_10K",
+        "predicted": "$ 323,888",
+        "ground_truth": "$323,888 million",
+        "correct": true,
+        "latency_seconds": 0.646,
+        "retrieved_tokens": 579,
+        "input_tokens": 675
+      },
+      {
+        "doc_name": "APPLE_2021_10K",
+        "predicted": "$351,002",
+        "ground_truth": "$351,002 million",
+        "correct": true,
+        "latency_seconds": 0.896,
+        "retrieved_tokens": 578,
+        "input_tokens": 674
+      },
+      {
+        "doc_name": "APPLE_2022_10K",
+        "predicted": "$ 352,755",
+        "ground_truth": "$352,755 million",
+        "correct": true,
+        "latency_seconds": 0.637,
+        "retrieved_tokens": 587,
+        "input_tokens": 682
+      },
+      {
+        "doc_name": "BESTBUY_2015_10K",
+        "predicted": "$15,256",
+        "ground_truth": "15,256 million",
+        "correct": true,
+        "latency_seconds": 0.831,
+        "retrieved_tokens": 677,
+        "input_tokens": 766
+      },
+      {
+        "doc_name": "BESTBUY_2021_10K",
+        "predicted": "NOT FOUND",
+        "ground_truth": "19,067 million",
+        "correct": false,
+        "latency_seconds": 0.724,
+        "retrieved_tokens": 0,
+        "input_tokens": 93
+      },
+      {
+        "doc_name": "BESTBUY_2022_10K",
+        "predicted": "NOT FOUND",
+        "ground_truth": "17,504 million",
+        "correct": false,
+        "latency_seconds": 0.626,
+        "retrieved_tokens": 0,
+        "input_tokens": 93
+      },
+      {
+        "doc_name": "BESTBUY_2023_10K",
+        "predicted": "$15,803",
+        "ground_truth": "15,803 million",
+        "correct": false,
+        "latency_seconds": 0.63,
+        "retrieved_tokens": 644,
+        "input_tokens": 735
+      },
+      {
+        "doc_name": "BOEING_2017_10K",
+        "predicted": "$92,333",
+        "ground_truth": "$92,333 million",
+        "correct": true,
+        "latency_seconds": 0.83,
+        "retrieved_tokens": 616,
+        "input_tokens": 709
+      },
+      {
+        "doc_name": "BOEING_2019_10K",
+        "predicted": "$133,625",
+        "ground_truth": "$133,625 million",
+        "correct": true,
+        "latency_seconds": 0.758,
+        "retrieved_tokens": 641,
+        "input_tokens": 734
+      },
+      {
+        "doc_name": "BOEING_2020_10K",
+        "predicted": "$152,136",
+        "ground_truth": "152,136 million",
+        "correct": true,
+        "latency_seconds": 0.741,
+        "retrieved_tokens": 665,
+        "input_tokens": 758
+      },
+      {
+        "doc_name": "BOEING_2022_10K",
+        "predicted": "$137,100",
+        "ground_truth": "$137,100 million",
+        "correct": true,
+        "latency_seconds": 0.751,
+        "retrieved_tokens": 661,
+        "input_tokens": 754
+      },
+      {
+        "doc_name": "CORNING_2022_10K",
+        "predicted": "29,499",
+        "ground_truth": "29,499 million",
+        "correct": true,
+        "latency_seconds": 0.683,
+        "retrieved_tokens": 877,
+        "input_tokens": 969
+      },
+      {
+        "doc_name": "COSTCO_2015_10K",
+        "predicted": "$33,440",
+        "ground_truth": "33,440",
+        "correct": true,
+        "latency_seconds": 0.624,
+        "retrieved_tokens": 675,
+        "input_tokens": 766
+      },
+      {
+        "doc_name": "COSTCO_2016_10K",
+        "predicted": "$33,163",
+        "ground_truth": "$33,163 million",
+        "correct": true,
+        "latency_seconds": 0.833,
+        "retrieved_tokens": 665,
+        "input_tokens": 756
+      },
+      {
+        "doc_name": "COSTCO_2018_10K",
+        "predicted": "$40,830",
+        "ground_truth": "$40,830 million",
+        "correct": true,
+        "latency_seconds": 0.862,
+        "retrieved_tokens": 657,
+        "input_tokens": 748
+      },
+      {
+        "doc_name": "GENERALMILLS_2022_10K",
+        "predicted": "$ 31,841.9",
+        "ground_truth": "31,090.1 million",
+        "correct": false,
+        "latency_seconds": 0.753,
+        "retrieved_tokens": 665,
+        "input_tokens": 757
+      },
+      {
+        "doc_name": "INTEL_2022_10K",
+        "predicted": "$ 182,103",
+        "ground_truth": "$182,103 million",
+        "correct": false,
+        "latency_seconds": 0.713,
+        "retrieved_tokens": 957,
+        "input_tokens": 1051
+      },
+      {
+        "doc_name": "KRAFTHEINZ_2021_10K",
+        "predicted": "NOT FOUND",
+        "ground_truth": "$93,394 million",
+        "correct": false,
+        "latency_seconds": 0.954,
+        "retrieved_tokens": 0,
+        "input_tokens": 93
+      },
+      {
+        "doc_name": "FOOTLOCKER_2023_10K",
+        "predicted": "$7,907 million",
+        "ground_truth": "7,907 million",
+        "correct": true,
+        "latency_seconds": 0.855,
+        "retrieved_tokens": 219,
+        "input_tokens": 312
+      },
+      {
+        "doc_name": "NIKE_2019_10K",
+        "predicted": "$23,717 million",
+        "ground_truth": "$23,717 million",
+        "correct": true,
+        "latency_seconds": 0.754,
+        "retrieved_tokens": 545,
+        "input_tokens": 635
+      },
+      {
+        "doc_name": "LOCKHEEDMARTIN_2021_10K",
+        "predicted": "$50,873",
+        "ground_truth": "$50,873 million",
+        "correct": true,
+        "latency_seconds": 0.682,
+        "retrieved_tokens": 539,
+        "input_tokens": 632
+      }
+    ]
+  },
+  {
+    "question": "What is the registrant's telephone number?",
+    "question_slug": "what_is_the_registrants_telephone_number_10_agentic",
+    "split": "unsampled",
+    "n": 50,
+    "n_correct": 49,
+    "accuracy": 0.98,
+    "avg_latency": 0.872,
+    "avg_retrieved": 24.6,
+    "avg_input_tok": 111.9,
+    "avg_cost_ratio": 0.000401,
+    "n_rules": 1,
+    "per_doc": [
+      {
+        "doc_name": "AMCOR_2023_10K",
+        "predicted": "+44 117 9753200",
+        "ground_truth": "+44 117 9753200",
+        "correct": true,
+        "latency_seconds": 0.691,
+        "retrieved_tokens": 19,
+        "input_tokens": 106
+      },
+      {
+        "doc_name": "APPLE_2016_10K",
+        "predicted": "(408) 996-1010",
+        "ground_truth": "(408) 996-1010",
+        "correct": true,
+        "latency_seconds": 1.232,
+        "retrieved_tokens": 20,
+        "input_tokens": 107
+      },
+      {
+        "doc_name": "BESTBUY_2020_10K",
+        "predicted": "(612) 291-1000",
+        "ground_truth": "(612) 291-1000",
+        "correct": true,
+        "latency_seconds": 0.818,
+        "retrieved_tokens": 20,
+        "input_tokens": 107
+      },
+      {
+        "doc_name": "INTEL_2016_10K",
+        "predicted": "(408) 765-8080",
+        "ground_truth": "(408) 765-8080",
+        "correct": true,
+        "latency_seconds": 0.684,
+        "retrieved_tokens": 17,
+        "input_tokens": 105
+      },
+      {
+        "doc_name": "ACTIVISIONBLIZZARD_2017_10K",
+        "predicted": "(310) 255-2000",
+        "ground_truth": "(310) 255-2000",
+        "correct": true,
+        "latency_seconds": 0.903,
+        "retrieved_tokens": 18,
+        "input_tokens": 106
+      },
+      {
+        "doc_name": "ACTIVISIONBLIZZARD_2020_10K",
+        "predicted": "(310) 255-2000",
+        "ground_truth": "(310) 255-2000",
+        "correct": true,
+        "latency_seconds": 0.73,
+        "retrieved_tokens": 20,
+        "input_tokens": 107
+      },
+      {
+        "doc_name": "ADOBE_2015_10K",
+        "predicted": "(408) 536-6000",
+        "ground_truth": "(408) 536-6000",
+        "correct": true,
+        "latency_seconds": 0.816,
+        "retrieved_tokens": 20,
+        "input_tokens": 107
+      },
+      {
+        "doc_name": "ADOBE_2016_10K",
+        "predicted": "(408) 536-6000",
+        "ground_truth": "(408) 536-6000",
+        "correct": true,
+        "latency_seconds": 0.99,
+        "retrieved_tokens": 20,
+        "input_tokens": 107
+      },
+      {
+        "doc_name": "ADOBE_2017_10K",
+        "predicted": "(408) 536-6000",
+        "ground_truth": "(408) 536-6000",
+        "correct": true,
+        "latency_seconds": 0.855,
+        "retrieved_tokens": 20,
+        "input_tokens": 107
+      },
+      {
+        "doc_name": "ADOBE_2018_10K",
+        "predicted": "(408) 536-6000",
+        "ground_truth": "(408) 536-6000",
+        "correct": true,
+        "latency_seconds": 0.786,
+        "retrieved_tokens": 20,
+        "input_tokens": 107
+      },
+      {
+        "doc_name": "ADOBE_2019_10K",
+        "predicted": "(408) 536-6000",
+        "ground_truth": "(408) 536-6000",
+        "correct": true,
+        "latency_seconds": 0.922,
+        "retrieved_tokens": 20,
+        "input_tokens": 107
+      },
+      {
+        "doc_name": "ADOBE_2020_10K",
+        "predicted": "(408) 536-6000",
+        "ground_truth": "(408) 536-6000",
+        "correct": true,
+        "latency_seconds": 0.942,
+        "retrieved_tokens": 20,
+        "input_tokens": 107
+      },
+      {
+        "doc_name": "ADOBE_2021_10K",
+        "predicted": "(408) 536-6000",
+        "ground_truth": "(408) 536-6000",
+        "correct": true,
+        "latency_seconds": 1.033,
+        "retrieved_tokens": 20,
+        "input_tokens": 107
+      },
+      {
+        "doc_name": "ADOBE_2022_10K",
+        "predicted": "(408) 536-6000",
+        "ground_truth": "(408) 536-6000",
+        "correct": true,
+        "latency_seconds": 0.988,
+        "retrieved_tokens": 20,
+        "input_tokens": 107
+      },
+      {
+        "doc_name": "AMAZON_2015_10K",
+        "predicted": "(206) 266-1000",
+        "ground_truth": "(206) 266-1000",
+        "correct": true,
+        "latency_seconds": 0.841,
+        "retrieved_tokens": 39,
+        "input_tokens": 127
+      },
+      {
+        "doc_name": "AMAZON_2017_10K",
+        "predicted": "(206) 266-1000",
+        "ground_truth": "(206) 266-1000",
+        "correct": true,
+        "latency_seconds": 1.223,
+        "retrieved_tokens": 39,
+        "input_tokens": 127
+      },
+      {
+        "doc_name": "AMAZON_2019_10K",
+        "predicted": "(206) 266-1000",
+        "ground_truth": "(206) 266-1000",
+        "correct": true,
+        "latency_seconds": 0.89,
+        "retrieved_tokens": 39,
+        "input_tokens": 127
+      },
+      {
+        "doc_name": "AMAZON_2020_10K",
+        "predicted": "(206) 266-1000",
+        "ground_truth": "(206) 266-1000",
+        "correct": true,
+        "latency_seconds": 0.763,
+        "retrieved_tokens": 39,
+        "input_tokens": 127
+      },
+      {
+        "doc_name": "AMAZON_2022_10K",
+        "predicted": "(206) 266-1000",
+        "ground_truth": "(206) 266-1000",
+        "correct": true,
+        "latency_seconds": 0.727,
+        "retrieved_tokens": 39,
+        "input_tokens": 127
+      },
+      {
+        "doc_name": "AMCOR_2021_10K",
+        "predicted": "+44 117 9753200",
+        "ground_truth": "+44 117 9753200",
+        "correct": true,
+        "latency_seconds": 0.877,
+        "retrieved_tokens": 19,
+        "input_tokens": 106
+      },
+      {
+        "doc_name": "AMCOR_2022_10K",
+        "predicted": "+44 117 9753200",
+        "ground_truth": "+44 117 9753200",
+        "correct": true,
+        "latency_seconds": 0.751,
+        "retrieved_tokens": 19,
+        "input_tokens": 106
+      },
+      {
+        "doc_name": "AMD_2019_10K",
+        "predicted": "(408) 749-4000",
+        "ground_truth": "(408) 749-4000",
+        "correct": true,
+        "latency_seconds": 0.944,
+        "retrieved_tokens": 20,
+        "input_tokens": 107
+      },
+      {
+        "doc_name": "AMD_2020_10K",
+        "predicted": "(408) 749-4000",
+        "ground_truth": "(408) 749-4000",
+        "correct": true,
+        "latency_seconds": 0.902,
+        "retrieved_tokens": 20,
+        "input_tokens": 107
+      },
+      {
+        "doc_name": "AMD_2021_10K",
+        "predicted": "(408) 749-4000",
+        "ground_truth": "(408) 749-4000",
+        "correct": true,
+        "latency_seconds": 0.708,
+        "retrieved_tokens": 20,
+        "input_tokens": 107
+      },
+      {
+        "doc_name": "AMD_2022_10K",
+        "predicted": "(408) 749-4000",
+        "ground_truth": "(408) 749-4000",
+        "correct": true,
+        "latency_seconds": 0.863,
+        "retrieved_tokens": 26,
+        "input_tokens": 113
+      },
+      {
+        "doc_name": "APPLE_2015_10K",
+        "predicted": "(408) 996-1010",
+        "ground_truth": "(408) 996-1010",
+        "correct": true,
+        "latency_seconds": 0.794,
+        "retrieved_tokens": 20,
+        "input_tokens": 107
+      },
+      {
+        "doc_name": "APPLE_2017_10K",
+        "predicted": "(408) 996-1010",
+        "ground_truth": "(408) 996-1010",
+        "correct": true,
+        "latency_seconds": 0.72,
+        "retrieved_tokens": 20,
+        "input_tokens": 107
+      },
+      {
+        "doc_name": "APPLE_2018_10K",
+        "predicted": "(408) 996-1010",
+        "ground_truth": "(408) 996-1010",
+        "correct": true,
+        "latency_seconds": 0.991,
+        "retrieved_tokens": 20,
+        "input_tokens": 107
+      },
+      {
+        "doc_name": "APPLE_2019_10K",
+        "predicted": "(408) 996-1010",
+        "ground_truth": "(408) 996-1010",
+        "correct": true,
+        "latency_seconds": 0.793,
+        "retrieved_tokens": 20,
+        "input_tokens": 107
+      },
+      {
+        "doc_name": "APPLE_2020_10K",
+        "predicted": "(408) 996-1010",
+        "ground_truth": "(408) 996-1010",
+        "correct": true,
+        "latency_seconds": 0.85,
+        "retrieved_tokens": 20,
+        "input_tokens": 107
+      },
+      {
+        "doc_name": "APPLE_2021_10K",
+        "predicted": "(408) 996-1010",
+        "ground_truth": "(408) 996-1010",
+        "correct": true,
+        "latency_seconds": 0.702,
+        "retrieved_tokens": 20,
+        "input_tokens": 107
+      },
+      {
+        "doc_name": "APPLE_2022_10K",
+        "predicted": "(408) 996-1010",
+        "ground_truth": "(408) 996-1010",
+        "correct": true,
+        "latency_seconds": 0.664,
+        "retrieved_tokens": 20,
+        "input_tokens": 107
+      },
+      {
+        "doc_name": "BESTBUY_2015_10K",
+        "predicted": "NOT FOUND",
+        "ground_truth": "612-291-1000",
+        "correct": false,
+        "latency_seconds": 0.582,
+        "retrieved_tokens": 1,
+        "input_tokens": 90
+      },
+      {
+        "doc_name": "BESTBUY_2021_10K",
+        "predicted": "(612) 291-1000",
+        "ground_truth": "(612) 291-1000",
+        "correct": true,
+        "latency_seconds": 0.855,
+        "retrieved_tokens": 19,
+        "input_tokens": 106
+      },
+      {
+        "doc_name": "BESTBUY_2022_10K",
+        "predicted": "(612) 291-1000",
+        "ground_truth": "(612) 291-1000",
+        "correct": true,
+        "latency_seconds": 0.703,
+        "retrieved_tokens": 19,
+        "input_tokens": 106
+      },
+      {
+        "doc_name": "BESTBUY_2023_10K",
+        "predicted": "(612) 291-1000",
+        "ground_truth": "(612) 291-1000",
+        "correct": true,
+        "latency_seconds": 0.665,
+        "retrieved_tokens": 20,
+        "input_tokens": 107
+      },
+      {
+        "doc_name": "BOEING_2017_10K",
+        "predicted": "(312) 544-2000",
+        "ground_truth": "(312) 544-2000",
+        "correct": true,
+        "latency_seconds": 1.422,
+        "retrieved_tokens": 30,
+        "input_tokens": 117
+      },
+      {
+        "doc_name": "BOEING_2019_10K",
+        "predicted": "(312)-544-2000",
+        "ground_truth": "(312) 544-2000",
+        "correct": true,
+        "latency_seconds": 0.853,
+        "retrieved_tokens": 16,
+        "input_tokens": 104
+      },
+      {
+        "doc_name": "BOEING_2020_10K",
+        "predicted": "(312)-544-2000",
+        "ground_truth": "(312)-544-2000",
+        "correct": true,
+        "latency_seconds": 2.082,
+        "retrieved_tokens": 16,
+        "input_tokens": 104
+      },
+      {
+        "doc_name": "BOEING_2022_10K",
+        "predicted": "(703)-414-6338",
+        "ground_truth": "(703)-414-6338",
+        "correct": true,
+        "latency_seconds": 0.789,
+        "retrieved_tokens": 16,
+        "input_tokens": 104
+      },
+      {
+        "doc_name": "CORNING_2022_10K",
+        "predicted": "607-974-9000",
+        "ground_truth": "607-974-9000",
+        "correct": true,
+        "latency_seconds": 0.732,
+        "retrieved_tokens": 31,
+        "input_tokens": 118
+      },
+      {
+        "doc_name": "COSTCO_2015_10K",
+        "predicted": "(425) 313-8100",
+        "ground_truth": "(425) 313-8100",
+        "correct": true,
+        "latency_seconds": 0.883,
+        "retrieved_tokens": 18,
+        "input_tokens": 106
+      },
+      {
+        "doc_name": "COSTCO_2016_10K",
+        "predicted": "(425) 313-8100",
+        "ground_truth": "(425) 313-8100",
+        "correct": true,
+        "latency_seconds": 0.703,
+        "retrieved_tokens": 18,
+        "input_tokens": 106
+      },
+      {
+        "doc_name": "COSTCO_2018_10K",
+        "predicted": "(425) 313-8100",
+        "ground_truth": "(425) 313-8100",
+        "correct": true,
+        "latency_seconds": 0.721,
+        "retrieved_tokens": 18,
+        "input_tokens": 106
+      },
+      {
+        "doc_name": "GENERALMILLS_2022_10K",
+        "predicted": "(763)764-7600",
+        "ground_truth": "(763) 764-7600",
+        "correct": true,
+        "latency_seconds": 0.856,
+        "retrieved_tokens": 19,
+        "input_tokens": 106
+      },
+      {
+        "doc_name": "INTEL_2022_10K",
+        "predicted": "(408) 765-8080",
+        "ground_truth": "(408) 765-8080",
+        "correct": true,
+        "latency_seconds": 0.938,
+        "retrieved_tokens": 31,
+        "input_tokens": 118
+      },
+      {
+        "doc_name": "KRAFTHEINZ_2021_10K",
+        "predicted": "(412) 456-5700",
+        "ground_truth": "(412) 456-5700",
+        "correct": true,
+        "latency_seconds": 0.839,
+        "retrieved_tokens": 18,
+        "input_tokens": 106
+      },
+      {
+        "doc_name": "FOOTLOCKER_2023_10K",
+        "predicted": "(212) 720-3700",
+        "ground_truth": "(212) 720-3700",
+        "correct": true,
+        "latency_seconds": 0.868,
+        "retrieved_tokens": 31,
+        "input_tokens": 118
+      },
+      {
+        "doc_name": "NIKE_2019_10K",
+        "predicted": "(503) 671-6453",
+        "ground_truth": "(503) 671-6453",
+        "correct": true,
+        "latency_seconds": 0.825,
+        "retrieved_tokens": 20,
+        "input_tokens": 107
+      },
+      {
+        "doc_name": "LOCKHEEDMARTIN_2021_10K",
+        "predicted": "(301) 897-6000",
+        "ground_truth": "(301) 897-6000",
+        "correct": true,
+        "latency_seconds": 0.888,
+        "retrieved_tokens": 154,
+        "input_tokens": 242
+      }
+    ]
+  },
+  {
+    "question": "How many shares of common stock were outstanding as of the cover-page reference date?",
+    "question_slug": "how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_agentic",
+    "split": "unsampled",
+    "n": 50,
+    "n_correct": 47,
+    "accuracy": 0.94,
+    "avg_latency": 0.842,
+    "avg_retrieved": 65.9,
+    "avg_input_tok": 161.1,
+    "avg_cost_ratio": 0.001032,
+    "n_rules": 2,
+    "per_doc": [
+      {
+        "doc_name": "AMCOR_2023_10K",
+        "predicted": "1,448,493,870",
+        "ground_truth": "1,448,493,870",
+        "correct": true,
+        "latency_seconds": 1.752,
+        "retrieved_tokens": 27,
+        "input_tokens": 122
+      },
+      {
+        "doc_name": "APPLE_2016_10K",
+        "predicted": "5,332,313,000 shares",
+        "ground_truth": "5,332,313,000",
+        "correct": true,
+        "latency_seconds": 1.075,
+        "retrieved_tokens": 25,
+        "input_tokens": 120
+      },
+      {
+        "doc_name": "BESTBUY_2020_10K",
+        "predicted": "256,971,220",
+        "ground_truth": "256,971,220",
+        "correct": true,
+        "latency_seconds": 0.868,
+        "retrieved_tokens": 39,
+        "input_tokens": 134
+      },
+      {
+        "doc_name": "INTEL_2016_10K",
+        "predicted": "4,728 million shares",
+        "ground_truth": "4,728 million shares of common stock outstanding as of February 7, 2017",
+        "correct": true,
+        "latency_seconds": 0.676,
+        "retrieved_tokens": 18,
+        "input_tokens": 114
+      },
+      {
+        "doc_name": "ACTIVISIONBLIZZARD_2017_10K",
+        "predicted": "758,631,663",
+        "ground_truth": "758,631,663",
+        "correct": true,
+        "latency_seconds": 0.632,
+        "retrieved_tokens": 28,
+        "input_tokens": 123
+      },
+      {
+        "doc_name": "ACTIVISIONBLIZZARD_2020_10K",
+        "predicted": "774,753,965",
+        "ground_truth": "774,753,965",
+        "correct": true,
+        "latency_seconds": 0.82,
+        "retrieved_tokens": 28,
+        "input_tokens": 123
+      },
+      {
+        "doc_name": "ADOBE_2015_10K",
+        "predicted": "498,330,407",
+        "ground_truth": "498,330,407",
+        "correct": true,
+        "latency_seconds": 0.671,
+        "retrieved_tokens": 186,
+        "input_tokens": 282
+      },
+      {
+        "doc_name": "ADOBE_2016_10K",
+        "predicted": "494,078,475",
+        "ground_truth": "494,078,475",
+        "correct": true,
+        "latency_seconds": 0.73,
+        "retrieved_tokens": 186,
+        "input_tokens": 282
+      },
+      {
+        "doc_name": "ADOBE_2017_10K",
+        "predicted": "491,578,529",
+        "ground_truth": "491,578,529",
+        "correct": true,
+        "latency_seconds": 0.827,
+        "retrieved_tokens": 186,
+        "input_tokens": 282
+      },
+      {
+        "doc_name": "ADOBE_2018_10K",
+        "predicted": "487,725,915",
+        "ground_truth": "487,725,915",
+        "correct": true,
+        "latency_seconds": 0.83,
+        "retrieved_tokens": 186,
+        "input_tokens": 282
+      },
+      {
+        "doc_name": "ADOBE_2019_10K",
+        "predicted": "482,130,975",
+        "ground_truth": "482,130,975",
+        "correct": true,
+        "latency_seconds": 0.741,
+        "retrieved_tokens": 183,
+        "input_tokens": 279
+      },
+      {
+        "doc_name": "ADOBE_2020_10K",
+        "predicted": "478.7 million shares",
+        "ground_truth": "478.7 million",
+        "correct": true,
+        "latency_seconds": 0.812,
+        "retrieved_tokens": 182,
+        "input_tokens": 278
+      },
+      {
+        "doc_name": "ADOBE_2021_10K",
+        "predicted": "471.7 million shares",
+        "ground_truth": "471.7 million",
+        "correct": true,
+        "latency_seconds": 0.884,
+        "retrieved_tokens": 182,
+        "input_tokens": 278
+      },
+      {
+        "doc_name": "ADOBE_2022_10K",
+        "predicted": "457.8 million shares",
+        "ground_truth": "457.8 million",
+        "correct": true,
+        "latency_seconds": 0.768,
+        "retrieved_tokens": 182,
+        "input_tokens": 278
+      },
+      {
+        "doc_name": "AMAZON_2015_10K",
+        "predicted": "470,842,035",
+        "ground_truth": "470,842,035",
+        "correct": true,
+        "latency_seconds": 0.728,
+        "retrieved_tokens": 30,
+        "input_tokens": 126
+      },
+      {
+        "doc_name": "AMAZON_2017_10K",
+        "predicted": "484,107,183",
+        "ground_truth": "484,107,183",
+        "correct": true,
+        "latency_seconds": 0.666,
+        "retrieved_tokens": 22,
+        "input_tokens": 118
+      },
+      {
+        "doc_name": "AMAZON_2019_10K",
+        "predicted": "497,810,444",
+        "ground_truth": "497,810,444",
+        "correct": true,
+        "latency_seconds": 0.98,
+        "retrieved_tokens": 22,
+        "input_tokens": 118
+      },
+      {
+        "doc_name": "AMAZON_2020_10K",
+        "predicted": "503,564,743",
+        "ground_truth": "503,564,743",
+        "correct": true,
+        "latency_seconds": 0.701,
+        "retrieved_tokens": 22,
+        "input_tokens": 118
+      },
+      {
+        "doc_name": "AMAZON_2022_10K",
+        "predicted": "NOT FOUND",
+        "ground_truth": "10,247,259,757",
+        "correct": false,
+        "latency_seconds": 0.836,
+        "retrieved_tokens": 41,
+        "input_tokens": 137
+      },
+      {
+        "doc_name": "AMCOR_2021_10K",
+        "predicted": "1,538,319,792 shares",
+        "ground_truth": "1,538,319,792",
+        "correct": true,
+        "latency_seconds": 0.827,
+        "retrieved_tokens": 27,
+        "input_tokens": 122
+      },
+      {
+        "doc_name": "AMCOR_2022_10K",
+        "predicted": "1,489,019,556",
+        "ground_truth": "1,489,019,556",
+        "correct": true,
+        "latency_seconds": 0.835,
+        "retrieved_tokens": 27,
+        "input_tokens": 122
+      },
+      {
+        "doc_name": "AMD_2019_10K",
+        "predicted": "1,169,661,536",
+        "ground_truth": "1,169,661,536 shares of common stock, $0.01 par value per share, as of January 31, 2020",
+        "correct": true,
+        "latency_seconds": 0.635,
+        "retrieved_tokens": 59,
+        "input_tokens": 154
+      },
+      {
+        "doc_name": "AMD_2020_10K",
+        "predicted": "1,211,280,009",
+        "ground_truth": "1,211,280,009 shares of common stock",
+        "correct": true,
+        "latency_seconds": 0.697,
+        "retrieved_tokens": 59,
+        "input_tokens": 154
+      },
+      {
+        "doc_name": "AMD_2021_10K",
+        "predicted": "1,199,303,422",
+        "ground_truth": "1,199,303,422",
+        "correct": true,
+        "latency_seconds": 0.694,
+        "retrieved_tokens": 59,
+        "input_tokens": 154
+      },
+      {
+        "doc_name": "AMD_2022_10K",
+        "predicted": "1,611,388,217",
+        "ground_truth": "1,611,388,217 shares",
+        "correct": true,
+        "latency_seconds": 0.777,
+        "retrieved_tokens": 59,
+        "input_tokens": 154
+      },
+      {
+        "doc_name": "APPLE_2015_10K",
+        "predicted": "5,575,331,000 shares",
+        "ground_truth": "5,575,331,000",
+        "correct": true,
+        "latency_seconds": 0.753,
+        "retrieved_tokens": 25,
+        "input_tokens": 120
+      },
+      {
+        "doc_name": "APPLE_2017_10K",
+        "predicted": "5,134,312,000",
+        "ground_truth": "5,134,312,000",
+        "correct": true,
+        "latency_seconds": 0.861,
+        "retrieved_tokens": 25,
+        "input_tokens": 120
+      },
+      {
+        "doc_name": "APPLE_2018_10K",
+        "predicted": "4,745,398,000 shares",
+        "ground_truth": "4,745,398,000",
+        "correct": true,
+        "latency_seconds": 0.89,
+        "retrieved_tokens": 25,
+        "input_tokens": 120
+      },
+      {
+        "doc_name": "APPLE_2019_10K",
+        "predicted": "4,443,265,000 shares",
+        "ground_truth": "4,443,265,000",
+        "correct": true,
+        "latency_seconds": 0.819,
+        "retrieved_tokens": 25,
+        "input_tokens": 120
+      },
+      {
+        "doc_name": "APPLE_2020_10K",
+        "predicted": "17,001,802,000",
+        "ground_truth": "17,001,802,000",
+        "correct": true,
+        "latency_seconds": 0.779,
+        "retrieved_tokens": 25,
+        "input_tokens": 120
+      },
+      {
+        "doc_name": "APPLE_2021_10K",
+        "predicted": "16,406,397,000 shares",
+        "ground_truth": "16,406,397,000",
+        "correct": true,
+        "latency_seconds": 0.831,
+        "retrieved_tokens": 25,
+        "input_tokens": 120
+      },
+      {
+        "doc_name": "APPLE_2022_10K",
+        "predicted": "15,908,118,000 shares",
+        "ground_truth": "15,908,118,000",
+        "correct": true,
+        "latency_seconds": 0.866,
+        "retrieved_tokens": 25,
+        "input_tokens": 120
+      },
+      {
+        "doc_name": "BESTBUY_2015_10K",
+        "predicted": "NOT FOUND",
+        "ground_truth": "352,185,626",
+        "correct": false,
+        "latency_seconds": 0.73,
+        "retrieved_tokens": 0,
+        "input_tokens": 95
+      },
+      {
+        "doc_name": "BESTBUY_2021_10K",
+        "predicted": "250,044,876",
+        "ground_truth": "250,044,876",
+        "correct": true,
+        "latency_seconds": 1.611,
+        "retrieved_tokens": 39,
+        "input_tokens": 134
+      },
+      {
+        "doc_name": "BESTBUY_2022_10K",
+        "predicted": "225,227,756",
+        "ground_truth": "225,227,756",
+        "correct": true,
+        "latency_seconds": 0.848,
+        "retrieved_tokens": 39,
+        "input_tokens": 134
+      },
+      {
+        "doc_name": "BESTBUY_2023_10K",
+        "predicted": "218,045,737",
+        "ground_truth": "218,045,737",
+        "correct": true,
+        "latency_seconds": 0.662,
+        "retrieved_tokens": 39,
+        "input_tokens": 134
+      },
+      {
+        "doc_name": "BOEING_2017_10K",
+        "predicted": "588,490,313",
+        "ground_truth": "588,490,313",
+        "correct": true,
+        "latency_seconds": 0.642,
+        "retrieved_tokens": 94,
+        "input_tokens": 189
+      },
+      {
+        "doc_name": "BOEING_2019_10K",
+        "predicted": "563,152,208",
+        "ground_truth": "563,152,208",
+        "correct": true,
+        "latency_seconds": 0.795,
+        "retrieved_tokens": 94,
+        "input_tokens": 189
+      },
+      {
+        "doc_name": "BOEING_2020_10K",
+        "predicted": "582,996,860",
+        "ground_truth": "582,996,860",
+        "correct": true,
+        "latency_seconds": 0.986,
+        "retrieved_tokens": 94,
+        "input_tokens": 189
+      },
+      {
+        "doc_name": "BOEING_2022_10K",
+        "predicted": "598,239,585",
+        "ground_truth": "598,239,585",
+        "correct": true,
+        "latency_seconds": 0.602,
+        "retrieved_tokens": 94,
+        "input_tokens": 189
+      },
+      {
+        "doc_name": "CORNING_2022_10K",
+        "predicted": "846,563,422",
+        "ground_truth": "846,563,422",
+        "correct": true,
+        "latency_seconds": 0.9,
+        "retrieved_tokens": 23,
+        "input_tokens": 118
+      },
+      {
+        "doc_name": "COSTCO_2015_10K",
+        "predicted": "437,406,636",
+        "ground_truth": "437,406,636",
+        "correct": true,
+        "latency_seconds": 0.755,
+        "retrieved_tokens": 29,
+        "input_tokens": 124
+      },
+      {
+        "doc_name": "COSTCO_2016_10K",
+        "predicted": "437,126,569",
+        "ground_truth": "437,126,569",
+        "correct": true,
+        "latency_seconds": 0.751,
+        "retrieved_tokens": 29,
+        "input_tokens": 124
+      },
+      {
+        "doc_name": "COSTCO_2018_10K",
+        "predicted": "438,208,376",
+        "ground_truth": "438,208,376",
+        "correct": true,
+        "latency_seconds": 0.813,
+        "retrieved_tokens": 29,
+        "input_tokens": 124
+      },
+      {
+        "doc_name": "GENERALMILLS_2022_10K",
+        "predicted": "597,158,440",
+        "ground_truth": "597,158,440",
+        "correct": true,
+        "latency_seconds": 0.861,
+        "retrieved_tokens": 36,
+        "input_tokens": 131
+      },
+      {
+        "doc_name": "INTEL_2022_10K",
+        "predicted": "4,137 million shares",
+        "ground_truth": "4,137 million shares",
+        "correct": true,
+        "latency_seconds": 0.722,
+        "retrieved_tokens": 81,
+        "input_tokens": 175
+      },
+      {
+        "doc_name": "KRAFTHEINZ_2021_10K",
+        "predicted": "1,223,740,203",
+        "ground_truth": "1,223,740,203",
+        "correct": true,
+        "latency_seconds": 0.681,
+        "retrieved_tokens": 83,
+        "input_tokens": 178
+      },
+      {
+        "doc_name": "FOOTLOCKER_2023_10K",
+        "predicted": "93,429,371",
+        "ground_truth": "93,429,371",
+        "correct": true,
+        "latency_seconds": 1.006,
+        "retrieved_tokens": 173,
+        "input_tokens": 268
+      },
+      {
+        "doc_name": "NIKE_2019_10K",
+        "predicted": "315,024,752",
+        "ground_truth": "1,566,888,373",
+        "correct": false,
+        "latency_seconds": 0.774,
+        "retrieved_tokens": 46,
+        "input_tokens": 141
+      },
+      {
+        "doc_name": "LOCKHEEDMARTIN_2021_10K",
+        "predicted": "272,326,925 shares",
+        "ground_truth": "272,326,925",
+        "correct": true,
+        "latency_seconds": 1.716,
+        "retrieved_tokens": 32,
+        "input_tokens": 127
+      }
+    ]
+  },
+  {
+    "question": "What is the registrant's exact name?",
+    "question_slug": "what_is_the_registrants_exact_name_10_agentic",
+    "split": "unsampled",
+    "n": 50,
+    "n_correct": 48,
+    "accuracy": 0.96,
+    "avg_latency": 0.9,
+    "avg_retrieved": 5.8,
+    "avg_input_tok": 94.4,
+    "avg_cost_ratio": 9.4e-05,
+    "n_rules": 1,
+    "per_doc": [
+      {
+        "doc_name": "AMCOR_2023_10K",
+        "predicted": "AMCOR PLC",
+        "ground_truth": "Amcor plc",
+        "correct": true,
+        "latency_seconds": 0.848,
+        "retrieved_tokens": 3,
+        "input_tokens": 92
+      },
+      {
+        "doc_name": "APPLE_2016_10K",
+        "predicted": "Apple Inc.",
+        "ground_truth": "Apple Inc.",
+        "correct": true,
+        "latency_seconds": 0.729,
+        "retrieved_tokens": 3,
+        "input_tokens": 91
+      },
+      {
+        "doc_name": "BESTBUY_2020_10K",
+        "predicted": "BEST BUY CO., INC.",
+        "ground_truth": "BEST BUY CO., INC.",
+        "correct": true,
+        "latency_seconds": 0.709,
+        "retrieved_tokens": 6,
+        "input_tokens": 94
+      },
+      {
+        "doc_name": "INTEL_2016_10K",
+        "predicted": "INTEL CORPORATION",
+        "ground_truth": "Intel Corporation",
+        "correct": true,
+        "latency_seconds": 0.887,
+        "retrieved_tokens": 16,
+        "input_tokens": 105
+      },
+      {
+        "doc_name": "ACTIVISIONBLIZZARD_2017_10K",
+        "predicted": "ACTIVISION BLIZZARD, INC.",
+        "ground_truth": "ACTIVISION BLIZZARD, INC.",
+        "correct": true,
+        "latency_seconds": 0.764,
+        "retrieved_tokens": 10,
+        "input_tokens": 97
+      },
+      {
+        "doc_name": "ACTIVISIONBLIZZARD_2020_10K",
+        "predicted": "ACTIVISION BLIZZARD, INC.",
+        "ground_truth": "Activision Blizzard, Inc.",
+        "correct": true,
+        "latency_seconds": 0.765,
+        "retrieved_tokens": 10,
+        "input_tokens": 97
+      },
+      {
+        "doc_name": "ADOBE_2015_10K",
+        "predicted": "ADOBE SYSTEMS INCORPORATED",
+        "ground_truth": "Adobe Systems Incorporated",
+        "correct": true,
+        "latency_seconds": 0.864,
+        "retrieved_tokens": 8,
+        "input_tokens": 98
+      },
+      {
+        "doc_name": "ADOBE_2016_10K",
+        "predicted": "ADOBE SYSTEMS INCORPORATED",
+        "ground_truth": "Adobe Systems Incorporated",
+        "correct": true,
+        "latency_seconds": 0.762,
+        "retrieved_tokens": 8,
+        "input_tokens": 98
+      },
+      {
+        "doc_name": "ADOBE_2017_10K",
+        "predicted": "ADOBE SYSTEMS INCORPORATED",
+        "ground_truth": "Adobe Systems Incorporated",
+        "correct": true,
+        "latency_seconds": 0.911,
+        "retrieved_tokens": 8,
+        "input_tokens": 98
+      },
+      {
+        "doc_name": "ADOBE_2018_10K",
+        "predicted": "Adobe Inc.",
+        "ground_truth": "Adobe Inc.",
+        "correct": true,
+        "latency_seconds": 0.801,
+        "retrieved_tokens": 3,
+        "input_tokens": 91
+      },
+      {
+        "doc_name": "ADOBE_2019_10K",
+        "predicted": "ADOBE INC.",
+        "ground_truth": "Adobe Inc.",
+        "correct": true,
+        "latency_seconds": 0.843,
+        "retrieved_tokens": 4,
+        "input_tokens": 93
+      },
+      {
+        "doc_name": "ADOBE_2020_10K",
+        "predicted": "ADOBE INC.",
+        "ground_truth": "Adobe Inc.",
+        "correct": true,
+        "latency_seconds": 0.604,
+        "retrieved_tokens": 4,
+        "input_tokens": 93
+      },
+      {
+        "doc_name": "ADOBE_2021_10K",
+        "predicted": "ADOBE INC.",
+        "ground_truth": "Adobe Inc.",
+        "correct": true,
+        "latency_seconds": 0.876,
+        "retrieved_tokens": 4,
+        "input_tokens": 93
+      },
+      {
+        "doc_name": "ADOBE_2022_10K",
+        "predicted": "ADOBE INC.",
+        "ground_truth": "Adobe Inc.",
+        "correct": true,
+        "latency_seconds": 0.935,
+        "retrieved_tokens": 4,
+        "input_tokens": 93
+      },
+      {
+        "doc_name": "AMAZON_2015_10K",
+        "predicted": "AMAZON.COM, INC.",
+        "ground_truth": "Amazon.com, Inc.",
+        "correct": true,
+        "latency_seconds": 0.74,
+        "retrieved_tokens": 7,
+        "input_tokens": 95
+      },
+      {
+        "doc_name": "AMAZON_2017_10K",
+        "predicted": "AMAZON.COM, INC.",
+        "ground_truth": "Amazon.com, Inc.",
+        "correct": true,
+        "latency_seconds": 0.866,
+        "retrieved_tokens": 7,
+        "input_tokens": 95
+      },
+      {
+        "doc_name": "AMAZON_2019_10K",
+        "predicted": "AMAZON.COM, INC.",
+        "ground_truth": "AMAZON.COM, INC.",
+        "correct": true,
+        "latency_seconds": 0.806,
+        "retrieved_tokens": 7,
+        "input_tokens": 95
+      },
+      {
+        "doc_name": "AMAZON_2020_10K",
+        "predicted": "AMAZON.COM, INC.",
+        "ground_truth": "Amazon.com, Inc.",
+        "correct": true,
+        "latency_seconds": 0.744,
+        "retrieved_tokens": 7,
+        "input_tokens": 95
+      },
+      {
+        "doc_name": "AMAZON_2022_10K",
+        "predicted": "AMAZON.COM, INC.",
+        "ground_truth": "AMAZON.COM, INC.",
+        "correct": true,
+        "latency_seconds": 0.926,
+        "retrieved_tokens": 7,
+        "input_tokens": 95
+      },
+      {
+        "doc_name": "AMCOR_2021_10K",
+        "predicted": "AMCOR PLC",
+        "ground_truth": "Amcor plc",
+        "correct": true,
+        "latency_seconds": 0.722,
+        "retrieved_tokens": 3,
+        "input_tokens": 92
+      },
+      {
+        "doc_name": "AMCOR_2022_10K",
+        "predicted": "AMCOR PLC",
+        "ground_truth": "Amcor plc",
+        "correct": true,
+        "latency_seconds": 0.892,
+        "retrieved_tokens": 3,
+        "input_tokens": 92
+      },
+      {
+        "doc_name": "AMD_2019_10K",
+        "predicted": "ADVANCED MICRO DEVICES, INC.",
+        "ground_truth": "Advanced Micro Devices, Inc.",
+        "correct": true,
+        "latency_seconds": 0.902,
+        "retrieved_tokens": 8,
+        "input_tokens": 96
+      },
+      {
+        "doc_name": "AMD_2020_10K",
+        "predicted": "ADVANCED MICRO DEVICES, INC.",
+        "ground_truth": "Advanced Micro Devices, Inc.",
+        "correct": true,
+        "latency_seconds": 0.685,
+        "retrieved_tokens": 8,
+        "input_tokens": 96
+      },
+      {
+        "doc_name": "AMD_2021_10K",
+        "predicted": "ADVANCED MICRO DEVICES, INC.",
+        "ground_truth": "Advanced Micro Devices, Inc.",
+        "correct": true,
+        "latency_seconds": 0.949,
+        "retrieved_tokens": 8,
+        "input_tokens": 96
+      },
+      {
+        "doc_name": "AMD_2022_10K",
+        "predicted": "ADVANCED MICRO DEVICES, INC.",
+        "ground_truth": "Advanced Micro Devices, Inc.",
+        "correct": true,
+        "latency_seconds": 0.836,
+        "retrieved_tokens": 8,
+        "input_tokens": 96
+      },
+      {
+        "doc_name": "APPLE_2015_10K",
+        "predicted": "Apple Inc.",
+        "ground_truth": "Apple Inc.",
+        "correct": true,
+        "latency_seconds": 0.712,
+        "retrieved_tokens": 3,
+        "input_tokens": 91
+      },
+      {
+        "doc_name": "APPLE_2017_10K",
+        "predicted": "Apple Inc.",
+        "ground_truth": "Apple Inc.",
+        "correct": true,
+        "latency_seconds": 0.637,
+        "retrieved_tokens": 3,
+        "input_tokens": 91
+      },
+      {
+        "doc_name": "APPLE_2018_10K",
+        "predicted": "Apple Inc.",
+        "ground_truth": "Apple Inc.",
+        "correct": true,
+        "latency_seconds": 0.888,
+        "retrieved_tokens": 3,
+        "input_tokens": 91
+      },
+      {
+        "doc_name": "APPLE_2019_10K",
+        "predicted": "Apple Inc.",
+        "ground_truth": "Apple Inc.",
+        "correct": true,
+        "latency_seconds": 0.793,
+        "retrieved_tokens": 3,
+        "input_tokens": 91
+      },
+      {
+        "doc_name": "APPLE_2020_10K",
+        "predicted": "Apple Inc.",
+        "ground_truth": "Apple Inc.",
+        "correct": true,
+        "latency_seconds": 0.766,
+        "retrieved_tokens": 3,
+        "input_tokens": 91
+      },
+      {
+        "doc_name": "APPLE_2021_10K",
+        "predicted": "Apple Inc.",
+        "ground_truth": "Apple Inc.",
+        "correct": true,
+        "latency_seconds": 0.895,
+        "retrieved_tokens": 3,
+        "input_tokens": 91
+      },
+      {
+        "doc_name": "APPLE_2022_10K",
+        "predicted": "Apple Inc.",
+        "ground_truth": "Apple Inc.",
+        "correct": true,
+        "latency_seconds": 0.8,
+        "retrieved_tokens": 3,
+        "input_tokens": 91
+      },
+      {
+        "doc_name": "BESTBUY_2015_10K",
+        "predicted": "BEST BUY CO., INC.",
+        "ground_truth": "BEST BUY CO., INC.",
+        "correct": true,
+        "latency_seconds": 1.343,
+        "retrieved_tokens": 6,
+        "input_tokens": 94
+      },
+      {
+        "doc_name": "BESTBUY_2021_10K",
+        "predicted": "NOT FOUND",
+        "ground_truth": "Best Buy Co., Inc.",
+        "correct": false,
+        "latency_seconds": 0.818,
+        "retrieved_tokens": 17,
+        "input_tokens": 106
+      },
+      {
+        "doc_name": "BESTBUY_2022_10K",
+        "predicted": "BEST BUY CO., INC.",
+        "ground_truth": "Best Buy Co., Inc.",
+        "correct": true,
+        "latency_seconds": 0.581,
+        "retrieved_tokens": 6,
+        "input_tokens": 94
+      },
+      {
+        "doc_name": "BESTBUY_2023_10K",
+        "predicted": "BEST BUY CO., INC.",
+        "ground_truth": "Best Buy Co., Inc.",
+        "correct": true,
+        "latency_seconds": 0.805,
+        "retrieved_tokens": 6,
+        "input_tokens": 94
+      },
+      {
+        "doc_name": "BOEING_2017_10K",
+        "predicted": "THE BOEING COMPANY",
+        "ground_truth": "THE BOEING COMPANY",
+        "correct": true,
+        "latency_seconds": 1.074,
+        "retrieved_tokens": 5,
+        "input_tokens": 94
+      },
+      {
+        "doc_name": "BOEING_2019_10K",
+        "predicted": "THE BOEING COMPANY",
+        "ground_truth": "THE BOEING COMPANY",
+        "correct": true,
+        "latency_seconds": 0.744,
+        "retrieved_tokens": 5,
+        "input_tokens": 94
+      },
+      {
+        "doc_name": "BOEING_2020_10K",
+        "predicted": "THE BOEING COMPANY",
+        "ground_truth": "THE BOEING COMPANY",
+        "correct": true,
+        "latency_seconds": 0.73,
+        "retrieved_tokens": 5,
+        "input_tokens": 94
+      },
+      {
+        "doc_name": "BOEING_2022_10K",
+        "predicted": "THE BOEING COMPANY",
+        "ground_truth": "THE BOEING COMPANY",
+        "correct": true,
+        "latency_seconds": 0.686,
+        "retrieved_tokens": 5,
+        "input_tokens": 94
+      },
+      {
+        "doc_name": "CORNING_2022_10K",
+        "predicted": "CORNING INCORPORATED",
+        "ground_truth": "Corning Incorporated",
+        "correct": true,
+        "latency_seconds": 0.951,
+        "retrieved_tokens": 6,
+        "input_tokens": 95
+      },
+      {
+        "doc_name": "COSTCO_2015_10K",
+        "predicted": "Costco Wholesale Corporation",
+        "ground_truth": "Costco Wholesale Corporation",
+        "correct": true,
+        "latency_seconds": 0.905,
+        "retrieved_tokens": 4,
+        "input_tokens": 93
+      },
+      {
+        "doc_name": "COSTCO_2016_10K",
+        "predicted": "Costco Wholesale Corporation",
+        "ground_truth": "Costco Wholesale Corporation",
+        "correct": true,
+        "latency_seconds": 0.695,
+        "retrieved_tokens": 4,
+        "input_tokens": 93
+      },
+      {
+        "doc_name": "COSTCO_2018_10K",
+        "predicted": "Costco Wholesale Corporation",
+        "ground_truth": "Costco Wholesale Corporation",
+        "correct": true,
+        "latency_seconds": 0.701,
+        "retrieved_tokens": 4,
+        "input_tokens": 93
+      },
+      {
+        "doc_name": "GENERALMILLS_2022_10K",
+        "predicted": "GENERAL MILLS, INC.",
+        "ground_truth": "GENERAL MILLS, INC.",
+        "correct": true,
+        "latency_seconds": 0.697,
+        "retrieved_tokens": 6,
+        "input_tokens": 94
+      },
+      {
+        "doc_name": "INTEL_2022_10K",
+        "predicted": "INTEL CORPORATION",
+        "ground_truth": "Intel Corporation",
+        "correct": true,
+        "latency_seconds": 0.904,
+        "retrieved_tokens": 3,
+        "input_tokens": 93
+      },
+      {
+        "doc_name": "KRAFTHEINZ_2021_10K",
+        "predicted": "The Kraft Heinz Company",
+        "ground_truth": "The Kraft Heinz Company",
+        "correct": true,
+        "latency_seconds": 0.663,
+        "retrieved_tokens": 5,
+        "input_tokens": 93
+      },
+      {
+        "doc_name": "FOOTLOCKER_2023_10K",
+        "predicted": "NOT FOUND",
+        "ground_truth": "Foot Locker, Inc.",
+        "correct": false,
+        "latency_seconds": 0.755,
+        "retrieved_tokens": 9,
+        "input_tokens": 98
+      },
+      {
+        "doc_name": "NIKE_2019_10K",
+        "predicted": "NIKE, Inc.",
+        "ground_truth": "NIKE, Inc.",
+        "correct": true,
+        "latency_seconds": 5.132,
+        "retrieved_tokens": 5,
+        "input_tokens": 93
+      },
+      {
+        "doc_name": "LOCKHEEDMARTIN_2021_10K",
+        "predicted": "LOCKHEED MARTIN CORPORATION",
+        "ground_truth": "Lockheed Martin Corporation",
+        "correct": true,
+        "latency_seconds": 0.957,
+        "retrieved_tokens": 6,
+        "input_tokens": 96
+      }
+    ]
+  },
+  {
+    "question": "What is the state (or other jurisdiction) of incorporation and the IRS Employer Identification Number?",
+    "question_slug": "what_is_the_state_or_other_jurisdiction_of_incorporation_and_10_agentic",
+    "split": "unsampled",
+    "n": 50,
+    "n_correct": 47,
+    "accuracy": 0.94,
+    "avg_latency": 0.81,
+    "avg_retrieved": 31.5,
+    "avg_input_tok": 128.5,
+    "avg_cost_ratio": 0.000503,
+    "n_rules": 1,
+    "per_doc": [
+      {
+        "doc_name": "AMCOR_2023_10K",
+        "predicted": "Jersey; 98-1455367",
+        "ground_truth": "Jersey, 98-1455367",
+        "correct": true,
+        "latency_seconds": 0.893,
+        "retrieved_tokens": 26,
+        "input_tokens": 123
+      },
+      {
+        "doc_name": "APPLE_2016_10K",
+        "predicted": "California, 94-2404110",
+        "ground_truth": "California, 94-2404110",
+        "correct": true,
+        "latency_seconds": 0.852,
+        "retrieved_tokens": 25,
+        "input_tokens": 122
+      },
+      {
+        "doc_name": "BESTBUY_2020_10K",
+        "predicted": "Minnesota; 41-0907483",
+        "ground_truth": "Minnesota, 41-0907483",
+        "correct": true,
+        "latency_seconds": 0.921,
+        "retrieved_tokens": 25,
+        "input_tokens": 123
+      },
+      {
+        "doc_name": "INTEL_2016_10K",
+        "predicted": "Delaware; 94-1672743",
+        "ground_truth": "Delaware, 94-1672743",
+        "correct": true,
+        "latency_seconds": 0.713,
+        "retrieved_tokens": 26,
+        "input_tokens": 123
+      },
+      {
+        "doc_name": "ACTIVISIONBLIZZARD_2017_10K",
+        "predicted": "Delaware; 95-4803544",
+        "ground_truth": "Delaware, 95-4803544",
+        "correct": true,
+        "latency_seconds": 0.918,
+        "retrieved_tokens": 26,
+        "input_tokens": 123
+      },
+      {
+        "doc_name": "ACTIVISIONBLIZZARD_2020_10K",
+        "predicted": "Delaware; 95-4803544",
+        "ground_truth": "Delaware, 95-4803544",
+        "correct": true,
+        "latency_seconds": 0.917,
+        "retrieved_tokens": 26,
+        "input_tokens": 123
+      },
+      {
+        "doc_name": "ADOBE_2015_10K",
+        "predicted": "Delaware; 77-0019522",
+        "ground_truth": "Delaware, 77-0019522",
+        "correct": true,
+        "latency_seconds": 0.842,
+        "retrieved_tokens": 26,
+        "input_tokens": 123
+      },
+      {
+        "doc_name": "ADOBE_2016_10K",
+        "predicted": "Delaware; 77-0019522",
+        "ground_truth": "Delaware, 77-0019522",
+        "correct": true,
+        "latency_seconds": 0.677,
+        "retrieved_tokens": 26,
+        "input_tokens": 123
+      },
+      {
+        "doc_name": "ADOBE_2017_10K",
+        "predicted": "Delaware; 77-0019522",
+        "ground_truth": "Delaware, 77-0019522",
+        "correct": true,
+        "latency_seconds": 0.815,
+        "retrieved_tokens": 26,
+        "input_tokens": 123
+      },
+      {
+        "doc_name": "ADOBE_2018_10K",
+        "predicted": "Delaware; 77-0019522",
+        "ground_truth": "Delaware, 77-0019522",
+        "correct": true,
+        "latency_seconds": 0.67,
+        "retrieved_tokens": 26,
+        "input_tokens": 123
+      },
+      {
+        "doc_name": "ADOBE_2019_10K",
+        "predicted": "Delaware; 77-0019522",
+        "ground_truth": "Delaware, 77-0019522",
+        "correct": true,
+        "latency_seconds": 0.913,
+        "retrieved_tokens": 26,
+        "input_tokens": 123
+      },
+      {
+        "doc_name": "ADOBE_2020_10K",
+        "predicted": "Delaware; 77-0019522",
+        "ground_truth": "Delaware, 77-0019522",
+        "correct": true,
+        "latency_seconds": 0.774,
+        "retrieved_tokens": 26,
+        "input_tokens": 123
+      },
+      {
+        "doc_name": "ADOBE_2021_10K",
+        "predicted": "Delaware; 77-0019522",
+        "ground_truth": "Delaware, 77-0019522",
+        "correct": true,
+        "latency_seconds": 0.689,
+        "retrieved_tokens": 26,
+        "input_tokens": 123
+      },
+      {
+        "doc_name": "ADOBE_2022_10K",
+        "predicted": "Delaware; 77-0019522",
+        "ground_truth": "Delaware, 77-0019522",
+        "correct": true,
+        "latency_seconds": 0.808,
+        "retrieved_tokens": 26,
+        "input_tokens": 123
+      },
+      {
+        "doc_name": "AMAZON_2015_10K",
+        "predicted": "Delaware; 91-1646860",
+        "ground_truth": "Delaware, 91-1646860",
+        "correct": true,
+        "latency_seconds": 0.784,
+        "retrieved_tokens": 28,
+        "input_tokens": 125
+      },
+      {
+        "doc_name": "AMAZON_2017_10K",
+        "predicted": "Delaware; 91-1646860",
+        "ground_truth": "Delaware, 91-1646860",
+        "correct": true,
+        "latency_seconds": 0.65,
+        "retrieved_tokens": 26,
+        "input_tokens": 123
+      },
+      {
+        "doc_name": "AMAZON_2019_10K",
+        "predicted": "Delaware; 91-1646860",
+        "ground_truth": "Delaware, 91-1646860",
+        "correct": true,
+        "latency_seconds": 0.722,
+        "retrieved_tokens": 26,
+        "input_tokens": 123
+      },
+      {
+        "doc_name": "AMAZON_2020_10K",
+        "predicted": "Delaware; 91-1646860",
+        "ground_truth": "Delaware, 91-1646860",
+        "correct": true,
+        "latency_seconds": 0.869,
+        "retrieved_tokens": 26,
+        "input_tokens": 123
+      },
+      {
+        "doc_name": "AMAZON_2022_10K",
+        "predicted": "Delaware; 91-1646860",
+        "ground_truth": "Delaware, 91-1646860",
+        "correct": true,
+        "latency_seconds": 0.957,
+        "retrieved_tokens": 26,
+        "input_tokens": 123
+      },
+      {
+        "doc_name": "AMCOR_2021_10K",
+        "predicted": "Jersey; 98-1455367",
+        "ground_truth": "Jersey, 98-1455367",
+        "correct": true,
+        "latency_seconds": 0.653,
+        "retrieved_tokens": 26,
+        "input_tokens": 123
+      },
+      {
+        "doc_name": "AMCOR_2022_10K",
+        "predicted": "Jersey; 98-1455367",
+        "ground_truth": "Jersey, 98-1455367",
+        "correct": true,
+        "latency_seconds": 0.846,
+        "retrieved_tokens": 26,
+        "input_tokens": 123
+      },
+      {
+        "doc_name": "AMD_2019_10K",
+        "predicted": "Delaware; 94-1692300",
+        "ground_truth": "Delaware, 94-1692300",
+        "correct": true,
+        "latency_seconds": 0.91,
+        "retrieved_tokens": 26,
+        "input_tokens": 123
+      },
+      {
+        "doc_name": "AMD_2020_10K",
+        "predicted": "Delaware; 94-1692300",
+        "ground_truth": "Delaware, 94-1692300",
+        "correct": true,
+        "latency_seconds": 0.769,
+        "retrieved_tokens": 26,
+        "input_tokens": 123
+      },
+      {
+        "doc_name": "AMD_2021_10K",
+        "predicted": "Delaware; 94-1692300",
+        "ground_truth": "Delaware, 94-1692300",
+        "correct": true,
+        "latency_seconds": 0.766,
+        "retrieved_tokens": 26,
+        "input_tokens": 123
+      },
+      {
+        "doc_name": "AMD_2022_10K",
+        "predicted": "Delaware; 94-1692300",
+        "ground_truth": "Delaware, 94-1692300",
+        "correct": true,
+        "latency_seconds": 0.982,
+        "retrieved_tokens": 26,
+        "input_tokens": 123
+      },
+      {
+        "doc_name": "APPLE_2015_10K",
+        "predicted": "California, 94-2404110",
+        "ground_truth": "California, 94-2404110",
+        "correct": true,
+        "latency_seconds": 0.766,
+        "retrieved_tokens": 25,
+        "input_tokens": 122
+      },
+      {
+        "doc_name": "APPLE_2017_10K",
+        "predicted": "California, 94-2404110",
+        "ground_truth": "California, 94-2404110",
+        "correct": true,
+        "latency_seconds": 0.717,
+        "retrieved_tokens": 25,
+        "input_tokens": 122
+      },
+      {
+        "doc_name": "APPLE_2018_10K",
+        "predicted": "California, 94-2404110",
+        "ground_truth": "California, 94-2404110",
+        "correct": true,
+        "latency_seconds": 0.763,
+        "retrieved_tokens": 25,
+        "input_tokens": 122
+      },
+      {
+        "doc_name": "APPLE_2019_10K",
+        "predicted": "California, 94-2404110",
+        "ground_truth": "California, 94-2404110",
+        "correct": true,
+        "latency_seconds": 0.674,
+        "retrieved_tokens": 25,
+        "input_tokens": 122
+      },
+      {
+        "doc_name": "APPLE_2020_10K",
+        "predicted": "California, 94-2404110",
+        "ground_truth": "California, 94-2404110",
+        "correct": true,
+        "latency_seconds": 0.769,
+        "retrieved_tokens": 25,
+        "input_tokens": 122
+      },
+      {
+        "doc_name": "APPLE_2021_10K",
+        "predicted": "California, 94-2404110",
+        "ground_truth": "California, 94-2404110",
+        "correct": true,
+        "latency_seconds": 0.841,
+        "retrieved_tokens": 25,
+        "input_tokens": 122
+      },
+      {
+        "doc_name": "APPLE_2022_10K",
+        "predicted": "California, 94-2404110",
+        "ground_truth": "California, 94-2404110",
+        "correct": true,
+        "latency_seconds": 0.838,
+        "retrieved_tokens": 25,
+        "input_tokens": 122
+      },
+      {
+        "doc_name": "BESTBUY_2015_10K",
+        "predicted": "NOT FOUND",
+        "ground_truth": "Minnesota, 41-0907483",
+        "correct": false,
+        "latency_seconds": 0.751,
+        "retrieved_tokens": 0,
+        "input_tokens": 97
+      },
+      {
+        "doc_name": "BESTBUY_2021_10K",
+        "predicted": "Minnesota, 41-0907483",
+        "ground_truth": "Minnesota, 41-0907483",
+        "correct": true,
+        "latency_seconds": 0.628,
+        "retrieved_tokens": 65,
+        "input_tokens": 163
+      },
+      {
+        "doc_name": "BESTBUY_2022_10K",
+        "predicted": "Minnesota, 41-0907483",
+        "ground_truth": "Minnesota, 41-0907483",
+        "correct": true,
+        "latency_seconds": 0.868,
+        "retrieved_tokens": 59,
+        "input_tokens": 157
+      },
+      {
+        "doc_name": "BESTBUY_2023_10K",
+        "predicted": "Minnesota, 41-0907483",
+        "ground_truth": "Minnesota, 41-0907483",
+        "correct": true,
+        "latency_seconds": 1.014,
+        "retrieved_tokens": 59,
+        "input_tokens": 157
+      },
+      {
+        "doc_name": "BOEING_2017_10K",
+        "predicted": "Delaware; 91-0425694",
+        "ground_truth": "Delaware, 91-0425694",
+        "correct": true,
+        "latency_seconds": 0.847,
+        "retrieved_tokens": 26,
+        "input_tokens": 123
+      },
+      {
+        "doc_name": "BOEING_2019_10K",
+        "predicted": "Delaware; 91-0425694",
+        "ground_truth": "Delaware, 91-0425694",
+        "correct": true,
+        "latency_seconds": 0.856,
+        "retrieved_tokens": 26,
+        "input_tokens": 123
+      },
+      {
+        "doc_name": "BOEING_2020_10K",
+        "predicted": "Delaware; 91-0425694",
+        "ground_truth": "Delaware, 91-0425694",
+        "correct": true,
+        "latency_seconds": 0.708,
+        "retrieved_tokens": 26,
+        "input_tokens": 123
+      },
+      {
+        "doc_name": "BOEING_2022_10K",
+        "predicted": "NOT FOUND",
+        "ground_truth": "Delaware, 91-0425694",
+        "correct": false,
+        "latency_seconds": 0.738,
+        "retrieved_tokens": 14,
+        "input_tokens": 111
+      },
+      {
+        "doc_name": "CORNING_2022_10K",
+        "predicted": "New York; 16-0393470",
+        "ground_truth": "New York, 16-0393470",
+        "correct": true,
+        "latency_seconds": 0.894,
+        "retrieved_tokens": 26,
+        "input_tokens": 123
+      },
+      {
+        "doc_name": "COSTCO_2015_10K",
+        "predicted": "Washington, 91-1223280",
+        "ground_truth": "Washington, 91-1223280",
+        "correct": true,
+        "latency_seconds": 0.745,
+        "retrieved_tokens": 25,
+        "input_tokens": 122
+      },
+      {
+        "doc_name": "COSTCO_2016_10K",
+        "predicted": "Washington, 91-1223280",
+        "ground_truth": "Washington, 91-1223280",
+        "correct": true,
+        "latency_seconds": 0.714,
+        "retrieved_tokens": 25,
+        "input_tokens": 122
+      },
+      {
+        "doc_name": "COSTCO_2018_10K",
+        "predicted": "Washington, 91-1223280",
+        "ground_truth": "Washington, 91-1223280",
+        "correct": true,
+        "latency_seconds": 0.928,
+        "retrieved_tokens": 25,
+        "input_tokens": 122
+      },
+      {
+        "doc_name": "GENERALMILLS_2022_10K",
+        "predicted": "Delaware; 41-0274440",
+        "ground_truth": "Delaware, 41-0274440",
+        "correct": true,
+        "latency_seconds": 0.996,
+        "retrieved_tokens": 72,
+        "input_tokens": 169
+      },
+      {
+        "doc_name": "INTEL_2022_10K",
+        "predicted": "Delaware, 94-1672743",
+        "ground_truth": "Delaware, 94-1672743",
+        "correct": true,
+        "latency_seconds": 0.679,
+        "retrieved_tokens": 34,
+        "input_tokens": 131
+      },
+      {
+        "doc_name": "KRAFTHEINZ_2021_10K",
+        "predicted": "NOT FOUND",
+        "ground_truth": "Delaware, 46-2078182",
+        "correct": false,
+        "latency_seconds": 0.871,
+        "retrieved_tokens": 24,
+        "input_tokens": 121
+      },
+      {
+        "doc_name": "FOOTLOCKER_2023_10K",
+        "predicted": "New York; 13-3513936",
+        "ground_truth": "New York, 13-3513936",
+        "correct": true,
+        "latency_seconds": 0.756,
+        "retrieved_tokens": 26,
+        "input_tokens": 123
+      },
+      {
+        "doc_name": "NIKE_2019_10K",
+        "predicted": "OREGON, 93-0584541",
+        "ground_truth": "Oregon, 93-0584541",
+        "correct": true,
+        "latency_seconds": 0.999,
+        "retrieved_tokens": 50,
+        "input_tokens": 146
+      },
+      {
+        "doc_name": "LOCKHEEDMARTIN_2021_10K",
+        "predicted": "Maryland; 52-1893632",
+        "ground_truth": "Maryland, 52-1893632",
+        "correct": true,
+        "latency_seconds": 0.807,
+        "retrieved_tokens": 166,
+        "input_tokens": 263
+      }
+    ]
+  },
+  {
+    "question": "What is the address of principal executive offices and ZIP code?",
+    "question_slug": "what_is_the_address_of_principal_executive_offices_and_zip_c_10_agentic",
+    "split": "unsampled",
+    "n": 50,
+    "n_correct": 47,
+    "accuracy": 0.94,
+    "avg_latency": 0.874,
+    "avg_retrieved": 79.1,
+    "avg_input_tok": 170.1,
+    "avg_cost_ratio": 0.001289,
+    "n_rules": 1,
+    "per_doc": [
+      {
+        "doc_name": "AMCOR_2023_10K",
+        "predicted": "83 Tower Road North Warmley, Bristol United Kingdom, BS30 8XP",
+        "ground_truth": "83 Tower Road North, Warmley, Bristol, United Kingdom BS30 8XP",
+        "correct": true,
+        "latency_seconds": 1.026,
+        "retrieved_tokens": 78,
+        "input_tokens": 168
+      },
+      {
+        "doc_name": "APPLE_2016_10K",
+        "predicted": "1 Infinite Loop Cupertino, California 95014",
+        "ground_truth": "1 Infinite Loop, Cupertino, California 95014",
+        "correct": true,
+        "latency_seconds": 1.172,
+        "retrieved_tokens": 69,
+        "input_tokens": 160
+      },
+      {
+        "doc_name": "BESTBUY_2020_10K",
+        "predicted": "7601 Penn Avenue South Richfield, Minnesota 55423",
+        "ground_truth": "7601 Penn Avenue South, Richfield, Minnesota, 55423",
+        "correct": true,
+        "latency_seconds": 0.901,
+        "retrieved_tokens": 74,
+        "input_tokens": 167
+      },
+      {
+        "doc_name": "INTEL_2016_10K",
+        "predicted": "2200 Mission College Boulevard, Santa Clara, California 95054-1549",
+        "ground_truth": "2200 Mission College Boulevard, Santa Clara, California 95054-1549",
+        "correct": true,
+        "latency_seconds": 0.952,
+        "retrieved_tokens": 94,
+        "input_tokens": 185
+      },
+      {
+        "doc_name": "ACTIVISIONBLIZZARD_2017_10K",
+        "predicted": "3100 Ocean Park Boulevard, Santa Monica, CA 90405",
+        "ground_truth": "3100 Ocean Park Boulevard, Santa Monica, CA 90405",
+        "correct": true,
+        "latency_seconds": 0.822,
+        "retrieved_tokens": 90,
+        "input_tokens": 180
+      },
+      {
+        "doc_name": "ACTIVISIONBLIZZARD_2020_10K",
+        "predicted": "3100 Ocean Park Boulevard, Santa Monica, 90405",
+        "ground_truth": "3100 Ocean Park Boulevard, Santa Monica, CA 90405",
+        "correct": true,
+        "latency_seconds": 0.843,
+        "retrieved_tokens": 46,
+        "input_tokens": 138
+      },
+      {
+        "doc_name": "ADOBE_2015_10K",
+        "predicted": "345 Park Avenue, San Jose, California 95110-2704",
+        "ground_truth": "345 Park Avenue, San Jose, California 95110-2704",
+        "correct": true,
+        "latency_seconds": 0.834,
+        "retrieved_tokens": 55,
+        "input_tokens": 147
+      },
+      {
+        "doc_name": "ADOBE_2016_10K",
+        "predicted": "345 Park Avenue, San Jose, California 95110-2704",
+        "ground_truth": "345 Park Avenue, San Jose, California 95110-2704",
+        "correct": true,
+        "latency_seconds": 0.841,
+        "retrieved_tokens": 55,
+        "input_tokens": 147
+      },
+      {
+        "doc_name": "ADOBE_2017_10K",
+        "predicted": "345 Park Avenue, San Jose, California 95110-2704",
+        "ground_truth": "345 Park Avenue, San Jose, California 95110-2704",
+        "correct": true,
+        "latency_seconds": 0.8,
+        "retrieved_tokens": 55,
+        "input_tokens": 147
+      },
+      {
+        "doc_name": "ADOBE_2018_10K",
+        "predicted": "NOT FOUND",
+        "ground_truth": "345 Park Avenue, San Jose, California 95110-2704",
+        "correct": false,
+        "latency_seconds": 0.771,
+        "retrieved_tokens": 55,
+        "input_tokens": 147
+      },
+      {
+        "doc_name": "ADOBE_2019_10K",
+        "predicted": "345 Park Avenue, San Jose, California 95110-2704",
+        "ground_truth": "345 Park Avenue, San Jose, California 95110-2704",
+        "correct": true,
+        "latency_seconds": 1.057,
+        "retrieved_tokens": 55,
+        "input_tokens": 147
+      },
+      {
+        "doc_name": "ADOBE_2020_10K",
+        "predicted": "345 Park Avenue, San Jose, California 95110-2704",
+        "ground_truth": "345 Park Avenue, San Jose, California 95110-2704",
+        "correct": true,
+        "latency_seconds": 0.934,
+        "retrieved_tokens": 55,
+        "input_tokens": 147
+      },
+      {
+        "doc_name": "ADOBE_2021_10K",
+        "predicted": "345 Park Avenue, San Jose, California 95110-2704",
+        "ground_truth": "345 Park Avenue, San Jose, California 95110-2704",
+        "correct": true,
+        "latency_seconds": 0.857,
+        "retrieved_tokens": 55,
+        "input_tokens": 147
+      },
+      {
+        "doc_name": "ADOBE_2022_10K",
+        "predicted": "345 Park Avenue, San Jose, California 95110-2704",
+        "ground_truth": "345 Park Avenue, San Jose, California 95110-2704",
+        "correct": true,
+        "latency_seconds": 0.779,
+        "retrieved_tokens": 55,
+        "input_tokens": 147
+      },
+      {
+        "doc_name": "AMAZON_2015_10K",
+        "predicted": "410 Terry Avenue North Seattle, Washington 98109-5210",
+        "ground_truth": "410 Terry Avenue North, Seattle, Washington 98109-5210",
+        "correct": true,
+        "latency_seconds": 0.784,
+        "retrieved_tokens": 81,
+        "input_tokens": 172
+      },
+      {
+        "doc_name": "AMAZON_2017_10K",
+        "predicted": "410 Terry Avenue North Seattle, Washington 98109-5210",
+        "ground_truth": "410 Terry Avenue North, Seattle, Washington 98109-5210",
+        "correct": true,
+        "latency_seconds": 0.748,
+        "retrieved_tokens": 79,
+        "input_tokens": 170
+      },
+      {
+        "doc_name": "AMAZON_2019_10K",
+        "predicted": "410 Terry Avenue North Seattle, Washington 98109-5210",
+        "ground_truth": "410 Terry Avenue North, Seattle, Washington 98109-5210",
+        "correct": true,
+        "latency_seconds": 1.022,
+        "retrieved_tokens": 79,
+        "input_tokens": 170
+      },
+      {
+        "doc_name": "AMAZON_2020_10K",
+        "predicted": "410 Terry Avenue North Seattle, Washington 98109-5210",
+        "ground_truth": "410 Terry Avenue North, Seattle, Washington 98109-5210",
+        "correct": true,
+        "latency_seconds": 0.74,
+        "retrieved_tokens": 95,
+        "input_tokens": 186
+      },
+      {
+        "doc_name": "AMAZON_2022_10K",
+        "predicted": "410 Terry Avenue North Seattle, Washington 98109-5210",
+        "ground_truth": "410 Terry Avenue North, Seattle, Washington 98109-5210",
+        "correct": true,
+        "latency_seconds": 0.945,
+        "retrieved_tokens": 79,
+        "input_tokens": 170
+      },
+      {
+        "doc_name": "AMCOR_2021_10K",
+        "predicted": "83 Tower Road North Warmley, Bristol United Kingdom, BS30 8XP",
+        "ground_truth": "83 Tower Road North, Warmley, Bristol, United Kingdom BS30 8XP",
+        "correct": true,
+        "latency_seconds": 0.994,
+        "retrieved_tokens": 71,
+        "input_tokens": 161
+      },
+      {
+        "doc_name": "AMCOR_2022_10K",
+        "predicted": "83 Tower Road North Warmley, Bristol United Kingdom, BS30 8XP",
+        "ground_truth": "83 Tower Road North, Warmley, Bristol, United Kingdom BS30 8XP",
+        "correct": true,
+        "latency_seconds": 1.001,
+        "retrieved_tokens": 78,
+        "input_tokens": 168
+      },
+      {
+        "doc_name": "AMD_2019_10K",
+        "predicted": "2485 Augustine Drive Santa Clara, California 95054",
+        "ground_truth": "2485 Augustine Drive, Santa Clara, California 95054",
+        "correct": true,
+        "latency_seconds": 0.748,
+        "retrieved_tokens": 77,
+        "input_tokens": 168
+      },
+      {
+        "doc_name": "AMD_2020_10K",
+        "predicted": "2485 Augustine Drive Santa Clara, California 95054",
+        "ground_truth": "2485 Augustine Drive, Santa Clara, California 95054",
+        "correct": true,
+        "latency_seconds": 0.749,
+        "retrieved_tokens": 53,
+        "input_tokens": 144
+      },
+      {
+        "doc_name": "AMD_2021_10K",
+        "predicted": "2485 Augustine Drive Santa Clara, California 95054",
+        "ground_truth": "2485 Augustine Drive, Santa Clara, California 95054",
+        "correct": true,
+        "latency_seconds": 0.702,
+        "retrieved_tokens": 53,
+        "input_tokens": 144
+      },
+      {
+        "doc_name": "AMD_2022_10K",
+        "predicted": "2485 Augustine Drive Santa Clara, California 95054",
+        "ground_truth": "2485 Augustine Drive, Santa Clara, California 95054",
+        "correct": true,
+        "latency_seconds": 0.803,
+        "retrieved_tokens": 64,
+        "input_tokens": 154
+      },
+      {
+        "doc_name": "APPLE_2015_10K",
+        "predicted": "1 Infinite Loop Cupertino, California 95014",
+        "ground_truth": "1 Infinite Loop, Cupertino, California 95014",
+        "correct": true,
+        "latency_seconds": 0.991,
+        "retrieved_tokens": 69,
+        "input_tokens": 160
+      },
+      {
+        "doc_name": "APPLE_2017_10K",
+        "predicted": "1 Infinite Loop Cupertino, California 95014",
+        "ground_truth": "1 Infinite Loop, Cupertino, California, 95014",
+        "correct": true,
+        "latency_seconds": 1.097,
+        "retrieved_tokens": 69,
+        "input_tokens": 160
+      },
+      {
+        "doc_name": "APPLE_2018_10K",
+        "predicted": "One Apple Park Way Cupertino, California 95014",
+        "ground_truth": "One Apple Park Way, Cupertino, California 95014",
+        "correct": true,
+        "latency_seconds": 0.659,
+        "retrieved_tokens": 70,
+        "input_tokens": 161
+      },
+      {
+        "doc_name": "APPLE_2019_10K",
+        "predicted": "One Apple Park Way Cupertino California 95014",
+        "ground_truth": "One Apple Park Way, Cupertino, California 95014",
+        "correct": true,
+        "latency_seconds": 0.799,
+        "retrieved_tokens": 69,
+        "input_tokens": 160
+      },
+      {
+        "doc_name": "APPLE_2020_10K",
+        "predicted": "One Apple Park Way Cupertino, California 95014",
+        "ground_truth": "One Apple Park Way, Cupertino, California, 95014",
+        "correct": true,
+        "latency_seconds": 0.897,
+        "retrieved_tokens": 70,
+        "input_tokens": 161
+      },
+      {
+        "doc_name": "APPLE_2021_10K",
+        "predicted": "One Apple Park Way Cupertino, California 95014",
+        "ground_truth": "One Apple Park Way, Cupertino, California, 95014",
+        "correct": true,
+        "latency_seconds": 0.799,
+        "retrieved_tokens": 70,
+        "input_tokens": 161
+      },
+      {
+        "doc_name": "APPLE_2022_10K",
+        "predicted": "One Apple Park Way Cupertino, California 95014",
+        "ground_truth": "One Apple Park Way, Cupertino, California 95014",
+        "correct": true,
+        "latency_seconds": 0.783,
+        "retrieved_tokens": 70,
+        "input_tokens": 161
+      },
+      {
+        "doc_name": "BESTBUY_2015_10K",
+        "predicted": "NOT FOUND",
+        "ground_truth": "7601 Penn Avenue South, Richfield, Minnesota 55423",
+        "correct": false,
+        "latency_seconds": 0.681,
+        "retrieved_tokens": 0,
+        "input_tokens": 91
+      },
+      {
+        "doc_name": "BESTBUY_2021_10K",
+        "predicted": "7601 Penn Avenue South Richfield, Minnesota 55423",
+        "ground_truth": "7601 Penn Avenue South, Richfield, Minnesota 55423",
+        "correct": true,
+        "latency_seconds": 0.723,
+        "retrieved_tokens": 179,
+        "input_tokens": 269
+      },
+      {
+        "doc_name": "BESTBUY_2022_10K",
+        "predicted": "7601 Penn Avenue South Richfield, Minnesota 55423",
+        "ground_truth": "7601 Penn Avenue South, Richfield, Minnesota 55423",
+        "correct": true,
+        "latency_seconds": 0.906,
+        "retrieved_tokens": 145,
+        "input_tokens": 236
+      },
+      {
+        "doc_name": "BESTBUY_2023_10K",
+        "predicted": "7601 Penn Avenue South Richfield, Minnesota 55423",
+        "ground_truth": "7601 Penn Avenue South, Richfield, Minnesota 55423",
+        "correct": true,
+        "latency_seconds": 1.484,
+        "retrieved_tokens": 121,
+        "input_tokens": 213
+      },
+      {
+        "doc_name": "BOEING_2017_10K",
+        "predicted": "100 N. Riverside Plaza, Chicago, IL 60606-1596",
+        "ground_truth": "100 N. Riverside Plaza, Chicago, IL 60606-1596",
+        "correct": true,
+        "latency_seconds": 1.026,
+        "retrieved_tokens": 100,
+        "input_tokens": 190
+      },
+      {
+        "doc_name": "BOEING_2019_10K",
+        "predicted": "100 N. Riverside Plaza, Chicago, IL 60606-1596",
+        "ground_truth": "100 N. Riverside Plaza, Chicago, IL 60606-1596",
+        "correct": true,
+        "latency_seconds": 0.772,
+        "retrieved_tokens": 80,
+        "input_tokens": 171
+      },
+      {
+        "doc_name": "BOEING_2020_10K",
+        "predicted": "100 N. Riverside Plaza, Chicago, IL 60606-1596",
+        "ground_truth": "100 N. Riverside Plaza, Chicago, IL 60606-1596",
+        "correct": true,
+        "latency_seconds": 0.752,
+        "retrieved_tokens": 68,
+        "input_tokens": 158
+      },
+      {
+        "doc_name": "BOEING_2022_10K",
+        "predicted": "929 Long Bridge Drive, Arlington, VA 22202",
+        "ground_truth": "929 Long Bridge Drive, Arlington, VA 22202",
+        "correct": true,
+        "latency_seconds": 0.964,
+        "retrieved_tokens": 38,
+        "input_tokens": 128
+      },
+      {
+        "doc_name": "CORNING_2022_10K",
+        "predicted": "One Riverfront Plaza, Corning, New York 14831",
+        "ground_truth": "One Riverfront Plaza, Corning, New York 14831",
+        "correct": true,
+        "latency_seconds": 0.84,
+        "retrieved_tokens": 75,
+        "input_tokens": 166
+      },
+      {
+        "doc_name": "COSTCO_2015_10K",
+        "predicted": "999 Lake Drive, Issaquah, WA 98027",
+        "ground_truth": "999 Lake Drive, Issaquah, WA 98027",
+        "correct": true,
+        "latency_seconds": 0.94,
+        "retrieved_tokens": 66,
+        "input_tokens": 157
+      },
+      {
+        "doc_name": "COSTCO_2016_10K",
+        "predicted": "999 Lake Drive, Issaquah, WA 98027",
+        "ground_truth": "999 Lake Drive, Issaquah, WA 98027",
+        "correct": true,
+        "latency_seconds": 0.867,
+        "retrieved_tokens": 66,
+        "input_tokens": 157
+      },
+      {
+        "doc_name": "COSTCO_2018_10K",
+        "predicted": "999 Lake Drive, Issaquah, WA 98027",
+        "ground_truth": "999 Lake Drive, Issaquah, WA 98027",
+        "correct": true,
+        "latency_seconds": 0.665,
+        "retrieved_tokens": 66,
+        "input_tokens": 157
+      },
+      {
+        "doc_name": "GENERALMILLS_2022_10K",
+        "predicted": "Number One General Mills Boulevard, Minneapolis, Minnesota 55426",
+        "ground_truth": "Number One General Mills Boulevard, Minneapolis, Minnesota 55426",
+        "correct": true,
+        "latency_seconds": 0.763,
+        "retrieved_tokens": 150,
+        "input_tokens": 239
+      },
+      {
+        "doc_name": "INTEL_2022_10K",
+        "predicted": "2200 Mission College Boulevard, Santa Clara, California 95054-1549",
+        "ground_truth": "2200 Mission College Boulevard, Santa Clara, California 95054-1549",
+        "correct": true,
+        "latency_seconds": 0.94,
+        "retrieved_tokens": 83,
+        "input_tokens": 173
+      },
+      {
+        "doc_name": "KRAFTHEINZ_2021_10K",
+        "predicted": "15222",
+        "ground_truth": "One PPG Place, Pittsburgh, Pennsylvania 15222",
+        "correct": false,
+        "latency_seconds": 0.621,
+        "retrieved_tokens": 66,
+        "input_tokens": 157
+      },
+      {
+        "doc_name": "FOOTLOCKER_2023_10K",
+        "predicted": "330 West 34 th Street, New York, New York 10001",
+        "ground_truth": "330 West 34th Street, New York, New York 10001",
+        "correct": true,
+        "latency_seconds": 0.919,
+        "retrieved_tokens": 104,
+        "input_tokens": 194
+      },
+      {
+        "doc_name": "NIKE_2019_10K",
+        "predicted": "One Bowerman Drive, Beaverton, Oregon 97005-6453",
+        "ground_truth": "One Bowerman Drive, Beaverton, Oregon 97005-6453",
+        "correct": true,
+        "latency_seconds": 1.127,
+        "retrieved_tokens": 122,
+        "input_tokens": 212
+      },
+      {
+        "doc_name": "LOCKHEEDMARTIN_2021_10K",
+        "predicted": "6801 Rockledge Drive, Bethesda, Maryland 20817",
+        "ground_truth": "6801 Rockledge Drive, Bethesda, Maryland 20817",
+        "correct": true,
+        "latency_seconds": 0.873,
+        "retrieved_tokens": 237,
+        "input_tokens": 330
+      }
+    ]
+  },
+  {
+    "question": "What is/are the trading symbol(s) and listing exchange(s)?",
+    "question_slug": "what_isare_the_trading_symbols_and_listing_exchanges_10_agentic",
+    "split": "unsampled",
+    "n": 50,
+    "n_correct": 43,
+    "accuracy": 0.86,
+    "avg_latency": 0.925,
+    "avg_retrieved": 226.4,
+    "avg_input_tok": 317.6,
+    "avg_cost_ratio": 0.003672,
+    "n_rules": 2,
+    "per_doc": [
+      {
+        "doc_name": "AMCOR_2023_10K",
+        "predicted": "AMCR — New York Stock Exchange; AUKF/27 — New York Stock Exchange; AMC — Australian Securities Exchange",
+        "ground_truth": [
+          {
+            "Trading Symbol": "AMCR",
+            "Exchange": "New York Stock Exchange"
+          },
+          {
+            "Trading Symbol": "AUKF/27",
+            "Exchange": "New York Stock Exchange"
+          }
+        ],
+        "correct": false,
+        "latency_seconds": 1.087,
+        "retrieved_tokens": 156,
+        "input_tokens": 249
+      },
+      {
+        "doc_name": "APPLE_2016_10K",
+        "predicted": "AAPL — The NASDAQ Stock Market LLC (NASDAQ)",
+        "ground_truth": "AAPL, NASDAQ",
+        "correct": true,
+        "latency_seconds": 0.794,
+        "retrieved_tokens": 82,
+        "input_tokens": 175
+      },
+      {
+        "doc_name": "BESTBUY_2020_10K",
+        "predicted": "BBY — New York Stock Exchange",
+        "ground_truth": "BBY, New York Stock Exchange",
+        "correct": true,
+        "latency_seconds": 0.824,
+        "retrieved_tokens": 315,
+        "input_tokens": 408
+      },
+      {
+        "doc_name": "INTEL_2016_10K",
+        "predicted": "INTC — NASDAQ Global Select Market",
+        "ground_truth": "Common stock, $0.001 par value: The NASDAQ Global Select Market",
+        "correct": false,
+        "latency_seconds": 0.749,
+        "retrieved_tokens": 158,
+        "input_tokens": 251
+      },
+      {
+        "doc_name": "ACTIVISIONBLIZZARD_2017_10K",
+        "predicted": "ATVI — The Nasdaq Global Select Market / The Nasdaq Stock Market / Nasdaq National Market",
+        "ground_truth": "ATVI, The Nasdaq Global Select Market",
+        "correct": true,
+        "latency_seconds": 0.862,
+        "retrieved_tokens": 228,
+        "input_tokens": 316
+      },
+      {
+        "doc_name": "ACTIVISIONBLIZZARD_2020_10K",
+        "predicted": "ATVI — The Nasdaq Global Select Market",
+        "ground_truth": "ATVI, The Nasdaq Global Select Market",
+        "correct": true,
+        "latency_seconds": 0.912,
+        "retrieved_tokens": 162,
+        "input_tokens": 252
+      },
+      {
+        "doc_name": "ADOBE_2015_10K",
+        "predicted": "ADBE — The NASDAQ Stock Market LLC (NASDAQ Global Select Market)",
+        "ground_truth": "NASDAQ: ADBE",
+        "correct": true,
+        "latency_seconds": 0.804,
+        "retrieved_tokens": 267,
+        "input_tokens": 361
+      },
+      {
+        "doc_name": "ADOBE_2016_10K",
+        "predicted": "ADBE — The NASDAQ Stock Market LLC (NASDAQ Global Select Market)",
+        "ground_truth": "ADBE, NASDAQ Global Select Market",
+        "correct": true,
+        "latency_seconds": 0.883,
+        "retrieved_tokens": 267,
+        "input_tokens": 361
+      },
+      {
+        "doc_name": "ADOBE_2017_10K",
+        "predicted": "ADBE — The NASDAQ Stock Market LLC (NASDAQ Global Select Market)",
+        "ground_truth": "ADBE, NASDAQ Global Select Market",
+        "correct": true,
+        "latency_seconds": 0.88,
+        "retrieved_tokens": 267,
+        "input_tokens": 361
+      },
+      {
+        "doc_name": "ADOBE_2018_10K",
+        "predicted": "ADBE — The NASDAQ Stock Market LLC (NASDAQ Global Select Market)",
+        "ground_truth": "ADBE, NASDAQ Global Select Market",
+        "correct": true,
+        "latency_seconds": 1.007,
+        "retrieved_tokens": 245,
+        "input_tokens": 339
+      },
+      {
+        "doc_name": "ADOBE_2019_10K",
+        "predicted": "ADBE — NASDAQ Global Select Market",
+        "ground_truth": "ADBE, NASDAQ",
+        "correct": true,
+        "latency_seconds": 0.738,
+        "retrieved_tokens": 236,
+        "input_tokens": 330
+      },
+      {
+        "doc_name": "ADOBE_2020_10K",
+        "predicted": "ADBE — NASDAQ Global Select Market",
+        "ground_truth": "ADBE, NASDAQ",
+        "correct": true,
+        "latency_seconds": 0.918,
+        "retrieved_tokens": 235,
+        "input_tokens": 329
+      },
+      {
+        "doc_name": "ADOBE_2021_10K",
+        "predicted": "ADBE — NASDAQ",
+        "ground_truth": "ADBE, NASDAQ",
+        "correct": true,
+        "latency_seconds": 0.785,
+        "retrieved_tokens": 235,
+        "input_tokens": 328
+      },
+      {
+        "doc_name": "ADOBE_2022_10K",
+        "predicted": "ADBE — Nasdaq Global Select Market / NASDAQ",
+        "ground_truth": [
+          {
+            "Trading Symbol": "ADBE",
+            "Listing Exchange": "NASDAQ"
+          }
+        ],
+        "correct": true,
+        "latency_seconds": 0.944,
+        "retrieved_tokens": 235,
+        "input_tokens": 328
+      },
+      {
+        "doc_name": "AMAZON_2015_10K",
+        "predicted": "AMZN — NASDAQ Global Select Market",
+        "ground_truth": "AMZN, NASDAQ Global Select Market",
+        "correct": true,
+        "latency_seconds": 1.141,
+        "retrieved_tokens": 174,
+        "input_tokens": 267
+      },
+      {
+        "doc_name": "AMAZON_2017_10K",
+        "predicted": "AMZN — Nasdaq Global Select Market",
+        "ground_truth": "AMZN, Nasdaq Global Select Market",
+        "correct": true,
+        "latency_seconds": 1.023,
+        "retrieved_tokens": 176,
+        "input_tokens": 265
+      },
+      {
+        "doc_name": "AMAZON_2019_10K",
+        "predicted": "AMZN; Nasdaq Global Select Market",
+        "ground_truth": "AMZN, Nasdaq Global Select Market",
+        "correct": true,
+        "latency_seconds": 0.831,
+        "retrieved_tokens": 190,
+        "input_tokens": 279
+      },
+      {
+        "doc_name": "AMAZON_2020_10K",
+        "predicted": "AMZN — Nasdaq Global Select Market",
+        "ground_truth": "AMZN, Nasdaq Global Select Market",
+        "correct": true,
+        "latency_seconds": 0.716,
+        "retrieved_tokens": 138,
+        "input_tokens": 228
+      },
+      {
+        "doc_name": "AMAZON_2022_10K",
+        "predicted": "AMZN — Nasdaq Global Select Market",
+        "ground_truth": "AMZN, Nasdaq Global Select Market",
+        "correct": true,
+        "latency_seconds": 1.205,
+        "retrieved_tokens": 98,
+        "input_tokens": 189
+      },
+      {
+        "doc_name": "AMCOR_2021_10K",
+        "predicted": "AMCR — New York Stock Exchange; AMC — Australian Securities Exchange",
+        "ground_truth": [
+          {
+            "Trading Symbol": "AMCR",
+            "Exchange": "New York Stock Exchange"
+          },
+          {
+            "Trading Symbol": "AUKF/27",
+            "Exchange": "New York Stock Exchange"
+          }
+        ],
+        "correct": false,
+        "latency_seconds": 0.822,
+        "retrieved_tokens": 364,
+        "input_tokens": 449
+      },
+      {
+        "doc_name": "AMCOR_2022_10K",
+        "predicted": "AMCR — New York Stock Exchange; AUKF/27 — New York Stock Exchange; AMC — Australian Securities Exchange",
+        "ground_truth": [
+          {
+            "symbol": "AMCR",
+            "exchange": "New York Stock Exchange"
+          },
+          {
+            "symbol": "AUKF/27",
+            "exchange": "New York Stock Exchange"
+          }
+        ],
+        "correct": false,
+        "latency_seconds": 0.888,
+        "retrieved_tokens": 155,
+        "input_tokens": 248
+      },
+      {
+        "doc_name": "AMD_2019_10K",
+        "predicted": "AMD — The NASDAQ Global Select Market (NASDAQ)",
+        "ground_truth": "AMD, The NASDAQ Global Select Market",
+        "correct": true,
+        "latency_seconds": 0.702,
+        "retrieved_tokens": 392,
+        "input_tokens": 485
+      },
+      {
+        "doc_name": "AMD_2020_10K",
+        "predicted": "AMD — The NASDAQ Global Select Market (NASDAQ)",
+        "ground_truth": "AMD, The NASDAQ Global Select Market",
+        "correct": true,
+        "latency_seconds": 0.628,
+        "retrieved_tokens": 228,
+        "input_tokens": 321
+      },
+      {
+        "doc_name": "AMD_2021_10K",
+        "predicted": "AMD — The NASDAQ Global Select Market (NASDAQ)",
+        "ground_truth": "AMD, The NASDAQ Global Select Market",
+        "correct": true,
+        "latency_seconds": 0.764,
+        "retrieved_tokens": 270,
+        "input_tokens": 363
+      },
+      {
+        "doc_name": "AMD_2022_10K",
+        "predicted": "AMD — The NASDAQ Global Select Market (NASDAQ)",
+        "ground_truth": "AMD, The NASDAQ Global Select Market",
+        "correct": true,
+        "latency_seconds": 2.578,
+        "retrieved_tokens": 421,
+        "input_tokens": 514
+      },
+      {
+        "doc_name": "APPLE_2015_10K",
+        "predicted": "AAPL — The NASDAQ Stock Market LLC",
+        "ground_truth": "AAPL, NASDAQ Stock Market LLC",
+        "correct": true,
+        "latency_seconds": 0.788,
+        "retrieved_tokens": 223,
+        "input_tokens": 317
+      },
+      {
+        "doc_name": "APPLE_2017_10K",
+        "predicted": "AAPL — The Nasdaq Stock Market LLC (Nasdaq)",
+        "ground_truth": "AAPL, The Nasdaq Stock Market LLC",
+        "correct": true,
+        "latency_seconds": 0.907,
+        "retrieved_tokens": 110,
+        "input_tokens": 200
+      },
+      {
+        "doc_name": "APPLE_2018_10K",
+        "predicted": "AAPL — The Nasdaq Stock Market LLC (Nasdaq)",
+        "ground_truth": "AAPL, The Nasdaq Stock Market LLC",
+        "correct": true,
+        "latency_seconds": 0.926,
+        "retrieved_tokens": 107,
+        "input_tokens": 197
+      },
+      {
+        "doc_name": "APPLE_2019_10K",
+        "predicted": "AAPL — The Nasdaq Stock Market LLC",
+        "ground_truth": "AAPL, The Nasdaq Stock Market LLC",
+        "correct": true,
+        "latency_seconds": 1.579,
+        "retrieved_tokens": 134,
+        "input_tokens": 216
+      },
+      {
+        "doc_name": "APPLE_2020_10K",
+        "predicted": "AAPL — The Nasdaq Stock Market LLC",
+        "ground_truth": "AAPL, The Nasdaq Stock Market LLC",
+        "correct": true,
+        "latency_seconds": 0.715,
+        "retrieved_tokens": 152,
+        "input_tokens": 232
+      },
+      {
+        "doc_name": "APPLE_2021_10K",
+        "predicted": "AAPL — The Nasdaq Stock Market LLC",
+        "ground_truth": "AAPL, The Nasdaq Stock Market LLC",
+        "correct": true,
+        "latency_seconds": 0.764,
+        "retrieved_tokens": 155,
+        "input_tokens": 235
+      },
+      {
+        "doc_name": "APPLE_2022_10K",
+        "predicted": "AAPL — The Nasdaq Stock Market LLC",
+        "ground_truth": {
+          "Common Stock": {
+            "Trading Symbol": "AAPL",
+            "Exchange": "The Nasdaq Stock Market LLC"
+          },
+          "1.000% Notes due 2022": {
+            "Exchange": "The Nasdaq Stock Market LLC"
+          },
+          "1.375% Notes due 2024": {
+            "Exchange": "The Nasdaq Stock Market LLC"
+          },
+          "0.000% Notes due 2025": {
+            "Exchange": "The Nasdaq Stock Market LLC"
+          },
+          "0.875% Notes due 2025": {
+            "Exchange": "The Nasdaq Stock Market LLC"
+          },
+          "1.625% Notes due 2026": {
+            "Exchange": "The Nasdaq Stock Market LLC"
+          },
+          "2.000% Notes due 2027": {
+            "Exchange": "The Nasdaq Stock Market LLC"
+          },
+          "1.375% Notes due 2029": {
+            "Exchange": "The Nasdaq Stock Market LLC"
+          },
+          "3.050% Notes due 2029": {
+            "Exchange": "The Nasdaq Stock Market LLC"
+          },
+          "0.500% Notes due 2031": {
+            "Exchange": "The Nasdaq Stock Market LLC"
+          },
+          "3.600% Notes due 2042": {
+            "Exchange": "The Nasdaq Stock Market LLC"
+          }
+        },
+        "correct": false,
+        "latency_seconds": 1.112,
+        "retrieved_tokens": 148,
+        "input_tokens": 228
+      },
+      {
+        "doc_name": "BESTBUY_2015_10K",
+        "predicted": "BBY — New York Stock Exchange",
+        "ground_truth": "BBY, New York Stock Exchange",
+        "correct": true,
+        "latency_seconds": 1.048,
+        "retrieved_tokens": 122,
+        "input_tokens": 215
+      },
+      {
+        "doc_name": "BESTBUY_2021_10K",
+        "predicted": "BBY — New York Stock Exchange",
+        "ground_truth": "BBY, New York Stock Exchange",
+        "correct": true,
+        "latency_seconds": 0.892,
+        "retrieved_tokens": 309,
+        "input_tokens": 402
+      },
+      {
+        "doc_name": "BESTBUY_2022_10K",
+        "predicted": "BBY — New York Stock Exchange",
+        "ground_truth": "BBY, New York Stock Exchange",
+        "correct": true,
+        "latency_seconds": 0.936,
+        "retrieved_tokens": 309,
+        "input_tokens": 402
+      },
+      {
+        "doc_name": "BESTBUY_2023_10K",
+        "predicted": "BBY — New York Stock Exchange",
+        "ground_truth": "BBY, New York Stock Exchange",
+        "correct": true,
+        "latency_seconds": 1.108,
+        "retrieved_tokens": 313,
+        "input_tokens": 406
+      },
+      {
+        "doc_name": "BOEING_2017_10K",
+        "predicted": "BA — New York Stock Exchange",
+        "ground_truth": "BA, New York Stock Exchange",
+        "correct": true,
+        "latency_seconds": 0.976,
+        "retrieved_tokens": 183,
+        "input_tokens": 276
+      },
+      {
+        "doc_name": "BOEING_2019_10K",
+        "predicted": "BA — New York Stock Exchange",
+        "ground_truth": "BA, New York Stock Exchange",
+        "correct": true,
+        "latency_seconds": 0.639,
+        "retrieved_tokens": 168,
+        "input_tokens": 261
+      },
+      {
+        "doc_name": "BOEING_2020_10K",
+        "predicted": "BA — New York Stock Exchange",
+        "ground_truth": "BA, New York Stock Exchange",
+        "correct": true,
+        "latency_seconds": 0.831,
+        "retrieved_tokens": 170,
+        "input_tokens": 263
+      },
+      {
+        "doc_name": "BOEING_2022_10K",
+        "predicted": "BA — New York Stock Exchange",
+        "ground_truth": "BA, New York Stock Exchange",
+        "correct": true,
+        "latency_seconds": 0.626,
+        "retrieved_tokens": 172,
+        "input_tokens": 265
+      },
+      {
+        "doc_name": "CORNING_2022_10K",
+        "predicted": "GLW — New York Stock Exchange (NYSE)",
+        "ground_truth": "GLW, New York Stock Exchange (NYSE)",
+        "correct": true,
+        "latency_seconds": 0.945,
+        "retrieved_tokens": 539,
+        "input_tokens": 632
+      },
+      {
+        "doc_name": "COSTCO_2015_10K",
+        "predicted": "COST — NASDAQ Global Select Market",
+        "ground_truth": "COST, The NASDAQ Global Select Market",
+        "correct": true,
+        "latency_seconds": 0.723,
+        "retrieved_tokens": 226,
+        "input_tokens": 319
+      },
+      {
+        "doc_name": "COSTCO_2016_10K",
+        "predicted": "COST; NASDAQ Global Select Market",
+        "ground_truth": "COST, The NASDAQ Global Select Market",
+        "correct": true,
+        "latency_seconds": 0.981,
+        "retrieved_tokens": 267,
+        "input_tokens": 360
+      },
+      {
+        "doc_name": "COSTCO_2018_10K",
+        "predicted": "COST; The NASDAQ Global Select Market",
+        "ground_truth": "COST, The NASDAQ Global Select Market",
+        "correct": true,
+        "latency_seconds": 0.776,
+        "retrieved_tokens": 273,
+        "input_tokens": 366
+      },
+      {
+        "doc_name": "GENERALMILLS_2022_10K",
+        "predicted": "GIS — New York Stock Exchange; GIS23A — New York Stock Exchange; GIS25A — New York Stock Exchange; GIS26 — New York Stock Exchange; GIS27 — New York Stock Exchange",
+        "ground_truth": [
+          {
+            "Trading Symbol": "GIS",
+            "Exchange": "New York Stock Exchange"
+          },
+          {
+            "Trading Symbol": "GIS23A",
+            "Exchange": "New York Stock Exchange"
+          },
+          {
+            "Trading Symbol": "GIS25A",
+            "Exchange": "New York Stock Exchange"
+          },
+          {
+            "Trading Symbol": "GIS26",
+            "Exchange": "New York Stock Exchange"
+          },
+          {
+            "Trading Symbol": "GIS27",
+            "Exchange": "New York Stock Exchange"
+          }
+        ],
+        "correct": true,
+        "latency_seconds": 1.148,
+        "retrieved_tokens": 468,
+        "input_tokens": 561
+      },
+      {
+        "doc_name": "INTEL_2022_10K",
+        "predicted": "INTC — Nasdaq Global Select Market; MBLY — Nasdaq Global Select Market",
+        "ground_truth": "INTC, Nasdaq Global Select Market",
+        "correct": false,
+        "latency_seconds": 1.042,
+        "retrieved_tokens": 208,
+        "input_tokens": 297
+      },
+      {
+        "doc_name": "KRAFTHEINZ_2021_10K",
+        "predicted": "KHC — The Nasdaq Stock Market LLC (Nasdaq)",
+        "ground_truth": "KHC, The Nasdaq Stock Market LLC",
+        "correct": true,
+        "latency_seconds": 0.871,
+        "retrieved_tokens": 79,
+        "input_tokens": 169
+      },
+      {
+        "doc_name": "FOOTLOCKER_2023_10K",
+        "predicted": "FL — New York Stock Exchange; Börse Stuttgart stock exchange in Germany",
+        "ground_truth": "FL, New York Stock Exchange",
+        "correct": false,
+        "latency_seconds": 1.046,
+        "retrieved_tokens": 229,
+        "input_tokens": 321
+      },
+      {
+        "doc_name": "NIKE_2019_10K",
+        "predicted": "NKE — New York Stock Exchange",
+        "ground_truth": "NKE, New York Stock Exchange",
+        "correct": true,
+        "latency_seconds": 0.763,
+        "retrieved_tokens": 254,
+        "input_tokens": 347
+      },
+      {
+        "doc_name": "LOCKHEEDMARTIN_2021_10K",
+        "predicted": "LMT — New York Stock Exchange",
+        "ground_truth": "LMT, New York Stock Exchange",
+        "correct": true,
+        "latency_seconds": 0.637,
+        "retrieved_tokens": 306,
+        "input_tokens": 399
+      }
+    ]
+  }
+]

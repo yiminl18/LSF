@@ -1,0 +1,22 @@
+{"step": 1, "tool": "list_docs", "args": "--labels-file data/financebench/sample/fps/sample_doc_labels.json", "result_summary": "10 docs listed; span counts 962-1936"}
+{"step": 2, "tool": "read_doc_json", "args": "--doc AMAZON_2015_10K --filter 'long-term debt'", "result_summary": "Found consolidated balance sheet table on page 41 with 'Long-term debt | 8,235 | 8,265'"}
+{"step": 3, "tool": "read_doc_json", "args": "--doc APPLE_2017_10K --filter 'long-term debt'", "result_summary": "Balance sheet p44 has 'Long-term debt | 97,207'; expected label is 103,703 (=97,207+6,496 current)"}
+{"step": 4, "tool": "read_doc_json", "args": "--doc BESTBUY_2015_10K --filter 'Long-term debt'", "result_summary": "Balance sheet p59 'Long-Term Debt | 1,580' (capital T); confirms case-insensitive match needed"}
+{"step": 5, "tool": "read_doc_json", "args": "--doc CORNING_2022_10K --filter 'long-term debt'", "result_summary": "Found CBS-like table p34 plus Note 11 details; need to verify CBS table"}
+{"step": 6, "tool": "read_doc_json", "args": "--doc GENERALMILLS_2022_10K --filter '9,134'", "result_summary": "Consolidated balance sheet p47 has 'Long-term debt | 9,134.8'"}
+{"step": 7, "tool": "read_doc_json", "args": "--doc JOHNSON_JOHNSON_2022_10K --filter 'Long-term debt'", "result_summary": "Balance sheet p46 has 'Long-term debt (Note 7) | 26,888'"}
+{"step": 8, "tool": "read_doc_json", "args": "--doc AMD_2019_10K --page 48", "result_summary": "AMD balance sheet uses 'Long-term debt, net | 486'"}
+{"step": 9, "tool": "read_doc_json", "args": "--doc AMCOR_2021_10K --page 51", "result_summary": "AMCOR uses 'Long-term debt, less current portion | 6,186'"}
+{"step": 10, "tool": "write_rule", "args": "rule_consolidated_balance_sheet_ltd (v1: long-term debt)", "result_summary": "Wrote initial rule matching only 'long-term debt' + Assets + Liabilities"}
+{"step": 11, "tool": "compute_cost", "args": "--rules rule_consolidated_balance_sheet_ltd", "result_summary": "avg_cost_ratio = 0.01308"}
+{"step": 12, "tool": "verify_accuracy", "args": "--rules rule_consolidated_balance_sheet_ltd (v1)", "result_summary": "match_rate=0.7, missed Apple 2017, 2018, 2021 (Apple 2018/2021 use 'Term debt')"}
+{"step": 13, "tool": "read_doc_json", "args": "--doc APPLE_2018_10K --page 43", "result_summary": "Apple 2018 CBS uses 'Term debt | 93,735' (no 'Long-term debt')"}
+{"step": 14, "tool": "read_doc_json", "args": "--doc APPLE_2021_10K --page 34", "result_summary": "Apple 2021 CBS uses 'Term debt | 109,106'"}
+{"step": 15, "tool": "write_rule", "args": "rule_consolidated_balance_sheet_ltd (v2: '(long-?term|term) debt') --overwrite", "result_summary": "Broadened pattern to catch Apple 'Term debt'"}
+{"step": 16, "tool": "verify_accuracy", "args": "--rules rule_consolidated_balance_sheet_ltd (v2)", "result_summary": "match_rate=0.9, only Apple 2017 misses (97,207 vs expected 103,703)"}
+{"step": 17, "tool": "read_doc_json", "args": "--doc APPLE_2017_10K --filter '103,703'", "result_summary": "MD&A p33 table has 'Total term debt | $ 103,703' matching the label"}
+{"step": 18, "tool": "write_rule", "args": "rule_total_term_debt_summary (sibling)", "result_summary": "Added rule matching tables with 'Total term debt'"}
+{"step": 19, "tool": "verify_accuracy", "args": "--rules rule_consolidated_balance_sheet_ltd rule_total_term_debt_summary", "result_summary": "match_rate=0.9 unchanged; QA still picks balance-sheet 97,207 over 103,703. Sibling rule adds cost without benefit."}
+{"step": 20, "tool": "compute_cost", "args": "refresh cache for both rules", "result_summary": "sum=0.0251 (0.0198 + 0.0054)"}
+{"step": 21, "tool": "delete_rule", "args": "rm rule_total_term_debt_summary.py", "result_summary": "Dropped unhelpful sibling; back to 1 rule"}
+{"step": 22, "tool": "compute_cost", "args": "final cost", "result_summary": "sum_avg_cost_ratio = 0.019766"}

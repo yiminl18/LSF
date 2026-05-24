@@ -1,0 +1,33 @@
+sample_set=fps  split=unsampled
+questions=10  docs=49  rules_base=rules/financebench_single_cluster/agent/opus47/agentic_fps/raw
+
+SKIP (exists): what_is_longterm_debt_at_yearend_0_if_none_10_agentic_fps_unsampled.json
+SKIP (exists): what_is_net_income_loss_for_the_most_recent_fiscal_year_10_agentic_fps_unsampled.json
+SKIP (exists): what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_agentic_fps_unsampled.json
+SKIP (exists): what_is_total_assets_at_yearend_from_the_audited_balance_she_10_agentic_fps_unsampled.json
+SKIP (exists): what_is_the_registrants_telephone_number_10_agentic_fps_unsampled.json
+
+Question: How many shares of common stock were outstanding as of the cover-page reference date?
+  rules=1  docs=49
+  accuracy=0.98 (48/49)  cost=0.00135
+
+Question: What is the registrant's exact name?
+  rules=1  docs=49
+  accuracy=0.82 (40/49)  cost=0.00008
+
+Question: What is the state (or other jurisdiction) of incorporation and the IRS Employer Identification Number?
+  rules=1  docs=49
+  accuracy=0.98 (48/49)  cost=0.00111
+
+Question: What is the address of principal executive offices and ZIP code?
+  rules=1  docs=49
+  accuracy=0.90 (44/49)  cost=0.00981
+
+Question: What is/are the trading symbol(s) and listing exchange(s)?
+  rules=2  docs=49
+  accuracy=0.67 (33/49)  cost=0.00291
+
+========================================================================
+  mean accuracy:   0.8694
+  mean cost ratio: 0.003052
+  written to:      results/financebench_single_cluster/agent/opus47/agentic_fps/raw/eval_merge_unsampled/

@@ -1,0 +1,7 @@
+{"step": 1, "tool": "list_docs", "args": "--labels-file ...sample_doc_labels.json", "result_summary": "10 docs across diverse 10-K filings"}
+{"step": 2, "tool": "read_doc_json", "args": "AMCOR/COSTCO/BOEING pages 1-2 filter=principal", "result_summary": "located '(Address of principal executive offices)' marker; layout differs (split vs combined spans)"}
+{"step": 3, "tool": "read_doc_json", "args": "7 more docs page 1 filter=Address", "result_summary": "confirmed every filing has '(Address of...principal executive offices...)' label on page 1"}
+{"step": 4, "tool": "read_doc_json", "args": "LOCKHEED/AMAZON page 1 full", "result_summary": "Lockheed splits address across 4 short spans; need backward window"}
+{"step": 5, "tool": "write_rule", "args": "rule_address_principal_offices", "result_summary": "wrote rule: label + 5 preceding spans on page 1"}
+{"step": 6, "tool": "compute_cost", "args": "rule_address_principal_offices", "result_summary": "avg_cost_ratio=0.000966"}
+{"step": 7, "tool": "verify_accuracy", "args": "--rules rule_address_principal_offices --d-star-mode all_labeled", "result_summary": "match_rate=1.0 on all 10 docs; missed_in_D_star=[]"}

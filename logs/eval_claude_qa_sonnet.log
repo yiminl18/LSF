@@ -1,0 +1,475 @@
+baseline=agentic_claude_qa  model=sonnet  split=sampled
+questions=10  docs=59  output=/mnt/data/LSF/baseline_results/financebench/agentic_claude_qa_sonnet
+labels_file=data/financebench/sample/single_cluster/random/single_cluster_all_doc_labels.json
+
+
+Question: What is long-term debt at year-end (0 if none)?
+  accuracy=0.75 (44/59)  avg_in=211914  avg_out=2227  avg_lat=51.1s
+
+
+Question: What is net income (loss) for the most recent fiscal year?
+  accuracy=0.93 (55/59)  avg_in=152862  avg_out=1516  avg_lat=36.1s
+
+  ✓ BOEING_2019_10K: '$76,559 million'
+  ✓ BOEING_2020_10K: '$58,158 million'
+  ✓ BOEING_2022_10K: '$66,608 million'
+  ✗ COSTCO_2015_10K: '$116,199 million'
+  ✗ COSTCO_2016_10K: '$118,719 million'
+  ✗ COSTCO_2018_10K: '$141,576 million'
+  ✓ GENERALMILLS_2022_10K: '$18,992.8 million'
+  ✓ INTEL_2022_10K: '$63,054 million'
+  ✓ KRAFTHEINZ_2021_10K: '$26,042 million'
+  ✗ FOOTLOCKER_2023_10K: '$8,759 million'
+  ✓ NIKE_2019_10K: '$39,117 million'
+  ✓ LOCKHEEDMARTIN_2021_10K: '$67,044 million'
+
+Question: What is total revenue for the most recent fiscal year (from the audite
+  accuracy=0.92 (54/59)  avg_in=139722  avg_out=1431  avg_lat=35.3s
+
+  ✓ AMCOR_2019_10K: '$17,165.0 million'
+  ✓ COSTCO_2017_10K: '$36,347 million'
+  ✓ BOEING_2018_10K: '$117,359 million'
+  ✓ AMAZON_2018_10K: '$162,648 million'
+  ✓ EBAY_2021_10K: '$26,626 million'
+  ✓ AMAZON_2016_10K: '$83,402 million'
+  ✓ CORNING_2022_10K: '$29,499 million'
+  ✓ NIKE_2021_10K: '$37,740 million'
+  ✓ LOCKHEEDMARTIN_2022_10K: '$52,880 million'
+  ✓ JOHNSON_JOHNSON_2022_10K: '$187,378 million'
+  ✓ AMCOR_2023_10K: '$17,003 million'
+  ✓ APPLE_2016_10K: '$321,686 million'
+  ✓ BESTBUY_2020_10K: '$15,591 million'
+  ✓ INTEL_2016_10K: '$113,327 million'
+  ✓ ACTIVISIONBLIZZARD_2017_10K: '$18,668 million'
+  ✓ ACTIVISIONBLIZZARD_2020_10K: '$23,109 million'
+  ✓ ADOBE_2015_10K: '$11,726,472 thousand'
+  ✓ ADOBE_2016_10K: '$12,707,114 thousand'
+  ✓ ADOBE_2017_10K: '$14,535,556 thousand'
+  ✓ ADOBE_2018_10K: '$18,768,682 thousand'
+  ✓ ADOBE_2019_10K: '$20,762,400 thousand'
+  ✓ ADOBE_2020_10K: '$24,284 million'
+  ✓ ADOBE_2021_10K: '$27,241 million'
+  ✓ ADOBE_2022_10K: '$27,165 million'
+  ✓ AMAZON_2015_10K: '$65,444 million'
+  ✓ AMAZON_2017_10K: '$131,310 million'
+  ✓ AMAZON_2019_10K: '$225,248 million'
+  ✓ AMAZON_2020_10K: '$321,195 million'
+  ✓ AMAZON_2022_10K: '$462,675 million'
+  ✓ AMCOR_2021_10K: '$17,188 million'
+  ✓ AMCOR_2022_10K: '$17,426 million'
+  ✓ AMD_2019_10K: '$6,028 million'
+  ✓ AMD_2020_10K: '$8,962 million'
+  ✓ AMD_2021_10K: '$12,419 million'
+  ✓ AMD_2022_10K: '$67,580 million'
+  ✓ APPLE_2015_10K: '$290,479 million'
+  ✓ APPLE_2017_10K: '$375,319 million'
+  ✓ APPLE_2018_10K: '$365,725 million'
+  ✓ APPLE_2019_10K: '$338,516 million'
+  ✓ APPLE_2020_10K: '$323,888 million'
+  ✓ APPLE_2021_10K: '$351,002 million'
+  ✓ APPLE_2022_10K: '$352,755 million'
+  ✓ BESTBUY_2015_10K: '$15,256 million'
+  ✓ BESTBUY_2021_10K: '$19,067 million'
+  ✓ BESTBUY_2022_10K: '$17,504 million'
+  ✓ BESTBUY_2023_10K: '$15,803 million'
+  ✓ BOEING_2017_10K: '$92,333 million'
+  ✗ BOEING_2019_10K: '$133,625'
+  ✓ BOEING_2020_10K: '$152,136 million'
+  ✓ BOEING_2022_10K: '$137,100 million'
+  ✓ COSTCO_2015_10K: '$33,440 million'
+  ✓ COSTCO_2016_10K: '$33,163 million'
+  ✓ COSTCO_2018_10K: '$40,830 million'
+  ✓ GENERALMILLS_2022_10K: '$31,090.1 million'
+  ✓ INTEL_2022_10K: '$182,103 million'
+  ✓ KRAFTHEINZ_2021_10K: '$93,394 million'
+  ✓ FOOTLOCKER_2023_10K: '$7,907 million'
+  ✓ NIKE_2019_10K: '$23,717 million'
+  ✓ LOCKHEEDMARTIN_2021_10K: '$50,873 million'
+
+Question: What is total assets at year-end (from the audited balance sheet)?
+  accuracy=0.98 (58/59)  avg_in=152151  avg_out=1443  avg_lat=35.1s
+
+  ✓ AMCOR_2019_10K: '+44 117 9753200'
+  ✗ COSTCO_2017_10K: None
+  ✗ BOEING_2018_10K: None
+  ✗ AMAZON_2018_10K: None
+  ✗ EBAY_2021_10K: None
+  ✗ AMAZON_2016_10K: None
+  ✗ CORNING_2022_10K: None
+  ✗ NIKE_2021_10K: None
+  ✗ LOCKHEEDMARTIN_2022_10K: None
+  ✗ JOHNSON_JOHNSON_2022_10K: None
+  ✗ AMCOR_2023_10K: None
+  ✗ APPLE_2016_10K: None
+  ✗ BESTBUY_2020_10K: None
+  ✗ INTEL_2016_10K: None
+  ✗ ACTIVISIONBLIZZARD_2017_10K: None
+  ✗ ACTIVISIONBLIZZARD_2020_10K: None
+  ✗ ADOBE_2015_10K: None
+  ✗ ADOBE_2016_10K: None
+  ✗ ADOBE_2017_10K: None
+  ✗ ADOBE_2018_10K: None
+  ✗ ADOBE_2019_10K: None
+  ✗ ADOBE_2020_10K: None
+  ✗ ADOBE_2021_10K: None
+  ✗ ADOBE_2022_10K: None
+  ✗ AMAZON_2015_10K: None
+  ✗ AMAZON_2017_10K: None
+  ✗ AMAZON_2019_10K: None
+  ✗ AMAZON_2020_10K: None
+  ✗ AMAZON_2022_10K: None
+  ✗ AMCOR_2021_10K: None
+  ✗ AMCOR_2022_10K: None
+  ✗ AMD_2019_10K: None
+  ✗ AMD_2020_10K: None
+  ✗ AMD_2021_10K: None
+  ✗ AMD_2022_10K: None
+  ✗ APPLE_2015_10K: None
+  ✗ APPLE_2017_10K: None
+  ✗ APPLE_2018_10K: None
+  ✗ APPLE_2019_10K: None
+  ✗ APPLE_2020_10K: None
+  ✗ APPLE_2021_10K: None
+  ✗ APPLE_2022_10K: None
+  ✗ BESTBUY_2015_10K: None
+  ✗ BESTBUY_2021_10K: None
+  ✗ BESTBUY_2022_10K: None
+  ✗ BESTBUY_2023_10K: None
+  ✗ BOEING_2017_10K: None
+  ✗ BOEING_2019_10K: None
+  ✗ BOEING_2020_10K: None
+  ✗ BOEING_2022_10K: None
+  ✗ COSTCO_2015_10K: None
+  ✗ COSTCO_2016_10K: None
+  ✗ COSTCO_2018_10K: None
+  ✗ GENERALMILLS_2022_10K: None
+  ✗ INTEL_2022_10K: None
+  ✗ KRAFTHEINZ_2021_10K: None
+  ✗ FOOTLOCKER_2023_10K: None
+  ✗ NIKE_2019_10K: None
+  ✗ LOCKHEEDMARTIN_2021_10K: None
+
+Question: What is the registrant's telephone number?
+  accuracy=0.02 (1/59)  avg_in=830  avg_out=5  avg_lat=1.3s
+
+  ✗ AMCOR_2019_10K: None
+  ✗ COSTCO_2017_10K: None
+  ✗ BOEING_2018_10K: None
+  ✗ AMAZON_2018_10K: None
+  ✗ EBAY_2021_10K: None
+  ✗ AMAZON_2016_10K: None
+  ✗ CORNING_2022_10K: None
+  ✗ NIKE_2021_10K: None
+  ✗ LOCKHEEDMARTIN_2022_10K: None
+  ✗ JOHNSON_JOHNSON_2022_10K: None
+  ✗ AMCOR_2023_10K: None
+  ✗ APPLE_2016_10K: None
+  ✗ BESTBUY_2020_10K: None
+  ✗ INTEL_2016_10K: None
+  ✗ ACTIVISIONBLIZZARD_2017_10K: None
+  ✗ ACTIVISIONBLIZZARD_2020_10K: None
+  ✗ ADOBE_2015_10K: None
+  ✗ ADOBE_2016_10K: None
+  ✗ ADOBE_2017_10K: None
+  ✗ ADOBE_2018_10K: None
+  ✗ ADOBE_2019_10K: None
+  ✗ ADOBE_2020_10K: None
+  ✗ ADOBE_2021_10K: None
+  ✗ ADOBE_2022_10K: None
+  ✗ AMAZON_2015_10K: None
+  ✗ AMAZON_2017_10K: None
+  ✗ AMAZON_2019_10K: None
+  ✗ AMAZON_2020_10K: None
+  ✗ AMAZON_2022_10K: None
+  ✗ AMCOR_2021_10K: None
+  ✗ AMCOR_2022_10K: None
+  ✗ AMD_2019_10K: None
+  ✗ AMD_2020_10K: None
+  ✗ AMD_2021_10K: None
+  ✗ AMD_2022_10K: None
+  ✗ APPLE_2015_10K: None
+  ✗ APPLE_2017_10K: None
+  ✗ APPLE_2018_10K: None
+  ✗ APPLE_2019_10K: None
+  ✗ APPLE_2020_10K: None
+  ✗ APPLE_2021_10K: None
+  ✗ APPLE_2022_10K: None
+  ✗ BESTBUY_2015_10K: None
+  ✗ BESTBUY_2021_10K: None
+  ✗ BESTBUY_2022_10K: None
+  ✗ BESTBUY_2023_10K: None
+  ✗ BOEING_2017_10K: None
+  ✗ BOEING_2019_10K: None
+  ✗ BOEING_2020_10K: None
+  ✗ BOEING_2022_10K: None
+  ✗ COSTCO_2015_10K: None
+  ✗ COSTCO_2016_10K: None
+  ✗ COSTCO_2018_10K: None
+  ✗ GENERALMILLS_2022_10K: None
+  ✗ INTEL_2022_10K: None
+  ✗ KRAFTHEINZ_2021_10K: None
+  ✗ FOOTLOCKER_2023_10K: None
+  ✗ NIKE_2019_10K: None
+  ✗ LOCKHEEDMARTIN_2021_10K: None
+
+Question: How many shares of common stock were outstanding as of the cover-page 
+  accuracy=0.00 (0/59)  avg_in=0  avg_out=0  avg_lat=1.2s
+
+  ✗ AMCOR_2019_10K: None
+  ✗ COSTCO_2017_10K: None
+  ✗ BOEING_2018_10K: None
+  ✗ AMAZON_2018_10K: None
+  ✗ EBAY_2021_10K: None
+  ✗ AMAZON_2016_10K: None
+  ✗ CORNING_2022_10K: None
+  ✗ NIKE_2021_10K: None
+  ✗ LOCKHEEDMARTIN_2022_10K: None
+  ✗ JOHNSON_JOHNSON_2022_10K: None
+  ✗ AMCOR_2023_10K: None
+  ✗ APPLE_2016_10K: None
+  ✗ BESTBUY_2020_10K: None
+  ✗ INTEL_2016_10K: None
+  ✗ ACTIVISIONBLIZZARD_2017_10K: None
+  ✗ ACTIVISIONBLIZZARD_2020_10K: None
+  ✗ ADOBE_2015_10K: None
+  ✗ ADOBE_2016_10K: None
+  ✗ ADOBE_2017_10K: None
+  ✗ ADOBE_2018_10K: None
+  ✗ ADOBE_2019_10K: None
+  ✗ ADOBE_2020_10K: None
+  ✗ ADOBE_2021_10K: None
+  ✗ ADOBE_2022_10K: None
+  ✗ AMAZON_2015_10K: None
+  ✗ AMAZON_2017_10K: None
+  ✗ AMAZON_2019_10K: None
+  ✗ AMAZON_2020_10K: None
+  ✗ AMAZON_2022_10K: None
+  ✗ AMCOR_2021_10K: None
+  ✗ AMCOR_2022_10K: None
+  ✗ AMD_2019_10K: None
+  ✗ AMD_2020_10K: None
+  ✗ AMD_2021_10K: None
+  ✗ AMD_2022_10K: None
+  ✗ APPLE_2015_10K: None
+  ✗ APPLE_2017_10K: None
+  ✗ APPLE_2018_10K: None
+  ✗ APPLE_2019_10K: None
+  ✗ APPLE_2020_10K: None
+  ✗ APPLE_2021_10K: None
+  ✗ APPLE_2022_10K: None
+  ✗ BESTBUY_2015_10K: None
+  ✗ BESTBUY_2021_10K: None
+  ✗ BESTBUY_2022_10K: None
+  ✗ BESTBUY_2023_10K: None
+  ✗ BOEING_2017_10K: None
+  ✗ BOEING_2019_10K: None
+  ✗ BOEING_2020_10K: None
+  ✗ BOEING_2022_10K: None
+  ✗ COSTCO_2015_10K: None
+  ✗ COSTCO_2016_10K: None
+  ✗ COSTCO_2018_10K: None
+  ✗ GENERALMILLS_2022_10K: None
+  ✗ INTEL_2022_10K: None
+  ✗ KRAFTHEINZ_2021_10K: None
+  ✗ FOOTLOCKER_2023_10K: None
+  ✗ NIKE_2019_10K: None
+  ✗ LOCKHEEDMARTIN_2021_10K: None
+
+Question: What is the registrant's exact name?
+  accuracy=0.00 (0/59)  avg_in=0  avg_out=0  avg_lat=1.2s
+
+  ✗ AMCOR_2019_10K: None
+  ✗ COSTCO_2017_10K: None
+  ✗ BOEING_2018_10K: None
+  ✗ AMAZON_2018_10K: None
+  ✗ EBAY_2021_10K: None
+  ✗ AMAZON_2016_10K: None
+  ✗ CORNING_2022_10K: None
+  ✗ NIKE_2021_10K: None
+  ✗ LOCKHEEDMARTIN_2022_10K: None
+  ✗ JOHNSON_JOHNSON_2022_10K: None
+  ✗ AMCOR_2023_10K: None
+  ✗ APPLE_2016_10K: None
+  ✗ BESTBUY_2020_10K: None
+  ✗ INTEL_2016_10K: None
+  ✗ ACTIVISIONBLIZZARD_2017_10K: None
+  ✗ ACTIVISIONBLIZZARD_2020_10K: None
+  ✗ ADOBE_2015_10K: None
+  ✗ ADOBE_2016_10K: None
+  ✗ ADOBE_2017_10K: None
+  ✗ ADOBE_2018_10K: None
+  ✗ ADOBE_2019_10K: None
+  ✗ ADOBE_2020_10K: None
+  ✗ ADOBE_2021_10K: None
+  ✗ ADOBE_2022_10K: None
+  ✗ AMAZON_2015_10K: None
+  ✗ AMAZON_2017_10K: None
+  ✗ AMAZON_2019_10K: None
+  ✗ AMAZON_2020_10K: None
+  ✗ AMAZON_2022_10K: None
+  ✗ AMCOR_2021_10K: None
+  ✗ AMCOR_2022_10K: None
+  ✗ AMD_2019_10K: None
+  ✗ AMD_2020_10K: None
+  ✗ AMD_2021_10K: None
+  ✗ AMD_2022_10K: None
+  ✗ APPLE_2015_10K: None
+  ✗ APPLE_2017_10K: None
+  ✗ APPLE_2018_10K: None
+  ✗ APPLE_2019_10K: None
+  ✗ APPLE_2020_10K: None
+  ✗ APPLE_2021_10K: None
+  ✗ APPLE_2022_10K: None
+  ✗ BESTBUY_2015_10K: None
+  ✗ BESTBUY_2021_10K: None
+  ✗ BESTBUY_2022_10K: None
+  ✗ BESTBUY_2023_10K: None
+  ✗ BOEING_2017_10K: None
+  ✗ BOEING_2019_10K: None
+  ✗ BOEING_2020_10K: None
+  ✗ BOEING_2022_10K: None
+  ✗ COSTCO_2015_10K: None
+  ✗ COSTCO_2016_10K: None
+  ✗ COSTCO_2018_10K: None
+  ✗ GENERALMILLS_2022_10K: None
+  ✗ INTEL_2022_10K: None
+  ✗ KRAFTHEINZ_2021_10K: None
+  ✗ FOOTLOCKER_2023_10K: None
+  ✗ NIKE_2019_10K: None
+  ✗ LOCKHEEDMARTIN_2021_10K: None
+
+Question: What is the state (or other jurisdiction) of incorporation and the IRS
+  accuracy=0.00 (0/59)  avg_in=0  avg_out=0  avg_lat=1.2s
+
+  ✗ AMCOR_2019_10K: None
+  ✗ COSTCO_2017_10K: None
+  ✗ BOEING_2018_10K: None
+  ✗ AMAZON_2018_10K: None
+  ✗ EBAY_2021_10K: None
+  ✗ AMAZON_2016_10K: None
+  ✗ CORNING_2022_10K: None
+  ✗ NIKE_2021_10K: None
+  ✗ LOCKHEEDMARTIN_2022_10K: None
+  ✗ JOHNSON_JOHNSON_2022_10K: None
+  ✗ AMCOR_2023_10K: None
+  ✗ APPLE_2016_10K: None
+  ✗ BESTBUY_2020_10K: None
+  ✗ INTEL_2016_10K: None
+  ✗ ACTIVISIONBLIZZARD_2017_10K: None
+  ✗ ACTIVISIONBLIZZARD_2020_10K: None
+  ✗ ADOBE_2015_10K: None
+  ✗ ADOBE_2016_10K: None
+  ✗ ADOBE_2017_10K: None
+  ✗ ADOBE_2018_10K: None
+  ✗ ADOBE_2019_10K: None
+  ✗ ADOBE_2020_10K: None
+  ✗ ADOBE_2021_10K: None
+  ✗ ADOBE_2022_10K: None
+  ✗ AMAZON_2015_10K: None
+  ✗ AMAZON_2017_10K: None
+  ✗ AMAZON_2019_10K: None
+  ✗ AMAZON_2020_10K: None
+  ✗ AMAZON_2022_10K: None
+  ✗ AMCOR_2021_10K: None
+  ✗ AMCOR_2022_10K: None
+  ✗ AMD_2019_10K: None
+  ✗ AMD_2020_10K: None
+  ✗ AMD_2021_10K: None
+  ✗ AMD_2022_10K: None
+  ✗ APPLE_2015_10K: None
+  ✗ APPLE_2017_10K: None
+  ✗ APPLE_2018_10K: None
+  ✗ APPLE_2019_10K: None
+  ✗ APPLE_2020_10K: None
+  ✗ APPLE_2021_10K: None
+  ✗ APPLE_2022_10K: None
+  ✗ BESTBUY_2015_10K: None
+  ✗ BESTBUY_2021_10K: None
+  ✗ BESTBUY_2022_10K: None
+  ✗ BESTBUY_2023_10K: None
+  ✗ BOEING_2017_10K: None
+  ✗ BOEING_2019_10K: None
+  ✗ BOEING_2020_10K: None
+  ✗ BOEING_2022_10K: None
+  ✗ COSTCO_2015_10K: None
+  ✗ COSTCO_2016_10K: None
+  ✗ COSTCO_2018_10K: None
+  ✗ GENERALMILLS_2022_10K: None
+  ✗ INTEL_2022_10K: None
+  ✗ KRAFTHEINZ_2021_10K: None
+  ✗ FOOTLOCKER_2023_10K: None
+  ✗ NIKE_2019_10K: None
+  ✗ LOCKHEEDMARTIN_2021_10K: None
+
+Question: What is the address of principal executive offices and ZIP code?
+  accuracy=0.00 (0/59)  avg_in=0  avg_out=0  avg_lat=1.2s
+
+  ✗ AMCOR_2019_10K: None
+  ✗ COSTCO_2017_10K: None
+  ✗ BOEING_2018_10K: None
+  ✗ AMAZON_2018_10K: None
+  ✗ EBAY_2021_10K: None
+  ✗ AMAZON_2016_10K: None
+  ✗ CORNING_2022_10K: None
+  ✗ NIKE_2021_10K: None
+  ✗ LOCKHEEDMARTIN_2022_10K: None
+  ✗ JOHNSON_JOHNSON_2022_10K: None
+  ✗ AMCOR_2023_10K: None
+  ✗ APPLE_2016_10K: None
+  ✗ BESTBUY_2020_10K: None
+  ✗ INTEL_2016_10K: None
+  ✗ ACTIVISIONBLIZZARD_2017_10K: None
+  ✗ ACTIVISIONBLIZZARD_2020_10K: None
+  ✗ ADOBE_2015_10K: None
+  ✗ ADOBE_2016_10K: None
+  ✗ ADOBE_2017_10K: None
+  ✗ ADOBE_2018_10K: None
+  ✗ ADOBE_2019_10K: None
+  ✗ ADOBE_2020_10K: None
+  ✗ ADOBE_2021_10K: None
+  ✗ ADOBE_2022_10K: None
+  ✗ AMAZON_2015_10K: None
+  ✗ AMAZON_2017_10K: None
+  ✗ AMAZON_2019_10K: None
+  ✗ AMAZON_2020_10K: None
+  ✗ AMAZON_2022_10K: None
+  ✗ AMCOR_2021_10K: None
+  ✗ AMCOR_2022_10K: None
+  ✗ AMD_2019_10K: None
+  ✗ AMD_2020_10K: None
+  ✗ AMD_2021_10K: None
+  ✗ AMD_2022_10K: None
+  ✗ APPLE_2015_10K: None
+  ✗ APPLE_2017_10K: None
+  ✗ APPLE_2018_10K: None
+  ✗ APPLE_2019_10K: None
+  ✗ APPLE_2020_10K: None
+  ✗ APPLE_2021_10K: None
+  ✗ APPLE_2022_10K: None
+  ✗ BESTBUY_2015_10K: None
+  ✗ BESTBUY_2021_10K: None
+  ✗ BESTBUY_2022_10K: None
+  ✗ BESTBUY_2023_10K: None
+  ✗ BOEING_2017_10K: None
+  ✗ BOEING_2019_10K: None
+  ✗ BOEING_2020_10K: None
+  ✗ BOEING_2022_10K: None
+  ✗ COSTCO_2015_10K: None
+  ✗ COSTCO_2016_10K: None
+  ✗ COSTCO_2018_10K: None
+  ✗ GENERALMILLS_2022_10K: None
+  ✗ INTEL_2022_10K: None
+  ✗ KRAFTHEINZ_2021_10K: None
+  ✗ FOOTLOCKER_2023_10K: None
+  ✗ NIKE_2019_10K: None
+  ✗ LOCKHEEDMARTIN_2021_10K: None
+
+Question: What is/are the trading symbol(s) and listing exchange(s)?
+  accuracy=0.00 (0/59)  avg_in=0  avg_out=0  avg_lat=1.2s
+
+
+============================================================
+  mean accuracy : 0.3593
+  mean in-tokens: 65748
+  mean latency  : 16.5s
+  results in    : /mnt/data/LSF/baseline_results/financebench/agentic_claude_qa_sonnet/

@@ -1,0 +1,18 @@
+{
+  "question": "What is/are the trading symbol(s) and listing exchange(s)?",
+  "question_slug": "what_isare_the_trading_symbols_and_listing_exchanges_10_agentic_fps",
+  "mode": "agentic_gen",
+  "model": "opus47",
+  "selected_rules": ["rule_cover_page_security_listing", "rule_traded_under_symbol"],
+  "selected_avg_cost_ratio_sum": 0.00156,
+  "min_cov": 0.4,
+  "mean_cov": 0.5,
+  "match_rate_on_sampled": 1.0,
+  "iterations": 4,
+  "verify_calls": 7,
+  "tool_llm_calls": 140,
+  "tool_input_tokens": 31551,
+  "tool_output_tokens": 1572,
+  "latency_seconds": 617.1,
+  "rationale": "Two complementary rules cover the two distinct cover-page layouts found across the 10 sampled docs. rule_cover_page_security_listing scans page 1 for class/exchange/trading-symbol keywords (Common Stock, Ordinary Shares, NYSE, Nasdaq, 'Trading symbol', 'Name of each exchange', 'Title of each class') and additionally grabs up to 5 spans following a bare 'Symbol' / 'Trading Symbol(s)' label so the value span (e.g. AAPL, GLW, BBY) is captured even when separated by other cover spans. rule_traded_under_symbol picks up the Item-5 sentence 'traded/listed on ... under the (ticker) symbol X' but is conditionally gated to fire only when the cover page lacks a 'Trading symbol' string — i.e. older 10-K filings (Amazon 2015, Apple 2017/2018, BestBuy 2015) whose covers omit the ticker; this gating was necessary because the 'GIS only' Item-5 sentence in newer filings was biasing the QA model toward a single-row answer for GENERALMILLS instead of enumerating all 5 securities. Final sum_avg_cost_ratio=0.00156 with match_rate=1.0 hits both the cost and rule-count soft targets comfortably."
+}

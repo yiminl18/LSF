@@ -1,0 +1,18 @@
+{
+  "question": "What is the registrant's telephone number?",
+  "question_slug": "what_is_the_registrants_telephone_number_10_agentic",
+  "mode": "agentic_gen",
+  "model": "opus47",
+  "selected_rules": ["rule_registrant_telephone_cover_page"],
+  "selected_avg_cost_ratio_sum": 0.000332,
+  "min_cov": 1.0,
+  "mean_cov": 1.0,
+  "match_rate_on_sampled": 1.0,
+  "iterations": 1,
+  "verify_calls": 1,
+  "tool_llm_calls": 20,
+  "tool_input_tokens": 3146,
+  "tool_output_tokens": 178,
+  "latency_seconds": 25.63,
+  "rationale": "Inspected page 1 of all 10 10-K cover pages and observed two layout variants: (a) docs where the 'Registrant's telephone number...' label span carries the phone inline (AMCOR, COSTCO, BOEING, EBAY, J&J) and (b) docs where the phone lives in a separate adjacent span (CORNING, NIKE, LOCKHEED) or embedded in the address span (AMAZON 2016/2018). A single rule restricted to page 1 and selecting spans that either contain the substring 'telephone' or match a US/international phone-number regex covers all 10 docs. Match rate = 1.0 with sum_avg_cost_ratio = 0.000332 — all three soft targets comfortably met, so no further rule was needed."
+}

@@ -1,0 +1,273 @@
+Questions: 12  |  Docs: 18
+
+
+Question: What stock exchange is the company's primary common stock listed on?  (5 rules)
+  ERROR apply rule_page1_exact_exchange_names / BOEING_2019_10K: unterminated string literal (detected at line 1717) (rule_page1_exact_exchange_names.py, line 1717)
+  ERROR apply rule_page1_exact_exchange_names / ADOBE_2020_10K: unterminated string literal (detected at line 1717) (rule_page1_exact_exchange_names.py, line 1717)
+  ERROR apply rule_page1_exact_exchange_names / ACTIVISIONBLIZZARD_2020_10K: unterminated string literal (detected at line 1717) (rule_page1_exact_exchange_names.py, line 1717)
+  ERROR apply rule_page1_exact_exchange_names / COSTCO_2018_10K: unterminated string literal (detected at line 1717) (rule_page1_exact_exchange_names.py, line 1717)
+  ERROR apply rule_page1_exact_exchange_names / AMCOR_2019_10K: unterminated string literal (detected at line 1717) (rule_page1_exact_exchange_names.py, line 1717)
+  ERROR apply rule_page1_exact_exchange_names / AMAZON_2020_10K: unterminated string literal (detected at line 1717) (rule_page1_exact_exchange_names.py, line 1717)
+  ERROR apply rule_page1_exact_exchange_names / AMAZON_2019_10K: unterminated string literal (detected at line 1717) (rule_page1_exact_exchange_names.py, line 1717)
+  ERROR apply rule_page1_exact_exchange_names / ADOBE_2021_10K: unterminated string literal (detected at line 1717) (rule_page1_exact_exchange_names.py, line 1717)
+  ERROR apply rule_page1_exact_exchange_names / EBAY_2022_10K: unterminated string literal (detected at line 1717) (rule_page1_exact_exchange_names.py, line 1717)
+  ERROR apply rule_page1_exact_exchange_names / ADOBE_2019_10K: unterminated string literal (detected at line 1717) (rule_page1_exact_exchange_names.py, line 1717)
+  ERROR apply rule_page1_exact_exchange_names / AMCOR_2023Q2_10Q: unterminated string literal (detected at line 1717) (rule_page1_exact_exchange_names.py, line 1717)
+  ERROR apply rule_page1_exact_exchange_names / ADOBE_2022Q2_10Q: unterminated string literal (detected at line 1717) (rule_page1_exact_exchange_names.py, line 1717)
+  ERROR apply rule_page1_exact_exchange_names / ACTIVSIONBLIZZARD_2023Q2_10Q: unterminated string literal (detected at line 1717) (rule_page1_exact_exchange_names.py, line 1717)
+  ERROR apply rule_page1_exact_exchange_names / 3M_2023Q2_10Q: unterminated string literal (detected at line 1717) (rule_page1_exact_exchange_names.py, line 1717)
+  ERROR apply rule_page1_exact_exchange_names / AMCOR_2022_8K_2022-07-01: unterminated string literal (detected at line 1717) (rule_page1_exact_exchange_names.py, line 1717)
+  ERROR apply rule_page1_exact_exchange_names / COSTCO_2023_8K_dated-2023-08-09: unterminated string literal (detected at line 1717) (rule_page1_exact_exchange_names.py, line 1717)
+  ERROR apply rule_page1_exact_exchange_names / COSTCO_2023_8K_dated-2023-08-16: unterminated string literal (detected at line 1717) (rule_page1_exact_exchange_names.py, line 1717)
+  ERROR apply rule_page1_exact_exchange_names / FOOTLOCKER_2022_8K_dated-2022-05-20: unterminated string literal (detected at line 1717) (rule_page1_exact_exchange_names.py, line 1717)
+  ERROR eval rule_page1_exact_exchange_names: Prediction file not found for 'rule_page1_exact_exchange_names' in 'results/financebench_multi_clusters/llm/gpt54/one_shot/rule_run_individual/what_stock_exchange_is_the_companys_primary_common_stock_lis_18_llm/'. Run rule_apply_individual first.
+  eval done: rule_page1_exchange_name_label
+  eval done: rule_page1_exchange_name_or_exchange_registered
+  eval done: rule_page1_exchange_value_keywords
+  eval done: rule_page1_securities_registered_12b_block
+
+Question: What is the reporting period covered by this document (e.g. fiscal year ended, quarter ended, or event date)?  (35 rules)
+  eval done: rule_10k_or_10q_cover_period_body_lines
+  eval done: rule_8k_cover_date_body_lines
+  eval done: rule_8k_date_of_earliest_event_page1
+  eval done: rule_annual_report_on_form_10k_for_fiscal_year
+  eval done: rule_body_text_period_text
+  eval done: rule_exact_date_of_report
+  eval done: rule_exact_for_the_fiscal_year_ended
+  eval done: rule_exact_for_the_quarterly_period_ended
+  eval done: rule_for_the_fiscal_year_end_capitalized
+  eval done: rule_for_the_quarterly_period_end_capitalized
+  eval done: rule_form_header_page1
+  eval done: rule_form_path_period_children
+  eval done: rule_page1_bold_small_period_lines
+  eval done: rule_page1_company_header_next_spans
+  eval done: rule_page1_company_header_with_period_reference
+  eval done: rule_page1_contains_month_year_and_ended
+  eval done: rule_page1_contains_quarterly_or_fiscal_and_date
+  eval done: rule_page1_current_report_block
+  eval done: rule_page1_event_report_date_pattern
+  eval done: rule_page1_first_20_spans_period
+  eval done: rule_page1_form10k_annual_report_block
+  eval done: rule_page1_form10q_quarterly_report_block
+  eval done: rule_page1_header_with_commission_file_and_period
+  eval done: rule_page1_near_form_header_next_spans
+  eval done: rule_page1_parenthetical_event_date
+  eval done: rule_page1_period_ended_date_pattern
+  eval done: rule_page1_period_in_any_label
+  eval done: rule_page1_period_in_large_bold_headers
+  eval done: rule_page1_period_line_without_transition
+  eval done: rule_page1_period_phrases
+  eval done: rule_page1_text_span_period_phrases
+  eval done: rule_page1_top_headers_with_period_in_text_or_span
+  eval done: rule_page2_repeated_form_period_line
+  eval done: rule_path_contains_form_and_period
+  eval done: rule_section_header_period_text
+
+Question: What is the exact name of the company (registrant) this document relates to?  (26 rules)
+  eval done: rule_h1_page1_after_form_header
+  eval done: rule_h1_page1_with_exact_name_child
+  eval done: rule_page1_all_caps_h1_company
+  eval done: rule_page1_before_ein_marker
+  eval done: rule_page1_before_exact_name_text_small_caption
+  eval done: rule_page1_before_state_or_incorporation
+  eval done: rule_page1_company_header_before_address_block
+  eval done: rule_page1_company_header_near_commission_file_number
+  eval done: rule_page1_company_name_in_path_text_of_following_spans
+  eval done: rule_page1_exact_name_following_text
+  eval done: rule_page1_exact_name_in_text_span
+  eval done: rule_page1_first_large_bold_after_form
+  eval done: rule_page1_first_non_form_h1
+  eval done: rule_page1_h1_not_under_form_path
+  eval done: rule_page1_h1_with_company_like_tokens
+  eval done: rule_page1_h1_with_company_suffix
+  eval done: rule_page1_h1_with_exact_name_path_and_children
+  eval done: rule_page1_h1_with_following_ein_and_state
+  eval done: rule_page1_h1_with_no_pipe_and_no_item
+  eval done: rule_page1_header_with_exact_name_descendant_and_state_descendant
+  eval done: rule_page1_large_bold_company_header
+  eval done: rule_page1_parent_of_state_ein_address_cluster
+  eval done: rule_page1_section_header_with_text_span_exact_name
+  eval done: rule_page1_span_before_exact_name_parenthetical_same_header
+  eval done: rule_page1_text_before_state_jurisdiction_label
+  eval done: rule_path_text_is_company_name
+
+Question: What is the company's principal executive offices address (city and state/country) as stated in this document?  (34 rules)
+  eval done: rule_item1_business_offices_located_sentence
+  eval done: rule_item1_business_overview_address_sentence
+  eval done: rule_item1_business_overview_company_offices
+  eval done: rule_item1_business_overview_located_at_address
+  eval done: rule_item1_business_principal_offices_sentence
+  eval done: rule_item1_business_sentence_with_city_state_only
+  eval done: rule_page1_address_and_telephone_principal_offices
+  eval done: rule_page1_address_before_phone_number_same_span
+  eval done: rule_page1_address_header_path
+  eval done: rule_page1_address_header_with_zip_in_textspan
+  eval done: rule_page1_address_label_following_principal_executive_offices
+  eval done: rule_page1_address_of_principal_executive_offices_h1_textspan
+  eval done: rule_page1_address_of_principal_executive_offices_window
+  eval done: rule_page1_after_exact_name_of_registrant
+  eval done: rule_page1_after_irs_ein
+  eval done: rule_page1_before_address_and_telephone_label
+  eval done: rule_page1_before_address_and_zip_code_text
+  eval done: rule_page1_before_address_of_principal_executive_offices_text
+  eval done: rule_page1_before_zip_code_label
+  eval done: rule_page1_bold_address_like_span
+  eval done: rule_page1_city_state_split_under_ein
+  eval done: rule_page1_company_block_with_city_state_in_text_span
+  eval done: rule_page1_company_children_address_like
+  eval done: rule_page1_h1_company_block
+  eval done: rule_page1_h1_or_h2_with_warmley_bristol
+  eval done: rule_page1_h2_address_header
+  eval done: rule_page1_h2_address_header_children
+  eval done: rule_page1_main_company_name_neighbors
+  eval done: rule_page1_main_header_text_span_contains_address
+  eval done: rule_page1_near_telephone_number
+  eval done: rule_page1_span_with_principal_executive_offices_in_text
+  eval done: rule_page1_split_city_state_after_street
+  eval done: rule_page1_text_with_city_state_zip_and_principal_label
+  eval done: rule_page1_top_half_address_candidates
+
+Question: What document type or SEC form is this (e.g. 10-K, 10-Q, 8-K, earnings release, annual report)?  (47 rules)
+  eval done: rule_10k_annual_combo
+  eval done: rule_10q_quarterly_combo
+  eval done: rule_8k_current_report_combo
+  eval done: rule_annual_report_on_form_10k_phrase
+  eval done: rule_annual_report_phrase
+  eval done: rule_checkbox_annual_report_selected
+  eval done: rule_checkbox_quarterly_report_selected
+  eval done: rule_company_header_with_form_in_text
+  eval done: rule_company_header_with_form_in_text_span
+  eval done: rule_cover_page_first_form_after_sec_header
+  eval done: rule_cover_page_form_family
+  eval done: rule_cover_page_report_phrase_after_form
+  eval done: rule_cover_page_report_type_keywords
+  eval done: rule_current_report_heading
+  eval done: rule_current_report_page1
+  eval done: rule_form_10k_exact
+  eval done: rule_form_10q_exact
+  eval done: rule_form_8k_exact
+  eval done: rule_form_h1_path_text
+  eval done: rule_form_heading_all_caps
+  eval done: rule_form_heading_any_page
+  eval done: rule_form_heading_before_company_name
+  eval done: rule_form_heading_bold
+  eval done: rule_form_heading_large_font
+  eval done: rule_form_heading_near_mark_one
+  eval done: rule_form_heading_or_report_in_section_header_text_span
+  eval done: rule_form_heading_page1
+  eval done: rule_form_heading_section_header
+  eval done: rule_form_heading_top_of_doc
+  eval done: rule_form_heading_top_of_page1
+  eval done: rule_form_heading_with_commission_file_nearby
+  eval done: rule_form_heading_with_sec_header_context
+  eval done: rule_form_name_in_text_or_text_span
+  eval done: rule_form_type_cover_page_section_headers
+  eval done: rule_form_type_from_path_or_text_page1
+  eval done: rule_form_type_keywords_in_path_text
+  eval done: rule_large_bold_top_form
+  eval done: rule_page1_current_report_h2_or_h1
+  eval done: rule_page1_first_large_formish_header
+  eval done: rule_page1_form_or_report
+  eval done: rule_page1_h1_form
+  eval done: rule_path_text_form
+  eval done: rule_path_text_form_fixed
+  eval done: rule_quarterly_report_on_form_10q_phrase
+  eval done: rule_quarterly_report_phrase
+  eval done: rule_report_type_in_first_page_first_40
+  eval done: rule_transition_report_phrase
+
+Question: List one material agreement or other exhibit number explicitly identified in the Exhibit Index (e.g., "Exhibit 10.1: Credit Agreement")—or record "none listed" if no material agreements are identified.  (29 rules)
+  eval done: rule_10q_exhibit_page_from_toc
+  eval done: rule_10q_item_6_exhibits
+  eval done: rule_8k_exhibit_104_cover_page
+  eval done: rule_8k_exhibit_99_press_release
+  eval done: rule_8k_exhibit_bylaws
+  eval done: rule_8k_exhibit_indenture
+  eval done: rule_8k_exhibit_line_items
+  eval done: rule_8k_exhibit_table_rows
+  eval done: rule_8k_item_901_exhibits
+  eval done: rule_exhibit_description_same_span
+  eval done: rule_exhibit_index_after_item_15_page
+  eval done: rule_exhibit_index_header_spans
+  eval done: rule_exhibit_index_neighbor_window
+  eval done: rule_exhibit_index_path_text
+  eval done: rule_exhibit_item_neighbor_window
+  eval done: rule_exhibit_number_lines
+  eval done: rule_exhibit_pages_high_page_numbers
+  eval done: rule_exhibit_related_on_page_one_8k
+  eval done: rule_exhibit_table_cells
+  eval done: rule_exhibit_table_header_cells
+  eval done: rule_exhibit_table_spans
+  eval done: rule_item_15_exhibits_headers
+  eval done: rule_item_15_exhibits_path
+  eval done: rule_late_document_exhibit_mentions
+  eval done: rule_material_agreement_keywords
+  eval done: rule_none_listed_when_no_exhibit_index
+  eval done: rule_page_near_item_15_from_toc
+  eval done: rule_part_iv_exhibits_path
+  eval done: rule_toc_item_15_page_locator_tables
+
+Question: What is/are the trading symbol(s) and listing exchange(s)?  (38 rules)
+  eval done: rule_item1_business_exchange_symbol_sentence
+  eval done: rule_item1_business_stock_listed
+  eval done: rule_page1_10q_inline_listing_sequence
+  eval done: rule_page1_8k_company_header_with_symbol_exchange
+  eval done: rule_page1_8k_inline_listing_sequence
+  eval done: rule_page1_allcaps_short_symbols
+  eval done: rule_page1_bold_small_listing_lines
+  eval done: rule_page1_company_cover_tables_and_neighbors
+  eval done: rule_page1_company_header_blob_contains_listing
+  eval done: rule_page1_cover_block_after_phone
+  eval done: rule_page1_cover_block_before_section12g
+  eval done: rule_page1_exchange_after_symbol
+  eval done: rule_page1_exchange_header_following_symbol_header
+  eval done: rule_page1_exchange_or_symbol_in_same_path
+  eval done: rule_page1_exchange_registered_keyword
+  eval done: rule_page1_first_page_only_listing_cluster
+  eval done: rule_page1_known_company_cover_listing_block
+  eval done: rule_page1_known_exchange_names
+  eval done: rule_page1_known_symbol_like_spans
+  eval done: rule_page1_main_header_children_after_section12b
+  eval done: rule_page1_near_name_of_each_exchange
+  eval done: rule_page1_near_title_of_each_class
+  eval done: rule_page1_near_trading_symbol_header
+  eval done: rule_page1_section12b_anchor
+  eval done: rule_page1_symbol_exchange_after_headers
+  eval done: rule_page1_table_cells_extract_symbol_rows
+  eval done: rule_page1_table_cells_return_matching_rows
+  eval done: rule_page1_table_header_trading_symbol_singular
+  eval done: rule_page1_table_header_trading_symbols_plural
+  eval done: rule_page1_table_or_text_with_title_symbol_exchange_triplet
+  eval done: rule_page1_text_near_section12b_window
+  eval done: rule_page1_text_with_registered_phrase
+  eval done: rule_page1_trading_symbol_keyword
+  eval done: rule_page1_under_company_header
+  eval done: rule_table_cells_symbol_exchange_columns
+  eval done: rule_table_row_header_title_of_each_class
+  eval done: rule_table_rows_with_exchange_values
+  eval done: rule_table_section12b
+
+Question: What is long-term debt at year-end (0 if none)?  (34 rules)
+  eval done: rule_10k_balance_sheet_debt
+  eval done: rule_balance_sheet_debt_cell_value
+  eval done: rule_balance_sheet_liabilities_block
+  eval done: rule_balance_sheet_long_term_debt_less_current_row
+  eval done: rule_balance_sheet_long_term_debt_page_range
+  eval done: rule_balance_sheet_long_term_debt_row
+  eval done: rule_balance_sheet_table_on_statement_pages
+  eval done: rule_condensed_balance_sheet_debt_table
+  eval done: rule_consolidated_balance_sheet_debt_table
+  eval done: rule_current_and_long_term_debt_table
+  eval done: rule_debt_and_credit_facilities_section
+  eval done: rule_debt_note_header
+  eval done: rule_debt_note_path
+  eval done: rule_debt_note_with_numeric_amount
+  eval done: rule_debt_value_in_current_liabilities_and_long_term_liabilities
+  eval done: rule_debt_zero_for_8k_forms
+  eval done: rule_deferred_revenue_not_debt_exclusion_context
+  eval done: rule_first_financial_statement_balance_sheet
+  eval done: rule_long_term_debt_in_condensed_balance_sheet_path
+  eval done: rule_long_term_debt_less_current_text_span
+  eval done: rule_long_term_debt_near_total_liabilities
+  eval done: rule_long_term_debt_numeric_text
+  eval done: rule_long_term_debt_on_balance_sheet_pages

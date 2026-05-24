@@ -1,0 +1,21 @@
+{
+  "question": "What is net income (loss) for the most recent fiscal year?",
+  "question_slug": "what_is_net_income_loss_for_the_most_recent_fiscal_year_10_agentic_fps",
+  "mode": "agentic_gen",
+  "model": "opus47",
+  "selected_rules": [
+    "rule_income_statement_table",
+    "rule_mda_net_income_summary"
+  ],
+  "selected_avg_cost_ratio_sum": 0.010991,
+  "min_cov": 0.1,
+  "mean_cov": 0.45,
+  "match_rate_on_sampled": 0.9,
+  "iterations": 8,
+  "verify_calls": 8,
+  "tool_llm_calls": 160,
+  "tool_input_tokens": 108770,
+  "tool_output_tokens": 1134,
+  "latency_seconds": 1233.83,
+  "rationale": "Two-rule set. rule_income_statement_table is layout-aware: for filings with a parent-attribution breakdown it returns focused MD&A summary spans naming 'net (income|earnings) attributable to <parent>' (excluding full income statements that include 'Cost of sales' and sub-entity statements like Obligor Group/Deed of Cross Guarantee); for simpler filings it falls back to the Consolidated Statements of Operations/Income/Earnings table. rule_mda_net_income_summary adds JNJ-style MD&A tables headlined '(Dollars In Billions)' so the QA emits the figure in billions, fixing the JNJ unit mismatch. The remaining miss is BESTBUY_2015_10K, whose gold is 'Net earnings from continuing operations' ($1,246M) \u2014 an unusual choice the QA agent consistently bypasses in favor of the 'Net earnings attributable to shareholders' line ($1,233M); a targeted 'continuing operations' MD&A rule (probed) did not shift the QA, so it was dropped to keep |R| minimal."
+}

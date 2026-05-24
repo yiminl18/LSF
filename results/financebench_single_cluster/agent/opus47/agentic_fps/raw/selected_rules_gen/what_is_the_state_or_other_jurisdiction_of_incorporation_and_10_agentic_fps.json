@@ -1,0 +1,18 @@
+{
+  "question": "What is the state (or other jurisdiction) of incorporation and the IRS Employer Identification Number?",
+  "question_slug": "what_is_the_state_or_other_jurisdiction_of_incorporation_and_10_agentic_fps",
+  "mode": "agentic_gen",
+  "model": "opus47",
+  "selected_rules": ["rule_cover_state_ein"],
+  "selected_avg_cost_ratio_sum": 0.000414,
+  "min_cov": 1.0,
+  "mean_cov": 1.0,
+  "match_rate_on_sampled": 1.0,
+  "iterations": 2,
+  "verify_calls": 2,
+  "tool_llm_calls": 40,
+  "tool_input_tokens": 6880,
+  "tool_output_tokens": 368,
+  "latency_seconds": 97.58,
+  "rationale": "Inspected 4 representative cover pages and observed that all 10 10-K filings expose two layout signals: a label phrase ('jurisdiction of incorporation' or 'state of incorporation'; '(I.R.S. Employer Identification No.)') and an EIN value matching the regex \\d{2}-\\d{7}. A single rule that gathers any span on pages 1-3 whose text/path contains either label phrase or an EIN-pattern number, plus its immediately-preceding span (where the value typically lives), captured all 10 docs with match_rate=1.0 at a sum_avg_cost_ratio of 0.000414. JNJ uses 'State of incorporation' (no 'jurisdiction') and required adding that as a second label alternation; one rule then proved sufficient, so no sibling rules were added."
+}

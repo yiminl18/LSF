@@ -1,0 +1,79 @@
+sample_set=fps  questions=10  model=opus47  budget=30
+rules_dir   = /mnt/data/LSF/rules/financebench_single_cluster/agent/opus47/agentic_fps/raw
+results_dir = /mnt/data/LSF/results/financebench_single_cluster/agent/opus47/agentic_fps/raw
+
+========================================================================
+Question: What is long-term debt at year-end (0 if none)?
+Slug:     what_is_longterm_debt_at_yearend_0_if_none_10_agentic_fps
+  status=ok  wall=504.4s
+  AGENTIC_GEN_DONE slug=what_is_longterm_debt_at_yearend_0_if_none_10_agentic_fps n_rules=1 sum_cost=0.019766 min_cov=0.9 match_rate=0.9 tool_calls=60 latency_s=307.09
+  rules=1  match_rate=0.9  sum_cost=0.019766
+
+========================================================================
+Question: What is net income (loss) for the most recent fiscal year?
+Slug:     what_is_net_income_loss_for_the_most_recent_fiscal_year_10_agentic_fps
+  status=ok  wall=1445.1s
+  rules=2  match_rate=0.9  sum_cost=0.010991
+
+========================================================================
+Question: What is total revenue for the most recent fiscal year (from the audited income statement)?
+Slug:     what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_agentic_fps
+  status=ok  wall=231.1s
+  AGENTIC_GEN_DONE slug=what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_agentic_fps n_rules=1 sum_cost=0.011823 min_cov=1.0 match_rate=1.0 tool_calls=20 latency_s=540.00
+  rules=1  match_rate=1.0  sum_cost=0.011823
+
+========================================================================
+Question: What is total assets at year-end (from the audited balance sheet)?
+Slug:     what_is_total_assets_at_yearend_from_the_audited_balance_she_10_agentic_fps
+  status=ok  wall=650.5s
+  rules=2  match_rate=1.0  sum_cost=0.007682
+
+========================================================================
+Question: What is the registrant's telephone number?
+Slug:     what_is_the_registrants_telephone_number_10_agentic_fps
+  status=exit_1  wall=180.0s
+
+========================================================================
+Question: How many shares of common stock were outstanding as of the cover-page reference date?
+Slug:     how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_agentic_fps
+  status=exit_1  wall=1.1s
+
+========================================================================
+Question: What is the registrant's exact name?
+Slug:     what_is_the_registrants_exact_name_10_agentic_fps
+  status=exit_1  wall=1.1s
+
+========================================================================
+Question: What is the state (or other jurisdiction) of incorporation and the IRS Employer Identification Number?
+Slug:     what_is_the_state_or_other_jurisdiction_of_incorporation_and_10_agentic_fps
+  status=exit_1  wall=1.1s
+
+========================================================================
+Question: What is the address of principal executive offices and ZIP code?
+Slug:     what_is_the_address_of_principal_executive_offices_and_zip_c_10_agentic_fps
+  status=exit_1  wall=1.1s
+
+========================================================================
+Question: What is/are the trading symbol(s) and listing exchange(s)?
+Slug:     what_isare_the_trading_symbols_and_listing_exchanges_10_agentic_fps
+  status=exit_1  wall=1.1s
+
+========================================================================
+Driver summary:
+  what_is_longterm_debt_at_yearend_0_if_none_10_agentic_fps     status=ok          rules= 1  match=  0.9  sum_cost=0.019766  wall=  504s
+  what_is_net_income_loss_for_the_most_recent_fiscal_year_10_agentic_fps  status=ok          rules= 2  match=  0.9  sum_cost=0.010991  wall= 1445s
+  what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_agentic_fps  status=ok          rules= 1  match=  1.0  sum_cost=0.011823  wall=  231s
+  what_is_total_assets_at_yearend_from_the_audited_balance_she_10_agentic_fps  status=ok          rules= 2  match=  1.0  sum_cost=0.007682  wall=  650s
+  what_is_the_registrants_telephone_number_10_agentic_fps       status=exit_1      rules= 0  match=    ?  sum_cost=     ?  wall=  180s
+  how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_agentic_fps  status=exit_1      rules= 0  match=    ?  sum_cost=     ?  wall=    1s
+  what_is_the_registrants_exact_name_10_agentic_fps             status=exit_1      rules= 0  match=    ?  sum_cost=     ?  wall=    1s
+  what_is_the_state_or_other_jurisdiction_of_incorporation_and_10_agentic_fps  status=exit_1      rules= 0  match=    ?  sum_cost=     ?  wall=    1s
+  what_is_the_address_of_principal_executive_offices_and_zip_c_10_agentic_fps  status=exit_1      rules= 0  match=    ?  sum_cost=     ?  wall=    1s
+  what_isare_the_trading_symbols_and_listing_exchanges_10_agentic_fps  status=exit_1      rules= 0  match=    ?  sum_cost=     ?  wall=    1s
+
+========================================================================
+Totals across 10 question(s):
+  Opus tokens:       in=23,977,226  out=190,143
+  Tool gpt54 tokens: in=211,542  out=2,110  (calls=300)
+  Wallclock total:   3017s (50.3m)
+  Opus cost (reported by CLI): $20.9496

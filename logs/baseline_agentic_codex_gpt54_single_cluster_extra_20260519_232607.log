@@ -1,0 +1,152 @@
+AZURE_OPENAI_API_KEY exported (84 chars) from /home/yiminglin/api_keys/azure_cloudbank/gpt-54_1.txt
+baseline=agentic_codex_qa  model=gpt54  split=unsampled
+questions=10  docs=10  output=/mnt/data/LSF/baseline_results/financebench/agentic_codex_qa_gpt54_single_cluster_extra
+labels_file=data/financebench/sample/single_cluster/random/unsampled_doc_labels.json
+completed_docs_skipped=0  selected_docs=10
+
+  ✓ ACTIVISIONBLIZZARD_2017_10K: '4,390'
+  ✗ ACTIVISIONBLIZZARD_2020_10K: '3,605'
+  ✗ ADOBE_2015_10K: '1,907,231'
+  ✗ ADOBE_2016_10K: '1,902,068'
+  ✗ ADOBE_2017_10K: '1881421'
+  ✗ ADOBE_2018_10K: '4,124,800'
+  ✗ ADOBE_2019_10K: '988,924'
+  ✓ ADOBE_2020_10K: '4117'
+  ✓ ADOBE_2021_10K: '4,123'
+  ✓ ADOBE_2022_10K: '3629'
+
+Question: What is long-term debt at year-end (0 if none)?
+  accuracy=0.40 (4/10)  avg_in=189508  avg_out=1529  avg_lat=23.9s
+
+  ✓ ACTIVISIONBLIZZARD_2017_10K: '$273 million'
+  ✓ ACTIVISIONBLIZZARD_2020_10K: '$2,197 million'
+  ✓ ADOBE_2015_10K: '$629.6 million'
+  ✗ ADOBE_2016_10K: '$1,168,782'
+  ✗ ADOBE_2017_10K: '$1,693,954'
+  ✗ ADOBE_2018_10K: '$2,590,774'
+  ✗ ADOBE_2019_10K: '2,951,458'
+  ✓ ADOBE_2020_10K: '$5,260 million'
+  ✓ ADOBE_2021_10K: '$4.82 billion'
+  ✓ ADOBE_2022_10K: '$4,756 million'
+
+Question: What is net income (loss) for the most recent fiscal year?
+  accuracy=0.60 (6/10)  avg_in=118736  avg_out=1143  avg_lat=19.5s
+
+  ✓ ACTIVISIONBLIZZARD_2017_10K: '$7,017 million'
+  ✓ ACTIVISIONBLIZZARD_2020_10K: '$8,086 million'
+  ✗ ADOBE_2015_10K: '$4,795,511'
+  ✗ ADOBE_2016_10K: '$5,854,430'
+  ✗ ADOBE_2017_10K: '$7,301,505'
+  ✗ ADOBE_2018_10K: '9,030,008'
+  ✗ ADOBE_2019_10K: '$11,171,297'
+  ✓ ADOBE_2020_10K: '$12,868 million'
+  ✓ ADOBE_2021_10K: '15,785'
+  ✓ ADOBE_2022_10K: '17,606'
+
+Question: What is total revenue for the most recent fiscal year (from the audite
+  accuracy=0.50 (5/10)  avg_in=188603  avg_out=1447  avg_lat=24.1s
+
+  ✓ ACTIVISIONBLIZZARD_2017_10K: '$18,668 million'
+  ✓ ACTIVISIONBLIZZARD_2020_10K: '$23,109 million'
+  ✗ ADOBE_2015_10K: '$11,726,472'
+  ✗ ADOBE_2016_10K: '$12,707,114'
+  ✗ ADOBE_2017_10K: '$14,535,556'
+  ✗ ADOBE_2018_10K: '$18,768,682'
+  ✗ ADOBE_2019_10K: '$20,762,400'
+  ✓ ADOBE_2020_10K: '$24,284 million'
+  ✓ ADOBE_2021_10K: '$27,241 million'
+  ✓ ADOBE_2022_10K: '$27,165 million'
+
+Question: What is total assets at year-end (from the audited balance sheet)?
+  accuracy=0.50 (5/10)  avg_in=138266  avg_out=1047  avg_lat=18.1s
+
+  ✓ ACTIVISIONBLIZZARD_2017_10K: '(310) 255-2000'
+  ✓ ACTIVISIONBLIZZARD_2020_10K: '(310) 255-2000'
+  ✓ ADOBE_2015_10K: '(408) 536-6000'
+  ✓ ADOBE_2016_10K: '408-536-6000'
+  ✓ ADOBE_2017_10K: '(408) 536-6000'
+  ✓ ADOBE_2018_10K: '(408) 536-6000'
+  ✓ ADOBE_2019_10K: '(408) 536-6000'
+  ✓ ADOBE_2020_10K: '(408) 536-6000'
+  ✓ ADOBE_2021_10K: '(408) 536-6000'
+  ✓ ADOBE_2022_10K: '(408) 536-6000'
+
+Question: What is the registrant's telephone number?
+  accuracy=1.00 (10/10)  avg_in=77701  avg_out=734  avg_lat=12.4s
+
+  ✓ ACTIVISIONBLIZZARD_2017_10K: '758,631,663'
+  ✓ ACTIVISIONBLIZZARD_2020_10K: '774,753,965'
+  ✓ ADOBE_2015_10K: '498,330,407'
+  ✓ ADOBE_2016_10K: '494,078,475'
+  ✓ ADOBE_2017_10K: '491,578,529'
+  ✓ ADOBE_2018_10K: '487,725,915'
+  ✓ ADOBE_2019_10K: '482,130,975'
+  ✓ ADOBE_2020_10K: '478.7 million shares'
+  ✓ ADOBE_2021_10K: '471.7 million shares'
+  ✓ ADOBE_2022_10K: '457.8 million shares'
+
+Question: How many shares of common stock were outstanding as of the cover-page 
+  accuracy=1.00 (10/10)  avg_in=84854  avg_out=667  avg_lat=11.0s
+
+  ✓ ACTIVISIONBLIZZARD_2017_10K: 'ACTIVISION BLIZZARD, INC.'
+  ✓ ACTIVISIONBLIZZARD_2020_10K: 'ACTIVISION BLIZZARD, INC.'
+  ✓ ADOBE_2015_10K: 'ADOBE SYSTEMS INCORPORATED'
+  ✓ ADOBE_2016_10K: 'ADOBE SYSTEMS INCORPORATED'
+  ✓ ADOBE_2017_10K: 'ADOBE SYSTEMS INCORPORATED'
+  ✓ ADOBE_2018_10K: 'Adobe Inc.'
+  ✓ ADOBE_2019_10K: 'ADOBE INC.'
+  ✓ ADOBE_2020_10K: 'ADOBE INC.'
+  ✓ ADOBE_2021_10K: 'ADOBE INC.'
+  ✓ ADOBE_2022_10K: 'ADOBE INC.'
+
+Question: What is the registrant's exact name?
+  accuracy=1.00 (10/10)  avg_in=84005  avg_out=665  avg_lat=12.2s
+
+  ✓ ACTIVISIONBLIZZARD_2017_10K: 'Delaware; 95-4803544'
+  ✓ ACTIVISIONBLIZZARD_2020_10K: 'Delaware, 95-4803544'
+  ✓ ADOBE_2015_10K: 'Delaware, 77-0019522'
+  ✓ ADOBE_2016_10K: 'Delaware, 77-0019522'
+  ✓ ADOBE_2017_10K: 'Delaware, 77-0019522'
+  ✓ ADOBE_2018_10K: 'Delaware, 77-0019522'
+  ✓ ADOBE_2019_10K: 'Delaware, 77-0019522'
+  ✓ ADOBE_2020_10K: 'Delaware, 77-0019522'
+  ✓ ADOBE_2021_10K: 'Delaware, 77-0019522'
+  ✓ ADOBE_2022_10K: 'Delaware, 77-0019522'
+
+Question: What is the state (or other jurisdiction) of incorporation and the IRS
+  accuracy=1.00 (10/10)  avg_in=89360  avg_out=850  avg_lat=14.2s
+
+  ✓ ACTIVISIONBLIZZARD_2017_10K: '3100 Ocean Park Boulevard, Santa Monica, CA 90405'
+  ✓ ACTIVISIONBLIZZARD_2020_10K: '3100 Ocean Park Boulevard, Santa Monica, California 90405'
+  ✓ ADOBE_2015_10K: '345 Park Avenue, San Jose, California 95110-2704'
+  ✓ ADOBE_2016_10K: '345 Park Avenue, San Jose, California 95110-2704'
+  ✓ ADOBE_2017_10K: '345 Park Avenue, San Jose, California 95110-2704'
+  ✓ ADOBE_2018_10K: '345 Park Avenue, San Jose, California 95110-2704'
+  ✓ ADOBE_2019_10K: '345 Park Avenue, San Jose, California 95110-2704'
+  ✓ ADOBE_2020_10K: '345 Park Avenue, San Jose, California 95110-2704'
+  ✓ ADOBE_2021_10K: '345 Park Avenue, San Jose, California 95110-2704'
+  ✓ ADOBE_2022_10K: '345 Park Avenue, San Jose, California 95110-2704'
+
+Question: What is the address of principal executive offices and ZIP code?
+  accuracy=1.00 (10/10)  avg_in=113002  avg_out=744  avg_lat=15.0s
+
+  ✓ ACTIVISIONBLIZZARD_2017_10K: 'ATVI, The Nasdaq Global Select Market'
+  ✓ ACTIVISIONBLIZZARD_2020_10K: 'ATVI, The Nasdaq Global Select Market'
+  ✓ ADOBE_2015_10K: 'ADBE — NASDAQ Global Select Market'
+  ✓ ADOBE_2016_10K: 'ADBE, NASDAQ Global Select Market'
+  ✓ ADOBE_2017_10K: 'ADBE; NASDAQ Global Select Market'
+  ✓ ADOBE_2018_10K: 'ADBE, NASDAQ Global Select Market'
+  ✓ ADOBE_2019_10K: 'ADBE, NASDAQ'
+  ✓ ADOBE_2020_10K: 'ADBE, NASDAQ'
+  ✓ ADOBE_2021_10K: 'ADBE, NASDAQ'
+  ✓ ADOBE_2022_10K: 'ADBE, NASDAQ'
+
+Question: What is/are the trading symbol(s) and listing exchange(s)?
+  accuracy=1.00 (10/10)  avg_in=118273  avg_out=976  avg_lat=21.0s
+
+
+============================================================
+  mean accuracy : 0.8000
+  mean in-tokens: 120231
+  mean latency  : 17.1s
+  results in    : /mnt/data/LSF/baseline_results/financebench/agentic_codex_qa_gpt54_single_cluster_extra/
