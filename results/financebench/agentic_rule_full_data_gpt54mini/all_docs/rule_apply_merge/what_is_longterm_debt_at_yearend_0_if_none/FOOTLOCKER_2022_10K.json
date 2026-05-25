@@ -1,0 +1,29 @@
+{
+  "doc_name": "FOOTLOCKER_2022_10K",
+  "question": "What is long-term debt at year-end (0 if none)?",
+  "question_slug": "what_is_longterm_debt_at_yearend_0_if_none",
+  "split": "all_docs",
+  "ground_truth": "$457 million",
+  "answer": "110",
+  "correct": false,
+  "status": "ok",
+  "input_tokens": 208,
+  "output_tokens": 5,
+  "latency_seconds": 0.855,
+  "model": "gpt54",
+  "doc_token_count": 87949,
+  "cost_ratio": 0.0024,
+  "retrieved_token_count": 115,
+  "rules_with_hits": [
+    "rule_long_term_debt_line_window"
+  ],
+  "rules_with_no_hits": [],
+  "num_spans_before_dedup": 6,
+  "num_spans_after_dedup": 6,
+  "rule_names": [
+    "rule_long_term_debt_line_window"
+  ],
+  "rule_question_dir": "q01_what_is_longterm_debt_at_yearend_0_if_none",
+  "rule_generation_report_path": "results/financebench/agentic_rule_full_data_gpt54mini/all_docs/q01_what_is_longterm_debt_at_yearend_0_if_none_rule_gen.json",
+  "rule_apply_trace_path": "results/financebench/agentic_rule_full_data_gpt54mini/all_docs/rule_apply_merge/_trace/q01_what_is_longterm_debt_at_yearend_0_if_none/rule_long_term_debt_line_window_merge.json"
+}

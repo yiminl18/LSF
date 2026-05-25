@@ -1,0 +1,57 @@
+{
+  "strategy": "agentic_rule_full_data",
+  "phase": "rule_generation",
+  "status": "ok",
+  "dataset": "nopv",
+  "question": "What is the CPF case number assigned to this enforcement action?",
+  "question_slug": "what_is_the_cpf_case_number_assigned_to_this_enforcement_act",
+  "model": "gpt54mini",
+  "split": "all_docs",
+  "doc_count": 242,
+  "question_count": 1,
+  "rules_dir": "rules/nopv/agentic_rule_full_data_gpt54mini/all_docs/q02_what_is_the_cpf_case_number_assigned_to_this_enforcement_act",
+  "results_report_path": "results/nopv/agentic_rule_full_data_gpt54mini/all_docs/q02_what_is_the_cpf_case_number_assigned_to_this_enforcement_act_rule_gen.json",
+  "verify_accuracy_ledger_path": "results/nopv/agentic_rule_full_data_gpt54mini/all_docs/q02_what_is_the_cpf_case_number_assigned_to_this_enforcement_act.verify_accuracy_ledger.json",
+  "rule_files": [
+    "rules/nopv/agentic_rule_full_data_gpt54mini/all_docs/q02_what_is_the_cpf_case_number_assigned_to_this_enforcement_act/rule_cpf_case_number.py"
+  ],
+  "rules_final": [
+    "rule_cpf_case_number"
+  ],
+  "num_rules_final": 1,
+  "rule_gen": {
+    "latency_seconds": 703.89,
+    "input_tokens": 3544868,
+    "output_tokens": 47957,
+    "cached_input_tokens": 3376896,
+    "reasoning_tokens": 27163,
+    "working_sample": [
+      "12022023NOPV_PCO_03312022_(20-194651)",
+      "32022018NOPV_PCP PCO_01192022_(21-210993)",
+      "52023016NOPV_PCO_03242023_(21-207466)",
+      "42022001NOPV_PCO_08042022_(21-210603)"
+    ],
+    "num_working_sample": 4,
+    "num_working_sample_iterations": 3,
+    "verify_accuracy_calls": {
+      "total": 4,
+      "input_tokens": 75474,
+      "output_tokens": 5334
+    },
+    "num_rules_written": 1,
+    "num_rules_rejected": 0,
+    "rules_final": [
+      "rule_cpf_case_number"
+    ],
+    "num_rules_final": 1,
+    "avg_cost_ratio_sample": 0.006556,
+    "match_rate_sample": 1.0,
+    "notes": "Header-first CPF extractor with a body-only fallback for one outlier doc. Full corpus verification reached 238/242 correct; the remaining four misses are true NOT FOUND cases."
+  },
+  "agent_log_path": "results/nopv/agentic_rule_full_data_gpt54mini/all_docs/q02_what_is_the_cpf_case_number_assigned_to_this_enforcement_act.codex.jsonl",
+  "agent_last_message_path": "results/nopv/agentic_rule_full_data_gpt54mini/all_docs/q02_what_is_the_cpf_case_number_assigned_to_this_enforcement_act.codex.last.txt",
+  "stderr": "2026-05-25T00:20:40.528042Z ERROR codex_models_manager::manager: failed to refresh available models: stream disconnected before completion: failed to decode models response: missing field `models` at line 3243 column 1; body: {\n  \"data\": [\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1772582400\n      },\n      \"id\": \"dall-e-3-3.0\",\n      \"created_at\": 1691712000,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1737936000\n      },\n      \"id\": \"dall-e-2-2.0\",\n      \"created_at\": 1713139200,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": true,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"fine_tune\": 1718323200,\n        \"inference\": 1718323200\n      },\n      \"id\": \"code-cushman-001\",\n      \"created_at\": 1642809600,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": false,\n        \"completion\": true,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"fine_tune\": 1720137600,\n        \"inference\": 1720137600\n      },\n      \"id\": \"code-cushman-fine-tune-002\",\n      \"created_at\": 1677456000,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"generally-available\",\n      \"deprecation\": {\n        \"inference\": 1797292800\n      },\n      \"id\": \"whisper-001\",\n      \"created_at\": 1694649600,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1746057600\n      },\n      \"id\": \"gpt-4-0125-Preview\",\n      \"created_at\": 1706140800,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1746057600\n      },\n      \"id\": \"gpt-4-1106-Preview\",\n      \"created_at\": 1700006400,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycl",
+  "codex_thread_id": "019e5c81-55d2-7882-9f5f-293b71aad6bc",
+  "codex_event_count": 162,
+  "codex_error_message": null
+}

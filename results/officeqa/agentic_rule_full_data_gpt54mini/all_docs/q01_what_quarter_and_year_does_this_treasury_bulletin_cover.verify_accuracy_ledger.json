@@ -1,0 +1,253 @@
+{
+  "verify_accuracy_calls": [
+    {
+      "doc_names": [
+        "treasury_bulletin_1980_07",
+        "treasury_bulletin_1983_03",
+        "treasury_bulletin_1984_06",
+        "treasury_bulletin_2024_12",
+        "treasury_bulletin_2025_09"
+      ],
+      "rule_names": [
+        "rule_treasury_bulletin_cover_period"
+      ],
+      "n": 5,
+      "n_correct": 3,
+      "accuracy": 0.6,
+      "avg_cost_ratio": 0.500061,
+      "qa_input_tokens": 670,
+      "qa_output_tokens": 42,
+      "judge_input_tokens": 634,
+      "judge_output_tokens": 32,
+      "input_tokens_total": 1304,
+      "output_tokens_total": 74,
+      "latency_seconds": 4.25,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_1980_07",
+          "answer": "July 1980",
+          "correct": true,
+          "retrieved_token_count": 4,
+          "cost_ratio": 5.7e-05,
+          "rules_applied": [
+            "rule_treasury_bulletin_cover_period"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1983_03",
+          "answer": "Winter Issue Fiscal 1983",
+          "correct": true,
+          "retrieved_token_count": 9,
+          "cost_ratio": 0.000125,
+          "rules_applied": [
+            "rule_treasury_bulletin_cover_period"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1984_06",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 2,
+          "cost_ratio": 6.4e-05,
+          "rules_applied": [
+            "rule_treasury_bulletin_cover_period"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2024_12",
+          "answer": "DECEMBER 2024",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 6e-05,
+          "rules_applied": [
+            "rule_treasury_bulletin_cover_period"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_09",
+          "answer": "Third quarter 2025",
+          "correct": false,
+          "retrieved_token_count": 10,
+          "cost_ratio": 2.5,
+          "rules_applied": [
+            "rule_treasury_bulletin_cover_period"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T00:20:09.082742+00:00"
+    },
+    {
+      "doc_names": [
+        "treasury_bulletin_1984_06",
+        "treasury_bulletin_2025_09"
+      ],
+      "rule_names": [
+        "rule_treasury_bulletin_cover_period"
+      ],
+      "n": 2,
+      "n_correct": 0,
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.625144,
+      "qa_input_tokens": 270,
+      "qa_output_tokens": 19,
+      "judge_input_tokens": 257,
+      "judge_output_tokens": 14,
+      "input_tokens_total": 527,
+      "output_tokens_total": 33,
+      "latency_seconds": 2.208,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_1984_06",
+          "answer": "Spring Issue Fiscal 1984",
+          "correct": false,
+          "retrieved_token_count": 9,
+          "cost_ratio": 0.000289,
+          "rules_applied": [
+            "rule_treasury_bulletin_cover_period"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_09",
+          "answer": "Third quarter 2025",
+          "correct": false,
+          "retrieved_token_count": 5,
+          "cost_ratio": 1.25,
+          "rules_applied": [
+            "rule_treasury_bulletin_cover_period"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T00:21:12.499120+00:00"
+    },
+    {
+      "doc_names": [
+        "treasury_bulletin_1980_07",
+        "treasury_bulletin_1983_03",
+        "treasury_bulletin_1984_06",
+        "treasury_bulletin_2024_12",
+        "treasury_bulletin_2025_09"
+      ],
+      "rule_names": [
+        "rule_treasury_bulletin_cover_period"
+      ],
+      "n": 5,
+      "n_correct": 4,
+      "accuracy": 0.8,
+      "avg_cost_ratio": 0.200151,
+      "qa_input_tokens": 678,
+      "qa_output_tokens": 50,
+      "judge_input_tokens": 642,
+      "judge_output_tokens": 31,
+      "input_tokens_total": 1320,
+      "output_tokens_total": 81,
+      "latency_seconds": 4.26,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_1980_07",
+          "answer": "July 1980",
+          "correct": true,
+          "retrieved_token_count": 4,
+          "cost_ratio": 5.7e-05,
+          "rules_applied": [
+            "rule_treasury_bulletin_cover_period"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1983_03",
+          "answer": "Winter Issue Fiscal 1983",
+          "correct": true,
+          "retrieved_token_count": 9,
+          "cost_ratio": 0.000125,
+          "rules_applied": [
+            "rule_treasury_bulletin_cover_period"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1984_06",
+          "answer": "SECOND QUARTER, FISCAL 1984",
+          "correct": true,
+          "retrieved_token_count": 16,
+          "cost_ratio": 0.000514,
+          "rules_applied": [
+            "rule_treasury_bulletin_cover_period"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2024_12",
+          "answer": "DECEMBER 2024",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 6e-05,
+          "rules_applied": [
+            "rule_treasury_bulletin_cover_period"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_09",
+          "answer": "September 2025",
+          "correct": false,
+          "retrieved_token_count": 4,
+          "cost_ratio": 1.0,
+          "rules_applied": [
+            "rule_treasury_bulletin_cover_period"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T00:21:56.640595+00:00"
+    },
+    {
+      "doc_names": [
+        "treasury_bulletin_2025_03",
+        "treasury_bulletin_2025_06",
+        "treasury_bulletin_2025_09"
+      ],
+      "rule_names": [
+        "rule_treasury_bulletin_cover_period"
+      ],
+      "n": 3,
+      "n_correct": 2,
+      "accuracy": 0.666667,
+      "avg_cost_ratio": 0.33337,
+      "qa_input_tokens": 398,
+      "qa_output_tokens": 26,
+      "judge_input_tokens": 377,
+      "judge_output_tokens": 19,
+      "input_tokens_total": 775,
+      "output_tokens_total": 45,
+      "latency_seconds": 2.572,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_2025_03",
+          "answer": "MARCH 2025",
+          "correct": true,
+          "retrieved_token_count": 5,
+          "cost_ratio": 4.7e-05,
+          "rules_applied": [
+            "rule_treasury_bulletin_cover_period"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_06",
+          "answer": "JUNE 2025",
+          "correct": true,
+          "retrieved_token_count": 5,
+          "cost_ratio": 6.2e-05,
+          "rules_applied": [
+            "rule_treasury_bulletin_cover_period"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_09",
+          "answer": "September 2025",
+          "correct": false,
+          "retrieved_token_count": 4,
+          "cost_ratio": 1.0,
+          "rules_applied": [
+            "rule_treasury_bulletin_cover_period"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T00:22:15.853065+00:00"
+    }
+  ]
+}

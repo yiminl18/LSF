@@ -1,0 +1,29 @@
+{
+  "doc_name": "EBAY_2017_10K",
+  "question": "What is total revenue for the most recent fiscal year (from the audited income statement)?",
+  "question_slug": "what_is_total_revenue_for_the_most_recent_fiscal_year_from_t",
+  "split": "all_docs",
+  "ground_truth": null,
+  "answer": "$9,567 million",
+  "correct": false,
+  "status": "ok",
+  "input_tokens": 154,
+  "output_tokens": 9,
+  "latency_seconds": 0.692,
+  "model": "gpt54",
+  "doc_token_count": 87606,
+  "cost_ratio": 0.0018,
+  "retrieved_token_count": 54,
+  "rules_with_hits": [
+    "rule_income_statement_revenue_window"
+  ],
+  "rules_with_no_hits": [],
+  "num_spans_before_dedup": 1,
+  "num_spans_after_dedup": 1,
+  "rule_names": [
+    "rule_income_statement_revenue_window"
+  ],
+  "rule_question_dir": "q03_what_is_total_revenue_for_the_most_recent_fiscal_year_from_t",
+  "rule_generation_report_path": "results/financebench/agentic_rule_full_data_gpt54mini/all_docs/q03_what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_rule_gen.json",
+  "rule_apply_trace_path": "results/financebench/agentic_rule_full_data_gpt54mini/all_docs/rule_apply_merge/_trace/q03_what_is_total_revenue_for_the_most_recent_fiscal_year_from_t/rule_income_statement_revenue_window_merge.json"
+}

@@ -1,0 +1,80 @@
+{
+  "verify_accuracy_calls": [
+    {
+      "doc_names": [
+        "treasury_bulletin_1995_06",
+        "treasury_bulletin_1996_06",
+        "treasury_bulletin_2024_12",
+        "treasury_bulletin_2025_03",
+        "treasury_bulletin_2025_06"
+      ],
+      "rule_names": [
+        "rule_individual_income_tax_receipts_quarter"
+      ],
+      "n": 5,
+      "n_correct": 5,
+      "accuracy": 1.0,
+      "avg_cost_ratio": 3.1e-05,
+      "qa_input_tokens": 700,
+      "qa_output_tokens": 35,
+      "judge_input_tokens": 670,
+      "judge_output_tokens": 30,
+      "input_tokens_total": 1370,
+      "output_tokens_total": 65,
+      "latency_seconds": 4.021,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_1995_06",
+          "answer": "134.4",
+          "correct": true,
+          "retrieved_token_count": 3,
+          "cost_ratio": 4.3e-05,
+          "rules_applied": [
+            "rule_individual_income_tax_receipts_quarter"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1996_06",
+          "answer": "144.5",
+          "correct": true,
+          "retrieved_token_count": 3,
+          "cost_ratio": 1.4e-05,
+          "rules_applied": [
+            "rule_individual_income_tax_receipts_quarter"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2024_12",
+          "answer": "540.3",
+          "correct": true,
+          "retrieved_token_count": 3,
+          "cost_ratio": 3e-05,
+          "rules_applied": [
+            "rule_individual_income_tax_receipts_quarter"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_03",
+          "answer": "518.2",
+          "correct": true,
+          "retrieved_token_count": 3,
+          "cost_ratio": 2.8e-05,
+          "rules_applied": [
+            "rule_individual_income_tax_receipts_quarter"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_06",
+          "answer": "625.6",
+          "correct": true,
+          "retrieved_token_count": 3,
+          "cost_ratio": 3.7e-05,
+          "rules_applied": [
+            "rule_individual_income_tax_receipts_quarter"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T01:05:51.238966+00:00"
+    }
+  ]
+}

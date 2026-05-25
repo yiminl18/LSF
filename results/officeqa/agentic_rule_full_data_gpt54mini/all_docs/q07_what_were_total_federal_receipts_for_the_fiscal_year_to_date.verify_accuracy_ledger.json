@@ -1,0 +1,388 @@
+{
+  "verify_accuracy_calls": [
+    {
+      "doc_names": [
+        "treasury_bulletin_2019_12",
+        "treasury_bulletin_2021_06",
+        "treasury_bulletin_2022_03",
+        "treasury_bulletin_2024_09",
+        "treasury_bulletin_2024_12"
+      ],
+      "rule_names": [
+        "rule_ffo4_total_receipts_table",
+        "rule_total_federal_receipts_narrative"
+      ],
+      "n": 5,
+      "n_correct": 0,
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.001468,
+      "qa_input_tokens": 1261,
+      "qa_output_tokens": 31,
+      "judge_input_tokens": 652,
+      "judge_output_tokens": 35,
+      "input_tokens_total": 1913,
+      "output_tokens_total": 66,
+      "latency_seconds": 4.277,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_2019_12",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "treasury_bulletin_2021_06",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "treasury_bulletin_2022_03",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "treasury_bulletin_2024_09",
+          "answer": "4085 billion",
+          "correct": false,
+          "retrieved_token_count": 592,
+          "cost_ratio": 0.007339,
+          "rules_applied": [
+            "rule_total_federal_receipts_narrative"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2024_12",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        }
+      ],
+      "timestamp": "2026-05-25T00:51:14.749755+00:00"
+    },
+    {
+      "doc_names": [
+        "treasury_bulletin_2019_12",
+        "treasury_bulletin_2021_06",
+        "treasury_bulletin_2022_03",
+        "treasury_bulletin_2024_09",
+        "treasury_bulletin_2024_12"
+      ],
+      "rule_names": [
+        "rule_ffo4_total_receipts_table",
+        "rule_total_federal_receipts_narrative"
+      ],
+      "n": 5,
+      "n_correct": 1,
+      "accuracy": 0.2,
+      "avg_cost_ratio": 0.003565,
+      "qa_input_tokens": 2349,
+      "qa_output_tokens": 42,
+      "judge_input_tokens": 667,
+      "judge_output_tokens": 34,
+      "input_tokens_total": 3016,
+      "output_tokens_total": 76,
+      "latency_seconds": 4.289,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_2019_12",
+          "answer": "3,462,196",
+          "correct": true,
+          "retrieved_token_count": 918,
+          "cost_ratio": 0.009949,
+          "rules_applied": [
+            "rule_ffo4_total_receipts_table",
+            "rule_total_federal_receipts_narrative"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2021_06",
+          "answer": "1,017,457",
+          "correct": false,
+          "retrieved_token_count": 26,
+          "cost_ratio": 0.000318,
+          "rules_applied": [
+            "rule_ffo4_total_receipts_table"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2022_03",
+          "answer": "691,157",
+          "correct": false,
+          "retrieved_token_count": 32,
+          "cost_ratio": 0.000309,
+          "rules_applied": [
+            "rule_ffo4_total_receipts_table"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2024_09",
+          "answer": "4,085 billion",
+          "correct": false,
+          "retrieved_token_count": 62,
+          "cost_ratio": 0.000769,
+          "rules_applied": [
+            "rule_ffo4_total_receipts_table",
+            "rule_total_federal_receipts_narrative"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2024_12",
+          "answer": "4,918,104",
+          "correct": false,
+          "retrieved_token_count": 643,
+          "cost_ratio": 0.00648,
+          "rules_applied": [
+            "rule_ffo4_total_receipts_table",
+            "rule_total_federal_receipts_narrative"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T00:52:00.094666+00:00"
+    },
+    {
+      "doc_names": [
+        "treasury_bulletin_2019_12",
+        "treasury_bulletin_2021_06",
+        "treasury_bulletin_2022_03",
+        "treasury_bulletin_2024_09",
+        "treasury_bulletin_2024_12"
+      ],
+      "rule_names": [
+        "rule_ffo4_total_receipts_table",
+        "rule_total_federal_receipts_narrative"
+      ],
+      "n": 5,
+      "n_correct": 3,
+      "accuracy": 0.6,
+      "avg_cost_ratio": 5.3e-05,
+      "qa_input_tokens": 699,
+      "qa_output_tokens": 44,
+      "judge_input_tokens": 669,
+      "judge_output_tokens": 32,
+      "input_tokens_total": 1368,
+      "output_tokens_total": 76,
+      "latency_seconds": 4.34,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_2019_12",
+          "answer": "3,462,196",
+          "correct": true,
+          "retrieved_token_count": 5,
+          "cost_ratio": 5.4e-05,
+          "rules_applied": [
+            "rule_ffo4_total_receipts_table"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2021_06",
+          "answer": "1,703,949",
+          "correct": true,
+          "retrieved_token_count": 5,
+          "cost_ratio": 6.1e-05,
+          "rules_applied": [
+            "rule_ffo4_total_receipts_table"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2022_03",
+          "answer": "1,051,873",
+          "correct": true,
+          "retrieved_token_count": 5,
+          "cost_ratio": 4.8e-05,
+          "rules_applied": [
+            "rule_ffo4_total_receipts_table"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2024_09",
+          "answer": "4,085 billion",
+          "correct": false,
+          "retrieved_token_count": 4,
+          "cost_ratio": 5e-05,
+          "rules_applied": [
+            "rule_total_federal_receipts_narrative"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2024_12",
+          "answer": "4,918,104",
+          "correct": false,
+          "retrieved_token_count": 5,
+          "cost_ratio": 5e-05,
+          "rules_applied": [
+            "rule_ffo4_total_receipts_table"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T00:53:39.469410+00:00"
+    },
+    {
+      "doc_names": [
+        "treasury_bulletin_2019_12",
+        "treasury_bulletin_2021_06",
+        "treasury_bulletin_2022_03",
+        "treasury_bulletin_2024_09",
+        "treasury_bulletin_2024_12"
+      ],
+      "rule_names": [
+        "rule_ffo4_total_receipts_table",
+        "rule_total_federal_receipts_narrative"
+      ],
+      "n": 5,
+      "n_correct": 5,
+      "accuracy": 1.0,
+      "avg_cost_ratio": 8.1e-05,
+      "qa_input_tokens": 712,
+      "qa_output_tokens": 45,
+      "judge_input_tokens": 670,
+      "judge_output_tokens": 30,
+      "input_tokens_total": 1382,
+      "output_tokens_total": 75,
+      "latency_seconds": 4.623,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_2019_12",
+          "answer": "3,462,196",
+          "correct": true,
+          "retrieved_token_count": 5,
+          "cost_ratio": 5.4e-05,
+          "rules_applied": [
+            "rule_ffo4_total_receipts_table"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2021_06",
+          "answer": "1,703,949",
+          "correct": true,
+          "retrieved_token_count": 11,
+          "cost_ratio": 0.000134,
+          "rules_applied": [
+            "rule_ffo4_total_receipts_table",
+            "rule_total_federal_receipts_narrative"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2022_03",
+          "answer": "1,051,873",
+          "correct": true,
+          "retrieved_token_count": 11,
+          "cost_ratio": 0.000106,
+          "rules_applied": [
+            "rule_ffo4_total_receipts_table",
+            "rule_total_federal_receipts_narrative"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2024_09",
+          "answer": "3,754,200",
+          "correct": true,
+          "retrieved_token_count": 5,
+          "cost_ratio": 6.2e-05,
+          "rules_applied": [
+            "rule_total_federal_receipts_narrative"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2024_12",
+          "answer": "4,918,737",
+          "correct": true,
+          "retrieved_token_count": 5,
+          "cost_ratio": 5e-05,
+          "rules_applied": [
+            "rule_total_federal_receipts_narrative"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T00:56:05.401457+00:00"
+    },
+    {
+      "doc_names": [
+        "treasury_bulletin_2019_06",
+        "treasury_bulletin_2020_12",
+        "treasury_bulletin_2023_09",
+        "treasury_bulletin_2025_03",
+        "treasury_bulletin_2025_06"
+      ],
+      "rule_names": [
+        "rule_ffo4_total_receipts_table",
+        "rule_total_federal_receipts_narrative"
+      ],
+      "n": 5,
+      "n_correct": 5,
+      "accuracy": 1.0,
+      "avg_cost_ratio": 8.3e-05,
+      "qa_input_tokens": 712,
+      "qa_output_tokens": 45,
+      "judge_input_tokens": 670,
+      "judge_output_tokens": 30,
+      "input_tokens_total": 1382,
+      "output_tokens_total": 75,
+      "latency_seconds": 5.034,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_2019_06",
+          "answer": "1,507,293",
+          "correct": true,
+          "retrieved_token_count": 5,
+          "cost_ratio": 6.5e-05,
+          "rules_applied": [
+            "rule_ffo4_total_receipts_table"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2020_12",
+          "answer": "3,419,955",
+          "correct": true,
+          "retrieved_token_count": 11,
+          "cost_ratio": 0.000103,
+          "rules_applied": [
+            "rule_ffo4_total_receipts_table",
+            "rule_total_federal_receipts_narrative"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2023_09",
+          "answer": "3,412,520",
+          "correct": true,
+          "retrieved_token_count": 11,
+          "cost_ratio": 0.000138,
+          "rules_applied": [
+            "rule_ffo4_total_receipts_table",
+            "rule_total_federal_receipts_narrative"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_03",
+          "answer": "1,082,939",
+          "correct": true,
+          "retrieved_token_count": 5,
+          "cost_ratio": 4.7e-05,
+          "rules_applied": [
+            "rule_total_federal_receipts_narrative"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_06",
+          "answer": "2,260,292",
+          "correct": true,
+          "retrieved_token_count": 5,
+          "cost_ratio": 6.2e-05,
+          "rules_applied": [
+            "rule_total_federal_receipts_narrative"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T00:56:27.483272+00:00"
+    }
+  ]
+}

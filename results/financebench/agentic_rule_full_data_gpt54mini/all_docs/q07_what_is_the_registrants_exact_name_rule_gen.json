@@ -1,0 +1,65 @@
+{
+  "strategy": "agentic_rule_full_data",
+  "phase": "rule_generation",
+  "status": "ok",
+  "dataset": "financebench",
+  "question": "What is the registrant's exact name?",
+  "question_slug": "what_is_the_registrants_exact_name",
+  "model": "gpt54mini",
+  "split": "all_docs",
+  "doc_count": 100,
+  "question_count": 1,
+  "rules_dir": "rules/financebench/agentic_rule_full_data_gpt54mini/all_docs/q07_what_is_the_registrants_exact_name",
+  "results_report_path": "results/financebench/agentic_rule_full_data_gpt54mini/all_docs/q07_what_is_the_registrants_exact_name_rule_gen.json",
+  "verify_accuracy_ledger_path": "results/financebench/agentic_rule_full_data_gpt54mini/all_docs/q07_what_is_the_registrants_exact_name.verify_accuracy_ledger.json",
+  "rule_files": [
+    "rules/financebench/agentic_rule_full_data_gpt54mini/all_docs/q07_what_is_the_registrants_exact_name/rule_registrant_exact_name.py"
+  ],
+  "rules_final": [
+    "rule_registrant_exact_name"
+  ],
+  "num_rules_final": 1,
+  "rule_gen": {
+    "latency_seconds": 1029.43,
+    "input_tokens": 9145655,
+    "output_tokens": 73077,
+    "cached_input_tokens": 8947584,
+    "reasoning_tokens": 40870,
+    "working_sample": [
+      "3M_2023Q2_10Q",
+      "AMERICANWATERWORKS_2023Q2_10Q",
+      "APPLE_2023Q3_10Q",
+      "COSTCO_2022_10K",
+      "SALESFORCE_2023Q3_10Q",
+      "ULTABEAUTY_2023_8K_dated-2023-06-07",
+      "AMCOR_2022_8K_2022-07-01",
+      "AMCOR_2022_8K_dated-2022-07-01",
+      "FOOTLOCKER_2022_10K",
+      "FOOTLOCKER_2022_10Q",
+      "FOOTLOCKER_2023Q3_10Q",
+      "FOOTLOCKER_2023_10K"
+    ],
+    "num_working_sample": 12,
+    "num_working_sample_iterations": 6,
+    "verify_accuracy_calls": {
+      "total": 11,
+      "input_tokens": 82165,
+      "output_tokens": 4273
+    },
+    "num_rules_written": 1,
+    "num_rules_rejected": 0,
+    "rules_final": [
+      "rule_registrant_exact_name"
+    ],
+    "num_rules_final": 1,
+    "avg_cost_ratio_sample": 0.001448,
+    "match_rate_sample": 0.833333,
+    "notes": "Single cover-page rule with label backtracking plus narrow late-document exact-name fallbacks; verified at 98/100 on the full manifest, with the remaining misses isolated to AMCOR 8-K variants."
+  },
+  "agent_log_path": "results/financebench/agentic_rule_full_data_gpt54mini/all_docs/q07_what_is_the_registrants_exact_name.codex.jsonl",
+  "agent_last_message_path": "results/financebench/agentic_rule_full_data_gpt54mini/all_docs/q07_what_is_the_registrants_exact_name.codex.last.txt",
+  "stderr": "2026-05-25T01:18:55.313441Z ERROR codex_models_manager::manager: failed to refresh available models: stream disconnected before completion: failed to decode models response: missing field `models` at line 3243 column 1; body: {\n  \"data\": [\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1772582400\n      },\n      \"id\": \"dall-e-3-3.0\",\n      \"created_at\": 1691712000,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1737936000\n      },\n      \"id\": \"dall-e-2-2.0\",\n      \"created_at\": 1713139200,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": true,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"fine_tune\": 1718323200,\n        \"inference\": 1718323200\n      },\n      \"id\": \"code-cushman-001\",\n      \"created_at\": 1642809600,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": false,\n        \"completion\": true,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"fine_tune\": 1720137600,\n        \"inference\": 1720137600\n      },\n      \"id\": \"code-cushman-fine-tune-002\",\n      \"created_at\": 1677456000,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"generally-available\",\n      \"deprecation\": {\n        \"inference\": 1797292800\n      },\n      \"id\": \"whisper-001\",\n      \"created_at\": 1694649600,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1746057600\n      },\n      \"id\": \"gpt-4-0125-Preview\",\n      \"created_at\": 1706140800,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1746057600\n      },\n      \"id\": \"gpt-4-1106-Preview\",\n      \"created_at\": 1700006400,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycl",
+  "codex_thread_id": "019e5cb6-a953-7130-8d04-c466f07fdf80",
+  "codex_event_count": 276,
+  "codex_error_message": "Reconnecting... 1/5 (stream disconnected before completion: response.failed event received)"
+}

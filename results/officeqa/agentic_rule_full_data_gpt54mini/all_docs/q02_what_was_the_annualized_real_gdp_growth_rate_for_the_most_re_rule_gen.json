@@ -1,0 +1,61 @@
+{
+  "strategy": "agentic_rule_full_data",
+  "phase": "rule_generation",
+  "status": "ok",
+  "dataset": "officeqa",
+  "question": "What was the annualized real GDP growth rate for the most recent quarter reported?",
+  "question_slug": "what_was_the_annualized_real_gdp_growth_rate_for_the_most_re",
+  "model": "gpt54mini",
+  "split": "all_docs",
+  "doc_count": 200,
+  "question_count": 1,
+  "rules_dir": "rules/officeqa/agentic_rule_full_data_gpt54mini/all_docs/q02_what_was_the_annualized_real_gdp_growth_rate_for_the_most_re",
+  "results_report_path": "results/officeqa/agentic_rule_full_data_gpt54mini/all_docs/q02_what_was_the_annualized_real_gdp_growth_rate_for_the_most_re_rule_gen.json",
+  "verify_accuracy_ledger_path": "results/officeqa/agentic_rule_full_data_gpt54mini/all_docs/q02_what_was_the_annualized_real_gdp_growth_rate_for_the_most_re.verify_accuracy_ledger.json",
+  "rule_files": [
+    "rules/officeqa/agentic_rule_full_data_gpt54mini/all_docs/q02_what_was_the_annualized_real_gdp_growth_rate_for_the_most_re/rule_legacy_real_gross_domestic_product.py",
+    "rules/officeqa/agentic_rule_full_data_gpt54mini/all_docs/q02_what_was_the_annualized_real_gdp_growth_rate_for_the_most_re/rule_recent_real_gdp_growth.py"
+  ],
+  "rules_final": [
+    "rule_legacy_real_gross_domestic_product",
+    "rule_recent_real_gdp_growth"
+  ],
+  "num_rules_final": 2,
+  "rule_gen": {
+    "latency_seconds": 143.9,
+    "input_tokens": 790500,
+    "output_tokens": 21153,
+    "cached_input_tokens": 744320,
+    "reasoning_tokens": 11567,
+    "working_sample": [
+      "treasury_bulletin_2007_12",
+      "treasury_bulletin_2008_03",
+      "treasury_bulletin_2024_12",
+      "treasury_bulletin_2025_03",
+      "treasury_bulletin_2025_06"
+    ],
+    "num_working_sample": 5,
+    "num_working_sample_iterations": 1,
+    "verify_accuracy_calls": {
+      "total": 1,
+      "input_tokens": 3403,
+      "output_tokens": 71
+    },
+    "num_rules_written": 2,
+    "num_rules_rejected": 0,
+    "rules_final": [
+      "rule_legacy_real_gross_domestic_product",
+      "rule_recent_real_gdp_growth"
+    ],
+    "num_rules_final": 2,
+    "avg_cost_ratio_sample": 0.003154,
+    "match_rate_sample": 1.0,
+    "notes": "Covers both the newer Real GDP growth phrasing and the older Real gross domestic product phrasing. Verified correct on the five-document working sample."
+  },
+  "agent_log_path": "results/officeqa/agentic_rule_full_data_gpt54mini/all_docs/q02_what_was_the_annualized_real_gdp_growth_rate_for_the_most_re.codex.jsonl",
+  "agent_last_message_path": "results/officeqa/agentic_rule_full_data_gpt54mini/all_docs/q02_what_was_the_annualized_real_gdp_growth_rate_for_the_most_re.codex.last.txt",
+  "stderr": "2026-05-25T00:22:35.786948Z ERROR codex_models_manager::manager: failed to refresh available models: timeout waiting for child process to exit",
+  "codex_thread_id": "019e5c83-180b-7b60-ae63-fb05ff580212",
+  "codex_event_count": 94,
+  "codex_error_message": null
+}

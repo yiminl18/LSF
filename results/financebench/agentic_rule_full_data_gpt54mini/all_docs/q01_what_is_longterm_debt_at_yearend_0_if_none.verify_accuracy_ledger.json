@@ -1,0 +1,967 @@
+{
+  "verify_accuracy_calls": [
+    {
+      "doc_names": [
+        "ADOBE_2022_10K",
+        "AMAZON_2022_10K",
+        "BESTBUY_2023_10K",
+        "CORNING_2022_10K",
+        "LOCKHEEDMARTIN_2023Q2_10Q",
+        "WALMART_2024Q1_10Q"
+      ],
+      "rule_names": [
+        "rule_debt_note_heading_context",
+        "rule_long_term_debt_line_window",
+        "rule_long_term_debt_paragraphs"
+      ],
+      "n": 6,
+      "n_correct": 3,
+      "accuracy": 0.5,
+      "avg_cost_ratio": 1.075744,
+      "qa_input_tokens": 396148,
+      "qa_output_tokens": 42,
+      "judge_input_tokens": 799,
+      "judge_output_tokens": 32,
+      "input_tokens_total": 396947,
+      "output_tokens_total": 74,
+      "latency_seconds": 12.961,
+      "results": [
+        {
+          "doc_name": "ADOBE_2022_10K",
+          "answer": "3,629",
+          "correct": true,
+          "retrieved_token_count": 77186,
+          "cost_ratio": 1.00183,
+          "rules_applied": [
+            "rule_debt_note_heading_context",
+            "rule_long_term_debt_line_window",
+            "rule_long_term_debt_paragraphs"
+          ]
+        },
+        {
+          "doc_name": "AMAZON_2022_10K",
+          "answer": "67,150",
+          "correct": true,
+          "retrieved_token_count": 68020,
+          "cost_ratio": 1.120538,
+          "rules_applied": [
+            "rule_debt_note_heading_context",
+            "rule_long_term_debt_line_window",
+            "rule_long_term_debt_paragraphs"
+          ]
+        },
+        {
+          "doc_name": "BESTBUY_2023_10K",
+          "answer": "1,160",
+          "correct": true,
+          "retrieved_token_count": 70464,
+          "cost_ratio": 1.043865,
+          "rules_applied": [
+            "rule_debt_note_heading_context",
+            "rule_long_term_debt_line_window",
+            "rule_long_term_debt_paragraphs"
+          ]
+        },
+        {
+          "doc_name": "CORNING_2022_10K",
+          "answer": "6,687",
+          "correct": false,
+          "retrieved_token_count": 119422,
+          "cost_ratio": 1.030095,
+          "rules_applied": [
+            "rule_debt_note_heading_context",
+            "rule_long_term_debt_line_window",
+            "rule_long_term_debt_paragraphs"
+          ]
+        },
+        {
+          "doc_name": "LOCKHEEDMARTIN_2023Q2_10Q",
+          "answer": "15,429",
+          "correct": false,
+          "retrieved_token_count": 12612,
+          "cost_ratio": 1.076752,
+          "rules_applied": [
+            "rule_debt_note_heading_context",
+            "rule_long_term_debt_line_window",
+            "rule_long_term_debt_paragraphs"
+          ]
+        },
+        {
+          "doc_name": "WALMART_2024Q1_10Q",
+          "answer": "34,649",
+          "correct": false,
+          "retrieved_token_count": 48048,
+          "cost_ratio": 1.181382,
+          "rules_applied": [
+            "rule_debt_note_heading_context",
+            "rule_long_term_debt_line_window",
+            "rule_long_term_debt_paragraphs"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T00:20:02.484951+00:00"
+    },
+    {
+      "doc_names": [
+        "AMAZON_2022_10K"
+      ],
+      "rule_names": [
+        "rule_long_term_debt_line_window"
+      ],
+      "n": 1,
+      "n_correct": 1,
+      "accuracy": 1.0,
+      "avg_cost_ratio": 0.013327,
+      "qa_input_tokens": 940,
+      "qa_output_tokens": 7,
+      "judge_input_tokens": 160,
+      "judge_output_tokens": 6,
+      "input_tokens_total": 1100,
+      "output_tokens_total": 13,
+      "latency_seconds": 1.158,
+      "results": [
+        {
+          "doc_name": "AMAZON_2022_10K",
+          "answer": "67,150",
+          "correct": true,
+          "retrieved_token_count": 809,
+          "cost_ratio": 0.013327,
+          "rules_applied": [
+            "rule_long_term_debt_line_window"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T00:20:35.157603+00:00"
+    },
+    {
+      "doc_names": [
+        "AMAZON_2022_10K"
+      ],
+      "rule_names": [
+        "rule_long_term_debt_paragraphs"
+      ],
+      "n": 1,
+      "n_correct": 1,
+      "accuracy": 1.0,
+      "avg_cost_ratio": 0.107211,
+      "qa_input_tokens": 6840,
+      "qa_output_tokens": 7,
+      "judge_input_tokens": 160,
+      "judge_output_tokens": 6,
+      "input_tokens_total": 7000,
+      "output_tokens_total": 13,
+      "latency_seconds": 1.028,
+      "results": [
+        {
+          "doc_name": "AMAZON_2022_10K",
+          "answer": "67,150",
+          "correct": true,
+          "retrieved_token_count": 6508,
+          "cost_ratio": 0.107211,
+          "rules_applied": [
+            "rule_long_term_debt_paragraphs"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T00:20:35.489718+00:00"
+    },
+    {
+      "doc_names": [
+        "AMAZON_2022_10K"
+      ],
+      "rule_names": [
+        "rule_debt_note_heading_context"
+      ],
+      "n": 1,
+      "n_correct": 1,
+      "accuracy": 1.0,
+      "avg_cost_ratio": 0.999984,
+      "qa_input_tokens": 61556,
+      "qa_output_tokens": 7,
+      "judge_input_tokens": 160,
+      "judge_output_tokens": 6,
+      "input_tokens_total": 61716,
+      "output_tokens_total": 13,
+      "latency_seconds": 2.391,
+      "results": [
+        {
+          "doc_name": "AMAZON_2022_10K",
+          "answer": "67,150",
+          "correct": true,
+          "retrieved_token_count": 60702,
+          "cost_ratio": 0.999984,
+          "rules_applied": [
+            "rule_debt_note_heading_context"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T00:20:36.328540+00:00"
+    },
+    {
+      "doc_names": [
+        "AMCOR_2023Q2_10Q",
+        "APPLE_2023Q3_10Q",
+        "NETFLIX_2023Q2_10Q",
+        "PAYPAL_2023Q2_10Q"
+      ],
+      "rule_names": [
+        "rule_long_term_debt_line_window"
+      ],
+      "n": 4,
+      "n_correct": 2,
+      "accuracy": 0.5,
+      "avg_cost_ratio": 0.005012,
+      "qa_input_tokens": 1253,
+      "qa_output_tokens": 29,
+      "judge_input_tokens": 640,
+      "judge_output_tokens": 26,
+      "input_tokens_total": 1893,
+      "output_tokens_total": 55,
+      "latency_seconds": 3.048,
+      "results": [
+        {
+          "doc_name": "AMCOR_2023Q2_10Q",
+          "answer": "6,840",
+          "correct": true,
+          "retrieved_token_count": 406,
+          "cost_ratio": 0.013605,
+          "rules_applied": [
+            "rule_long_term_debt_line_window"
+          ]
+        },
+        {
+          "doc_name": "APPLE_2023Q3_10Q",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "NETFLIX_2023Q2_10Q",
+          "answer": "14,070,151",
+          "correct": true,
+          "retrieved_token_count": 43,
+          "cost_ratio": 0.001602,
+          "rules_applied": [
+            "rule_long_term_debt_line_window"
+          ]
+        },
+        {
+          "doc_name": "PAYPAL_2023Q2_10Q",
+          "answer": "10,417",
+          "correct": false,
+          "retrieved_token_count": 287,
+          "cost_ratio": 0.004842,
+          "rules_applied": [
+            "rule_long_term_debt_line_window"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T00:20:53.377087+00:00"
+    },
+    {
+      "doc_names": [
+        "3M_2023Q2_10Q",
+        "AMD_2022_10K",
+        "COSTCO_2023_8K_dated-2023-08-09",
+        "FOOTLOCKER_2023_10K"
+      ],
+      "rule_names": [
+        "rule_long_term_debt_line_window"
+      ],
+      "n": 4,
+      "n_correct": 1,
+      "accuracy": 0.25,
+      "avg_cost_ratio": 0.006561,
+      "qa_input_tokens": 2584,
+      "qa_output_tokens": 23,
+      "judge_input_tokens": 629,
+      "judge_output_tokens": 27,
+      "input_tokens_total": 3213,
+      "output_tokens_total": 50,
+      "latency_seconds": 3.477,
+      "results": [
+        {
+          "doc_name": "3M_2023Q2_10Q",
+          "answer": "907",
+          "correct": false,
+          "retrieved_token_count": 1423,
+          "cost_ratio": 0.018074,
+          "rules_applied": [
+            "rule_long_term_debt_line_window"
+          ]
+        },
+        {
+          "doc_name": "AMD_2022_10K",
+          "answer": "2,467",
+          "correct": true,
+          "retrieved_token_count": 387,
+          "cost_ratio": 0.004437,
+          "rules_applied": [
+            "rule_long_term_debt_line_window"
+          ]
+        },
+        {
+          "doc_name": "COSTCO_2023_8K_dated-2023-08-09",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "FOOTLOCKER_2023_10K",
+          "answer": "451",
+          "correct": false,
+          "retrieved_token_count": 285,
+          "cost_ratio": 0.003733,
+          "rules_applied": [
+            "rule_long_term_debt_line_window"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T00:20:53.844788+00:00"
+    },
+    {
+      "doc_names": [
+        "ADOBE_2022_10K",
+        "AMAZON_2022_10K",
+        "BESTBUY_2023_10K",
+        "CORNING_2022_10K",
+        "LOCKHEEDMARTIN_2023Q2_10Q",
+        "WALMART_2024Q1_10Q"
+      ],
+      "rule_names": [
+        "rule_long_term_debt_line_window"
+      ],
+      "n": 6,
+      "n_correct": 4,
+      "accuracy": 0.666667,
+      "avg_cost_ratio": 0.012976,
+      "qa_input_tokens": 4744,
+      "qa_output_tokens": 42,
+      "judge_input_tokens": 799,
+      "judge_output_tokens": 31,
+      "input_tokens_total": 5543,
+      "output_tokens_total": 73,
+      "latency_seconds": 4.618,
+      "results": [
+        {
+          "doc_name": "ADOBE_2022_10K",
+          "answer": "3,629",
+          "correct": true,
+          "retrieved_token_count": 32,
+          "cost_ratio": 0.000415,
+          "rules_applied": [
+            "rule_long_term_debt_line_window"
+          ]
+        },
+        {
+          "doc_name": "AMAZON_2022_10K",
+          "answer": "67,150",
+          "correct": true,
+          "retrieved_token_count": 809,
+          "cost_ratio": 0.013327,
+          "rules_applied": [
+            "rule_long_term_debt_line_window"
+          ]
+        },
+        {
+          "doc_name": "BESTBUY_2023_10K",
+          "answer": "1,160",
+          "correct": true,
+          "retrieved_token_count": 687,
+          "cost_ratio": 0.010177,
+          "rules_applied": [
+            "rule_long_term_debt_line_window"
+          ]
+        },
+        {
+          "doc_name": "CORNING_2022_10K",
+          "answer": "6,687",
+          "correct": false,
+          "retrieved_token_count": 729,
+          "cost_ratio": 0.006288,
+          "rules_applied": [
+            "rule_long_term_debt_line_window"
+          ]
+        },
+        {
+          "doc_name": "LOCKHEEDMARTIN_2023Q2_10Q",
+          "answer": "17,262",
+          "correct": true,
+          "retrieved_token_count": 78,
+          "cost_ratio": 0.006659,
+          "rules_applied": [
+            "rule_long_term_debt_line_window"
+          ]
+        },
+        {
+          "doc_name": "WALMART_2024Q1_10Q",
+          "answer": "34,649",
+          "correct": false,
+          "retrieved_token_count": 1667,
+          "cost_ratio": 0.040987,
+          "rules_applied": [
+            "rule_long_term_debt_line_window"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T00:20:55.679288+00:00"
+    },
+    {
+      "doc_names": [
+        "3M_2023Q2_10Q",
+        "ADOBE_2022_10K",
+        "AMAZON_2022_10K",
+        "AMD_2022_10K",
+        "BESTBUY_2023_10K",
+        "CORNING_2022_10K",
+        "FOOTLOCKER_2023_10K",
+        "LOCKHEEDMARTIN_2023Q2_10Q",
+        "PAYPAL_2023Q2_10Q",
+        "WALMART_2024Q1_10Q"
+      ],
+      "rule_names": [
+        "rule_long_term_debt_line_window"
+      ],
+      "n": 10,
+      "n_correct": 5,
+      "accuracy": 0.5,
+      "avg_cost_ratio": 0.018972,
+      "qa_input_tokens": 12020,
+      "qa_output_tokens": 68,
+      "judge_input_tokens": 1435,
+      "judge_output_tokens": 58,
+      "input_tokens_total": 13455,
+      "output_tokens_total": 126,
+      "latency_seconds": 7.051,
+      "results": [
+        {
+          "doc_name": "3M_2023Q2_10Q",
+          "answer": "14,001",
+          "correct": false,
+          "retrieved_token_count": 2273,
+          "cost_ratio": 0.02887,
+          "rules_applied": [
+            "rule_long_term_debt_line_window"
+          ]
+        },
+        {
+          "doc_name": "ADOBE_2022_10K",
+          "answer": "3,629",
+          "correct": true,
+          "retrieved_token_count": 79,
+          "cost_ratio": 0.001025,
+          "rules_applied": [
+            "rule_long_term_debt_line_window"
+          ]
+        },
+        {
+          "doc_name": "AMAZON_2022_10K",
+          "answer": "67,150",
+          "correct": true,
+          "retrieved_token_count": 1426,
+          "cost_ratio": 0.023491,
+          "rules_applied": [
+            "rule_long_term_debt_line_window"
+          ]
+        },
+        {
+          "doc_name": "AMD_2022_10K",
+          "answer": "2,467",
+          "correct": true,
+          "retrieved_token_count": 570,
+          "cost_ratio": 0.006535,
+          "rules_applied": [
+            "rule_long_term_debt_line_window"
+          ]
+        },
+        {
+          "doc_name": "BESTBUY_2023_10K",
+          "answer": "1,160",
+          "correct": true,
+          "retrieved_token_count": 1239,
+          "cost_ratio": 0.018355,
+          "rules_applied": [
+            "rule_long_term_debt_line_window"
+          ]
+        },
+        {
+          "doc_name": "CORNING_2022_10K",
+          "answer": "6,687",
+          "correct": false,
+          "retrieved_token_count": 1147,
+          "cost_ratio": 0.009894,
+          "rules_applied": [
+            "rule_long_term_debt_line_window"
+          ]
+        },
+        {
+          "doc_name": "FOOTLOCKER_2023_10K",
+          "answer": "446",
+          "correct": false,
+          "retrieved_token_count": 541,
+          "cost_ratio": 0.007086,
+          "rules_applied": [
+            "rule_long_term_debt_line_window"
+          ]
+        },
+        {
+          "doc_name": "LOCKHEEDMARTIN_2023Q2_10Q",
+          "answer": "17,262",
+          "correct": true,
+          "retrieved_token_count": 178,
+          "cost_ratio": 0.015197,
+          "rules_applied": [
+            "rule_long_term_debt_line_window"
+          ]
+        },
+        {
+          "doc_name": "PAYPAL_2023Q2_10Q",
+          "answer": "10,417",
+          "correct": false,
+          "retrieved_token_count": 507,
+          "cost_ratio": 0.008554,
+          "rules_applied": [
+            "rule_long_term_debt_line_window"
+          ]
+        },
+        {
+          "doc_name": "WALMART_2024Q1_10Q",
+          "answer": "34,649",
+          "correct": false,
+          "retrieved_token_count": 2876,
+          "cost_ratio": 0.070714,
+          "rules_applied": [
+            "rule_long_term_debt_line_window"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T00:22:41.239404+00:00"
+    },
+    {
+      "doc_names": [
+        "WALMART_2024Q1_10Q"
+      ],
+      "rule_names": [
+        "rule_long_term_debt_line_window"
+      ],
+      "n": 1,
+      "n_correct": 1,
+      "accuracy": 1.0,
+      "avg_cost_ratio": 0.00359,
+      "qa_input_tokens": 275,
+      "qa_output_tokens": 7,
+      "judge_input_tokens": 159,
+      "judge_output_tokens": 6,
+      "input_tokens_total": 434,
+      "output_tokens_total": 13,
+      "latency_seconds": 1.171,
+      "results": [
+        {
+          "doc_name": "WALMART_2024Q1_10Q",
+          "answer": "38,120",
+          "correct": true,
+          "retrieved_token_count": 146,
+          "cost_ratio": 0.00359,
+          "rules_applied": [
+            "rule_long_term_debt_line_window"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T00:29:01.494221+00:00"
+    },
+    {
+      "doc_names": [
+        "3M_2023Q2_10Q",
+        "ADOBE_2022_10K",
+        "AMAZON_2022_10K",
+        "AMD_2022_10K",
+        "BESTBUY_2023_10K",
+        "CORNING_2022_10K",
+        "FOOTLOCKER_2023_10K",
+        "LOCKHEEDMARTIN_2023Q2_10Q",
+        "PAYPAL_2023Q2_10Q",
+        "WALMART_2024Q1_10Q"
+      ],
+      "rule_names": [
+        "rule_long_term_debt_line_window"
+      ],
+      "n": 10,
+      "n_correct": 4,
+      "accuracy": 0.4,
+      "avg_cost_ratio": 0.001259,
+      "qa_input_tokens": 1995,
+      "qa_output_tokens": 66,
+      "judge_input_tokens": 1433,
+      "judge_output_tokens": 59,
+      "input_tokens_total": 3428,
+      "output_tokens_total": 125,
+      "latency_seconds": 7.268,
+      "results": [
+        {
+          "doc_name": "3M_2023Q2_10Q",
+          "answer": "907",
+          "correct": false,
+          "retrieved_token_count": 49,
+          "cost_ratio": 0.000622,
+          "rules_applied": [
+            "rule_long_term_debt_line_window"
+          ]
+        },
+        {
+          "doc_name": "ADOBE_2022_10K",
+          "answer": "3,629",
+          "correct": true,
+          "retrieved_token_count": 39,
+          "cost_ratio": 0.000506,
+          "rules_applied": [
+            "rule_long_term_debt_line_window"
+          ]
+        },
+        {
+          "doc_name": "AMAZON_2022_10K",
+          "answer": "48,744",
+          "correct": false,
+          "retrieved_token_count": 64,
+          "cost_ratio": 0.001054,
+          "rules_applied": [
+            "rule_long_term_debt_line_window"
+          ]
+        },
+        {
+          "doc_name": "AMD_2022_10K",
+          "answer": "1,474",
+          "correct": false,
+          "retrieved_token_count": 90,
+          "cost_ratio": 0.001032,
+          "rules_applied": [
+            "rule_long_term_debt_line_window"
+          ]
+        },
+        {
+          "doc_name": "BESTBUY_2023_10K",
+          "answer": "2,061",
+          "correct": false,
+          "retrieved_token_count": 103,
+          "cost_ratio": 0.001526,
+          "rules_applied": [
+            "rule_long_term_debt_line_window"
+          ]
+        },
+        {
+          "doc_name": "CORNING_2022_10K",
+          "answer": "6,687",
+          "correct": false,
+          "retrieved_token_count": 71,
+          "cost_ratio": 0.000612,
+          "rules_applied": [
+            "rule_long_term_debt_line_window"
+          ]
+        },
+        {
+          "doc_name": "FOOTLOCKER_2023_10K",
+          "answer": "446",
+          "correct": false,
+          "retrieved_token_count": 86,
+          "cost_ratio": 0.001126,
+          "rules_applied": [
+            "rule_long_term_debt_line_window"
+          ]
+        },
+        {
+          "doc_name": "LOCKHEEDMARTIN_2023Q2_10Q",
+          "answer": "17,262",
+          "correct": true,
+          "retrieved_token_count": 25,
+          "cost_ratio": 0.002134,
+          "rules_applied": [
+            "rule_long_term_debt_line_window"
+          ]
+        },
+        {
+          "doc_name": "PAYPAL_2023Q2_10Q",
+          "answer": "10,549",
+          "correct": true,
+          "retrieved_token_count": 23,
+          "cost_ratio": 0.000388,
+          "rules_applied": [
+            "rule_long_term_debt_line_window"
+          ]
+        },
+        {
+          "doc_name": "WALMART_2024Q1_10Q",
+          "answer": "38,120",
+          "correct": true,
+          "retrieved_token_count": 146,
+          "cost_ratio": 0.00359,
+          "rules_applied": [
+            "rule_long_term_debt_line_window"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T00:29:27.783540+00:00"
+    },
+    {
+      "doc_names": [
+        "CORNING_2022_10K"
+      ],
+      "rule_names": [
+        "rule_long_term_debt_line_window"
+      ],
+      "n": 1,
+      "n_correct": 0,
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.000612,
+      "qa_input_tokens": 198,
+      "qa_output_tokens": 7,
+      "judge_input_tokens": 0,
+      "judge_output_tokens": 0,
+      "input_tokens_total": 198,
+      "output_tokens_total": 7,
+      "latency_seconds": 1.062,
+      "results": [
+        {
+          "doc_name": "CORNING_2022_10K",
+          "answer": "6,687",
+          "correct": false,
+          "retrieved_token_count": 71,
+          "cost_ratio": 0.000612,
+          "rules_applied": [
+            "rule_long_term_debt_line_window"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T00:31:18.928486+00:00"
+    },
+    {
+      "doc_names": [
+        "CORNING_2022_10K"
+      ],
+      "rule_names": [
+        "rule_long_term_debt_line_window"
+      ],
+      "n": 1,
+      "n_correct": 0,
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.001035,
+      "qa_input_tokens": 247,
+      "qa_output_tokens": 7,
+      "judge_input_tokens": 0,
+      "judge_output_tokens": 0,
+      "input_tokens_total": 247,
+      "output_tokens_total": 7,
+      "latency_seconds": 1.132,
+      "results": [
+        {
+          "doc_name": "CORNING_2022_10K",
+          "answer": "6,687",
+          "correct": false,
+          "retrieved_token_count": 120,
+          "cost_ratio": 0.001035,
+          "rules_applied": [
+            "rule_long_term_debt_line_window"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T00:32:11.918551+00:00"
+    },
+    {
+      "doc_names": [
+        "3M_2023Q2_10Q"
+      ],
+      "rule_names": [
+        "rule_long_term_debt_line_window"
+      ],
+      "n": 1,
+      "n_correct": 1,
+      "accuracy": 1.0,
+      "avg_cost_ratio": 0.001092,
+      "qa_input_tokens": 216,
+      "qa_output_tokens": 7,
+      "judge_input_tokens": 160,
+      "judge_output_tokens": 6,
+      "input_tokens_total": 376,
+      "output_tokens_total": 13,
+      "latency_seconds": 1.116,
+      "results": [
+        {
+          "doc_name": "3M_2023Q2_10Q",
+          "answer": "12,954",
+          "correct": true,
+          "retrieved_token_count": 86,
+          "cost_ratio": 0.001092,
+          "rules_applied": [
+            "rule_long_term_debt_line_window"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T00:32:12.566346+00:00"
+    },
+    {
+      "doc_names": [
+        "AMAZON_2022_10K"
+      ],
+      "rule_names": [
+        "rule_long_term_debt_line_window"
+      ],
+      "n": 1,
+      "n_correct": 0,
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.001993,
+      "qa_input_tokens": 252,
+      "qa_output_tokens": 7,
+      "judge_input_tokens": 160,
+      "judge_output_tokens": 7,
+      "input_tokens_total": 412,
+      "output_tokens_total": 14,
+      "latency_seconds": 1.353,
+      "results": [
+        {
+          "doc_name": "AMAZON_2022_10K",
+          "answer": "48,744",
+          "correct": false,
+          "retrieved_token_count": 121,
+          "cost_ratio": 0.001993,
+          "rules_applied": [
+            "rule_long_term_debt_line_window"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T00:32:13.080053+00:00"
+    },
+    {
+      "doc_names": [
+        "3M_2023Q2_10Q",
+        "ADOBE_2022_10K",
+        "AMAZON_2022_10K",
+        "AMD_2022_10K",
+        "BESTBUY_2023_10K",
+        "CORNING_2022_10K",
+        "FOOTLOCKER_2023_10K",
+        "LOCKHEEDMARTIN_2023Q2_10Q",
+        "PAYPAL_2023Q2_10Q",
+        "WALMART_2024Q1_10Q"
+      ],
+      "rule_names": [
+        "rule_long_term_debt_line_window"
+      ],
+      "n": 10,
+      "n_correct": 5,
+      "accuracy": 0.5,
+      "avg_cost_ratio": 0.00179,
+      "qa_input_tokens": 2287,
+      "qa_output_tokens": 68,
+      "judge_input_tokens": 1435,
+      "judge_output_tokens": 58,
+      "input_tokens_total": 3722,
+      "output_tokens_total": 126,
+      "latency_seconds": 8.038,
+      "results": [
+        {
+          "doc_name": "3M_2023Q2_10Q",
+          "answer": "12,954",
+          "correct": true,
+          "retrieved_token_count": 86,
+          "cost_ratio": 0.001092,
+          "rules_applied": [
+            "rule_long_term_debt_line_window"
+          ]
+        },
+        {
+          "doc_name": "ADOBE_2022_10K",
+          "answer": "3,629",
+          "correct": true,
+          "retrieved_token_count": 78,
+          "cost_ratio": 0.001012,
+          "rules_applied": [
+            "rule_long_term_debt_line_window"
+          ]
+        },
+        {
+          "doc_name": "AMAZON_2022_10K",
+          "answer": "48,744",
+          "correct": false,
+          "retrieved_token_count": 121,
+          "cost_ratio": 0.001993,
+          "rules_applied": [
+            "rule_long_term_debt_line_window"
+          ]
+        },
+        {
+          "doc_name": "AMD_2022_10K",
+          "answer": "2,467",
+          "correct": true,
+          "retrieved_token_count": 99,
+          "cost_ratio": 0.001135,
+          "rules_applied": [
+            "rule_long_term_debt_line_window"
+          ]
+        },
+        {
+          "doc_name": "BESTBUY_2023_10K",
+          "answer": "2,164",
+          "correct": false,
+          "retrieved_token_count": 96,
+          "cost_ratio": 0.001422,
+          "rules_applied": [
+            "rule_long_term_debt_line_window"
+          ]
+        },
+        {
+          "doc_name": "CORNING_2022_10K",
+          "answer": "6,687",
+          "correct": false,
+          "retrieved_token_count": 120,
+          "cost_ratio": 0.001035,
+          "rules_applied": [
+            "rule_long_term_debt_line_window"
+          ]
+        },
+        {
+          "doc_name": "FOOTLOCKER_2023_10K",
+          "answer": "452",
+          "correct": true,
+          "retrieved_token_count": 97,
+          "cost_ratio": 0.001271,
+          "rules_applied": [
+            "rule_long_term_debt_line_window"
+          ]
+        },
+        {
+          "doc_name": "LOCKHEEDMARTIN_2023Q2_10Q",
+          "answer": "17,262",
+          "correct": true,
+          "retrieved_token_count": 35,
+          "cost_ratio": 0.002988,
+          "rules_applied": [
+            "rule_long_term_debt_line_window"
+          ]
+        },
+        {
+          "doc_name": "PAYPAL_2023Q2_10Q",
+          "answer": "10,417",
+          "correct": false,
+          "retrieved_token_count": 35,
+          "cost_ratio": 0.000591,
+          "rules_applied": [
+            "rule_long_term_debt_line_window"
+          ]
+        },
+        {
+          "doc_name": "WALMART_2024Q1_10Q",
+          "answer": "42,095",
+          "correct": false,
+          "retrieved_token_count": 218,
+          "cost_ratio": 0.00536,
+          "rules_applied": [
+            "rule_long_term_debt_line_window"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T00:33:02.870281+00:00"
+    }
+  ]
+}

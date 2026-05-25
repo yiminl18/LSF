@@ -1,0 +1,59 @@
+{
+  "strategy": "agentic_rule_full_data",
+  "phase": "rule_generation",
+  "status": "ok",
+  "dataset": "nopv",
+  "question": "On what date or date range did PHMSA conduct the inspection that gave rise to this Notice?",
+  "question_slug": "on_what_date_or_date_range_did_phmsa_conduct_the_inspection_",
+  "model": "gpt54mini",
+  "split": "all_docs",
+  "doc_count": 242,
+  "question_count": 1,
+  "rules_dir": "rules/nopv/agentic_rule_full_data_gpt54mini/all_docs/q05_on_what_date_or_date_range_did_phmsa_conduct_the_inspection_",
+  "results_report_path": "results/nopv/agentic_rule_full_data_gpt54mini/all_docs/q05_on_what_date_or_date_range_did_phmsa_conduct_the_inspection__rule_gen.json",
+  "verify_accuracy_ledger_path": "results/nopv/agentic_rule_full_data_gpt54mini/all_docs/q05_on_what_date_or_date_range_did_phmsa_conduct_the_inspection_.verify_accuracy_ledger.json",
+  "rule_files": [
+    "rules/nopv/agentic_rule_full_data_gpt54mini/all_docs/q05_on_what_date_or_date_range_did_phmsa_conduct_the_inspection_/rule_phmsa_inspection_date_range.py"
+  ],
+  "rules_final": [
+    "rule_phmsa_inspection_date_range"
+  ],
+  "num_rules_final": 1,
+  "rule_gen": {
+    "latency_seconds": 253.91,
+    "input_tokens": 3509938,
+    "output_tokens": 35941,
+    "cached_input_tokens": 3392768,
+    "reasoning_tokens": 22582,
+    "working_sample": [
+      "12023047NOPV_PCO_12042023_(22-233293)",
+      "12025006NOPV_PCO_05082025_(23-272518)",
+      "32025024NOPV_PCO_11062025_(24-297583)",
+      "42022026NOPV_PCO_01262022_(21-209158)",
+      "42024034NOPV_PCO_08272024_(24-299840)",
+      "52022038NOPV_PCO_04122022_(21-219857)"
+    ],
+    "num_working_sample": 6,
+    "num_working_sample_iterations": 3,
+    "verify_accuracy_calls": {
+      "total": 1,
+      "input_tokens": 1816,
+      "output_tokens": 134
+    },
+    "num_rules_written": 1,
+    "num_rules_rejected": 0,
+    "rules_final": [
+      "rule_phmsa_inspection_date_range"
+    ],
+    "num_rules_final": 1,
+    "avg_cost_ratio_sample": 0.003886,
+    "match_rate_sample": 1.0,
+    "notes": "Single opening-date rule covers the main PHMSA notice phrasings: From/On, various dates between, weeks-of lists, and during-field-inspection variants. Full corpus probe hit 241 of 242 docs; one compliance-order-only file did not contain an explicit inspection opener."
+  },
+  "agent_log_path": "results/nopv/agentic_rule_full_data_gpt54mini/all_docs/q05_on_what_date_or_date_range_did_phmsa_conduct_the_inspection_.codex.jsonl",
+  "agent_last_message_path": "results/nopv/agentic_rule_full_data_gpt54mini/all_docs/q05_on_what_date_or_date_range_did_phmsa_conduct_the_inspection_.codex.last.txt",
+  "stderr": "2026-05-25T00:54:14.058360Z ERROR codex_models_manager::manager: failed to refresh available models: stream disconnected before completion: failed to decode models response: missing field `models` at line 3243 column 1; body: {\n  \"data\": [\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1772582400\n      },\n      \"id\": \"dall-e-3-3.0\",\n      \"created_at\": 1691712000,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1737936000\n      },\n      \"id\": \"dall-e-2-2.0\",\n      \"created_at\": 1713139200,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": true,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"fine_tune\": 1718323200,\n        \"inference\": 1718323200\n      },\n      \"id\": \"code-cushman-001\",\n      \"created_at\": 1642809600,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": false,\n        \"completion\": true,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"fine_tune\": 1720137600,\n        \"inference\": 1720137600\n      },\n      \"id\": \"code-cushman-fine-tune-002\",\n      \"created_at\": 1677456000,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"generally-available\",\n      \"deprecation\": {\n        \"inference\": 1797292800\n      },\n      \"id\": \"whisper-001\",\n      \"created_at\": 1694649600,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1746057600\n      },\n      \"id\": \"gpt-4-0125-Preview\",\n      \"created_at\": 1706140800,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1746057600\n      },\n      \"id\": \"gpt-4-1106-Preview\",\n      \"created_at\": 1700006400,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycl",
+  "codex_thread_id": "019e5ca0-0f2c-7ce2-984d-0cad939ebcf9",
+  "codex_event_count": 162,
+  "codex_error_message": null
+}

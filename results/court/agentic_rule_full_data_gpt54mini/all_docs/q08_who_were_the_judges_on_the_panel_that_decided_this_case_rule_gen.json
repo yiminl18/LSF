@@ -1,0 +1,65 @@
+{
+  "strategy": "agentic_rule_full_data",
+  "phase": "rule_generation",
+  "status": "ok",
+  "dataset": "court",
+  "question": "Who were the judges on the panel that decided this case?",
+  "question_slug": "who_were_the_judges_on_the_panel_that_decided_this_case",
+  "model": "gpt54mini",
+  "split": "all_docs",
+  "doc_count": 294,
+  "question_count": 1,
+  "rules_dir": "rules/court/agentic_rule_full_data_gpt54mini/all_docs/q08_who_were_the_judges_on_the_panel_that_decided_this_case",
+  "results_report_path": "results/court/agentic_rule_full_data_gpt54mini/all_docs/q08_who_were_the_judges_on_the_panel_that_decided_this_case_rule_gen.json",
+  "verify_accuracy_ledger_path": "results/court/agentic_rule_full_data_gpt54mini/all_docs/q08_who_were_the_judges_on_the_panel_that_decided_this_case.verify_accuracy_ledger.json",
+  "rule_files": [
+    "rules/court/agentic_rule_full_data_gpt54mini/all_docs/q08_who_were_the_judges_on_the_panel_that_decided_this_case/rule_panel_judges_before_header.py"
+  ],
+  "rules_final": [
+    "rule_panel_judges_before_header"
+  ],
+  "num_rules_final": 1,
+  "rule_gen": {
+    "latency_seconds": 289.09,
+    "input_tokens": 2467570,
+    "output_tokens": 36278,
+    "cached_input_tokens": 2357120,
+    "reasoning_tokens": 23645,
+    "working_sample": [
+      "20250723_state_of_washington_v._trump",
+      "20250724_bates_v._pakseresht",
+      "20250725_international_partners_for_ethical_care_inc_v._inslee",
+      "20250813_ugochukwu_nwauzor_v._the_geo_group_inc.",
+      "20250828_frankie_greer_v._county_of_san_diego",
+      "20250911_rearden_llc_v._walt_disney_pictures",
+      "20251030_state_of_oregon_v._trump",
+      "20251211_human_rights_defense_center_inc._v._uttecht",
+      "20251229_employees_at_the_clark_county_government_center_and_or_on_its_property_v._1",
+      "20260102_peridot_tree_inc._v._city_of_sacramento",
+      "20260102_sedlik_v._von_drachenberg",
+      "20260128_avery_v._teksystems_inc."
+    ],
+    "num_working_sample": 12,
+    "num_working_sample_iterations": 4,
+    "verify_accuracy_calls": {
+      "total": 1,
+      "input_tokens": 3803,
+      "output_tokens": 321
+    },
+    "num_rules_written": 1,
+    "num_rules_rejected": 0,
+    "rules_final": [
+      "rule_panel_judges_before_header"
+    ],
+    "num_rules_final": 1,
+    "avg_cost_ratio_sample": 0.005951,
+    "match_rate_sample": 1.0,
+    "notes": "Single header rule extracts judge names from 'Before:' panel lines, including wrapped, all-caps, two-judge, and district-judge-by-designation panels. Remaining full-corpus zero captures are mostly rehearing orders without a deciding panel."
+  },
+  "agent_log_path": "results/court/agentic_rule_full_data_gpt54mini/all_docs/q08_who_were_the_judges_on_the_panel_that_decided_this_case.codex.jsonl",
+  "agent_last_message_path": "results/court/agentic_rule_full_data_gpt54mini/all_docs/q08_who_were_the_judges_on_the_panel_that_decided_this_case.codex.last.txt",
+  "stderr": "2026-05-25T01:03:01.016613Z ERROR codex_models_manager::manager: failed to refresh available models: stream disconnected before completion: failed to decode models response: missing field `models` at line 3243 column 1; body: {\n  \"data\": [\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1772582400\n      },\n      \"id\": \"dall-e-3-3.0\",\n      \"created_at\": 1691712000,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1737936000\n      },\n      \"id\": \"dall-e-2-2.0\",\n      \"created_at\": 1713139200,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": true,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"fine_tune\": 1718323200,\n        \"inference\": 1718323200\n      },\n      \"id\": \"code-cushman-001\",\n      \"created_at\": 1642809600,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": false,\n        \"completion\": true,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"fine_tune\": 1720137600,\n        \"inference\": 1720137600\n      },\n      \"id\": \"code-cushman-fine-tune-002\",\n      \"created_at\": 1677456000,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"generally-available\",\n      \"deprecation\": {\n        \"inference\": 1797292800\n      },\n      \"id\": \"whisper-001\",\n      \"created_at\": 1694649600,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1746057600\n      },\n      \"id\": \"gpt-4-0125-Preview\",\n      \"created_at\": 1706140800,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1746057600\n      },\n      \"id\": \"gpt-4-1106-Preview\",\n      \"created_at\": 1700006400,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycl",
+  "codex_thread_id": "019e5ca8-199a-7c92-9ce8-b9dd10104931",
+  "codex_event_count": 133,
+  "codex_error_message": null
+}

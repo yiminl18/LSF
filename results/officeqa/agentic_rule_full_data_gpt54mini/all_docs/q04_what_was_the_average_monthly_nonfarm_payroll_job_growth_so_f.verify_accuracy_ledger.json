@@ -1,0 +1,84 @@
+{
+  "verify_accuracy_calls": [
+    {
+      "doc_names": [
+        "treasury_bulletin_2024_12",
+        "treasury_bulletin_2025_06"
+      ],
+      "rule_names": [
+        "rule_payroll_monthly_gain_first_quarter",
+        "rule_payroll_year_to_date_average"
+      ],
+      "n": 2,
+      "n_correct": 2,
+      "accuracy": 1.0,
+      "avg_cost_ratio": 0.000653,
+      "qa_input_tokens": 381,
+      "qa_output_tokens": 14,
+      "judge_input_tokens": 264,
+      "judge_output_tokens": 12,
+      "input_tokens_total": 645,
+      "output_tokens_total": 26,
+      "latency_seconds": 1.906,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_2024_12",
+          "answer": "170,000",
+          "correct": true,
+          "retrieved_token_count": 36,
+          "cost_ratio": 0.000363,
+          "rules_applied": [
+            "rule_payroll_monthly_gain_first_quarter",
+            "rule_payroll_year_to_date_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_06",
+          "answer": "133,000",
+          "correct": true,
+          "retrieved_token_count": 76,
+          "cost_ratio": 0.000944,
+          "rules_applied": [
+            "rule_payroll_monthly_gain_first_quarter",
+            "rule_payroll_year_to_date_average"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T00:35:40.708218+00:00"
+    },
+    {
+      "doc_names": [
+        "treasury_bulletin_2024_09"
+      ],
+      "rule_names": [
+        "rule_payroll_monthly_gain_first_quarter",
+        "rule_payroll_year_to_date_average"
+      ],
+      "n": 1,
+      "n_correct": 1,
+      "accuracy": 1.0,
+      "avg_cost_ratio": 0.000781,
+      "qa_input_tokens": 198,
+      "qa_output_tokens": 7,
+      "judge_input_tokens": 132,
+      "judge_output_tokens": 6,
+      "input_tokens_total": 330,
+      "output_tokens_total": 13,
+      "latency_seconds": 1.138,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_2024_09",
+          "answer": "203,000",
+          "correct": true,
+          "retrieved_token_count": 63,
+          "cost_ratio": 0.000781,
+          "rules_applied": [
+            "rule_payroll_monthly_gain_first_quarter",
+            "rule_payroll_year_to_date_average"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T00:36:05.714934+00:00"
+    }
+  ]
+}

@@ -1,0 +1,132 @@
+{
+  "verify_accuracy_calls": [
+    {
+      "doc_names": [
+        "treasury_bulletin_1982_10",
+        "treasury_bulletin_1992_09"
+      ],
+      "rule_names": [
+        "rule_ms1_latest_per_capita_currency_and_coin",
+        "rule_uscc2_latest_per_capita_currency_and_coin"
+      ],
+      "n": 2,
+      "n_correct": 0,
+      "accuracy": 0.0,
+      "avg_cost_ratio": 2.8e-05,
+      "qa_input_tokens": 283,
+      "qa_output_tokens": 14,
+      "judge_input_tokens": 270,
+      "judge_output_tokens": 14,
+      "input_tokens_total": 553,
+      "output_tokens_total": 28,
+      "latency_seconds": 1.761,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_1982_10",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "treasury_bulletin_1992_09",
+          "answer": "1.21857",
+          "correct": false,
+          "retrieved_token_count": 4,
+          "cost_ratio": 5.6e-05,
+          "rules_applied": [
+            "rule_uscc2_latest_per_capita_currency_and_coin"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T01:29:54.813923+00:00"
+    },
+    {
+      "doc_names": [
+        "treasury_bulletin_1982_10",
+        "treasury_bulletin_1992_09"
+      ],
+      "rule_names": [
+        "rule_ms1_latest_per_capita_currency_and_coin",
+        "rule_uscc2_latest_per_capita_currency_and_coin"
+      ],
+      "n": 2,
+      "n_correct": 1,
+      "accuracy": 0.5,
+      "avg_cost_ratio": 3.5e-05,
+      "qa_input_tokens": 284,
+      "qa_output_tokens": 15,
+      "judge_input_tokens": 271,
+      "judge_output_tokens": 13,
+      "input_tokens_total": 555,
+      "output_tokens_total": 28,
+      "latency_seconds": 1.777,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_1982_10",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "treasury_bulletin_1992_09",
+          "answer": "1,218.57",
+          "correct": true,
+          "retrieved_token_count": 5,
+          "cost_ratio": 7.1e-05,
+          "rules_applied": [
+            "rule_uscc2_latest_per_capita_currency_and_coin"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T01:30:26.679916+00:00"
+    },
+    {
+      "doc_names": [
+        "treasury_bulletin_1982_10",
+        "treasury_bulletin_1992_09"
+      ],
+      "rule_names": [
+        "rule_ms1_latest_per_capita_currency_and_coin",
+        "rule_uscc2_latest_per_capita_currency_and_coin"
+      ],
+      "n": 2,
+      "n_correct": 2,
+      "accuracy": 1.0,
+      "avg_cost_ratio": 5.9e-05,
+      "qa_input_tokens": 288,
+      "qa_output_tokens": 16,
+      "judge_input_tokens": 273,
+      "judge_output_tokens": 12,
+      "input_tokens_total": 561,
+      "output_tokens_total": 28,
+      "latency_seconds": 1.867,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_1982_10",
+          "answer": "642.81",
+          "correct": true,
+          "retrieved_token_count": 3,
+          "cost_ratio": 4.7e-05,
+          "rules_applied": [
+            "rule_ms1_latest_per_capita_currency_and_coin"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1992_09",
+          "answer": "1,218.57",
+          "correct": true,
+          "retrieved_token_count": 5,
+          "cost_ratio": 7.1e-05,
+          "rules_applied": [
+            "rule_uscc2_latest_per_capita_currency_and_coin"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T01:30:58.662113+00:00"
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "verify_accuracy_calls": [
+    {
+      "doc_names": [
+        "treasury_bulletin_2023_12",
+        "treasury_bulletin_2024_06",
+        "treasury_bulletin_2024_12",
+        "treasury_bulletin_2025_03",
+        "treasury_bulletin_2025_06"
+      ],
+      "rule_names": [
+        "rule_reuters_michigan_consumer_sentiment_latest_reading",
+        "rule_umich_consumer_sentiment_latest_reading"
+      ],
+      "n": 5,
+      "n_correct": 5,
+      "accuracy": 1.0,
+      "avg_cost_ratio": 0.000447,
+      "qa_input_tokens": 868,
+      "qa_output_tokens": 35,
+      "judge_input_tokens": 660,
+      "judge_output_tokens": 30,
+      "input_tokens_total": 1528,
+      "output_tokens_total": 65,
+      "latency_seconds": 3.875,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_2023_12",
+          "answer": "60.4",
+          "correct": true,
+          "retrieved_token_count": 37,
+          "cost_ratio": 0.000391,
+          "rules_applied": [
+            "rule_reuters_michigan_consumer_sentiment_latest_reading"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2024_06",
+          "answer": "67.4",
+          "correct": true,
+          "retrieved_token_count": 49,
+          "cost_ratio": 0.000626,
+          "rules_applied": [
+            "rule_reuters_michigan_consumer_sentiment_latest_reading"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2024_12",
+          "answer": "71.8",
+          "correct": true,
+          "retrieved_token_count": 38,
+          "cost_ratio": 0.000383,
+          "rules_applied": [
+            "rule_umich_consumer_sentiment_latest_reading"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_03",
+          "answer": "67.8",
+          "correct": true,
+          "retrieved_token_count": 33,
+          "cost_ratio": 0.000313,
+          "rules_applied": [
+            "rule_umich_consumer_sentiment_latest_reading"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_06",
+          "answer": "52.2",
+          "correct": true,
+          "retrieved_token_count": 42,
+          "cost_ratio": 0.000521,
+          "rules_applied": [
+            "rule_umich_consumer_sentiment_latest_reading"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T00:39:15.236916+00:00"
+    }
+  ]
+}

@@ -1,0 +1,3602 @@
+{
+  "verify_accuracy_calls": [
+    {
+      "doc_names": [
+        "3M_2023Q2_10Q",
+        "AMAZON_2022_10K",
+        "AMCOR_2022_8K_2022-07-01",
+        "FOOTLOCKER_2022_8K_dated-2022-05-20",
+        "JOHNSON_JOHNSON_2023_8K_dated-2023-08-23",
+        "SALESFORCE_2023Q3_10Q"
+      ],
+      "rule_names": [
+        "rule_registrant_telephone_number"
+      ],
+      "n": 6,
+      "n_correct": 6,
+      "accuracy": 1.0,
+      "avg_cost_ratio": 0.002071,
+      "qa_input_tokens": 808,
+      "qa_output_tokens": 70,
+      "judge_input_tokens": 976,
+      "judge_output_tokens": 36,
+      "input_tokens_total": 1784,
+      "output_tokens_total": 106,
+      "latency_seconds": 5.013,
+      "results": [
+        {
+          "doc_name": "3M_2023Q2_10Q",
+          "answer": "(651) 733-1110",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000102,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMAZON_2022_10K",
+          "answer": "(206) 266-1000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000132,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMCOR_2022_8K_2022-07-01",
+          "answer": "+44 117 9753200",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.001292,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "FOOTLOCKER_2022_8K_dated-2022-05-20",
+          "answer": "(212) 720-3700",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.003953,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "JOHNSON_JOHNSON_2023_8K_dated-2023-08-23",
+          "answer": "732-524-0400",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 0.006818,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "SALESFORCE_2023Q3_10Q",
+          "answer": "(415) 901-7000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000129,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T01:00:47.019622+00:00"
+    },
+    {
+      "doc_names": [
+        "3M_2023Q2_10Q",
+        "ACTIVISIONBLIZZARD_2017_10K",
+        "ACTIVISIONBLIZZARD_2020_10K",
+        "ACTIVSIONBLIZZARD_2023Q2_10Q",
+        "ADOBE_2015_10K",
+        "ADOBE_2016_10K",
+        "ADOBE_2017_10K",
+        "ADOBE_2018_10K",
+        "ADOBE_2019_10K",
+        "ADOBE_2020_10K",
+        "ADOBE_2021_10K",
+        "ADOBE_2022Q2_10Q",
+        "ADOBE_2022_10K",
+        "AMAZON_2015_10K",
+        "AMAZON_2016_10K",
+        "AMAZON_2017_10K",
+        "AMAZON_2018_10K",
+        "AMAZON_2019_10K",
+        "AMAZON_2020_10K",
+        "AMAZON_2022_10K",
+        "AMCOR_2019_10K",
+        "AMCOR_2021_10K",
+        "AMCOR_2022_10K",
+        "AMCOR_2022_8K_2022-07-01",
+        "AMCOR_2022_8K_dated-2022-07-01",
+        "AMCOR_2023Q2_10Q",
+        "AMCOR_2023_10K",
+        "AMD_2019_10K",
+        "AMD_2020_10K",
+        "AMD_2021_10K",
+        "AMD_2022_10K",
+        "AMERICANWATERWORKS_2023Q2_10Q",
+        "APPLE_2015_10K",
+        "APPLE_2016_10K",
+        "APPLE_2017_10K",
+        "APPLE_2018_10K",
+        "APPLE_2019_10K",
+        "APPLE_2020_10K",
+        "APPLE_2021_10K",
+        "APPLE_2022_10K",
+        "APPLE_2023Q3_10Q",
+        "BESTBUY_2015_10K",
+        "BESTBUY_2020_10K",
+        "BESTBUY_2021_10K",
+        "BESTBUY_2022_10K",
+        "BESTBUY_2023_10K",
+        "BESTBUY_2023_8K_dated-2023-04-24",
+        "BESTBUY_2024Q2_10Q",
+        "BLOCK_2022_8K_dated-2022-01-28",
+        "BOEING_2017_10K",
+        "BOEING_2018_10K",
+        "BOEING_2019_10K",
+        "BOEING_2020_10K",
+        "BOEING_2022_10K",
+        "CORNING_2022_10K",
+        "CORNING_2023Q2_10Q",
+        "COSTCO_2015_10K",
+        "COSTCO_2016_10K",
+        "COSTCO_2017_10K",
+        "COSTCO_2018_10K",
+        "COSTCO_2019_10K",
+        "COSTCO_2020_10K",
+        "COSTCO_2021_10K",
+        "COSTCO_2022_10K",
+        "COSTCO_2023_8K_dated-2023-08-09",
+        "COSTCO_2023_8K_dated-2023-08-16",
+        "EBAY_2015_10K",
+        "EBAY_2016_10K",
+        "EBAY_2017_10K",
+        "EBAY_2020_10K",
+        "EBAY_2021_10K",
+        "EBAY_2022_10K",
+        "EBAY_2023Q1_8K",
+        "EBAY_2023Q2_8K",
+        "FOOTLOCKER_2022_10K",
+        "FOOTLOCKER_2022_10Q",
+        "FOOTLOCKER_2022_8K_dated-2022-05-20",
+        "FOOTLOCKER_2022_8K_dated_2023-02-21",
+        "FOOTLOCKER_2023Q3_10Q",
+        "FOOTLOCKER_2023_10K",
+        "GENERALMILLS_2015_10K",
+        "JOHNSON_JOHNSON_2023_8K_dated-2023-08-23",
+        "JOHNSON_JOHNSON_2023_8K_dated-2023-08-30",
+        "LOCKHEEDMARTIN_2022Q2_10Q",
+        "LOCKHEEDMARTIN_2023Q1_10Q",
+        "LOCKHEEDMARTIN_2023Q2_10Q",
+        "MCDONALDS_8K_dated-2023-01-06",
+        "MCDONALDS_8K_dated-2023-02-13",
+        "MCDONALDS_8K_dated-2023-08-14",
+        "MGMRESORTS_2023Q2_10Q",
+        "MGMRESORTS_2023_8K_dated-2023-03-01",
+        "MGMRESORTS_2023_8K_dated-2023-09-12",
+        "NETFLIX_2023Q2_10Q",
+        "PAYPAL_2023Q2_10Q",
+        "PEPSICO_2023_8K_dated-2023-05-05",
+        "Pfizer_2023Q2_10Q",
+        "SALESFORCE_2021_8K_dated-2023-01-04",
+        "SALESFORCE_2023Q3_10Q",
+        "ULTABEAUTY_2023_8K_dated-2023-06-07",
+        "WALMART_2024Q1_10Q"
+      ],
+      "rule_names": [
+        "rule_registrant_telephone_number"
+      ],
+      "n": 100,
+      "n_correct": 98,
+      "accuracy": 0.98,
+      "avg_cost_ratio": 0.000864,
+      "qa_input_tokens": 13463,
+      "qa_output_tokens": 1167,
+      "judge_input_tokens": 16269,
+      "judge_output_tokens": 602,
+      "input_tokens_total": 29732,
+      "output_tokens_total": 1769,
+      "latency_seconds": 84.269,
+      "results": [
+        {
+          "doc_name": "3M_2023Q2_10Q",
+          "answer": "(651) 733-1110",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000102,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "ACTIVISIONBLIZZARD_2017_10K",
+          "answer": "(310) 255-2000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 7.7e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "ACTIVISIONBLIZZARD_2020_10K",
+          "answer": "(310) 255-2000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 7.9e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "ACTIVSIONBLIZZARD_2023Q2_10Q",
+          "answer": "(310) 255-2000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000162,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "ADOBE_2015_10K",
+          "answer": "(408) 536-6000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 8.5e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "ADOBE_2016_10K",
+          "answer": "(408) 536-6000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 8.9e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "ADOBE_2017_10K",
+          "answer": "(408) 536-6000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 9.2e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "ADOBE_2018_10K",
+          "answer": "(408) 536-6000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 8.9e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "ADOBE_2019_10K",
+          "answer": "(408) 536-6000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 8.7e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "ADOBE_2020_10K",
+          "answer": "(408) 536-6000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 8.6e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "ADOBE_2021_10K",
+          "answer": "(408) 536-6000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000102,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "ADOBE_2022Q2_10Q",
+          "answer": "(408) 536-6000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000189,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "ADOBE_2022_10K",
+          "answer": "(408) 536-6000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000104,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMAZON_2015_10K",
+          "answer": "(206) 266-1000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000131,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMAZON_2016_10K",
+          "answer": "(206) 266-1000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.00013,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMAZON_2017_10K",
+          "answer": "(206) 266-1000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000125,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMAZON_2018_10K",
+          "answer": "(206) 266-1000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.00012,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMAZON_2019_10K",
+          "answer": "(206) 266-1000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000132,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMAZON_2020_10K",
+          "answer": "(206) 266-1000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.00014,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMAZON_2022_10K",
+          "answer": "(206) 266-1000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000132,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMCOR_2019_10K",
+          "answer": "+44 117 9753200",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.0001,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMCOR_2021_10K",
+          "answer": "+44 117 9753200",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 7.4e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMCOR_2022_10K",
+          "answer": "+44 117 9753200",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 7.9e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMCOR_2022_8K_2022-07-01",
+          "answer": "+44 117 9753200",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.001292,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMCOR_2022_8K_dated-2022-07-01",
+          "answer": "+44 117 9753200",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.001292,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMCOR_2023Q2_10Q",
+          "answer": "+44 117 9753200",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000268,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMCOR_2023_10K",
+          "answer": "+44 117 9753200",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 7.5e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMD_2019_10K",
+          "answer": "(408) 749-4000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 9.6e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMD_2020_10K",
+          "answer": "(408) 749-4000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 7.5e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMD_2021_10K",
+          "answer": "(408) 749-4000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.0001,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMD_2022_10K",
+          "answer": "(408) 749-4000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 9.2e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMERICANWATERWORKS_2023Q2_10Q",
+          "answer": "(856) 955-4001",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000165,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "APPLE_2015_10K",
+          "answer": "(408) 996-1010",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000106,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "APPLE_2016_10K",
+          "answer": "(408) 996-1010",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 9.6e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "APPLE_2017_10K",
+          "answer": "(408) 996-1010",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 7.9e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "APPLE_2018_10K",
+          "answer": "(408) 996-1010",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 9.8e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "APPLE_2019_10K",
+          "answer": "(408) 996-1010",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 9.6e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "APPLE_2020_10K",
+          "answer": "(408) 996-1010",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 9.2e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "APPLE_2021_10K",
+          "answer": "(408) 996-1010",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000117,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "APPLE_2022_10K",
+          "answer": "(408) 996-1010",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000124,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "APPLE_2023Q3_10Q",
+          "answer": "(408) 996-1010",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000453,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "BESTBUY_2015_10K",
+          "answer": "612-291-1000",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 5.7e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "BESTBUY_2020_10K",
+          "answer": "(612) 291-1000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000118,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "BESTBUY_2021_10K",
+          "answer": "(612) 291-1000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 8.5e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "BESTBUY_2022_10K",
+          "answer": "(612) 291-1000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 7.5e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "BESTBUY_2023_10K",
+          "answer": "(612) 291-1000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000119,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "BESTBUY_2023_8K_dated-2023-04-24",
+          "answer": "(612) 291-1000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.008342,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "BESTBUY_2024Q2_10Q",
+          "answer": "(612) 291-1000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000308,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "BLOCK_2022_8K_dated-2022-01-28",
+          "answer": "(415) 375-3176",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 9.9e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "BOEING_2017_10K",
+          "answer": "(312) 544-2000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 9.3e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "BOEING_2018_10K",
+          "answer": "(312) 544-2000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 8.8e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "BOEING_2019_10K",
+          "answer": "(312)-544-2000",
+          "correct": true,
+          "retrieved_token_count": 7,
+          "cost_ratio": 7.3e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "BOEING_2020_10K",
+          "answer": "(312)-544-2000",
+          "correct": true,
+          "retrieved_token_count": 7,
+          "cost_ratio": 6.3e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "BOEING_2022_10K",
+          "answer": "(703)-414-6338",
+          "correct": true,
+          "retrieved_token_count": 7,
+          "cost_ratio": 6.2e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "CORNING_2022_10K",
+          "answer": "607-974-9000",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 5.2e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "CORNING_2023Q2_10Q",
+          "answer": "607-974-9000",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 0.000172,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "COSTCO_2015_10K",
+          "answer": "(425) 313-8100",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000127,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "COSTCO_2016_10K",
+          "answer": "(425) 313-8100",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000143,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "COSTCO_2017_10K",
+          "answer": "(425) 313-8100",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000146,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "COSTCO_2018_10K",
+          "answer": "(425) 313-8100",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000156,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "COSTCO_2019_10K",
+          "answer": "(425) 313-8100",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000153,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "COSTCO_2020_10K",
+          "answer": "(425) 313-8100",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000142,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "COSTCO_2021_10K",
+          "answer": "(425) 313-8100",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000166,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "COSTCO_2022_10K",
+          "answer": "(425) 313-8100",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000155,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "COSTCO_2023_8K_dated-2023-08-09",
+          "answer": "425-313-8100",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 0.000242,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "COSTCO_2023_8K_dated-2023-08-16",
+          "answer": "425-313-8100",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 0.00531,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "EBAY_2015_10K",
+          "answer": "(408) 376-7400",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 9.5e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "EBAY_2016_10K",
+          "answer": "(408) 376-7400",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 9e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "EBAY_2017_10K",
+          "answer": "(408) 376-7008",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 9.1e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "EBAY_2020_10K",
+          "answer": "(408) 376-7008",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 8.3e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "EBAY_2021_10K",
+          "answer": "(408) 376-7108",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 7.2e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "EBAY_2022_10K",
+          "answer": "(408) 376-7108",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 8.7e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "EBAY_2023Q1_8K",
+          "answer": "(408) 376-7108",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.006441,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "EBAY_2023Q2_8K",
+          "answer": "(408) 376-7108",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.008214,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "FOOTLOCKER_2022_10K",
+          "answer": "(212) 720-3700",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 9.1e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "FOOTLOCKER_2022_10Q",
+          "answer": "212-720-3700",
+          "correct": true,
+          "retrieved_token_count": 7,
+          "cost_ratio": 0.000255,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "FOOTLOCKER_2022_8K_dated-2022-05-20",
+          "answer": "(212) 720-3700",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.003953,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "FOOTLOCKER_2022_8K_dated_2023-02-21",
+          "answer": "(212) 720-3700",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.006339,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "FOOTLOCKER_2023Q3_10Q",
+          "answer": "212-720-3700",
+          "correct": true,
+          "retrieved_token_count": 7,
+          "cost_ratio": 0.000255,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "FOOTLOCKER_2023_10K",
+          "answer": "(212) 720-3700",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000105,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "GENERALMILLS_2015_10K",
+          "answer": "(763) 764-7600",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 7.6e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "JOHNSON_JOHNSON_2023_8K_dated-2023-08-23",
+          "answer": "732-524-0400",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 0.006818,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "JOHNSON_JOHNSON_2023_8K_dated-2023-08-30",
+          "answer": "732-524-0400",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 0.000355,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "LOCKHEEDMARTIN_2022Q2_10Q",
+          "answer": "(301) 897-6000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000176,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "LOCKHEEDMARTIN_2023Q1_10Q",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "LOCKHEEDMARTIN_2023Q2_10Q",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "MCDONALDS_8K_dated-2023-01-06",
+          "answer": "(630) 623-3000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.003381,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "MCDONALDS_8K_dated-2023-02-13",
+          "answer": "(630) 623-3000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.005674,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "MCDONALDS_8K_dated-2023-08-14",
+          "answer": "(630) 623-3000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.003153,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "MGMRESORTS_2023Q2_10Q",
+          "answer": "(702) 693-7120",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000186,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "MGMRESORTS_2023_8K_dated-2023-03-01",
+          "answer": "(702) 693-7120",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.003162,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "MGMRESORTS_2023_8K_dated-2023-09-12",
+          "answer": "(702) 693-7120",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.004338,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "NETFLIX_2023Q2_10Q",
+          "answer": "(408) 540-3700",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000298,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "PAYPAL_2023Q2_10Q",
+          "answer": "(408) 967-1000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000135,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "PEPSICO_2023_8K_dated-2023-05-05",
+          "answer": "(914) 253-2000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.004137,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "Pfizer_2023Q2_10Q",
+          "answer": "(212) 733-2323",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000123,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "SALESFORCE_2021_8K_dated-2023-01-04",
+          "answer": "(415) 901-7000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.003817,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "SALESFORCE_2023Q3_10Q",
+          "answer": "(415) 901-7000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000129,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "ULTABEAUTY_2023_8K_dated-2023-06-07",
+          "answer": "(630) 410-4800",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000317,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "WALMART_2024Q1_10Q",
+          "answer": "(479) 273-4000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000197,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T01:03:51.387814+00:00"
+    },
+    {
+      "doc_names": [
+        "3M_2023Q2_10Q",
+        "ACTIVISIONBLIZZARD_2017_10K",
+        "ACTIVISIONBLIZZARD_2020_10K",
+        "ACTIVSIONBLIZZARD_2023Q2_10Q",
+        "ADOBE_2015_10K",
+        "ADOBE_2016_10K",
+        "ADOBE_2017_10K",
+        "ADOBE_2018_10K",
+        "ADOBE_2019_10K",
+        "ADOBE_2020_10K",
+        "ADOBE_2021_10K",
+        "ADOBE_2022Q2_10Q",
+        "ADOBE_2022_10K",
+        "AMAZON_2015_10K",
+        "AMAZON_2016_10K",
+        "AMAZON_2017_10K",
+        "AMAZON_2018_10K",
+        "AMAZON_2019_10K",
+        "AMAZON_2020_10K",
+        "AMAZON_2022_10K",
+        "AMCOR_2019_10K",
+        "AMCOR_2021_10K",
+        "AMCOR_2022_10K",
+        "AMCOR_2022_8K_2022-07-01",
+        "AMCOR_2022_8K_dated-2022-07-01",
+        "AMCOR_2023Q2_10Q",
+        "AMCOR_2023_10K",
+        "AMD_2019_10K",
+        "AMD_2020_10K",
+        "AMD_2021_10K",
+        "AMD_2022_10K",
+        "AMERICANWATERWORKS_2023Q2_10Q",
+        "APPLE_2015_10K",
+        "APPLE_2016_10K",
+        "APPLE_2017_10K",
+        "APPLE_2018_10K",
+        "APPLE_2019_10K",
+        "APPLE_2020_10K",
+        "APPLE_2021_10K",
+        "APPLE_2022_10K",
+        "APPLE_2023Q3_10Q",
+        "BESTBUY_2015_10K",
+        "BESTBUY_2020_10K",
+        "BESTBUY_2021_10K",
+        "BESTBUY_2022_10K",
+        "BESTBUY_2023_10K",
+        "BESTBUY_2023_8K_dated-2023-04-24",
+        "BESTBUY_2024Q2_10Q",
+        "BLOCK_2022_8K_dated-2022-01-28",
+        "BOEING_2017_10K",
+        "BOEING_2018_10K",
+        "BOEING_2019_10K",
+        "BOEING_2020_10K",
+        "BOEING_2022_10K",
+        "CORNING_2022_10K",
+        "CORNING_2023Q2_10Q",
+        "COSTCO_2015_10K",
+        "COSTCO_2016_10K",
+        "COSTCO_2017_10K",
+        "COSTCO_2018_10K",
+        "COSTCO_2019_10K",
+        "COSTCO_2020_10K",
+        "COSTCO_2021_10K",
+        "COSTCO_2022_10K",
+        "COSTCO_2023_8K_dated-2023-08-09",
+        "COSTCO_2023_8K_dated-2023-08-16",
+        "EBAY_2015_10K",
+        "EBAY_2016_10K",
+        "EBAY_2017_10K",
+        "EBAY_2020_10K",
+        "EBAY_2021_10K",
+        "EBAY_2022_10K",
+        "EBAY_2023Q1_8K",
+        "EBAY_2023Q2_8K",
+        "FOOTLOCKER_2022_10K",
+        "FOOTLOCKER_2022_10Q",
+        "FOOTLOCKER_2022_8K_dated-2022-05-20",
+        "FOOTLOCKER_2022_8K_dated_2023-02-21",
+        "FOOTLOCKER_2023Q3_10Q",
+        "FOOTLOCKER_2023_10K",
+        "GENERALMILLS_2015_10K",
+        "JOHNSON_JOHNSON_2023_8K_dated-2023-08-23",
+        "JOHNSON_JOHNSON_2023_8K_dated-2023-08-30",
+        "LOCKHEEDMARTIN_2022Q2_10Q",
+        "LOCKHEEDMARTIN_2023Q1_10Q",
+        "LOCKHEEDMARTIN_2023Q2_10Q",
+        "MCDONALDS_8K_dated-2023-01-06",
+        "MCDONALDS_8K_dated-2023-02-13",
+        "MCDONALDS_8K_dated-2023-08-14",
+        "MGMRESORTS_2023Q2_10Q",
+        "MGMRESORTS_2023_8K_dated-2023-03-01",
+        "MGMRESORTS_2023_8K_dated-2023-09-12",
+        "NETFLIX_2023Q2_10Q",
+        "PAYPAL_2023Q2_10Q",
+        "PEPSICO_2023_8K_dated-2023-05-05",
+        "Pfizer_2023Q2_10Q",
+        "SALESFORCE_2021_8K_dated-2023-01-04",
+        "SALESFORCE_2023Q3_10Q",
+        "ULTABEAUTY_2023_8K_dated-2023-06-07",
+        "WALMART_2024Q1_10Q"
+      ],
+      "rule_names": [
+        "rule_registrant_telephone_number"
+      ],
+      "n": 100,
+      "n_correct": 98,
+      "accuracy": 0.98,
+      "avg_cost_ratio": 0.000875,
+      "qa_input_tokens": 13477,
+      "qa_output_tokens": 1175,
+      "judge_input_tokens": 16279,
+      "judge_output_tokens": 602,
+      "input_tokens_total": 29756,
+      "output_tokens_total": 1777,
+      "latency_seconds": 80.334,
+      "results": [
+        {
+          "doc_name": "3M_2023Q2_10Q",
+          "answer": "(651) 733-1110",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000102,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "ACTIVISIONBLIZZARD_2017_10K",
+          "answer": "(310) 255-2000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 7.7e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "ACTIVISIONBLIZZARD_2020_10K",
+          "answer": "(310) 255-2000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 7.9e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "ACTIVSIONBLIZZARD_2023Q2_10Q",
+          "answer": "(310) 255-2000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000162,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "ADOBE_2015_10K",
+          "answer": "(408) 536-6000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 8.5e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "ADOBE_2016_10K",
+          "answer": "(408) 536-6000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 8.9e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "ADOBE_2017_10K",
+          "answer": "(408) 536-6000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 9.2e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "ADOBE_2018_10K",
+          "answer": "(408) 536-6000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 8.9e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "ADOBE_2019_10K",
+          "answer": "(408) 536-6000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 8.7e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "ADOBE_2020_10K",
+          "answer": "(408) 536-6000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 8.6e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "ADOBE_2021_10K",
+          "answer": "(408) 536-6000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000102,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "ADOBE_2022Q2_10Q",
+          "answer": "(408) 536-6000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000189,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "ADOBE_2022_10K",
+          "answer": "(408) 536-6000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000104,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMAZON_2015_10K",
+          "answer": "(206) 266-1000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000131,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMAZON_2016_10K",
+          "answer": "(206) 266-1000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.00013,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMAZON_2017_10K",
+          "answer": "(206) 266-1000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000125,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMAZON_2018_10K",
+          "answer": "(206) 266-1000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.00012,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMAZON_2019_10K",
+          "answer": "(206) 266-1000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000132,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMAZON_2020_10K",
+          "answer": "(206) 266-1000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.00014,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMAZON_2022_10K",
+          "answer": "(206) 266-1000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000132,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMCOR_2019_10K",
+          "answer": "+44 117 9753200",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.0001,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMCOR_2021_10K",
+          "answer": "+44 117 9753200",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 7.4e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMCOR_2022_10K",
+          "answer": "+44 117 9753200",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 7.9e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMCOR_2022_8K_2022-07-01",
+          "answer": "+44 117 9753200",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.001292,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMCOR_2022_8K_dated-2022-07-01",
+          "answer": "+44 117 9753200",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.001292,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMCOR_2023Q2_10Q",
+          "answer": "+44 117 9753200",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000268,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMCOR_2023_10K",
+          "answer": "+44 117 9753200",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 7.5e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMD_2019_10K",
+          "answer": "(408) 749-4000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 9.6e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMD_2020_10K",
+          "answer": "(408) 749-4000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 7.5e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMD_2021_10K",
+          "answer": "(408) 749-4000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.0001,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMD_2022_10K",
+          "answer": "(408) 749-4000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 9.2e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMERICANWATERWORKS_2023Q2_10Q",
+          "answer": "(856) 955-4001",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000165,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "APPLE_2015_10K",
+          "answer": "(408) 996-1010",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000106,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "APPLE_2016_10K",
+          "answer": "(408) 996-1010",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 9.6e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "APPLE_2017_10K",
+          "answer": "(408) 996-1010",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 7.9e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "APPLE_2018_10K",
+          "answer": "(408) 996-1010",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 9.8e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "APPLE_2019_10K",
+          "answer": "(408) 996-1010",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 9.6e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "APPLE_2020_10K",
+          "answer": "(408) 996-1010",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 9.2e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "APPLE_2021_10K",
+          "answer": "(408) 996-1010",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000117,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "APPLE_2022_10K",
+          "answer": "(408) 996-1010",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000124,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "APPLE_2023Q3_10Q",
+          "answer": "(408) 996-1010",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000453,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "BESTBUY_2015_10K",
+          "answer": "612-291-1000",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 5.7e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "BESTBUY_2020_10K",
+          "answer": "(612) 291-1000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000118,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "BESTBUY_2021_10K",
+          "answer": "(612) 291-1000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 8.5e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "BESTBUY_2022_10K",
+          "answer": "(612) 291-1000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 7.5e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "BESTBUY_2023_10K",
+          "answer": "(612) 291-1000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000119,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "BESTBUY_2023_8K_dated-2023-04-24",
+          "answer": "(612) 291-1000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.008342,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "BESTBUY_2024Q2_10Q",
+          "answer": "(612) 291-1000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000308,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "BLOCK_2022_8K_dated-2022-01-28",
+          "answer": "(415) 375-3176",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 9.9e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "BOEING_2017_10K",
+          "answer": "(312) 544-2000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 9.3e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "BOEING_2018_10K",
+          "answer": "(312) 544-2000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 8.8e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "BOEING_2019_10K",
+          "answer": "(312)-544-2000",
+          "correct": true,
+          "retrieved_token_count": 7,
+          "cost_ratio": 7.3e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "BOEING_2020_10K",
+          "answer": "(312)-544-2000",
+          "correct": true,
+          "retrieved_token_count": 7,
+          "cost_ratio": 6.3e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "BOEING_2022_10K",
+          "answer": "(703)-414-6338",
+          "correct": true,
+          "retrieved_token_count": 7,
+          "cost_ratio": 6.2e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "CORNING_2022_10K",
+          "answer": "607-974-9000",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 5.2e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "CORNING_2023Q2_10Q",
+          "answer": "607-974-9000",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 0.000172,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "COSTCO_2015_10K",
+          "answer": "(425) 313-8100",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000127,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "COSTCO_2016_10K",
+          "answer": "(425) 313-8100",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000143,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "COSTCO_2017_10K",
+          "answer": "(425) 313-8100",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000146,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "COSTCO_2018_10K",
+          "answer": "(425) 313-8100",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000156,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "COSTCO_2019_10K",
+          "answer": "(425) 313-8100",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000153,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "COSTCO_2020_10K",
+          "answer": "(425) 313-8100",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000142,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "COSTCO_2021_10K",
+          "answer": "(425) 313-8100",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000166,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "COSTCO_2022_10K",
+          "answer": "(425) 313-8100",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000155,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "COSTCO_2023_8K_dated-2023-08-09",
+          "answer": "425-313-8100",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 0.000242,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "COSTCO_2023_8K_dated-2023-08-16",
+          "answer": "425-313-8100",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 0.00531,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "EBAY_2015_10K",
+          "answer": "(408) 376-7400",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 9.5e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "EBAY_2016_10K",
+          "answer": "(408) 376-7400",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 9e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "EBAY_2017_10K",
+          "answer": "(408) 376-7008",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 9.1e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "EBAY_2020_10K",
+          "answer": "(408) 376-7008",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 8.3e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "EBAY_2021_10K",
+          "answer": "(408) 376-7108",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 7.2e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "EBAY_2022_10K",
+          "answer": "(408) 376-7108",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 8.7e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "EBAY_2023Q1_8K",
+          "answer": "(408) 376-7108",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.006441,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "EBAY_2023Q2_8K",
+          "answer": "(408) 376-7108",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.008214,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "FOOTLOCKER_2022_10K",
+          "answer": "(212) 720-3700",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 9.1e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "FOOTLOCKER_2022_10Q",
+          "answer": "212-720-3700",
+          "correct": true,
+          "retrieved_token_count": 7,
+          "cost_ratio": 0.000255,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "FOOTLOCKER_2022_8K_dated-2022-05-20",
+          "answer": "(212) 720-3700",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.003953,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "FOOTLOCKER_2022_8K_dated_2023-02-21",
+          "answer": "(212) 720-3700",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.006339,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "FOOTLOCKER_2023Q3_10Q",
+          "answer": "212-720-3700",
+          "correct": true,
+          "retrieved_token_count": 7,
+          "cost_ratio": 0.000255,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "FOOTLOCKER_2023_10K",
+          "answer": "(212) 720-3700",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000105,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "GENERALMILLS_2015_10K",
+          "answer": "(763) 764-7600",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 7.6e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "JOHNSON_JOHNSON_2023_8K_dated-2023-08-23",
+          "answer": "732-524-0400",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 0.006818,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "JOHNSON_JOHNSON_2023_8K_dated-2023-08-30",
+          "answer": "732-524-0400",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 0.000355,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "LOCKHEEDMARTIN_2022Q2_10Q",
+          "answer": "(301) 897-6000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000176,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "LOCKHEEDMARTIN_2023Q1_10Q",
+          "answer": "301-897-6000",
+          "correct": false,
+          "retrieved_token_count": 6,
+          "cost_ratio": 0.000619,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "LOCKHEEDMARTIN_2023Q2_10Q",
+          "answer": "301-897-6000",
+          "correct": false,
+          "retrieved_token_count": 6,
+          "cost_ratio": 0.000512,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "MCDONALDS_8K_dated-2023-01-06",
+          "answer": "(630) 623-3000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.003381,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "MCDONALDS_8K_dated-2023-02-13",
+          "answer": "(630) 623-3000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.005674,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "MCDONALDS_8K_dated-2023-08-14",
+          "answer": "(630) 623-3000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.003153,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "MGMRESORTS_2023Q2_10Q",
+          "answer": "(702) 693-7120",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000186,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "MGMRESORTS_2023_8K_dated-2023-03-01",
+          "answer": "(702) 693-7120",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.003162,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "MGMRESORTS_2023_8K_dated-2023-09-12",
+          "answer": "(702) 693-7120",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.004338,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "NETFLIX_2023Q2_10Q",
+          "answer": "(408) 540-3700",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000298,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "PAYPAL_2023Q2_10Q",
+          "answer": "(408) 967-1000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000135,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "PEPSICO_2023_8K_dated-2023-05-05",
+          "answer": "(914) 253-2000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.004137,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "Pfizer_2023Q2_10Q",
+          "answer": "(212) 733-2323",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000123,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "SALESFORCE_2021_8K_dated-2023-01-04",
+          "answer": "(415) 901-7000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.003817,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "SALESFORCE_2023Q3_10Q",
+          "answer": "(415) 901-7000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000129,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "ULTABEAUTY_2023_8K_dated-2023-06-07",
+          "answer": "(630) 410-4800",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000317,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "WALMART_2024Q1_10Q",
+          "answer": "(479) 273-4000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000197,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T01:07:35.798651+00:00"
+    },
+    {
+      "doc_names": [
+        "LOCKHEEDMARTIN_2023Q1_10Q",
+        "LOCKHEEDMARTIN_2023Q2_10Q"
+      ],
+      "rule_names": [
+        "rule_registrant_telephone_number"
+      ],
+      "n": 2,
+      "n_correct": 2,
+      "accuracy": 1.0,
+      "avg_cost_ratio": 0.000848,
+      "qa_input_tokens": 272,
+      "qa_output_tokens": 26,
+      "judge_input_tokens": 330,
+      "judge_output_tokens": 12,
+      "input_tokens_total": 602,
+      "output_tokens_total": 38,
+      "latency_seconds": 1.841,
+      "results": [
+        {
+          "doc_name": "LOCKHEEDMARTIN_2023Q1_10Q",
+          "answer": "+1 301-897-6000",
+          "correct": true,
+          "retrieved_token_count": 9,
+          "cost_ratio": 0.000928,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "LOCKHEEDMARTIN_2023Q2_10Q",
+          "answer": "+1 301-897-6800",
+          "correct": true,
+          "retrieved_token_count": 9,
+          "cost_ratio": 0.000768,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T01:08:10.260555+00:00"
+    },
+    {
+      "doc_names": [
+        "3M_2023Q2_10Q",
+        "ACTIVISIONBLIZZARD_2017_10K",
+        "ACTIVISIONBLIZZARD_2020_10K",
+        "ACTIVSIONBLIZZARD_2023Q2_10Q",
+        "ADOBE_2015_10K",
+        "ADOBE_2016_10K",
+        "ADOBE_2017_10K",
+        "ADOBE_2018_10K",
+        "ADOBE_2019_10K",
+        "ADOBE_2020_10K",
+        "ADOBE_2021_10K",
+        "ADOBE_2022Q2_10Q",
+        "ADOBE_2022_10K",
+        "AMAZON_2015_10K",
+        "AMAZON_2016_10K",
+        "AMAZON_2017_10K",
+        "AMAZON_2018_10K",
+        "AMAZON_2019_10K",
+        "AMAZON_2020_10K",
+        "AMAZON_2022_10K",
+        "AMCOR_2019_10K",
+        "AMCOR_2021_10K",
+        "AMCOR_2022_10K",
+        "AMCOR_2022_8K_2022-07-01",
+        "AMCOR_2022_8K_dated-2022-07-01",
+        "AMCOR_2023Q2_10Q",
+        "AMCOR_2023_10K",
+        "AMD_2019_10K",
+        "AMD_2020_10K",
+        "AMD_2021_10K",
+        "AMD_2022_10K",
+        "AMERICANWATERWORKS_2023Q2_10Q",
+        "APPLE_2015_10K",
+        "APPLE_2016_10K",
+        "APPLE_2017_10K",
+        "APPLE_2018_10K",
+        "APPLE_2019_10K",
+        "APPLE_2020_10K",
+        "APPLE_2021_10K",
+        "APPLE_2022_10K",
+        "APPLE_2023Q3_10Q",
+        "BESTBUY_2015_10K",
+        "BESTBUY_2020_10K",
+        "BESTBUY_2021_10K",
+        "BESTBUY_2022_10K",
+        "BESTBUY_2023_10K",
+        "BESTBUY_2023_8K_dated-2023-04-24",
+        "BESTBUY_2024Q2_10Q",
+        "BLOCK_2022_8K_dated-2022-01-28",
+        "BOEING_2017_10K",
+        "BOEING_2018_10K",
+        "BOEING_2019_10K",
+        "BOEING_2020_10K",
+        "BOEING_2022_10K",
+        "CORNING_2022_10K",
+        "CORNING_2023Q2_10Q",
+        "COSTCO_2015_10K",
+        "COSTCO_2016_10K",
+        "COSTCO_2017_10K",
+        "COSTCO_2018_10K",
+        "COSTCO_2019_10K",
+        "COSTCO_2020_10K",
+        "COSTCO_2021_10K",
+        "COSTCO_2022_10K",
+        "COSTCO_2023_8K_dated-2023-08-09",
+        "COSTCO_2023_8K_dated-2023-08-16",
+        "EBAY_2015_10K",
+        "EBAY_2016_10K",
+        "EBAY_2017_10K",
+        "EBAY_2020_10K",
+        "EBAY_2021_10K",
+        "EBAY_2022_10K",
+        "EBAY_2023Q1_8K",
+        "EBAY_2023Q2_8K",
+        "FOOTLOCKER_2022_10K",
+        "FOOTLOCKER_2022_10Q",
+        "FOOTLOCKER_2022_8K_dated-2022-05-20",
+        "FOOTLOCKER_2022_8K_dated_2023-02-21",
+        "FOOTLOCKER_2023Q3_10Q",
+        "FOOTLOCKER_2023_10K",
+        "GENERALMILLS_2015_10K",
+        "JOHNSON_JOHNSON_2023_8K_dated-2023-08-23",
+        "JOHNSON_JOHNSON_2023_8K_dated-2023-08-30",
+        "LOCKHEEDMARTIN_2022Q2_10Q",
+        "LOCKHEEDMARTIN_2023Q1_10Q",
+        "LOCKHEEDMARTIN_2023Q2_10Q",
+        "MCDONALDS_8K_dated-2023-01-06",
+        "MCDONALDS_8K_dated-2023-02-13",
+        "MCDONALDS_8K_dated-2023-08-14",
+        "MGMRESORTS_2023Q2_10Q",
+        "MGMRESORTS_2023_8K_dated-2023-03-01",
+        "MGMRESORTS_2023_8K_dated-2023-09-12",
+        "NETFLIX_2023Q2_10Q",
+        "PAYPAL_2023Q2_10Q",
+        "PEPSICO_2023_8K_dated-2023-05-05",
+        "Pfizer_2023Q2_10Q",
+        "SALESFORCE_2021_8K_dated-2023-01-04",
+        "SALESFORCE_2023Q3_10Q",
+        "ULTABEAUTY_2023_8K_dated-2023-06-07",
+        "WALMART_2024Q1_10Q"
+      ],
+      "rule_names": [
+        "rule_registrant_telephone_number"
+      ],
+      "n": 100,
+      "n_correct": 100,
+      "accuracy": 1.0,
+      "avg_cost_ratio": 0.000881,
+      "qa_input_tokens": 13483,
+      "qa_output_tokens": 1181,
+      "judge_input_tokens": 16283,
+      "judge_output_tokens": 600,
+      "input_tokens_total": 29766,
+      "output_tokens_total": 1781,
+      "latency_seconds": 79.688,
+      "results": [
+        {
+          "doc_name": "3M_2023Q2_10Q",
+          "answer": "(651) 733-1110",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000102,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "ACTIVISIONBLIZZARD_2017_10K",
+          "answer": "(310) 255-2000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 7.7e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "ACTIVISIONBLIZZARD_2020_10K",
+          "answer": "(310) 255-2000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 7.9e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "ACTIVSIONBLIZZARD_2023Q2_10Q",
+          "answer": "(310) 255-2000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000162,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "ADOBE_2015_10K",
+          "answer": "(408) 536-6000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 8.5e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "ADOBE_2016_10K",
+          "answer": "(408) 536-6000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 8.9e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "ADOBE_2017_10K",
+          "answer": "(408) 536-6000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 9.2e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "ADOBE_2018_10K",
+          "answer": "(408) 536-6000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 8.9e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "ADOBE_2019_10K",
+          "answer": "(408) 536-6000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 8.7e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "ADOBE_2020_10K",
+          "answer": "(408) 536-6000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 8.6e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "ADOBE_2021_10K",
+          "answer": "(408) 536-6000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000102,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "ADOBE_2022Q2_10Q",
+          "answer": "(408) 536-6000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000189,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "ADOBE_2022_10K",
+          "answer": "(408) 536-6000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000104,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMAZON_2015_10K",
+          "answer": "(206) 266-1000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000131,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMAZON_2016_10K",
+          "answer": "(206) 266-1000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.00013,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMAZON_2017_10K",
+          "answer": "(206) 266-1000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000125,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMAZON_2018_10K",
+          "answer": "(206) 266-1000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.00012,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMAZON_2019_10K",
+          "answer": "(206) 266-1000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000132,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMAZON_2020_10K",
+          "answer": "(206) 266-1000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.00014,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMAZON_2022_10K",
+          "answer": "(206) 266-1000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000132,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMCOR_2019_10K",
+          "answer": "+44 117 9753200",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.0001,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMCOR_2021_10K",
+          "answer": "+44 117 9753200",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 7.4e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMCOR_2022_10K",
+          "answer": "+44 117 9753200",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 7.9e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMCOR_2022_8K_2022-07-01",
+          "answer": "+44 117 9753200",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.001292,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMCOR_2022_8K_dated-2022-07-01",
+          "answer": "+44 117 9753200",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.001292,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMCOR_2023Q2_10Q",
+          "answer": "+44 117 9753200",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000268,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMCOR_2023_10K",
+          "answer": "+44 117 9753200",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 7.5e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMD_2019_10K",
+          "answer": "(408) 749-4000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 9.6e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMD_2020_10K",
+          "answer": "(408) 749-4000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 7.5e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMD_2021_10K",
+          "answer": "(408) 749-4000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.0001,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMD_2022_10K",
+          "answer": "(408) 749-4000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 9.2e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMERICANWATERWORKS_2023Q2_10Q",
+          "answer": "(856) 955-4001",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000165,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "APPLE_2015_10K",
+          "answer": "(408) 996-1010",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000106,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "APPLE_2016_10K",
+          "answer": "(408) 996-1010",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 9.6e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "APPLE_2017_10K",
+          "answer": "(408) 996-1010",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 7.9e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "APPLE_2018_10K",
+          "answer": "(408) 996-1010",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 9.8e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "APPLE_2019_10K",
+          "answer": "(408) 996-1010",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 9.6e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "APPLE_2020_10K",
+          "answer": "(408) 996-1010",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 9.2e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "APPLE_2021_10K",
+          "answer": "(408) 996-1010",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000117,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "APPLE_2022_10K",
+          "answer": "(408) 996-1010",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000124,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "APPLE_2023Q3_10Q",
+          "answer": "(408) 996-1010",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000453,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "BESTBUY_2015_10K",
+          "answer": "612-291-1000",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 5.7e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "BESTBUY_2020_10K",
+          "answer": "(612) 291-1000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000118,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "BESTBUY_2021_10K",
+          "answer": "(612) 291-1000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 8.5e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "BESTBUY_2022_10K",
+          "answer": "(612) 291-1000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 7.5e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "BESTBUY_2023_10K",
+          "answer": "(612) 291-1000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000119,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "BESTBUY_2023_8K_dated-2023-04-24",
+          "answer": "(612) 291-1000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.008342,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "BESTBUY_2024Q2_10Q",
+          "answer": "(612) 291-1000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000308,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "BLOCK_2022_8K_dated-2022-01-28",
+          "answer": "(415) 375-3176",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 9.9e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "BOEING_2017_10K",
+          "answer": "(312) 544-2000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 9.3e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "BOEING_2018_10K",
+          "answer": "(312) 544-2000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 8.8e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "BOEING_2019_10K",
+          "answer": "(312)-544-2000",
+          "correct": true,
+          "retrieved_token_count": 7,
+          "cost_ratio": 7.3e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "BOEING_2020_10K",
+          "answer": "(312)-544-2000",
+          "correct": true,
+          "retrieved_token_count": 7,
+          "cost_ratio": 6.3e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "BOEING_2022_10K",
+          "answer": "(703)-414-6338",
+          "correct": true,
+          "retrieved_token_count": 7,
+          "cost_ratio": 6.2e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "CORNING_2022_10K",
+          "answer": "607-974-9000",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 5.2e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "CORNING_2023Q2_10Q",
+          "answer": "607-974-9000",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 0.000172,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "COSTCO_2015_10K",
+          "answer": "(425) 313-8100",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000127,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "COSTCO_2016_10K",
+          "answer": "(425) 313-8100",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000143,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "COSTCO_2017_10K",
+          "answer": "(425) 313-8100",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000146,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "COSTCO_2018_10K",
+          "answer": "(425) 313-8100",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000156,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "COSTCO_2019_10K",
+          "answer": "(425) 313-8100",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000153,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "COSTCO_2020_10K",
+          "answer": "(425) 313-8100",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000142,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "COSTCO_2021_10K",
+          "answer": "(425) 313-8100",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000166,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "COSTCO_2022_10K",
+          "answer": "(425) 313-8100",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000155,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "COSTCO_2023_8K_dated-2023-08-09",
+          "answer": "425-313-8100",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 0.000242,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "COSTCO_2023_8K_dated-2023-08-16",
+          "answer": "425-313-8100",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 0.00531,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "EBAY_2015_10K",
+          "answer": "(408) 376-7400",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 9.5e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "EBAY_2016_10K",
+          "answer": "(408) 376-7400",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 9e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "EBAY_2017_10K",
+          "answer": "(408) 376-7008",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 9.1e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "EBAY_2020_10K",
+          "answer": "(408) 376-7008",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 8.3e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "EBAY_2021_10K",
+          "answer": "(408) 376-7108",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 7.2e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "EBAY_2022_10K",
+          "answer": "(408) 376-7108",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 8.7e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "EBAY_2023Q1_8K",
+          "answer": "(408) 376-7108",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.006441,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "EBAY_2023Q2_8K",
+          "answer": "(408) 376-7108",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.008214,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "FOOTLOCKER_2022_10K",
+          "answer": "(212) 720-3700",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 9.1e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "FOOTLOCKER_2022_10Q",
+          "answer": "212-720-3700",
+          "correct": true,
+          "retrieved_token_count": 7,
+          "cost_ratio": 0.000255,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "FOOTLOCKER_2022_8K_dated-2022-05-20",
+          "answer": "(212) 720-3700",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.003953,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "FOOTLOCKER_2022_8K_dated_2023-02-21",
+          "answer": "(212) 720-3700",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.006339,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "FOOTLOCKER_2023Q3_10Q",
+          "answer": "212-720-3700",
+          "correct": true,
+          "retrieved_token_count": 7,
+          "cost_ratio": 0.000255,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "FOOTLOCKER_2023_10K",
+          "answer": "(212) 720-3700",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000105,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "GENERALMILLS_2015_10K",
+          "answer": "(763) 764-7600",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 7.6e-05,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "JOHNSON_JOHNSON_2023_8K_dated-2023-08-23",
+          "answer": "732-524-0400",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 0.006818,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "JOHNSON_JOHNSON_2023_8K_dated-2023-08-30",
+          "answer": "732-524-0400",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 0.000355,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "LOCKHEEDMARTIN_2022Q2_10Q",
+          "answer": "(301) 897-6000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000176,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "LOCKHEEDMARTIN_2023Q1_10Q",
+          "answer": "+1 301-897-6000",
+          "correct": true,
+          "retrieved_token_count": 9,
+          "cost_ratio": 0.000928,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "LOCKHEEDMARTIN_2023Q2_10Q",
+          "answer": "+1 301-897-6800",
+          "correct": true,
+          "retrieved_token_count": 9,
+          "cost_ratio": 0.000768,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "MCDONALDS_8K_dated-2023-01-06",
+          "answer": "(630) 623-3000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.003381,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "MCDONALDS_8K_dated-2023-02-13",
+          "answer": "(630) 623-3000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.005674,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "MCDONALDS_8K_dated-2023-08-14",
+          "answer": "(630) 623-3000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.003153,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "MGMRESORTS_2023Q2_10Q",
+          "answer": "(702) 693-7120",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000186,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "MGMRESORTS_2023_8K_dated-2023-03-01",
+          "answer": "(702) 693-7120",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.003162,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "MGMRESORTS_2023_8K_dated-2023-09-12",
+          "answer": "(702) 693-7120",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.004338,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "NETFLIX_2023Q2_10Q",
+          "answer": "(408) 540-3700",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000298,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "PAYPAL_2023Q2_10Q",
+          "answer": "(408) 967-1000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000135,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "PEPSICO_2023_8K_dated-2023-05-05",
+          "answer": "(914) 253-2000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.004137,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "Pfizer_2023Q2_10Q",
+          "answer": "(212) 733-2323",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000123,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "SALESFORCE_2021_8K_dated-2023-01-04",
+          "answer": "(415) 901-7000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.003817,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "SALESFORCE_2023Q3_10Q",
+          "answer": "(415) 901-7000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000129,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "ULTABEAUTY_2023_8K_dated-2023-06-07",
+          "answer": "(630) 410-4800",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000317,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "WALMART_2024Q1_10Q",
+          "answer": "(479) 273-4000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000197,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T01:11:31.240150+00:00"
+    },
+    {
+      "doc_names": [
+        "3M_2023Q2_10Q",
+        "AMAZON_2022_10K",
+        "AMCOR_2022_8K_2022-07-01",
+        "FOOTLOCKER_2022_8K_dated-2022-05-20",
+        "JOHNSON_JOHNSON_2023_8K_dated-2023-08-23",
+        "LOCKHEEDMARTIN_2023Q1_10Q",
+        "LOCKHEEDMARTIN_2023Q2_10Q",
+        "SALESFORCE_2023Q3_10Q"
+      ],
+      "rule_names": [
+        "rule_registrant_telephone_number"
+      ],
+      "n": 8,
+      "n_correct": 8,
+      "accuracy": 1.0,
+      "avg_cost_ratio": 0.001765,
+      "qa_input_tokens": 1080,
+      "qa_output_tokens": 96,
+      "judge_input_tokens": 1306,
+      "judge_output_tokens": 48,
+      "input_tokens_total": 2386,
+      "output_tokens_total": 144,
+      "latency_seconds": 6.397,
+      "results": [
+        {
+          "doc_name": "3M_2023Q2_10Q",
+          "answer": "(651) 733-1110",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000102,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMAZON_2022_10K",
+          "answer": "(206) 266-1000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000132,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "AMCOR_2022_8K_2022-07-01",
+          "answer": "+44 117 9753200",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.001292,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "FOOTLOCKER_2022_8K_dated-2022-05-20",
+          "answer": "(212) 720-3700",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.003953,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "JOHNSON_JOHNSON_2023_8K_dated-2023-08-23",
+          "answer": "732-524-0400",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 0.006818,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "LOCKHEEDMARTIN_2023Q1_10Q",
+          "answer": "+1 301-897-6000",
+          "correct": true,
+          "retrieved_token_count": 9,
+          "cost_ratio": 0.000928,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "LOCKHEEDMARTIN_2023Q2_10Q",
+          "answer": "+1 301-897-6800",
+          "correct": true,
+          "retrieved_token_count": 9,
+          "cost_ratio": 0.000768,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        },
+        {
+          "doc_name": "SALESFORCE_2023Q3_10Q",
+          "answer": "(415) 901-7000",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.000129,
+          "rules_applied": [
+            "rule_registrant_telephone_number"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T01:11:53.245791+00:00"
+    }
+  ]
+}

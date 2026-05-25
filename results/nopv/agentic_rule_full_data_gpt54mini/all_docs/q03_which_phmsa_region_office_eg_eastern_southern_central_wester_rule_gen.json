@@ -1,0 +1,58 @@
+{
+  "strategy": "agentic_rule_full_data",
+  "phase": "rule_generation",
+  "status": "ok",
+  "dataset": "nopv",
+  "question": "Which PHMSA Region office (e.g., Eastern, Southern, Central, Western, Southwest) issued this Notice?",
+  "question_slug": "which_phmsa_region_office_eg_eastern_southern_central_wester",
+  "model": "gpt54mini",
+  "split": "all_docs",
+  "doc_count": 242,
+  "question_count": 1,
+  "rules_dir": "rules/nopv/agentic_rule_full_data_gpt54mini/all_docs/q03_which_phmsa_region_office_eg_eastern_southern_central_wester",
+  "results_report_path": "results/nopv/agentic_rule_full_data_gpt54mini/all_docs/q03_which_phmsa_region_office_eg_eastern_southern_central_wester_rule_gen.json",
+  "verify_accuracy_ledger_path": "results/nopv/agentic_rule_full_data_gpt54mini/all_docs/q03_which_phmsa_region_office_eg_eastern_southern_central_wester.verify_accuracy_ledger.json",
+  "rule_files": [
+    "rules/nopv/agentic_rule_full_data_gpt54mini/all_docs/q03_which_phmsa_region_office_eg_eastern_southern_central_wester/rule_phmsa_region_office_signature.py"
+  ],
+  "rules_final": [
+    "rule_phmsa_region_office_signature"
+  ],
+  "num_rules_final": 1,
+  "rule_gen": {
+    "latency_seconds": 299.8,
+    "input_tokens": 2041432,
+    "output_tokens": 20429,
+    "cached_input_tokens": 1950720,
+    "reasoning_tokens": 11751,
+    "working_sample": [
+      "12023047NOPV_PCO_12042023_(22-233293)",
+      "22023013NOPV_PCP PCO_11162023_(21-224433)",
+      "32022025NOPV_PCP PCO_10142022_(20-182827)",
+      "42022018NOPV_PCO_02142022_(21-207285)",
+      "52023009NOPV_PCP PCO_03012023_(21-217219)"
+    ],
+    "num_working_sample": 5,
+    "num_working_sample_iterations": 2,
+    "verify_accuracy_calls": {
+      "total": 2,
+      "input_tokens": 13961,
+      "output_tokens": 112
+    },
+    "num_rules_written": 1,
+    "num_rules_rejected": 1,
+    "rules_final": [
+      "rule_phmsa_region_office_signature"
+    ],
+    "num_rules_final": 1,
+    "avg_cost_ratio_sample": 0.004946,
+    "match_rate_sample": 1.0,
+    "notes": "The signature-block rule alone retrieved the PHMSA region office for all 5 sample notices with low cost. A broader opening-paragraph fallback was tested, then removed because it was unnecessary and too expensive."
+  },
+  "agent_log_path": "results/nopv/agentic_rule_full_data_gpt54mini/all_docs/q03_which_phmsa_region_office_eg_eastern_southern_central_wester.codex.jsonl",
+  "agent_last_message_path": "results/nopv/agentic_rule_full_data_gpt54mini/all_docs/q03_which_phmsa_region_office_eg_eastern_southern_central_wester.codex.last.txt",
+  "stderr": "2026-05-25T00:32:24.541967Z ERROR codex_models_manager::manager: failed to refresh available models: stream disconnected before completion: failed to decode models response: missing field `models` at line 3243 column 1; body: {\n  \"data\": [\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1772582400\n      },\n      \"id\": \"dall-e-3-3.0\",\n      \"created_at\": 1691712000,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1737936000\n      },\n      \"id\": \"dall-e-2-2.0\",\n      \"created_at\": 1713139200,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": true,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"fine_tune\": 1718323200,\n        \"inference\": 1718323200\n      },\n      \"id\": \"code-cushman-001\",\n      \"created_at\": 1642809600,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": false,\n        \"completion\": true,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"fine_tune\": 1720137600,\n        \"inference\": 1720137600\n      },\n      \"id\": \"code-cushman-fine-tune-002\",\n      \"created_at\": 1677456000,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"generally-available\",\n      \"deprecation\": {\n        \"inference\": 1797292800\n      },\n      \"id\": \"whisper-001\",\n      \"created_at\": 1694649600,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1746057600\n      },\n      \"id\": \"gpt-4-0125-Preview\",\n      \"created_at\": 1706140800,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1746057600\n      },\n      \"id\": \"gpt-4-1106-Preview\",\n      \"created_at\": 1700006400,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycl",
+  "codex_thread_id": "019e5c8c-13e0-74e3-81a4-800c949d2fac",
+  "codex_event_count": 120,
+  "codex_error_message": "Reconnecting... 1/5 (stream disconnected before completion: Incomplete response returned, reason: content_filter)"
+}

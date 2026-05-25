@@ -1,0 +1,134 @@
+{
+  "verify_accuracy_calls": [
+    {
+      "doc_names": [
+        "treasury_bulletin_1982_04",
+        "treasury_bulletin_2004_12",
+        "treasury_bulletin_2013_03",
+        "treasury_bulletin_2019_12"
+      ],
+      "rule_names": [
+        "rule_esf_total_assets"
+      ],
+      "n": 4,
+      "n_correct": 3,
+      "accuracy": 0.75,
+      "avg_cost_ratio": 0.001187,
+      "qa_input_tokens": 1049,
+      "qa_output_tokens": 33,
+      "judge_input_tokens": 522,
+      "judge_output_tokens": 25,
+      "input_tokens_total": 1571,
+      "output_tokens_total": 58,
+      "latency_seconds": 3.54,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_1982_04",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 91,
+          "cost_ratio": 0.001422,
+          "rules_applied": [
+            "rule_esf_total_assets"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2004_12",
+          "answer": "42,479,589",
+          "correct": true,
+          "retrieved_token_count": 137,
+          "cost_ratio": 0.000794,
+          "rules_applied": [
+            "rule_esf_total_assets"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2013_03",
+          "answer": "103,859,997",
+          "correct": true,
+          "retrieved_token_count": 150,
+          "cost_ratio": 0.00094,
+          "rules_applied": [
+            "rule_esf_total_assets"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2019_12",
+          "answer": "93,322,299",
+          "correct": true,
+          "retrieved_token_count": 147,
+          "cost_ratio": 0.001593,
+          "rules_applied": [
+            "rule_esf_total_assets"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T01:34:41.785516+00:00"
+    },
+    {
+      "doc_names": [
+        "treasury_bulletin_2004_12",
+        "treasury_bulletin_2013_03",
+        "treasury_bulletin_2019_12",
+        "treasury_bulletin_2025_06"
+      ],
+      "rule_names": [
+        "rule_esf_total_assets"
+      ],
+      "n": 4,
+      "n_correct": 4,
+      "accuracy": 1.0,
+      "avg_cost_ratio": 0.001397,
+      "qa_input_tokens": 1137,
+      "qa_output_tokens": 36,
+      "judge_input_tokens": 528,
+      "judge_output_tokens": 24,
+      "input_tokens_total": 1665,
+      "output_tokens_total": 60,
+      "latency_seconds": 3.189,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_2004_12",
+          "answer": "42,479,589",
+          "correct": true,
+          "retrieved_token_count": 137,
+          "cost_ratio": 0.000794,
+          "rules_applied": [
+            "rule_esf_total_assets"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2013_03",
+          "answer": "103,859,997",
+          "correct": true,
+          "retrieved_token_count": 150,
+          "cost_ratio": 0.00094,
+          "rules_applied": [
+            "rule_esf_total_assets"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2019_12",
+          "answer": "93,322,299",
+          "correct": true,
+          "retrieved_token_count": 147,
+          "cost_ratio": 0.001593,
+          "rules_applied": [
+            "rule_esf_total_assets"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_06",
+          "answer": "214,428,994",
+          "correct": true,
+          "retrieved_token_count": 182,
+          "cost_ratio": 0.00226,
+          "rules_applied": [
+            "rule_esf_total_assets"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T01:35:16.114351+00:00"
+    }
+  ]
+}

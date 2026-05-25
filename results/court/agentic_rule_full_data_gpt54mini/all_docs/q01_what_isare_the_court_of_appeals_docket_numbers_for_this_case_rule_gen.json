@@ -1,0 +1,58 @@
+{
+  "strategy": "agentic_rule_full_data",
+  "phase": "rule_generation",
+  "status": "ok",
+  "dataset": "court",
+  "question": "What is/are the Court of Appeals docket number(s) for this case?",
+  "question_slug": "what_isare_the_court_of_appeals_docket_numbers_for_this_case",
+  "model": "gpt54mini",
+  "split": "all_docs",
+  "doc_count": 294,
+  "question_count": 1,
+  "rules_dir": "rules/court/agentic_rule_full_data_gpt54mini/all_docs/q01_what_isare_the_court_of_appeals_docket_numbers_for_this_case",
+  "results_report_path": "results/court/agentic_rule_full_data_gpt54mini/all_docs/q01_what_isare_the_court_of_appeals_docket_numbers_for_this_case_rule_gen.json",
+  "verify_accuracy_ledger_path": "results/court/agentic_rule_full_data_gpt54mini/all_docs/q01_what_isare_the_court_of_appeals_docket_numbers_for_this_case.verify_accuracy_ledger.json",
+  "rule_files": [
+    "rules/court/agentic_rule_full_data_gpt54mini/all_docs/q01_what_isare_the_court_of_appeals_docket_numbers_for_this_case/rule_court_of_appeals_docket_numbers.py"
+  ],
+  "rules_final": [
+    "rule_court_of_appeals_docket_numbers"
+  ],
+  "num_rules_final": 1,
+  "rule_gen": {
+    "latency_seconds": 361.16,
+    "input_tokens": 2130192,
+    "output_tokens": 20514,
+    "cached_input_tokens": 2049920,
+    "reasoning_tokens": 13450,
+    "working_sample": [
+      "20250723_state_of_washington_v._trump",
+      "20250728_todd_yukutake_v._anne_e._lopez",
+      "20250729_cedar_park_assembly_of_god_of_kirkland_washington_v._patty_kuderer",
+      "20260108_state_of_oregon_v._trump",
+      "20260305_pacito_v._trump"
+    ],
+    "num_working_sample": 5,
+    "num_working_sample_iterations": 2,
+    "verify_accuracy_calls": {
+      "total": 2,
+      "input_tokens": 2945,
+      "output_tokens": 169
+    },
+    "num_rules_written": 1,
+    "num_rules_rejected": 0,
+    "rules_final": [
+      "rule_court_of_appeals_docket_numbers"
+    ],
+    "num_rules_final": 1,
+    "avg_cost_ratio_sample": 0.011974,
+    "match_rate_sample": 1.0,
+    "notes": "Single header-focused rule that extracts Court of Appeals docket numbers from No./Nos. lines, including split-label and comma-continued multi-docket headers."
+  },
+  "agent_log_path": "results/court/agentic_rule_full_data_gpt54mini/all_docs/q01_what_isare_the_court_of_appeals_docket_numbers_for_this_case.codex.jsonl",
+  "agent_last_message_path": "results/court/agentic_rule_full_data_gpt54mini/all_docs/q01_what_isare_the_court_of_appeals_docket_numbers_for_this_case.codex.last.txt",
+  "stderr": "2026-05-25T00:17:41.129388Z ERROR codex_models_manager::manager: failed to refresh available models: stream disconnected before completion: failed to decode models response: missing field `models` at line 3243 column 1; body: {\n  \"data\": [\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1772582400\n      },\n      \"id\": \"dall-e-3-3.0\",\n      \"created_at\": 1691712000,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1737936000\n      },\n      \"id\": \"dall-e-2-2.0\",\n      \"created_at\": 1713139200,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": true,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"fine_tune\": 1718323200,\n        \"inference\": 1718323200\n      },\n      \"id\": \"code-cushman-001\",\n      \"created_at\": 1642809600,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": false,\n        \"completion\": true,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"fine_tune\": 1720137600,\n        \"inference\": 1720137600\n      },\n      \"id\": \"code-cushman-fine-tune-002\",\n      \"created_at\": 1677456000,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"generally-available\",\n      \"deprecation\": {\n        \"inference\": 1797292800\n      },\n      \"id\": \"whisper-001\",\n      \"created_at\": 1694649600,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1746057600\n      },\n      \"id\": \"gpt-4-0125-Preview\",\n      \"created_at\": 1706140800,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1746057600\n      },\n      \"id\": \"gpt-4-1106-Preview\",\n      \"created_at\": 1700006400,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycl",
+  "codex_thread_id": "019e5c7e-990e-7112-90a6-02edc61ac7f3",
+  "codex_event_count": 102,
+  "codex_error_message": "Reconnecting... 1/5 (stream disconnected before completion: Incomplete response returned, reason: content_filter)"
+}

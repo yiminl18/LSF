@@ -1,0 +1,29 @@
+{
+  "doc_name": "treasury_bulletin_1984_03",
+  "question": "What quarter and year does this Treasury Bulletin cover?",
+  "question_slug": "what_quarter_and_year_does_this_treasury_bulletin_cover",
+  "split": "all_docs",
+  "ground_truth": "Winter Issue\n1st Quarter, Fiscal 1984",
+  "answer": "Winter Issue Fiscal 1984",
+  "correct": true,
+  "status": "ok",
+  "input_tokens": 101,
+  "output_tokens": 10,
+  "latency_seconds": 0.655,
+  "model": "gpt54",
+  "doc_token_count": 129069,
+  "cost_ratio": 0.0008,
+  "retrieved_token_count": 9,
+  "rules_with_hits": [
+    "rule_treasury_bulletin_cover_period"
+  ],
+  "rules_with_no_hits": [],
+  "num_spans_before_dedup": 2,
+  "num_spans_after_dedup": 2,
+  "rule_names": [
+    "rule_treasury_bulletin_cover_period"
+  ],
+  "rule_question_dir": "q01_what_quarter_and_year_does_this_treasury_bulletin_cover",
+  "rule_generation_report_path": "results/officeqa/agentic_rule_full_data_gpt54mini/all_docs/q01_what_quarter_and_year_does_this_treasury_bulletin_cover_rule_gen.json",
+  "rule_apply_trace_path": "results/officeqa/agentic_rule_full_data_gpt54mini/all_docs/rule_apply_merge/_trace/q01_what_quarter_and_year_does_this_treasury_bulletin_cover/rule_treasury_bulletin_cover_period_merge.json"
+}

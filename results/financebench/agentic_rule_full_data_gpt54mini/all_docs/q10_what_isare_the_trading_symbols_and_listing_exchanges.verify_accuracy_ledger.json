@@ -1,0 +1,439 @@
+{
+  "verify_accuracy_calls": [
+    {
+      "doc_names": [
+        "AMCOR_2023_10K",
+        "AMD_2022_10K",
+        "APPLE_2022_10K",
+        "BESTBUY_2023_10K",
+        "MCDONALDS_8K_dated-2023-08-14",
+        "SALESFORCE_2023Q3_10Q"
+      ],
+      "rule_names": [
+        "rule_trading_symbol_listing_exchange"
+      ],
+      "n": 6,
+      "n_correct": 5,
+      "accuracy": 0.833333,
+      "avg_cost_ratio": 0.001658,
+      "qa_input_tokens": 1076,
+      "qa_output_tokens": 78,
+      "judge_input_tokens": 1263,
+      "judge_output_tokens": 37,
+      "input_tokens_total": 2339,
+      "output_tokens_total": 115,
+      "latency_seconds": 4.918,
+      "results": [
+        {
+          "doc_name": "AMCOR_2023_10K",
+          "answer": "AMCR — New York Stock Exchange; AUKF/27 — New York Stock Exchange",
+          "correct": true,
+          "retrieved_token_count": 39,
+          "cost_ratio": 0.000366,
+          "rules_applied": [
+            "rule_trading_symbol_listing_exchange"
+          ]
+        },
+        {
+          "doc_name": "AMD_2022_10K",
+          "answer": "AMD — The NASDAQ Global Select Market",
+          "correct": true,
+          "retrieved_token_count": 18,
+          "cost_ratio": 0.000206,
+          "rules_applied": [
+            "rule_trading_symbol_listing_exchange"
+          ]
+        },
+        {
+          "doc_name": "APPLE_2022_10K",
+          "answer": "AAPL — The Nasdaq Stock Market LLC",
+          "correct": false,
+          "retrieved_token_count": 190,
+          "cost_ratio": 0.002952,
+          "rules_applied": [
+            "rule_trading_symbol_listing_exchange"
+          ]
+        },
+        {
+          "doc_name": "BESTBUY_2023_10K",
+          "answer": "BBY — New York Stock Exchange",
+          "correct": true,
+          "retrieved_token_count": 17,
+          "cost_ratio": 0.000252,
+          "rules_applied": [
+            "rule_trading_symbol_listing_exchange"
+          ]
+        },
+        {
+          "doc_name": "MCDONALDS_8K_dated-2023-08-14",
+          "answer": "MCD — New York Stock Exchange",
+          "correct": true,
+          "retrieved_token_count": 15,
+          "cost_ratio": 0.005912,
+          "rules_applied": [
+            "rule_trading_symbol_listing_exchange"
+          ]
+        },
+        {
+          "doc_name": "SALESFORCE_2023Q3_10Q",
+          "answer": "CRM — New York Stock Exchange",
+          "correct": true,
+          "retrieved_token_count": 16,
+          "cost_ratio": 0.000258,
+          "rules_applied": [
+            "rule_trading_symbol_listing_exchange"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T01:57:02.010605+00:00"
+    },
+    {
+      "doc_names": [
+        "AMCOR_2023_10K",
+        "AMD_2022_10K",
+        "APPLE_2022_10K",
+        "BESTBUY_2023_10K",
+        "MCDONALDS_8K_dated-2023-08-14",
+        "SALESFORCE_2023Q3_10Q"
+      ],
+      "rule_names": [
+        "rule_trading_symbol_listing_exchange"
+      ],
+      "n": 6,
+      "n_correct": 4,
+      "accuracy": 0.666667,
+      "avg_cost_ratio": 0.001185,
+      "qa_input_tokens": 895,
+      "qa_output_tokens": 67,
+      "judge_input_tokens": 1252,
+      "judge_output_tokens": 38,
+      "input_tokens_total": 2147,
+      "output_tokens_total": 105,
+      "latency_seconds": 4.96,
+      "results": [
+        {
+          "doc_name": "AMCOR_2023_10K",
+          "answer": "AMCR — New York Stock Exchange",
+          "correct": false,
+          "retrieved_token_count": 18,
+          "cost_ratio": 0.000169,
+          "rules_applied": [
+            "rule_trading_symbol_listing_exchange"
+          ]
+        },
+        {
+          "doc_name": "AMD_2022_10K",
+          "answer": "AMD — The NASDAQ Global Select Market",
+          "correct": true,
+          "retrieved_token_count": 18,
+          "cost_ratio": 0.000206,
+          "rules_applied": [
+            "rule_trading_symbol_listing_exchange"
+          ]
+        },
+        {
+          "doc_name": "APPLE_2022_10K",
+          "answer": "AAPL — The Nasdaq Stock Market LLC",
+          "correct": false,
+          "retrieved_token_count": 20,
+          "cost_ratio": 0.000311,
+          "rules_applied": [
+            "rule_trading_symbol_listing_exchange"
+          ]
+        },
+        {
+          "doc_name": "BESTBUY_2023_10K",
+          "answer": "BBY — New York Stock Exchange",
+          "correct": true,
+          "retrieved_token_count": 17,
+          "cost_ratio": 0.000252,
+          "rules_applied": [
+            "rule_trading_symbol_listing_exchange"
+          ]
+        },
+        {
+          "doc_name": "MCDONALDS_8K_dated-2023-08-14",
+          "answer": "MCD — New York Stock Exchange",
+          "correct": true,
+          "retrieved_token_count": 15,
+          "cost_ratio": 0.005912,
+          "rules_applied": [
+            "rule_trading_symbol_listing_exchange"
+          ]
+        },
+        {
+          "doc_name": "SALESFORCE_2023Q3_10Q",
+          "answer": "CRM — New York Stock Exchange",
+          "correct": true,
+          "retrieved_token_count": 16,
+          "cost_ratio": 0.000258,
+          "rules_applied": [
+            "rule_trading_symbol_listing_exchange"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T01:57:29.519951+00:00"
+    },
+    {
+      "doc_names": [
+        "AMCOR_2023_10K",
+        "AMD_2022_10K",
+        "APPLE_2022_10K",
+        "BESTBUY_2023_10K",
+        "MCDONALDS_8K_dated-2023-08-14",
+        "SALESFORCE_2023Q3_10Q"
+      ],
+      "rule_names": [
+        "rule_trading_symbol_listing_exchange"
+      ],
+      "n": 6,
+      "n_correct": 5,
+      "accuracy": 0.833333,
+      "avg_cost_ratio": 0.000581,
+      "qa_input_tokens": 853,
+      "qa_output_tokens": 78,
+      "judge_input_tokens": 1263,
+      "judge_output_tokens": 37,
+      "input_tokens_total": 2116,
+      "output_tokens_total": 115,
+      "latency_seconds": 5.778,
+      "results": [
+        {
+          "doc_name": "AMCOR_2023_10K",
+          "answer": "AMCR — New York Stock Exchange; AUKF/27 — New York Stock Exchange",
+          "correct": true,
+          "retrieved_token_count": 18,
+          "cost_ratio": 0.000169,
+          "rules_applied": [
+            "rule_trading_symbol_listing_exchange"
+          ]
+        },
+        {
+          "doc_name": "AMD_2022_10K",
+          "answer": "AMD — The NASDAQ Global Select Market",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 9.2e-05,
+          "rules_applied": [
+            "rule_trading_symbol_listing_exchange"
+          ]
+        },
+        {
+          "doc_name": "APPLE_2022_10K",
+          "answer": "AAPL — The Nasdaq Stock Market LLC",
+          "correct": false,
+          "retrieved_token_count": 17,
+          "cost_ratio": 0.000264,
+          "rules_applied": [
+            "rule_trading_symbol_listing_exchange"
+          ]
+        },
+        {
+          "doc_name": "BESTBUY_2023_10K",
+          "answer": "BBY — New York Stock Exchange",
+          "correct": true,
+          "retrieved_token_count": 7,
+          "cost_ratio": 0.000104,
+          "rules_applied": [
+            "rule_trading_symbol_listing_exchange"
+          ]
+        },
+        {
+          "doc_name": "MCDONALDS_8K_dated-2023-08-14",
+          "answer": "MCD — New York Stock Exchange",
+          "correct": true,
+          "retrieved_token_count": 7,
+          "cost_ratio": 0.002759,
+          "rules_applied": [
+            "rule_trading_symbol_listing_exchange"
+          ]
+        },
+        {
+          "doc_name": "SALESFORCE_2023Q3_10Q",
+          "answer": "CRM — New York Stock Exchange",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 9.7e-05,
+          "rules_applied": [
+            "rule_trading_symbol_listing_exchange"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T01:57:58.412930+00:00"
+    },
+    {
+      "doc_names": [
+        "AMCOR_2023_10K",
+        "AMD_2022_10K",
+        "APPLE_2022_10K",
+        "BESTBUY_2023_10K",
+        "MCDONALDS_8K_dated-2023-08-14",
+        "SALESFORCE_2023Q3_10Q"
+      ],
+      "rule_names": [
+        "rule_trading_symbol_listing_exchange"
+      ],
+      "n": 6,
+      "n_correct": 4,
+      "accuracy": 0.666667,
+      "avg_cost_ratio": 0.000543,
+      "qa_input_tokens": 835,
+      "qa_output_tokens": 67,
+      "judge_input_tokens": 1252,
+      "judge_output_tokens": 38,
+      "input_tokens_total": 2087,
+      "output_tokens_total": 105,
+      "latency_seconds": 5.207,
+      "results": [
+        {
+          "doc_name": "AMCOR_2023_10K",
+          "answer": "AMCR — New York Stock Exchange",
+          "correct": false,
+          "retrieved_token_count": 7,
+          "cost_ratio": 6.6e-05,
+          "rules_applied": [
+            "rule_trading_symbol_listing_exchange"
+          ]
+        },
+        {
+          "doc_name": "AMD_2022_10K",
+          "answer": "AMD — The NASDAQ Global Select Market",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 9.2e-05,
+          "rules_applied": [
+            "rule_trading_symbol_listing_exchange"
+          ]
+        },
+        {
+          "doc_name": "APPLE_2022_10K",
+          "answer": "AAPL — The Nasdaq Stock Market LLC",
+          "correct": false,
+          "retrieved_token_count": 9,
+          "cost_ratio": 0.00014,
+          "rules_applied": [
+            "rule_trading_symbol_listing_exchange"
+          ]
+        },
+        {
+          "doc_name": "BESTBUY_2023_10K",
+          "answer": "BBY — New York Stock Exchange",
+          "correct": true,
+          "retrieved_token_count": 7,
+          "cost_ratio": 0.000104,
+          "rules_applied": [
+            "rule_trading_symbol_listing_exchange"
+          ]
+        },
+        {
+          "doc_name": "MCDONALDS_8K_dated-2023-08-14",
+          "answer": "MCD — New York Stock Exchange",
+          "correct": true,
+          "retrieved_token_count": 7,
+          "cost_ratio": 0.002759,
+          "rules_applied": [
+            "rule_trading_symbol_listing_exchange"
+          ]
+        },
+        {
+          "doc_name": "SALESFORCE_2023Q3_10Q",
+          "answer": "CRM — New York Stock Exchange",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 9.7e-05,
+          "rules_applied": [
+            "rule_trading_symbol_listing_exchange"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T01:58:17.654534+00:00"
+    },
+    {
+      "doc_names": [
+        "AMCOR_2023_10K",
+        "AMD_2022_10K",
+        "APPLE_2022_10K",
+        "BESTBUY_2023_10K",
+        "MCDONALDS_8K_dated-2023-08-14",
+        "SALESFORCE_2023Q3_10Q"
+      ],
+      "rule_names": [
+        "rule_trading_symbol_listing_exchange"
+      ],
+      "n": 6,
+      "n_correct": 6,
+      "accuracy": 1.0,
+      "avg_cost_ratio": 0.000581,
+      "qa_input_tokens": 853,
+      "qa_output_tokens": 85,
+      "judge_input_tokens": 1270,
+      "judge_output_tokens": 36,
+      "input_tokens_total": 2123,
+      "output_tokens_total": 121,
+      "latency_seconds": 6.055,
+      "results": [
+        {
+          "doc_name": "AMCOR_2023_10K",
+          "answer": "AMCR — New York Stock Exchange; AUKF/27 — New York Stock Exchange",
+          "correct": true,
+          "retrieved_token_count": 18,
+          "cost_ratio": 0.000169,
+          "rules_applied": [
+            "rule_trading_symbol_listing_exchange"
+          ]
+        },
+        {
+          "doc_name": "AMD_2022_10K",
+          "answer": "AMD — The NASDAQ Global Select Market",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 9.2e-05,
+          "rules_applied": [
+            "rule_trading_symbol_listing_exchange"
+          ]
+        },
+        {
+          "doc_name": "APPLE_2022_10K",
+          "answer": "AAPL — The Nasdaq Stock Market LLC; — The Nasdaq Stock Market LLC",
+          "correct": true,
+          "retrieved_token_count": 17,
+          "cost_ratio": 0.000264,
+          "rules_applied": [
+            "rule_trading_symbol_listing_exchange"
+          ]
+        },
+        {
+          "doc_name": "BESTBUY_2023_10K",
+          "answer": "BBY — New York Stock Exchange",
+          "correct": true,
+          "retrieved_token_count": 7,
+          "cost_ratio": 0.000104,
+          "rules_applied": [
+            "rule_trading_symbol_listing_exchange"
+          ]
+        },
+        {
+          "doc_name": "MCDONALDS_8K_dated-2023-08-14",
+          "answer": "MCD — New York Stock Exchange",
+          "correct": true,
+          "retrieved_token_count": 7,
+          "cost_ratio": 0.002759,
+          "rules_applied": [
+            "rule_trading_symbol_listing_exchange"
+          ]
+        },
+        {
+          "doc_name": "SALESFORCE_2023Q3_10Q",
+          "answer": "CRM — New York Stock Exchange",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 9.7e-05,
+          "rules_applied": [
+            "rule_trading_symbol_listing_exchange"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T01:59:01.194024+00:00"
+    }
+  ]
+}

@@ -1,0 +1,110 @@
+{
+  "verify_accuracy_calls": [
+    {
+      "doc_names": [
+        "20250723_state_of_washington_v._trump",
+        "20250724_bates_v._pakseresht",
+        "20250829_national_tps_alliance_v._noem"
+      ],
+      "rule_names": [
+        "rule_on_what_date_was_this_opinion_filed"
+      ],
+      "n": 3,
+      "n_correct": 2,
+      "accuracy": 0.666667,
+      "avg_cost_ratio": 0.000186,
+      "qa_input_tokens": 391,
+      "qa_output_tokens": 28,
+      "judge_input_tokens": 425,
+      "judge_output_tokens": 19,
+      "input_tokens_total": 816,
+      "output_tokens_total": 47,
+      "latency_seconds": 2.439,
+      "results": [
+        {
+          "doc_name": "20250723_state_of_washington_v._trump",
+          "answer": "JUL 23 2025",
+          "correct": true,
+          "retrieved_token_count": 7,
+          "cost_ratio": 0.000252,
+          "rules_applied": [
+            "rule_on_what_date_was_this_opinion_filed"
+          ]
+        },
+        {
+          "doc_name": "20250724_bates_v._pakseresht",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "20250829_national_tps_alliance_v._noem",
+          "answer": "August 29, 2025",
+          "correct": true,
+          "retrieved_token_count": 7,
+          "cost_ratio": 0.000307,
+          "rules_applied": [
+            "rule_on_what_date_was_this_opinion_filed"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T01:00:36.055105+00:00"
+    },
+    {
+      "doc_names": [
+        "20250723_state_of_washington_v._trump",
+        "20250724_bates_v._pakseresht",
+        "20250829_national_tps_alliance_v._noem"
+      ],
+      "rule_names": [
+        "rule_on_what_date_was_this_opinion_filed"
+      ],
+      "n": 3,
+      "n_correct": 3,
+      "accuracy": 1.0,
+      "avg_cost_ratio": 0.000242,
+      "qa_input_tokens": 399,
+      "qa_output_tokens": 33,
+      "judge_input_tokens": 430,
+      "judge_output_tokens": 18,
+      "input_tokens_total": 829,
+      "output_tokens_total": 51,
+      "latency_seconds": 3.12,
+      "results": [
+        {
+          "doc_name": "20250723_state_of_washington_v._trump",
+          "answer": "JUL 23 2025",
+          "correct": true,
+          "retrieved_token_count": 7,
+          "cost_ratio": 0.000252,
+          "rules_applied": [
+            "rule_on_what_date_was_this_opinion_filed"
+          ]
+        },
+        {
+          "doc_name": "20250724_bates_v._pakseresht",
+          "answer": "July 24, 2025",
+          "correct": true,
+          "retrieved_token_count": 7,
+          "cost_ratio": 0.000169,
+          "rules_applied": [
+            "rule_on_what_date_was_this_opinion_filed"
+          ]
+        },
+        {
+          "doc_name": "20250829_national_tps_alliance_v._noem",
+          "answer": "August 29, 2025",
+          "correct": true,
+          "retrieved_token_count": 7,
+          "cost_ratio": 0.000307,
+          "rules_applied": [
+            "rule_on_what_date_was_this_opinion_filed"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T01:02:46.695249+00:00"
+    }
+  ]
+}

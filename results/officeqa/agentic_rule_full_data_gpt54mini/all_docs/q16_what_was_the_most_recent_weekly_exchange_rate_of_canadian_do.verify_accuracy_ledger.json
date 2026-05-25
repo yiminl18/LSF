@@ -1,0 +1,130 @@
+{
+  "verify_accuracy_calls": [
+    {
+      "doc_names": [
+        "treasury_bulletin_1980_08",
+        "treasury_bulletin_1984_06",
+        "treasury_bulletin_2019_12",
+        "treasury_bulletin_2025_06"
+      ],
+      "rule_names": [
+        "rule_canadian_dollar_weekly_exchange_rate"
+      ],
+      "n": 4,
+      "n_correct": 2,
+      "accuracy": 0.5,
+      "avg_cost_ratio": 2.3e-05,
+      "qa_input_tokens": 550,
+      "qa_output_tokens": 28,
+      "judge_input_tokens": 402,
+      "judge_output_tokens": 19,
+      "input_tokens_total": 952,
+      "output_tokens_total": 47,
+      "latency_seconds": 4.108,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_1980_08",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "treasury_bulletin_1984_06",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "treasury_bulletin_2019_12",
+          "answer": "1.3279",
+          "correct": true,
+          "retrieved_token_count": 4,
+          "cost_ratio": 4.3e-05,
+          "rules_applied": [
+            "rule_canadian_dollar_weekly_exchange_rate"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_06",
+          "answer": "1.4254",
+          "correct": true,
+          "retrieved_token_count": 4,
+          "cost_ratio": 5e-05,
+          "rules_applied": [
+            "rule_canadian_dollar_weekly_exchange_rate"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T01:42:29.064636+00:00"
+    },
+    {
+      "doc_names": [
+        "treasury_bulletin_2019_12",
+        "treasury_bulletin_2021_09",
+        "treasury_bulletin_2024_12",
+        "treasury_bulletin_2025_06"
+      ],
+      "rule_names": [
+        "rule_canadian_dollar_weekly_exchange_rate"
+      ],
+      "n": 4,
+      "n_correct": 4,
+      "accuracy": 1.0,
+      "avg_cost_ratio": 4.6e-05,
+      "qa_input_tokens": 560,
+      "qa_output_tokens": 32,
+      "judge_input_tokens": 540,
+      "judge_output_tokens": 24,
+      "input_tokens_total": 1100,
+      "output_tokens_total": 56,
+      "latency_seconds": 4.608,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_2019_12",
+          "answer": "1.3279",
+          "correct": true,
+          "retrieved_token_count": 4,
+          "cost_ratio": 4.3e-05,
+          "rules_applied": [
+            "rule_canadian_dollar_weekly_exchange_rate"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2021_09",
+          "answer": "1.2404",
+          "correct": true,
+          "retrieved_token_count": 4,
+          "cost_ratio": 4.9e-05,
+          "rules_applied": [
+            "rule_canadian_dollar_weekly_exchange_rate"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2024_12",
+          "answer": "1.3466",
+          "correct": true,
+          "retrieved_token_count": 4,
+          "cost_ratio": 4e-05,
+          "rules_applied": [
+            "rule_canadian_dollar_weekly_exchange_rate"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_06",
+          "answer": "1.4254",
+          "correct": true,
+          "retrieved_token_count": 4,
+          "cost_ratio": 5e-05,
+          "rules_applied": [
+            "rule_canadian_dollar_weekly_exchange_rate"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T01:43:14.313963+00:00"
+    }
+  ]
+}

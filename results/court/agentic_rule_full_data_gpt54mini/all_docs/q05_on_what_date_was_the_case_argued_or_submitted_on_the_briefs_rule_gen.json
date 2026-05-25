@@ -1,0 +1,59 @@
+{
+  "strategy": "agentic_rule_full_data",
+  "phase": "rule_generation",
+  "status": "ok",
+  "dataset": "court",
+  "question": "On what date was the case argued or submitted on the briefs?",
+  "question_slug": "on_what_date_was_the_case_argued_or_submitted_on_the_briefs",
+  "model": "gpt54mini",
+  "split": "all_docs",
+  "doc_count": 294,
+  "question_count": 1,
+  "rules_dir": "rules/court/agentic_rule_full_data_gpt54mini/all_docs/q05_on_what_date_was_the_case_argued_or_submitted_on_the_briefs",
+  "results_report_path": "results/court/agentic_rule_full_data_gpt54mini/all_docs/q05_on_what_date_was_the_case_argued_or_submitted_on_the_briefs_rule_gen.json",
+  "verify_accuracy_ledger_path": "results/court/agentic_rule_full_data_gpt54mini/all_docs/q05_on_what_date_was_the_case_argued_or_submitted_on_the_briefs.verify_accuracy_ledger.json",
+  "rule_files": [
+    "rules/court/agentic_rule_full_data_gpt54mini/all_docs/q05_on_what_date_was_the_case_argued_or_submitted_on_the_briefs/rule_argument_submission_date_header.py"
+  ],
+  "rules_final": [
+    "rule_argument_submission_date_header"
+  ],
+  "num_rules_final": 1,
+  "rule_gen": {
+    "latency_seconds": 157.83,
+    "input_tokens": 1219359,
+    "output_tokens": 20700,
+    "cached_input_tokens": 1132032,
+    "reasoning_tokens": 12762,
+    "working_sample": [
+      "20250724_bates_v._pakseresht",
+      "20250725_nadon_v._bisignano",
+      "20250730_health_freedom_defense_fund_inc._v._alberto_carvalho",
+      "20250813_susan_pitt_v._metropolitan_tower_life_insurance_company",
+      "20250915_united_states_v._patrick",
+      "20251204_state_of_washington_v._united_states_department_of_education"
+    ],
+    "num_working_sample": 6,
+    "num_working_sample_iterations": 3,
+    "verify_accuracy_calls": {
+      "total": 3,
+      "input_tokens": 4886,
+      "output_tokens": 281
+    },
+    "num_rules_written": 1,
+    "num_rules_rejected": 0,
+    "rules_final": [
+      "rule_argument_submission_date_header"
+    ],
+    "num_rules_final": 1,
+    "avg_cost_ratio_sample": 0.003708,
+    "match_rate_sample": 1.0,
+    "notes": "Matched header submission dates from argued/submitted opinions, including En Banc and footnote-star variants; returned the full header line for context."
+  },
+  "agent_log_path": "results/court/agentic_rule_full_data_gpt54mini/all_docs/q05_on_what_date_was_the_case_argued_or_submitted_on_the_briefs.codex.jsonl",
+  "agent_last_message_path": "results/court/agentic_rule_full_data_gpt54mini/all_docs/q05_on_what_date_was_the_case_argued_or_submitted_on_the_briefs.codex.last.txt",
+  "stderr": "2026-05-25T00:51:01.062104Z ERROR codex_models_manager::manager: failed to refresh available models: stream disconnected before completion: failed to decode models response: missing field `models` at line 3243 column 1; body: {\n  \"data\": [\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1772582400\n      },\n      \"id\": \"dall-e-3-3.0\",\n      \"created_at\": 1691712000,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1737936000\n      },\n      \"id\": \"dall-e-2-2.0\",\n      \"created_at\": 1713139200,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": true,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"fine_tune\": 1718323200,\n        \"inference\": 1718323200\n      },\n      \"id\": \"code-cushman-001\",\n      \"created_at\": 1642809600,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": false,\n        \"completion\": true,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"fine_tune\": 1720137600,\n        \"inference\": 1720137600\n      },\n      \"id\": \"code-cushman-fine-tune-002\",\n      \"created_at\": 1677456000,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"generally-available\",\n      \"deprecation\": {\n        \"inference\": 1797292800\n      },\n      \"id\": \"whisper-001\",\n      \"created_at\": 1694649600,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1746057600\n      },\n      \"id\": \"gpt-4-0125-Preview\",\n      \"created_at\": 1706140800,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1746057600\n      },\n      \"id\": \"gpt-4-1106-Preview\",\n      \"created_at\": 1700006400,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycl",
+  "codex_thread_id": "019e5c9d-1d48-7082-8ff2-fdd42f480fba",
+  "codex_event_count": 109,
+  "codex_error_message": null
+}

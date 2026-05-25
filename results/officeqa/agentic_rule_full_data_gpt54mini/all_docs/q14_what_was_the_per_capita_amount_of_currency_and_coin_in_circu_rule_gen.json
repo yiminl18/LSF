@@ -1,0 +1,58 @@
+{
+  "strategy": "agentic_rule_full_data",
+  "phase": "rule_generation",
+  "status": "ok",
+  "dataset": "officeqa",
+  "question": "What was the per capita amount of currency and coin in circulation at the most recent reporting date, in dollars?",
+  "question_slug": "what_was_the_per_capita_amount_of_currency_and_coin_in_circu",
+  "model": "gpt54mini",
+  "split": "all_docs",
+  "doc_count": 200,
+  "question_count": 1,
+  "rules_dir": "rules/officeqa/agentic_rule_full_data_gpt54mini/all_docs/q14_what_was_the_per_capita_amount_of_currency_and_coin_in_circu",
+  "results_report_path": "results/officeqa/agentic_rule_full_data_gpt54mini/all_docs/q14_what_was_the_per_capita_amount_of_currency_and_coin_in_circu_rule_gen.json",
+  "verify_accuracy_ledger_path": "results/officeqa/agentic_rule_full_data_gpt54mini/all_docs/q14_what_was_the_per_capita_amount_of_currency_and_coin_in_circu.verify_accuracy_ledger.json",
+  "rule_files": [
+    "rules/officeqa/agentic_rule_full_data_gpt54mini/all_docs/q14_what_was_the_per_capita_amount_of_currency_and_coin_in_circu/rule_ms1_latest_per_capita_currency_and_coin.py",
+    "rules/officeqa/agentic_rule_full_data_gpt54mini/all_docs/q14_what_was_the_per_capita_amount_of_currency_and_coin_in_circu/rule_uscc2_latest_per_capita_currency_and_coin.py"
+  ],
+  "rules_final": [
+    "rule_ms1_latest_per_capita_currency_and_coin",
+    "rule_uscc2_latest_per_capita_currency_and_coin"
+  ],
+  "num_rules_final": 2,
+  "rule_gen": {
+    "latency_seconds": 222.92,
+    "input_tokens": 1363827,
+    "output_tokens": 24452,
+    "cached_input_tokens": 1250304,
+    "reasoning_tokens": 13275,
+    "working_sample": [
+      "treasury_bulletin_1982_10",
+      "treasury_bulletin_1992_09"
+    ],
+    "num_working_sample": 2,
+    "num_working_sample_iterations": 2,
+    "verify_accuracy_calls": {
+      "total": 3,
+      "input_tokens": 1669,
+      "output_tokens": 84
+    },
+    "num_rules_written": 2,
+    "num_rules_rejected": 0,
+    "rules_final": [
+      "rule_ms1_latest_per_capita_currency_and_coin",
+      "rule_uscc2_latest_per_capita_currency_and_coin"
+    ],
+    "num_rules_final": 2,
+    "avg_cost_ratio_sample": 5.9e-05,
+    "match_rate_sample": 1.0,
+    "notes": "Covers both Treasury Bulletin MS-1 and USCC-2 circulation tables and normalizes OCR-digit formatting into standard dollar amounts."
+  },
+  "agent_log_path": "results/officeqa/agentic_rule_full_data_gpt54mini/all_docs/q14_what_was_the_per_capita_amount_of_currency_and_coin_in_circu.codex.jsonl",
+  "agent_last_message_path": "results/officeqa/agentic_rule_full_data_gpt54mini/all_docs/q14_what_was_the_per_capita_amount_of_currency_and_coin_in_circu.codex.last.txt",
+  "stderr": "2026-05-25T01:27:32.266881Z ERROR codex_models_manager::manager: failed to refresh available models: stream disconnected before completion: failed to decode models response: missing field `models` at line 3243 column 1; body: {\n  \"data\": [\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1772582400\n      },\n      \"id\": \"dall-e-3-3.0\",\n      \"created_at\": 1691712000,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1737936000\n      },\n      \"id\": \"dall-e-2-2.0\",\n      \"created_at\": 1713139200,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": true,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"fine_tune\": 1718323200,\n        \"inference\": 1718323200\n      },\n      \"id\": \"code-cushman-001\",\n      \"created_at\": 1642809600,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": false,\n        \"completion\": true,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"fine_tune\": 1720137600,\n        \"inference\": 1720137600\n      },\n      \"id\": \"code-cushman-fine-tune-002\",\n      \"created_at\": 1677456000,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"generally-available\",\n      \"deprecation\": {\n        \"inference\": 1797292800\n      },\n      \"id\": \"whisper-001\",\n      \"created_at\": 1694649600,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1746057600\n      },\n      \"id\": \"gpt-4-0125-Preview\",\n      \"created_at\": 1706140800,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1746057600\n      },\n      \"id\": \"gpt-4-1106-Preview\",\n      \"created_at\": 1700006400,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycl",
+  "codex_thread_id": "019e5cbe-8cac-7d33-b5c9-2f9c63711a4d",
+  "codex_event_count": 115,
+  "codex_error_message": "Reconnecting... 3/5 (stream disconnected before completion: response.failed event received)"
+}

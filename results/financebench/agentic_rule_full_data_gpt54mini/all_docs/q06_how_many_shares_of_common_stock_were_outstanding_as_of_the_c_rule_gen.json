@@ -1,0 +1,62 @@
+{
+  "strategy": "agentic_rule_full_data",
+  "phase": "rule_generation",
+  "status": "ok",
+  "dataset": "financebench",
+  "question": "How many shares of common stock were outstanding as of the cover-page reference date?",
+  "question_slug": "how_many_shares_of_common_stock_were_outstanding_as_of_the_c",
+  "model": "gpt54mini",
+  "split": "all_docs",
+  "doc_count": 100,
+  "question_count": 1,
+  "rules_dir": "rules/financebench/agentic_rule_full_data_gpt54mini/all_docs/q06_how_many_shares_of_common_stock_were_outstanding_as_of_the_c",
+  "results_report_path": "results/financebench/agentic_rule_full_data_gpt54mini/all_docs/q06_how_many_shares_of_common_stock_were_outstanding_as_of_the_c_rule_gen.json",
+  "verify_accuracy_ledger_path": "results/financebench/agentic_rule_full_data_gpt54mini/all_docs/q06_how_many_shares_of_common_stock_were_outstanding_as_of_the_c.verify_accuracy_ledger.json",
+  "rule_files": [
+    "rules/financebench/agentic_rule_full_data_gpt54mini/all_docs/q06_how_many_shares_of_common_stock_were_outstanding_as_of_the_c/rule_cover_page_common_stock_outstanding.py"
+  ],
+  "rules_final": [
+    "rule_cover_page_common_stock_outstanding"
+  ],
+  "num_rules_final": 1,
+  "rule_gen": {
+    "latency_seconds": 407.96,
+    "input_tokens": 4263635,
+    "output_tokens": 47135,
+    "cached_input_tokens": 4168576,
+    "reasoning_tokens": 31922,
+    "working_sample": [
+      "3M_2023Q2_10Q",
+      "ACTIVISIONBLIZZARD_2017_10K",
+      "ACTIVISIONBLIZZARD_2020_10K",
+      "AMAZON_2022_10K",
+      "APPLE_2018_10K",
+      "BESTBUY_2022_10K",
+      "BOEING_2017_10K",
+      "FOOTLOCKER_2022_10K",
+      "WALMART_2024Q1_10Q"
+    ],
+    "num_working_sample": 9,
+    "num_working_sample_iterations": 5,
+    "verify_accuracy_calls": {
+      "total": 5,
+      "input_tokens": 8207,
+      "output_tokens": 448
+    },
+    "num_rules_written": 1,
+    "num_rules_rejected": 0,
+    "rules_final": [
+      "rule_cover_page_common_stock_outstanding"
+    ],
+    "num_rules_final": 1,
+    "avg_cost_ratio_sample": 0.000401,
+    "match_rate_sample": 0.0,
+    "notes": "Single first-page retrieval rule for cover-page common stock counts; it strips nearby market-value noise and reduces count lines to bare numbers when possible."
+  },
+  "agent_log_path": "results/financebench/agentic_rule_full_data_gpt54mini/all_docs/q06_how_many_shares_of_common_stock_were_outstanding_as_of_the_c.codex.jsonl",
+  "agent_last_message_path": "results/financebench/agentic_rule_full_data_gpt54mini/all_docs/q06_how_many_shares_of_common_stock_were_outstanding_as_of_the_c.codex.last.txt",
+  "stderr": "2026-05-25T01:12:07.272288Z ERROR codex_models_manager::manager: failed to refresh available models: stream disconnected before completion: failed to decode models response: missing field `models` at line 3243 column 1; body: {\n  \"data\": [\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1772582400\n      },\n      \"id\": \"dall-e-3-3.0\",\n      \"created_at\": 1691712000,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1737936000\n      },\n      \"id\": \"dall-e-2-2.0\",\n      \"created_at\": 1713139200,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": true,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"fine_tune\": 1718323200,\n        \"inference\": 1718323200\n      },\n      \"id\": \"code-cushman-001\",\n      \"created_at\": 1642809600,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": false,\n        \"completion\": true,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"fine_tune\": 1720137600,\n        \"inference\": 1720137600\n      },\n      \"id\": \"code-cushman-fine-tune-002\",\n      \"created_at\": 1677456000,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"generally-available\",\n      \"deprecation\": {\n        \"inference\": 1797292800\n      },\n      \"id\": \"whisper-001\",\n      \"created_at\": 1694649600,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1746057600\n      },\n      \"id\": \"gpt-4-0125-Preview\",\n      \"created_at\": 1706140800,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1746057600\n      },\n      \"id\": \"gpt-4-1106-Preview\",\n      \"created_at\": 1700006400,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycl",
+  "codex_thread_id": "019e5cb0-6f6a-7e61-b79a-29a563f1ccc4",
+  "codex_event_count": 147,
+  "codex_error_message": null
+}

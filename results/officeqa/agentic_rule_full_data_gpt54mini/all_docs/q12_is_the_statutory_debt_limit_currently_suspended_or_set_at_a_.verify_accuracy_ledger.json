@@ -1,0 +1,118 @@
+{
+  "verify_accuracy_calls": [
+    {
+      "doc_names": [
+        "treasury_bulletin_2024_09",
+        "treasury_bulletin_2025_03",
+        "treasury_bulletin_2025_06"
+      ],
+      "rule_names": [
+        "rule_debt_limit_suspension_note",
+        "rule_fd6_latest_statutory_debt_limit"
+      ],
+      "n": 3,
+      "n_correct": 3,
+      "accuracy": 1.0,
+      "avg_cost_ratio": 0.011098,
+      "qa_input_tokens": 3457,
+      "qa_output_tokens": 22,
+      "judge_input_tokens": 382,
+      "judge_output_tokens": 18,
+      "input_tokens_total": 3839,
+      "output_tokens_total": 40,
+      "latency_seconds": 3.175,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_2024_09",
+          "answer": "suspended",
+          "correct": true,
+          "retrieved_token_count": 1476,
+          "cost_ratio": 0.018299,
+          "rules_applied": [
+            "rule_debt_limit_suspension_note",
+            "rule_fd6_latest_statutory_debt_limit"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_03",
+          "answer": "suspended",
+          "correct": true,
+          "retrieved_token_count": 1530,
+          "cost_ratio": 0.014522,
+          "rules_applied": [
+            "rule_debt_limit_suspension_note",
+            "rule_fd6_latest_statutory_debt_limit"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_06",
+          "answer": "set at a specific dollar amount",
+          "correct": true,
+          "retrieved_token_count": 38,
+          "cost_ratio": 0.000472,
+          "rules_applied": [
+            "rule_fd6_latest_statutory_debt_limit"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T01:23:49.590973+00:00"
+    },
+    {
+      "doc_names": [
+        "treasury_bulletin_2024_09",
+        "treasury_bulletin_2025_03",
+        "treasury_bulletin_2025_06"
+      ],
+      "rule_names": [
+        "rule_debt_limit_suspension_note",
+        "rule_fd6_latest_statutory_debt_limit"
+      ],
+      "n": 3,
+      "n_correct": 3,
+      "accuracy": 1.0,
+      "avg_cost_ratio": 0.011098,
+      "qa_input_tokens": 3457,
+      "qa_output_tokens": 30,
+      "judge_input_tokens": 390,
+      "judge_output_tokens": 18,
+      "input_tokens_total": 3847,
+      "output_tokens_total": 48,
+      "latency_seconds": 2.707,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_2024_09",
+          "answer": "suspended",
+          "correct": true,
+          "retrieved_token_count": 1476,
+          "cost_ratio": 0.018299,
+          "rules_applied": [
+            "rule_debt_limit_suspension_note",
+            "rule_fd6_latest_statutory_debt_limit"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_03",
+          "answer": "suspended through January 1, 2025",
+          "correct": true,
+          "retrieved_token_count": 1530,
+          "cost_ratio": 0.014522,
+          "rules_applied": [
+            "rule_debt_limit_suspension_note",
+            "rule_fd6_latest_statutory_debt_limit"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_06",
+          "answer": "set at a specific dollar amount",
+          "correct": true,
+          "retrieved_token_count": 38,
+          "cost_ratio": 0.000472,
+          "rules_applied": [
+            "rule_fd6_latest_statutory_debt_limit"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T01:24:18.107896+00:00"
+    }
+  ]
+}

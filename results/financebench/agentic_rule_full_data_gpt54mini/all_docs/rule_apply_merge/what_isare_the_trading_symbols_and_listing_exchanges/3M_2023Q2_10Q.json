@@ -1,0 +1,50 @@
+{
+  "doc_name": "3M_2023Q2_10Q",
+  "question": "What is/are the trading symbol(s) and listing exchange(s)?",
+  "question_slug": "what_isare_the_trading_symbols_and_listing_exchanges",
+  "split": "all_docs",
+  "ground_truth": [
+    {
+      "symbol": "MMM",
+      "exchange": "New York Stock Exchange"
+    },
+    {
+      "symbol": "MMM",
+      "exchange": "Chicago Stock Exchange, Inc."
+    },
+    {
+      "symbol": "MMM26",
+      "exchange": "New York Stock Exchange"
+    },
+    {
+      "symbol": "MMM30",
+      "exchange": "New York Stock Exchange"
+    },
+    {
+      "symbol": "MMM31",
+      "exchange": "New York Stock Exchange"
+    }
+  ],
+  "answer": "MMM — New York Stock Exchange; MMM26 — New York Stock Exchange; MMM30 — New York Stock Exchange; MMM31 — New York Stock Exchange",
+  "correct": false,
+  "status": "ok",
+  "input_tokens": 125,
+  "output_tokens": 34,
+  "latency_seconds": 0.978,
+  "model": "gpt54",
+  "doc_token_count": 78731,
+  "cost_ratio": 0.0016,
+  "retrieved_token_count": 30,
+  "rules_with_hits": [
+    "rule_trading_symbol_listing_exchange"
+  ],
+  "rules_with_no_hits": [],
+  "num_spans_before_dedup": 1,
+  "num_spans_after_dedup": 1,
+  "rule_names": [
+    "rule_trading_symbol_listing_exchange"
+  ],
+  "rule_question_dir": "q10_what_isare_the_trading_symbols_and_listing_exchanges",
+  "rule_generation_report_path": "results/financebench/agentic_rule_full_data_gpt54mini/all_docs/q10_what_isare_the_trading_symbols_and_listing_exchanges_rule_gen.json",
+  "rule_apply_trace_path": "results/financebench/agentic_rule_full_data_gpt54mini/all_docs/rule_apply_merge/_trace/q10_what_isare_the_trading_symbols_and_listing_exchanges/rule_trading_symbol_listing_exchange_merge.json"
+}

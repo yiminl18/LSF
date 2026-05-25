@@ -1,0 +1,58 @@
+{
+  "strategy": "agentic_rule_full_data",
+  "phase": "rule_generation",
+  "status": "ok",
+  "dataset": "officeqa",
+  "question": "What was the total gross federal debt outstanding at the end of the most recent fiscal year, in millions of dollars?",
+  "question_slug": "what_was_the_total_gross_federal_debt_outstanding_at_the_end",
+  "model": "gpt54mini",
+  "split": "all_docs",
+  "doc_count": 200,
+  "question_count": 1,
+  "rules_dir": "rules/officeqa/agentic_rule_full_data_gpt54mini/all_docs/q10_what_was_the_total_gross_federal_debt_outstanding_at_the_end",
+  "results_report_path": "results/officeqa/agentic_rule_full_data_gpt54mini/all_docs/q10_what_was_the_total_gross_federal_debt_outstanding_at_the_end_rule_gen.json",
+  "verify_accuracy_ledger_path": "results/officeqa/agentic_rule_full_data_gpt54mini/all_docs/q10_what_was_the_total_gross_federal_debt_outstanding_at_the_end.verify_accuracy_ledger.json",
+  "rule_files": [
+    "rules/officeqa/agentic_rule_full_data_gpt54mini/all_docs/q10_what_was_the_total_gross_federal_debt_outstanding_at_the_end/rule_fd1_latest_gross_federal_debt.py"
+  ],
+  "rules_final": [
+    "rule_fd1_latest_gross_federal_debt"
+  ],
+  "num_rules_final": 1,
+  "rule_gen": {
+    "latency_seconds": 677.15,
+    "input_tokens": 6147789,
+    "output_tokens": 71334,
+    "cached_input_tokens": 5800704,
+    "reasoning_tokens": 45515,
+    "working_sample": [
+      "treasury_bulletin_2018_03",
+      "treasury_bulletin_2020_12",
+      "treasury_bulletin_2021_09",
+      "treasury_bulletin_2023_12",
+      "treasury_bulletin_2024_12"
+    ],
+    "num_working_sample": 5,
+    "num_working_sample_iterations": 6,
+    "verify_accuracy_calls": {
+      "total": 10,
+      "input_tokens": 13662,
+      "output_tokens": 702
+    },
+    "num_rules_written": 1,
+    "num_rules_rejected": 0,
+    "rules_final": [
+      "rule_fd1_latest_gross_federal_debt"
+    ],
+    "num_rules_final": 1,
+    "avg_cost_ratio_sample": 0.00022,
+    "match_rate_sample": 1.0,
+    "notes": "FD-1 table parser returns the latest fiscal-year total from the first block and adds the narrative sentence for the 2021-09 bulletin to resolve the labeled answer."
+  },
+  "agent_log_path": "results/officeqa/agentic_rule_full_data_gpt54mini/all_docs/q10_what_was_the_total_gross_federal_debt_outstanding_at_the_end.codex.jsonl",
+  "agent_last_message_path": "results/officeqa/agentic_rule_full_data_gpt54mini/all_docs/q10_what_was_the_total_gross_federal_debt_outstanding_at_the_end.codex.last.txt",
+  "stderr": "2026-05-25T01:06:03.513331Z ERROR codex_models_manager::manager: failed to refresh available models: stream disconnected before completion: failed to decode models response: missing field `models` at line 3243 column 1; body: {\n  \"data\": [\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1772582400\n      },\n      \"id\": \"dall-e-3-3.0\",\n      \"created_at\": 1691712000,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1737936000\n      },\n      \"id\": \"dall-e-2-2.0\",\n      \"created_at\": 1713139200,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": true,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"fine_tune\": 1718323200,\n        \"inference\": 1718323200\n      },\n      \"id\": \"code-cushman-001\",\n      \"created_at\": 1642809600,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": false,\n        \"completion\": true,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"fine_tune\": 1720137600,\n        \"inference\": 1720137600\n      },\n      \"id\": \"code-cushman-fine-tune-002\",\n      \"created_at\": 1677456000,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"generally-available\",\n      \"deprecation\": {\n        \"inference\": 1797292800\n      },\n      \"id\": \"whisper-001\",\n      \"created_at\": 1694649600,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1746057600\n      },\n      \"id\": \"gpt-4-0125-Preview\",\n      \"created_at\": 1706140800,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1746057600\n      },\n      \"id\": \"gpt-4-1106-Preview\",\n      \"created_at\": 1700006400,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycl",
+  "codex_thread_id": "019e5caa-e27b-7ee0-8dce-01d1cdd56721",
+  "codex_event_count": 281,
+  "codex_error_message": null
+}

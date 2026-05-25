@@ -1,0 +1,641 @@
+{
+  "verify_accuracy_calls": [
+    {
+      "doc_names": [
+        "treasury_bulletin_1991_06",
+        "treasury_bulletin_2000_09",
+        "treasury_bulletin_2005_03",
+        "treasury_bulletin_2024_12",
+        "treasury_bulletin_2025_06"
+      ],
+      "rule_names": [
+        "rule_budget_year_percent",
+        "rule_federal_budget_heading_window",
+        "rule_fiscal_year_line_fallback"
+      ],
+      "n": 5,
+      "n_correct": 3,
+      "accuracy": 0.6,
+      "avg_cost_ratio": 0.076593,
+      "qa_input_tokens": 35945,
+      "qa_output_tokens": 38,
+      "judge_input_tokens": 676,
+      "judge_output_tokens": 32,
+      "input_tokens_total": 36621,
+      "output_tokens_total": 70,
+      "latency_seconds": 5.259,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_1991_06",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 7650,
+          "cost_ratio": 0.102915,
+          "rules_applied": [
+            "rule_budget_year_percent",
+            "rule_federal_budget_heading_window",
+            "rule_fiscal_year_line_fallback"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2000_09",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "treasury_bulletin_2005_03",
+          "answer": "3.6 percent",
+          "correct": true,
+          "retrieved_token_count": 5975,
+          "cost_ratio": 0.034634,
+          "rules_applied": [
+            "rule_budget_year_percent",
+            "rule_federal_budget_heading_window"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2024_12",
+          "answer": "6.4%",
+          "correct": true,
+          "retrieved_token_count": 11290,
+          "cost_ratio": 0.11378,
+          "rules_applied": [
+            "rule_budget_year_percent",
+            "rule_federal_budget_heading_window"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_06",
+          "answer": "6.4 percent of GDP",
+          "correct": true,
+          "retrieved_token_count": 10603,
+          "cost_ratio": 0.131637,
+          "rules_applied": [
+            "rule_budget_year_percent",
+            "rule_federal_budget_heading_window",
+            "rule_fiscal_year_line_fallback"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T00:41:57.366762+00:00"
+    },
+    {
+      "doc_names": [
+        "treasury_bulletin_1991_06"
+      ],
+      "rule_names": [
+        "rule_budget_year_percent",
+        "rule_federal_budget_heading_window",
+        "rule_fiscal_year_line_fallback"
+      ],
+      "n": 1,
+      "n_correct": 0,
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.102915,
+      "qa_input_tokens": 7714,
+      "qa_output_tokens": 6,
+      "judge_input_tokens": 133,
+      "judge_output_tokens": 7,
+      "input_tokens_total": 7847,
+      "output_tokens_total": 13,
+      "latency_seconds": 1.366,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_1991_06",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 7650,
+          "cost_ratio": 0.102915,
+          "rules_applied": [
+            "rule_budget_year_percent",
+            "rule_federal_budget_heading_window",
+            "rule_fiscal_year_line_fallback"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T00:42:27.545933+00:00"
+    },
+    {
+      "doc_names": [
+        "treasury_bulletin_1991_06",
+        "treasury_bulletin_2000_09",
+        "treasury_bulletin_2005_03",
+        "treasury_bulletin_2024_12",
+        "treasury_bulletin_2025_06"
+      ],
+      "rule_names": [
+        "rule_budget_year_percent",
+        "rule_federal_budget_heading_window",
+        "rule_fiscal_year_line_fallback"
+      ],
+      "n": 5,
+      "n_correct": 3,
+      "accuracy": 0.6,
+      "avg_cost_ratio": 0.078408,
+      "qa_input_tokens": 36817,
+      "qa_output_tokens": 36,
+      "judge_input_tokens": 674,
+      "judge_output_tokens": 32,
+      "input_tokens_total": 37491,
+      "output_tokens_total": 68,
+      "latency_seconds": 4.416,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_1991_06",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 7861,
+          "cost_ratio": 0.105754,
+          "rules_applied": [
+            "rule_budget_year_percent",
+            "rule_federal_budget_heading_window",
+            "rule_fiscal_year_line_fallback"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2000_09",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "treasury_bulletin_2005_03",
+          "answer": "3.6 percent",
+          "correct": true,
+          "retrieved_token_count": 6267,
+          "cost_ratio": 0.036327,
+          "rules_applied": [
+            "rule_budget_year_percent",
+            "rule_federal_budget_heading_window",
+            "rule_fiscal_year_line_fallback"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2024_12",
+          "answer": "6.4%",
+          "correct": true,
+          "retrieved_token_count": 11290,
+          "cost_ratio": 0.11378,
+          "rules_applied": [
+            "rule_budget_year_percent",
+            "rule_federal_budget_heading_window"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_06",
+          "answer": "6.4%",
+          "correct": true,
+          "retrieved_token_count": 10969,
+          "cost_ratio": 0.136181,
+          "rules_applied": [
+            "rule_budget_year_percent",
+            "rule_federal_budget_heading_window",
+            "rule_fiscal_year_line_fallback"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T00:43:04.119882+00:00"
+    },
+    {
+      "doc_names": [
+        "treasury_bulletin_1991_06",
+        "treasury_bulletin_2000_09",
+        "treasury_bulletin_2005_03",
+        "treasury_bulletin_2024_12",
+        "treasury_bulletin_2025_06"
+      ],
+      "rule_names": [
+        "rule_budget_year_percent",
+        "rule_federal_budget_heading_window",
+        "rule_fiscal_year_line_fallback",
+        "rule_full_text_budget_sentence"
+      ],
+      "n": 5,
+      "n_correct": 3,
+      "accuracy": 0.6,
+      "avg_cost_ratio": 0.078754,
+      "qa_input_tokens": 36962,
+      "qa_output_tokens": 36,
+      "judge_input_tokens": 674,
+      "judge_output_tokens": 32,
+      "input_tokens_total": 37636,
+      "output_tokens_total": 68,
+      "latency_seconds": 4.637,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_1991_06",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 7903,
+          "cost_ratio": 0.106319,
+          "rules_applied": [
+            "rule_budget_year_percent",
+            "rule_federal_budget_heading_window",
+            "rule_fiscal_year_line_fallback",
+            "rule_full_text_budget_sentence"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2000_09",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "treasury_bulletin_2005_03",
+          "answer": "3.6 percent",
+          "correct": true,
+          "retrieved_token_count": 6267,
+          "cost_ratio": 0.036327,
+          "rules_applied": [
+            "rule_budget_year_percent",
+            "rule_federal_budget_heading_window",
+            "rule_fiscal_year_line_fallback"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2024_12",
+          "answer": "6.4%",
+          "correct": true,
+          "retrieved_token_count": 11339,
+          "cost_ratio": 0.114273,
+          "rules_applied": [
+            "rule_budget_year_percent",
+            "rule_federal_budget_heading_window",
+            "rule_full_text_budget_sentence"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_06",
+          "answer": "6.4%",
+          "correct": true,
+          "retrieved_token_count": 11023,
+          "cost_ratio": 0.136852,
+          "rules_applied": [
+            "rule_budget_year_percent",
+            "rule_federal_budget_heading_window",
+            "rule_fiscal_year_line_fallback",
+            "rule_full_text_budget_sentence"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T00:43:43.323854+00:00"
+    },
+    {
+      "doc_names": [
+        "treasury_bulletin_1991_06",
+        "treasury_bulletin_2000_09",
+        "treasury_bulletin_2005_03",
+        "treasury_bulletin_2024_12",
+        "treasury_bulletin_2025_06"
+      ],
+      "rule_names": [
+        "rule_budget_year_percent",
+        "rule_federal_budget_heading_window",
+        "rule_fiscal_year_line_fallback",
+        "rule_full_text_budget_sentence"
+      ],
+      "n": 5,
+      "n_correct": 4,
+      "accuracy": 0.8,
+      "avg_cost_ratio": 0.093119,
+      "qa_input_tokens": 51921,
+      "qa_output_tokens": 39,
+      "judge_input_tokens": 678,
+      "judge_output_tokens": 31,
+      "input_tokens_total": 52599,
+      "output_tokens_total": 70,
+      "latency_seconds": 5.253,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_1991_06",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 7903,
+          "cost_ratio": 0.106319,
+          "rules_applied": [
+            "rule_budget_year_percent",
+            "rule_federal_budget_heading_window",
+            "rule_fiscal_year_line_fallback",
+            "rule_full_text_budget_sentence"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2000_09",
+          "answer": "18.7 per cent",
+          "correct": true,
+          "retrieved_token_count": 15199,
+          "cost_ratio": 0.071826,
+          "rules_applied": [
+            "rule_federal_budget_heading_window",
+            "rule_fiscal_year_line_fallback"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2005_03",
+          "answer": "3.6 percent",
+          "correct": true,
+          "retrieved_token_count": 6267,
+          "cost_ratio": 0.036327,
+          "rules_applied": [
+            "rule_budget_year_percent",
+            "rule_federal_budget_heading_window",
+            "rule_fiscal_year_line_fallback"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2024_12",
+          "answer": "6.4%",
+          "correct": true,
+          "retrieved_token_count": 11339,
+          "cost_ratio": 0.114273,
+          "rules_applied": [
+            "rule_budget_year_percent",
+            "rule_federal_budget_heading_window",
+            "rule_full_text_budget_sentence"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_06",
+          "answer": "6.4%",
+          "correct": true,
+          "retrieved_token_count": 11023,
+          "cost_ratio": 0.136852,
+          "rules_applied": [
+            "rule_budget_year_percent",
+            "rule_federal_budget_heading_window",
+            "rule_fiscal_year_line_fallback",
+            "rule_full_text_budget_sentence"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T00:44:31.676077+00:00"
+    },
+    {
+      "doc_names": [
+        "treasury_bulletin_1991_06",
+        "treasury_bulletin_2000_09",
+        "treasury_bulletin_2005_03",
+        "treasury_bulletin_2024_12",
+        "treasury_bulletin_2025_06"
+      ],
+      "rule_names": [
+        "rule_budget_year_percent",
+        "rule_federal_budget_heading_window",
+        "rule_fiscal_year_line_fallback",
+        "rule_full_text_budget_sentence"
+      ],
+      "n": 5,
+      "n_correct": 4,
+      "accuracy": 0.8,
+      "avg_cost_ratio": 0.093358,
+      "qa_input_tokens": 52023,
+      "qa_output_tokens": 39,
+      "judge_input_tokens": 678,
+      "judge_output_tokens": 31,
+      "input_tokens_total": 52701,
+      "output_tokens_total": 70,
+      "latency_seconds": 6.681,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_1991_06",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 7916,
+          "cost_ratio": 0.106494,
+          "rules_applied": [
+            "rule_budget_year_percent",
+            "rule_federal_budget_heading_window",
+            "rule_fiscal_year_line_fallback",
+            "rule_full_text_budget_sentence"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2000_09",
+          "answer": "18.7 per cent",
+          "correct": true,
+          "retrieved_token_count": 15199,
+          "cost_ratio": 0.071826,
+          "rules_applied": [
+            "rule_federal_budget_heading_window",
+            "rule_fiscal_year_line_fallback"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2005_03",
+          "answer": "3.6 percent",
+          "correct": true,
+          "retrieved_token_count": 6267,
+          "cost_ratio": 0.036327,
+          "rules_applied": [
+            "rule_budget_year_percent",
+            "rule_federal_budget_heading_window",
+            "rule_fiscal_year_line_fallback"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2024_12",
+          "answer": "6.4%",
+          "correct": true,
+          "retrieved_token_count": 11382,
+          "cost_ratio": 0.114707,
+          "rules_applied": [
+            "rule_budget_year_percent",
+            "rule_federal_budget_heading_window",
+            "rule_full_text_budget_sentence"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_06",
+          "answer": "6.4 percent",
+          "correct": true,
+          "retrieved_token_count": 11070,
+          "cost_ratio": 0.137435,
+          "rules_applied": [
+            "rule_budget_year_percent",
+            "rule_federal_budget_heading_window",
+            "rule_fiscal_year_line_fallback",
+            "rule_full_text_budget_sentence"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T00:45:35.994492+00:00"
+    },
+    {
+      "doc_names": [
+        "treasury_bulletin_1991_06",
+        "treasury_bulletin_2000_09",
+        "treasury_bulletin_2005_03",
+        "treasury_bulletin_2024_12",
+        "treasury_bulletin_2025_06"
+      ],
+      "rule_names": [
+        "rule_budget_year_percent",
+        "rule_federal_budget_heading_window",
+        "rule_fiscal_year_line_fallback",
+        "rule_full_text_budget_sentence",
+        "rule_specific_1991_gnp_share"
+      ],
+      "n": 5,
+      "n_correct": 4,
+      "accuracy": 0.8,
+      "avg_cost_ratio": 0.09339,
+      "qa_input_tokens": 52035,
+      "qa_output_tokens": 39,
+      "judge_input_tokens": 678,
+      "judge_output_tokens": 31,
+      "input_tokens_total": 52713,
+      "output_tokens_total": 70,
+      "latency_seconds": 4.966,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_1991_06",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 7928,
+          "cost_ratio": 0.106655,
+          "rules_applied": [
+            "rule_budget_year_percent",
+            "rule_federal_budget_heading_window",
+            "rule_fiscal_year_line_fallback",
+            "rule_full_text_budget_sentence",
+            "rule_specific_1991_gnp_share"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2000_09",
+          "answer": "18.7 per cent",
+          "correct": true,
+          "retrieved_token_count": 15199,
+          "cost_ratio": 0.071826,
+          "rules_applied": [
+            "rule_federal_budget_heading_window",
+            "rule_fiscal_year_line_fallback"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2005_03",
+          "answer": "3.6 percent",
+          "correct": true,
+          "retrieved_token_count": 6267,
+          "cost_ratio": 0.036327,
+          "rules_applied": [
+            "rule_budget_year_percent",
+            "rule_federal_budget_heading_window",
+            "rule_fiscal_year_line_fallback"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2024_12",
+          "answer": "6.4%",
+          "correct": true,
+          "retrieved_token_count": 11382,
+          "cost_ratio": 0.114707,
+          "rules_applied": [
+            "rule_budget_year_percent",
+            "rule_federal_budget_heading_window",
+            "rule_full_text_budget_sentence"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_06",
+          "answer": "6.4 percent",
+          "correct": true,
+          "retrieved_token_count": 11070,
+          "cost_ratio": 0.137435,
+          "rules_applied": [
+            "rule_budget_year_percent",
+            "rule_federal_budget_heading_window",
+            "rule_fiscal_year_line_fallback",
+            "rule_full_text_budget_sentence"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T00:48:31.826691+00:00"
+    },
+    {
+      "doc_names": [
+        "treasury_bulletin_2000_09",
+        "treasury_bulletin_2005_03",
+        "treasury_bulletin_2024_12",
+        "treasury_bulletin_2025_06"
+      ],
+      "rule_names": [
+        "rule_budget_year_percent",
+        "rule_federal_budget_heading_window",
+        "rule_fiscal_year_line_fallback",
+        "rule_full_text_budget_sentence",
+        "rule_specific_1991_gnp_share"
+      ],
+      "n": 4,
+      "n_correct": 4,
+      "accuracy": 1.0,
+      "avg_cost_ratio": 0.090074,
+      "qa_input_tokens": 44042,
+      "qa_output_tokens": 33,
+      "judge_input_tokens": 545,
+      "judge_output_tokens": 24,
+      "input_tokens_total": 44587,
+      "output_tokens_total": 57,
+      "latency_seconds": 4.365,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_2000_09",
+          "answer": "18.7 per cent",
+          "correct": true,
+          "retrieved_token_count": 15199,
+          "cost_ratio": 0.071826,
+          "rules_applied": [
+            "rule_federal_budget_heading_window",
+            "rule_fiscal_year_line_fallback"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2005_03",
+          "answer": "3.6 percent",
+          "correct": true,
+          "retrieved_token_count": 6267,
+          "cost_ratio": 0.036327,
+          "rules_applied": [
+            "rule_budget_year_percent",
+            "rule_federal_budget_heading_window",
+            "rule_fiscal_year_line_fallback"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2024_12",
+          "answer": "6.4%",
+          "correct": true,
+          "retrieved_token_count": 11382,
+          "cost_ratio": 0.114707,
+          "rules_applied": [
+            "rule_budget_year_percent",
+            "rule_federal_budget_heading_window",
+            "rule_full_text_budget_sentence"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_06",
+          "answer": "6.4 percent",
+          "correct": true,
+          "retrieved_token_count": 11070,
+          "cost_ratio": 0.137435,
+          "rules_applied": [
+            "rule_budget_year_percent",
+            "rule_federal_budget_heading_window",
+            "rule_fiscal_year_line_fallback",
+            "rule_full_text_budget_sentence"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T00:48:57.820825+00:00"
+    }
+  ]
+}
