@@ -19,7 +19,7 @@ _FINANCE_SPLITS = {
 
 _DATASET_CONFIG = {
     "financebench": {
-        "queries_file": _ROOT / "data/financebench/sample_queries.txt",
+        "queries_file": _ROOT / "data/financebench/multi_clsuter_queries.txt",
         "text_dir": _ROOT / "data/financebench/text",
         "labels_file": None,
     },
@@ -73,6 +73,22 @@ def _load_labels(dataset: str, split: str) -> dict[str, dict]:
                 raise ValueError(f"Conflicting labels for duplicated doc: {pdf_key}")
             merged[pdf_key] = doc_labels
     return merged
+
+
+def _validate_financebench_questions(
+    questions: list[str],
+    labels: dict[str, dict],
+) -> None:
+    if not labels:
+        return
+    label_questions = list(next(iter(labels.values())).keys())
+    if questions != label_questions:
+        raise ValueError(
+            "FinanceBench query file does not match label question order.\n"
+            f"queries_file has {len(questions)} questions but labels have {len(label_questions)}.\n"
+            f"queries_file: {questions}\n"
+            f"labels: {label_questions}"
+        )
 
 
 def _select_docs(
@@ -130,6 +146,8 @@ def main() -> None:
     split_name = args.split_name or args.split
     questions_all = _load_questions(args.dataset)
     labels_all = _load_labels(args.dataset, args.split)
+    if args.dataset == "financebench":
+        _validate_financebench_questions(questions_all, labels_all)
     labels_selected = _select_docs(
         args.dataset,
         labels_all,

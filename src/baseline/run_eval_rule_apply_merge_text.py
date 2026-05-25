@@ -24,7 +24,7 @@ _FINANCE_SPLITS = {
 
 _DATASET_CONFIG = {
     "financebench": {
-        "queries_file": _ROOT / "data/financebench/sample_queries.txt",
+        "queries_file": _ROOT / "data/financebench/multi_clsuter_queries.txt",
         "text_dir": _ROOT / "data/financebench/text",
         "labels_file": None,
     },
