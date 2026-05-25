@@ -1,0 +1,236 @@
+{
+  "verify_accuracy_calls": [
+    {
+      "doc_names": [
+        "3M_2023Q2_10Q",
+        "AMAZON_2022_10K",
+        "APPLE_2022_10K"
+      ],
+      "rule_names": [
+        "rule_common_stock_listing_narrative",
+        "rule_common_stock_listing_table"
+      ],
+      "n": 3,
+      "n_correct": 3,
+      "accuracy": 1.0,
+      "avg_cost_ratio": 0.087631,
+      "qa_input_tokens": 18293,
+      "qa_output_tokens": 26,
+      "judge_input_tokens": 476,
+      "judge_output_tokens": 18,
+      "input_tokens_total": 18769,
+      "output_tokens_total": 44,
+      "latency_seconds": 3.138,
+      "results": [
+        {
+          "doc_name": "3M_2023Q2_10Q",
+          "answer": "New York Stock Exchange",
+          "correct": true,
+          "retrieved_token_count": 7755,
+          "cost_ratio": 0.0985,
+          "rules_applied": [
+            "rule_common_stock_listing_narrative",
+            "rule_common_stock_listing_table"
+          ]
+        },
+        {
+          "doc_name": "AMAZON_2022_10K",
+          "answer": "Nasdaq Global Select Market",
+          "correct": true,
+          "retrieved_token_count": 5749,
+          "cost_ratio": 0.094707,
+          "rules_applied": [
+            "rule_common_stock_listing_narrative",
+            "rule_common_stock_listing_table"
+          ]
+        },
+        {
+          "doc_name": "APPLE_2022_10K",
+          "answer": "The Nasdaq Stock Market LLC",
+          "correct": true,
+          "retrieved_token_count": 4485,
+          "cost_ratio": 0.069685,
+          "rules_applied": [
+            "rule_common_stock_listing_narrative",
+            "rule_common_stock_listing_table"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T23:05:05.335378+00:00"
+    },
+    {
+      "doc_names": [
+        "3M_2023Q2_10Q",
+        "AMAZON_2022_10K",
+        "AMCOR_2022_10K",
+        "APPLE_2022_10K",
+        "BOEING_2022_10K",
+        "LOCKHEEDMARTIN_2023Q1_10Q"
+      ],
+      "rule_names": [
+        "rule_common_stock_listing_narrative",
+        "rule_common_stock_listing_table"
+      ],
+      "n": 6,
+      "n_correct": 4,
+      "accuracy": 0.666667,
+      "avg_cost_ratio": 0.000545,
+      "qa_input_tokens": 974,
+      "qa_output_tokens": 46,
+      "judge_input_tokens": 944,
+      "judge_output_tokens": 38,
+      "input_tokens_total": 1918,
+      "output_tokens_total": 84,
+      "latency_seconds": 4.687,
+      "results": [
+        {
+          "doc_name": "3M_2023Q2_10Q",
+          "answer": "New York Stock Exchange",
+          "correct": true,
+          "retrieved_token_count": 57,
+          "cost_ratio": 0.000724,
+          "rules_applied": [
+            "rule_common_stock_listing_table"
+          ]
+        },
+        {
+          "doc_name": "AMAZON_2022_10K",
+          "answer": "Nasdaq Global Select Market",
+          "correct": true,
+          "retrieved_token_count": 76,
+          "cost_ratio": 0.001252,
+          "rules_applied": [
+            "rule_common_stock_listing_table"
+          ]
+        },
+        {
+          "doc_name": "AMCOR_2022_10K",
+          "answer": "New York Stock Exchange",
+          "correct": true,
+          "retrieved_token_count": 38,
+          "cost_ratio": 0.000377,
+          "rules_applied": [
+            "rule_common_stock_listing_table"
+          ]
+        },
+        {
+          "doc_name": "APPLE_2022_10K",
+          "answer": "The Nasdaq Stock Market LLC",
+          "correct": true,
+          "retrieved_token_count": 26,
+          "cost_ratio": 0.000404,
+          "rules_applied": [
+            "rule_common_stock_listing_table"
+          ]
+        },
+        {
+          "doc_name": "BOEING_2022_10K",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "LOCKHEEDMARTIN_2023Q1_10Q",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 5,
+          "cost_ratio": 0.000516,
+          "rules_applied": [
+            "rule_common_stock_listing_narrative"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T23:06:03.700681+00:00"
+    },
+    {
+      "doc_names": [
+        "3M_2023Q2_10Q",
+        "AMAZON_2022_10K",
+        "AMCOR_2022_10K",
+        "APPLE_2022_10K",
+        "BOEING_2022_10K",
+        "LOCKHEEDMARTIN_2023Q1_10Q"
+      ],
+      "rule_names": [
+        "rule_common_stock_listing_narrative",
+        "rule_common_stock_listing_table"
+      ],
+      "n": 6,
+      "n_correct": 6,
+      "accuracy": 1.0,
+      "avg_cost_ratio": 0.000731,
+      "qa_input_tokens": 914,
+      "qa_output_tokens": 47,
+      "judge_input_tokens": 946,
+      "judge_output_tokens": 36,
+      "input_tokens_total": 1860,
+      "output_tokens_total": 83,
+      "latency_seconds": 4.229,
+      "results": [
+        {
+          "doc_name": "3M_2023Q2_10Q",
+          "answer": "New York Stock Exchange",
+          "correct": true,
+          "retrieved_token_count": 19,
+          "cost_ratio": 0.000241,
+          "rules_applied": [
+            "rule_common_stock_listing_table"
+          ]
+        },
+        {
+          "doc_name": "AMAZON_2022_10K",
+          "answer": "Nasdaq Global Select Market",
+          "correct": true,
+          "retrieved_token_count": 22,
+          "cost_ratio": 0.000362,
+          "rules_applied": [
+            "rule_common_stock_listing_table"
+          ]
+        },
+        {
+          "doc_name": "AMCOR_2022_10K",
+          "answer": "New York Stock Exchange",
+          "correct": true,
+          "retrieved_token_count": 22,
+          "cost_ratio": 0.000218,
+          "rules_applied": [
+            "rule_common_stock_listing_table"
+          ]
+        },
+        {
+          "doc_name": "APPLE_2022_10K",
+          "answer": "The Nasdaq Stock Market LLC",
+          "correct": true,
+          "retrieved_token_count": 26,
+          "cost_ratio": 0.000404,
+          "rules_applied": [
+            "rule_common_stock_listing_table"
+          ]
+        },
+        {
+          "doc_name": "BOEING_2022_10K",
+          "answer": "New York Stock Exchange",
+          "correct": true,
+          "retrieved_token_count": 19,
+          "cost_ratio": 0.000169,
+          "rules_applied": [
+            "rule_common_stock_listing_table"
+          ]
+        },
+        {
+          "doc_name": "LOCKHEEDMARTIN_2023Q1_10Q",
+          "answer": "NYSE",
+          "correct": true,
+          "retrieved_token_count": 29,
+          "cost_ratio": 0.002991,
+          "rules_applied": [
+            "rule_common_stock_listing_narrative"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-25T23:07:22.463301+00:00"
+    }
+  ]
+}
