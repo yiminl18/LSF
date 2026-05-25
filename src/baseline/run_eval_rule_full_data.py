@@ -136,6 +136,12 @@ def main() -> None:
     ap.add_argument("--timeout", type=int, default=3600)
     ap.add_argument("--skip-existing", action="store_true", default=True)
     ap.add_argument("--no-skip-existing", dest="skip_existing", action="store_false")
+    ap.add_argument(
+        "--adaptive-large-sample",
+        action="store_true",
+        default=False,
+        help="Append adaptive sample-size guidance to the agent prompt (see _ADAPTIVE_LARGE_SAMPLE_HINT)",
+    )
     args = ap.parse_args()
 
     baseline_mod = importlib.import_module(f"baseline.{args.baseline}")
@@ -212,6 +218,7 @@ def main() -> None:
             rules_dir=q_rules_dir,
             results_dir=results_root,
             run_stem=f"q{q_index:02d}",
+            adaptive_large_sample=args.adaptive_large_sample,
         )
         print(
             f"  status={result.get('status')}  "

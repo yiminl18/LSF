@@ -1,3 +1,4 @@
+from __future__ import annotations
 import re
 
 
@@ -22,7 +23,7 @@ _NAMEISH_RE = re.compile(
     r"(?i)^\s*(?:Hon\.?\s*)?[A-Z][A-Za-z0-9.'’\-]*(?:\s+[A-Z][A-Za-z0-9.'’\-]*){0,6}\s*,?\s*$"
 )
 _NAME_FRAGMENT_RE = re.compile(
-    r"(?i)^\s*(?:Hon\.?\s*)?[A-Z][^,\n]*(?:,\s*[^,\n]+)*(?:,\s*and| and|,|&)\s*$"
+    r"(?i)^\s*(?:Hon\.?\s*)?[A-Z][A-Za-z0-9.'' \-]{0,120}(?:,\s*and| and|,|&)\s*$"
 )
 _NON_NAME_HINT_RE = re.compile(
     r"(?i)\b(?:appeal|appeals|district court|bankruptcy appellate panel|bankruptcy court|"
@@ -136,7 +137,9 @@ def rule_presiding_district_judge(doc: dict) -> list[dict]:
                     spans.insert(0, aggregate_span)
 
         if not spans:
-            full_text = re.sub(r"\s+", " ", doc.get("text") or "").strip()
+            # Limit to first 5000 chars — full-text search with (.+?) + dotall
+            # causes catastrophic backtracking on long strings.
+            full_text = re.sub(r"\s+", " ", doc.get("text") or "").strip()[:5000]
             if full_text:
                 for pat in (_ROLE_RE, _MAGISTRATE_RE, _BANKRUPTCY_RE):
                     match = pat.search(full_text)

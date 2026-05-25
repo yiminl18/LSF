@@ -1,0 +1,29 @@
+{
+  "doc_name": "20250818_united_states_v._plancarte",
+  "question": "Which judge authored the majority opinion?",
+  "question_slug": "which_judge_authored_the_majority_opinion",
+  "split": "all_docs",
+  "ground_truth": "Judge Ikuta",
+  "answer": "Judge Ikuta",
+  "correct": true,
+  "status": "ok",
+  "input_tokens": 93,
+  "output_tokens": 7,
+  "latency_seconds": 1.058,
+  "model": "gpt54",
+  "doc_token_count": 5792,
+  "cost_ratio": 0.0161,
+  "retrieved_token_count": 7,
+  "rules_with_hits": [
+    "rule_opinion_by_judge_header"
+  ],
+  "rules_with_no_hits": [],
+  "num_spans_before_dedup": 1,
+  "num_spans_after_dedup": 1,
+  "rule_names": [
+    "rule_opinion_by_judge_header"
+  ],
+  "rule_question_dir": "q09_which_judge_authored_the_majority_opinion",
+  "rule_generation_report_path": "results/court/agentic_rule_full_data_gpt54mini/all_docs/q09_which_judge_authored_the_majority_opinion_rule_gen.json",
+  "rule_apply_trace_path": "results/court/agentic_rule_full_data_gpt54mini/all_docs/rule_apply_merge/_trace/q09_which_judge_authored_the_majority_opinion/rule_opinion_by_judge_header_merge.json"
+}

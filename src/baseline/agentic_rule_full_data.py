@@ -144,6 +144,20 @@ When complete, print exactly one line:
 AGENTIC_RULE_FULL_DATA_DONE report={report_path}
 """
 
+_ADAPTIVE_LARGE_SAMPLE_HINT = """
+Seed sample size guidance (adaptive-large-sample mode):
+- Run list-docs to get N (total corpus size).
+- Start with a working sample of max(5, min(N // 20, 15)) docs.
+- Pick seed docs spread across the sorted list (first, last, and evenly-spaced
+  middle indices) to capture layout variation, not just the first few docs.
+
+Sample expansion rules (check after every verify-accuracy call):
+- match_rate < 0.90  : add ceil(current_sample_size * 0.5) more spread docs, re-verify.
+- 0.90 <= match_rate < 0.95 : add 2-3 docs targeting failure cases, re-verify.
+- match_rate >= 0.95 : do not expand unless a rule change causes a regression.
+- Hard cap: never exceed min(N // 10, 30) total docs to stay within the verify-accuracy budget.
+"""
+
 
 def _resolve_model(model: str) -> str:
     return _MODEL_ALIASES.get(model, model)
@@ -616,6 +630,7 @@ def run_rule_gen(
     rules_dir: str | Path | None = None,
     results_dir: str | Path | None = None,
     run_stem: str = "q01",
+    adaptive_large_sample: bool = False,
     **_: Any,
 ) -> dict[str, Any]:
     if len(questions) != 1:
@@ -699,6 +714,8 @@ def run_rule_gen(
         ledger_path=str(ledger_path.resolve()),
         verify_budget=_VERIFY_BUDGET,
     )
+    if adaptive_large_sample:
+        prompt = prompt + _ADAPTIVE_LARGE_SAMPLE_HINT
 
     cmd = [
         codex_bin,

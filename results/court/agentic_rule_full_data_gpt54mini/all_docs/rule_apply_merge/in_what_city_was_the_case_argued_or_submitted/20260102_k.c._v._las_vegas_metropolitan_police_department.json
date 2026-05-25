@@ -1,0 +1,32 @@
+{
+  "doc_name": "20260102_k.c._v._las_vegas_metropolitan_police_department",
+  "question": "In what city was the case argued or submitted?",
+  "question_slug": "in_what_city_was_the_case_argued_or_submitted",
+  "split": "all_docs",
+  "ground_truth": "Las Vegas, Nevada",
+  "answer": "Las Vegas",
+  "correct": true,
+  "status": "ok",
+  "input_tokens": 95,
+  "output_tokens": 6,
+  "latency_seconds": 0.84,
+  "model": "gpt54",
+  "doc_token_count": 4967,
+  "cost_ratio": 0.0191,
+  "retrieved_token_count": 4,
+  "rules_with_hits": [
+    "rule_city_after_argued_submitted_header"
+  ],
+  "rules_with_no_hits": [
+    "rule_city_from_oral_argument_order_phrase"
+  ],
+  "num_spans_before_dedup": 1,
+  "num_spans_after_dedup": 1,
+  "rule_names": [
+    "rule_city_after_argued_submitted_header",
+    "rule_city_from_oral_argument_order_phrase"
+  ],
+  "rule_question_dir": "q06_in_what_city_was_the_case_argued_or_submitted",
+  "rule_generation_report_path": "results/court/agentic_rule_full_data_gpt54mini/all_docs/q06_in_what_city_was_the_case_argued_or_submitted_rule_gen.json",
+  "rule_apply_trace_path": "results/court/agentic_rule_full_data_gpt54mini/all_docs/rule_apply_merge/_trace/q06_in_what_city_was_the_case_argued_or_submitted/rule_city_after_argued_submitted_header__rule_city_from_oral_argument_order_phrase_merge.json"
+}
