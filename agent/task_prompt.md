@@ -5,12 +5,12 @@ low and per-rule coverage high.
 
 QUESTION   : {question}
 SLUG       : {question_slug}
-RULE POOL  : rules/financebench_single_cluster/llm/gpt54/one_shot/{question_slug}/
+RULE POOL  : rules/financebench/lsf/single_cluster/llm/gpt54/one_shot/{question_slug}/
 SAMPLED    : data/financebench/sample/single_cluster/random/sample_doc_labels.json (10 docs)
-COST CACHE : results/financebench_single_cluster/llm/gpt54/one_shot/cost_profile/{question_slug}.json
-COV CACHE  : results/financebench_single_cluster/llm/gpt54/one_shot/eval_individual/{question_slug}/
-OUTPUT     : results/financebench_single_cluster/llm/gpt54/one_shot/selected_rules_agent/{question_slug}.json
-TRACE      : results/financebench_single_cluster/llm/gpt54/one_shot/agent_trace/{question_slug}.jsonl
+COST CACHE : results/financebench/lsf/single_cluster/llm/gpt54/one_shot/cost_profile/{question_slug}.json
+COV CACHE  : results/financebench/lsf/single_cluster/llm/gpt54/one_shot/eval_individual/{question_slug}/
+OUTPUT     : results/financebench/lsf/single_cluster/llm/gpt54/one_shot/selected_rules_agent/{question_slug}.json
+TRACE      : results/financebench/lsf/single_cluster/llm/gpt54/one_shot/agent_trace/{question_slug}.jsonl
 
 HARD CONSTRAINT (must be satisfied before you finish)
   Merge accuracy of your selected subset S must equal the merge accuracy of

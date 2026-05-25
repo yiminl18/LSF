@@ -48,15 +48,15 @@ def sample_set_config(name: str) -> dict:
         return {
             "labels_file":         _ROOT / "data/financebench/sample/single_cluster/random/sample_doc_labels.json",
             "slug_suffix":         "_10_agentic",
-            "rules_dir":           _ROOT / "rules/financebench_single_cluster/agent/opus47/agentic/raw",
-            "results_dir":         _ROOT / "results/financebench_single_cluster/agent/opus47/agentic/raw",
+            "rules_dir":           _ROOT / "rules/financebench/lsf/single_cluster/agent/opus47/agentic/raw",
+            "results_dir":         _ROOT / "results/financebench/lsf/single_cluster/agent/opus47/agentic/raw",
         }
     if name == "fps":
         return {
             "labels_file":         _ROOT / "data/financebench/sample/single_cluster/fps/sample_doc_labels.json",
             "slug_suffix":         "_10_agentic_fps",
-            "rules_dir":           _ROOT / "rules/financebench_single_cluster/agent/opus47/agentic_fps/raw",
-            "results_dir":         _ROOT / "results/financebench_single_cluster/agent/opus47/agentic_fps/raw",
+            "rules_dir":           _ROOT / "rules/financebench/lsf/single_cluster/agent/opus47/agentic_fps/raw",
+            "results_dir":         _ROOT / "results/financebench/lsf/single_cluster/agent/opus47/agentic_fps/raw",
         }
     raise ValueError(f"unknown sample-set: {name!r}")
 

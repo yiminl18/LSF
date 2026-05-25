@@ -1,7 +1,7 @@
 """Driver: spawn one Claude Code session per question to select rules (multi-cluster).
 
 Mirrors agent/run_agent_select.py for the multi-cluster mix_doc_queries case.
-Uses task_prompt_multi.md, rules from financebench_multi_clusters, and the
+Uses task_prompt_multi.md, rules from financebench/lsf/multi_clusters, and the
 _18_llm slug suffix (18 sampled docs).
 
 Usage:
@@ -26,8 +26,8 @@ _ROOT = _THIS.parent
 
 QUERIES_FILE          = _ROOT / "data/financebench/mix_doc_queries.txt"
 TASK_PROMPT_FILE      = _THIS / "task_prompt_multi.md"
-SELECTED_AGENT_DIR    = _ROOT / "results/financebench_multi_clusters/llm/gpt54/one_shot/selected_rules_agent"
-AGENT_TRACE_DIR       = _ROOT / "results/financebench_multi_clusters/llm/gpt54/one_shot/agent_trace"
+SELECTED_AGENT_DIR    = _ROOT / "results/financebench/lsf/multi_clusters/llm/gpt54/one_shot/selected_rules_agent"
+AGENT_TRACE_DIR       = _ROOT / "results/financebench/lsf/multi_clusters/llm/gpt54/one_shot/agent_trace"
 
 _MODEL_ALIASES = {
     "opus":   "claude-opus-4-5",

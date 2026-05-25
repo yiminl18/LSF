@@ -5,10 +5,10 @@ low and per-rule coverage high.
 
 QUESTION   : {question}
 SLUG       : {question_slug}
-RULE POOL  : rules/financebench_multi_clusters/llm/gpt54/one_shot/{question_slug}/
+RULE POOL  : rules/financebench/lsf/multi_clusters/llm/gpt54/one_shot/{question_slug}/
 SAMPLED    : data/financebench/sample/multi_cluster/random/sample_doc_labels.json (18 docs)
-COST CACHE : results/financebench_multi_clusters/llm/gpt54/one_shot/cost_profile/{question_slug}.json
-COV CACHE  : results/financebench_multi_clusters/llm/gpt54/one_shot/eval_individual/{question_slug}/
+COST CACHE : results/financebench/lsf/multi_clusters/llm/gpt54/one_shot/cost_profile/{question_slug}.json
+COV CACHE  : results/financebench/lsf/multi_clusters/llm/gpt54/one_shot/eval_individual/{question_slug}/
 OUTPUT     : {output_path}
 TRACE      : {trace_path}
 
@@ -33,30 +33,30 @@ TOOLS YOU HAVE (invoke via the Bash tool, one per call)
 
   # Free (no LLM):
   python3 tools/list_rules.py --question-slug {question_slug} \
-      --rules-dir rules/financebench_multi_clusters/llm/gpt54/one_shot
+      --rules-dir rules/financebench/lsf/multi_clusters/llm/gpt54/one_shot
 
   python3 tools/compute_cost.py --question-slug {question_slug} \
-      --rules-dir rules/financebench_multi_clusters/llm/gpt54/one_shot \
+      --rules-dir rules/financebench/lsf/multi_clusters/llm/gpt54/one_shot \
       --labels-file data/financebench/sample/multi_cluster/random/sample_doc_labels.json \
       [--rules <r1> <r2> ... | --all]
 
   python3 tools/compute_coverage.py --question-slug {question_slug} \
-      --rules-dir rules/financebench_multi_clusters/llm/gpt54/one_shot \
-      --eval-individual-dir results/financebench_multi_clusters/llm/gpt54/one_shot/eval_individual \
+      --rules-dir rules/financebench/lsf/multi_clusters/llm/gpt54/one_shot \
+      --eval-individual-dir results/financebench/lsf/multi_clusters/llm/gpt54/one_shot/eval_individual \
       [--rules <r1> <r2> ... | --all]
 
   python3 tools/inspect_rule.py --question-slug {question_slug} \
-      --rules-dir rules/financebench_multi_clusters/llm/gpt54/one_shot \
+      --rules-dir rules/financebench/lsf/multi_clusters/llm/gpt54/one_shot \
       --rule <name>
 
   # Paid (each call: ~36 gpt54 invocations on the 18 sampled docs):
   python3 tools/verify_accuracy.py \
       --question-slug {question_slug} \
       --question "{question}" \
-      --rules-dir rules/financebench_multi_clusters/llm/gpt54/one_shot \
+      --rules-dir rules/financebench/lsf/multi_clusters/llm/gpt54/one_shot \
       --labels-file data/financebench/sample/multi_cluster/random/sample_doc_labels.json \
-      --eval-merge-dir results/financebench_multi_clusters/llm/gpt54/one_shot/eval_merge \
-      --output-dir results/financebench_multi_clusters/llm/gpt54/one_shot/selector_run_agent \
+      --eval-merge-dir results/financebench/lsf/multi_clusters/llm/gpt54/one_shot/eval_merge \
+      --output-dir results/financebench/lsf/multi_clusters/llm/gpt54/one_shot/selector_run_agent \
       --rules <r1> <r2> ...
 
 BUDGET: at most {budget} verify_accuracy calls. Use them sparingly.
