@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import signal
 import sys
 import warnings
 from pathlib import Path
@@ -104,6 +105,29 @@ Equivalence rules:
 - If the predicted answer is "NOT_FOUND", "NOT FOUND", or null, always judge as incorrect
 Reply with exactly one word: CORRECT or INCORRECT""",
 }
+
+
+class _TimeoutExpired(RuntimeError):
+    pass
+
+
+def _run_with_timeout(timeout_seconds: int | None, fn, *args, **kwargs):
+    if not timeout_seconds or timeout_seconds <= 0:
+        return fn(*args, **kwargs)
+
+    def _handle_timeout(signum, frame):
+        raise _TimeoutExpired(f"timed out after {timeout_seconds}s")
+
+    prev_handler = signal.getsignal(signal.SIGALRM)
+    prev_timer = signal.setitimer(signal.ITIMER_REAL, timeout_seconds)
+    signal.signal(signal.SIGALRM, _handle_timeout)
+    try:
+        return fn(*args, **kwargs)
+    finally:
+        signal.setitimer(signal.ITIMER_REAL, 0.0)
+        signal.signal(signal.SIGALRM, prev_handler)
+        if prev_timer != (0.0, 0.0):
+            signal.setitimer(signal.ITIMER_REAL, *prev_timer)
 
 
 def _make_slug(text: str) -> str:
@@ -285,6 +309,8 @@ def main() -> None:
     ap.add_argument("--max-docs", type=int, default=None)
     ap.add_argument("--latest-docs", action="store_true")
     ap.add_argument("--output-name", default=None, help="Optional output name under results/<dataset>/")
+    ap.add_argument("--apply-timeout-seconds", type=int, default=180)
+    ap.add_argument("--judge-timeout-seconds", type=int, default=60)
     ap.add_argument("--skip-existing", action="store_true", default=True)
     ap.add_argument("--no-skip-existing", dest="skip_existing", action="store_false")
     args = ap.parse_args()
@@ -329,6 +355,8 @@ def main() -> None:
         "split": split_name,
         "rule_gen_output_name": args.rule_gen_output_name,
         "answer_model": args.model,
+        "apply_timeout_seconds": args.apply_timeout_seconds,
+        "judge_timeout_seconds": args.judge_timeout_seconds,
         "selected_docs": sorted(selected_docs),
         "doc_count": len(selected_docs),
         "question_count": len(report_entries),
@@ -384,7 +412,9 @@ def main() -> None:
             doc_token_count = _count_tokens(document["text"])
 
             try:
-                apply_result = rule_apply_merge(
+                apply_result = _run_with_timeout(
+                    args.apply_timeout_seconds,
+                    rule_apply_merge,
                     document=document,
                     rule_names=rule_names,
                     question_slug=rule_question_dir,
@@ -396,6 +426,23 @@ def main() -> None:
                 )
                 answer = apply_result.get("predicted_answer")
                 status = "ok"
+            except _TimeoutExpired as exc:
+                print(f"  TIMEOUT {doc_name}: {exc}")
+                apply_result = {
+                    "predicted_answer": None,
+                    "latency_seconds": 0.0,
+                    "input_tokens": 0,
+                    "output_tokens": 0,
+                    "retrieved_token_count": 0,
+                    "rules_with_hits": [],
+                    "rules_with_no_hits": list(rule_names),
+                    "num_spans_before_dedup": 0,
+                    "num_spans_after_dedup": 0,
+                    "retrieved_spans": [],
+                    "retrieved_text": "",
+                }
+                answer = None
+                status = "apply_timeout"
             except Exception as exc:
                 print(f"  ERROR {doc_name}: {exc}")
                 apply_result = {
@@ -414,7 +461,21 @@ def main() -> None:
                 answer = None
                 status = "error"
 
-            correct = _judge(args.dataset, question, ground_truth, answer, gpt54_mod)
+            try:
+                correct = _run_with_timeout(
+                    args.judge_timeout_seconds,
+                    _judge,
+                    args.dataset,
+                    question,
+                    ground_truth,
+                    answer,
+                    gpt54_mod,
+                )
+            except _TimeoutExpired as exc:
+                print(f"  JUDGE_TIMEOUT {doc_name}: {exc}")
+                correct = False
+                if status == "ok":
+                    status = "judge_timeout"
             cost_ratio = round(apply_result.get("input_tokens", 0) / max(doc_token_count, 1), 4)
             rule_set_slug = "__".join(sorted(rule_names))[:120]
             record = {
