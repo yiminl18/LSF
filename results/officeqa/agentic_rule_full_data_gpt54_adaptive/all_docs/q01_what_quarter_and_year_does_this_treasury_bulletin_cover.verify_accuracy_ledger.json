@@ -1,0 +1,1398 @@
+{
+  "verify_accuracy_calls": [
+    {
+      "doc_names": [
+        "treasury_bulletin_1980_07",
+        "treasury_bulletin_1982_05",
+        "treasury_bulletin_1986_12",
+        "treasury_bulletin_1992_06",
+        "treasury_bulletin_1997_12",
+        "treasury_bulletin_2003_09",
+        "treasury_bulletin_2009_03",
+        "treasury_bulletin_2014_09",
+        "treasury_bulletin_2020_03",
+        "treasury_bulletin_2025_09"
+      ],
+      "rule_names": [
+        "rule_issue_cover_date",
+        "rule_sparse_doc_name_period"
+      ],
+      "n": 10,
+      "n_correct": 8,
+      "accuracy": 0.8,
+      "avg_cost_ratio": 0.250088,
+      "qa_input_tokens": 1390,
+      "qa_output_tokens": 89,
+      "judge_input_tokens": 1269,
+      "judge_output_tokens": 62,
+      "input_tokens_total": 2659,
+      "output_tokens_total": 151,
+      "latency_seconds": 8.221,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_1980_07",
+          "answer": "July 1980",
+          "correct": true,
+          "retrieved_token_count": 4,
+          "cost_ratio": 5.7e-05,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1982_05",
+          "answer": "May 1982",
+          "correct": true,
+          "retrieved_token_count": 4,
+          "cost_ratio": 5.8e-05,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1986_12",
+          "answer": "Fourth Quarter, Fiscal 1986",
+          "correct": true,
+          "retrieved_token_count": 15,
+          "cost_ratio": 0.000277,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1992_06",
+          "answer": "June 1992",
+          "correct": true,
+          "retrieved_token_count": 5,
+          "cost_ratio": 6.9e-05,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1997_12",
+          "answer": "Third 1997",
+          "correct": false,
+          "retrieved_token_count": 52,
+          "cost_ratio": 0.000237,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2003_09",
+          "answer": "SEPTEMBER 2003",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 4.2e-05,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2009_03",
+          "answer": "March 2009",
+          "correct": true,
+          "retrieved_token_count": 4,
+          "cost_ratio": 2.2e-05,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2014_09",
+          "answer": "SEPTEMBER 2014",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 7.8e-05,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2020_03",
+          "answer": "MARCH 2020",
+          "correct": true,
+          "retrieved_token_count": 5,
+          "cost_ratio": 4.4e-05,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_09",
+          "answer": "Third Quarter 2025",
+          "correct": false,
+          "retrieved_token_count": 10,
+          "cost_ratio": 2.5,
+          "rules_applied": [
+            "rule_issue_cover_date",
+            "rule_sparse_doc_name_period"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T05:35:58.124604+00:00"
+    },
+    {
+      "doc_names": [
+        "treasury_bulletin_1980_07",
+        "treasury_bulletin_1982_05",
+        "treasury_bulletin_1986_12",
+        "treasury_bulletin_1992_06",
+        "treasury_bulletin_1997_12",
+        "treasury_bulletin_2003_09",
+        "treasury_bulletin_2009_03",
+        "treasury_bulletin_2014_09",
+        "treasury_bulletin_2020_03",
+        "treasury_bulletin_2025_09"
+      ],
+      "rule_names": [
+        "rule_issue_cover_date",
+        "rule_sparse_doc_name_period"
+      ],
+      "n": 10,
+      "n_correct": 7,
+      "accuracy": 0.7,
+      "avg_cost_ratio": 0.100089,
+      "qa_input_tokens": 1385,
+      "qa_output_tokens": 89,
+      "judge_input_tokens": 1269,
+      "judge_output_tokens": 63,
+      "input_tokens_total": 2654,
+      "output_tokens_total": 152,
+      "latency_seconds": 8.398,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_1980_07",
+          "answer": "July 1980",
+          "correct": true,
+          "retrieved_token_count": 4,
+          "cost_ratio": 5.7e-05,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1982_05",
+          "answer": "Second quarter 1982",
+          "correct": false,
+          "retrieved_token_count": 4,
+          "cost_ratio": 5.8e-05,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1986_12",
+          "answer": "Fourth Quarter, Fiscal 1986",
+          "correct": true,
+          "retrieved_token_count": 15,
+          "cost_ratio": 0.000277,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1992_06",
+          "answer": "June 1992",
+          "correct": true,
+          "retrieved_token_count": 5,
+          "cost_ratio": 6.9e-05,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1997_12",
+          "answer": "Third Quarter 1997",
+          "correct": false,
+          "retrieved_token_count": 53,
+          "cost_ratio": 0.000241,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2003_09",
+          "answer": "SEPTEMBER 2003",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 4.2e-05,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2009_03",
+          "answer": "March 2009",
+          "correct": true,
+          "retrieved_token_count": 4,
+          "cost_ratio": 2.2e-05,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2014_09",
+          "answer": "SEPTEMBER 2014",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 7.8e-05,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2020_03",
+          "answer": "March 2020",
+          "correct": true,
+          "retrieved_token_count": 5,
+          "cost_ratio": 4.4e-05,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_09",
+          "answer": "September 2025",
+          "correct": false,
+          "retrieved_token_count": 4,
+          "cost_ratio": 1.0,
+          "rules_applied": [
+            "rule_issue_cover_date",
+            "rule_sparse_doc_name_period"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T05:36:37.202107+00:00"
+    },
+    {
+      "doc_names": [
+        "treasury_bulletin_1980_07",
+        "treasury_bulletin_1982_05",
+        "treasury_bulletin_1986_12",
+        "treasury_bulletin_1992_06",
+        "treasury_bulletin_1997_12",
+        "treasury_bulletin_2003_09",
+        "treasury_bulletin_2009_03",
+        "treasury_bulletin_2014_09",
+        "treasury_bulletin_2020_03",
+        "treasury_bulletin_2025_09"
+      ],
+      "rule_names": [
+        "rule_issue_cover_date",
+        "rule_sparse_doc_name_period"
+      ],
+      "n": 10,
+      "n_correct": 9,
+      "accuracy": 0.9,
+      "avg_cost_ratio": 0.100084,
+      "qa_input_tokens": 1355,
+      "qa_output_tokens": 88,
+      "judge_input_tokens": 1269,
+      "judge_output_tokens": 61,
+      "input_tokens_total": 2624,
+      "output_tokens_total": 149,
+      "latency_seconds": 7.818,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_1980_07",
+          "answer": "July 1980",
+          "correct": true,
+          "retrieved_token_count": 4,
+          "cost_ratio": 5.7e-05,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1982_05",
+          "answer": "May 1982",
+          "correct": true,
+          "retrieved_token_count": 4,
+          "cost_ratio": 5.8e-05,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1986_12",
+          "answer": "Fourth Quarter, Fiscal 1986",
+          "correct": true,
+          "retrieved_token_count": 15,
+          "cost_ratio": 0.000277,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1992_06",
+          "answer": "JUNE 1992",
+          "correct": true,
+          "retrieved_token_count": 14,
+          "cost_ratio": 0.000193,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1997_12",
+          "answer": "DECEMBER 1997",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 2.7e-05,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2003_09",
+          "answer": "September 2003",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 4.2e-05,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2009_03",
+          "answer": "March 2009",
+          "correct": true,
+          "retrieved_token_count": 12,
+          "cost_ratio": 6.7e-05,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2014_09",
+          "answer": "SEPTEMBER 2014",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 7.8e-05,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2020_03",
+          "answer": "MARCH 2020",
+          "correct": true,
+          "retrieved_token_count": 5,
+          "cost_ratio": 4.4e-05,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_09",
+          "answer": "September 2025",
+          "correct": false,
+          "retrieved_token_count": 4,
+          "cost_ratio": 1.0,
+          "rules_applied": [
+            "rule_issue_cover_date",
+            "rule_sparse_doc_name_period"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T05:37:40.064296+00:00"
+    },
+    {
+      "doc_names": [
+        "treasury_bulletin_1980_07",
+        "treasury_bulletin_1982_05",
+        "treasury_bulletin_1986_12",
+        "treasury_bulletin_1992_06",
+        "treasury_bulletin_1997_12",
+        "treasury_bulletin_2003_09",
+        "treasury_bulletin_2009_03",
+        "treasury_bulletin_2014_09",
+        "treasury_bulletin_2020_03",
+        "treasury_bulletin_2024_12",
+        "treasury_bulletin_2025_03",
+        "treasury_bulletin_2025_06",
+        "treasury_bulletin_2025_09"
+      ],
+      "rule_names": [
+        "rule_issue_cover_date",
+        "rule_sparse_doc_name_period"
+      ],
+      "n": 13,
+      "n_correct": 11,
+      "accuracy": 0.846154,
+      "avg_cost_ratio": 0.077001,
+      "qa_input_tokens": 1754,
+      "qa_output_tokens": 118,
+      "judge_input_tokens": 1652,
+      "judge_output_tokens": 80,
+      "input_tokens_total": 3406,
+      "output_tokens_total": 198,
+      "latency_seconds": 10.785,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_1980_07",
+          "answer": "July 1980",
+          "correct": true,
+          "retrieved_token_count": 4,
+          "cost_ratio": 5.7e-05,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1982_05",
+          "answer": "Second quarter 1982",
+          "correct": false,
+          "retrieved_token_count": 4,
+          "cost_ratio": 5.8e-05,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1986_12",
+          "answer": "Fourth Quarter, Fiscal 1986",
+          "correct": true,
+          "retrieved_token_count": 15,
+          "cost_ratio": 0.000277,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1992_06",
+          "answer": "JUNE 1992",
+          "correct": true,
+          "retrieved_token_count": 14,
+          "cost_ratio": 0.000193,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1997_12",
+          "answer": "DECEMBER 1997",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 2.7e-05,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2003_09",
+          "answer": "SEPTEMBER 2003",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 4.2e-05,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2009_03",
+          "answer": "March 2009",
+          "correct": true,
+          "retrieved_token_count": 12,
+          "cost_ratio": 6.7e-05,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2014_09",
+          "answer": "SEPTEMBER 2014",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 7.8e-05,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2020_03",
+          "answer": "MARCH 2020",
+          "correct": true,
+          "retrieved_token_count": 5,
+          "cost_ratio": 4.4e-05,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2024_12",
+          "answer": "DECEMBER 2024",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 6e-05,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_03",
+          "answer": "MARCH 2025",
+          "correct": true,
+          "retrieved_token_count": 5,
+          "cost_ratio": 4.7e-05,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_06",
+          "answer": "JUNE 2025",
+          "correct": true,
+          "retrieved_token_count": 5,
+          "cost_ratio": 6.2e-05,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_09",
+          "answer": "September 2025",
+          "correct": false,
+          "retrieved_token_count": 4,
+          "cost_ratio": 1.0,
+          "rules_applied": [
+            "rule_issue_cover_date",
+            "rule_sparse_doc_name_period"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T05:38:23.911299+00:00"
+    },
+    {
+      "doc_names": [
+        "treasury_bulletin_1980_07",
+        "treasury_bulletin_1982_05",
+        "treasury_bulletin_1986_12",
+        "treasury_bulletin_1992_06",
+        "treasury_bulletin_1997_12",
+        "treasury_bulletin_2003_09",
+        "treasury_bulletin_2009_03",
+        "treasury_bulletin_2014_09",
+        "treasury_bulletin_2020_03",
+        "treasury_bulletin_2024_12",
+        "treasury_bulletin_2025_03",
+        "treasury_bulletin_2025_06",
+        "treasury_bulletin_2025_09"
+      ],
+      "rule_names": [
+        "rule_issue_cover_date",
+        "rule_sparse_doc_name_period"
+      ],
+      "n": 13,
+      "n_correct": 12,
+      "accuracy": 0.923077,
+      "avg_cost_ratio": 0.077033,
+      "qa_input_tokens": 1789,
+      "qa_output_tokens": 117,
+      "judge_input_tokens": 1651,
+      "judge_output_tokens": 79,
+      "input_tokens_total": 3440,
+      "output_tokens_total": 196,
+      "latency_seconds": 10.793,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_1980_07",
+          "answer": "July 1980",
+          "correct": true,
+          "retrieved_token_count": 4,
+          "cost_ratio": 5.7e-05,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1982_05",
+          "answer": "May 1982",
+          "correct": true,
+          "retrieved_token_count": 12,
+          "cost_ratio": 0.000174,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1986_12",
+          "answer": "Fourth Quarter, Fiscal 1986",
+          "correct": true,
+          "retrieved_token_count": 15,
+          "cost_ratio": 0.000277,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1992_06",
+          "answer": "JUNE 1992",
+          "correct": true,
+          "retrieved_token_count": 14,
+          "cost_ratio": 0.000193,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1997_12",
+          "answer": "DECEMBER 1997",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 2.7e-05,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2003_09",
+          "answer": "SEPTEMBER 2003",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 4.2e-05,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2009_03",
+          "answer": "March 2009",
+          "correct": true,
+          "retrieved_token_count": 12,
+          "cost_ratio": 6.7e-05,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2014_09",
+          "answer": "SEPTEMBER 2014",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 7.8e-05,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2020_03",
+          "answer": "MARCH 2020",
+          "correct": true,
+          "retrieved_token_count": 5,
+          "cost_ratio": 4.4e-05,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2024_12",
+          "answer": "DECEMBER 2024",
+          "correct": true,
+          "retrieved_token_count": 16,
+          "cost_ratio": 0.000161,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_03",
+          "answer": "MARCH 2025",
+          "correct": true,
+          "retrieved_token_count": 14,
+          "cost_ratio": 0.000133,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_06",
+          "answer": "JUNE 2025",
+          "correct": true,
+          "retrieved_token_count": 14,
+          "cost_ratio": 0.000174,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_09",
+          "answer": "September 2025",
+          "correct": false,
+          "retrieved_token_count": 4,
+          "cost_ratio": 1.0,
+          "rules_applied": [
+            "rule_issue_cover_date",
+            "rule_sparse_doc_name_period"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T05:39:03.214165+00:00"
+    },
+    {
+      "doc_names": [
+        "treasury_bulletin_1980_07",
+        "treasury_bulletin_1982_05",
+        "treasury_bulletin_1986_12",
+        "treasury_bulletin_1992_06",
+        "treasury_bulletin_1997_12",
+        "treasury_bulletin_2003_09",
+        "treasury_bulletin_2009_03",
+        "treasury_bulletin_2014_09",
+        "treasury_bulletin_2020_03",
+        "treasury_bulletin_2023_03",
+        "treasury_bulletin_2023_06",
+        "treasury_bulletin_2023_09",
+        "treasury_bulletin_2024_12",
+        "treasury_bulletin_2025_03",
+        "treasury_bulletin_2025_06",
+        "treasury_bulletin_2025_09"
+      ],
+      "rule_names": [
+        "rule_issue_cover_date",
+        "rule_sparse_doc_name_period"
+      ],
+      "n": 16,
+      "n_correct": 15,
+      "accuracy": 0.9375,
+      "avg_cost_ratio": 0.062621,
+      "qa_input_tokens": 2216,
+      "qa_output_tokens": 142,
+      "judge_input_tokens": 2030,
+      "judge_output_tokens": 97,
+      "input_tokens_total": 4246,
+      "output_tokens_total": 239,
+      "latency_seconds": 13.244,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_1980_07",
+          "answer": "July 1980",
+          "correct": true,
+          "retrieved_token_count": 4,
+          "cost_ratio": 5.7e-05,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1982_05",
+          "answer": "May 1982",
+          "correct": true,
+          "retrieved_token_count": 12,
+          "cost_ratio": 0.000174,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1986_12",
+          "answer": "Fourth Quarter, Fiscal 1986",
+          "correct": true,
+          "retrieved_token_count": 15,
+          "cost_ratio": 0.000277,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1992_06",
+          "answer": "JUNE 1992",
+          "correct": true,
+          "retrieved_token_count": 14,
+          "cost_ratio": 0.000193,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1997_12",
+          "answer": "DECEMBER 1997",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 2.7e-05,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2003_09",
+          "answer": "SEPTEMBER 2003",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 4.2e-05,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2009_03",
+          "answer": "March 2009",
+          "correct": true,
+          "retrieved_token_count": 12,
+          "cost_ratio": 6.7e-05,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2014_09",
+          "answer": "September 2014",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 7.8e-05,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2020_03",
+          "answer": "March 2020",
+          "correct": true,
+          "retrieved_token_count": 5,
+          "cost_ratio": 4.4e-05,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2023_03",
+          "answer": "MARCH 2023",
+          "correct": true,
+          "retrieved_token_count": 14,
+          "cost_ratio": 0.000136,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2023_06",
+          "answer": "JUNE 2023",
+          "correct": true,
+          "retrieved_token_count": 14,
+          "cost_ratio": 0.000172,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2023_09",
+          "answer": "SEPTEMBER 2023",
+          "correct": true,
+          "retrieved_token_count": 16,
+          "cost_ratio": 0.000201,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2024_12",
+          "answer": "DECEMBER 2024",
+          "correct": true,
+          "retrieved_token_count": 16,
+          "cost_ratio": 0.000161,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_03",
+          "answer": "MARCH 2025",
+          "correct": true,
+          "retrieved_token_count": 14,
+          "cost_ratio": 0.000133,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_06",
+          "answer": "JUNE 2025",
+          "correct": true,
+          "retrieved_token_count": 14,
+          "cost_ratio": 0.000174,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_09",
+          "answer": "September 2025",
+          "correct": false,
+          "retrieved_token_count": 4,
+          "cost_ratio": 1.0,
+          "rules_applied": [
+            "rule_issue_cover_date",
+            "rule_sparse_doc_name_period"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T05:39:44.674033+00:00"
+    },
+    {
+      "doc_names": [
+        "treasury_bulletin_1980_07",
+        "treasury_bulletin_1982_05",
+        "treasury_bulletin_1986_12",
+        "treasury_bulletin_1992_06",
+        "treasury_bulletin_1997_12",
+        "treasury_bulletin_2003_09",
+        "treasury_bulletin_2009_03",
+        "treasury_bulletin_2014_09",
+        "treasury_bulletin_2020_03",
+        "treasury_bulletin_2023_03",
+        "treasury_bulletin_2023_06",
+        "treasury_bulletin_2023_09",
+        "treasury_bulletin_2023_12",
+        "treasury_bulletin_2024_03",
+        "treasury_bulletin_2024_12",
+        "treasury_bulletin_2025_03",
+        "treasury_bulletin_2025_06",
+        "treasury_bulletin_2025_09"
+      ],
+      "rule_names": [
+        "rule_issue_cover_date",
+        "rule_sparse_doc_name_period"
+      ],
+      "n": 18,
+      "n_correct": 17,
+      "accuracy": 0.944444,
+      "avg_cost_ratio": 0.05568,
+      "qa_input_tokens": 2500,
+      "qa_output_tokens": 163,
+      "judge_input_tokens": 2286,
+      "judge_output_tokens": 109,
+      "input_tokens_total": 4786,
+      "output_tokens_total": 272,
+      "latency_seconds": 15.137,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_1980_07",
+          "answer": "July 1980",
+          "correct": true,
+          "retrieved_token_count": 4,
+          "cost_ratio": 5.7e-05,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1982_05",
+          "answer": "May 1982",
+          "correct": true,
+          "retrieved_token_count": 12,
+          "cost_ratio": 0.000174,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1986_12",
+          "answer": "Fourth Quarter, Fiscal 1986",
+          "correct": true,
+          "retrieved_token_count": 15,
+          "cost_ratio": 0.000277,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1992_06",
+          "answer": "JUNE 1992",
+          "correct": true,
+          "retrieved_token_count": 14,
+          "cost_ratio": 0.000193,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1997_12",
+          "answer": "DECEMBER 1997",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 2.7e-05,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2003_09",
+          "answer": "SEPTEMBER 2003",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 4.2e-05,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2009_03",
+          "answer": "March 2009",
+          "correct": true,
+          "retrieved_token_count": 12,
+          "cost_ratio": 6.7e-05,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2014_09",
+          "answer": "SEPTEMBER 2014",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 7.8e-05,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2020_03",
+          "answer": "MARCH 2020",
+          "correct": true,
+          "retrieved_token_count": 5,
+          "cost_ratio": 4.4e-05,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2023_03",
+          "answer": "MARCH 2023",
+          "correct": true,
+          "retrieved_token_count": 14,
+          "cost_ratio": 0.000136,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2023_06",
+          "answer": "JUNE 2023",
+          "correct": true,
+          "retrieved_token_count": 14,
+          "cost_ratio": 0.000172,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2023_09",
+          "answer": "SEPTEMBER 2023",
+          "correct": true,
+          "retrieved_token_count": 16,
+          "cost_ratio": 0.000201,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2023_12",
+          "answer": "DECEMBER 2023",
+          "correct": true,
+          "retrieved_token_count": 16,
+          "cost_ratio": 0.000169,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2024_03",
+          "answer": "MARCH 2024",
+          "correct": true,
+          "retrieved_token_count": 14,
+          "cost_ratio": 0.000134,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2024_12",
+          "answer": "DECEMBER 2024",
+          "correct": true,
+          "retrieved_token_count": 16,
+          "cost_ratio": 0.000161,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_03",
+          "answer": "MARCH 2025",
+          "correct": true,
+          "retrieved_token_count": 14,
+          "cost_ratio": 0.000133,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_06",
+          "answer": "JUNE 2025",
+          "correct": true,
+          "retrieved_token_count": 14,
+          "cost_ratio": 0.000174,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_09",
+          "answer": "September 2025",
+          "correct": false,
+          "retrieved_token_count": 4,
+          "cost_ratio": 1.0,
+          "rules_applied": [
+            "rule_issue_cover_date",
+            "rule_sparse_doc_name_period"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T05:40:29.008980+00:00"
+    },
+    {
+      "doc_names": [
+        "treasury_bulletin_1980_07",
+        "treasury_bulletin_1982_05",
+        "treasury_bulletin_1986_12",
+        "treasury_bulletin_1992_06",
+        "treasury_bulletin_1997_12",
+        "treasury_bulletin_2003_09",
+        "treasury_bulletin_2009_03",
+        "treasury_bulletin_2014_09",
+        "treasury_bulletin_2020_03",
+        "treasury_bulletin_2023_03",
+        "treasury_bulletin_2023_06",
+        "treasury_bulletin_2023_09",
+        "treasury_bulletin_2023_12",
+        "treasury_bulletin_2024_03",
+        "treasury_bulletin_2024_06",
+        "treasury_bulletin_2024_09",
+        "treasury_bulletin_2024_12",
+        "treasury_bulletin_2025_03",
+        "treasury_bulletin_2025_06",
+        "treasury_bulletin_2025_09"
+      ],
+      "rule_names": [
+        "rule_issue_cover_date",
+        "rule_sparse_doc_name_period"
+      ],
+      "n": 20,
+      "n_correct": 19,
+      "accuracy": 0.95,
+      "avg_cost_ratio": 0.050131,
+      "qa_input_tokens": 2785,
+      "qa_output_tokens": 182,
+      "judge_input_tokens": 2540,
+      "judge_output_tokens": 121,
+      "input_tokens_total": 5325,
+      "output_tokens_total": 303,
+      "latency_seconds": 17.051,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_1980_07",
+          "answer": "July 1980",
+          "correct": true,
+          "retrieved_token_count": 4,
+          "cost_ratio": 5.7e-05,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1982_05",
+          "answer": "May 1982",
+          "correct": true,
+          "retrieved_token_count": 12,
+          "cost_ratio": 0.000174,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1986_12",
+          "answer": "Fourth Quarter, Fiscal 1986",
+          "correct": true,
+          "retrieved_token_count": 15,
+          "cost_ratio": 0.000277,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1992_06",
+          "answer": "JUNE 1992",
+          "correct": true,
+          "retrieved_token_count": 14,
+          "cost_ratio": 0.000193,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1997_12",
+          "answer": "DECEMBER 1997",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 2.7e-05,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2003_09",
+          "answer": "SEPTEMBER 2003",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 4.2e-05,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2009_03",
+          "answer": "March 2009",
+          "correct": true,
+          "retrieved_token_count": 12,
+          "cost_ratio": 6.7e-05,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2014_09",
+          "answer": "SEPTEMBER 2014",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 7.8e-05,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2020_03",
+          "answer": "MARCH 2020",
+          "correct": true,
+          "retrieved_token_count": 5,
+          "cost_ratio": 4.4e-05,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2023_03",
+          "answer": "MARCH 2023",
+          "correct": true,
+          "retrieved_token_count": 14,
+          "cost_ratio": 0.000136,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2023_06",
+          "answer": "JUNE 2023",
+          "correct": true,
+          "retrieved_token_count": 14,
+          "cost_ratio": 0.000172,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2023_09",
+          "answer": "SEPTEMBER 2023",
+          "correct": true,
+          "retrieved_token_count": 16,
+          "cost_ratio": 0.000201,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2023_12",
+          "answer": "DECEMBER 2023",
+          "correct": true,
+          "retrieved_token_count": 16,
+          "cost_ratio": 0.000169,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2024_03",
+          "answer": "MARCH 2024",
+          "correct": true,
+          "retrieved_token_count": 14,
+          "cost_ratio": 0.000134,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2024_06",
+          "answer": "JUNE 2024",
+          "correct": true,
+          "retrieved_token_count": 14,
+          "cost_ratio": 0.000179,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2024_09",
+          "answer": "SEPTEMBER 2024",
+          "correct": true,
+          "retrieved_token_count": 16,
+          "cost_ratio": 0.000198,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2024_12",
+          "answer": "DECEMBER 2024",
+          "correct": true,
+          "retrieved_token_count": 16,
+          "cost_ratio": 0.000161,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_03",
+          "answer": "MARCH 2025",
+          "correct": true,
+          "retrieved_token_count": 14,
+          "cost_ratio": 0.000133,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_06",
+          "answer": "JUNE 2025",
+          "correct": true,
+          "retrieved_token_count": 14,
+          "cost_ratio": 0.000174,
+          "rules_applied": [
+            "rule_issue_cover_date"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_09",
+          "answer": "September 2025",
+          "correct": false,
+          "retrieved_token_count": 4,
+          "cost_ratio": 1.0,
+          "rules_applied": [
+            "rule_issue_cover_date",
+            "rule_sparse_doc_name_period"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T05:41:13.884371+00:00"
+    }
+  ]
+}

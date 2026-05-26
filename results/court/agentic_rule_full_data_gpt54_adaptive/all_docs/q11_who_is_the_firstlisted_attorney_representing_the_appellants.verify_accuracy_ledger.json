@@ -1,0 +1,657 @@
+{
+  "verify_accuracy_calls": [
+    {
+      "doc_names": [
+        "20250723_state_of_washington_v._trump",
+        "20250801_king_v._navy_federal_credit_union",
+        "20250815_in_re_subpoena_internet_subscribers_of_cox_communications_llc_and_coxcom",
+        "20250827_ambrosetti_v._oregon_catholic_press",
+        "20250904_garcia_v._county_of_alameda",
+        "20250912_pacito_v._trump",
+        "20251003_caldrone_v._circle_k_stores_inc.",
+        "20251030_doe_v._deutsche_lufthansa_aktiengesellschaft",
+        "20251120_rosa_a._camacho_v._nmi_settlement_fund",
+        "20251222_united_states_v._holmes",
+        "20260105_walker_specialty_constr._inc._v._bd._of_tr._of_the_constr._indus._and",
+        "20260130_kalbers_v._volkswagen_ag",
+        "20260227_l.b._v._san_diego_unified_school_district",
+        "20260317_adventist_health_system_of_west_v._abbvie_inc."
+      ],
+      "rule_names": [
+        "rule_first_listed_attorney_appellant"
+      ],
+      "n": 14,
+      "n_correct": 12,
+      "accuracy": 0.857143,
+      "avg_cost_ratio": 0.000529,
+      "qa_input_tokens": 1868,
+      "qa_output_tokens": 124,
+      "judge_input_tokens": 1995,
+      "judge_output_tokens": 86,
+      "input_tokens_total": 3863,
+      "output_tokens_total": 210,
+      "latency_seconds": 13.564,
+      "results": [
+        {
+          "doc_name": "20250723_state_of_washington_v._trump",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "20250801_king_v._navy_federal_credit_union",
+          "answer": "Robert Friedman",
+          "correct": true,
+          "retrieved_token_count": 2,
+          "cost_ratio": 0.000364,
+          "rules_applied": [
+            "rule_first_listed_attorney_appellant"
+          ]
+        },
+        {
+          "doc_name": "20250815_in_re_subpoena_internet_subscribers_of_cox_communications_llc_and_coxcom",
+          "answer": "Kerry S. Culpepper",
+          "correct": true,
+          "retrieved_token_count": 7,
+          "cost_ratio": 0.000607,
+          "rules_applied": [
+            "rule_first_listed_attorney_appellant"
+          ]
+        },
+        {
+          "doc_name": "20250827_ambrosetti_v._oregon_catholic_press",
+          "answer": "Donald J. Schmid",
+          "correct": true,
+          "retrieved_token_count": 5,
+          "cost_ratio": 0.000402,
+          "rules_applied": [
+            "rule_first_listed_attorney_appellant"
+          ]
+        },
+        {
+          "doc_name": "20250904_garcia_v._county_of_alameda",
+          "answer": "J. David Loy",
+          "correct": true,
+          "retrieved_token_count": 4,
+          "cost_ratio": 0.000483,
+          "rules_applied": [
+            "rule_first_listed_attorney_appellant"
+          ]
+        },
+        {
+          "doc_name": "20250912_pacito_v._trump",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "20251003_caldrone_v._circle_k_stores_inc.",
+          "answer": "Joseph S. Klapach",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 0.000969,
+          "rules_applied": [
+            "rule_first_listed_attorney_appellant"
+          ]
+        },
+        {
+          "doc_name": "20251030_doe_v._deutsche_lufthansa_aktiengesellschaft",
+          "answer": "Donald J. Putterman",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 0.000506,
+          "rules_applied": [
+            "rule_first_listed_attorney_appellant"
+          ]
+        },
+        {
+          "doc_name": "20251120_rosa_a._camacho_v._nmi_settlement_fund",
+          "answer": "Jeanne H. Rayphand",
+          "correct": true,
+          "retrieved_token_count": 7,
+          "cost_ratio": 0.001313,
+          "rules_applied": [
+            "rule_first_listed_attorney_appellant"
+          ]
+        },
+        {
+          "doc_name": "20251222_united_states_v._holmes",
+          "answer": "Amy M. Saharia",
+          "correct": true,
+          "retrieved_token_count": 5,
+          "cost_ratio": 0.000225,
+          "rules_applied": [
+            "rule_first_listed_attorney_appellant"
+          ]
+        },
+        {
+          "doc_name": "20260105_walker_specialty_constr._inc._v._bd._of_tr._of_the_constr._indus._and",
+          "answer": "Adam P. Segal",
+          "correct": true,
+          "retrieved_token_count": 5,
+          "cost_ratio": 0.000749,
+          "rules_applied": [
+            "rule_first_listed_attorney_appellant"
+          ]
+        },
+        {
+          "doc_name": "20260130_kalbers_v._volkswagen_ag",
+          "answer": "Sean R. Janda",
+          "correct": true,
+          "retrieved_token_count": 5,
+          "cost_ratio": 0.000444,
+          "rules_applied": [
+            "rule_first_listed_attorney_appellant"
+          ]
+        },
+        {
+          "doc_name": "20260227_l.b._v._san_diego_unified_school_district",
+          "answer": "Meagan Nunez",
+          "correct": true,
+          "retrieved_token_count": 5,
+          "cost_ratio": 0.000482,
+          "rules_applied": [
+            "rule_first_listed_attorney_appellant"
+          ]
+        },
+        {
+          "doc_name": "20260317_adventist_health_system_of_west_v._abbvie_inc.",
+          "answer": "Kenneth D. Capesius",
+          "correct": true,
+          "retrieved_token_count": 7,
+          "cost_ratio": 0.000856,
+          "rules_applied": [
+            "rule_first_listed_attorney_appellant"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T06:42:58.703928+00:00"
+    },
+    {
+      "doc_names": [
+        "20250723_state_of_washington_v._trump",
+        "20250731_lapadat_v._bondi",
+        "20250801_king_v._navy_federal_credit_union",
+        "20250814_foothills_christian_ministries_v._johnson",
+        "20250815_in_re_subpoena_internet_subscribers_of_cox_communications_llc_and_coxcom",
+        "20250821_kari_lake_v._bill_gates",
+        "20250827_ambrosetti_v._oregon_catholic_press",
+        "20250904_garcia_v._county_of_alameda",
+        "20250912_pacito_v._trump",
+        "20250922_promise_arizona_v._petersen",
+        "20251003_caldrone_v._circle_k_stores_inc.",
+        "20251030_doe_v._deutsche_lufthansa_aktiengesellschaft",
+        "20251120_rosa_a._camacho_v._nmi_settlement_fund",
+        "20251222_united_states_v._holmes",
+        "20251223_industrial_park_center_llc_v._great_northern_insurance_company",
+        "20260105_walker_specialty_constr._inc._v._bd._of_tr._of_the_constr._indus._and",
+        "20260108_united_states_v._soto",
+        "20260130_kalbers_v._volkswagen_ag",
+        "20260227_l.b._v._san_diego_unified_school_district",
+        "20260310_b.b._v._capistrano_unified_school_district",
+        "20260317_adventist_health_system_of_west_v._abbvie_inc."
+      ],
+      "rule_names": [
+        "rule_first_listed_attorney_appellant"
+      ],
+      "n": 21,
+      "n_correct": 19,
+      "accuracy": 0.904762,
+      "avg_cost_ratio": 0.000613,
+      "qa_input_tokens": 2824,
+      "qa_output_tokens": 199,
+      "judge_input_tokens": 3019,
+      "judge_output_tokens": 128,
+      "input_tokens_total": 5843,
+      "output_tokens_total": 327,
+      "latency_seconds": 18.334,
+      "results": [
+        {
+          "doc_name": "20250723_state_of_washington_v._trump",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 2,
+          "cost_ratio": 7.2e-05,
+          "rules_applied": [
+            "rule_first_listed_attorney_appellant"
+          ]
+        },
+        {
+          "doc_name": "20250731_lapadat_v._bondi",
+          "answer": "Colyn B. Desatnik",
+          "correct": true,
+          "retrieved_token_count": 7,
+          "cost_ratio": 0.000272,
+          "rules_applied": [
+            "rule_first_listed_attorney_appellant"
+          ]
+        },
+        {
+          "doc_name": "20250801_king_v._navy_federal_credit_union",
+          "answer": "Robert Friedman",
+          "correct": true,
+          "retrieved_token_count": 2,
+          "cost_ratio": 0.000364,
+          "rules_applied": [
+            "rule_first_listed_attorney_appellant"
+          ]
+        },
+        {
+          "doc_name": "20250814_foothills_christian_ministries_v._johnson",
+          "answer": "Kevin T. Snider",
+          "correct": true,
+          "retrieved_token_count": 5,
+          "cost_ratio": 0.000522,
+          "rules_applied": [
+            "rule_first_listed_attorney_appellant"
+          ]
+        },
+        {
+          "doc_name": "20250815_in_re_subpoena_internet_subscribers_of_cox_communications_llc_and_coxcom",
+          "answer": "Kerry S. Culpepper",
+          "correct": true,
+          "retrieved_token_count": 7,
+          "cost_ratio": 0.000607,
+          "rules_applied": [
+            "rule_first_listed_attorney_appellant"
+          ]
+        },
+        {
+          "doc_name": "20250821_kari_lake_v._bill_gates",
+          "answer": "ANDREW D. PARKER",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 0.000582,
+          "rules_applied": [
+            "rule_first_listed_attorney_appellant"
+          ]
+        },
+        {
+          "doc_name": "20250827_ambrosetti_v._oregon_catholic_press",
+          "answer": "Donald J. Schmid",
+          "correct": true,
+          "retrieved_token_count": 5,
+          "cost_ratio": 0.000402,
+          "rules_applied": [
+            "rule_first_listed_attorney_appellant"
+          ]
+        },
+        {
+          "doc_name": "20250904_garcia_v._county_of_alameda",
+          "answer": "J. David Loy",
+          "correct": true,
+          "retrieved_token_count": 4,
+          "cost_ratio": 0.000483,
+          "rules_applied": [
+            "rule_first_listed_attorney_appellant"
+          ]
+        },
+        {
+          "doc_name": "20250912_pacito_v._trump",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 2,
+          "cost_ratio": 0.000499,
+          "rules_applied": [
+            "rule_first_listed_attorney_appellant"
+          ]
+        },
+        {
+          "doc_name": "20250922_promise_arizona_v._petersen",
+          "answer": "Kory A. Langhofer",
+          "correct": true,
+          "retrieved_token_count": 7,
+          "cost_ratio": 0.000506,
+          "rules_applied": [
+            "rule_first_listed_attorney_appellant"
+          ]
+        },
+        {
+          "doc_name": "20251003_caldrone_v._circle_k_stores_inc.",
+          "answer": "Joseph S. Klapach",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 0.000969,
+          "rules_applied": [
+            "rule_first_listed_attorney_appellant"
+          ]
+        },
+        {
+          "doc_name": "20251030_doe_v._deutsche_lufthansa_aktiengesellschaft",
+          "answer": "Donald J. Putterman",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 0.000506,
+          "rules_applied": [
+            "rule_first_listed_attorney_appellant"
+          ]
+        },
+        {
+          "doc_name": "20251120_rosa_a._camacho_v._nmi_settlement_fund",
+          "answer": "Jeanne H. Rayphand",
+          "correct": true,
+          "retrieved_token_count": 7,
+          "cost_ratio": 0.001313,
+          "rules_applied": [
+            "rule_first_listed_attorney_appellant"
+          ]
+        },
+        {
+          "doc_name": "20251222_united_states_v._holmes",
+          "answer": "Amy M. Saharia",
+          "correct": true,
+          "retrieved_token_count": 5,
+          "cost_ratio": 0.000225,
+          "rules_applied": [
+            "rule_first_listed_attorney_appellant"
+          ]
+        },
+        {
+          "doc_name": "20251223_industrial_park_center_llc_v._great_northern_insurance_company",
+          "answer": "Chad L. Schexnayder",
+          "correct": true,
+          "retrieved_token_count": 9,
+          "cost_ratio": 0.001459,
+          "rules_applied": [
+            "rule_first_listed_attorney_appellant"
+          ]
+        },
+        {
+          "doc_name": "20260105_walker_specialty_constr._inc._v._bd._of_tr._of_the_constr._indus._and",
+          "answer": "Adam P. Segal",
+          "correct": true,
+          "retrieved_token_count": 5,
+          "cost_ratio": 0.000749,
+          "rules_applied": [
+            "rule_first_listed_attorney_appellant"
+          ]
+        },
+        {
+          "doc_name": "20260108_united_states_v._soto",
+          "answer": "Sonam A. H. Henderson",
+          "correct": true,
+          "retrieved_token_count": 7,
+          "cost_ratio": 0.000986,
+          "rules_applied": [
+            "rule_first_listed_attorney_appellant"
+          ]
+        },
+        {
+          "doc_name": "20260130_kalbers_v._volkswagen_ag",
+          "answer": "Sean R. Janda",
+          "correct": true,
+          "retrieved_token_count": 5,
+          "cost_ratio": 0.000444,
+          "rules_applied": [
+            "rule_first_listed_attorney_appellant"
+          ]
+        },
+        {
+          "doc_name": "20260227_l.b._v._san_diego_unified_school_district",
+          "answer": "Meagan Nunez",
+          "correct": true,
+          "retrieved_token_count": 5,
+          "cost_ratio": 0.000482,
+          "rules_applied": [
+            "rule_first_listed_attorney_appellant"
+          ]
+        },
+        {
+          "doc_name": "20260310_b.b._v._capistrano_unified_school_district",
+          "answer": "Caleb R. Trotter",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 0.000582,
+          "rules_applied": [
+            "rule_first_listed_attorney_appellant"
+          ]
+        },
+        {
+          "doc_name": "20260317_adventist_health_system_of_west_v._abbvie_inc.",
+          "answer": "Kenneth D. Capesius",
+          "correct": true,
+          "retrieved_token_count": 7,
+          "cost_ratio": 0.000856,
+          "rules_applied": [
+            "rule_first_listed_attorney_appellant"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T06:53:18.879109+00:00"
+    },
+    {
+      "doc_names": [
+        "20250731_lapadat_v._bondi",
+        "20250801_king_v._navy_federal_credit_union",
+        "20250814_foothills_christian_ministries_v._johnson",
+        "20250815_in_re_subpoena_internet_subscribers_of_cox_communications_llc_and_coxcom",
+        "20250821_kari_lake_v._bill_gates",
+        "20250827_ambrosetti_v._oregon_catholic_press",
+        "20250904_garcia_v._county_of_alameda",
+        "20250922_promise_arizona_v._petersen",
+        "20251003_caldrone_v._circle_k_stores_inc.",
+        "20251030_doe_v._deutsche_lufthansa_aktiengesellschaft",
+        "20251120_rosa_a._camacho_v._nmi_settlement_fund",
+        "20251222_united_states_v._holmes",
+        "20251223_industrial_park_center_llc_v._great_northern_insurance_company",
+        "20260105_walker_specialty_constr._inc._v._bd._of_tr._of_the_constr._indus._and",
+        "20260108_united_states_v._soto",
+        "20260130_kalbers_v._volkswagen_ag",
+        "20260227_l.b._v._san_diego_unified_school_district",
+        "20260310_b.b._v._capistrano_unified_school_district",
+        "20260317_adventist_health_system_of_west_v._abbvie_inc."
+      ],
+      "rule_names": [
+        "rule_first_listed_attorney_appellant"
+      ],
+      "n": 19,
+      "n_correct": 19,
+      "accuracy": 1.0,
+      "avg_cost_ratio": 0.000648,
+      "qa_input_tokens": 2562,
+      "qa_output_tokens": 187,
+      "judge_input_tokens": 2745,
+      "judge_output_tokens": 114,
+      "input_tokens_total": 5307,
+      "output_tokens_total": 301,
+      "latency_seconds": 18.981,
+      "results": [
+        {
+          "doc_name": "20250731_lapadat_v._bondi",
+          "answer": "Colyn B. Desatnik",
+          "correct": true,
+          "retrieved_token_count": 7,
+          "cost_ratio": 0.000272,
+          "rules_applied": [
+            "rule_first_listed_attorney_appellant"
+          ]
+        },
+        {
+          "doc_name": "20250801_king_v._navy_federal_credit_union",
+          "answer": "Robert Friedman",
+          "correct": true,
+          "retrieved_token_count": 2,
+          "cost_ratio": 0.000364,
+          "rules_applied": [
+            "rule_first_listed_attorney_appellant"
+          ]
+        },
+        {
+          "doc_name": "20250814_foothills_christian_ministries_v._johnson",
+          "answer": "Kevin T. Snider",
+          "correct": true,
+          "retrieved_token_count": 5,
+          "cost_ratio": 0.000522,
+          "rules_applied": [
+            "rule_first_listed_attorney_appellant"
+          ]
+        },
+        {
+          "doc_name": "20250815_in_re_subpoena_internet_subscribers_of_cox_communications_llc_and_coxcom",
+          "answer": "Kerry S. Culpepper",
+          "correct": true,
+          "retrieved_token_count": 7,
+          "cost_ratio": 0.000607,
+          "rules_applied": [
+            "rule_first_listed_attorney_appellant"
+          ]
+        },
+        {
+          "doc_name": "20250821_kari_lake_v._bill_gates",
+          "answer": "ANDREW D. PARKER",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 0.000582,
+          "rules_applied": [
+            "rule_first_listed_attorney_appellant"
+          ]
+        },
+        {
+          "doc_name": "20250827_ambrosetti_v._oregon_catholic_press",
+          "answer": "Donald J. Schmid",
+          "correct": true,
+          "retrieved_token_count": 5,
+          "cost_ratio": 0.000402,
+          "rules_applied": [
+            "rule_first_listed_attorney_appellant"
+          ]
+        },
+        {
+          "doc_name": "20250904_garcia_v._county_of_alameda",
+          "answer": "J. David Loy",
+          "correct": true,
+          "retrieved_token_count": 4,
+          "cost_ratio": 0.000483,
+          "rules_applied": [
+            "rule_first_listed_attorney_appellant"
+          ]
+        },
+        {
+          "doc_name": "20250922_promise_arizona_v._petersen",
+          "answer": "Kory A. Langhofer",
+          "correct": true,
+          "retrieved_token_count": 7,
+          "cost_ratio": 0.000506,
+          "rules_applied": [
+            "rule_first_listed_attorney_appellant"
+          ]
+        },
+        {
+          "doc_name": "20251003_caldrone_v._circle_k_stores_inc.",
+          "answer": "Joseph S. Klapach",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 0.000969,
+          "rules_applied": [
+            "rule_first_listed_attorney_appellant"
+          ]
+        },
+        {
+          "doc_name": "20251030_doe_v._deutsche_lufthansa_aktiengesellschaft",
+          "answer": "Donald J. Putterman",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 0.000506,
+          "rules_applied": [
+            "rule_first_listed_attorney_appellant"
+          ]
+        },
+        {
+          "doc_name": "20251120_rosa_a._camacho_v._nmi_settlement_fund",
+          "answer": "Jeanne H. Rayphand",
+          "correct": true,
+          "retrieved_token_count": 7,
+          "cost_ratio": 0.001313,
+          "rules_applied": [
+            "rule_first_listed_attorney_appellant"
+          ]
+        },
+        {
+          "doc_name": "20251222_united_states_v._holmes",
+          "answer": "Amy M. Saharia",
+          "correct": true,
+          "retrieved_token_count": 5,
+          "cost_ratio": 0.000225,
+          "rules_applied": [
+            "rule_first_listed_attorney_appellant"
+          ]
+        },
+        {
+          "doc_name": "20251223_industrial_park_center_llc_v._great_northern_insurance_company",
+          "answer": "Chad L. Schexnayder",
+          "correct": true,
+          "retrieved_token_count": 9,
+          "cost_ratio": 0.001459,
+          "rules_applied": [
+            "rule_first_listed_attorney_appellant"
+          ]
+        },
+        {
+          "doc_name": "20260105_walker_specialty_constr._inc._v._bd._of_tr._of_the_constr._indus._and",
+          "answer": "Adam P. Segal",
+          "correct": true,
+          "retrieved_token_count": 5,
+          "cost_ratio": 0.000749,
+          "rules_applied": [
+            "rule_first_listed_attorney_appellant"
+          ]
+        },
+        {
+          "doc_name": "20260108_united_states_v._soto",
+          "answer": "Sonam A. H. Henderson",
+          "correct": true,
+          "retrieved_token_count": 7,
+          "cost_ratio": 0.000986,
+          "rules_applied": [
+            "rule_first_listed_attorney_appellant"
+          ]
+        },
+        {
+          "doc_name": "20260130_kalbers_v._volkswagen_ag",
+          "answer": "Sean R. Janda",
+          "correct": true,
+          "retrieved_token_count": 5,
+          "cost_ratio": 0.000444,
+          "rules_applied": [
+            "rule_first_listed_attorney_appellant"
+          ]
+        },
+        {
+          "doc_name": "20260227_l.b._v._san_diego_unified_school_district",
+          "answer": "Meagan Nunez",
+          "correct": true,
+          "retrieved_token_count": 5,
+          "cost_ratio": 0.000482,
+          "rules_applied": [
+            "rule_first_listed_attorney_appellant"
+          ]
+        },
+        {
+          "doc_name": "20260310_b.b._v._capistrano_unified_school_district",
+          "answer": "Caleb R. Trotter",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 0.000582,
+          "rules_applied": [
+            "rule_first_listed_attorney_appellant"
+          ]
+        },
+        {
+          "doc_name": "20260317_adventist_health_system_of_west_v._abbvie_inc.",
+          "answer": "Kenneth D. Capesius",
+          "correct": true,
+          "retrieved_token_count": 7,
+          "cost_ratio": 0.000856,
+          "rules_applied": [
+            "rule_first_listed_attorney_appellant"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T06:54:59.125770+00:00"
+    }
+  ]
+}

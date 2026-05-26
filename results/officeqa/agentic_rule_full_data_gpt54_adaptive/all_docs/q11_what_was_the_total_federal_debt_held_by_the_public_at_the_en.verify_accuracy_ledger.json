@@ -1,0 +1,401 @@
+{
+  "verify_accuracy_calls": [
+    {
+      "doc_names": [
+        "treasury_bulletin_1986_12",
+        "treasury_bulletin_1992_06",
+        "treasury_bulletin_1992_12",
+        "treasury_bulletin_1997_12",
+        "treasury_bulletin_2003_09",
+        "treasury_bulletin_2009_06",
+        "treasury_bulletin_2014_12",
+        "treasury_bulletin_2020_03",
+        "treasury_bulletin_2024_12",
+        "treasury_bulletin_2025_06"
+      ],
+      "rule_names": [
+        "rule_fd1_latest_fy_public_total",
+        "rule_private_investors_latest_fy"
+      ],
+      "n": 10,
+      "n_correct": 9,
+      "accuracy": 0.9,
+      "avg_cost_ratio": 0.002222,
+      "qa_input_tokens": 3498,
+      "qa_output_tokens": 90,
+      "judge_input_tokens": 1420,
+      "judge_output_tokens": 61,
+      "input_tokens_total": 4918,
+      "output_tokens_total": 151,
+      "latency_seconds": 8.102,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_1986_12",
+          "answer": "1,745,602",
+          "correct": true,
+          "retrieved_token_count": 191,
+          "cost_ratio": 0.003522,
+          "rules_applied": [
+            "rule_fd1_latest_fy_public_total"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1992_06",
+          "answer": "2,113,799",
+          "correct": true,
+          "retrieved_token_count": 123,
+          "cost_ratio": 0.001696,
+          "rules_applied": [
+            "rule_private_investors_latest_fy"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1992_12",
+          "answer": "2.763.341",
+          "correct": false,
+          "retrieved_token_count": 307,
+          "cost_ratio": 0.004747,
+          "rules_applied": [
+            "rule_fd1_latest_fy_public_total",
+            "rule_private_investors_latest_fy"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1997_12",
+          "answer": "3,840,776",
+          "correct": true,
+          "retrieved_token_count": 253,
+          "cost_ratio": 0.001151,
+          "rules_applied": [
+            "rule_fd1_latest_fy_public_total"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2003_09",
+          "answer": "3,579,758",
+          "correct": true,
+          "retrieved_token_count": 195,
+          "cost_ratio": 0.001352,
+          "rules_applied": [
+            "rule_fd1_latest_fy_public_total"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2009_06",
+          "answer": "5,837,337",
+          "correct": true,
+          "retrieved_token_count": 194,
+          "cost_ratio": 0.001308,
+          "rules_applied": [
+            "rule_fd1_latest_fy_public_total"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2014_12",
+          "answer": "12,808,666",
+          "correct": true,
+          "retrieved_token_count": 194,
+          "cost_ratio": 0.002064,
+          "rules_applied": [
+            "rule_fd1_latest_fy_public_total"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2020_03",
+          "answer": "16,847,433",
+          "correct": true,
+          "retrieved_token_count": 206,
+          "cost_ratio": 0.001812,
+          "rules_applied": [
+            "rule_fd1_latest_fy_public_total"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2024_12",
+          "answer": "28,345,980",
+          "correct": true,
+          "retrieved_token_count": 203,
+          "cost_ratio": 0.002046,
+          "rules_applied": [
+            "rule_fd1_latest_fy_public_total"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_06",
+          "answer": "28,345,980",
+          "correct": true,
+          "retrieved_token_count": 203,
+          "cost_ratio": 0.00252,
+          "rules_applied": [
+            "rule_fd1_latest_fy_public_total"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T08:12:38.435981+00:00"
+    },
+    {
+      "doc_names": [
+        "treasury_bulletin_1986_12",
+        "treasury_bulletin_1992_06",
+        "treasury_bulletin_1992_12",
+        "treasury_bulletin_1997_12",
+        "treasury_bulletin_2003_09",
+        "treasury_bulletin_2009_06",
+        "treasury_bulletin_2014_12",
+        "treasury_bulletin_2020_03",
+        "treasury_bulletin_2024_12",
+        "treasury_bulletin_2025_06"
+      ],
+      "rule_names": [
+        "rule_fd1_latest_fy_public_total",
+        "rule_private_investors_latest_fy"
+      ],
+      "n": 10,
+      "n_correct": 4,
+      "accuracy": 0.4,
+      "avg_cost_ratio": 0.001911,
+      "qa_input_tokens": 3261,
+      "qa_output_tokens": 90,
+      "judge_input_tokens": 1420,
+      "judge_output_tokens": 66,
+      "input_tokens_total": 4681,
+      "output_tokens_total": 156,
+      "latency_seconds": 8.307,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_1986_12",
+          "answer": "1,827,470",
+          "correct": false,
+          "retrieved_token_count": 179,
+          "cost_ratio": 0.003301,
+          "rules_applied": [
+            "rule_fd1_latest_fy_public_total"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1992_06",
+          "answer": "2,113,799",
+          "correct": true,
+          "retrieved_token_count": 123,
+          "cost_ratio": 0.001696,
+          "rules_applied": [
+            "rule_private_investors_latest_fy"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1992_12",
+          "answer": "3,048,291",
+          "correct": false,
+          "retrieved_token_count": 167,
+          "cost_ratio": 0.002582,
+          "rules_applied": [
+            "rule_fd1_latest_fy_public_total"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1997_12",
+          "answer": "3,814,687",
+          "correct": false,
+          "retrieved_token_count": 241,
+          "cost_ratio": 0.001097,
+          "rules_applied": [
+            "rule_fd1_latest_fy_public_total"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2003_09",
+          "answer": "6,255,406",
+          "correct": false,
+          "retrieved_token_count": 183,
+          "cost_ratio": 0.001269,
+          "rules_applied": [
+            "rule_fd1_latest_fy_public_total"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2009_06",
+          "answer": "5,837,337",
+          "correct": true,
+          "retrieved_token_count": 182,
+          "cost_ratio": 0.001227,
+          "rules_applied": [
+            "rule_fd1_latest_fy_public_total"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2014_12",
+          "answer": "12,808,666",
+          "correct": true,
+          "retrieved_token_count": 182,
+          "cost_ratio": 0.001937,
+          "rules_applied": [
+            "rule_fd1_latest_fy_public_total"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2020_03",
+          "answer": "16,825,978",
+          "correct": false,
+          "retrieved_token_count": 194,
+          "cost_ratio": 0.001706,
+          "rules_applied": [
+            "rule_fd1_latest_fy_public_total"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2024_12",
+          "answer": "28,325,715",
+          "correct": false,
+          "retrieved_token_count": 191,
+          "cost_ratio": 0.001925,
+          "rules_applied": [
+            "rule_fd1_latest_fy_public_total"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_06",
+          "answer": "28,345,980",
+          "correct": true,
+          "retrieved_token_count": 191,
+          "cost_ratio": 0.002371,
+          "rules_applied": [
+            "rule_fd1_latest_fy_public_total"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T08:14:44.720653+00:00"
+    },
+    {
+      "doc_names": [
+        "treasury_bulletin_1986_12",
+        "treasury_bulletin_1992_06",
+        "treasury_bulletin_1992_12",
+        "treasury_bulletin_1997_12",
+        "treasury_bulletin_2003_09",
+        "treasury_bulletin_2009_06",
+        "treasury_bulletin_2014_12",
+        "treasury_bulletin_2020_03",
+        "treasury_bulletin_2024_12",
+        "treasury_bulletin_2025_06"
+      ],
+      "rule_names": [
+        "rule_fd1_latest_fy_public_total",
+        "rule_private_investors_latest_fy"
+      ],
+      "n": 10,
+      "n_correct": 10,
+      "accuracy": 1.0,
+      "avg_cost_ratio": 0.002032,
+      "qa_input_tokens": 3375,
+      "qa_output_tokens": 90,
+      "judge_input_tokens": 1420,
+      "judge_output_tokens": 60,
+      "input_tokens_total": 4795,
+      "output_tokens_total": 150,
+      "latency_seconds": 8.555,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_1986_12",
+          "answer": "1,745,602",
+          "correct": true,
+          "retrieved_token_count": 191,
+          "cost_ratio": 0.003522,
+          "rules_applied": [
+            "rule_fd1_latest_fy_public_total"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1992_06",
+          "answer": "2,113,799",
+          "correct": true,
+          "retrieved_token_count": 123,
+          "cost_ratio": 0.001696,
+          "rules_applied": [
+            "rule_private_investors_latest_fy"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1992_12",
+          "answer": "3.066.418",
+          "correct": true,
+          "retrieved_token_count": 184,
+          "cost_ratio": 0.002845,
+          "rules_applied": [
+            "rule_fd1_latest_fy_public_total"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1997_12",
+          "answer": "3,840,776",
+          "correct": true,
+          "retrieved_token_count": 253,
+          "cost_ratio": 0.001151,
+          "rules_applied": [
+            "rule_fd1_latest_fy_public_total"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2003_09",
+          "answer": "3,579,758",
+          "correct": true,
+          "retrieved_token_count": 195,
+          "cost_ratio": 0.001352,
+          "rules_applied": [
+            "rule_fd1_latest_fy_public_total"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2009_06",
+          "answer": "5,837,337",
+          "correct": true,
+          "retrieved_token_count": 194,
+          "cost_ratio": 0.001308,
+          "rules_applied": [
+            "rule_fd1_latest_fy_public_total"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2014_12",
+          "answer": "12,808,666",
+          "correct": true,
+          "retrieved_token_count": 194,
+          "cost_ratio": 0.002064,
+          "rules_applied": [
+            "rule_fd1_latest_fy_public_total"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2020_03",
+          "answer": "16,847,433",
+          "correct": true,
+          "retrieved_token_count": 206,
+          "cost_ratio": 0.001812,
+          "rules_applied": [
+            "rule_fd1_latest_fy_public_total"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2024_12",
+          "answer": "28,345,980",
+          "correct": true,
+          "retrieved_token_count": 203,
+          "cost_ratio": 0.002046,
+          "rules_applied": [
+            "rule_fd1_latest_fy_public_total"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_06",
+          "answer": "28,345,980",
+          "correct": true,
+          "retrieved_token_count": 203,
+          "cost_ratio": 0.00252,
+          "rules_applied": [
+            "rule_fd1_latest_fy_public_total"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T08:17:31.537579+00:00"
+    }
+  ]
+}

@@ -1,0 +1,403 @@
+{
+  "verify_accuracy_calls": [
+    {
+      "doc_names": [
+        "treasury_bulletin_1980_07",
+        "treasury_bulletin_1982_05",
+        "treasury_bulletin_1986_12",
+        "treasury_bulletin_1992_06",
+        "treasury_bulletin_1997_12",
+        "treasury_bulletin_2003_06",
+        "treasury_bulletin_2008_12",
+        "treasury_bulletin_2014_06",
+        "treasury_bulletin_2019_12",
+        "treasury_bulletin_2025_09"
+      ],
+      "rule_names": [
+        "rule_statutory_debt_limit_amount",
+        "rule_statutory_debt_limit_suspended"
+      ],
+      "n": 10,
+      "n_correct": 8,
+      "accuracy": 0.8,
+      "avg_cost_ratio": 0.003632,
+      "qa_input_tokens": 4492,
+      "qa_output_tokens": 92,
+      "judge_input_tokens": 1312,
+      "judge_output_tokens": 62,
+      "input_tokens_total": 5804,
+      "output_tokens_total": 154,
+      "latency_seconds": 7.946,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_1980_07",
+          "answer": "set at a specific dollar amount",
+          "correct": true,
+          "retrieved_token_count": 57,
+          "cost_ratio": 0.000813,
+          "rules_applied": [
+            "rule_statutory_debt_limit_amount"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1982_05",
+          "answer": "set at a specific dollar amount",
+          "correct": true,
+          "retrieved_token_count": 643,
+          "cost_ratio": 0.009333,
+          "rules_applied": [
+            "rule_statutory_debt_limit_amount"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1986_12",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "treasury_bulletin_1992_06",
+          "answer": "set at a specific dollar amount",
+          "correct": true,
+          "retrieved_token_count": 48,
+          "cost_ratio": 0.000662,
+          "rules_applied": [
+            "rule_statutory_debt_limit_amount"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1997_12",
+          "answer": "set at a specific dollar amount",
+          "correct": true,
+          "retrieved_token_count": 83,
+          "cost_ratio": 0.000378,
+          "rules_applied": [
+            "rule_statutory_debt_limit_amount"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2003_06",
+          "answer": "set at a specific dollar amount",
+          "correct": true,
+          "retrieved_token_count": 145,
+          "cost_ratio": 0.000969,
+          "rules_applied": [
+            "rule_statutory_debt_limit_amount"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2008_12",
+          "answer": "set at a specific dollar amount",
+          "correct": true,
+          "retrieved_token_count": 123,
+          "cost_ratio": 0.000777,
+          "rules_applied": [
+            "rule_statutory_debt_limit_amount"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2014_06",
+          "answer": "suspended",
+          "correct": true,
+          "retrieved_token_count": 491,
+          "cost_ratio": 0.006323,
+          "rules_applied": [
+            "rule_statutory_debt_limit_amount",
+            "rule_statutory_debt_limit_suspended"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2019_12",
+          "answer": "suspended through July 31, 2021",
+          "correct": true,
+          "retrieved_token_count": 1575,
+          "cost_ratio": 0.01707,
+          "rules_applied": [
+            "rule_statutory_debt_limit_amount",
+            "rule_statutory_debt_limit_suspended"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_09",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        }
+      ],
+      "timestamp": "2026-05-26T08:25:16.374831+00:00"
+    },
+    {
+      "doc_names": [
+        "treasury_bulletin_1980_09",
+        "treasury_bulletin_1981_06",
+        "treasury_bulletin_1982_03",
+        "treasury_bulletin_1984_03",
+        "treasury_bulletin_1987_03",
+        "treasury_bulletin_1994_12",
+        "treasury_bulletin_2003_09",
+        "treasury_bulletin_2014_12",
+        "treasury_bulletin_2019_09",
+        "treasury_bulletin_2024_12"
+      ],
+      "rule_names": [
+        "rule_statutory_debt_limit_amount",
+        "rule_statutory_debt_limit_suspended"
+      ],
+      "n": 10,
+      "n_correct": 7,
+      "accuracy": 0.7,
+      "avg_cost_ratio": 0.008508,
+      "qa_input_tokens": 9429,
+      "qa_output_tokens": 118,
+      "judge_input_tokens": 1345,
+      "judge_output_tokens": 63,
+      "input_tokens_total": 10774,
+      "output_tokens_total": 181,
+      "latency_seconds": 8.77,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_1980_09",
+          "answer": "set at a specific dollar amount",
+          "correct": false,
+          "retrieved_token_count": 173,
+          "cost_ratio": 0.0018,
+          "rules_applied": [
+            "rule_statutory_debt_limit_amount"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1981_06",
+          "answer": "set at a specific dollar amount",
+          "correct": true,
+          "retrieved_token_count": 114,
+          "cost_ratio": 0.000404,
+          "rules_applied": [
+            "rule_statutory_debt_limit_amount"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1982_03",
+          "answer": "set at a specific dollar amount",
+          "correct": false,
+          "retrieved_token_count": 626,
+          "cost_ratio": 0.005247,
+          "rules_applied": [
+            "rule_statutory_debt_limit_amount"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1984_03",
+          "answer": "set at $1,490 billion",
+          "correct": true,
+          "retrieved_token_count": 1254,
+          "cost_ratio": 0.009716,
+          "rules_applied": [
+            "rule_statutory_debt_limit_amount"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1987_03",
+          "answer": "set at a specific dollar amount: $2,300,000 million",
+          "correct": true,
+          "retrieved_token_count": 549,
+          "cost_ratio": 0.007366,
+          "rules_applied": [
+            "rule_statutory_debt_limit_amount"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1994_12",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 31,
+          "cost_ratio": 0.000414,
+          "rules_applied": [
+            "rule_statutory_debt_limit_amount"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2003_09",
+          "answer": "set at a specific dollar amount",
+          "correct": true,
+          "retrieved_token_count": 145,
+          "cost_ratio": 0.001006,
+          "rules_applied": [
+            "rule_statutory_debt_limit_amount"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2014_12",
+          "answer": "suspended",
+          "correct": true,
+          "retrieved_token_count": 520,
+          "cost_ratio": 0.005533,
+          "rules_applied": [
+            "rule_statutory_debt_limit_amount",
+            "rule_statutory_debt_limit_suspended"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2019_09",
+          "answer": "set at a specific dollar amount: $21,987,705,611,407.70",
+          "correct": true,
+          "retrieved_token_count": 1878,
+          "cost_ratio": 0.025121,
+          "rules_applied": [
+            "rule_statutory_debt_limit_amount",
+            "rule_statutory_debt_limit_suspended"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2024_12",
+          "answer": "suspended through January 1, 2025",
+          "correct": true,
+          "retrieved_token_count": 2825,
+          "cost_ratio": 0.02847,
+          "rules_applied": [
+            "rule_statutory_debt_limit_amount",
+            "rule_statutory_debt_limit_suspended"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T08:26:58.994741+00:00"
+    },
+    {
+      "doc_names": [
+        "treasury_bulletin_1981_06",
+        "treasury_bulletin_1982_05",
+        "treasury_bulletin_1984_03",
+        "treasury_bulletin_1987_03",
+        "treasury_bulletin_1992_06",
+        "treasury_bulletin_1997_12",
+        "treasury_bulletin_2003_06",
+        "treasury_bulletin_2008_12",
+        "treasury_bulletin_2014_12",
+        "treasury_bulletin_2024_12"
+      ],
+      "rule_names": [
+        "rule_statutory_debt_limit_amount",
+        "rule_statutory_debt_limit_suspended"
+      ],
+      "n": 10,
+      "n_correct": 10,
+      "accuracy": 1.0,
+      "avg_cost_ratio": 0.006361,
+      "qa_input_tokens": 7611,
+      "qa_output_tokens": 109,
+      "judge_input_tokens": 1337,
+      "judge_output_tokens": 60,
+      "input_tokens_total": 8948,
+      "output_tokens_total": 169,
+      "latency_seconds": 8.052,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_1981_06",
+          "answer": "set at a specific dollar amount",
+          "correct": true,
+          "retrieved_token_count": 114,
+          "cost_ratio": 0.000404,
+          "rules_applied": [
+            "rule_statutory_debt_limit_amount"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1982_05",
+          "answer": "set at a specific dollar amount",
+          "correct": true,
+          "retrieved_token_count": 643,
+          "cost_ratio": 0.009333,
+          "rules_applied": [
+            "rule_statutory_debt_limit_amount"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1984_03",
+          "answer": "set at $1,490 billion",
+          "correct": true,
+          "retrieved_token_count": 1254,
+          "cost_ratio": 0.009716,
+          "rules_applied": [
+            "rule_statutory_debt_limit_amount"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1987_03",
+          "answer": "set at a specific dollar amount: $2,300,000 million",
+          "correct": true,
+          "retrieved_token_count": 549,
+          "cost_ratio": 0.007366,
+          "rules_applied": [
+            "rule_statutory_debt_limit_amount"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1992_06",
+          "answer": "set at a specific dollar amount",
+          "correct": true,
+          "retrieved_token_count": 48,
+          "cost_ratio": 0.000662,
+          "rules_applied": [
+            "rule_statutory_debt_limit_amount"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1997_12",
+          "answer": "set at a specific dollar amount",
+          "correct": true,
+          "retrieved_token_count": 83,
+          "cost_ratio": 0.000378,
+          "rules_applied": [
+            "rule_statutory_debt_limit_amount"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2003_06",
+          "answer": "set at a specific dollar amount",
+          "correct": true,
+          "retrieved_token_count": 145,
+          "cost_ratio": 0.000969,
+          "rules_applied": [
+            "rule_statutory_debt_limit_amount"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2008_12",
+          "answer": "set at a specific dollar amount",
+          "correct": true,
+          "retrieved_token_count": 123,
+          "cost_ratio": 0.000777,
+          "rules_applied": [
+            "rule_statutory_debt_limit_amount"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2014_12",
+          "answer": "suspended",
+          "correct": true,
+          "retrieved_token_count": 520,
+          "cost_ratio": 0.005533,
+          "rules_applied": [
+            "rule_statutory_debt_limit_amount",
+            "rule_statutory_debt_limit_suspended"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2024_12",
+          "answer": "suspended through January 1, 2025",
+          "correct": true,
+          "retrieved_token_count": 2825,
+          "cost_ratio": 0.02847,
+          "rules_applied": [
+            "rule_statutory_debt_limit_amount",
+            "rule_statutory_debt_limit_suspended"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T08:27:36.793226+00:00"
+    }
+  ]
+}

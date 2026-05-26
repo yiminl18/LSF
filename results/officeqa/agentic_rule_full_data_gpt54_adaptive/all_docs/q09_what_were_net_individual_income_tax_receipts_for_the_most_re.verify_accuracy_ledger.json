@@ -1,0 +1,260 @@
+{
+  "verify_accuracy_calls": [
+    {
+      "doc_names": [
+        "treasury_bulletin_1980_07",
+        "treasury_bulletin_1982_05",
+        "treasury_bulletin_1986_12",
+        "treasury_bulletin_1992_06",
+        "treasury_bulletin_1997_12",
+        "treasury_bulletin_2003_06",
+        "treasury_bulletin_2008_12",
+        "treasury_bulletin_2014_06",
+        "treasury_bulletin_2019_12",
+        "treasury_bulletin_2025_09"
+      ],
+      "rule_names": [
+        "rule_individual_income_tax_receipts"
+      ],
+      "n": 10,
+      "n_correct": 6,
+      "accuracy": 0.6,
+      "avg_cost_ratio": 0.002043,
+      "qa_input_tokens": 2664,
+      "qa_output_tokens": 68,
+      "judge_input_tokens": 939,
+      "judge_output_tokens": 43,
+      "input_tokens_total": 3603,
+      "output_tokens_total": 111,
+      "latency_seconds": 8.519,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_1980_07",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "treasury_bulletin_1982_05",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "treasury_bulletin_1986_12",
+          "answer": "91.45",
+          "correct": false,
+          "retrieved_token_count": 666,
+          "cost_ratio": 0.012281,
+          "rules_applied": [
+            "rule_individual_income_tax_receipts"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1992_06",
+          "answer": "113.0",
+          "correct": true,
+          "retrieved_token_count": 519,
+          "cost_ratio": 0.007157,
+          "rules_applied": [
+            "rule_individual_income_tax_receipts"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1997_12",
+          "answer": "239.4",
+          "correct": true,
+          "retrieved_token_count": 19,
+          "cost_ratio": 8.6e-05,
+          "rules_applied": [
+            "rule_individual_income_tax_receipts"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2003_06",
+          "answer": "174.4",
+          "correct": true,
+          "retrieved_token_count": 24,
+          "cost_ratio": 0.00016,
+          "rules_applied": [
+            "rule_individual_income_tax_receipts"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2008_12",
+          "answer": "268.0",
+          "correct": true,
+          "retrieved_token_count": 25,
+          "cost_ratio": 0.000158,
+          "rules_applied": [
+            "rule_individual_income_tax_receipts"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2014_06",
+          "answer": "278.5 billion",
+          "correct": true,
+          "retrieved_token_count": 25,
+          "cost_ratio": 0.000322,
+          "rules_applied": [
+            "rule_individual_income_tax_receipts"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2019_12",
+          "answer": "416.4",
+          "correct": true,
+          "retrieved_token_count": 25,
+          "cost_ratio": 0.000271,
+          "rules_applied": [
+            "rule_individual_income_tax_receipts"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_09",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        }
+      ],
+      "timestamp": "2026-05-26T07:42:50.466480+00:00"
+    },
+    {
+      "doc_names": [
+        "treasury_bulletin_1986_12",
+        "treasury_bulletin_1990_12",
+        "treasury_bulletin_1995_12",
+        "treasury_bulletin_1999_03",
+        "treasury_bulletin_2003_09",
+        "treasury_bulletin_2009_03",
+        "treasury_bulletin_2014_09",
+        "treasury_bulletin_2020_03",
+        "treasury_bulletin_2024_12",
+        "treasury_bulletin_2025_03"
+      ],
+      "rule_names": [
+        "rule_individual_income_tax_receipts"
+      ],
+      "n": 10,
+      "n_correct": 10,
+      "accuracy": 1.0,
+      "avg_cost_ratio": 0.000215,
+      "qa_input_tokens": 1591,
+      "qa_output_tokens": 73,
+      "judge_input_tokens": 1343,
+      "judge_output_tokens": 60,
+      "input_tokens_total": 2934,
+      "output_tokens_total": 133,
+      "latency_seconds": 8.023,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_1986_12",
+          "answer": "45.12",
+          "correct": true,
+          "retrieved_token_count": 3,
+          "cost_ratio": 5.5e-05,
+          "rules_applied": [
+            "rule_individual_income_tax_receipts"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1990_12",
+          "answer": "145.5",
+          "correct": true,
+          "retrieved_token_count": 23,
+          "cost_ratio": 0.000381,
+          "rules_applied": [
+            "rule_individual_income_tax_receipts"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1995_12",
+          "answer": "167.6 billion",
+          "correct": true,
+          "retrieved_token_count": 19,
+          "cost_ratio": 0.000265,
+          "rules_applied": [
+            "rule_individual_income_tax_receipts"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1999_03",
+          "answer": "204.7",
+          "correct": true,
+          "retrieved_token_count": 26,
+          "cost_ratio": 0.000104,
+          "rules_applied": [
+            "rule_individual_income_tax_receipts"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2003_09",
+          "answer": "232.5 billion",
+          "correct": true,
+          "retrieved_token_count": 24,
+          "cost_ratio": 0.000166,
+          "rules_applied": [
+            "rule_individual_income_tax_receipts"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2009_03",
+          "answer": "255.3",
+          "correct": true,
+          "retrieved_token_count": 25,
+          "cost_ratio": 0.000141,
+          "rules_applied": [
+            "rule_individual_income_tax_receipts"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2014_09",
+          "answer": "460.8 billion",
+          "correct": true,
+          "retrieved_token_count": 25,
+          "cost_ratio": 0.000324,
+          "rules_applied": [
+            "rule_individual_income_tax_receipts"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2020_03",
+          "answer": "384.9",
+          "correct": true,
+          "retrieved_token_count": 26,
+          "cost_ratio": 0.000229,
+          "rules_applied": [
+            "rule_individual_income_tax_receipts"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2024_12",
+          "answer": "540.3",
+          "correct": true,
+          "retrieved_token_count": 25,
+          "cost_ratio": 0.000252,
+          "rules_applied": [
+            "rule_individual_income_tax_receipts"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_03",
+          "answer": "518.2",
+          "correct": true,
+          "retrieved_token_count": 25,
+          "cost_ratio": 0.000237,
+          "rules_applied": [
+            "rule_individual_income_tax_receipts"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T07:49:39.153270+00:00"
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "strategy": "agentic_rule_full_data",
+  "phase": "rule_generation",
+  "status": "ok",
+  "dataset": "officeqa",
+  "question": "What was the Exchange Stabilization Fund total assets, in thousands of dollars?",
+  "question_slug": "what_was_the_exchange_stabilization_fund_total_assets_in_tho",
+  "model": "gpt54",
+  "split": "all_docs",
+  "doc_count": 200,
+  "question_count": 1,
+  "rules_dir": "rules/officeqa/agentic_rule_full_data_gpt54_adaptive/all_docs/q15_what_was_the_exchange_stabilization_fund_total_assets_in_tho",
+  "results_report_path": "results/officeqa/agentic_rule_full_data_gpt54_adaptive/all_docs/q15_what_was_the_exchange_stabilization_fund_total_assets_in_tho_rule_gen.json",
+  "verify_accuracy_ledger_path": "results/officeqa/agentic_rule_full_data_gpt54_adaptive/all_docs/q15_what_was_the_exchange_stabilization_fund_total_assets_in_tho.verify_accuracy_ledger.json",
+  "rule_files": [
+    "rules/officeqa/agentic_rule_full_data_gpt54_adaptive/all_docs/q15_what_was_the_exchange_stabilization_fund_total_assets_in_tho/rule_esf_total_assets.py"
+  ],
+  "rules_final": [
+    "rule_esf_total_assets"
+  ],
+  "num_rules_final": 1,
+  "rule_gen": {
+    "latency_seconds": 1030.05,
+    "input_tokens": 6775947,
+    "output_tokens": 47324,
+    "cached_input_tokens": 5721856,
+    "reasoning_tokens": 21352,
+    "working_sample": [
+      "treasury_bulletin_1980_07",
+      "treasury_bulletin_1984_09",
+      "treasury_bulletin_1989_12",
+      "treasury_bulletin_1992_06",
+      "treasury_bulletin_1994_12",
+      "treasury_bulletin_1999_12",
+      "treasury_bulletin_2002_06",
+      "treasury_bulletin_2005_03",
+      "treasury_bulletin_2010_03",
+      "treasury_bulletin_2012_09",
+      "treasury_bulletin_2015_03",
+      "treasury_bulletin_2020_06",
+      "treasury_bulletin_2022_12",
+      "treasury_bulletin_2025_06"
+    ],
+    "num_working_sample": 14,
+    "num_working_sample_iterations": 3,
+    "verify_accuracy_calls": {
+      "total": 9,
+      "input_tokens": 96371,
+      "output_tokens": 1147
+    },
+    "num_rules_written": 1,
+    "num_rules_rejected": 0,
+    "rules_final": [
+      "rule_esf_total_assets"
+    ],
+    "num_rules_final": 1,
+    "avg_cost_ratio_sample": 0.011768,
+    "match_rate_sample": 0.785714,
+    "notes": "Single ESF balance-table rule with OCR-tolerant ESF-1 detection plus inline and stacked-table hints. It is strong on most mid/late bulletins, but early OCR loss and some multi-column modern rows still pull the sample score down."
+  },
+  "agent_log_path": "results/officeqa/agentic_rule_full_data_gpt54_adaptive/all_docs/q15_what_was_the_exchange_stabilization_fund_total_assets_in_tho.codex.jsonl",
+  "agent_last_message_path": "results/officeqa/agentic_rule_full_data_gpt54_adaptive/all_docs/q15_what_was_the_exchange_stabilization_fund_total_assets_in_tho.codex.last.txt",
+  "stderr": "2026-05-26T09:05:57.884906Z ERROR codex_models_manager::manager: failed to refresh available models: timeout waiting for child process to exit\n2026-05-26T09:21:07.866210Z ERROR codex_core::tools::router: error=apply_patch verification failed: Failed to find expected lines in /mnt/data/LSF/rules/officeqa/agentic_rule_full_data_gpt54_adaptive/all_docs/q15_what_was_the_exchange_stabilization_fund_total_assets_in_tho/rule_esf_total_assets.py:\n                            digits = re.sub(r\"[^0-9]\", \"\", raw)\n                            if digits:\n                                numeric_entries.append((int(digits), raw, idx))\n\n                    if len(numeric_entries) >= 15 and not re.search(r\"\\d\", lines[total_idx].get(\"text\", \"\")):\n                        date_lines = []\n                        for idx in range(start_idx, min(len(lines), total_idx)):\n                            raw = (lines[idx].get(\"text\") or \"\").rstrip()\n                            compact_raw = compact(raw)\n                            if not raw:\n                                continue\n                            if re.search(r\"(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)\", raw, re.IGNORECASE) or re.search(r\"\\b(19|20)\\d{2}\\b\", raw) or compact_raw in {\"through\"}:\n                                date_lines.append(raw)\n\n                        _, best_raw, best_idx = max(numeric_entries, key=lambda item: item[0])\n                        hint_lines = date_lines[-4:] + [\"Total assets\", best_raw, \"Total liabilities and capital\", best_raw]\n                        hint_text = \"\\n\".join(line for line in hint_lines if line)",
+  "codex_thread_id": "019e6388-9c7d-7991-b0fb-44f657076a89",
+  "codex_event_count": 261,
+  "codex_error_message": null
+}

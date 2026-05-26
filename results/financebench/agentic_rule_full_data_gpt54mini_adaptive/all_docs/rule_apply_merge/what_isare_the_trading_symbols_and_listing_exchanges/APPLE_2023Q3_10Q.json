@@ -1,0 +1,73 @@
+{
+  "doc_name": "APPLE_2023Q3_10Q",
+  "question": "What is/are the trading symbol(s) and listing exchange(s)?",
+  "question_slug": "what_isare_the_trading_symbols_and_listing_exchanges",
+  "split": "all_docs",
+  "ground_truth": [
+    {
+      "symbol": "AAPL",
+      "exchange": "The Nasdaq Stock Market LLC"
+    },
+    {
+      "symbol": "1.375% Notes due 2024",
+      "exchange": "The Nasdaq Stock Market LLC"
+    },
+    {
+      "symbol": "0.000% Notes due 2025",
+      "exchange": "The Nasdaq Stock Market LLC"
+    },
+    {
+      "symbol": "0.875% Notes due 2025",
+      "exchange": "The Nasdaq Stock Market LLC"
+    },
+    {
+      "symbol": "1.625% Notes due 2026",
+      "exchange": "The Nasdaq Stock Market LLC"
+    },
+    {
+      "symbol": "2.000% Notes due 2027",
+      "exchange": "The Nasdaq Stock Market LLC"
+    },
+    {
+      "symbol": "1.375% Notes due 2029",
+      "exchange": "The Nasdaq Stock Market LLC"
+    },
+    {
+      "symbol": "3.050% Notes due 2029",
+      "exchange": "The Nasdaq Stock Market LLC"
+    },
+    {
+      "symbol": "0.500% Notes due 2031",
+      "exchange": "The Nasdaq Stock Market LLC"
+    },
+    {
+      "symbol": "3.600% Notes due 2042",
+      "exchange": "The Nasdaq Stock Market LLC"
+    }
+  ],
+  "answer": "AAPL — The Nasdaq Stock Market LLC",
+  "correct": false,
+  "status": "ok",
+  "input_tokens": 287,
+  "output_tokens": 12,
+  "latency_seconds": 0.78,
+  "model": "gpt54",
+  "doc_token_count": 17644,
+  "cost_ratio": 0.0163,
+  "retrieved_token_count": 211,
+  "rules_with_hits": [
+    "rule_trading_symbol_section"
+  ],
+  "rules_with_no_hits": [
+    "rule_trading_symbol_prose"
+  ],
+  "num_spans_before_dedup": 1,
+  "num_spans_after_dedup": 1,
+  "rule_names": [
+    "rule_trading_symbol_section",
+    "rule_trading_symbol_prose"
+  ],
+  "rule_question_dir": "q07_what_isare_the_trading_symbols_and_listing_exchanges",
+  "rule_generation_report_path": "results/financebench/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q07_what_isare_the_trading_symbols_and_listing_exchanges_rule_gen.json",
+  "rule_apply_trace_path": "results/financebench/agentic_rule_full_data_gpt54mini_adaptive/all_docs/rule_apply_merge/_trace/q07_what_isare_the_trading_symbols_and_listing_exchanges/rule_trading_symbol_prose__rule_trading_symbol_section_merge.json"
+}

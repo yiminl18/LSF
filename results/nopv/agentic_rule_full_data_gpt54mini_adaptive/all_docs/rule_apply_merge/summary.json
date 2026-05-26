@@ -17,5 +17,216 @@
     "rule_names": [
       "rule_pipeline_operator_name"
     ]
+  },
+  {
+    "question": "What is the CPF case number assigned to this enforcement action?",
+    "question_slug": "what_is_the_cpf_case_number_assigned_to_this_enforcement_act",
+    "split": "all_docs",
+    "model": "gpt54",
+    "n": 242,
+    "n_correct": 236,
+    "accuracy": 0.9752,
+    "avg_input_tokens": 126.4,
+    "avg_output_tokens": 14.8,
+    "avg_latency_seconds": 0.9,
+    "avg_retrieved_tokens": 33.4,
+    "avg_cost_ratio": 0.045,
+    "rule_gen_output_name": "agentic_rule_full_data_gpt54mini_adaptive/all_docs",
+    "rule_question_dir": "q02_what_is_the_cpf_case_number_assigned_to_this_enforcement_act",
+    "rule_names": [
+      "rule_cpf_case_number_assigned_to_enforcement_action",
+      "rule_cpf_case_number_sentence"
+    ]
+  },
+  {
+    "question": "Which PHMSA Region office (e.g., Eastern, Southern, Central, Western, Southwest) issued this Notice?",
+    "question_slug": "which_phmsa_region_office_eg_eastern_southern_central_wester",
+    "split": "all_docs",
+    "model": "gpt54",
+    "n": 242,
+    "n_correct": 224,
+    "accuracy": 0.9256,
+    "avg_input_tokens": 110.6,
+    "avg_output_tokens": 5.3,
+    "avg_latency_seconds": 0.76,
+    "avg_retrieved_tokens": 4.6,
+    "avg_cost_ratio": 0.0397,
+    "rule_gen_output_name": "agentic_rule_full_data_gpt54mini_adaptive/all_docs",
+    "rule_question_dir": "q03_which_phmsa_region_office_eg_eastern_southern_central_wester",
+    "rule_names": [
+      "rule_phmsa_region_office"
+    ]
+  },
+  {
+    "question": "On what date was this Notice of Probable Violation issued?",
+    "question_slug": "on_what_date_was_this_notice_of_probable_violation_issued",
+    "split": "all_docs",
+    "model": "gpt54",
+    "n": 242,
+    "n_correct": 235,
+    "accuracy": 0.9711,
+    "avg_input_tokens": 101.9,
+    "avg_output_tokens": 10.9,
+    "avg_latency_seconds": 0.8,
+    "avg_retrieved_tokens": 6.9,
+    "avg_cost_ratio": 0.0365,
+    "rule_gen_output_name": "agentic_rule_full_data_gpt54mini_adaptive/all_docs",
+    "rule_question_dir": "q04_on_what_date_was_this_notice_of_probable_violation_issued",
+    "rule_names": [
+      "rule_nopv_issue_date"
+    ]
+  },
+  {
+    "question": "On what date or date range did PHMSA conduct the inspection that gave rise to this Notice?",
+    "question_slug": "on_what_date_or_date_range_did_phmsa_conduct_the_inspection_",
+    "split": "all_docs",
+    "model": "gpt54",
+    "n": 242,
+    "n_correct": 233,
+    "accuracy": 0.9628,
+    "avg_input_tokens": 117.7,
+    "avg_output_tokens": 16.6,
+    "avg_latency_seconds": 0.88,
+    "avg_retrieved_tokens": 15.8,
+    "avg_cost_ratio": 0.042,
+    "rule_gen_output_name": "agentic_rule_full_data_gpt54mini_adaptive/all_docs",
+    "rule_question_dir": "q05_on_what_date_or_date_range_did_phmsa_conduct_the_inspection_",
+    "rule_names": [
+      "rule_phmsa_inspection_date_range"
+    ]
+  },
+  {
+    "question": "In which U.S. state (or states) is the pipeline facility addressed in this Notice physically located?",
+    "question_slug": "in_which_us_state_or_states_is_the_pipeline_facility_address",
+    "split": "all_docs",
+    "model": "gpt54",
+    "n": 242,
+    "n_correct": 172,
+    "accuracy": 0.7107,
+    "avg_input_tokens": 152.3,
+    "avg_output_tokens": 6.8,
+    "avg_latency_seconds": 0.88,
+    "avg_retrieved_tokens": 50.5,
+    "avg_cost_ratio": 0.0542,
+    "rule_gen_output_name": "agentic_rule_full_data_gpt54mini_adaptive/all_docs",
+    "rule_question_dir": "q06_in_which_us_state_or_states_is_the_pipeline_facility_address",
+    "rule_names": [
+      "rule_pipeline_facility_state_intro",
+      "rule_pipeline_facility_state_fallback"
+    ]
+  },
+  {
+    "question": "Under which 49 CFR Part is the operator's regulated activity covered (e.g., Part 192, Part 195, Part 199)?",
+    "question_slug": "under_which_49_cfr_part_is_the_operators_regulated_activity_",
+    "split": "all_docs",
+    "model": "gpt54",
+    "n": 242,
+    "n_correct": 224,
+    "accuracy": 0.9256,
+    "avg_input_tokens": 128.9,
+    "avg_output_tokens": 6.9,
+    "avg_latency_seconds": 0.93,
+    "avg_retrieved_tokens": 18.9,
+    "avg_cost_ratio": 0.0473,
+    "rule_gen_output_name": "agentic_rule_full_data_gpt54mini_adaptive/all_docs",
+    "rule_question_dir": "q07_under_which_49_cfr_part_is_the_operators_regulated_activity_",
+    "rule_names": [
+      "rule_operator_regulated_part"
+    ]
+  },
+  {
+    "question": "How many distinct alleged violations are enumerated in the body of this Notice?",
+    "question_slug": "how_many_distinct_alleged_violations_are_enumerated_in_the_b",
+    "split": "all_docs",
+    "model": "gpt54",
+    "n": 242,
+    "n_correct": 229,
+    "accuracy": 0.9463,
+    "avg_input_tokens": 1655.8,
+    "avg_output_tokens": 5,
+    "avg_latency_seconds": 0.89,
+    "avg_retrieved_tokens": 1569.0,
+    "avg_cost_ratio": 0.4335,
+    "rule_gen_output_name": "agentic_rule_full_data_gpt54mini_adaptive/all_docs",
+    "rule_question_dir": "q08_how_many_distinct_alleged_violations_are_enumerated_in_the_b",
+    "rule_names": [
+      "rule_alleged_violations_body_section"
+    ]
+  },
+  {
+    "question": "List all 49 CFR section numbers cited as the basis for alleged violations in this Notice.",
+    "question_slug": "list_all_49_cfr_section_numbers_cited_as_the_basis_for_alleg",
+    "split": "all_docs",
+    "model": "gpt54",
+    "n": 242,
+    "n_correct": 168,
+    "accuracy": 0.6942,
+    "avg_input_tokens": 1680.5,
+    "avg_output_tokens": 25.8,
+    "avg_latency_seconds": 1.15,
+    "avg_retrieved_tokens": 1590.4,
+    "avg_cost_ratio": 0.4406,
+    "rule_gen_output_name": "agentic_rule_full_data_gpt54mini_adaptive/all_docs",
+    "rule_question_dir": "q09_list_all_49_cfr_section_numbers_cited_as_the_basis_for_alleg",
+    "rule_names": [
+      "rule_alleged_violation_cfr_sections"
+    ]
+  },
+  {
+    "question": "How many distinct corrective action items are listed in the Proposed Compliance Order section?",
+    "question_slug": "how_many_distinct_corrective_action_items_are_listed_in_the_",
+    "split": "all_docs",
+    "model": "gpt54",
+    "n": 242,
+    "n_correct": 48,
+    "accuracy": 0.1983,
+    "avg_input_tokens": 369.7,
+    "avg_output_tokens": 5.0,
+    "avg_latency_seconds": 0.95,
+    "avg_retrieved_tokens": 274.7,
+    "avg_cost_ratio": 0.1108,
+    "rule_gen_output_name": "agentic_rule_full_data_gpt54mini_adaptive/all_docs",
+    "rule_question_dir": "q10_how_many_distinct_corrective_action_items_are_listed_in_the_",
+    "rule_names": [
+      "rule_proposed_compliance_order_remedial_items"
+    ]
+  },
+  {
+    "question": "What is the longest deadline (in days, measured from the Final Order's issuance) specified in the Proposed Compliance Order for completion of any corrective action item?",
+    "question_slug": "what_is_the_longest_deadline_in_days_measured_from_the_final",
+    "split": "all_docs",
+    "model": "gpt54",
+    "n": 242,
+    "n_correct": 200,
+    "accuracy": 0.8264,
+    "avg_input_tokens": 153.2,
+    "avg_output_tokens": 5.1,
+    "avg_latency_seconds": 0.9,
+    "avg_retrieved_tokens": 41.0,
+    "avg_cost_ratio": 0.0545,
+    "rule_gen_output_name": "agentic_rule_full_data_gpt54mini_adaptive/all_docs",
+    "rule_question_dir": "q11_what_is_the_longest_deadline_in_days_measured_from_the_final",
+    "rule_names": [
+      "rule_proposed_compliance_order_deadlines"
+    ]
+  },
+  {
+    "question": "Who signed this Notice on behalf of PHMSA (Regional Director or Director of the issuing office)?",
+    "question_slug": "who_signed_this_notice_on_behalf_of_phmsa_regional_director_",
+    "split": "all_docs",
+    "model": "gpt54",
+    "n": 242,
+    "n_correct": 233,
+    "accuracy": 0.9628,
+    "avg_input_tokens": 119.0,
+    "avg_output_tokens": 8.9,
+    "avg_latency_seconds": 0.95,
+    "avg_retrieved_tokens": 17.7,
+    "avg_cost_ratio": 0.0428,
+    "rule_gen_output_name": "agentic_rule_full_data_gpt54mini_adaptive/all_docs",
+    "rule_question_dir": "q12_who_signed_this_notice_on_behalf_of_phmsa_regional_director_",
+    "rule_names": [
+      "rule_phmsa_notice_signatory"
+    ]
   }
 ]

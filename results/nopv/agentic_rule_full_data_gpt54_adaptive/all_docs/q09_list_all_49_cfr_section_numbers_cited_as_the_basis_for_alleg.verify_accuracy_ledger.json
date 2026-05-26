@@ -1,0 +1,726 @@
+{
+  "verify_accuracy_calls": [
+    {
+      "doc_names": [
+        "12022023NOPV_PCO_03312022_(20-194651)",
+        "32021051NOPV_PCP PCO_11102021_(21-200403)",
+        "32022052NOPV_PCP PCO_11102022_(21-207738)",
+        "32024007NOPV_PCO_01182024_(22-234928)",
+        "32024056NOPV_PCP PCO_10252024_(23-264602)",
+        "42021033NOPV_PCO_09232021_(21-220612)",
+        "42023010NOPV_PCP PCO_06022023_(22-232749)",
+        "42024042NOPV_PCO_08292024_(23-267234)",
+        "42026012NOPV_PCP PCO_02122026_(23-266706)",
+        "52023009NOPV_PCP PCO_03012023_(21-217219)",
+        "52024001NOPV_PCO_12122024_(24-297227)",
+        "52026002NOPV_PCO_01222026_(25-331927)"
+      ],
+      "rule_names": [
+        "rule_citation_lines",
+        "rule_violation_blocks"
+      ],
+      "n": 12,
+      "n_correct": 8,
+      "accuracy": 0.666667,
+      "avg_cost_ratio": 0.162358,
+      "qa_input_tokens": 9499,
+      "qa_output_tokens": 312,
+      "judge_input_tokens": 2448,
+      "judge_output_tokens": 76,
+      "input_tokens_total": 11947,
+      "output_tokens_total": 388,
+      "latency_seconds": 13.696,
+      "results": [
+        {
+          "doc_name": "12022023NOPV_PCO_03312022_(20-194651)",
+          "answer": "195.446(e)(4), 195.446(c)(1), 195.446(e)(1), 195.446(h)",
+          "correct": false,
+          "retrieved_token_count": 547,
+          "cost_ratio": 0.176794,
+          "rules_applied": [
+            "rule_violation_blocks"
+          ]
+        },
+        {
+          "doc_name": "32021051NOPV_PCP PCO_11102021_(21-200403)",
+          "answer": "195.440, 195.452, 195.573, 195.581",
+          "correct": true,
+          "retrieved_token_count": 1181,
+          "cost_ratio": 0.211232,
+          "rules_applied": [
+            "rule_citation_lines",
+            "rule_violation_blocks"
+          ]
+        },
+        {
+          "doc_name": "32022052NOPV_PCP PCO_11102022_(21-207738)",
+          "answer": "194.105, 195.406, 195.452, 195.583",
+          "correct": true,
+          "retrieved_token_count": 585,
+          "cost_ratio": 0.138396,
+          "rules_applied": [
+            "rule_violation_blocks"
+          ]
+        },
+        {
+          "doc_name": "32024007NOPV_PCO_01182024_(22-234928)",
+          "answer": "192.479, 192.705, 192.750",
+          "correct": true,
+          "retrieved_token_count": 352,
+          "cost_ratio": 0.139572,
+          "rules_applied": [
+            "rule_citation_lines",
+            "rule_violation_blocks"
+          ]
+        },
+        {
+          "doc_name": "32024056NOPV_PCP PCO_10252024_(23-264602)",
+          "answer": "195.264, 195.505, 195.563(a), 195.573(a)(1), 195.573(e)",
+          "correct": true,
+          "retrieved_token_count": 1067,
+          "cost_ratio": 0.242005,
+          "rules_applied": [
+            "rule_citation_lines",
+            "rule_violation_blocks"
+          ]
+        },
+        {
+          "doc_name": "42021033NOPV_PCO_09232021_(21-220612)",
+          "answer": "191.17",
+          "correct": true,
+          "retrieved_token_count": 141,
+          "cost_ratio": 0.090909,
+          "rules_applied": [
+            "rule_violation_blocks"
+          ]
+        },
+        {
+          "doc_name": "42023010NOPV_PCP PCO_06022023_(22-232749)",
+          "answer": "195.420, 195.428, 195.505, 195.573",
+          "correct": true,
+          "retrieved_token_count": 532,
+          "cost_ratio": 0.17189,
+          "rules_applied": [
+            "rule_citation_lines",
+            "rule_violation_blocks"
+          ]
+        },
+        {
+          "doc_name": "42024042NOPV_PCO_08292024_(23-267234)",
+          "answer": "193.2637",
+          "correct": true,
+          "retrieved_token_count": 62,
+          "cost_ratio": 0.031714,
+          "rules_applied": [
+            "rule_violation_blocks"
+          ]
+        },
+        {
+          "doc_name": "42026012NOPV_PCP PCO_02122026_(23-266706)",
+          "answer": "195.452(l)(1), 195.452(g)",
+          "correct": false,
+          "retrieved_token_count": 277,
+          "cost_ratio": 0.102214,
+          "rules_applied": [
+            "rule_violation_blocks"
+          ]
+        },
+        {
+          "doc_name": "52023009NOPV_PCP PCO_03012023_(21-217219)",
+          "answer": "192.16, 192.283, 192.453, 192.481, 192.605, 192.625, 192.739, 192.743, 192.747, 192.756, 192.1007(c), 192.1007(d)",
+          "correct": false,
+          "retrieved_token_count": 1560,
+          "cost_ratio": 0.307632,
+          "rules_applied": [
+            "rule_citation_lines",
+            "rule_violation_blocks"
+          ]
+        },
+        {
+          "doc_name": "52024001NOPV_PCO_12122024_(24-297227)",
+          "answer": "195.420(b), 195.583(a)",
+          "correct": true,
+          "retrieved_token_count": 342,
+          "cost_ratio": 0.122581,
+          "rules_applied": [
+            "rule_citation_lines",
+            "rule_violation_blocks"
+          ]
+        },
+        {
+          "doc_name": "52026002NOPV_PCO_01222026_(25-331927)",
+          "answer": "192.13(d), 192.169(a), 192.195(a), 192.199(e), 192.731(a), 192.739(a)(2), 192.739(a)(3)",
+          "correct": false,
+          "retrieved_token_count": 1252,
+          "cost_ratio": 0.213361,
+          "rules_applied": [
+            "rule_citation_lines",
+            "rule_violation_blocks"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T06:43:33.931508+00:00"
+    },
+    {
+      "doc_names": [
+        "12022023NOPV_PCO_03312022_(20-194651)",
+        "32021051NOPV_PCP PCO_11102021_(21-200403)",
+        "32022052NOPV_PCP PCO_11102022_(21-207738)",
+        "32024007NOPV_PCO_01182024_(22-234928)",
+        "32024056NOPV_PCP PCO_10252024_(23-264602)",
+        "42021033NOPV_PCO_09232021_(21-220612)",
+        "42023010NOPV_PCP PCO_06022023_(22-232749)",
+        "42024042NOPV_PCO_08292024_(23-267234)",
+        "42026012NOPV_PCP PCO_02122026_(23-266706)",
+        "52023009NOPV_PCP PCO_03012023_(21-217219)",
+        "52024001NOPV_PCO_12122024_(24-297227)",
+        "52026002NOPV_PCO_01222026_(25-331927)"
+      ],
+      "rule_names": [
+        "rule_citation_lines",
+        "rule_normalized_citations",
+        "rule_violation_blocks"
+      ],
+      "n": 12,
+      "n_correct": 6,
+      "accuracy": 0.5,
+      "avg_cost_ratio": 0.170137,
+      "qa_input_tokens": 9829,
+      "qa_output_tokens": 289,
+      "judge_input_tokens": 2425,
+      "judge_output_tokens": 78,
+      "input_tokens_total": 12254,
+      "output_tokens_total": 367,
+      "latency_seconds": 11.774,
+      "results": [
+        {
+          "doc_name": "12022023NOPV_PCO_03312022_(20-194651)",
+          "answer": "195.446(c)(3)\n195.446(e)(4)\n195.446(e)(5)\n195.446(h)(5)",
+          "correct": false,
+          "retrieved_token_count": 592,
+          "cost_ratio": 0.191338,
+          "rules_applied": [
+            "rule_normalized_citations",
+            "rule_violation_blocks"
+          ]
+        },
+        {
+          "doc_name": "32021051NOPV_PCP PCO_11102021_(21-200403)",
+          "answer": "195.440, 195.452, 195.573, 195.581, 195.452(h)(3), 195.452(h)(4)(iii)(e), 195.452(i)(4)",
+          "correct": false,
+          "retrieved_token_count": 1219,
+          "cost_ratio": 0.218029,
+          "rules_applied": [
+            "rule_citation_lines",
+            "rule_normalized_citations",
+            "rule_violation_blocks"
+          ]
+        },
+        {
+          "doc_name": "32022052NOPV_PCP PCO_11102022_(21-207738)",
+          "answer": "194.105, 195.406, 195.452, 195.583",
+          "correct": true,
+          "retrieved_token_count": 585,
+          "cost_ratio": 0.138396,
+          "rules_applied": [
+            "rule_violation_blocks"
+          ]
+        },
+        {
+          "doc_name": "32024007NOPV_PCO_01182024_(22-234928)",
+          "answer": "192.479(a), 192.705(a), 192.750",
+          "correct": true,
+          "retrieved_token_count": 377,
+          "cost_ratio": 0.149485,
+          "rules_applied": [
+            "rule_citation_lines",
+            "rule_normalized_citations",
+            "rule_violation_blocks"
+          ]
+        },
+        {
+          "doc_name": "32024056NOPV_PCP PCO_10252024_(23-264602)",
+          "answer": "195.264(b)\n195.401(b)\n195.505(a)\n195.563(a)\n195.573(a)(1)",
+          "correct": false,
+          "retrieved_token_count": 1115,
+          "cost_ratio": 0.252892,
+          "rules_applied": [
+            "rule_citation_lines",
+            "rule_normalized_citations",
+            "rule_violation_blocks"
+          ]
+        },
+        {
+          "doc_name": "42021033NOPV_PCO_09232021_(21-220612)",
+          "answer": "191.17",
+          "correct": true,
+          "retrieved_token_count": 149,
+          "cost_ratio": 0.096067,
+          "rules_applied": [
+            "rule_normalized_citations",
+            "rule_violation_blocks"
+          ]
+        },
+        {
+          "doc_name": "42023010NOPV_PCP PCO_06022023_(22-232749)",
+          "answer": "195.420(b)\n195.505(b)\n195.573(e)",
+          "correct": false,
+          "retrieved_token_count": 560,
+          "cost_ratio": 0.180937,
+          "rules_applied": [
+            "rule_citation_lines",
+            "rule_normalized_citations",
+            "rule_violation_blocks"
+          ]
+        },
+        {
+          "doc_name": "42024042NOPV_PCO_08292024_(23-267234)",
+          "answer": "193.2637",
+          "correct": true,
+          "retrieved_token_count": 71,
+          "cost_ratio": 0.036317,
+          "rules_applied": [
+            "rule_normalized_citations",
+            "rule_violation_blocks"
+          ]
+        },
+        {
+          "doc_name": "42026012NOPV_PCP PCO_02122026_(23-266706)",
+          "answer": "195.452(g)(1)\n195.452(l)(1)(ii)",
+          "correct": true,
+          "retrieved_token_count": 302,
+          "cost_ratio": 0.111439,
+          "rules_applied": [
+            "rule_normalized_citations",
+            "rule_violation_blocks"
+          ]
+        },
+        {
+          "doc_name": "52023009NOPV_PCP PCO_03012023_(21-217219)",
+          "answer": "192.16, 192.283, 192.743, 192.756",
+          "correct": false,
+          "retrieved_token_count": 1592,
+          "cost_ratio": 0.313942,
+          "rules_applied": [
+            "rule_citation_lines",
+            "rule_normalized_citations",
+            "rule_violation_blocks"
+          ]
+        },
+        {
+          "doc_name": "52024001NOPV_PCO_12122024_(24-297227)",
+          "answer": "195.420(b), 195.583(a)",
+          "correct": true,
+          "retrieved_token_count": 361,
+          "cost_ratio": 0.129391,
+          "rules_applied": [
+            "rule_citation_lines",
+            "rule_normalized_citations",
+            "rule_violation_blocks"
+          ]
+        },
+        {
+          "doc_name": "52026002NOPV_PCO_01222026_(25-331927)",
+          "answer": "192.13(d)\n192.169(a)\n192.195(a)\n192.199(e)\n192.731(a)\n192.739(a)(2)\n192.739(a)(3)",
+          "correct": false,
+          "retrieved_token_count": 1311,
+          "cost_ratio": 0.223415,
+          "rules_applied": [
+            "rule_citation_lines",
+            "rule_normalized_citations",
+            "rule_violation_blocks"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T06:48:37.759366+00:00"
+    },
+    {
+      "doc_names": [
+        "12022023NOPV_PCO_03312022_(20-194651)",
+        "32021051NOPV_PCP PCO_11102021_(21-200403)",
+        "32022052NOPV_PCP PCO_11102022_(21-207738)",
+        "32024007NOPV_PCO_01182024_(22-234928)",
+        "32024056NOPV_PCP PCO_10252024_(23-264602)",
+        "42021033NOPV_PCO_09232021_(21-220612)",
+        "42023010NOPV_PCP PCO_06022023_(22-232749)",
+        "42024042NOPV_PCO_08292024_(23-267234)",
+        "42026012NOPV_PCP PCO_02122026_(23-266706)",
+        "52023009NOPV_PCP PCO_03012023_(21-217219)",
+        "52024001NOPV_PCO_12122024_(24-297227)",
+        "52026002NOPV_PCO_01222026_(25-331927)"
+      ],
+      "rule_names": [
+        "rule_citation_lines",
+        "rule_violation_blocks"
+      ],
+      "n": 12,
+      "n_correct": 7,
+      "accuracy": 0.583333,
+      "avg_cost_ratio": 0.164459,
+      "qa_input_tokens": 9538,
+      "qa_output_tokens": 321,
+      "judge_input_tokens": 2457,
+      "judge_output_tokens": 77,
+      "input_tokens_total": 11995,
+      "output_tokens_total": 398,
+      "latency_seconds": 12.583,
+      "results": [
+        {
+          "doc_name": "12022023NOPV_PCO_03312022_(20-194651)",
+          "answer": "195.446(e)(4), 195.446(c)(3), 195.446(e)(5), 195.446(h)(5)",
+          "correct": false,
+          "retrieved_token_count": 683,
+          "cost_ratio": 0.22075,
+          "rules_applied": [
+            "rule_violation_blocks"
+          ]
+        },
+        {
+          "doc_name": "32021051NOPV_PCP PCO_11102021_(21-200403)",
+          "answer": "195.440, 195.452, 195.573, 195.581, 195.452(h)(4)(iii)(e)",
+          "correct": true,
+          "retrieved_token_count": 1197,
+          "cost_ratio": 0.214094,
+          "rules_applied": [
+            "rule_citation_lines",
+            "rule_violation_blocks"
+          ]
+        },
+        {
+          "doc_name": "32022052NOPV_PCP PCO_11102022_(21-207738)",
+          "answer": "194.105, 195.406, 195.452, 195.583",
+          "correct": true,
+          "retrieved_token_count": 585,
+          "cost_ratio": 0.138396,
+          "rules_applied": [
+            "rule_violation_blocks"
+          ]
+        },
+        {
+          "doc_name": "32024007NOPV_PCO_01182024_(22-234928)",
+          "answer": "192.479, 192.705, 192.750",
+          "correct": true,
+          "retrieved_token_count": 352,
+          "cost_ratio": 0.139572,
+          "rules_applied": [
+            "rule_citation_lines",
+            "rule_violation_blocks"
+          ]
+        },
+        {
+          "doc_name": "32024056NOPV_PCP PCO_10252024_(23-264602)",
+          "answer": "195.446(c)(3)\n\n195.573(a)(1)",
+          "correct": false,
+          "retrieved_token_count": 1090,
+          "cost_ratio": 0.247222,
+          "rules_applied": [
+            "rule_citation_lines",
+            "rule_violation_blocks"
+          ]
+        },
+        {
+          "doc_name": "42021033NOPV_PCO_09232021_(21-220612)",
+          "answer": "191.17",
+          "correct": true,
+          "retrieved_token_count": 141,
+          "cost_ratio": 0.090909,
+          "rules_applied": [
+            "rule_violation_blocks"
+          ]
+        },
+        {
+          "doc_name": "42023010NOPV_PCP PCO_06022023_(22-232749)",
+          "answer": "195.420, 195.428, 195.505, 195.573, 195.401(b), 195.452, 195.452(h)",
+          "correct": false,
+          "retrieved_token_count": 532,
+          "cost_ratio": 0.17189,
+          "rules_applied": [
+            "rule_citation_lines",
+            "rule_violation_blocks"
+          ]
+        },
+        {
+          "doc_name": "42024042NOPV_PCO_08292024_(23-267234)",
+          "answer": "193.2637",
+          "correct": true,
+          "retrieved_token_count": 62,
+          "cost_ratio": 0.031714,
+          "rules_applied": [
+            "rule_violation_blocks"
+          ]
+        },
+        {
+          "doc_name": "42026012NOPV_PCP PCO_02122026_(23-266706)",
+          "answer": "195.452(l)(1), 195.452(g)",
+          "correct": false,
+          "retrieved_token_count": 277,
+          "cost_ratio": 0.102214,
+          "rules_applied": [
+            "rule_violation_blocks"
+          ]
+        },
+        {
+          "doc_name": "52023009NOPV_PCP PCO_03012023_(21-217219)",
+          "answer": "192.16, 192.283, 192.453, 192.481, 192.605, 192.625, 192.739, 192.743, 192.747, 192.756, 192.1007",
+          "correct": true,
+          "retrieved_token_count": 1424,
+          "cost_ratio": 0.280812,
+          "rules_applied": [
+            "rule_citation_lines",
+            "rule_violation_blocks"
+          ]
+        },
+        {
+          "doc_name": "52024001NOPV_PCO_12122024_(24-297227)",
+          "answer": "195.420(b), 195.583(a)",
+          "correct": true,
+          "retrieved_token_count": 342,
+          "cost_ratio": 0.122581,
+          "rules_applied": [
+            "rule_citation_lines",
+            "rule_violation_blocks"
+          ]
+        },
+        {
+          "doc_name": "52026002NOPV_PCO_01222026_(25-331927)",
+          "answer": "192.13(d), 192.169(a), 192.195(a), 192.199(e), 192.731(a), 192.739(a)(2), 192.739(a)(3)",
+          "correct": false,
+          "retrieved_token_count": 1252,
+          "cost_ratio": 0.213361,
+          "rules_applied": [
+            "rule_citation_lines",
+            "rule_violation_blocks"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T06:50:11.970190+00:00"
+    },
+    {
+      "doc_names": [
+        "12022023NOPV_PCO_03312022_(20-194651)",
+        "22023011NOPV_PCO_07282023_(21-202560)",
+        "32021051NOPV_PCP PCO_11102021_(21-200403)",
+        "32021087NOPV_PCP PCO_12132021_(21-210505)",
+        "32022047NOPV_PCP PCO_05122022_(21-201425)",
+        "32022052NOPV_PCP PCO_11102022_(21-207738)",
+        "32023014NOPV_PCP PCO_07272023_(22-250434)",
+        "32024007NOPV_PCO_01182024_(22-234928)",
+        "32024019NOPV_PCO_03042024_(22-233359)",
+        "32024052NOPV_PCP PCO_07032024_(24-305436)",
+        "32024056NOPV_PCP PCO_10252024_(23-264602)",
+        "42021033NOPV_PCO_09232021_(21-220612)",
+        "42023010NOPV_PCP PCO_06022023_(22-232749)",
+        "42024042NOPV_PCO_08292024_(23-267234)",
+        "42026012NOPV_PCP PCO_02122026_(23-266706)",
+        "52023009NOPV_PCP PCO_03012023_(21-217219)",
+        "52024001NOPV_PCO_12122024_(24-297227)",
+        "52026002NOPV_PCO_01222026_(25-331927)"
+      ],
+      "rule_names": [
+        "rule_citation_lines",
+        "rule_violation_blocks"
+      ],
+      "n": 18,
+      "n_correct": 12,
+      "accuracy": 0.666667,
+      "avg_cost_ratio": 0.151175,
+      "qa_input_tokens": 13394,
+      "qa_output_tokens": 433,
+      "judge_input_tokens": 3457,
+      "judge_output_tokens": 114,
+      "input_tokens_total": 16851,
+      "output_tokens_total": 547,
+      "latency_seconds": 18.858,
+      "results": [
+        {
+          "doc_name": "12022023NOPV_PCO_03312022_(20-194651)",
+          "answer": "195.446(e)(4), 195.446(c)(3), 195.446(e)(5), 195.446(h)(5)",
+          "correct": false,
+          "retrieved_token_count": 683,
+          "cost_ratio": 0.22075,
+          "rules_applied": [
+            "rule_violation_blocks"
+          ]
+        },
+        {
+          "doc_name": "22023011NOPV_PCO_07282023_(21-202560)",
+          "answer": "195.440, 195.452, 195.588, 195.402, 195.589",
+          "correct": false,
+          "retrieved_token_count": 1205,
+          "cost_ratio": 0.208984,
+          "rules_applied": [
+            "rule_violation_blocks"
+          ]
+        },
+        {
+          "doc_name": "32021051NOPV_PCP PCO_11102021_(21-200403)",
+          "answer": "195.440, 195.452, 195.573, 195.581",
+          "correct": true,
+          "retrieved_token_count": 1181,
+          "cost_ratio": 0.211232,
+          "rules_applied": [
+            "rule_citation_lines",
+            "rule_violation_blocks"
+          ]
+        },
+        {
+          "doc_name": "32021087NOPV_PCP PCO_12132021_(21-210505)",
+          "answer": "192.481",
+          "correct": true,
+          "retrieved_token_count": 162,
+          "cost_ratio": 0.071586,
+          "rules_applied": [
+            "rule_violation_blocks"
+          ]
+        },
+        {
+          "doc_name": "32022047NOPV_PCP PCO_05122022_(21-201425)",
+          "answer": "192.631(b), 192.631(c)(1), 192.631(e)(1), 192.631(j)(1)",
+          "correct": true,
+          "retrieved_token_count": 667,
+          "cost_ratio": 0.146722,
+          "rules_applied": [
+            "rule_citation_lines",
+            "rule_violation_blocks"
+          ]
+        },
+        {
+          "doc_name": "32022052NOPV_PCP PCO_11102022_(21-207738)",
+          "answer": "194.105, 195.406, 195.452, 195.583",
+          "correct": true,
+          "retrieved_token_count": 585,
+          "cost_ratio": 0.138396,
+          "rules_applied": [
+            "rule_violation_blocks"
+          ]
+        },
+        {
+          "doc_name": "32023014NOPV_PCP PCO_07272023_(22-250434)",
+          "answer": "195.444, 195.452(i)(3), 195.446(c)(1), 195.446(c)(2), 195.446(e), 195.446(h)(1)",
+          "correct": false,
+          "retrieved_token_count": 891,
+          "cost_ratio": 0.203518,
+          "rules_applied": [
+            "rule_citation_lines",
+            "rule_violation_blocks"
+          ]
+        },
+        {
+          "doc_name": "32024007NOPV_PCO_01182024_(22-234928)",
+          "answer": "192.479, 192.705, 192.750",
+          "correct": true,
+          "retrieved_token_count": 352,
+          "cost_ratio": 0.139572,
+          "rules_applied": [
+            "rule_citation_lines",
+            "rule_violation_blocks"
+          ]
+        },
+        {
+          "doc_name": "32024019NOPV_PCO_03042024_(22-233359)",
+          "answer": "195.563(a)",
+          "correct": true,
+          "retrieved_token_count": 146,
+          "cost_ratio": 0.122176,
+          "rules_applied": [
+            "rule_citation_lines",
+            "rule_violation_blocks"
+          ]
+        },
+        {
+          "doc_name": "32024052NOPV_PCP PCO_07032024_(24-305436)",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "32024056NOPV_PCP PCO_10252024_(23-264602)",
+          "answer": "195.264, 195.505, 195.563(a), 195.573(a)(1), 195.573(e)",
+          "correct": true,
+          "retrieved_token_count": 1079,
+          "cost_ratio": 0.244727,
+          "rules_applied": [
+            "rule_citation_lines",
+            "rule_violation_blocks"
+          ]
+        },
+        {
+          "doc_name": "42021033NOPV_PCO_09232021_(21-220612)",
+          "answer": "191.17",
+          "correct": true,
+          "retrieved_token_count": 141,
+          "cost_ratio": 0.090909,
+          "rules_applied": [
+            "rule_violation_blocks"
+          ]
+        },
+        {
+          "doc_name": "42023010NOPV_PCP PCO_06022023_(22-232749)",
+          "answer": "195.420, 195.428, 195.505, 195.573",
+          "correct": true,
+          "retrieved_token_count": 532,
+          "cost_ratio": 0.17189,
+          "rules_applied": [
+            "rule_citation_lines",
+            "rule_violation_blocks"
+          ]
+        },
+        {
+          "doc_name": "42024042NOPV_PCO_08292024_(23-267234)",
+          "answer": "193.2637",
+          "correct": true,
+          "retrieved_token_count": 62,
+          "cost_ratio": 0.031714,
+          "rules_applied": [
+            "rule_violation_blocks"
+          ]
+        },
+        {
+          "doc_name": "42026012NOPV_PCP PCO_02122026_(23-266706)",
+          "answer": "195.452(l)(1), 195.452(g)",
+          "correct": false,
+          "retrieved_token_count": 277,
+          "cost_ratio": 0.102214,
+          "rules_applied": [
+            "rule_violation_blocks"
+          ]
+        },
+        {
+          "doc_name": "52023009NOPV_PCP PCO_03012023_(21-217219)",
+          "answer": "192.16, 192.283, 192.453, 192.481, 192.605, 192.625, 192.739, 192.743, 192.747, 192.756, 192.1007",
+          "correct": true,
+          "retrieved_token_count": 1424,
+          "cost_ratio": 0.280812,
+          "rules_applied": [
+            "rule_citation_lines",
+            "rule_violation_blocks"
+          ]
+        },
+        {
+          "doc_name": "52024001NOPV_PCO_12122024_(24-297227)",
+          "answer": "195.420(b), 195.583(a)",
+          "correct": true,
+          "retrieved_token_count": 342,
+          "cost_ratio": 0.122581,
+          "rules_applied": [
+            "rule_violation_blocks"
+          ]
+        },
+        {
+          "doc_name": "52026002NOPV_PCO_01222026_(25-331927)",
+          "answer": "192.13(d), 192.169(a), 192.195(a), 192.199(e), 192.731(a), 192.739(a)(2), 192.739(a)(3)",
+          "correct": false,
+          "retrieved_token_count": 1252,
+          "cost_ratio": 0.213361,
+          "rules_applied": [
+            "rule_citation_lines",
+            "rule_violation_blocks"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T06:51:45.043545+00:00"
+    }
+  ]
+}

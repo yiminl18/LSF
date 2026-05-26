@@ -1,0 +1,312 @@
+[
+  {
+    "question": "What quarter and year does this Treasury Bulletin cover?",
+    "question_slug": "what_quarter_and_year_does_this_treasury_bulletin_cover",
+    "split": "all_docs",
+    "model": "gpt54",
+    "n": 200,
+    "n_correct": 153,
+    "accuracy": 0.765,
+    "avg_input_tokens": 102.6,
+    "avg_output_tokens": 8.8,
+    "avg_latency_seconds": 0.86,
+    "avg_retrieved_tokens": 10.8,
+    "avg_cost_ratio": 0.1273,
+    "rule_gen_output_name": "agentic_rule_full_data_gpt54_adaptive/all_docs",
+    "rule_question_dir": "q01_what_quarter_and_year_does_this_treasury_bulletin_cover",
+    "rule_names": [
+      "rule_issue_cover_date",
+      "rule_sparse_doc_name_period"
+    ]
+  },
+  {
+    "question": "What was the annualized real GDP growth rate for the most recent quarter reported?",
+    "question_slug": "what_was_the_annualized_real_gdp_growth_rate_for_the_most_re",
+    "split": "all_docs",
+    "model": "gpt54",
+    "n": 200,
+    "n_correct": 129,
+    "accuracy": 0.645,
+    "avg_input_tokens": 143.4,
+    "avg_output_tokens": 7.4,
+    "avg_latency_seconds": 0.86,
+    "avg_retrieved_tokens": 46.8,
+    "avg_cost_ratio": 0.1226,
+    "rule_gen_output_name": "agentic_rule_full_data_gpt54_adaptive/all_docs",
+    "rule_question_dir": "q02_what_was_the_annualized_real_gdp_growth_rate_for_the_most_re",
+    "rule_names": [
+      "rule_real_gdp_growth"
+    ]
+  },
+  {
+    "question": "What was the unemployment rate at the most recent month reported?",
+    "question_slug": "what_was_the_unemployment_rate_at_the_most_recent_month_repo",
+    "split": "all_docs",
+    "model": "gpt54",
+    "n": 200,
+    "n_correct": 109,
+    "accuracy": 0.545,
+    "avg_input_tokens": 118.1,
+    "avg_output_tokens": 7.3,
+    "avg_latency_seconds": 0.87,
+    "avg_retrieved_tokens": 25.2,
+    "avg_cost_ratio": 0.1175,
+    "rule_gen_output_name": "agentic_rule_full_data_gpt54_adaptive/all_docs",
+    "rule_question_dir": "q03_what_was_the_unemployment_rate_at_the_most_recent_month_repo",
+    "rule_names": [
+      "rule_unemployment_latest_month"
+    ]
+  },
+  {
+    "question": "What was the average monthly nonfarm payroll job growth so far in the current calendar year?",
+    "question_slug": "what_was_the_average_monthly_nonfarm_payroll_job_growth_so_f",
+    "split": "all_docs",
+    "model": "gpt54",
+    "n": 200,
+    "n_correct": 55,
+    "accuracy": 0.275,
+    "avg_input_tokens": 145.4,
+    "avg_output_tokens": 6.8,
+    "avg_latency_seconds": 0.84,
+    "avg_retrieved_tokens": 46.6,
+    "avg_cost_ratio": 0.1252,
+    "rule_gen_output_name": "agentic_rule_full_data_gpt54_adaptive/all_docs",
+    "rule_question_dir": "q04_what_was_the_average_monthly_nonfarm_payroll_job_growth_so_f",
+    "rule_names": [
+      "rule_payroll_chart_current_period",
+      "rule_payroll_early_year_gain",
+      "rule_payroll_year_to_date_average"
+    ]
+  },
+  {
+    "question": "What was the University of Michigan / Reuters consumer sentiment index at the most recent reading?",
+    "question_slug": "what_was_the_university_of_michigan_reuters_consumer_sentime",
+    "split": "all_docs",
+    "model": "gpt54",
+    "n": 200,
+    "n_correct": 26,
+    "accuracy": 0.13,
+    "avg_input_tokens": 99.8,
+    "avg_output_tokens": 6.1,
+    "avg_latency_seconds": 0.78,
+    "avg_retrieved_tokens": 1.7,
+    "avg_cost_ratio": 0.1236,
+    "rule_gen_output_name": "agentic_rule_full_data_gpt54_adaptive/all_docs",
+    "rule_question_dir": "q05_what_was_the_university_of_michigan_reuters_consumer_sentime",
+    "rule_names": [
+      "rule_michigan_consumer_sentiment_latest_reading"
+    ]
+  },
+  {
+    "question": "What was the federal budget deficit for the most recent completed fiscal year, as a percentage of GDP?",
+    "question_slug": "what_was_the_federal_budget_deficit_for_the_most_recent_comp",
+    "split": "all_docs",
+    "model": "gpt54",
+    "n": 200,
+    "n_correct": 117,
+    "accuracy": 0.585,
+    "avg_input_tokens": 109.7,
+    "avg_output_tokens": 8.0,
+    "avg_latency_seconds": 0.86,
+    "avg_retrieved_tokens": 8.1,
+    "avg_cost_ratio": 0.1449,
+    "rule_gen_output_name": "agentic_rule_full_data_gpt54_adaptive/all_docs",
+    "rule_question_dir": "q06_what_was_the_federal_budget_deficit_for_the_most_recent_comp",
+    "rule_names": [
+      "rule_budget_deficit_paragraph"
+    ]
+  },
+  {
+    "question": "What were total federal receipts for the fiscal year to date, in millions of dollars?",
+    "question_slug": "what_were_total_federal_receipts_for_the_fiscal_year_to_date",
+    "split": "all_docs",
+    "model": "gpt54",
+    "n": 200,
+    "n_correct": 97,
+    "accuracy": 0.485,
+    "avg_input_tokens": 101.8,
+    "avg_output_tokens": 7.5,
+    "avg_latency_seconds": 0.86,
+    "avg_retrieved_tokens": 3.0,
+    "avg_cost_ratio": 0.1236,
+    "rule_gen_output_name": "agentic_rule_full_data_gpt54_adaptive/all_docs",
+    "rule_question_dir": "q07_what_were_total_federal_receipts_for_the_fiscal_year_to_date",
+    "rule_names": [
+      "rule_total_receipts_ffo4_total_funds"
+    ]
+  },
+  {
+    "question": "What was the total surplus or deficit for the fiscal year to date, in millions of dollars?",
+    "question_slug": "what_was_the_total_surplus_or_deficit_for_the_fiscal_year_to",
+    "split": "all_docs",
+    "model": "gpt54",
+    "n": 200,
+    "n_correct": 100,
+    "accuracy": 0.5,
+    "avg_input_tokens": 375.2,
+    "avg_output_tokens": 7.4,
+    "avg_latency_seconds": 0.85,
+    "avg_retrieved_tokens": 276.3,
+    "avg_cost_ratio": 0.1288,
+    "rule_gen_output_name": "agentic_rule_full_data_gpt54_adaptive/all_docs",
+    "rule_question_dir": "q08_what_was_the_total_surplus_or_deficit_for_the_fiscal_year_to",
+    "rule_names": [
+      "rule_ffo4_total_surplus_deficit_fytd"
+    ]
+  },
+  {
+    "question": "What were net individual income tax receipts for the most recent quarter reported, in billions of dollars?",
+    "question_slug": "what_were_net_individual_income_tax_receipts_for_the_most_re",
+    "split": "all_docs",
+    "model": "gpt54",
+    "n": 200,
+    "n_correct": 125,
+    "accuracy": 0.625,
+    "avg_input_tokens": 299.1,
+    "avg_output_tokens": 6.7,
+    "avg_latency_seconds": 0.83,
+    "avg_retrieved_tokens": 199.2,
+    "avg_cost_ratio": 0.1282,
+    "rule_gen_output_name": "agentic_rule_full_data_gpt54_adaptive/all_docs",
+    "rule_question_dir": "q09_what_were_net_individual_income_tax_receipts_for_the_most_re",
+    "rule_names": [
+      "rule_individual_income_tax_receipts"
+    ]
+  },
+  {
+    "question": "What was the total gross federal debt outstanding at the end of the most recent fiscal year, in millions of dollars?",
+    "question_slug": "what_was_the_total_gross_federal_debt_outstanding_at_the_end",
+    "split": "all_docs",
+    "model": "gpt54",
+    "n": 200,
+    "n_correct": 110,
+    "accuracy": 0.55,
+    "avg_input_tokens": 108.3,
+    "avg_output_tokens": 8.0,
+    "avg_latency_seconds": 0.82,
+    "avg_retrieved_tokens": 3.5,
+    "avg_cost_ratio": 0.1311,
+    "rule_gen_output_name": "agentic_rule_full_data_gpt54_adaptive/all_docs",
+    "rule_question_dir": "q10_what_was_the_total_gross_federal_debt_outstanding_at_the_end",
+    "rule_names": [
+      "rule_fd1_latest_gross_federal_debt_total"
+    ]
+  },
+  {
+    "question": "What was the total federal debt held by the public at the end of the most recent fiscal year, in millions of dollars?",
+    "question_slug": "what_was_the_total_federal_debt_held_by_the_public_at_the_en",
+    "split": "all_docs",
+    "model": "gpt54",
+    "n": 200,
+    "n_correct": 101,
+    "accuracy": 0.505,
+    "avg_input_tokens": 212.0,
+    "avg_output_tokens": 7.6,
+    "avg_latency_seconds": 0.84,
+    "avg_retrieved_tokens": 105.5,
+    "avg_cost_ratio": 0.1346,
+    "rule_gen_output_name": "agentic_rule_full_data_gpt54_adaptive/all_docs",
+    "rule_question_dir": "q11_what_was_the_total_federal_debt_held_by_the_public_at_the_en",
+    "rule_names": [
+      "rule_fd1_latest_fy_public_total",
+      "rule_private_investors_latest_fy"
+    ]
+  },
+  {
+    "question": "Is the statutory debt limit currently suspended or set at a specific dollar amount?",
+    "question_slug": "is_the_statutory_debt_limit_currently_suspended_or_set_at_a_",
+    "split": "all_docs",
+    "model": "gpt54",
+    "n": 200,
+    "n_correct": 96,
+    "accuracy": 0.48,
+    "avg_input_tokens": 756.2,
+    "avg_output_tokens": 8.8,
+    "avg_latency_seconds": 0.9,
+    "avg_retrieved_tokens": 661.1,
+    "avg_cost_ratio": 0.1285,
+    "rule_gen_output_name": "agentic_rule_full_data_gpt54_adaptive/all_docs",
+    "rule_question_dir": "q12_is_the_statutory_debt_limit_currently_suspended_or_set_at_a_",
+    "rule_names": [
+      "rule_statutory_debt_limit_amount",
+      "rule_statutory_debt_limit_suspended"
+    ]
+  },
+  {
+    "question": "What was the average length in months of marketable interest-bearing public debt held by private investors at end of the most recent fiscal year?",
+    "question_slug": "what_was_the_average_length_in_months_of_marketable_interest",
+    "split": "all_docs",
+    "model": "gpt54",
+    "n": 200,
+    "n_correct": 95,
+    "accuracy": 0.475,
+    "avg_input_tokens": 296.3,
+    "avg_output_tokens": 6.1,
+    "avg_latency_seconds": 0.83,
+    "avg_retrieved_tokens": 189.5,
+    "avg_cost_ratio": 0.139,
+    "rule_gen_output_name": "agentic_rule_full_data_gpt54_adaptive/all_docs",
+    "rule_question_dir": "q13_what_was_the_average_length_in_months_of_marketable_interest",
+    "rule_names": [
+      "rule_marketable_debt_average_length"
+    ]
+  },
+  {
+    "question": "What was the per capita amount of currency and coin in circulation at the most recent reporting date, in dollars?",
+    "question_slug": "what_was_the_per_capita_amount_of_currency_and_coin_in_circu",
+    "split": "all_docs",
+    "model": "gpt54",
+    "n": 200,
+    "n_correct": 108,
+    "accuracy": 0.54,
+    "avg_input_tokens": 144.8,
+    "avg_output_tokens": 7.0,
+    "avg_latency_seconds": 0.8,
+    "avg_retrieved_tokens": 41.3,
+    "avg_cost_ratio": 0.1302,
+    "rule_gen_output_name": "agentic_rule_full_data_gpt54_adaptive/all_docs",
+    "rule_question_dir": "q14_what_was_the_per_capita_amount_of_currency_and_coin_in_circu",
+    "rule_names": [
+      "rule_ms1_latest_per_capita_currency_and_coin",
+      "rule_uscc2_latest_per_capita_currency_and_coin"
+    ]
+  },
+  {
+    "question": "What was the Exchange Stabilization Fund total assets, in thousands of dollars?",
+    "question_slug": "what_was_the_exchange_stabilization_fund_total_assets_in_tho",
+    "split": "all_docs",
+    "model": "gpt54",
+    "n": 200,
+    "n_correct": 149,
+    "accuracy": 0.745,
+    "avg_input_tokens": 1131.4,
+    "avg_output_tokens": 8.6,
+    "avg_latency_seconds": 0.87,
+    "avg_retrieved_tokens": 1049.7,
+    "avg_cost_ratio": 0.1306,
+    "rule_gen_output_name": "agentic_rule_full_data_gpt54_adaptive/all_docs",
+    "rule_question_dir": "q15_what_was_the_exchange_stabilization_fund_total_assets_in_tho",
+    "rule_names": [
+      "rule_esf_total_assets"
+    ]
+  },
+  {
+    "question": "What was the most recent weekly exchange rate of Canadian dollars per U.S. dollar reported?",
+    "question_slug": "what_was_the_most_recent_weekly_exchange_rate_of_canadian_do",
+    "split": "all_docs",
+    "model": "gpt54",
+    "n": 200,
+    "n_correct": 99,
+    "accuracy": 0.495,
+    "avg_input_tokens": 105.2,
+    "avg_output_tokens": 7.0,
+    "avg_latency_seconds": 0.79,
+    "avg_retrieved_tokens": 5.7,
+    "avg_cost_ratio": 0.1249,
+    "rule_gen_output_name": "agentic_rule_full_data_gpt54_adaptive/all_docs",
+    "rule_question_dir": "q16_what_was_the_most_recent_weekly_exchange_rate_of_canadian_do",
+    "rule_names": [
+      "rule_canadian_dollar_weekly_exchange_rate"
+    ]
+  }
+]

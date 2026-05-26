@@ -1,0 +1,32 @@
+{
+  "doc_name": "20251223_industrial_park_center_llc_v._great_northern_insurance_company",
+  "question": "What was the panel's final disposition of the appeal?",
+  "question_slug": "what_was_the_panels_final_disposition_of_the_appeal",
+  "split": "all_docs",
+  "ground_truth": "This consolidated appeal is withdrawn from submission and will be resubmitted following the conclusion of any proceedings in the Arizona Supreme Court.",
+  "answer": "NOT FOUND",
+  "correct": false,
+  "status": "ok",
+  "input_tokens": 588,
+  "output_tokens": 6,
+  "latency_seconds": 0.769,
+  "model": "gpt54",
+  "doc_token_count": 6169,
+  "cost_ratio": 0.0953,
+  "retrieved_token_count": 495,
+  "rules_with_hits": [
+    "rule_panel_disposition_conclusion"
+  ],
+  "rules_with_no_hits": [
+    "rule_panel_disposition_terminal_line"
+  ],
+  "num_spans_before_dedup": 1,
+  "num_spans_after_dedup": 1,
+  "rule_names": [
+    "rule_panel_disposition_conclusion",
+    "rule_panel_disposition_terminal_line"
+  ],
+  "rule_question_dir": "q13_what_was_the_panels_final_disposition_of_the_appeal",
+  "rule_generation_report_path": "results/court/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q13_what_was_the_panels_final_disposition_of_the_appeal_rule_gen.json",
+  "rule_apply_trace_path": "results/court/agentic_rule_full_data_gpt54mini_adaptive/all_docs/rule_apply_merge/_trace/q13_what_was_the_panels_final_disposition_of_the_appeal/rule_panel_disposition_conclusion__rule_panel_disposition_terminal_line_merge.json"
+}

@@ -1,0 +1,38 @@
+{
+  "doc_name": "20250731_lapadat_v._bondi",
+  "question": "Who were the judges on the panel that decided this case?",
+  "question_slug": "who_were_the_judges_on_the_panel_that_decided_this_case",
+  "split": "all_docs",
+  "ground_truth": [
+    "Ronald Lee Gilman",
+    "N. Randy Smith",
+    "Salvador Mendoza, Jr."
+  ],
+  "answer": "Ronald Lee Gilman, N. Randy Smith, Salvador Mendoza, Jr.",
+  "correct": true,
+  "status": "ok",
+  "input_tokens": 112,
+  "output_tokens": 20,
+  "latency_seconds": 0.839,
+  "model": "gpt54",
+  "doc_token_count": 25772,
+  "cost_ratio": 0.0043,
+  "retrieved_token_count": 20,
+  "rules_with_hits": [
+    "rule_panel_judges_before_header"
+  ],
+  "rules_with_no_hits": [
+    "rule_signing_judge_order_header",
+    "rule_order_statement_judges"
+  ],
+  "num_spans_before_dedup": 1,
+  "num_spans_after_dedup": 1,
+  "rule_names": [
+    "rule_panel_judges_before_header",
+    "rule_signing_judge_order_header",
+    "rule_order_statement_judges"
+  ],
+  "rule_question_dir": "q08_who_were_the_judges_on_the_panel_that_decided_this_case",
+  "rule_generation_report_path": "results/court/agentic_rule_full_data_gpt54_adaptive/all_docs/q08_who_were_the_judges_on_the_panel_that_decided_this_case_rule_gen.json",
+  "rule_apply_trace_path": "results/court/agentic_rule_full_data_gpt54_adaptive/all_docs/rule_apply_merge/_trace/q08_who_were_the_judges_on_the_panel_that_decided_this_case/rule_order_statement_judges__rule_panel_judges_before_header__rule_signing_judge_order_header_merge.json"
+}

@@ -1,0 +1,65 @@
+{
+  "strategy": "agentic_rule_full_data",
+  "phase": "rule_generation",
+  "status": "ok",
+  "dataset": "nopv",
+  "question": "How many distinct alleged violations are enumerated in the body of this Notice?",
+  "question_slug": "how_many_distinct_alleged_violations_are_enumerated_in_the_b",
+  "model": "gpt54",
+  "split": "all_docs",
+  "doc_count": 242,
+  "question_count": 1,
+  "rules_dir": "rules/nopv/agentic_rule_full_data_gpt54_adaptive/all_docs/q08_how_many_distinct_alleged_violations_are_enumerated_in_the_b",
+  "results_report_path": "results/nopv/agentic_rule_full_data_gpt54_adaptive/all_docs/q08_how_many_distinct_alleged_violations_are_enumerated_in_the_b_rule_gen.json",
+  "verify_accuracy_ledger_path": "results/nopv/agentic_rule_full_data_gpt54_adaptive/all_docs/q08_how_many_distinct_alleged_violations_are_enumerated_in_the_b.verify_accuracy_ledger.json",
+  "rule_files": [
+    "rules/nopv/agentic_rule_full_data_gpt54_adaptive/all_docs/q08_how_many_distinct_alleged_violations_are_enumerated_in_the_b/rule_alleged_violations_numbered_items.py"
+  ],
+  "rules_final": [
+    "rule_alleged_violations_numbered_items"
+  ],
+  "num_rules_final": 1,
+  "rule_gen": {
+    "latency_seconds": 535.61,
+    "input_tokens": 3137498,
+    "output_tokens": 32240,
+    "cached_input_tokens": 2834688,
+    "reasoning_tokens": 14915,
+    "working_sample": [
+      "12022023NOPV_PCO_03312022_(20-194651)",
+      "32021051NOPV_PCP PCO_11102021_(21-200403)",
+      "32022052NOPV_PCP PCO_11102022_(21-207738)",
+      "32024007NOPV_PCO_01182024_(22-234928)",
+      "32024056NOPV_PCP PCO_10252024_(23-264602)",
+      "42021033NOPV_PCO_09232021_(21-220612)",
+      "42023010NOPV_PCP PCO_06022023_(22-232749)",
+      "42024042NOPV_PCO_08292024_(23-267234)",
+      "42026012NOPV_PCP PCO_02122026_(23-266706)",
+      "52023009NOPV_PCP PCO_03012023_(21-217219)",
+      "52024001NOPV_PCO_12122024_(24-297227)",
+      "52026002NOPV_PCO_01222026_(25-331927)"
+    ],
+    "num_working_sample": 12,
+    "num_working_sample_iterations": 2,
+    "verify_accuracy_calls": {
+      "total": 2,
+      "input_tokens": 8415,
+      "output_tokens": 272
+    },
+    "num_rules_written": 1,
+    "num_rules_rejected": 0,
+    "rules_final": [
+      "rule_alleged_violations_numbered_items"
+    ],
+    "num_rules_final": 1,
+    "avg_cost_ratio_sample": 0.026906,
+    "match_rate_sample": 1.0,
+    "notes": "One final rule summarizes enumerated item numbers from body headings, with fallbacks for unnumbered sections and OCR-truncated notices. The second verification pass reached 12/12 accuracy without expanding the sample."
+  },
+  "agent_log_path": "results/nopv/agentic_rule_full_data_gpt54_adaptive/all_docs/q08_how_many_distinct_alleged_violations_are_enumerated_in_the_b.codex.jsonl",
+  "agent_last_message_path": "results/nopv/agentic_rule_full_data_gpt54_adaptive/all_docs/q08_how_many_distinct_alleged_violations_are_enumerated_in_the_b.codex.last.txt",
+  "stderr": "2026-05-26T06:21:53.718421Z ERROR codex_models_manager::manager: failed to refresh available models: timeout waiting for child process to exit",
+  "codex_thread_id": "019e62f2-66b7-7e23-9930-d8896b609999",
+  "codex_event_count": 138,
+  "codex_error_message": null
+}

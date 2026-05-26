@@ -1,0 +1,440 @@
+{
+  "verify_accuracy_calls": [
+    {
+      "doc_names": [
+        "treasury_bulletin_1980_07",
+        "treasury_bulletin_1982_05",
+        "treasury_bulletin_1986_12",
+        "treasury_bulletin_1992_06",
+        "treasury_bulletin_1997_12",
+        "treasury_bulletin_2003_09",
+        "treasury_bulletin_2009_03",
+        "treasury_bulletin_2014_09",
+        "treasury_bulletin_2020_03",
+        "treasury_bulletin_2025_09"
+      ],
+      "rule_names": [
+        "rule_budget_deficit_paragraph"
+      ],
+      "n": 10,
+      "n_correct": 4,
+      "accuracy": 0.4,
+      "avg_cost_ratio": 9e-05,
+      "qa_input_tokens": 1500,
+      "qa_output_tokens": 74,
+      "judge_input_tokens": 550,
+      "judge_output_tokens": 24,
+      "input_tokens_total": 2050,
+      "output_tokens_total": 98,
+      "latency_seconds": 8.17,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_1980_07",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "treasury_bulletin_1982_05",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "treasury_bulletin_1986_12",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "treasury_bulletin_1992_06",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "treasury_bulletin_1997_12",
+          "answer": "0.3 percent",
+          "correct": true,
+          "retrieved_token_count": 51,
+          "cost_ratio": 0.000232,
+          "rules_applied": [
+            "rule_budget_deficit_paragraph"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2003_09",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "treasury_bulletin_2009_03",
+          "answer": "3.2 percent of GDP",
+          "correct": true,
+          "retrieved_token_count": 24,
+          "cost_ratio": 0.000135,
+          "rules_applied": [
+            "rule_budget_deficit_paragraph"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2014_09",
+          "answer": "4.1 percent of GDP",
+          "correct": true,
+          "retrieved_token_count": 20,
+          "cost_ratio": 0.000259,
+          "rules_applied": [
+            "rule_budget_deficit_paragraph"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2020_03",
+          "answer": "4.6 percent of GDP",
+          "correct": true,
+          "retrieved_token_count": 31,
+          "cost_ratio": 0.000273,
+          "rules_applied": [
+            "rule_budget_deficit_paragraph"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_09",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        }
+      ],
+      "timestamp": "2026-05-26T06:50:38.001379+00:00"
+    },
+    {
+      "doc_names": [
+        "treasury_bulletin_1980_07",
+        "treasury_bulletin_1981_09",
+        "treasury_bulletin_1983_12",
+        "treasury_bulletin_1988_03",
+        "treasury_bulletin_1992_03",
+        "treasury_bulletin_1995_03",
+        "treasury_bulletin_1998_03",
+        "treasury_bulletin_2003_03",
+        "treasury_bulletin_2006_03",
+        "treasury_bulletin_2010_03",
+        "treasury_bulletin_2013_03",
+        "treasury_bulletin_2016_03",
+        "treasury_bulletin_2019_03",
+        "treasury_bulletin_2022_03",
+        "treasury_bulletin_2025_09"
+      ],
+      "rule_names": [
+        "rule_budget_deficit_paragraph"
+      ],
+      "n": 15,
+      "n_correct": 6,
+      "accuracy": 0.4,
+      "avg_cost_ratio": 0.233511,
+      "qa_input_tokens": 2372,
+      "qa_output_tokens": 124,
+      "judge_input_tokens": 1228,
+      "judge_output_tokens": 57,
+      "input_tokens_total": 3600,
+      "output_tokens_total": 181,
+      "latency_seconds": 13.394,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_1980_07",
+          "answer": "1.6 percent",
+          "correct": false,
+          "retrieved_token_count": 14,
+          "cost_ratio": 0.0002,
+          "rules_applied": [
+            "rule_budget_deficit_paragraph"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1981_09",
+          "answer": "2.6 percent",
+          "correct": false,
+          "retrieved_token_count": 14,
+          "cost_ratio": 0.000155,
+          "rules_applied": [
+            "rule_budget_deficit_paragraph"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1983_12",
+          "answer": "6.0 percent",
+          "correct": false,
+          "retrieved_token_count": 14,
+          "cost_ratio": 0.000259,
+          "rules_applied": [
+            "rule_budget_deficit_paragraph"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1988_03",
+          "answer": "3.1 percent",
+          "correct": false,
+          "retrieved_token_count": 14,
+          "cost_ratio": 0.000158,
+          "rules_applied": [
+            "rule_budget_deficit_paragraph"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1992_03",
+          "answer": "4.8 percent",
+          "correct": false,
+          "retrieved_token_count": 14,
+          "cost_ratio": 0.000182,
+          "rules_applied": [
+            "rule_budget_deficit_paragraph"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1995_03",
+          "answer": "3.1 percent",
+          "correct": true,
+          "retrieved_token_count": 31,
+          "cost_ratio": 0.000348,
+          "rules_applied": [
+            "rule_budget_deficit_paragraph"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1998_03",
+          "answer": "4.7 percent",
+          "correct": false,
+          "retrieved_token_count": 39,
+          "cost_ratio": 0.000158,
+          "rules_applied": [
+            "rule_budget_deficit_paragraph"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2003_03",
+          "answer": "1.5 percent",
+          "correct": true,
+          "retrieved_token_count": 14,
+          "cost_ratio": 8.6e-05,
+          "rules_applied": [
+            "rule_budget_deficit_paragraph"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2006_03",
+          "answer": "2.5 percent",
+          "correct": false,
+          "retrieved_token_count": 14,
+          "cost_ratio": 8.2e-05,
+          "rules_applied": [
+            "rule_budget_deficit_paragraph"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2010_03",
+          "answer": "10 percent of GDP",
+          "correct": true,
+          "retrieved_token_count": 36,
+          "cost_ratio": 0.000208,
+          "rules_applied": [
+            "rule_budget_deficit_paragraph"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2013_03",
+          "answer": "6.7 percent",
+          "correct": false,
+          "retrieved_token_count": 14,
+          "cost_ratio": 8.8e-05,
+          "rules_applied": [
+            "rule_budget_deficit_paragraph"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2016_03",
+          "answer": "2.5 percent of GDP",
+          "correct": true,
+          "retrieved_token_count": 20,
+          "cost_ratio": 0.000176,
+          "rules_applied": [
+            "rule_budget_deficit_paragraph"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2019_03",
+          "answer": "3.9 percent of GDP",
+          "correct": true,
+          "retrieved_token_count": 33,
+          "cost_ratio": 0.000285,
+          "rules_applied": [
+            "rule_budget_deficit_paragraph"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2022_03",
+          "answer": "12.4%",
+          "correct": true,
+          "retrieved_token_count": 29,
+          "cost_ratio": 0.00028,
+          "rules_applied": [
+            "rule_budget_deficit_paragraph"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_09",
+          "answer": "6.4 percent",
+          "correct": false,
+          "retrieved_token_count": 14,
+          "cost_ratio": 3.5,
+          "rules_applied": [
+            "rule_budget_deficit_paragraph"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T07:00:30.293305+00:00"
+    },
+    {
+      "doc_names": [
+        "treasury_bulletin_1992_12",
+        "treasury_bulletin_1995_03",
+        "treasury_bulletin_1998_03",
+        "treasury_bulletin_2002_12",
+        "treasury_bulletin_2006_12",
+        "treasury_bulletin_2011_12",
+        "treasury_bulletin_2016_12",
+        "treasury_bulletin_2020_12",
+        "treasury_bulletin_2023_06",
+        "treasury_bulletin_2024_12"
+      ],
+      "rule_names": [
+        "rule_budget_deficit_paragraph"
+      ],
+      "n": 10,
+      "n_correct": 10,
+      "accuracy": 1.0,
+      "avg_cost_ratio": 3.7e-05,
+      "qa_input_tokens": 1420,
+      "qa_output_tokens": 80,
+      "judge_input_tokens": 1360,
+      "judge_output_tokens": 60,
+      "input_tokens_total": 2780,
+      "output_tokens_total": 140,
+      "latency_seconds": 7.959,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_1992_12",
+          "answer": "4.9 percent",
+          "correct": true,
+          "retrieved_token_count": 4,
+          "cost_ratio": 6.2e-05,
+          "rules_applied": [
+            "rule_budget_deficit_paragraph"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1995_03",
+          "answer": "3.1 percent",
+          "correct": true,
+          "retrieved_token_count": 4,
+          "cost_ratio": 4.5e-05,
+          "rules_applied": [
+            "rule_budget_deficit_paragraph"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1998_03",
+          "answer": "0.1 percent",
+          "correct": true,
+          "retrieved_token_count": 4,
+          "cost_ratio": 1.6e-05,
+          "rules_applied": [
+            "rule_budget_deficit_paragraph"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2002_12",
+          "answer": "1.5 percent",
+          "correct": true,
+          "retrieved_token_count": 4,
+          "cost_ratio": 2.4e-05,
+          "rules_applied": [
+            "rule_budget_deficit_paragraph"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2006_12",
+          "answer": "2.3 percent",
+          "correct": true,
+          "retrieved_token_count": 4,
+          "cost_ratio": 2.5e-05,
+          "rules_applied": [
+            "rule_budget_deficit_paragraph"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2011_12",
+          "answer": "8.7 percent",
+          "correct": true,
+          "retrieved_token_count": 4,
+          "cost_ratio": 2.5e-05,
+          "rules_applied": [
+            "rule_budget_deficit_paragraph"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2016_12",
+          "answer": "3.2 percent",
+          "correct": true,
+          "retrieved_token_count": 4,
+          "cost_ratio": 4.2e-05,
+          "rules_applied": [
+            "rule_budget_deficit_paragraph"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2020_12",
+          "answer": "14.9 percent",
+          "correct": true,
+          "retrieved_token_count": 4,
+          "cost_ratio": 3.8e-05,
+          "rules_applied": [
+            "rule_budget_deficit_paragraph"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2023_06",
+          "answer": "5.4 percent",
+          "correct": true,
+          "retrieved_token_count": 4,
+          "cost_ratio": 4.9e-05,
+          "rules_applied": [
+            "rule_budget_deficit_paragraph"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2024_12",
+          "answer": "6.4 percent",
+          "correct": true,
+          "retrieved_token_count": 4,
+          "cost_ratio": 4e-05,
+          "rules_applied": [
+            "rule_budget_deficit_paragraph"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T07:05:59.213959+00:00"
+    }
+  ]
+}

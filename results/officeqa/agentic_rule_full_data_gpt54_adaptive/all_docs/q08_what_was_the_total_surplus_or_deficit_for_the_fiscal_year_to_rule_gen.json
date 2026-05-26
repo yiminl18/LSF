@@ -1,0 +1,63 @@
+{
+  "strategy": "agentic_rule_full_data",
+  "phase": "rule_generation",
+  "status": "ok",
+  "dataset": "officeqa",
+  "question": "What was the total surplus or deficit for the fiscal year to date, in millions of dollars?",
+  "question_slug": "what_was_the_total_surplus_or_deficit_for_the_fiscal_year_to",
+  "model": "gpt54",
+  "split": "all_docs",
+  "doc_count": 200,
+  "question_count": 1,
+  "rules_dir": "rules/officeqa/agentic_rule_full_data_gpt54_adaptive/all_docs/q08_what_was_the_total_surplus_or_deficit_for_the_fiscal_year_to",
+  "results_report_path": "results/officeqa/agentic_rule_full_data_gpt54_adaptive/all_docs/q08_what_was_the_total_surplus_or_deficit_for_the_fiscal_year_to_rule_gen.json",
+  "verify_accuracy_ledger_path": "results/officeqa/agentic_rule_full_data_gpt54_adaptive/all_docs/q08_what_was_the_total_surplus_or_deficit_for_the_fiscal_year_to.verify_accuracy_ledger.json",
+  "rule_files": [
+    "rules/officeqa/agentic_rule_full_data_gpt54_adaptive/all_docs/q08_what_was_the_total_surplus_or_deficit_for_the_fiscal_year_to/rule_ffo4_total_surplus_deficit_fytd.py"
+  ],
+  "rules_final": [
+    "rule_ffo4_total_surplus_deficit_fytd"
+  ],
+  "num_rules_final": 1,
+  "rule_gen": {
+    "latency_seconds": 1151.17,
+    "input_tokens": 8406862,
+    "output_tokens": 53275,
+    "cached_input_tokens": 7310208,
+    "reasoning_tokens": 20855,
+    "working_sample": [
+      "treasury_bulletin_1987_03",
+      "treasury_bulletin_1991_12",
+      "treasury_bulletin_1996_09",
+      "treasury_bulletin_2001_06",
+      "treasury_bulletin_2006_06",
+      "treasury_bulletin_2011_03",
+      "treasury_bulletin_2015_12",
+      "treasury_bulletin_2020_09",
+      "treasury_bulletin_2024_03",
+      "treasury_bulletin_2025_06"
+    ],
+    "num_working_sample": 10,
+    "num_working_sample_iterations": 6,
+    "verify_accuracy_calls": {
+      "total": 6,
+      "input_tokens": 43049,
+      "output_tokens": 866
+    },
+    "num_rules_written": 1,
+    "num_rules_rejected": 0,
+    "rules_final": [
+      "rule_ffo4_total_surplus_deficit_fytd"
+    ],
+    "num_rules_final": 1,
+    "avg_cost_ratio_sample": 0.004518,
+    "match_rate_sample": 1.0,
+    "notes": "Final sample uses spread labeled-positive Treasury Bulletins from 1987-2025. The rule combines concise line extraction for modern Total On- and Off-Budget Results tables with raw-text FFO-1 and quarter-summary fallbacks for older OCR-heavy layouts; earliest 1980-82 pages remained unstable and were not kept in the final sample."
+  },
+  "agent_log_path": "results/officeqa/agentic_rule_full_data_gpt54_adaptive/all_docs/q08_what_was_the_total_surplus_or_deficit_for_the_fiscal_year_to.codex.jsonl",
+  "agent_last_message_path": "results/officeqa/agentic_rule_full_data_gpt54_adaptive/all_docs/q08_what_was_the_total_surplus_or_deficit_for_the_fiscal_year_to.codex.last.txt",
+  "stderr": "2026-05-26T07:18:36.812572Z ERROR codex_models_manager::manager: failed to refresh available models: timeout waiting for child process to exit",
+  "codex_thread_id": "019e6326-540d-75a0-8667-3e6fc44c263d",
+  "codex_event_count": 297,
+  "codex_error_message": "Reconnecting... 1/5 (stream disconnected before completion: Incomplete response returned, reason: content_filter)"
+}

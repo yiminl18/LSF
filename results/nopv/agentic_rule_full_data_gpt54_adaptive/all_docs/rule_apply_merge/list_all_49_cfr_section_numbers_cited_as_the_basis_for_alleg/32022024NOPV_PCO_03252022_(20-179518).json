@@ -1,0 +1,35 @@
+{
+  "doc_name": "32022024NOPV_PCO_03252022_(20-179518)",
+  "question": "List all 49 CFR section numbers cited as the basis for alleged violations in this Notice.",
+  "question_slug": "list_all_49_cfr_section_numbers_cited_as_the_basis_for_alleg",
+  "split": "all_docs",
+  "ground_truth": [
+    "49 CFR § 195.310",
+    "49 CFR § 195.402"
+  ],
+  "answer": "195.310, 195.402",
+  "correct": true,
+  "status": "ok",
+  "input_tokens": 311,
+  "output_tokens": 12,
+  "latency_seconds": 0.729,
+  "model": "gpt54",
+  "doc_token_count": 1609,
+  "cost_ratio": 0.1933,
+  "retrieved_token_count": 212,
+  "rules_with_hits": [
+    "rule_violation_blocks"
+  ],
+  "rules_with_no_hits": [
+    "rule_citation_lines"
+  ],
+  "num_spans_before_dedup": 13,
+  "num_spans_after_dedup": 13,
+  "rule_names": [
+    "rule_citation_lines",
+    "rule_violation_blocks"
+  ],
+  "rule_question_dir": "q09_list_all_49_cfr_section_numbers_cited_as_the_basis_for_alleg",
+  "rule_generation_report_path": "results/nopv/agentic_rule_full_data_gpt54_adaptive/all_docs/q09_list_all_49_cfr_section_numbers_cited_as_the_basis_for_alleg_rule_gen.json",
+  "rule_apply_trace_path": "results/nopv/agentic_rule_full_data_gpt54_adaptive/all_docs/rule_apply_merge/_trace/q09_list_all_49_cfr_section_numbers_cited_as_the_basis_for_alleg/rule_citation_lines__rule_violation_blocks_merge.json"
+}

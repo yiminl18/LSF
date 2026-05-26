@@ -1,0 +1,229 @@
+{
+  "verify_accuracy_calls": [
+    {
+      "doc_names": [
+        "3M_2023Q2_10Q",
+        "AMCOR_2023Q2_10Q",
+        "BOEING_2018_10K",
+        "FOOTLOCKER_2022_10K",
+        "WALMART_2024Q1_10Q"
+      ],
+      "rule_names": [
+        "rule_cover_page_state_ein_block",
+        "rule_cover_page_state_ein_paragraph"
+      ],
+      "n": 5,
+      "n_correct": 0,
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.0,
+      "qa_input_tokens": 675,
+      "qa_output_tokens": 30,
+      "judge_input_tokens": 831,
+      "judge_output_tokens": 35,
+      "input_tokens_total": 1506,
+      "output_tokens_total": 65,
+      "latency_seconds": 4.006,
+      "results": [
+        {
+          "doc_name": "3M_2023Q2_10Q",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "AMCOR_2023Q2_10Q",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "BOEING_2018_10K",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "FOOTLOCKER_2022_10K",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "WALMART_2024Q1_10Q",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        }
+      ],
+      "timestamp": "2026-05-26T07:05:13.288345+00:00"
+    },
+    {
+      "doc_names": [
+        "3M_2023Q2_10Q",
+        "AMCOR_2023Q2_10Q",
+        "BOEING_2018_10K",
+        "FOOTLOCKER_2022_10K",
+        "WALMART_2024Q1_10Q"
+      ],
+      "rule_names": [
+        "rule_cover_page_state_ein_block",
+        "rule_cover_page_state_ein_paragraph"
+      ],
+      "n": 5,
+      "n_correct": 5,
+      "accuracy": 1.0,
+      "avg_cost_ratio": 0.012875,
+      "qa_input_tokens": 4546,
+      "qa_output_tokens": 65,
+      "judge_input_tokens": 862,
+      "judge_output_tokens": 30,
+      "input_tokens_total": 5408,
+      "output_tokens_total": 95,
+      "latency_seconds": 4.6,
+      "results": [
+        {
+          "doc_name": "3M_2023Q2_10Q",
+          "answer": "Delaware, 41-0417775",
+          "correct": true,
+          "retrieved_token_count": 1255,
+          "cost_ratio": 0.01594,
+          "rules_applied": [
+            "rule_cover_page_state_ein_block",
+            "rule_cover_page_state_ein_paragraph"
+          ]
+        },
+        {
+          "doc_name": "AMCOR_2023Q2_10Q",
+          "answer": "Jersey, 98-1455367",
+          "correct": true,
+          "retrieved_token_count": 479,
+          "cost_ratio": 0.016051,
+          "rules_applied": [
+            "rule_cover_page_state_ein_block",
+            "rule_cover_page_state_ein_paragraph"
+          ]
+        },
+        {
+          "doc_name": "BOEING_2018_10K",
+          "answer": "Delaware, 91-0425694",
+          "correct": true,
+          "retrieved_token_count": 218,
+          "cost_ratio": 0.002398,
+          "rules_applied": [
+            "rule_cover_page_state_ein_block",
+            "rule_cover_page_state_ein_paragraph"
+          ]
+        },
+        {
+          "doc_name": "FOOTLOCKER_2022_10K",
+          "answer": "New York, 13-3513936",
+          "correct": true,
+          "retrieved_token_count": 1385,
+          "cost_ratio": 0.015748,
+          "rules_applied": [
+            "rule_cover_page_state_ein_block",
+            "rule_cover_page_state_ein_paragraph"
+          ]
+        },
+        {
+          "doc_name": "WALMART_2024Q1_10Q",
+          "answer": "Delaware, 71-0415188",
+          "correct": true,
+          "retrieved_token_count": 579,
+          "cost_ratio": 0.014236,
+          "rules_applied": [
+            "rule_cover_page_state_ein_block",
+            "rule_cover_page_state_ein_paragraph"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T07:05:47.217102+00:00"
+    },
+    {
+      "doc_names": [
+        "3M_2023Q2_10Q",
+        "AMCOR_2023Q2_10Q",
+        "BOEING_2018_10K",
+        "FOOTLOCKER_2022_10K",
+        "WALMART_2024Q1_10Q"
+      ],
+      "rule_names": [
+        "rule_cover_page_state_ein_block"
+      ],
+      "n": 5,
+      "n_correct": 5,
+      "accuracy": 1.0,
+      "avg_cost_ratio": 0.00089,
+      "qa_input_tokens": 921,
+      "qa_output_tokens": 65,
+      "judge_input_tokens": 862,
+      "judge_output_tokens": 30,
+      "input_tokens_total": 1783,
+      "output_tokens_total": 95,
+      "latency_seconds": 4.483,
+      "results": [
+        {
+          "doc_name": "3M_2023Q2_10Q",
+          "answer": "Delaware, 41-0417775",
+          "correct": true,
+          "retrieved_token_count": 59,
+          "cost_ratio": 0.000749,
+          "rules_applied": [
+            "rule_cover_page_state_ein_block"
+          ]
+        },
+        {
+          "doc_name": "AMCOR_2023Q2_10Q",
+          "answer": "Jersey, 98-1455367",
+          "correct": true,
+          "retrieved_token_count": 42,
+          "cost_ratio": 0.001407,
+          "rules_applied": [
+            "rule_cover_page_state_ein_block"
+          ]
+        },
+        {
+          "doc_name": "BOEING_2018_10K",
+          "answer": "Delaware, 91-0425694",
+          "correct": true,
+          "retrieved_token_count": 41,
+          "cost_ratio": 0.000451,
+          "rules_applied": [
+            "rule_cover_page_state_ein_block"
+          ]
+        },
+        {
+          "doc_name": "FOOTLOCKER_2022_10K",
+          "answer": "New York, 13-3513936",
+          "correct": true,
+          "retrieved_token_count": 58,
+          "cost_ratio": 0.000659,
+          "rules_applied": [
+            "rule_cover_page_state_ein_block"
+          ]
+        },
+        {
+          "doc_name": "WALMART_2024Q1_10Q",
+          "answer": "Delaware, 71-0415188",
+          "correct": true,
+          "retrieved_token_count": 48,
+          "cost_ratio": 0.00118,
+          "rules_applied": [
+            "rule_cover_page_state_ein_block"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T07:06:44.508056+00:00"
+    }
+  ]
+}

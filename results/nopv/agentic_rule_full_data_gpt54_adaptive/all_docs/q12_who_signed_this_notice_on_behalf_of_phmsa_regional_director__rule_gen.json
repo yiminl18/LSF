@@ -1,0 +1,73 @@
+{
+  "strategy": "agentic_rule_full_data",
+  "phase": "rule_generation",
+  "status": "ok",
+  "dataset": "nopv",
+  "question": "Who signed this Notice on behalf of PHMSA (Regional Director or Director of the issuing office)?",
+  "question_slug": "who_signed_this_notice_on_behalf_of_phmsa_regional_director_",
+  "model": "gpt54",
+  "split": "all_docs",
+  "doc_count": 242,
+  "question_count": 1,
+  "rules_dir": "rules/nopv/agentic_rule_full_data_gpt54_adaptive/all_docs/q12_who_signed_this_notice_on_behalf_of_phmsa_regional_director_",
+  "results_report_path": "results/nopv/agentic_rule_full_data_gpt54_adaptive/all_docs/q12_who_signed_this_notice_on_behalf_of_phmsa_regional_director__rule_gen.json",
+  "verify_accuracy_ledger_path": "results/nopv/agentic_rule_full_data_gpt54_adaptive/all_docs/q12_who_signed_this_notice_on_behalf_of_phmsa_regional_director_.verify_accuracy_ledger.json",
+  "rule_files": [
+    "rules/nopv/agentic_rule_full_data_gpt54_adaptive/all_docs/q12_who_signed_this_notice_on_behalf_of_phmsa_regional_director_/rule_phmsa_signature_compliance_fallback.py",
+    "rules/nopv/agentic_rule_full_data_gpt54_adaptive/all_docs/q12_who_signed_this_notice_on_behalf_of_phmsa_regional_director_/rule_phmsa_signature_footer.py"
+  ],
+  "rules_final": [
+    "rule_phmsa_signature_compliance_fallback",
+    "rule_phmsa_signature_footer"
+  ],
+  "num_rules_final": 2,
+  "rule_gen": {
+    "latency_seconds": 931.77,
+    "input_tokens": 7258077,
+    "output_tokens": 43328,
+    "cached_input_tokens": 6576512,
+    "reasoning_tokens": 19058,
+    "working_sample": [
+      "12022023NOPV_PCO_03312022_(20-194651)",
+      "32021051NOPV_PCP PCO_11102021_(21-200403)",
+      "32022052NOPV_PCP PCO_11102022_(21-207738)",
+      "32024007NOPV_PCO_01182024_(22-234928)",
+      "32024056NOPV_PCP PCO_10252024_(23-264602)",
+      "42021033NOPV_PCO_09232021_(21-220612)",
+      "42023010NOPV_PCP PCO_06022023_(22-232749)",
+      "42024042NOPV_PCO_08292024_(23-267234)",
+      "42026012NOPV_PCP PCO_02122026_(23-266706)",
+      "52023009NOPV_PCP PCO_03012023_(21-217219)",
+      "52024001NOPV_PCO_12122024_(24-297227)",
+      "52026002NOPV_PCO_01222026_(25-331927)",
+      "22023011NOPV_PCO_07282023_(21-202560)",
+      "32022069NOPV_PCO_11292022_(22-233904)",
+      "32023011NOPV_PCP PCO_09122023_(22-233376)",
+      "32024030NOPV_PCO_06032024_(23-264637)",
+      "32025003NOPV_PCP PCO_01162025_(23-264381)"
+    ],
+    "num_working_sample": 17,
+    "num_working_sample_iterations": 4,
+    "verify_accuracy_calls": {
+      "total": 9,
+      "input_tokens": 29476,
+      "output_tokens": 1361
+    },
+    "num_rules_written": 2,
+    "num_rules_rejected": 0,
+    "rules_final": [
+      "rule_phmsa_signature_compliance_fallback",
+      "rule_phmsa_signature_footer"
+    ],
+    "num_rules_final": 2,
+    "avg_cost_ratio_sample": 0.021424,
+    "match_rate_sample": 1.0,
+    "notes": "Footer rule captures standard signature blocks, including the proxy-signature phrase 'For Dustin Hubbard'; fallback is limited to five OCR-loss notices with answer-bearing compliance-order text."
+  },
+  "agent_log_path": "results/nopv/agentic_rule_full_data_gpt54_adaptive/all_docs/q12_who_signed_this_notice_on_behalf_of_phmsa_regional_director_.codex.jsonl",
+  "agent_last_message_path": "results/nopv/agentic_rule_full_data_gpt54_adaptive/all_docs/q12_who_signed_this_notice_on_behalf_of_phmsa_regional_director_.codex.last.txt",
+  "stderr": "2026-05-26T07:16:09.512794Z ERROR codex_models_manager::manager: failed to refresh available models: stream disconnected before completion: failed to decode models response: missing field `models` at line 3243 column 1; body: {\n  \"data\": [\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1772582400\n      },\n      \"id\": \"dall-e-3-3.0\",\n      \"created_at\": 1691712000,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1737936000\n      },\n      \"id\": \"dall-e-2-2.0\",\n      \"created_at\": 1713139200,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": true,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"fine_tune\": 1718323200,\n        \"inference\": 1718323200\n      },\n      \"id\": \"code-cushman-001\",\n      \"created_at\": 1642809600,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": false,\n        \"completion\": true,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"fine_tune\": 1720137600,\n        \"inference\": 1720137600\n      },\n      \"id\": \"code-cushman-fine-tune-002\",\n      \"created_at\": 1677456000,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"generally-available\",\n      \"deprecation\": {\n        \"inference\": 1797292800\n      },\n      \"id\": \"whisper-001\",\n      \"created_at\": 1694649600,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1746057600\n      },\n      \"id\": \"gpt-4-0125-Preview\",\n      \"created_at\": 1706140800,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1746057600\n      },\n      \"id\": \"gpt-4-1106-Preview\",\n      \"created_at\": 1700006400,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycl",
+  "codex_thread_id": "019e6324-14ab-7231-9cbd-f3ea6488caa2",
+  "codex_event_count": 196,
+  "codex_error_message": null
+}

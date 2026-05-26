@@ -1,0 +1,418 @@
+{
+  "verify_accuracy_calls": [
+    {
+      "doc_names": [
+        "20250723_state_of_washington_v._trump",
+        "20250801_american_federation_of_government_employees_afl-cio_v._trump",
+        "20250815_gibson_v._cendyn_group_llc",
+        "20250825_united_states_v._sylvia_olivas",
+        "20250903_confederated_tribes_of_the_colville_reservation_v._teck_cominco_metals_ltd",
+        "20250910_united_states_v._keast",
+        "20250930_uc_encarnacion_v._bondi",
+        "20251028_united_states_v._1106775_in_us_currency",
+        "20251120_rosa_a._camacho_v._nmi_settlement_fund",
+        "20251222_ruiz_v._bondi",
+        "20260106_nevada_resort_association-international_alliance_of_theatrical_stage",
+        "20260130_fiedler_v._united_states",
+        "20260227_l.b._v._san_diego_unified_school_district",
+        "20260317_adventist_health_system_of_west_v._abbvie_inc."
+      ],
+      "rule_names": [
+        "rule_majority_author_header",
+        "rule_majority_author_signature"
+      ],
+      "n": 14,
+      "n_correct": 13,
+      "accuracy": 0.928571,
+      "avg_cost_ratio": 0.003992,
+      "qa_input_tokens": 1893,
+      "qa_output_tokens": 92,
+      "judge_input_tokens": 1883,
+      "judge_output_tokens": 85,
+      "input_tokens_total": 3776,
+      "output_tokens_total": 177,
+      "latency_seconds": 10.845,
+      "results": [
+        {
+          "doc_name": "20250723_state_of_washington_v._trump",
+          "answer": "Judge Gould",
+          "correct": true,
+          "retrieved_token_count": 12,
+          "cost_ratio": 0.000431,
+          "rules_applied": [
+            "rule_majority_author_header",
+            "rule_majority_author_signature"
+          ]
+        },
+        {
+          "doc_name": "20250801_american_federation_of_government_employees_afl-cio_v._trump",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 4,
+          "cost_ratio": 0.00072,
+          "rules_applied": [
+            "rule_majority_author_header",
+            "rule_majority_author_signature"
+          ]
+        },
+        {
+          "doc_name": "20250815_gibson_v._cendyn_group_llc",
+          "answer": "Judge Bea",
+          "correct": true,
+          "retrieved_token_count": 12,
+          "cost_ratio": 0.00102,
+          "rules_applied": [
+            "rule_majority_author_header",
+            "rule_majority_author_signature"
+          ]
+        },
+        {
+          "doc_name": "20250825_united_states_v._sylvia_olivas",
+          "answer": "Judge R. Nelson",
+          "correct": true,
+          "retrieved_token_count": 17,
+          "cost_ratio": 0.002107,
+          "rules_applied": [
+            "rule_majority_author_header",
+            "rule_majority_author_signature"
+          ]
+        },
+        {
+          "doc_name": "20250903_confederated_tribes_of_the_colville_reservation_v._teck_cominco_metals_ltd",
+          "answer": "Judge Gould",
+          "correct": true,
+          "retrieved_token_count": 12,
+          "cost_ratio": 0.001538,
+          "rules_applied": [
+            "rule_majority_author_header",
+            "rule_majority_author_signature"
+          ]
+        },
+        {
+          "doc_name": "20250910_united_states_v._keast",
+          "answer": "Judge Sung",
+          "correct": true,
+          "retrieved_token_count": 12,
+          "cost_ratio": 0.001205,
+          "rules_applied": [
+            "rule_majority_author_header",
+            "rule_majority_author_signature"
+          ]
+        },
+        {
+          "doc_name": "20250930_uc_encarnacion_v._bondi",
+          "answer": "Judge Hamilton",
+          "correct": true,
+          "retrieved_token_count": 13,
+          "cost_ratio": 0.000616,
+          "rules_applied": [
+            "rule_majority_author_header",
+            "rule_majority_author_signature"
+          ]
+        },
+        {
+          "doc_name": "20251028_united_states_v._1106775_in_us_currency",
+          "answer": "MURGUIA",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.038462,
+          "rules_applied": [
+            "rule_majority_author_signature"
+          ]
+        },
+        {
+          "doc_name": "20251120_rosa_a._camacho_v._nmi_settlement_fund",
+          "answer": "Judge Graber",
+          "correct": true,
+          "retrieved_token_count": 14,
+          "cost_ratio": 0.002626,
+          "rules_applied": [
+            "rule_majority_author_header",
+            "rule_majority_author_signature"
+          ]
+        },
+        {
+          "doc_name": "20251222_ruiz_v._bondi",
+          "answer": "Judge Nguyen",
+          "correct": true,
+          "retrieved_token_count": 13,
+          "cost_ratio": 0.00099,
+          "rules_applied": [
+            "rule_majority_author_header",
+            "rule_majority_author_signature"
+          ]
+        },
+        {
+          "doc_name": "20260106_nevada_resort_association-international_alliance_of_theatrical_stage",
+          "answer": "Judge Desai",
+          "correct": true,
+          "retrieved_token_count": 14,
+          "cost_ratio": 0.002405,
+          "rules_applied": [
+            "rule_majority_author_header",
+            "rule_majority_author_signature"
+          ]
+        },
+        {
+          "doc_name": "20260130_fiedler_v._united_states",
+          "answer": "Judge Owens",
+          "correct": true,
+          "retrieved_token_count": 12,
+          "cost_ratio": 0.000701,
+          "rules_applied": [
+            "rule_majority_author_header",
+            "rule_majority_author_signature"
+          ]
+        },
+        {
+          "doc_name": "20260227_l.b._v._san_diego_unified_school_district",
+          "answer": "Judge Wardlaw",
+          "correct": true,
+          "retrieved_token_count": 14,
+          "cost_ratio": 0.001351,
+          "rules_applied": [
+            "rule_majority_author_header",
+            "rule_majority_author_signature"
+          ]
+        },
+        {
+          "doc_name": "20260317_adventist_health_system_of_west_v._abbvie_inc.",
+          "answer": "Judge Desai",
+          "correct": true,
+          "retrieved_token_count": 14,
+          "cost_ratio": 0.001711,
+          "rules_applied": [
+            "rule_majority_author_header",
+            "rule_majority_author_signature"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T06:24:32.619165+00:00"
+    },
+    {
+      "doc_names": [
+        "20250723_state_of_washington_v._trump",
+        "20250801_american_federation_of_government_employees_afl-cio_v._trump",
+        "20250815_gibson_v._cendyn_group_llc",
+        "20250825_united_states_v._sylvia_olivas",
+        "20250903_confederated_tribes_of_the_colville_reservation_v._teck_cominco_metals_ltd",
+        "20250910_united_states_v._keast",
+        "20250912_in_re_svenhards_swedish_bakery_v._bakery_and_confectionery_union_and",
+        "20250930_uc_encarnacion_v._bondi",
+        "20251020_state_of_oregon_v._trump",
+        "20251028_united_states_v._1106775_in_us_currency",
+        "20251104_valame_v._trump",
+        "20251120_rosa_a._camacho_v._nmi_settlement_fund",
+        "20251222_ruiz_v._bondi",
+        "20260106_nevada_resort_association-international_alliance_of_theatrical_stage",
+        "20260130_fiedler_v._united_states",
+        "20260227_l.b._v._san_diego_unified_school_district",
+        "20260317_adventist_health_system_of_west_v._abbvie_inc."
+      ],
+      "rule_names": [
+        "rule_majority_author_header",
+        "rule_majority_author_signature"
+      ],
+      "n": 17,
+      "n_correct": 17,
+      "accuracy": 1.0,
+      "avg_cost_ratio": 0.004409,
+      "qa_input_tokens": 2314,
+      "qa_output_tokens": 116,
+      "judge_input_tokens": 2294,
+      "judge_output_tokens": 102,
+      "input_tokens_total": 4608,
+      "output_tokens_total": 218,
+      "latency_seconds": 13.296,
+      "results": [
+        {
+          "doc_name": "20250723_state_of_washington_v._trump",
+          "answer": "Judge Gould",
+          "correct": true,
+          "retrieved_token_count": 12,
+          "cost_ratio": 0.000431,
+          "rules_applied": [
+            "rule_majority_author_header",
+            "rule_majority_author_signature"
+          ]
+        },
+        {
+          "doc_name": "20250801_american_federation_of_government_employees_afl-cio_v._trump",
+          "answer": "PER CURIAM",
+          "correct": true,
+          "retrieved_token_count": 9,
+          "cost_ratio": 0.00162,
+          "rules_applied": [
+            "rule_majority_author_header",
+            "rule_majority_author_signature"
+          ]
+        },
+        {
+          "doc_name": "20250815_gibson_v._cendyn_group_llc",
+          "answer": "Judge Bea",
+          "correct": true,
+          "retrieved_token_count": 12,
+          "cost_ratio": 0.00102,
+          "rules_applied": [
+            "rule_majority_author_header",
+            "rule_majority_author_signature"
+          ]
+        },
+        {
+          "doc_name": "20250825_united_states_v._sylvia_olivas",
+          "answer": "R. Nelson",
+          "correct": true,
+          "retrieved_token_count": 17,
+          "cost_ratio": 0.002107,
+          "rules_applied": [
+            "rule_majority_author_header",
+            "rule_majority_author_signature"
+          ]
+        },
+        {
+          "doc_name": "20250903_confederated_tribes_of_the_colville_reservation_v._teck_cominco_metals_ltd",
+          "answer": "Judge Gould",
+          "correct": true,
+          "retrieved_token_count": 12,
+          "cost_ratio": 0.001538,
+          "rules_applied": [
+            "rule_majority_author_header",
+            "rule_majority_author_signature"
+          ]
+        },
+        {
+          "doc_name": "20250910_united_states_v._keast",
+          "answer": "Judge Sung",
+          "correct": true,
+          "retrieved_token_count": 12,
+          "cost_ratio": 0.001205,
+          "rules_applied": [
+            "rule_majority_author_header",
+            "rule_majority_author_signature"
+          ]
+        },
+        {
+          "doc_name": "20250912_in_re_svenhards_swedish_bakery_v._bakery_and_confectionery_union_and",
+          "answer": "PER CURIAM",
+          "correct": true,
+          "retrieved_token_count": 18,
+          "cost_ratio": 0.00338,
+          "rules_applied": [
+            "rule_majority_author_header",
+            "rule_majority_author_signature"
+          ]
+        },
+        {
+          "doc_name": "20250930_uc_encarnacion_v._bondi",
+          "answer": "Hamilton",
+          "correct": true,
+          "retrieved_token_count": 13,
+          "cost_ratio": 0.000616,
+          "rules_applied": [
+            "rule_majority_author_header",
+            "rule_majority_author_signature"
+          ]
+        },
+        {
+          "doc_name": "20251020_state_of_oregon_v._trump",
+          "answer": "PER CURIAM",
+          "correct": true,
+          "retrieved_token_count": 9,
+          "cost_ratio": 0.000258,
+          "rules_applied": [
+            "rule_majority_author_header",
+            "rule_majority_author_signature"
+          ]
+        },
+        {
+          "doc_name": "20251028_united_states_v._1106775_in_us_currency",
+          "answer": "MURGUIA",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.038462,
+          "rules_applied": [
+            "rule_majority_author_signature"
+          ]
+        },
+        {
+          "doc_name": "20251104_valame_v._trump",
+          "answer": "PER CURIAM",
+          "correct": true,
+          "retrieved_token_count": 18,
+          "cost_ratio": 0.01454,
+          "rules_applied": [
+            "rule_majority_author_header",
+            "rule_majority_author_signature"
+          ]
+        },
+        {
+          "doc_name": "20251120_rosa_a._camacho_v._nmi_settlement_fund",
+          "answer": "Judge Graber",
+          "correct": true,
+          "retrieved_token_count": 14,
+          "cost_ratio": 0.002626,
+          "rules_applied": [
+            "rule_majority_author_header",
+            "rule_majority_author_signature"
+          ]
+        },
+        {
+          "doc_name": "20251222_ruiz_v._bondi",
+          "answer": "Judge Nguyen",
+          "correct": true,
+          "retrieved_token_count": 13,
+          "cost_ratio": 0.00099,
+          "rules_applied": [
+            "rule_majority_author_header",
+            "rule_majority_author_signature"
+          ]
+        },
+        {
+          "doc_name": "20260106_nevada_resort_association-international_alliance_of_theatrical_stage",
+          "answer": "Judge Desai",
+          "correct": true,
+          "retrieved_token_count": 14,
+          "cost_ratio": 0.002405,
+          "rules_applied": [
+            "rule_majority_author_header",
+            "rule_majority_author_signature"
+          ]
+        },
+        {
+          "doc_name": "20260130_fiedler_v._united_states",
+          "answer": "Judge Owens",
+          "correct": true,
+          "retrieved_token_count": 12,
+          "cost_ratio": 0.000701,
+          "rules_applied": [
+            "rule_majority_author_header",
+            "rule_majority_author_signature"
+          ]
+        },
+        {
+          "doc_name": "20260227_l.b._v._san_diego_unified_school_district",
+          "answer": "Judge Wardlaw",
+          "correct": true,
+          "retrieved_token_count": 14,
+          "cost_ratio": 0.001351,
+          "rules_applied": [
+            "rule_majority_author_header",
+            "rule_majority_author_signature"
+          ]
+        },
+        {
+          "doc_name": "20260317_adventist_health_system_of_west_v._abbvie_inc.",
+          "answer": "Judge Desai",
+          "correct": true,
+          "retrieved_token_count": 14,
+          "cost_ratio": 0.001711,
+          "rules_applied": [
+            "rule_majority_author_header",
+            "rule_majority_author_signature"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T06:25:31.725548+00:00"
+    }
+  ]
+}

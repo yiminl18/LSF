@@ -1,0 +1,999 @@
+{
+  "verify_accuracy_calls": [
+    {
+      "doc_names": [
+        "20250723_state_of_washington_v._trump",
+        "20250801_king_v._navy_federal_credit_union",
+        "20250815_in_re_subpoena_internet_subscribers_of_cox_communications_llc_and_coxcom",
+        "20250827_ambrosetti_v._oregon_catholic_press",
+        "20250904_garcia_v._county_of_alameda",
+        "20250912_pacito_v._trump",
+        "20251003_caldrone_v._circle_k_stores_inc.",
+        "20251030_doe_v._deutsche_lufthansa_aktiengesellschaft",
+        "20251120_rosa_a._camacho_v._nmi_settlement_fund",
+        "20251222_united_states_v._holmes",
+        "20260105_walker_specialty_constr._inc._v._bd._of_tr._of_the_constr._indus._and",
+        "20260130_kalbers_v._volkswagen_ag",
+        "20260227_l.b._v._san_diego_unified_school_district",
+        "20260317_adventist_health_system_of_west_v._abbvie_inc."
+      ],
+      "rule_names": [
+        "rule_panel_disposition_conclusion",
+        "rule_panel_disposition_terminal_line"
+      ],
+      "n": 14,
+      "n_correct": 13,
+      "accuracy": 0.928571,
+      "avg_cost_ratio": 0.003485,
+      "qa_input_tokens": 2193,
+      "qa_output_tokens": 170,
+      "judge_input_tokens": 2090,
+      "judge_output_tokens": 85,
+      "input_tokens_total": 4283,
+      "output_tokens_total": 255,
+      "latency_seconds": 11.572,
+      "results": [
+        {
+          "doc_name": "20250723_state_of_washington_v._trump",
+          "answer": "we affirm the injunction’s scope",
+          "correct": true,
+          "retrieved_token_count": 30,
+          "cost_ratio": 0.001078,
+          "rules_applied": [
+            "rule_panel_disposition_conclusion"
+          ]
+        },
+        {
+          "doc_name": "20250801_king_v._navy_federal_credit_union",
+          "answer": "we affirm",
+          "correct": true,
+          "retrieved_token_count": 9,
+          "cost_ratio": 0.001637,
+          "rules_applied": [
+            "rule_panel_disposition_conclusion"
+          ]
+        },
+        {
+          "doc_name": "20250815_in_re_subpoena_internet_subscribers_of_cox_communications_llc_and_coxcom",
+          "answer": "AFFIRMED",
+          "correct": true,
+          "retrieved_token_count": 25,
+          "cost_ratio": 0.002168,
+          "rules_applied": [
+            "rule_panel_disposition_conclusion"
+          ]
+        },
+        {
+          "doc_name": "20250827_ambrosetti_v._oregon_catholic_press",
+          "answer": "affirmed in part, reversed in part, and remanded",
+          "correct": true,
+          "retrieved_token_count": 37,
+          "cost_ratio": 0.002971,
+          "rules_applied": [
+            "rule_panel_disposition_conclusion"
+          ]
+        },
+        {
+          "doc_name": "20250904_garcia_v._county_of_alameda",
+          "answer": "REVERSE the district court’s denial of a preliminary injunction and REMAND with instructions to enter a preliminary injunction in favor of Garcia on his as-applied challenge.",
+          "correct": true,
+          "retrieved_token_count": 34,
+          "cost_ratio": 0.004105,
+          "rules_applied": [
+            "rule_panel_disposition_conclusion"
+          ]
+        },
+        {
+          "doc_name": "20250912_pacito_v._trump",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 65,
+          "cost_ratio": 0.016209,
+          "rules_applied": [
+            "rule_panel_disposition_terminal_line"
+          ]
+        },
+        {
+          "doc_name": "20251003_caldrone_v._circle_k_stores_inc.",
+          "answer": "We reverse and remand.",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 0.000969,
+          "rules_applied": [
+            "rule_panel_disposition_conclusion"
+          ]
+        },
+        {
+          "doc_name": "20251030_doe_v._deutsche_lufthansa_aktiengesellschaft",
+          "answer": "REVERSED AND REMANDED.",
+          "correct": true,
+          "retrieved_token_count": 24,
+          "cost_ratio": 0.002024,
+          "rules_applied": [
+            "rule_panel_disposition_conclusion"
+          ]
+        },
+        {
+          "doc_name": "20251120_rosa_a._camacho_v._nmi_settlement_fund",
+          "answer": "AFFIRMED.",
+          "correct": true,
+          "retrieved_token_count": 4,
+          "cost_ratio": 0.00075,
+          "rules_applied": [
+            "rule_panel_disposition_terminal_line"
+          ]
+        },
+        {
+          "doc_name": "20251222_united_states_v._holmes",
+          "answer": "AFFIRMED",
+          "correct": true,
+          "retrieved_token_count": 17,
+          "cost_ratio": 0.000765,
+          "rules_applied": [
+            "rule_panel_disposition_conclusion"
+          ]
+        },
+        {
+          "doc_name": "20260105_walker_specialty_constr._inc._v._bd._of_tr._of_the_constr._indus._and",
+          "answer": "affirm",
+          "correct": true,
+          "retrieved_token_count": 30,
+          "cost_ratio": 0.004495,
+          "rules_applied": [
+            "rule_panel_disposition_conclusion"
+          ]
+        },
+        {
+          "doc_name": "20260130_kalbers_v._volkswagen_ag",
+          "answer": "REVERSED IN PART, and VACATED AND REMANDED IN PART.",
+          "correct": true,
+          "retrieved_token_count": 59,
+          "cost_ratio": 0.005242,
+          "rules_applied": [
+            "rule_panel_disposition_conclusion"
+          ]
+        },
+        {
+          "doc_name": "20260227_l.b._v._san_diego_unified_school_district",
+          "answer": "we reverse the decision of the district court and remand",
+          "correct": true,
+          "retrieved_token_count": 37,
+          "cost_ratio": 0.00357,
+          "rules_applied": [
+            "rule_panel_disposition_conclusion"
+          ]
+        },
+        {
+          "doc_name": "20260317_adventist_health_system_of_west_v._abbvie_inc.",
+          "answer": "REVERSED AND REMANDED.",
+          "correct": true,
+          "retrieved_token_count": 23,
+          "cost_ratio": 0.002812,
+          "rules_applied": [
+            "rule_panel_disposition_conclusion"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T07:20:07.373914+00:00"
+    },
+    {
+      "doc_names": [
+        "20250723_state_of_washington_v._trump",
+        "20250729_cedar_park_assembly_of_god_of_kirkland_washington_v._patty_kuderer",
+        "20250801_king_v._navy_federal_credit_union",
+        "20250815_in_re_subpoena_internet_subscribers_of_cox_communications_llc_and_coxcom",
+        "20250827_ambrosetti_v._oregon_catholic_press",
+        "20250904_garcia_v._county_of_alameda",
+        "20250911_united_states_v._holcomb",
+        "20250912_pacito_v._trump",
+        "20251003_caldrone_v._circle_k_stores_inc.",
+        "20251030_doe_v._deutsche_lufthansa_aktiengesellschaft",
+        "20251120_rosa_a._camacho_v._nmi_settlement_fund",
+        "20251222_united_states_v._holmes",
+        "20260105_walker_specialty_constr._inc._v._bd._of_tr._of_the_constr._indus._and",
+        "20260130_kalbers_v._volkswagen_ag",
+        "20260227_l.b._v._san_diego_unified_school_district",
+        "20260317_adventist_health_system_of_west_v._abbvie_inc."
+      ],
+      "rule_names": [
+        "rule_panel_disposition_conclusion",
+        "rule_panel_disposition_terminal_line"
+      ],
+      "n": 16,
+      "n_correct": 14,
+      "accuracy": 0.875,
+      "avg_cost_ratio": 0.008801,
+      "qa_input_tokens": 2424,
+      "qa_output_tokens": 190,
+      "judge_input_tokens": 2398,
+      "judge_output_tokens": 98,
+      "input_tokens_total": 4822,
+      "output_tokens_total": 288,
+      "latency_seconds": 14.574,
+      "results": [
+        {
+          "doc_name": "20250723_state_of_washington_v._trump",
+          "answer": "we affirm the injunction’s scope.",
+          "correct": true,
+          "retrieved_token_count": 30,
+          "cost_ratio": 0.001078,
+          "rules_applied": [
+            "rule_panel_disposition_conclusion"
+          ]
+        },
+        {
+          "doc_name": "20250729_cedar_park_assembly_of_god_of_kirkland_washington_v._patty_kuderer",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 22,
+          "cost_ratio": 0.066667,
+          "rules_applied": [
+            "rule_panel_disposition_conclusion"
+          ]
+        },
+        {
+          "doc_name": "20250801_king_v._navy_federal_credit_union",
+          "answer": "we affirm",
+          "correct": true,
+          "retrieved_token_count": 9,
+          "cost_ratio": 0.001637,
+          "rules_applied": [
+            "rule_panel_disposition_conclusion"
+          ]
+        },
+        {
+          "doc_name": "20250815_in_re_subpoena_internet_subscribers_of_cox_communications_llc_and_coxcom",
+          "answer": "AFFIRMED",
+          "correct": true,
+          "retrieved_token_count": 25,
+          "cost_ratio": 0.002168,
+          "rules_applied": [
+            "rule_panel_disposition_conclusion"
+          ]
+        },
+        {
+          "doc_name": "20250827_ambrosetti_v._oregon_catholic_press",
+          "answer": "affirmed in part, reversed in part, and remanded",
+          "correct": true,
+          "retrieved_token_count": 37,
+          "cost_ratio": 0.002971,
+          "rules_applied": [
+            "rule_panel_disposition_conclusion"
+          ]
+        },
+        {
+          "doc_name": "20250904_garcia_v._county_of_alameda",
+          "answer": "REVERSE the district court’s denial of a preliminary injunction and REMAND with instructions to enter a preliminary injunction in favor of Garcia on his as-applied challenge.",
+          "correct": true,
+          "retrieved_token_count": 34,
+          "cost_ratio": 0.004105,
+          "rules_applied": [
+            "rule_panel_disposition_conclusion"
+          ]
+        },
+        {
+          "doc_name": "20250911_united_states_v._holcomb",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 11,
+          "cost_ratio": 0.039568,
+          "rules_applied": [
+            "rule_panel_disposition_conclusion"
+          ]
+        },
+        {
+          "doc_name": "20250912_pacito_v._trump",
+          "answer": "An opinion will issue in due course.",
+          "correct": true,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.001995,
+          "rules_applied": [
+            "rule_panel_disposition_conclusion"
+          ]
+        },
+        {
+          "doc_name": "20251003_caldrone_v._circle_k_stores_inc.",
+          "answer": "We reverse and remand.",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 0.000969,
+          "rules_applied": [
+            "rule_panel_disposition_conclusion"
+          ]
+        },
+        {
+          "doc_name": "20251030_doe_v._deutsche_lufthansa_aktiengesellschaft",
+          "answer": "REVERSED AND REMANDED.",
+          "correct": true,
+          "retrieved_token_count": 24,
+          "cost_ratio": 0.002024,
+          "rules_applied": [
+            "rule_panel_disposition_conclusion"
+          ]
+        },
+        {
+          "doc_name": "20251120_rosa_a._camacho_v._nmi_settlement_fund",
+          "answer": "AFFIRMED.",
+          "correct": true,
+          "retrieved_token_count": 4,
+          "cost_ratio": 0.00075,
+          "rules_applied": [
+            "rule_panel_disposition_terminal_line"
+          ]
+        },
+        {
+          "doc_name": "20251222_united_states_v._holmes",
+          "answer": "AFFIRMED.",
+          "correct": true,
+          "retrieved_token_count": 17,
+          "cost_ratio": 0.000765,
+          "rules_applied": [
+            "rule_panel_disposition_conclusion"
+          ]
+        },
+        {
+          "doc_name": "20260105_walker_specialty_constr._inc._v._bd._of_tr._of_the_constr._indus._and",
+          "answer": "affirm",
+          "correct": true,
+          "retrieved_token_count": 30,
+          "cost_ratio": 0.004495,
+          "rules_applied": [
+            "rule_panel_disposition_conclusion"
+          ]
+        },
+        {
+          "doc_name": "20260130_kalbers_v._volkswagen_ag",
+          "answer": "REVERSED IN PART, and VACATED AND REMANDED IN PART.",
+          "correct": true,
+          "retrieved_token_count": 59,
+          "cost_ratio": 0.005242,
+          "rules_applied": [
+            "rule_panel_disposition_conclusion"
+          ]
+        },
+        {
+          "doc_name": "20260227_l.b._v._san_diego_unified_school_district",
+          "answer": "we reverse the decision of the district court and remand",
+          "correct": true,
+          "retrieved_token_count": 37,
+          "cost_ratio": 0.00357,
+          "rules_applied": [
+            "rule_panel_disposition_conclusion"
+          ]
+        },
+        {
+          "doc_name": "20260317_adventist_health_system_of_west_v._abbvie_inc.",
+          "answer": "REVERSED AND REMANDED.",
+          "correct": true,
+          "retrieved_token_count": 23,
+          "cost_ratio": 0.002812,
+          "rules_applied": [
+            "rule_panel_disposition_conclusion"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T07:23:00.238386+00:00"
+    },
+    {
+      "doc_names": [
+        "20250723_state_of_washington_v._trump",
+        "20250729_cedar_park_assembly_of_god_of_kirkland_washington_v._patty_kuderer",
+        "20250801_king_v._navy_federal_credit_union",
+        "20250815_in_re_subpoena_internet_subscribers_of_cox_communications_llc_and_coxcom",
+        "20250827_ambrosetti_v._oregon_catholic_press",
+        "20250904_garcia_v._county_of_alameda",
+        "20250911_united_states_v._holcomb",
+        "20250912_pacito_v._trump",
+        "20251003_caldrone_v._circle_k_stores_inc.",
+        "20251030_doe_v._deutsche_lufthansa_aktiengesellschaft",
+        "20251120_rosa_a._camacho_v._nmi_settlement_fund",
+        "20251222_united_states_v._holmes",
+        "20260105_walker_specialty_constr._inc._v._bd._of_tr._of_the_constr._indus._and",
+        "20260130_kalbers_v._volkswagen_ag",
+        "20260227_l.b._v._san_diego_unified_school_district",
+        "20260317_adventist_health_system_of_west_v._abbvie_inc."
+      ],
+      "rule_names": [
+        "rule_panel_disposition_conclusion",
+        "rule_panel_disposition_terminal_line"
+      ],
+      "n": 16,
+      "n_correct": 13,
+      "accuracy": 0.8125,
+      "avg_cost_ratio": 0.031618,
+      "qa_input_tokens": 2534,
+      "qa_output_tokens": 180,
+      "judge_input_tokens": 2388,
+      "judge_output_tokens": 99,
+      "input_tokens_total": 4922,
+      "output_tokens_total": 279,
+      "latency_seconds": 14.637,
+      "results": [
+        {
+          "doc_name": "20250723_state_of_washington_v._trump",
+          "answer": "we affirm the injunction’s scope",
+          "correct": true,
+          "retrieved_token_count": 30,
+          "cost_ratio": 0.001078,
+          "rules_applied": [
+            "rule_panel_disposition_conclusion"
+          ]
+        },
+        {
+          "doc_name": "20250729_cedar_park_assembly_of_god_of_kirkland_washington_v._patty_kuderer",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 76,
+          "cost_ratio": 0.230303,
+          "rules_applied": [
+            "rule_panel_disposition_conclusion"
+          ]
+        },
+        {
+          "doc_name": "20250801_king_v._navy_federal_credit_union",
+          "answer": "we affirm",
+          "correct": true,
+          "retrieved_token_count": 9,
+          "cost_ratio": 0.001637,
+          "rules_applied": [
+            "rule_panel_disposition_conclusion"
+          ]
+        },
+        {
+          "doc_name": "20250815_in_re_subpoena_internet_subscribers_of_cox_communications_llc_and_coxcom",
+          "answer": "AFFIRMED",
+          "correct": true,
+          "retrieved_token_count": 25,
+          "cost_ratio": 0.002168,
+          "rules_applied": [
+            "rule_panel_disposition_conclusion"
+          ]
+        },
+        {
+          "doc_name": "20250827_ambrosetti_v._oregon_catholic_press",
+          "answer": "affirmed in part, reversed in part, and remanded",
+          "correct": true,
+          "retrieved_token_count": 37,
+          "cost_ratio": 0.002971,
+          "rules_applied": [
+            "rule_panel_disposition_conclusion"
+          ]
+        },
+        {
+          "doc_name": "20250904_garcia_v._county_of_alameda",
+          "answer": "REVERSE the district court’s denial of a preliminary injunction and REMAND with instructions to enter a preliminary injunction in favor of Garcia on his as-applied challenge.",
+          "correct": true,
+          "retrieved_token_count": 34,
+          "cost_ratio": 0.004105,
+          "rules_applied": [
+            "rule_panel_disposition_conclusion"
+          ]
+        },
+        {
+          "doc_name": "20250911_united_states_v._holcomb",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 67,
+          "cost_ratio": 0.241007,
+          "rules_applied": [
+            "rule_panel_disposition_conclusion"
+          ]
+        },
+        {
+          "doc_name": "20250912_pacito_v._trump",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 8,
+          "cost_ratio": 0.001995,
+          "rules_applied": [
+            "rule_panel_disposition_conclusion"
+          ]
+        },
+        {
+          "doc_name": "20251003_caldrone_v._circle_k_stores_inc.",
+          "answer": "We reverse and remand.",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 0.000969,
+          "rules_applied": [
+            "rule_panel_disposition_conclusion"
+          ]
+        },
+        {
+          "doc_name": "20251030_doe_v._deutsche_lufthansa_aktiengesellschaft",
+          "answer": "REVERSED AND REMANDED",
+          "correct": true,
+          "retrieved_token_count": 24,
+          "cost_ratio": 0.002024,
+          "rules_applied": [
+            "rule_panel_disposition_conclusion"
+          ]
+        },
+        {
+          "doc_name": "20251120_rosa_a._camacho_v._nmi_settlement_fund",
+          "answer": "AFFIRMED.",
+          "correct": true,
+          "retrieved_token_count": 4,
+          "cost_ratio": 0.00075,
+          "rules_applied": [
+            "rule_panel_disposition_terminal_line"
+          ]
+        },
+        {
+          "doc_name": "20251222_united_states_v._holmes",
+          "answer": "AFFIRMED",
+          "correct": true,
+          "retrieved_token_count": 17,
+          "cost_ratio": 0.000765,
+          "rules_applied": [
+            "rule_panel_disposition_conclusion"
+          ]
+        },
+        {
+          "doc_name": "20260105_walker_specialty_constr._inc._v._bd._of_tr._of_the_constr._indus._and",
+          "answer": "affirm",
+          "correct": true,
+          "retrieved_token_count": 30,
+          "cost_ratio": 0.004495,
+          "rules_applied": [
+            "rule_panel_disposition_conclusion"
+          ]
+        },
+        {
+          "doc_name": "20260130_kalbers_v._volkswagen_ag",
+          "answer": "REVERSED IN PART, and VACATED AND REMANDED IN PART.",
+          "correct": true,
+          "retrieved_token_count": 59,
+          "cost_ratio": 0.005242,
+          "rules_applied": [
+            "rule_panel_disposition_conclusion"
+          ]
+        },
+        {
+          "doc_name": "20260227_l.b._v._san_diego_unified_school_district",
+          "answer": "we reverse the decision of the district court and remand",
+          "correct": true,
+          "retrieved_token_count": 37,
+          "cost_ratio": 0.00357,
+          "rules_applied": [
+            "rule_panel_disposition_conclusion"
+          ]
+        },
+        {
+          "doc_name": "20260317_adventist_health_system_of_west_v._abbvie_inc.",
+          "answer": "REVERSED AND REMANDED",
+          "correct": true,
+          "retrieved_token_count": 23,
+          "cost_ratio": 0.002812,
+          "rules_applied": [
+            "rule_panel_disposition_conclusion"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T07:24:53.284364+00:00"
+    },
+    {
+      "doc_names": [
+        "20250729_cedar_park_assembly_of_god_of_kirkland_washington_v._patty_kuderer",
+        "20250911_united_states_v._holcomb",
+        "20250912_pacito_v._trump"
+      ],
+      "rule_names": [
+        "rule_panel_disposition_conclusion",
+        "rule_panel_disposition_due_course_order",
+        "rule_panel_disposition_terminal_line"
+      ],
+      "n": 3,
+      "n_correct": 1,
+      "accuracy": 0.333333,
+      "avg_cost_ratio": 0.037359,
+      "qa_input_tokens": 427,
+      "qa_output_tokens": 38,
+      "judge_input_tokens": 461,
+      "judge_output_tokens": 20,
+      "input_tokens_total": 888,
+      "output_tokens_total": 58,
+      "latency_seconds": 3.625,
+      "results": [
+        {
+          "doc_name": "20250729_cedar_park_assembly_of_god_of_kirkland_washington_v._patty_kuderer",
+          "answer": "Oral argument will be scheduled by separate order, and the court will file a new opinion in due course.",
+          "correct": true,
+          "retrieved_token_count": 22,
+          "cost_ratio": 0.066667,
+          "rules_applied": [
+            "rule_panel_disposition_due_course_order"
+          ]
+        },
+        {
+          "doc_name": "20250911_united_states_v._holcomb",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 12,
+          "cost_ratio": 0.043165,
+          "rules_applied": [
+            "rule_panel_disposition_due_course_order"
+          ]
+        },
+        {
+          "doc_name": "20250912_pacito_v._trump",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 9,
+          "cost_ratio": 0.002244,
+          "rules_applied": [
+            "rule_panel_disposition_due_course_order"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T07:26:06.059316+00:00"
+    },
+    {
+      "doc_names": [
+        "20250729_cedar_park_assembly_of_god_of_kirkland_washington_v._patty_kuderer",
+        "20250911_united_states_v._holcomb",
+        "20250912_pacito_v._trump"
+      ],
+      "rule_names": [
+        "rule_panel_disposition_conclusion",
+        "rule_panel_disposition_due_course_order",
+        "rule_panel_disposition_terminal_line"
+      ],
+      "n": 3,
+      "n_correct": 0,
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.079789,
+      "qa_input_tokens": 480,
+      "qa_output_tokens": 18,
+      "judge_input_tokens": 442,
+      "judge_output_tokens": 21,
+      "input_tokens_total": 922,
+      "output_tokens_total": 39,
+      "latency_seconds": 2.874,
+      "results": [
+        {
+          "doc_name": "20250729_cedar_park_assembly_of_god_of_kirkland_washington_v._patty_kuderer",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 22,
+          "cost_ratio": 0.066667,
+          "rules_applied": [
+            "rule_panel_disposition_due_course_order"
+          ]
+        },
+        {
+          "doc_name": "20250911_united_states_v._holcomb",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 46,
+          "cost_ratio": 0.165468,
+          "rules_applied": [
+            "rule_panel_disposition_due_course_order"
+          ]
+        },
+        {
+          "doc_name": "20250912_pacito_v._trump",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 29,
+          "cost_ratio": 0.007232,
+          "rules_applied": [
+            "rule_panel_disposition_due_course_order"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T07:27:21.737132+00:00"
+    },
+    {
+      "doc_names": [
+        "20250729_cedar_park_assembly_of_god_of_kirkland_washington_v._patty_kuderer",
+        "20250911_united_states_v._holcomb",
+        "20250912_pacito_v._trump"
+      ],
+      "rule_names": [
+        "rule_panel_disposition_conclusion",
+        "rule_panel_disposition_due_course_order",
+        "rule_panel_disposition_terminal_line"
+      ],
+      "n": 3,
+      "n_correct": 2,
+      "accuracy": 0.666667,
+      "avg_cost_ratio": 0.085655,
+      "qa_input_tokens": 488,
+      "qa_output_tokens": 97,
+      "judge_input_tokens": 520,
+      "judge_output_tokens": 19,
+      "input_tokens_total": 1008,
+      "output_tokens_total": 116,
+      "latency_seconds": 4.163,
+      "results": [
+        {
+          "doc_name": "20250729_cedar_park_assembly_of_god_of_kirkland_washington_v._patty_kuderer",
+          "answer": "Oral argument will be scheduled by separate order, and the court will file a new opinion in due course.",
+          "correct": true,
+          "retrieved_token_count": 24,
+          "cost_ratio": 0.072727,
+          "rules_applied": [
+            "rule_panel_disposition_due_course_order"
+          ]
+        },
+        {
+          "doc_name": "20250911_united_states_v._holcomb",
+          "answer": "The Opinion filed March 27, 2025, and appearing at 132 F.4th 1118 (9th Cir. 2025), is withdrawn.",
+          "correct": false,
+          "retrieved_token_count": 49,
+          "cost_ratio": 0.176259,
+          "rules_applied": [
+            "rule_panel_disposition_due_course_order"
+          ]
+        },
+        {
+          "doc_name": "20250912_pacito_v._trump",
+          "answer": "We heard oral argument in this case on an expedited basis on September 3, 2025. An opinion will issue in due course.",
+          "correct": true,
+          "retrieved_token_count": 32,
+          "cost_ratio": 0.00798,
+          "rules_applied": [
+            "rule_panel_disposition_due_course_order"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T07:27:52.087221+00:00"
+    },
+    {
+      "doc_names": [
+        "20250729_cedar_park_assembly_of_god_of_kirkland_washington_v._patty_kuderer",
+        "20250911_united_states_v._holcomb",
+        "20250912_pacito_v._trump"
+      ],
+      "rule_names": [
+        "rule_panel_disposition_conclusion",
+        "rule_panel_disposition_due_course_order",
+        "rule_panel_disposition_terminal_line"
+      ],
+      "n": 3,
+      "n_correct": 3,
+      "accuracy": 1.0,
+      "avg_cost_ratio": 0.043689,
+      "qa_input_tokens": 453,
+      "qa_output_tokens": 73,
+      "judge_input_tokens": 496,
+      "judge_output_tokens": 18,
+      "input_tokens_total": 949,
+      "output_tokens_total": 91,
+      "latency_seconds": 3.154,
+      "results": [
+        {
+          "doc_name": "20250729_cedar_park_assembly_of_god_of_kirkland_washington_v._patty_kuderer",
+          "answer": "Oral argument will be scheduled by separate order, and the court will file a new opinion in due course.",
+          "correct": true,
+          "retrieved_token_count": 24,
+          "cost_ratio": 0.072727,
+          "rules_applied": [
+            "rule_panel_disposition_due_course_order"
+          ]
+        },
+        {
+          "doc_name": "20250911_united_states_v._holcomb",
+          "answer": "The court will file a new opinion in due course.",
+          "correct": true,
+          "retrieved_token_count": 14,
+          "cost_ratio": 0.05036,
+          "rules_applied": [
+            "rule_panel_disposition_due_course_order"
+          ]
+        },
+        {
+          "doc_name": "20250912_pacito_v._trump",
+          "answer": "We heard oral argument in this case on an expedited basis on September 3, 2025. An opinion will issue in due course.",
+          "correct": true,
+          "retrieved_token_count": 32,
+          "cost_ratio": 0.00798,
+          "rules_applied": [
+            "rule_panel_disposition_due_course_order"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T07:28:24.906976+00:00"
+    },
+    {
+      "doc_names": [
+        "20250723_state_of_washington_v._trump",
+        "20250729_cedar_park_assembly_of_god_of_kirkland_washington_v._patty_kuderer",
+        "20250801_king_v._navy_federal_credit_union",
+        "20250815_in_re_subpoena_internet_subscribers_of_cox_communications_llc_and_coxcom",
+        "20250827_ambrosetti_v._oregon_catholic_press",
+        "20250904_garcia_v._county_of_alameda",
+        "20250911_united_states_v._holcomb",
+        "20250912_pacito_v._trump",
+        "20251003_caldrone_v._circle_k_stores_inc.",
+        "20251030_doe_v._deutsche_lufthansa_aktiengesellschaft",
+        "20251120_rosa_a._camacho_v._nmi_settlement_fund",
+        "20251222_united_states_v._holmes",
+        "20260105_walker_specialty_constr._inc._v._bd._of_tr._of_the_constr._indus._and",
+        "20260130_kalbers_v._volkswagen_ag",
+        "20260227_l.b._v._san_diego_unified_school_district",
+        "20260317_adventist_health_system_of_west_v._abbvie_inc."
+      ],
+      "rule_names": [
+        "rule_panel_disposition_conclusion",
+        "rule_panel_disposition_due_course_order",
+        "rule_panel_disposition_terminal_line"
+      ],
+      "n": 16,
+      "n_correct": 16,
+      "accuracy": 1.0,
+      "avg_cost_ratio": 0.010228,
+      "qa_input_tokens": 2452,
+      "qa_output_tokens": 231,
+      "judge_input_tokens": 2438,
+      "judge_output_tokens": 96,
+      "input_tokens_total": 4890,
+      "output_tokens_total": 327,
+      "latency_seconds": 13.774,
+      "results": [
+        {
+          "doc_name": "20250723_state_of_washington_v._trump",
+          "answer": "we affirm the injunction’s scope.",
+          "correct": true,
+          "retrieved_token_count": 30,
+          "cost_ratio": 0.001078,
+          "rules_applied": [
+            "rule_panel_disposition_conclusion"
+          ]
+        },
+        {
+          "doc_name": "20250729_cedar_park_assembly_of_god_of_kirkland_washington_v._patty_kuderer",
+          "answer": "Oral argument will be scheduled by separate order, and the court will file a new opinion in due course.",
+          "correct": true,
+          "retrieved_token_count": 24,
+          "cost_ratio": 0.072727,
+          "rules_applied": [
+            "rule_panel_disposition_due_course_order"
+          ]
+        },
+        {
+          "doc_name": "20250801_king_v._navy_federal_credit_union",
+          "answer": "we affirm",
+          "correct": true,
+          "retrieved_token_count": 9,
+          "cost_ratio": 0.001637,
+          "rules_applied": [
+            "rule_panel_disposition_conclusion"
+          ]
+        },
+        {
+          "doc_name": "20250815_in_re_subpoena_internet_subscribers_of_cox_communications_llc_and_coxcom",
+          "answer": "AFFIRMED",
+          "correct": true,
+          "retrieved_token_count": 25,
+          "cost_ratio": 0.002168,
+          "rules_applied": [
+            "rule_panel_disposition_conclusion"
+          ]
+        },
+        {
+          "doc_name": "20250827_ambrosetti_v._oregon_catholic_press",
+          "answer": "affirmed in part, reversed in part, and remanded",
+          "correct": true,
+          "retrieved_token_count": 37,
+          "cost_ratio": 0.002971,
+          "rules_applied": [
+            "rule_panel_disposition_conclusion"
+          ]
+        },
+        {
+          "doc_name": "20250904_garcia_v._county_of_alameda",
+          "answer": "REVERSE the district court’s denial of a preliminary injunction and REMAND with instructions to enter a preliminary injunction in favor of Garcia on his as-applied challenge.",
+          "correct": true,
+          "retrieved_token_count": 34,
+          "cost_ratio": 0.004105,
+          "rules_applied": [
+            "rule_panel_disposition_conclusion"
+          ]
+        },
+        {
+          "doc_name": "20250911_united_states_v._holcomb",
+          "answer": "The court will file a new opinion in due course.",
+          "correct": true,
+          "retrieved_token_count": 14,
+          "cost_ratio": 0.05036,
+          "rules_applied": [
+            "rule_panel_disposition_due_course_order"
+          ]
+        },
+        {
+          "doc_name": "20250912_pacito_v._trump",
+          "answer": "We heard oral argument in this case on an expedited basis on September 3, 2025. An opinion will issue in due course.",
+          "correct": true,
+          "retrieved_token_count": 32,
+          "cost_ratio": 0.00798,
+          "rules_applied": [
+            "rule_panel_disposition_due_course_order"
+          ]
+        },
+        {
+          "doc_name": "20251003_caldrone_v._circle_k_stores_inc.",
+          "answer": "We reverse and remand.",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 0.000969,
+          "rules_applied": [
+            "rule_panel_disposition_conclusion"
+          ]
+        },
+        {
+          "doc_name": "20251030_doe_v._deutsche_lufthansa_aktiengesellschaft",
+          "answer": "REVERSED AND REMANDED.",
+          "correct": true,
+          "retrieved_token_count": 24,
+          "cost_ratio": 0.002024,
+          "rules_applied": [
+            "rule_panel_disposition_conclusion"
+          ]
+        },
+        {
+          "doc_name": "20251120_rosa_a._camacho_v._nmi_settlement_fund",
+          "answer": "AFFIRMED.",
+          "correct": true,
+          "retrieved_token_count": 4,
+          "cost_ratio": 0.00075,
+          "rules_applied": [
+            "rule_panel_disposition_terminal_line"
+          ]
+        },
+        {
+          "doc_name": "20251222_united_states_v._holmes",
+          "answer": "AFFIRMED",
+          "correct": true,
+          "retrieved_token_count": 17,
+          "cost_ratio": 0.000765,
+          "rules_applied": [
+            "rule_panel_disposition_conclusion"
+          ]
+        },
+        {
+          "doc_name": "20260105_walker_specialty_constr._inc._v._bd._of_tr._of_the_constr._indus._and",
+          "answer": "affirm",
+          "correct": true,
+          "retrieved_token_count": 30,
+          "cost_ratio": 0.004495,
+          "rules_applied": [
+            "rule_panel_disposition_conclusion"
+          ]
+        },
+        {
+          "doc_name": "20260130_kalbers_v._volkswagen_ag",
+          "answer": "REVERSED IN PART, and VACATED AND REMANDED IN PART.",
+          "correct": true,
+          "retrieved_token_count": 59,
+          "cost_ratio": 0.005242,
+          "rules_applied": [
+            "rule_panel_disposition_conclusion"
+          ]
+        },
+        {
+          "doc_name": "20260227_l.b._v._san_diego_unified_school_district",
+          "answer": "reverse and remand",
+          "correct": true,
+          "retrieved_token_count": 37,
+          "cost_ratio": 0.00357,
+          "rules_applied": [
+            "rule_panel_disposition_conclusion"
+          ]
+        },
+        {
+          "doc_name": "20260317_adventist_health_system_of_west_v._abbvie_inc.",
+          "answer": "REVERSED AND REMANDED.",
+          "correct": true,
+          "retrieved_token_count": 23,
+          "cost_ratio": 0.002812,
+          "rules_applied": [
+            "rule_panel_disposition_conclusion"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T07:29:06.329837+00:00"
+    }
+  ]
+}

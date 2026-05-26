@@ -1,0 +1,34 @@
+{
+  "doc_name": "BOEING_2018_10K",
+  "question": "What is/are the trading symbol(s) and listing exchange(s)?",
+  "question_slug": "what_isare_the_trading_symbols_and_listing_exchanges",
+  "split": "all_docs",
+  "ground_truth": "BA, New York Stock Exchange",
+  "answer": "BA — New York Stock Exchange",
+  "correct": true,
+  "status": "ok",
+  "input_tokens": 128,
+  "output_tokens": 10,
+  "latency_seconds": 0.907,
+  "model": "gpt54",
+  "doc_token_count": 90903,
+  "cost_ratio": 0.0014,
+  "retrieved_token_count": 34,
+  "rules_with_hits": [
+    "rule_section_12b_trading_table",
+    "rule_symbol_exchange_narrative"
+  ],
+  "rules_with_no_hits": [
+    "rule_single_common_stock_labeled_row"
+  ],
+  "num_spans_before_dedup": 2,
+  "num_spans_after_dedup": 2,
+  "rule_names": [
+    "rule_section_12b_trading_table",
+    "rule_single_common_stock_labeled_row",
+    "rule_symbol_exchange_narrative"
+  ],
+  "rule_question_dir": "q07_what_isare_the_trading_symbols_and_listing_exchanges",
+  "rule_generation_report_path": "results/financebench/agentic_rule_full_data_gpt54_adaptive/all_docs/q07_what_isare_the_trading_symbols_and_listing_exchanges_rule_gen.json",
+  "rule_apply_trace_path": "results/financebench/agentic_rule_full_data_gpt54_adaptive/all_docs/rule_apply_merge/_trace/q07_what_isare_the_trading_symbols_and_listing_exchanges/rule_section_12b_trading_table__rule_single_common_stock_labeled_row__rule_symbol_exchange_narrative_merge.json"
+}

@@ -1,0 +1,71 @@
+{
+  "strategy": "agentic_rule_full_data",
+  "phase": "rule_generation",
+  "status": "ok",
+  "dataset": "nopv",
+  "question": "What is the CPF case number assigned to this enforcement action?",
+  "question_slug": "what_is_the_cpf_case_number_assigned_to_this_enforcement_act",
+  "model": "gpt54",
+  "split": "all_docs",
+  "doc_count": 242,
+  "question_count": 1,
+  "rules_dir": "rules/nopv/agentic_rule_full_data_gpt54_adaptive/all_docs/q02_what_is_the_cpf_case_number_assigned_to_this_enforcement_act",
+  "results_report_path": "results/nopv/agentic_rule_full_data_gpt54_adaptive/all_docs/q02_what_is_the_cpf_case_number_assigned_to_this_enforcement_act_rule_gen.json",
+  "verify_accuracy_ledger_path": "results/nopv/agentic_rule_full_data_gpt54_adaptive/all_docs/q02_what_is_the_cpf_case_number_assigned_to_this_enforcement_act.verify_accuracy_ledger.json",
+  "rule_files": [
+    "rules/nopv/agentic_rule_full_data_gpt54_adaptive/all_docs/q02_what_is_the_cpf_case_number_assigned_to_this_enforcement_act/rule_cpf_case_number_assigned_to_enforcement_action.py"
+  ],
+  "rules_final": [
+    "rule_cpf_case_number_assigned_to_enforcement_action"
+  ],
+  "num_rules_final": 1,
+  "rule_gen": {
+    "latency_seconds": 343.79,
+    "input_tokens": 2675937,
+    "output_tokens": 18780,
+    "cached_input_tokens": 2280832,
+    "reasoning_tokens": 7095,
+    "working_sample": [
+      "12022023NOPV_PCO_03312022_(20-194651)",
+      "12026022NOPV_PCO_02242026_(25-330072)",
+      "32021051NOPV_PCP PCO_11102021_(21-200403)",
+      "32022052NOPV_PCP PCO_11102022_(21-207738)",
+      "32023008NOPV_PCP PCO_06022023_(21-207275)",
+      "32024007NOPV_PCO_01182024_(22-234928)",
+      "32024056NOPV_PCP PCO_10252024_(23-264602)",
+      "32025022NOPV_PCO_07182025_(24-297198)",
+      "42021033NOPV_PCO_09232021_(21-220612)",
+      "42023010NOPV_PCP PCO_06022023_(22-232749)",
+      "42023053NOPV_PCO_06132023_(21-227138)",
+      "42024042NOPV_PCO_08292024_(23-267234)",
+      "42026012NOPV_PCP PCO_02122026_(23-266706)",
+      "52022021NOPV_PCO_06152022_(21-201441)",
+      "52023009NOPV_PCP PCO_03012023_(21-217219)",
+      "52024001NOPV_PCO_12122024_(24-297227)",
+      "52024040NOPV_PCO_11182024_(24-297214)",
+      "52026002NOPV_PCO_01222026_(25-331927)"
+    ],
+    "num_working_sample": 18,
+    "num_working_sample_iterations": 2,
+    "verify_accuracy_calls": {
+      "total": 2,
+      "input_tokens": 8628,
+      "output_tokens": 611
+    },
+    "num_rules_written": 1,
+    "num_rules_rejected": 0,
+    "rules_final": [
+      "rule_cpf_case_number_assigned_to_enforcement_action"
+    ],
+    "num_rules_final": 1,
+    "avg_cost_ratio_sample": 0.007698,
+    "match_rate_sample": 1.0,
+    "notes": "Final rule returns an answer-shaped CPF sentence from header text and falls back to doc_name for the four OCR-truncated files; second verification pass reached 18/18 on the expanded spread sample."
+  },
+  "agent_log_path": "results/nopv/agentic_rule_full_data_gpt54_adaptive/all_docs/q02_what_is_the_cpf_case_number_assigned_to_this_enforcement_act.codex.jsonl",
+  "agent_last_message_path": "results/nopv/agentic_rule_full_data_gpt54_adaptive/all_docs/q02_what_is_the_cpf_case_number_assigned_to_this_enforcement_act.codex.last.txt",
+  "stderr": "2026-05-26T05:40:00.160891Z ERROR codex_models_manager::manager: failed to refresh available models: stream disconnected before completion: failed to decode models response: missing field `models` at line 3243 column 1; body: {\n  \"data\": [\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1772582400\n      },\n      \"id\": \"dall-e-3-3.0\",\n      \"created_at\": 1691712000,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1737936000\n      },\n      \"id\": \"dall-e-2-2.0\",\n      \"created_at\": 1713139200,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": true,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"fine_tune\": 1718323200,\n        \"inference\": 1718323200\n      },\n      \"id\": \"code-cushman-001\",\n      \"created_at\": 1642809600,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": false,\n        \"completion\": true,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"fine_tune\": 1720137600,\n        \"inference\": 1720137600\n      },\n      \"id\": \"code-cushman-fine-tune-002\",\n      \"created_at\": 1677456000,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"generally-available\",\n      \"deprecation\": {\n        \"inference\": 1797292800\n      },\n      \"id\": \"whisper-001\",\n      \"created_at\": 1694649600,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1746057600\n      },\n      \"id\": \"gpt-4-0125-Preview\",\n      \"created_at\": 1706140800,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1746057600\n      },\n      \"id\": \"gpt-4-1106-Preview\",\n      \"created_at\": 1700006400,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycl",
+  "codex_thread_id": "019e62cc-0c23-7650-9151-bbeb2721521f",
+  "codex_event_count": 126,
+  "codex_error_message": null
+}

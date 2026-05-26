@@ -1,0 +1,82 @@
+{
+  "verify_accuracy_calls": [
+    {
+      "doc_names": [
+        "3M_2023Q2_10Q",
+        "AMCOR_2023Q2_10Q",
+        "BOEING_2018_10K",
+        "FOOTLOCKER_2022_10Q",
+        "WALMART_2024Q1_10Q"
+      ],
+      "rule_names": [
+        "rule_common_stock_listing_narrative",
+        "rule_common_stock_listing_table"
+      ],
+      "n": 5,
+      "n_correct": 5,
+      "accuracy": 1.0,
+      "avg_cost_ratio": 0.000131,
+      "qa_input_tokens": 675,
+      "qa_output_tokens": 40,
+      "judge_input_tokens": 790,
+      "judge_output_tokens": 30,
+      "input_tokens_total": 1465,
+      "output_tokens_total": 70,
+      "latency_seconds": 4.051,
+      "results": [
+        {
+          "doc_name": "3M_2023Q2_10Q",
+          "answer": "New York Stock Exchange",
+          "correct": true,
+          "retrieved_token_count": 4,
+          "cost_ratio": 5.1e-05,
+          "rules_applied": [
+            "rule_common_stock_listing_table"
+          ]
+        },
+        {
+          "doc_name": "AMCOR_2023Q2_10Q",
+          "answer": "New York Stock Exchange",
+          "correct": true,
+          "retrieved_token_count": 4,
+          "cost_ratio": 0.000134,
+          "rules_applied": [
+            "rule_common_stock_listing_table"
+          ]
+        },
+        {
+          "doc_name": "BOEING_2018_10K",
+          "answer": "New York Stock Exchange",
+          "correct": true,
+          "retrieved_token_count": 4,
+          "cost_ratio": 4.4e-05,
+          "rules_applied": [
+            "rule_common_stock_listing_table"
+          ]
+        },
+        {
+          "doc_name": "FOOTLOCKER_2022_10Q",
+          "answer": "New York Stock Exchange",
+          "correct": true,
+          "retrieved_token_count": 9,
+          "cost_ratio": 0.000328,
+          "rules_applied": [
+            "rule_common_stock_listing_narrative",
+            "rule_common_stock_listing_table"
+          ]
+        },
+        {
+          "doc_name": "WALMART_2024Q1_10Q",
+          "answer": "New York Stock Exchange",
+          "correct": true,
+          "retrieved_token_count": 4,
+          "cost_ratio": 9.8e-05,
+          "rules_applied": [
+            "rule_common_stock_listing_table"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T05:35:35.167152+00:00"
+    }
+  ]
+}

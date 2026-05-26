@@ -1,0 +1,254 @@
+[
+  {
+    "question": "What is/are the Court of Appeals docket number(s) for this case?",
+    "question_slug": "what_isare_the_court_of_appeals_docket_numbers_for_this_case",
+    "split": "all_docs",
+    "model": "gpt54",
+    "n": 294,
+    "n_correct": 272,
+    "accuracy": 0.9252,
+    "avg_input_tokens": 101.6,
+    "avg_output_tokens": 8.7,
+    "avg_latency_seconds": 0.8,
+    "avg_retrieved_tokens": 4.6,
+    "avg_cost_ratio": 0.0324,
+    "rule_gen_output_name": "agentic_rule_full_data_gpt54mini_adaptive/all_docs",
+    "rule_question_dir": "q01_what_isare_the_court_of_appeals_docket_numbers_for_this_case",
+    "rule_names": [
+      "rule_court_of_appeals_docket_numbers"
+    ]
+  },
+  {
+    "question": "What is/are the originating district court docket number(s) (\"D.C. No.\")?",
+    "question_slug": "what_isare_the_originating_district_court_docket_numbers_dc_",
+    "split": "all_docs",
+    "model": "gpt54",
+    "n": 294,
+    "n_correct": 157,
+    "accuracy": 0.534,
+    "avg_input_tokens": 110.6,
+    "avg_output_tokens": 11.5,
+    "avg_latency_seconds": 0.82,
+    "avg_retrieved_tokens": 10.7,
+    "avg_cost_ratio": 0.0349,
+    "rule_gen_output_name": "agentic_rule_full_data_gpt54mini_adaptive/all_docs",
+    "rule_question_dir": "q02_what_isare_the_originating_district_court_docket_numbers_dc_",
+    "rule_names": [
+      "rule_dc_no_originating_docket_numbers"
+    ]
+  },
+  {
+    "question": "From which U.S. District Court(s) did this appeal originate?",
+    "question_slug": "from_which_us_district_courts_did_this_appeal_originate",
+    "split": "all_docs",
+    "model": "gpt54",
+    "n": 294,
+    "n_correct": 248,
+    "accuracy": 0.8435,
+    "avg_input_tokens": 114.4,
+    "avg_output_tokens": 8.7,
+    "avg_latency_seconds": 0.84,
+    "avg_retrieved_tokens": 19.7,
+    "avg_cost_ratio": 0.0333,
+    "rule_gen_output_name": "agentic_rule_full_data_gpt54mini_adaptive/all_docs",
+    "rule_question_dir": "q03_from_which_us_district_courts_did_this_appeal_originate",
+    "rule_names": [
+      "rule_appeal_from_us_district_court_header",
+      "rule_district_court_caption_fallback"
+    ]
+  },
+  {
+    "question": "Which district judge(s) presided over the case below?",
+    "question_slug": "which_district_judges_presided_over_the_case_below",
+    "split": "all_docs",
+    "model": "gpt54",
+    "n": 294,
+    "n_correct": 216,
+    "accuracy": 0.7347,
+    "avg_input_tokens": 103.1,
+    "avg_output_tokens": 8.5,
+    "avg_latency_seconds": 0.84,
+    "avg_retrieved_tokens": 10.5,
+    "avg_cost_ratio": 0.0315,
+    "rule_gen_output_name": "agentic_rule_full_data_gpt54mini_adaptive/all_docs",
+    "rule_question_dir": "q04_which_district_judges_presided_over_the_case_below",
+    "rule_names": [
+      "rule_presiding_district_judge"
+    ]
+  },
+  {
+    "question": "On what date was the case argued or submitted on the briefs?",
+    "question_slug": "on_what_date_was_the_case_argued_or_submitted_on_the_briefs",
+    "split": "all_docs",
+    "model": "gpt54",
+    "n": 294,
+    "n_correct": 243,
+    "accuracy": 0.8265,
+    "avg_input_tokens": 102.8,
+    "avg_output_tokens": 10.1,
+    "avg_latency_seconds": 0.92,
+    "avg_retrieved_tokens": 9.0,
+    "avg_cost_ratio": 0.0307,
+    "rule_gen_output_name": "agentic_rule_full_data_gpt54mini_adaptive/all_docs",
+    "rule_question_dir": "q05_on_what_date_was_the_case_argued_or_submitted_on_the_briefs",
+    "rule_names": [
+      "rule_argued_or_submitted_date"
+    ]
+  },
+  {
+    "question": "In what city was the case argued or submitted?",
+    "question_slug": "in_what_city_was_the_case_argued_or_submitted",
+    "split": "all_docs",
+    "model": "gpt54",
+    "n": 294,
+    "n_correct": 231,
+    "accuracy": 0.7857,
+    "avg_input_tokens": 93.8,
+    "avg_output_tokens": 5.8,
+    "avg_latency_seconds": 0.88,
+    "avg_retrieved_tokens": 3.0,
+    "avg_cost_ratio": 0.0291,
+    "rule_gen_output_name": "agentic_rule_full_data_gpt54mini_adaptive/all_docs",
+    "rule_question_dir": "q06_in_what_city_was_the_case_argued_or_submitted",
+    "rule_names": [
+      "rule_city_after_argued_submitted_header",
+      "rule_city_from_oral_argument_order_phrase"
+    ]
+  },
+  {
+    "question": "On what date was this opinion filed?",
+    "question_slug": "on_what_date_was_this_opinion_filed",
+    "split": "all_docs",
+    "model": "gpt54",
+    "n": 294,
+    "n_correct": 292,
+    "accuracy": 0.9932,
+    "avg_input_tokens": 95.9,
+    "avg_output_tokens": 10.9,
+    "avg_latency_seconds": 0.89,
+    "avg_retrieved_tokens": 6.9,
+    "avg_cost_ratio": 0.0304,
+    "rule_gen_output_name": "agentic_rule_full_data_gpt54mini_adaptive/all_docs",
+    "rule_question_dir": "q07_on_what_date_was_this_opinion_filed",
+    "rule_names": [
+      "rule_filed_date",
+      "rule_header_standalone_date"
+    ]
+  },
+  {
+    "question": "Who were the judges on the panel that decided this case?",
+    "question_slug": "who_were_the_judges_on_the_panel_that_decided_this_case",
+    "split": "all_docs",
+    "model": "gpt54",
+    "n": 294,
+    "n_correct": 268,
+    "accuracy": 0.9116,
+    "avg_input_tokens": 110.5,
+    "avg_output_tokens": 21.3,
+    "avg_latency_seconds": 1.13,
+    "avg_retrieved_tokens": 18.3,
+    "avg_cost_ratio": 0.033,
+    "rule_gen_output_name": "agentic_rule_full_data_gpt54mini_adaptive/all_docs",
+    "rule_question_dir": "q08_who_were_the_judges_on_the_panel_that_decided_this_case",
+    "rule_names": [
+      "rule_panel_judges_before_header"
+    ]
+  },
+  {
+    "question": "Which judge authored the majority opinion?",
+    "question_slug": "which_judge_authored_the_majority_opinion",
+    "split": "all_docs",
+    "model": "gpt54",
+    "n": 294,
+    "n_correct": 252,
+    "accuracy": 0.8571,
+    "avg_input_tokens": 101.9,
+    "avg_output_tokens": 7.3,
+    "avg_latency_seconds": 1.01,
+    "avg_retrieved_tokens": 15.9,
+    "avg_cost_ratio": 0.0299,
+    "rule_gen_output_name": "agentic_rule_full_data_gpt54mini_adaptive/all_docs",
+    "rule_question_dir": "q09_which_judge_authored_the_majority_opinion",
+    "rule_names": [
+      "rule_majority_opinion_header",
+      "rule_majority_opinion_signature"
+    ]
+  },
+  {
+    "question": "What legal subject matter does the court staff SUMMARY identify as the topic of this opinion?",
+    "question_slug": "what_legal_subject_matter_does_the_court_staff_summary_ident",
+    "split": "all_docs",
+    "model": "gpt54",
+    "n": 294,
+    "n_correct": 240,
+    "accuracy": 0.8163,
+    "avg_input_tokens": 115.2,
+    "avg_output_tokens": 7.9,
+    "avg_latency_seconds": 0.87,
+    "avg_retrieved_tokens": 17.4,
+    "avg_cost_ratio": 0.0451,
+    "rule_gen_output_name": "agentic_rule_full_data_gpt54mini_adaptive/all_docs",
+    "rule_question_dir": "q10_what_legal_subject_matter_does_the_court_staff_summary_ident",
+    "rule_names": [
+      "rule_summary_topic"
+    ]
+  },
+  {
+    "question": "Who is the first-listed attorney representing the appellant(s)?",
+    "question_slug": "who_is_the_firstlisted_attorney_representing_the_appellants",
+    "split": "all_docs",
+    "model": "gpt54",
+    "n": 294,
+    "n_correct": 138,
+    "accuracy": 0.4694,
+    "avg_input_tokens": 98.4,
+    "avg_output_tokens": 8.1,
+    "avg_latency_seconds": 0.86,
+    "avg_retrieved_tokens": 6.7,
+    "avg_cost_ratio": 0.0322,
+    "rule_gen_output_name": "agentic_rule_full_data_gpt54mini_adaptive/all_docs",
+    "rule_question_dir": "q11_who_is_the_firstlisted_attorney_representing_the_appellants",
+    "rule_names": [
+      "rule_appellant_first_listed_attorney"
+    ]
+  },
+  {
+    "question": "Who is the first-listed attorney representing the appellee(s)?",
+    "question_slug": "who_is_the_firstlisted_attorney_representing_the_appellees",
+    "split": "all_docs",
+    "model": "gpt54",
+    "n": 294,
+    "n_correct": 137,
+    "accuracy": 0.466,
+    "avg_input_tokens": 96.5,
+    "avg_output_tokens": 7.6,
+    "avg_latency_seconds": 0.85,
+    "avg_retrieved_tokens": 4.0,
+    "avg_cost_ratio": 0.0298,
+    "rule_gen_output_name": "agentic_rule_full_data_gpt54mini_adaptive/all_docs",
+    "rule_question_dir": "q12_who_is_the_firstlisted_attorney_representing_the_appellees",
+    "rule_names": [
+      "rule_first_listed_attorney_representing_appellees"
+    ]
+  },
+  {
+    "question": "What was the panel's final disposition of the appeal?",
+    "question_slug": "what_was_the_panels_final_disposition_of_the_appeal",
+    "split": "all_docs",
+    "model": "gpt54",
+    "n": 294,
+    "n_correct": 177,
+    "accuracy": 0.602,
+    "avg_input_tokens": 137.3,
+    "avg_output_tokens": 8.9,
+    "avg_latency_seconds": 0.9,
+    "avg_retrieved_tokens": 46.3,
+    "avg_cost_ratio": 0.0389,
+    "rule_gen_output_name": "agentic_rule_full_data_gpt54mini_adaptive/all_docs",
+    "rule_question_dir": "q13_what_was_the_panels_final_disposition_of_the_appeal",
+    "rule_names": [
+      "rule_panel_disposition_conclusion",
+      "rule_panel_disposition_terminal_line"
+    ]
+  }
+]

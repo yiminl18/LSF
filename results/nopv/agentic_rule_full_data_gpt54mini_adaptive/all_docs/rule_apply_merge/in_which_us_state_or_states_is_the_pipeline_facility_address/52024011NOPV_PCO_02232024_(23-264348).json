@@ -1,0 +1,31 @@
+{
+  "doc_name": "52024011NOPV_PCO_02232024_(23-264348)",
+  "question": "In which U.S. state (or states) is the pipeline facility addressed in this Notice physically located?",
+  "question_slug": "in_which_us_state_or_states_is_the_pipeline_facility_address",
+  "split": "all_docs",
+  "ground_truth": "\"California\"",
+  "answer": "California",
+  "correct": true,
+  "status": "ok",
+  "input_tokens": 148,
+  "output_tokens": 5,
+  "latency_seconds": 0.773,
+  "model": "gpt54",
+  "doc_token_count": 3841,
+  "cost_ratio": 0.0385,
+  "retrieved_token_count": 46,
+  "rules_with_hits": [
+    "rule_pipeline_facility_state_intro",
+    "rule_pipeline_facility_state_fallback"
+  ],
+  "rules_with_no_hits": [],
+  "num_spans_before_dedup": 2,
+  "num_spans_after_dedup": 2,
+  "rule_names": [
+    "rule_pipeline_facility_state_intro",
+    "rule_pipeline_facility_state_fallback"
+  ],
+  "rule_question_dir": "q06_in_which_us_state_or_states_is_the_pipeline_facility_address",
+  "rule_generation_report_path": "results/nopv/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q06_in_which_us_state_or_states_is_the_pipeline_facility_address_rule_gen.json",
+  "rule_apply_trace_path": "results/nopv/agentic_rule_full_data_gpt54mini_adaptive/all_docs/rule_apply_merge/_trace/q06_in_which_us_state_or_states_is_the_pipeline_facility_address/rule_pipeline_facility_state_fallback__rule_pipeline_facility_state_intro_merge.json"
+}

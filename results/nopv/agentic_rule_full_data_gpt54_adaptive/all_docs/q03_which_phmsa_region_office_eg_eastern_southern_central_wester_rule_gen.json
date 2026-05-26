@@ -1,0 +1,65 @@
+{
+  "strategy": "agentic_rule_full_data",
+  "phase": "rule_generation",
+  "status": "ok",
+  "dataset": "nopv",
+  "question": "Which PHMSA Region office (e.g., Eastern, Southern, Central, Western, Southwest) issued this Notice?",
+  "question_slug": "which_phmsa_region_office_eg_eastern_southern_central_wester",
+  "model": "gpt54",
+  "split": "all_docs",
+  "doc_count": 242,
+  "question_count": 1,
+  "rules_dir": "rules/nopv/agentic_rule_full_data_gpt54_adaptive/all_docs/q03_which_phmsa_region_office_eg_eastern_southern_central_wester",
+  "results_report_path": "results/nopv/agentic_rule_full_data_gpt54_adaptive/all_docs/q03_which_phmsa_region_office_eg_eastern_southern_central_wester_rule_gen.json",
+  "verify_accuracy_ledger_path": "results/nopv/agentic_rule_full_data_gpt54_adaptive/all_docs/q03_which_phmsa_region_office_eg_eastern_southern_central_wester.verify_accuracy_ledger.json",
+  "rule_files": [
+    "rules/nopv/agentic_rule_full_data_gpt54_adaptive/all_docs/q03_which_phmsa_region_office_eg_eastern_southern_central_wester/rule_phmsa_region_office.py"
+  ],
+  "rules_final": [
+    "rule_phmsa_region_office"
+  ],
+  "num_rules_final": 1,
+  "rule_gen": {
+    "latency_seconds": 137.11,
+    "input_tokens": 577489,
+    "output_tokens": 9094,
+    "cached_input_tokens": 497280,
+    "reasoning_tokens": 3258,
+    "working_sample": [
+      "12022023NOPV_PCO_03312022_(20-194651)",
+      "12026022NOPV_PCO_02242026_(25-330072)",
+      "22023002NOPV_PCO_07282023_(21-202409)",
+      "22024011NOPV_PCP PCO (AMENDED)_07092024_(22-235530)",
+      "32022052NOPV_PCP PCO_11102022_(21-207738)",
+      "32024007NOPV_PCO_01182024_(22-234928)",
+      "32024056NOPV_PCP PCO_10252024_(23-264602)",
+      "42021033NOPV_PCO_09232021_(21-220612)",
+      "42024042NOPV_PCO_08292024_(23-267234)",
+      "42026012NOPV_PCP PCO_02122026_(23-266706)",
+      "52024001NOPV_PCO_12122024_(24-297227)",
+      "52026002NOPV_PCO_01222026_(25-331927)"
+    ],
+    "num_working_sample": 12,
+    "num_working_sample_iterations": 1,
+    "verify_accuracy_calls": {
+      "total": 1,
+      "input_tokens": 3356,
+      "output_tokens": 135
+    },
+    "num_rules_written": 1,
+    "num_rules_rejected": 0,
+    "rules_final": [
+      "rule_phmsa_region_office"
+    ],
+    "num_rules_final": 1,
+    "avg_cost_ratio_sample": 0.001707,
+    "match_rate_sample": 1.0,
+    "notes": "Single broad rule maps PHMSA regional office addresses and explicit region-name mentions, prioritizing header/footer lines. Verified 12/12 correct on a 12-document sample spanning Eastern, Southern, Central, Southwest, and Western notices."
+  },
+  "agent_log_path": "results/nopv/agentic_rule_full_data_gpt54_adaptive/all_docs/q03_which_phmsa_region_office_eg_eastern_southern_central_wester.codex.jsonl",
+  "agent_last_message_path": "results/nopv/agentic_rule_full_data_gpt54_adaptive/all_docs/q03_which_phmsa_region_office_eg_eastern_southern_central_wester.codex.last.txt",
+  "stderr": "2026-05-26T05:45:43.911825Z ERROR codex_models_manager::manager: failed to refresh available models: stream disconnected before completion: failed to decode models response: missing field `models` at line 3243 column 1; body: {\n  \"data\": [\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1772582400\n      },\n      \"id\": \"dall-e-3-3.0\",\n      \"created_at\": 1691712000,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1737936000\n      },\n      \"id\": \"dall-e-2-2.0\",\n      \"created_at\": 1713139200,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": true,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"fine_tune\": 1718323200,\n        \"inference\": 1718323200\n      },\n      \"id\": \"code-cushman-001\",\n      \"created_at\": 1642809600,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": false,\n        \"completion\": true,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"fine_tune\": 1720137600,\n        \"inference\": 1720137600\n      },\n      \"id\": \"code-cushman-fine-tune-002\",\n      \"created_at\": 1677456000,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"generally-available\",\n      \"deprecation\": {\n        \"inference\": 1797292800\n      },\n      \"id\": \"whisper-001\",\n      \"created_at\": 1694649600,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1746057600\n      },\n      \"id\": \"gpt-4-0125-Preview\",\n      \"created_at\": 1706140800,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1746057600\n      },\n      \"id\": \"gpt-4-1106-Preview\",\n      \"created_at\": 1700006400,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycl",
+  "codex_thread_id": "019e62d1-4aea-7370-a7e6-3c0d734836e6",
+  "codex_event_count": 62,
+  "codex_error_message": null
+}

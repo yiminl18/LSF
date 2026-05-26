@@ -1,0 +1,286 @@
+{
+  "verify_accuracy_calls": [
+    {
+      "doc_names": [
+        "treasury_bulletin_1997_06",
+        "treasury_bulletin_1997_09",
+        "treasury_bulletin_1997_12",
+        "treasury_bulletin_1998_06",
+        "treasury_bulletin_2005_12",
+        "treasury_bulletin_2006_09",
+        "treasury_bulletin_2006_12",
+        "treasury_bulletin_2008_03",
+        "treasury_bulletin_2014_09",
+        "treasury_bulletin_2020_09",
+        "treasury_bulletin_2024_12"
+      ],
+      "rule_names": [
+        "rule_payroll_chart_current_period",
+        "rule_payroll_early_year_gain",
+        "rule_payroll_year_to_date_average"
+      ],
+      "n": 11,
+      "n_correct": 8,
+      "accuracy": 0.727273,
+      "avg_cost_ratio": 0.000699,
+      "qa_input_tokens": 2692,
+      "qa_output_tokens": 78,
+      "judge_input_tokens": 1450,
+      "judge_output_tokens": 69,
+      "input_tokens_total": 4142,
+      "output_tokens_total": 147,
+      "latency_seconds": 9.388,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_1997_06",
+          "answer": "214,000 per month",
+          "correct": true,
+          "retrieved_token_count": 167,
+          "cost_ratio": 0.000807,
+          "rules_applied": [
+            "rule_payroll_early_year_gain",
+            "rule_payroll_year_to_date_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1997_09",
+          "answer": "214,000 per month",
+          "correct": true,
+          "retrieved_token_count": 167,
+          "cost_ratio": 0.000799,
+          "rules_applied": [
+            "rule_payroll_early_year_gain",
+            "rule_payroll_year_to_date_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1997_12",
+          "answer": "239,000",
+          "correct": true,
+          "retrieved_token_count": 39,
+          "cost_ratio": 0.000177,
+          "rules_applied": [
+            "rule_payroll_year_to_date_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1998_06",
+          "answer": "224,000",
+          "correct": true,
+          "retrieved_token_count": 87,
+          "cost_ratio": 0.000405,
+          "rules_applied": [
+            "rule_payroll_year_to_date_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2005_12",
+          "answer": "161,000 per month",
+          "correct": true,
+          "retrieved_token_count": 55,
+          "cost_ratio": 0.000322,
+          "rules_applied": [
+            "rule_payroll_year_to_date_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2006_09",
+          "answer": "155",
+          "correct": false,
+          "retrieved_token_count": 390,
+          "cost_ratio": 0.002666,
+          "rules_applied": [
+            "rule_payroll_chart_current_period",
+            "rule_payroll_year_to_date_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2006_12",
+          "answer": "167",
+          "correct": false,
+          "retrieved_token_count": 96,
+          "cost_ratio": 0.000594,
+          "rules_applied": [
+            "rule_payroll_year_to_date_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2008_03",
+          "answer": "66,250",
+          "correct": true,
+          "retrieved_token_count": 69,
+          "cost_ratio": 0.000399,
+          "rules_applied": [
+            "rule_payroll_early_year_gain"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2014_09",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "treasury_bulletin_2020_09",
+          "answer": "232,500",
+          "correct": true,
+          "retrieved_token_count": 101,
+          "cost_ratio": 0.001159,
+          "rules_applied": [
+            "rule_payroll_early_year_gain"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2024_12",
+          "answer": "170,000",
+          "correct": true,
+          "retrieved_token_count": 36,
+          "cost_ratio": 0.000363,
+          "rules_applied": [
+            "rule_payroll_year_to_date_average"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T06:27:38.344416+00:00"
+    },
+    {
+      "doc_names": [
+        "treasury_bulletin_1997_06",
+        "treasury_bulletin_1997_09",
+        "treasury_bulletin_1997_12",
+        "treasury_bulletin_1998_06",
+        "treasury_bulletin_2005_12",
+        "treasury_bulletin_2006_09",
+        "treasury_bulletin_2006_12",
+        "treasury_bulletin_2008_03",
+        "treasury_bulletin_2020_09",
+        "treasury_bulletin_2024_12"
+      ],
+      "rule_names": [
+        "rule_payroll_chart_current_period",
+        "rule_payroll_early_year_gain",
+        "rule_payroll_year_to_date_average"
+      ],
+      "n": 10,
+      "n_correct": 10,
+      "accuracy": 1.0,
+      "avg_cost_ratio": 0.000627,
+      "qa_input_tokens": 2305,
+      "qa_output_tokens": 86,
+      "judge_input_tokens": 1335,
+      "judge_output_tokens": 60,
+      "input_tokens_total": 3640,
+      "output_tokens_total": 146,
+      "latency_seconds": 8.706,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_1997_06",
+          "answer": "214,000 per month",
+          "correct": true,
+          "retrieved_token_count": 167,
+          "cost_ratio": 0.000807,
+          "rules_applied": [
+            "rule_payroll_early_year_gain",
+            "rule_payroll_year_to_date_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1997_09",
+          "answer": "214,000 per month",
+          "correct": true,
+          "retrieved_token_count": 167,
+          "cost_ratio": 0.000799,
+          "rules_applied": [
+            "rule_payroll_early_year_gain",
+            "rule_payroll_year_to_date_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1997_12",
+          "answer": "239,000",
+          "correct": true,
+          "retrieved_token_count": 39,
+          "cost_ratio": 0.000177,
+          "rules_applied": [
+            "rule_payroll_year_to_date_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1998_06",
+          "answer": "224,000",
+          "correct": true,
+          "retrieved_token_count": 87,
+          "cost_ratio": 0.000405,
+          "rules_applied": [
+            "rule_payroll_year_to_date_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2005_12",
+          "answer": "161,000 per month",
+          "correct": true,
+          "retrieved_token_count": 55,
+          "cost_ratio": 0.000322,
+          "rules_applied": [
+            "rule_payroll_year_to_date_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2006_09",
+          "answer": "140,000 per month",
+          "correct": true,
+          "retrieved_token_count": 57,
+          "cost_ratio": 0.00039,
+          "rules_applied": [
+            "rule_payroll_year_to_date_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2006_12",
+          "answer": "147,000 per month",
+          "correct": true,
+          "retrieved_token_count": 54,
+          "cost_ratio": 0.000334,
+          "rules_applied": [
+            "rule_payroll_year_to_date_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2008_03",
+          "answer": "66,250 per month",
+          "correct": true,
+          "retrieved_token_count": 115,
+          "cost_ratio": 0.000664,
+          "rules_applied": [
+            "rule_payroll_early_year_gain",
+            "rule_payroll_year_to_date_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2020_09",
+          "answer": "232,500 per month",
+          "correct": true,
+          "retrieved_token_count": 175,
+          "cost_ratio": 0.002008,
+          "rules_applied": [
+            "rule_payroll_early_year_gain",
+            "rule_payroll_year_to_date_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2024_12",
+          "answer": "170,000 per month",
+          "correct": true,
+          "retrieved_token_count": 36,
+          "cost_ratio": 0.000363,
+          "rules_applied": [
+            "rule_payroll_year_to_date_average"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T06:30:11.219483+00:00"
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "verify_accuracy_calls": [
+    {
+      "doc_names": [
+        "3M_2023Q2_10Q",
+        "AMCOR_2022_8K_dated-2022-07-01",
+        "BOEING_2017_10K",
+        "FOOTLOCKER_2022_10K",
+        "WALMART_2024Q1_10Q"
+      ],
+      "rule_names": [
+        "rule_company_name_fallback",
+        "rule_cover_registrant_name"
+      ],
+      "n": 5,
+      "n_correct": 5,
+      "accuracy": 1.0,
+      "avg_cost_ratio": 0.000155,
+      "qa_input_tokens": 695,
+      "qa_output_tokens": 41,
+      "judge_input_tokens": 812,
+      "judge_output_tokens": 30,
+      "input_tokens_total": 1507,
+      "output_tokens_total": 71,
+      "latency_seconds": 4.372,
+      "results": [
+        {
+          "doc_name": "3M_2023Q2_10Q",
+          "answer": "3M COMPANY",
+          "correct": true,
+          "retrieved_token_count": 3,
+          "cost_ratio": 3.8e-05,
+          "rules_applied": [
+            "rule_cover_registrant_name"
+          ]
+        },
+        {
+          "doc_name": "AMCOR_2022_8K_dated-2022-07-01",
+          "answer": "AMCOR PLC",
+          "correct": true,
+          "retrieved_token_count": 3,
+          "cost_ratio": 0.000484,
+          "rules_applied": [
+            "rule_cover_registrant_name"
+          ]
+        },
+        {
+          "doc_name": "BOEING_2017_10K",
+          "answer": "THE BOEING COMPANY",
+          "correct": true,
+          "retrieved_token_count": 5,
+          "cost_ratio": 5.8e-05,
+          "rules_applied": [
+            "rule_cover_registrant_name"
+          ]
+        },
+        {
+          "doc_name": "FOOTLOCKER_2022_10K",
+          "answer": "Foot Locker, Inc",
+          "correct": true,
+          "retrieved_token_count": 4,
+          "cost_ratio": 4.5e-05,
+          "rules_applied": [
+            "rule_company_name_fallback"
+          ]
+        },
+        {
+          "doc_name": "WALMART_2024Q1_10Q",
+          "answer": "WALMART INC.",
+          "correct": true,
+          "retrieved_token_count": 6,
+          "cost_ratio": 0.000148,
+          "rules_applied": [
+            "rule_cover_registrant_name"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T05:51:24.654041+00:00"
+    }
+  ]
+}

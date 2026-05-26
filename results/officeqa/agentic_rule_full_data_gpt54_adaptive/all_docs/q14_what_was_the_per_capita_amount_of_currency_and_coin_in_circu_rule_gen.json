@@ -1,0 +1,65 @@
+{
+  "strategy": "agentic_rule_full_data",
+  "phase": "rule_generation",
+  "status": "ok",
+  "dataset": "officeqa",
+  "question": "What was the per capita amount of currency and coin in circulation at the most recent reporting date, in dollars?",
+  "question_slug": "what_was_the_per_capita_amount_of_currency_and_coin_in_circu",
+  "model": "gpt54",
+  "split": "all_docs",
+  "doc_count": 200,
+  "question_count": 1,
+  "rules_dir": "rules/officeqa/agentic_rule_full_data_gpt54_adaptive/all_docs/q14_what_was_the_per_capita_amount_of_currency_and_coin_in_circu",
+  "results_report_path": "results/officeqa/agentic_rule_full_data_gpt54_adaptive/all_docs/q14_what_was_the_per_capita_amount_of_currency_and_coin_in_circu_rule_gen.json",
+  "verify_accuracy_ledger_path": "results/officeqa/agentic_rule_full_data_gpt54_adaptive/all_docs/q14_what_was_the_per_capita_amount_of_currency_and_coin_in_circu.verify_accuracy_ledger.json",
+  "rule_files": [
+    "rules/officeqa/agentic_rule_full_data_gpt54_adaptive/all_docs/q14_what_was_the_per_capita_amount_of_currency_and_coin_in_circu/rule_ms1_latest_per_capita_currency_and_coin.py",
+    "rules/officeqa/agentic_rule_full_data_gpt54_adaptive/all_docs/q14_what_was_the_per_capita_amount_of_currency_and_coin_in_circu/rule_uscc2_latest_per_capita_currency_and_coin.py"
+  ],
+  "rules_final": [
+    "rule_ms1_latest_per_capita_currency_and_coin",
+    "rule_uscc2_latest_per_capita_currency_and_coin"
+  ],
+  "num_rules_final": 2,
+  "rule_gen": {
+    "latency_seconds": 1210.57,
+    "input_tokens": 8279458,
+    "output_tokens": 48022,
+    "cached_input_tokens": 6816000,
+    "reasoning_tokens": 20269,
+    "working_sample": [
+      "treasury_bulletin_1982_10",
+      "treasury_bulletin_1992_09",
+      "treasury_bulletin_1999_06",
+      "treasury_bulletin_2000_09",
+      "treasury_bulletin_2004_09",
+      "treasury_bulletin_2009_12",
+      "treasury_bulletin_2014_12",
+      "treasury_bulletin_2020_03",
+      "treasury_bulletin_2025_06"
+    ],
+    "num_working_sample": 9,
+    "num_working_sample_iterations": 1,
+    "verify_accuracy_calls": {
+      "total": 1,
+      "input_tokens": 3191,
+      "output_tokens": 126
+    },
+    "num_rules_written": 2,
+    "num_rules_rejected": 0,
+    "rules_final": [
+      "rule_ms1_latest_per_capita_currency_and_coin",
+      "rule_uscc2_latest_per_capita_currency_and_coin"
+    ],
+    "num_rules_final": 2,
+    "avg_cost_ratio_sample": 0.000836,
+    "match_rate_sample": 1.0,
+    "notes": "Two-rule set covers early MS-1 monetary-statistics tables and later USCC-2 circulation tables, including OCR-spaced 2000-era layouts and legacy comparative-total blocks."
+  },
+  "agent_log_path": "results/officeqa/agentic_rule_full_data_gpt54_adaptive/all_docs/q14_what_was_the_per_capita_amount_of_currency_and_coin_in_circu.codex.jsonl",
+  "agent_last_message_path": "results/officeqa/agentic_rule_full_data_gpt54_adaptive/all_docs/q14_what_was_the_per_capita_amount_of_currency_and_coin_in_circu.codex.last.txt",
+  "stderr": "2026-05-26T08:45:47.222278Z ERROR codex_models_manager::manager: failed to refresh available models: timeout waiting for child process to exit\n2026-05-26T08:46:14.501495Z ERROR codex_core::tools::router: error=write_stdin failed: stdin is closed for this session; rerun exec_command with tty=true to keep stdin open",
+  "codex_thread_id": "019e6376-2356-7970-9b02-7fa5f6530ee3",
+  "codex_event_count": 286,
+  "codex_error_message": "Reconnecting... 1/5 (stream disconnected before completion: Incomplete response returned, reason: content_filter)"
+}

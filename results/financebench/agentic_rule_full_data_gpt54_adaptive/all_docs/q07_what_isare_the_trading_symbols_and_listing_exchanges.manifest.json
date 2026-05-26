@@ -1,0 +1,721 @@
+{
+  "dataset": "financebench",
+  "split": "all_docs",
+  "question": "What is/are the trading symbol(s) and listing exchange(s)?",
+  "question_slug": "what_isare_the_trading_symbols_and_listing_exchanges",
+  "model": "gpt-5.4",
+  "rules_dir": "/mnt/data/LSF/rules/financebench/agentic_rule_full_data_gpt54_adaptive/all_docs/q07_what_isare_the_trading_symbols_and_listing_exchanges",
+  "ledger_path": "/mnt/data/LSF/results/financebench/agentic_rule_full_data_gpt54_adaptive/all_docs/q07_what_isare_the_trading_symbols_and_listing_exchanges.verify_accuracy_ledger.json",
+  "report_path": "/mnt/data/LSF/results/financebench/agentic_rule_full_data_gpt54_adaptive/all_docs/q07_what_isare_the_trading_symbols_and_listing_exchanges_rule_gen.json",
+  "verify_accuracy_budget": 30,
+  "documents": [
+    {
+      "doc_name": "3M_2023Q2_10Q",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/3M_2023Q2_10Q.txt",
+      "ground_truth": [
+        {
+          "symbol": "MMM",
+          "exchange": "New York Stock Exchange"
+        },
+        {
+          "symbol": "MMM",
+          "exchange": "Chicago Stock Exchange, Inc."
+        },
+        {
+          "symbol": "MMM26",
+          "exchange": "New York Stock Exchange"
+        },
+        {
+          "symbol": "MMM30",
+          "exchange": "New York Stock Exchange"
+        },
+        {
+          "symbol": "MMM31",
+          "exchange": "New York Stock Exchange"
+        }
+      ]
+    },
+    {
+      "doc_name": "ACTIVISIONBLIZZARD_2017_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/ACTIVISIONBLIZZARD_2017_10K.txt",
+      "ground_truth": "ATVI, The Nasdaq Global Select Market"
+    },
+    {
+      "doc_name": "ACTIVISIONBLIZZARD_2020_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/ACTIVISIONBLIZZARD_2020_10K.txt",
+      "ground_truth": "ATVI, The Nasdaq Global Select Market"
+    },
+    {
+      "doc_name": "ACTIVSIONBLIZZARD_2023Q2_10Q",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/ACTIVSIONBLIZZARD_2023Q2_10Q.txt",
+      "ground_truth": "ATVI, The Nasdaq Global Select Market"
+    },
+    {
+      "doc_name": "ADOBE_2015_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/ADOBE_2015_10K.txt",
+      "ground_truth": "NASDAQ: ADBE"
+    },
+    {
+      "doc_name": "ADOBE_2016_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/ADOBE_2016_10K.txt",
+      "ground_truth": "ADBE, NASDAQ Global Select Market"
+    },
+    {
+      "doc_name": "ADOBE_2017_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/ADOBE_2017_10K.txt",
+      "ground_truth": "ADBE, NASDAQ Global Select Market"
+    },
+    {
+      "doc_name": "ADOBE_2018_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/ADOBE_2018_10K.txt",
+      "ground_truth": "ADBE, NASDAQ Global Select Market"
+    },
+    {
+      "doc_name": "ADOBE_2019_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/ADOBE_2019_10K.txt",
+      "ground_truth": "ADBE, NASDAQ"
+    },
+    {
+      "doc_name": "ADOBE_2020_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/ADOBE_2020_10K.txt",
+      "ground_truth": "ADBE, NASDAQ"
+    },
+    {
+      "doc_name": "ADOBE_2021_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/ADOBE_2021_10K.txt",
+      "ground_truth": "ADBE, NASDAQ"
+    },
+    {
+      "doc_name": "ADOBE_2022Q2_10Q",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/ADOBE_2022Q2_10Q.txt",
+      "ground_truth": "ADBE, NASDAQ"
+    },
+    {
+      "doc_name": "ADOBE_2022_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/ADOBE_2022_10K.txt",
+      "ground_truth": [
+        {
+          "Trading Symbol": "ADBE",
+          "Listing Exchange": "NASDAQ"
+        }
+      ]
+    },
+    {
+      "doc_name": "AMAZON_2015_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/AMAZON_2015_10K.txt",
+      "ground_truth": "AMZN, NASDAQ Global Select Market"
+    },
+    {
+      "doc_name": "AMAZON_2016_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/AMAZON_2016_10K.txt",
+      "ground_truth": "AMZN, NASDAQ Global Select Market"
+    },
+    {
+      "doc_name": "AMAZON_2017_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/AMAZON_2017_10K.txt",
+      "ground_truth": "AMZN, Nasdaq Global Select Market"
+    },
+    {
+      "doc_name": "AMAZON_2018_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/AMAZON_2018_10K.txt",
+      "ground_truth": "AMZN, Nasdaq Global Select Market"
+    },
+    {
+      "doc_name": "AMAZON_2019_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/AMAZON_2019_10K.txt",
+      "ground_truth": "AMZN, Nasdaq Global Select Market"
+    },
+    {
+      "doc_name": "AMAZON_2020_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/AMAZON_2020_10K.txt",
+      "ground_truth": "AMZN, Nasdaq Global Select Market"
+    },
+    {
+      "doc_name": "AMAZON_2022_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/AMAZON_2022_10K.txt",
+      "ground_truth": "AMZN, Nasdaq Global Select Market"
+    },
+    {
+      "doc_name": "AMCOR_2019_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/AMCOR_2019_10K.txt",
+      "ground_truth": "AMCR, The New York Stock Exchange"
+    },
+    {
+      "doc_name": "AMCOR_2021_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/AMCOR_2021_10K.txt",
+      "ground_truth": [
+        {
+          "Trading Symbol": "AMCR",
+          "Exchange": "New York Stock Exchange"
+        },
+        {
+          "Trading Symbol": "AUKF/27",
+          "Exchange": "New York Stock Exchange"
+        }
+      ]
+    },
+    {
+      "doc_name": "AMCOR_2022_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/AMCOR_2022_10K.txt",
+      "ground_truth": [
+        {
+          "symbol": "AMCR",
+          "exchange": "New York Stock Exchange"
+        },
+        {
+          "symbol": "AUKF/27",
+          "exchange": "New York Stock Exchange"
+        }
+      ]
+    },
+    {
+      "doc_name": "AMCOR_2022_8K_2022-07-01",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/AMCOR_2022_8K_2022-07-01.txt",
+      "ground_truth": [
+        {
+          "Trading Symbol": "AMCR",
+          "Exchange": "New York Stock Exchange"
+        },
+        {
+          "Trading Symbol": "AUKF/27",
+          "Exchange": "New York Stock Exchange"
+        }
+      ]
+    },
+    {
+      "doc_name": "AMCOR_2022_8K_dated-2022-07-01",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/AMCOR_2022_8K_dated-2022-07-01.txt",
+      "ground_truth": [
+        {
+          "Trading Symbol": "AMCR",
+          "Exchange": "New York Stock Exchange"
+        },
+        {
+          "Trading Symbol": "AUKF/27",
+          "Exchange": "New York Stock Exchange"
+        }
+      ]
+    },
+    {
+      "doc_name": "AMCOR_2023Q2_10Q",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/AMCOR_2023Q2_10Q.txt",
+      "ground_truth": [
+        {
+          "symbol": "AMCR",
+          "exchange": "New York Stock Exchange"
+        },
+        {
+          "symbol": "AUKF/27",
+          "exchange": "New York Stock Exchange"
+        }
+      ]
+    },
+    {
+      "doc_name": "AMCOR_2023_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/AMCOR_2023_10K.txt",
+      "ground_truth": [
+        {
+          "Trading Symbol": "AMCR",
+          "Exchange": "New York Stock Exchange"
+        },
+        {
+          "Trading Symbol": "AUKF/27",
+          "Exchange": "New York Stock Exchange"
+        }
+      ]
+    },
+    {
+      "doc_name": "AMD_2019_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/AMD_2019_10K.txt",
+      "ground_truth": "AMD, The NASDAQ Global Select Market"
+    },
+    {
+      "doc_name": "AMD_2020_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/AMD_2020_10K.txt",
+      "ground_truth": "AMD, The NASDAQ Global Select Market"
+    },
+    {
+      "doc_name": "AMD_2021_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/AMD_2021_10K.txt",
+      "ground_truth": "AMD, The NASDAQ Global Select Market"
+    },
+    {
+      "doc_name": "AMD_2022_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/AMD_2022_10K.txt",
+      "ground_truth": "AMD, The NASDAQ Global Select Market"
+    },
+    {
+      "doc_name": "AMERICANWATERWORKS_2023Q2_10Q",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/AMERICANWATERWORKS_2023Q2_10Q.txt",
+      "ground_truth": "AWK, New York Stock Exchange"
+    },
+    {
+      "doc_name": "APPLE_2015_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/APPLE_2015_10K.txt",
+      "ground_truth": "AAPL, NASDAQ Stock Market LLC"
+    },
+    {
+      "doc_name": "APPLE_2016_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/APPLE_2016_10K.txt",
+      "ground_truth": "AAPL, NASDAQ"
+    },
+    {
+      "doc_name": "APPLE_2017_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/APPLE_2017_10K.txt",
+      "ground_truth": "AAPL, The Nasdaq Stock Market LLC"
+    },
+    {
+      "doc_name": "APPLE_2018_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/APPLE_2018_10K.txt",
+      "ground_truth": "AAPL, The Nasdaq Stock Market LLC"
+    },
+    {
+      "doc_name": "APPLE_2019_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/APPLE_2019_10K.txt",
+      "ground_truth": "AAPL, The Nasdaq Stock Market LLC"
+    },
+    {
+      "doc_name": "APPLE_2020_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/APPLE_2020_10K.txt",
+      "ground_truth": "AAPL, The Nasdaq Stock Market LLC"
+    },
+    {
+      "doc_name": "APPLE_2021_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/APPLE_2021_10K.txt",
+      "ground_truth": "AAPL, The Nasdaq Stock Market LLC"
+    },
+    {
+      "doc_name": "APPLE_2022_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/APPLE_2022_10K.txt",
+      "ground_truth": {
+        "Common Stock": {
+          "Trading Symbol": "AAPL",
+          "Exchange": "The Nasdaq Stock Market LLC"
+        },
+        "1.000% Notes due 2022": {
+          "Exchange": "The Nasdaq Stock Market LLC"
+        },
+        "1.375% Notes due 2024": {
+          "Exchange": "The Nasdaq Stock Market LLC"
+        },
+        "0.000% Notes due 2025": {
+          "Exchange": "The Nasdaq Stock Market LLC"
+        },
+        "0.875% Notes due 2025": {
+          "Exchange": "The Nasdaq Stock Market LLC"
+        },
+        "1.625% Notes due 2026": {
+          "Exchange": "The Nasdaq Stock Market LLC"
+        },
+        "2.000% Notes due 2027": {
+          "Exchange": "The Nasdaq Stock Market LLC"
+        },
+        "1.375% Notes due 2029": {
+          "Exchange": "The Nasdaq Stock Market LLC"
+        },
+        "3.050% Notes due 2029": {
+          "Exchange": "The Nasdaq Stock Market LLC"
+        },
+        "0.500% Notes due 2031": {
+          "Exchange": "The Nasdaq Stock Market LLC"
+        },
+        "3.600% Notes due 2042": {
+          "Exchange": "The Nasdaq Stock Market LLC"
+        }
+      }
+    },
+    {
+      "doc_name": "APPLE_2023Q3_10Q",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/APPLE_2023Q3_10Q.txt",
+      "ground_truth": [
+        {
+          "symbol": "AAPL",
+          "exchange": "The Nasdaq Stock Market LLC"
+        },
+        {
+          "symbol": "1.375% Notes due 2024",
+          "exchange": "The Nasdaq Stock Market LLC"
+        },
+        {
+          "symbol": "0.000% Notes due 2025",
+          "exchange": "The Nasdaq Stock Market LLC"
+        },
+        {
+          "symbol": "0.875% Notes due 2025",
+          "exchange": "The Nasdaq Stock Market LLC"
+        },
+        {
+          "symbol": "1.625% Notes due 2026",
+          "exchange": "The Nasdaq Stock Market LLC"
+        },
+        {
+          "symbol": "2.000% Notes due 2027",
+          "exchange": "The Nasdaq Stock Market LLC"
+        },
+        {
+          "symbol": "1.375% Notes due 2029",
+          "exchange": "The Nasdaq Stock Market LLC"
+        },
+        {
+          "symbol": "3.050% Notes due 2029",
+          "exchange": "The Nasdaq Stock Market LLC"
+        },
+        {
+          "symbol": "0.500% Notes due 2031",
+          "exchange": "The Nasdaq Stock Market LLC"
+        },
+        {
+          "symbol": "3.600% Notes due 2042",
+          "exchange": "The Nasdaq Stock Market LLC"
+        }
+      ]
+    },
+    {
+      "doc_name": "BESTBUY_2015_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/BESTBUY_2015_10K.txt",
+      "ground_truth": "BBY, New York Stock Exchange"
+    },
+    {
+      "doc_name": "BESTBUY_2020_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/BESTBUY_2020_10K.txt",
+      "ground_truth": "BBY, New York Stock Exchange"
+    },
+    {
+      "doc_name": "BESTBUY_2021_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/BESTBUY_2021_10K.txt",
+      "ground_truth": "BBY, New York Stock Exchange"
+    },
+    {
+      "doc_name": "BESTBUY_2022_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/BESTBUY_2022_10K.txt",
+      "ground_truth": "BBY, New York Stock Exchange"
+    },
+    {
+      "doc_name": "BESTBUY_2023_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/BESTBUY_2023_10K.txt",
+      "ground_truth": "BBY, New York Stock Exchange"
+    },
+    {
+      "doc_name": "BESTBUY_2023_8K_dated-2023-04-24",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/BESTBUY_2023_8K_dated-2023-04-24.txt",
+      "ground_truth": "BBY, New York Stock Exchange"
+    },
+    {
+      "doc_name": "BESTBUY_2024Q2_10Q",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/BESTBUY_2024Q2_10Q.txt",
+      "ground_truth": "BBY, New York Stock Exchange"
+    },
+    {
+      "doc_name": "BLOCK_2022_8K_dated-2022-01-28",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/BLOCK_2022_8K_dated-2022-01-28.txt",
+      "ground_truth": "SQ, New York Stock Exchange"
+    },
+    {
+      "doc_name": "BOEING_2017_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/BOEING_2017_10K.txt",
+      "ground_truth": "BA, New York Stock Exchange"
+    },
+    {
+      "doc_name": "BOEING_2018_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/BOEING_2018_10K.txt",
+      "ground_truth": "BA, New York Stock Exchange"
+    },
+    {
+      "doc_name": "BOEING_2019_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/BOEING_2019_10K.txt",
+      "ground_truth": "BA, New York Stock Exchange"
+    },
+    {
+      "doc_name": "BOEING_2020_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/BOEING_2020_10K.txt",
+      "ground_truth": "BA — New York Stock Exchange"
+    },
+    {
+      "doc_name": "BOEING_2022_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/BOEING_2022_10K.txt",
+      "ground_truth": "BA — New York Stock Exchange"
+    },
+    {
+      "doc_name": "CORNING_2022_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/CORNING_2022_10K.txt",
+      "ground_truth": "GLW — New York Stock Exchange (NYSE)"
+    },
+    {
+      "doc_name": "CORNING_2023Q2_10Q",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/CORNING_2023Q2_10Q.txt",
+      "ground_truth": [
+        {
+          "Trading Symbol": "GLW",
+          "Exchange": "New York Stock Exchange"
+        },
+        {
+          "Trading Symbol": "GLW26",
+          "Exchange": "New York Stock Exchange"
+        },
+        {
+          "Trading Symbol": "GLW31",
+          "Exchange": "New York Stock Exchange"
+        }
+      ]
+    },
+    {
+      "doc_name": "COSTCO_2015_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/COSTCO_2015_10K.txt",
+      "ground_truth": "COST — The NASDAQ Global Select Market"
+    },
+    {
+      "doc_name": "COSTCO_2016_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/COSTCO_2016_10K.txt",
+      "ground_truth": "COST — The NASDAQ Global Select Market"
+    },
+    {
+      "doc_name": "COSTCO_2017_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/COSTCO_2017_10K.txt",
+      "ground_truth": "COST — The NASDAQ Global Select Market"
+    },
+    {
+      "doc_name": "COSTCO_2018_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/COSTCO_2018_10K.txt",
+      "ground_truth": "COST — The NASDAQ Global Select Market"
+    },
+    {
+      "doc_name": "COSTCO_2019_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/COSTCO_2019_10K.txt",
+      "ground_truth": "COST — The NASDAQ Global Select Market"
+    },
+    {
+      "doc_name": "COSTCO_2020_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/COSTCO_2020_10K.txt",
+      "ground_truth": "COST — The NASDAQ Global Select Market"
+    },
+    {
+      "doc_name": "COSTCO_2021_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/COSTCO_2021_10K.txt",
+      "ground_truth": "COST — The NASDAQ Global Select Market"
+    },
+    {
+      "doc_name": "COSTCO_2022_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/COSTCO_2022_10K.txt",
+      "ground_truth": "COST — The NASDAQ Global Select Market"
+    },
+    {
+      "doc_name": "COSTCO_2023_8K_dated-2023-08-09",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/COSTCO_2023_8K_dated-2023-08-09.txt",
+      "ground_truth": "COST, NASDAQ"
+    },
+    {
+      "doc_name": "COSTCO_2023_8K_dated-2023-08-16",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/COSTCO_2023_8K_dated-2023-08-16.txt",
+      "ground_truth": "COST, NASDAQ"
+    },
+    {
+      "doc_name": "EBAY_2015_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/EBAY_2015_10K.txt",
+      "ground_truth": "Common stock — The Nasdaq Global Select Market"
+    },
+    {
+      "doc_name": "EBAY_2016_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/EBAY_2016_10K.txt",
+      "ground_truth": "Common stock — The Nasdaq Global Select Market"
+    },
+    {
+      "doc_name": "EBAY_2017_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/EBAY_2017_10K.txt",
+      "ground_truth": "Common stock — The Nasdaq Global Select Market; 6.00% Notes due 2056 — The NASDAQ Stock Market LLC"
+    },
+    {
+      "doc_name": "EBAY_2020_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/EBAY_2020_10K.txt",
+      "ground_truth": "EBAY — The Nasdaq Global Select Market; EBAYL — The Nasdaq Global Select Market"
+    },
+    {
+      "doc_name": "EBAY_2021_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/EBAY_2021_10K.txt",
+      "ground_truth": "EBAY — The Nasdaq Global Select Market"
+    },
+    {
+      "doc_name": "EBAY_2022_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/EBAY_2022_10K.txt",
+      "ground_truth": "EBAY — The Nasdaq Global Select Market"
+    },
+    {
+      "doc_name": "EBAY_2023Q1_8K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/EBAY_2023Q1_8K.txt",
+      "ground_truth": "EBAY, The Nasdaq Global Select Market"
+    },
+    {
+      "doc_name": "EBAY_2023Q2_8K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/EBAY_2023Q2_8K.txt",
+      "ground_truth": "EBAY, The Nasdaq Global Select Market"
+    },
+    {
+      "doc_name": "FOOTLOCKER_2022_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/FOOTLOCKER_2022_10K.txt",
+      "ground_truth": "FL — New York Stock Exchange"
+    },
+    {
+      "doc_name": "FOOTLOCKER_2022_10Q",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/FOOTLOCKER_2022_10Q.txt",
+      "ground_truth": "Common Stock, par value $0.01, FL, New York Stock Exchange"
+    },
+    {
+      "doc_name": "FOOTLOCKER_2022_8K_dated-2022-05-20",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/FOOTLOCKER_2022_8K_dated-2022-05-20.txt",
+      "ground_truth": "FL, New York Stock Exchange"
+    },
+    {
+      "doc_name": "FOOTLOCKER_2022_8K_dated_2023-02-21",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/FOOTLOCKER_2022_8K_dated_2023-02-21.txt",
+      "ground_truth": "FL, New York Stock Exchange"
+    },
+    {
+      "doc_name": "FOOTLOCKER_2023Q3_10Q",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/FOOTLOCKER_2023Q3_10Q.txt",
+      "ground_truth": "Common Stock, par value $0.01, FL, New York Stock Exchange"
+    },
+    {
+      "doc_name": "FOOTLOCKER_2023_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/FOOTLOCKER_2023_10K.txt",
+      "ground_truth": "FL — New York Stock Exchange"
+    },
+    {
+      "doc_name": "GENERALMILLS_2015_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/GENERALMILLS_2015_10K.txt",
+      "ground_truth": "GIS — New York Stock Exchange"
+    },
+    {
+      "doc_name": "JOHNSON_JOHNSON_2023_8K_dated-2023-08-23",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/JOHNSON_JOHNSON_2023_8K_dated-2023-08-23.txt",
+      "ground_truth": "JNJ (New York Stock Exchange), JNJ24C (New York Stock Exchange), JNJ24BP (New York Stock Exchange), JNJ28 (New York Stock Exchange), JNJ35 (New York Stock Exchange)"
+    },
+    {
+      "doc_name": "JOHNSON_JOHNSON_2023_8K_dated-2023-08-30",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/JOHNSON_JOHNSON_2023_8K_dated-2023-08-30.txt",
+      "ground_truth": [
+        {
+          "symbol": "JNJ",
+          "exchange": "New York Stock Exchange"
+        },
+        {
+          "symbol": "JNJ24C",
+          "exchange": "New York Stock Exchange"
+        },
+        {
+          "symbol": "JNJ24BP",
+          "exchange": "New York Stock Exchange"
+        },
+        {
+          "symbol": "JNJ28",
+          "exchange": "New York Stock Exchange"
+        },
+        {
+          "symbol": "JNJ35",
+          "exchange": "New York Stock Exchange"
+        }
+      ]
+    },
+    {
+      "doc_name": "LOCKHEEDMARTIN_2022Q2_10Q",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/LOCKHEEDMARTIN_2022Q2_10Q.txt",
+      "ground_truth": "LMT, New York Stock Exchange"
+    },
+    {
+      "doc_name": "LOCKHEEDMARTIN_2023Q1_10Q",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/LOCKHEEDMARTIN_2023Q1_10Q.txt",
+      "ground_truth": "LMT (NYSE)"
+    },
+    {
+      "doc_name": "LOCKHEEDMARTIN_2023Q2_10Q",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/LOCKHEEDMARTIN_2023Q2_10Q.txt",
+      "ground_truth": "LMT (NYSE)"
+    },
+    {
+      "doc_name": "MCDONALDS_8K_dated-2023-01-06",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/MCDONALDS_8K_dated-2023-01-06.txt",
+      "ground_truth": "MCD, New York Stock Exchange"
+    },
+    {
+      "doc_name": "MCDONALDS_8K_dated-2023-02-13",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/MCDONALDS_8K_dated-2023-02-13.txt",
+      "ground_truth": "MCD, New York Stock Exchange"
+    },
+    {
+      "doc_name": "MCDONALDS_8K_dated-2023-08-14",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/MCDONALDS_8K_dated-2023-08-14.txt",
+      "ground_truth": "MCD, New York Stock Exchange"
+    },
+    {
+      "doc_name": "MGMRESORTS_2023Q2_10Q",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/MGMRESORTS_2023Q2_10Q.txt",
+      "ground_truth": "MGM, New York Stock Exchange (NYSE)"
+    },
+    {
+      "doc_name": "MGMRESORTS_2023_8K_dated-2023-03-01",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/MGMRESORTS_2023_8K_dated-2023-03-01.txt",
+      "ground_truth": "MGM, New York Stock Exchange (NYSE)"
+    },
+    {
+      "doc_name": "MGMRESORTS_2023_8K_dated-2023-09-12",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/MGMRESORTS_2023_8K_dated-2023-09-12.txt",
+      "ground_truth": "MGM, New York Stock Exchange (NYSE)"
+    },
+    {
+      "doc_name": "NETFLIX_2023Q2_10Q",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/NETFLIX_2023Q2_10Q.txt",
+      "ground_truth": "NFLX, NASDAQ Global Select Market"
+    },
+    {
+      "doc_name": "PAYPAL_2023Q2_10Q",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/PAYPAL_2023Q2_10Q.txt",
+      "ground_truth": "PYPL, NASDAQ Global Select Market"
+    },
+    {
+      "doc_name": "PEPSICO_2023_8K_dated-2023-05-05",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/PEPSICO_2023_8K_dated-2023-05-05.txt",
+      "ground_truth": "PEP: The Nasdaq Stock Market LLC"
+    },
+    {
+      "doc_name": "Pfizer_2023Q2_10Q",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/Pfizer_2023Q2_10Q.txt",
+      "ground_truth": [
+        {
+          "symbol": "PFE",
+          "exchange": "New York Stock Exchange"
+        },
+        {
+          "symbol": "PFE27",
+          "exchange": "New York Stock Exchange"
+        }
+      ]
+    },
+    {
+      "doc_name": "SALESFORCE_2021_8K_dated-2023-01-04",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/SALESFORCE_2021_8K_dated-2023-01-04.txt",
+      "ground_truth": "CRM, New York Stock Exchange, Inc."
+    },
+    {
+      "doc_name": "SALESFORCE_2023Q3_10Q",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/SALESFORCE_2023Q3_10Q.txt",
+      "ground_truth": "CRM, New York Stock Exchange"
+    },
+    {
+      "doc_name": "ULTABEAUTY_2023_8K_dated-2023-06-07",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/ULTABEAUTY_2023_8K_dated-2023-06-07.txt",
+      "ground_truth": "ULTA, The NASDAQ Global Select Market"
+    },
+    {
+      "doc_name": "WALMART_2024Q1_10Q",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/WALMART_2024Q1_10Q.txt",
+      "ground_truth": [
+        {
+          "Trading Symbol": "WMT",
+          "Exchange": "New York Stock Exchange"
+        },
+        {
+          "Trading Symbol": "WMT26",
+          "Exchange": "New York Stock Exchange"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,513 @@
+{
+  "dataset": "financebench",
+  "split": "all_docs",
+  "question": "What is the address of principal executive offices and ZIP code?",
+  "question_slug": "what_is_the_address_of_principal_executive_offices_and_zip_c",
+  "model": "gpt-5.4",
+  "rules_dir": "/mnt/data/LSF/rules/financebench/agentic_rule_full_data_gpt54_adaptive/all_docs/q10_what_is_the_address_of_principal_executive_offices_and_zip_c",
+  "ledger_path": "/mnt/data/LSF/results/financebench/agentic_rule_full_data_gpt54_adaptive/all_docs/q10_what_is_the_address_of_principal_executive_offices_and_zip_c.verify_accuracy_ledger.json",
+  "report_path": "/mnt/data/LSF/results/financebench/agentic_rule_full_data_gpt54_adaptive/all_docs/q10_what_is_the_address_of_principal_executive_offices_and_zip_c_rule_gen.json",
+  "verify_accuracy_budget": 30,
+  "documents": [
+    {
+      "doc_name": "3M_2023Q2_10Q",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/3M_2023Q2_10Q.txt",
+      "ground_truth": "3M Center, St. Paul, Minnesota 55144-1000"
+    },
+    {
+      "doc_name": "ACTIVISIONBLIZZARD_2017_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/ACTIVISIONBLIZZARD_2017_10K.txt",
+      "ground_truth": "3100 Ocean Park Boulevard, Santa Monica, CA 90405"
+    },
+    {
+      "doc_name": "ACTIVISIONBLIZZARD_2020_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/ACTIVISIONBLIZZARD_2020_10K.txt",
+      "ground_truth": "3100 Ocean Park Boulevard, Santa Monica, CA 90405"
+    },
+    {
+      "doc_name": "ACTIVSIONBLIZZARD_2023Q2_10Q",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/ACTIVSIONBLIZZARD_2023Q2_10Q.txt",
+      "ground_truth": "2701 Olympic Boulevard, Building B, Santa Monica, CA 90404"
+    },
+    {
+      "doc_name": "ADOBE_2015_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/ADOBE_2015_10K.txt",
+      "ground_truth": "345 Park Avenue, San Jose, California 95110-2704"
+    },
+    {
+      "doc_name": "ADOBE_2016_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/ADOBE_2016_10K.txt",
+      "ground_truth": "345 Park Avenue, San Jose, California 95110-2704"
+    },
+    {
+      "doc_name": "ADOBE_2017_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/ADOBE_2017_10K.txt",
+      "ground_truth": "345 Park Avenue, San Jose, California 95110-2704"
+    },
+    {
+      "doc_name": "ADOBE_2018_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/ADOBE_2018_10K.txt",
+      "ground_truth": "345 Park Avenue, San Jose, California 95110-2704"
+    },
+    {
+      "doc_name": "ADOBE_2019_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/ADOBE_2019_10K.txt",
+      "ground_truth": "345 Park Avenue, San Jose, California 95110-2704"
+    },
+    {
+      "doc_name": "ADOBE_2020_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/ADOBE_2020_10K.txt",
+      "ground_truth": "345 Park Avenue, San Jose, California 95110-2704"
+    },
+    {
+      "doc_name": "ADOBE_2021_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/ADOBE_2021_10K.txt",
+      "ground_truth": "345 Park Avenue, San Jose, California 95110-2704"
+    },
+    {
+      "doc_name": "ADOBE_2022Q2_10Q",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/ADOBE_2022Q2_10Q.txt",
+      "ground_truth": "345 Park Avenue, San Jose, California 95110-2704"
+    },
+    {
+      "doc_name": "ADOBE_2022_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/ADOBE_2022_10K.txt",
+      "ground_truth": "345 Park Avenue, San Jose, California 95110-2704"
+    },
+    {
+      "doc_name": "AMAZON_2015_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/AMAZON_2015_10K.txt",
+      "ground_truth": "410 Terry Avenue North, Seattle, Washington 98109-5210"
+    },
+    {
+      "doc_name": "AMAZON_2016_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/AMAZON_2016_10K.txt",
+      "ground_truth": "410 Terry Avenue North, Seattle, Washington 98109-5210"
+    },
+    {
+      "doc_name": "AMAZON_2017_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/AMAZON_2017_10K.txt",
+      "ground_truth": "410 Terry Avenue North, Seattle, Washington 98109-5210"
+    },
+    {
+      "doc_name": "AMAZON_2018_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/AMAZON_2018_10K.txt",
+      "ground_truth": "410 Terry Avenue North, Seattle, Washington 98109-5210"
+    },
+    {
+      "doc_name": "AMAZON_2019_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/AMAZON_2019_10K.txt",
+      "ground_truth": "410 Terry Avenue North, Seattle, Washington 98109-5210"
+    },
+    {
+      "doc_name": "AMAZON_2020_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/AMAZON_2020_10K.txt",
+      "ground_truth": "410 Terry Avenue North, Seattle, Washington 98109-5210"
+    },
+    {
+      "doc_name": "AMAZON_2022_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/AMAZON_2022_10K.txt",
+      "ground_truth": "410 Terry Avenue North, Seattle, Washington 98109-5210"
+    },
+    {
+      "doc_name": "AMCOR_2019_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/AMCOR_2019_10K.txt",
+      "ground_truth": "83 Tower Road North, Warmley, Bristol BS30 8XP, United Kingdom"
+    },
+    {
+      "doc_name": "AMCOR_2021_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/AMCOR_2021_10K.txt",
+      "ground_truth": "83 Tower Road North, Warmley, Bristol, United Kingdom BS30 8XP"
+    },
+    {
+      "doc_name": "AMCOR_2022_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/AMCOR_2022_10K.txt",
+      "ground_truth": "83 Tower Road North, Warmley, Bristol, United Kingdom BS30 8XP"
+    },
+    {
+      "doc_name": "AMCOR_2022_8K_2022-07-01",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/AMCOR_2022_8K_2022-07-01.txt",
+      "ground_truth": "83 Tower Road North, Warmley, Bristol, United Kingdom BS30 8XP"
+    },
+    {
+      "doc_name": "AMCOR_2022_8K_dated-2022-07-01",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/AMCOR_2022_8K_dated-2022-07-01.txt",
+      "ground_truth": "83 Tower Road North, Warmley, Bristol, United Kingdom BS30 8XP"
+    },
+    {
+      "doc_name": "AMCOR_2023Q2_10Q",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/AMCOR_2023Q2_10Q.txt",
+      "ground_truth": "83 Tower Road North, Warmley, Bristol BS30 8XP, United Kingdom"
+    },
+    {
+      "doc_name": "AMCOR_2023_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/AMCOR_2023_10K.txt",
+      "ground_truth": "83 Tower Road North, Warmley, Bristol, United Kingdom BS30 8XP"
+    },
+    {
+      "doc_name": "AMD_2019_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/AMD_2019_10K.txt",
+      "ground_truth": "2485 Augustine Drive, Santa Clara, California 95054"
+    },
+    {
+      "doc_name": "AMD_2020_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/AMD_2020_10K.txt",
+      "ground_truth": "2485 Augustine Drive, Santa Clara, California 95054"
+    },
+    {
+      "doc_name": "AMD_2021_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/AMD_2021_10K.txt",
+      "ground_truth": "2485 Augustine Drive, Santa Clara, California 95054"
+    },
+    {
+      "doc_name": "AMD_2022_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/AMD_2022_10K.txt",
+      "ground_truth": "2485 Augustine Drive, Santa Clara, California 95054"
+    },
+    {
+      "doc_name": "AMERICANWATERWORKS_2023Q2_10Q",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/AMERICANWATERWORKS_2023Q2_10Q.txt",
+      "ground_truth": "1 Water Street, Camden, NJ 08102-1658"
+    },
+    {
+      "doc_name": "APPLE_2015_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/APPLE_2015_10K.txt",
+      "ground_truth": "1 Infinite Loop, Cupertino, California 95014"
+    },
+    {
+      "doc_name": "APPLE_2016_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/APPLE_2016_10K.txt",
+      "ground_truth": "1 Infinite Loop, Cupertino, California 95014"
+    },
+    {
+      "doc_name": "APPLE_2017_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/APPLE_2017_10K.txt",
+      "ground_truth": "1 Infinite Loop, Cupertino, California, 95014"
+    },
+    {
+      "doc_name": "APPLE_2018_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/APPLE_2018_10K.txt",
+      "ground_truth": "One Apple Park Way, Cupertino, California 95014"
+    },
+    {
+      "doc_name": "APPLE_2019_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/APPLE_2019_10K.txt",
+      "ground_truth": "One Apple Park Way, Cupertino, California 95014"
+    },
+    {
+      "doc_name": "APPLE_2020_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/APPLE_2020_10K.txt",
+      "ground_truth": "One Apple Park Way, Cupertino, California, 95014"
+    },
+    {
+      "doc_name": "APPLE_2021_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/APPLE_2021_10K.txt",
+      "ground_truth": "One Apple Park Way, Cupertino, California, 95014"
+    },
+    {
+      "doc_name": "APPLE_2022_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/APPLE_2022_10K.txt",
+      "ground_truth": "One Apple Park Way, Cupertino, California 95014"
+    },
+    {
+      "doc_name": "APPLE_2023Q3_10Q",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/APPLE_2023Q3_10Q.txt",
+      "ground_truth": "One Apple Park Way, Cupertino, California 95014"
+    },
+    {
+      "doc_name": "BESTBUY_2015_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/BESTBUY_2015_10K.txt",
+      "ground_truth": "7601 Penn Avenue South, Richfield, Minnesota 55423"
+    },
+    {
+      "doc_name": "BESTBUY_2020_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/BESTBUY_2020_10K.txt",
+      "ground_truth": "7601 Penn Avenue South, Richfield, Minnesota, 55423"
+    },
+    {
+      "doc_name": "BESTBUY_2021_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/BESTBUY_2021_10K.txt",
+      "ground_truth": "7601 Penn Avenue South, Richfield, Minnesota 55423"
+    },
+    {
+      "doc_name": "BESTBUY_2022_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/BESTBUY_2022_10K.txt",
+      "ground_truth": "7601 Penn Avenue South, Richfield, Minnesota 55423"
+    },
+    {
+      "doc_name": "BESTBUY_2023_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/BESTBUY_2023_10K.txt",
+      "ground_truth": "7601 Penn Avenue South, Richfield, Minnesota 55423"
+    },
+    {
+      "doc_name": "BESTBUY_2023_8K_dated-2023-04-24",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/BESTBUY_2023_8K_dated-2023-04-24.txt",
+      "ground_truth": "7601 Penn Avenue South, Richfield, Minnesota 55423"
+    },
+    {
+      "doc_name": "BESTBUY_2024Q2_10Q",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/BESTBUY_2024Q2_10Q.txt",
+      "ground_truth": "7601 Penn Avenue South, Richfield, Minnesota 55423"
+    },
+    {
+      "doc_name": "BLOCK_2022_8K_dated-2022-01-28",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/BLOCK_2022_8K_dated-2022-01-28.txt",
+      "ground_truth": "1455 Market Street, Suite 600, San Francisco, CA 94103"
+    },
+    {
+      "doc_name": "BOEING_2017_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/BOEING_2017_10K.txt",
+      "ground_truth": "100 N. Riverside Plaza, Chicago, IL 60606-1596"
+    },
+    {
+      "doc_name": "BOEING_2018_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/BOEING_2018_10K.txt",
+      "ground_truth": "100 N. Riverside Plaza, Chicago, IL 60606-1596"
+    },
+    {
+      "doc_name": "BOEING_2019_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/BOEING_2019_10K.txt",
+      "ground_truth": "100 N. Riverside Plaza, Chicago, IL 60606-1596"
+    },
+    {
+      "doc_name": "BOEING_2020_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/BOEING_2020_10K.txt",
+      "ground_truth": "100 N. Riverside Plaza, Chicago, IL 60606-1596"
+    },
+    {
+      "doc_name": "BOEING_2022_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/BOEING_2022_10K.txt",
+      "ground_truth": "929 Long Bridge Drive, Arlington, VA 22202"
+    },
+    {
+      "doc_name": "CORNING_2022_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/CORNING_2022_10K.txt",
+      "ground_truth": "One Riverfront Plaza, Corning, New York 14831"
+    },
+    {
+      "doc_name": "CORNING_2023Q2_10Q",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/CORNING_2023Q2_10Q.txt",
+      "ground_truth": "One Riverfront Plaza, Corning, New York 14831"
+    },
+    {
+      "doc_name": "COSTCO_2015_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/COSTCO_2015_10K.txt",
+      "ground_truth": "999 Lake Drive, Issaquah, WA 98027"
+    },
+    {
+      "doc_name": "COSTCO_2016_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/COSTCO_2016_10K.txt",
+      "ground_truth": "999 Lake Drive, Issaquah, WA 98027"
+    },
+    {
+      "doc_name": "COSTCO_2017_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/COSTCO_2017_10K.txt",
+      "ground_truth": "999 Lake Drive, Issaquah, WA 98027"
+    },
+    {
+      "doc_name": "COSTCO_2018_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/COSTCO_2018_10K.txt",
+      "ground_truth": "999 Lake Drive, Issaquah, WA 98027"
+    },
+    {
+      "doc_name": "COSTCO_2019_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/COSTCO_2019_10K.txt",
+      "ground_truth": "999 Lake Drive, Issaquah, WA 98027"
+    },
+    {
+      "doc_name": "COSTCO_2020_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/COSTCO_2020_10K.txt",
+      "ground_truth": "999 Lake Drive, Issaquah, WA 98027"
+    },
+    {
+      "doc_name": "COSTCO_2021_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/COSTCO_2021_10K.txt",
+      "ground_truth": "999 Lake Drive, Issaquah, WA 98027"
+    },
+    {
+      "doc_name": "COSTCO_2022_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/COSTCO_2022_10K.txt",
+      "ground_truth": "999 Lake Drive, Issaquah, WA 98027"
+    },
+    {
+      "doc_name": "COSTCO_2023_8K_dated-2023-08-09",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/COSTCO_2023_8K_dated-2023-08-09.txt",
+      "ground_truth": "999 Lake Drive, Issaquah, WA 98027"
+    },
+    {
+      "doc_name": "COSTCO_2023_8K_dated-2023-08-16",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/COSTCO_2023_8K_dated-2023-08-16.txt",
+      "ground_truth": "999 Lake Drive, Issaquah, WA 98027"
+    },
+    {
+      "doc_name": "EBAY_2015_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/EBAY_2015_10K.txt",
+      "ground_truth": "2065 Hamilton Avenue, San Jose, California 95125"
+    },
+    {
+      "doc_name": "EBAY_2016_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/EBAY_2016_10K.txt",
+      "ground_truth": "2025 Hamilton Avenue, San Jose, California 95125"
+    },
+    {
+      "doc_name": "EBAY_2017_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/EBAY_2017_10K.txt",
+      "ground_truth": "2025 Hamilton Avenue, San Jose, California 95125"
+    },
+    {
+      "doc_name": "EBAY_2020_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/EBAY_2020_10K.txt",
+      "ground_truth": "2025 Hamilton Avenue, San Jose, California 95125"
+    },
+    {
+      "doc_name": "EBAY_2021_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/EBAY_2021_10K.txt",
+      "ground_truth": "2025 Hamilton Avenue, San Jose, California 95125"
+    },
+    {
+      "doc_name": "EBAY_2022_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/EBAY_2022_10K.txt",
+      "ground_truth": "2025 Hamilton Avenue, San Jose, California 95125"
+    },
+    {
+      "doc_name": "EBAY_2023Q1_8K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/EBAY_2023Q1_8K.txt",
+      "ground_truth": "2025 Hamilton Avenue, San Jose, California 95125"
+    },
+    {
+      "doc_name": "EBAY_2023Q2_8K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/EBAY_2023Q2_8K.txt",
+      "ground_truth": "2025 Hamilton Avenue, San Jose, California 95125"
+    },
+    {
+      "doc_name": "FOOTLOCKER_2022_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/FOOTLOCKER_2022_10K.txt",
+      "ground_truth": "330 West 34th Street, New York, New York 10001"
+    },
+    {
+      "doc_name": "FOOTLOCKER_2022_10Q",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/FOOTLOCKER_2022_10Q.txt",
+      "ground_truth": "330 West 34th Street, New York, New York 10001"
+    },
+    {
+      "doc_name": "FOOTLOCKER_2022_8K_dated-2022-05-20",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/FOOTLOCKER_2022_8K_dated-2022-05-20.txt",
+      "ground_truth": "330 West 34th Street, New York, New York 10001"
+    },
+    {
+      "doc_name": "FOOTLOCKER_2022_8K_dated_2023-02-21",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/FOOTLOCKER_2022_8K_dated_2023-02-21.txt",
+      "ground_truth": "330 West 34th Street, New York, New York 10001"
+    },
+    {
+      "doc_name": "FOOTLOCKER_2023Q3_10Q",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/FOOTLOCKER_2023Q3_10Q.txt",
+      "ground_truth": "330 West 34th Street, New York, New York 10001"
+    },
+    {
+      "doc_name": "FOOTLOCKER_2023_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/FOOTLOCKER_2023_10K.txt",
+      "ground_truth": "330 West 34th Street, New York, New York 10001"
+    },
+    {
+      "doc_name": "GENERALMILLS_2015_10K",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/GENERALMILLS_2015_10K.txt",
+      "ground_truth": "Number One General Mills Boulevard, Minneapolis, Minnesota 55426"
+    },
+    {
+      "doc_name": "JOHNSON_JOHNSON_2023_8K_dated-2023-08-23",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/JOHNSON_JOHNSON_2023_8K_dated-2023-08-23.txt",
+      "ground_truth": "One Johnson & Johnson Plaza, New Brunswick, New Jersey 08933"
+    },
+    {
+      "doc_name": "JOHNSON_JOHNSON_2023_8K_dated-2023-08-30",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/JOHNSON_JOHNSON_2023_8K_dated-2023-08-30.txt",
+      "ground_truth": "One Johnson & Johnson Plaza, New Brunswick, New Jersey 08933"
+    },
+    {
+      "doc_name": "LOCKHEEDMARTIN_2022Q2_10Q",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/LOCKHEEDMARTIN_2022Q2_10Q.txt",
+      "ground_truth": "6801 Rockledge Drive, Bethesda, Maryland 20817"
+    },
+    {
+      "doc_name": "LOCKHEEDMARTIN_2023Q1_10Q",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/LOCKHEEDMARTIN_2023Q1_10Q.txt",
+      "ground_truth": "6801 Rockledge Drive, Bethesda, MD 20817"
+    },
+    {
+      "doc_name": "LOCKHEEDMARTIN_2023Q2_10Q",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/LOCKHEEDMARTIN_2023Q2_10Q.txt",
+      "ground_truth": "Bethesda, Maryland, 20817"
+    },
+    {
+      "doc_name": "MCDONALDS_8K_dated-2023-01-06",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/MCDONALDS_8K_dated-2023-01-06.txt",
+      "ground_truth": "110 North Carpenter Street, Chicago, Illinois, 60607"
+    },
+    {
+      "doc_name": "MCDONALDS_8K_dated-2023-02-13",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/MCDONALDS_8K_dated-2023-02-13.txt",
+      "ground_truth": "110 North Carpenter Street, Chicago, Illinois, 60607"
+    },
+    {
+      "doc_name": "MCDONALDS_8K_dated-2023-08-14",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/MCDONALDS_8K_dated-2023-08-14.txt",
+      "ground_truth": "110 North Carpenter Street, Chicago, Illinois, 60607"
+    },
+    {
+      "doc_name": "MGMRESORTS_2023Q2_10Q",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/MGMRESORTS_2023Q2_10Q.txt",
+      "ground_truth": "3600 Las Vegas Boulevard South, Las Vegas, Nevada 89109"
+    },
+    {
+      "doc_name": "MGMRESORTS_2023_8K_dated-2023-03-01",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/MGMRESORTS_2023_8K_dated-2023-03-01.txt",
+      "ground_truth": "3600 Las Vegas Boulevard South, Las Vegas, Nevada 89109"
+    },
+    {
+      "doc_name": "MGMRESORTS_2023_8K_dated-2023-09-12",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/MGMRESORTS_2023_8K_dated-2023-09-12.txt",
+      "ground_truth": "3600 Las Vegas Boulevard South, Las Vegas, Nevada 89109"
+    },
+    {
+      "doc_name": "NETFLIX_2023Q2_10Q",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/NETFLIX_2023Q2_10Q.txt",
+      "ground_truth": "121 Albright Way, Los Gatos, California 95032"
+    },
+    {
+      "doc_name": "PAYPAL_2023Q2_10Q",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/PAYPAL_2023Q2_10Q.txt",
+      "ground_truth": "2211 North First Street, San Jose, California 95131"
+    },
+    {
+      "doc_name": "PEPSICO_2023_8K_dated-2023-05-05",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/PEPSICO_2023_8K_dated-2023-05-05.txt",
+      "ground_truth": "700 Anderson Hill Road, Purchase, New York 10577"
+    },
+    {
+      "doc_name": "Pfizer_2023Q2_10Q",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/Pfizer_2023Q2_10Q.txt",
+      "ground_truth": "66 Hudson Boulevard East, New York, New York 10001-2192"
+    },
+    {
+      "doc_name": "SALESFORCE_2021_8K_dated-2023-01-04",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/SALESFORCE_2021_8K_dated-2023-01-04.txt",
+      "ground_truth": "Salesforce Tower, 415 Mission Street, 3rd Fl, San Francisco, California 94105"
+    },
+    {
+      "doc_name": "SALESFORCE_2023Q3_10Q",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/SALESFORCE_2023Q3_10Q.txt",
+      "ground_truth": "Salesforce Tower, 415 Mission Street, 3rd Fl, San Francisco, California 94105"
+    },
+    {
+      "doc_name": "ULTABEAUTY_2023_8K_dated-2023-06-07",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/ULTABEAUTY_2023_8K_dated-2023-06-07.txt",
+      "ground_truth": "1000 Remington Blvd., Suite 120, Bolingbrook, Illinois 60440"
+    },
+    {
+      "doc_name": "WALMART_2024Q1_10Q",
+      "doc_path": "/mnt/data/LSF/data/financebench/text/WALMART_2024Q1_10Q.txt",
+      "ground_truth": "702 S.W. 8th Street, Bentonville, AR 72716"
+    }
+  ]
+}

@@ -1,0 +1,576 @@
+{
+  "verify_accuracy_calls": [
+    {
+      "doc_names": [
+        "3M_2023Q2_10Q",
+        "AMCOR_2023Q2_10Q",
+        "BOEING_2018_10K",
+        "FOOTLOCKER_2022_10Q",
+        "WALMART_2024Q1_10Q"
+      ],
+      "rule_names": [
+        "rule_section_12b_trading_table",
+        "rule_symbol_exchange_narrative"
+      ],
+      "n": 5,
+      "n_correct": 3,
+      "accuracy": 0.6,
+      "avg_cost_ratio": 0.000394,
+      "qa_input_tokens": 763,
+      "qa_output_tokens": 96,
+      "judge_input_tokens": 1008,
+      "judge_output_tokens": 32,
+      "input_tokens_total": 1771,
+      "output_tokens_total": 128,
+      "latency_seconds": 4.825,
+      "results": [
+        {
+          "doc_name": "3M_2023Q2_10Q",
+          "answer": "MMM — New York Stock Exchange; MMM26 — New York Stock Exchange; MMM30 — New York Stock Exchange; MMM31 — New York Stock Exchange",
+          "correct": false,
+          "retrieved_token_count": 30,
+          "cost_ratio": 0.000381,
+          "rules_applied": [
+            "rule_section_12b_trading_table"
+          ]
+        },
+        {
+          "doc_name": "AMCOR_2023Q2_10Q",
+          "answer": "AMCR — New York Stock Exchange; AUKF/27 — New York Stock Exchange",
+          "correct": true,
+          "retrieved_token_count": 18,
+          "cost_ratio": 0.000603,
+          "rules_applied": [
+            "rule_section_12b_trading_table"
+          ]
+        },
+        {
+          "doc_name": "BOEING_2018_10K",
+          "answer": "BA — New York Stock Exchange",
+          "correct": true,
+          "retrieved_token_count": 34,
+          "cost_ratio": 0.000374,
+          "rules_applied": [
+            "rule_section_12b_trading_table",
+            "rule_symbol_exchange_narrative"
+          ]
+        },
+        {
+          "doc_name": "FOOTLOCKER_2022_10Q",
+          "answer": "FL — New York Stock Exchange",
+          "correct": false,
+          "retrieved_token_count": 6,
+          "cost_ratio": 0.000218,
+          "rules_applied": [
+            "rule_section_12b_trading_table"
+          ]
+        },
+        {
+          "doc_name": "WALMART_2024Q1_10Q",
+          "answer": "WMT — New York Stock Exchange; WMT26 — New York Stock Exchange",
+          "correct": true,
+          "retrieved_token_count": 16,
+          "cost_ratio": 0.000393,
+          "rules_applied": [
+            "rule_section_12b_trading_table"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T06:20:09.998787+00:00"
+    },
+    {
+      "doc_names": [
+        "3M_2023Q2_10Q",
+        "AMCOR_2023Q2_10Q",
+        "BOEING_2018_10K",
+        "FOOTLOCKER_2022_10Q",
+        "WALMART_2024Q1_10Q"
+      ],
+      "rule_names": [
+        "rule_section_12b_trading_table",
+        "rule_symbol_exchange_narrative"
+      ],
+      "n": 5,
+      "n_correct": 4,
+      "accuracy": 0.8,
+      "avg_cost_ratio": 0.000909,
+      "qa_input_tokens": 883,
+      "qa_output_tokens": 104,
+      "judge_input_tokens": 1016,
+      "judge_output_tokens": 31,
+      "input_tokens_total": 1899,
+      "output_tokens_total": 135,
+      "latency_seconds": 5.635,
+      "results": [
+        {
+          "doc_name": "3M_2023Q2_10Q",
+          "answer": "MMM — New York Stock Exchange; MMM — Chicago Stock Exchange, Inc.; MMM26 — New York Stock Exchange; MMM30 — New York Stock Exchange; MMM31 — New York Stock Exchange",
+          "correct": true,
+          "retrieved_token_count": 91,
+          "cost_ratio": 0.001156,
+          "rules_applied": [
+            "rule_section_12b_trading_table"
+          ]
+        },
+        {
+          "doc_name": "AMCOR_2023Q2_10Q",
+          "answer": "AMCR — New York Stock Exchange; AUKF/27 — New York Stock Exchange",
+          "correct": true,
+          "retrieved_token_count": 44,
+          "cost_ratio": 0.001474,
+          "rules_applied": [
+            "rule_section_12b_trading_table"
+          ]
+        },
+        {
+          "doc_name": "BOEING_2018_10K",
+          "answer": "BA — New York Stock Exchange",
+          "correct": true,
+          "retrieved_token_count": 34,
+          "cost_ratio": 0.000374,
+          "rules_applied": [
+            "rule_section_12b_trading_table",
+            "rule_symbol_exchange_narrative"
+          ]
+        },
+        {
+          "doc_name": "FOOTLOCKER_2022_10Q",
+          "answer": "FL | New York Stock Exchange",
+          "correct": false,
+          "retrieved_token_count": 16,
+          "cost_ratio": 0.000583,
+          "rules_applied": [
+            "rule_section_12b_trading_table"
+          ]
+        },
+        {
+          "doc_name": "WALMART_2024Q1_10Q",
+          "answer": "WMT — New York Stock Exchange; WMT26 — New York Stock Exchange",
+          "correct": true,
+          "retrieved_token_count": 39,
+          "cost_ratio": 0.000959,
+          "rules_applied": [
+            "rule_section_12b_trading_table"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T06:21:57.404096+00:00"
+    },
+    {
+      "doc_names": [
+        "3M_2023Q2_10Q",
+        "AMCOR_2023Q2_10Q",
+        "BOEING_2018_10K",
+        "FOOTLOCKER_2022_10Q",
+        "WALMART_2024Q1_10Q"
+      ],
+      "rule_names": [
+        "rule_section_12b_trading_table",
+        "rule_symbol_exchange_narrative"
+      ],
+      "n": 5,
+      "n_correct": 4,
+      "accuracy": 0.8,
+      "avg_cost_ratio": 0.000909,
+      "qa_input_tokens": 883,
+      "qa_output_tokens": 104,
+      "judge_input_tokens": 1016,
+      "judge_output_tokens": 31,
+      "input_tokens_total": 1899,
+      "output_tokens_total": 135,
+      "latency_seconds": 5.541,
+      "results": [
+        {
+          "doc_name": "3M_2023Q2_10Q",
+          "answer": "MMM — New York Stock Exchange; MMM — Chicago Stock Exchange, Inc.; MMM26 — New York Stock Exchange; MMM30 — New York Stock Exchange; MMM31 — New York Stock Exchange",
+          "correct": true,
+          "retrieved_token_count": 91,
+          "cost_ratio": 0.001156,
+          "rules_applied": [
+            "rule_section_12b_trading_table"
+          ]
+        },
+        {
+          "doc_name": "AMCOR_2023Q2_10Q",
+          "answer": "AMCR — New York Stock Exchange; AUKF/27 — New York Stock Exchange",
+          "correct": true,
+          "retrieved_token_count": 44,
+          "cost_ratio": 0.001474,
+          "rules_applied": [
+            "rule_section_12b_trading_table"
+          ]
+        },
+        {
+          "doc_name": "BOEING_2018_10K",
+          "answer": "BA, New York Stock Exchange",
+          "correct": true,
+          "retrieved_token_count": 34,
+          "cost_ratio": 0.000374,
+          "rules_applied": [
+            "rule_section_12b_trading_table",
+            "rule_symbol_exchange_narrative"
+          ]
+        },
+        {
+          "doc_name": "FOOTLOCKER_2022_10Q",
+          "answer": "FL, New York Stock Exchange",
+          "correct": false,
+          "retrieved_token_count": 16,
+          "cost_ratio": 0.000583,
+          "rules_applied": [
+            "rule_section_12b_trading_table"
+          ]
+        },
+        {
+          "doc_name": "WALMART_2024Q1_10Q",
+          "answer": "WMT — New York Stock Exchange; WMT26 — New York Stock Exchange",
+          "correct": true,
+          "retrieved_token_count": 39,
+          "cost_ratio": 0.000959,
+          "rules_applied": [
+            "rule_section_12b_trading_table"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T06:22:57.278571+00:00"
+    },
+    {
+      "doc_names": [
+        "3M_2023Q2_10Q",
+        "AMCOR_2023Q2_10Q",
+        "BOEING_2018_10K",
+        "FOOTLOCKER_2022_10Q",
+        "WALMART_2024Q1_10Q"
+      ],
+      "rule_names": [
+        "rule_section_12b_trading_table",
+        "rule_single_common_stock_labeled_row",
+        "rule_symbol_exchange_narrative"
+      ],
+      "n": 5,
+      "n_correct": 4,
+      "accuracy": 0.8,
+      "avg_cost_ratio": 0.001157,
+      "qa_input_tokens": 917,
+      "qa_output_tokens": 104,
+      "judge_input_tokens": 1016,
+      "judge_output_tokens": 31,
+      "input_tokens_total": 1933,
+      "output_tokens_total": 135,
+      "latency_seconds": 5.75,
+      "results": [
+        {
+          "doc_name": "3M_2023Q2_10Q",
+          "answer": "MMM — New York Stock Exchange; MMM — Chicago Stock Exchange, Inc.; MMM26 — New York Stock Exchange; MMM30 — New York Stock Exchange; MMM31 — New York Stock Exchange",
+          "correct": true,
+          "retrieved_token_count": 91,
+          "cost_ratio": 0.001156,
+          "rules_applied": [
+            "rule_section_12b_trading_table"
+          ]
+        },
+        {
+          "doc_name": "AMCOR_2023Q2_10Q",
+          "answer": "AMCR — New York Stock Exchange; AUKF/27 — New York Stock Exchange",
+          "correct": true,
+          "retrieved_token_count": 44,
+          "cost_ratio": 0.001474,
+          "rules_applied": [
+            "rule_section_12b_trading_table"
+          ]
+        },
+        {
+          "doc_name": "BOEING_2018_10K",
+          "answer": "BA, New York Stock Exchange",
+          "correct": true,
+          "retrieved_token_count": 34,
+          "cost_ratio": 0.000374,
+          "rules_applied": [
+            "rule_section_12b_trading_table",
+            "rule_symbol_exchange_narrative"
+          ]
+        },
+        {
+          "doc_name": "FOOTLOCKER_2022_10Q",
+          "answer": "FL, New York Stock Exchange",
+          "correct": false,
+          "retrieved_token_count": 50,
+          "cost_ratio": 0.001821,
+          "rules_applied": [
+            "rule_section_12b_trading_table",
+            "rule_single_common_stock_labeled_row"
+          ]
+        },
+        {
+          "doc_name": "WALMART_2024Q1_10Q",
+          "answer": "WMT — New York Stock Exchange; WMT26 — New York Stock Exchange",
+          "correct": true,
+          "retrieved_token_count": 39,
+          "cost_ratio": 0.000959,
+          "rules_applied": [
+            "rule_section_12b_trading_table"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T06:23:55.160329+00:00"
+    },
+    {
+      "doc_names": [
+        "3M_2023Q2_10Q",
+        "ADOBE_2022_10K",
+        "AMCOR_2023Q2_10Q",
+        "APPLE_2020_10K",
+        "BOEING_2018_10K",
+        "COSTCO_2023_8K_dated-2023-08-09",
+        "FOOTLOCKER_2022_10Q",
+        "WALMART_2024Q1_10Q"
+      ],
+      "rule_names": [
+        "rule_section_12b_trading_table",
+        "rule_single_common_stock_labeled_row",
+        "rule_symbol_exchange_narrative"
+      ],
+      "n": 8,
+      "n_correct": 7,
+      "accuracy": 0.875,
+      "avg_cost_ratio": 0.001428,
+      "qa_input_tokens": 1663,
+      "qa_output_tokens": 134,
+      "judge_input_tokens": 1517,
+      "judge_output_tokens": 49,
+      "input_tokens_total": 3180,
+      "output_tokens_total": 183,
+      "latency_seconds": 7.819,
+      "results": [
+        {
+          "doc_name": "3M_2023Q2_10Q",
+          "answer": "MMM — New York Stock Exchange; MMM — Chicago Stock Exchange, Inc.; MMM26 — New York Stock Exchange; MMM30 — New York Stock Exchange; MMM31 — New York Stock Exchange",
+          "correct": true,
+          "retrieved_token_count": 91,
+          "cost_ratio": 0.001156,
+          "rules_applied": [
+            "rule_section_12b_trading_table"
+          ]
+        },
+        {
+          "doc_name": "ADOBE_2022_10K",
+          "answer": "ADBE, NASDAQ",
+          "correct": true,
+          "retrieved_token_count": 76,
+          "cost_ratio": 0.000986,
+          "rules_applied": [
+            "rule_section_12b_trading_table",
+            "rule_single_common_stock_labeled_row",
+            "rule_symbol_exchange_narrative"
+          ]
+        },
+        {
+          "doc_name": "AMCOR_2023Q2_10Q",
+          "answer": "AMCR — New York Stock Exchange; AUKF/27 — New York Stock Exchange",
+          "correct": true,
+          "retrieved_token_count": 44,
+          "cost_ratio": 0.001474,
+          "rules_applied": [
+            "rule_section_12b_trading_table"
+          ]
+        },
+        {
+          "doc_name": "APPLE_2020_10K",
+          "answer": "AAPL — The Nasdaq Stock Market LLC",
+          "correct": true,
+          "retrieved_token_count": 243,
+          "cost_ratio": 0.0028,
+          "rules_applied": [
+            "rule_section_12b_trading_table",
+            "rule_symbol_exchange_narrative"
+          ]
+        },
+        {
+          "doc_name": "BOEING_2018_10K",
+          "answer": "BA, New York Stock Exchange",
+          "correct": true,
+          "retrieved_token_count": 34,
+          "cost_ratio": 0.000374,
+          "rules_applied": [
+            "rule_section_12b_trading_table",
+            "rule_symbol_exchange_narrative"
+          ]
+        },
+        {
+          "doc_name": "COSTCO_2023_8K_dated-2023-08-09",
+          "answer": "COST, NASDAQ",
+          "correct": true,
+          "retrieved_token_count": 46,
+          "cost_ratio": 0.001855,
+          "rules_applied": [
+            "rule_section_12b_trading_table",
+            "rule_single_common_stock_labeled_row"
+          ]
+        },
+        {
+          "doc_name": "FOOTLOCKER_2022_10Q",
+          "answer": "FL, New York Stock Exchange",
+          "correct": false,
+          "retrieved_token_count": 50,
+          "cost_ratio": 0.001821,
+          "rules_applied": [
+            "rule_section_12b_trading_table",
+            "rule_single_common_stock_labeled_row"
+          ]
+        },
+        {
+          "doc_name": "WALMART_2024Q1_10Q",
+          "answer": "WMT — New York Stock Exchange; WMT26 — New York Stock Exchange",
+          "correct": true,
+          "retrieved_token_count": 39,
+          "cost_ratio": 0.000959,
+          "rules_applied": [
+            "rule_section_12b_trading_table"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T06:25:05.851702+00:00"
+    },
+    {
+      "doc_names": [
+        "3M_2023Q2_10Q",
+        "ADOBE_2022_10K",
+        "AMCOR_2023Q2_10Q",
+        "APPLE_2020_10K",
+        "BOEING_2018_10K",
+        "COSTCO_2023_8K_dated-2023-08-09",
+        "FOOTLOCKER_2022_10Q",
+        "PAYPAL_2023Q2_10Q",
+        "SALESFORCE_2023Q3_10Q",
+        "WALMART_2024Q1_10Q"
+      ],
+      "rule_names": [
+        "rule_section_12b_trading_table",
+        "rule_single_common_stock_labeled_row",
+        "rule_symbol_exchange_narrative"
+      ],
+      "n": 10,
+      "n_correct": 9,
+      "accuracy": 0.9,
+      "avg_cost_ratio": 0.001331,
+      "qa_input_tokens": 2041,
+      "qa_output_tokens": 156,
+      "judge_input_tokens": 1849,
+      "judge_output_tokens": 61,
+      "input_tokens_total": 3890,
+      "output_tokens_total": 217,
+      "latency_seconds": 9.669,
+      "results": [
+        {
+          "doc_name": "3M_2023Q2_10Q",
+          "answer": "MMM — New York Stock Exchange; MMM — Chicago Stock Exchange, Inc.; MMM26 — New York Stock Exchange; MMM30 — New York Stock Exchange; MMM31 — New York Stock Exchange",
+          "correct": true,
+          "retrieved_token_count": 91,
+          "cost_ratio": 0.001156,
+          "rules_applied": [
+            "rule_section_12b_trading_table"
+          ]
+        },
+        {
+          "doc_name": "ADOBE_2022_10K",
+          "answer": "ADBE, NASDAQ",
+          "correct": true,
+          "retrieved_token_count": 76,
+          "cost_ratio": 0.000986,
+          "rules_applied": [
+            "rule_section_12b_trading_table",
+            "rule_single_common_stock_labeled_row",
+            "rule_symbol_exchange_narrative"
+          ]
+        },
+        {
+          "doc_name": "AMCOR_2023Q2_10Q",
+          "answer": "AMCR — New York Stock Exchange; AUKF/27 — New York Stock Exchange",
+          "correct": true,
+          "retrieved_token_count": 44,
+          "cost_ratio": 0.001474,
+          "rules_applied": [
+            "rule_section_12b_trading_table"
+          ]
+        },
+        {
+          "doc_name": "APPLE_2020_10K",
+          "answer": "AAPL — The Nasdaq Stock Market LLC",
+          "correct": true,
+          "retrieved_token_count": 243,
+          "cost_ratio": 0.0028,
+          "rules_applied": [
+            "rule_section_12b_trading_table",
+            "rule_symbol_exchange_narrative"
+          ]
+        },
+        {
+          "doc_name": "BOEING_2018_10K",
+          "answer": "BA, New York Stock Exchange",
+          "correct": true,
+          "retrieved_token_count": 34,
+          "cost_ratio": 0.000374,
+          "rules_applied": [
+            "rule_section_12b_trading_table",
+            "rule_symbol_exchange_narrative"
+          ]
+        },
+        {
+          "doc_name": "COSTCO_2023_8K_dated-2023-08-09",
+          "answer": "COST, NASDAQ",
+          "correct": true,
+          "retrieved_token_count": 46,
+          "cost_ratio": 0.001855,
+          "rules_applied": [
+            "rule_section_12b_trading_table",
+            "rule_single_common_stock_labeled_row"
+          ]
+        },
+        {
+          "doc_name": "FOOTLOCKER_2022_10Q",
+          "answer": "FL, New York Stock Exchange",
+          "correct": false,
+          "retrieved_token_count": 50,
+          "cost_ratio": 0.001821,
+          "rules_applied": [
+            "rule_section_12b_trading_table",
+            "rule_single_common_stock_labeled_row"
+          ]
+        },
+        {
+          "doc_name": "PAYPAL_2023Q2_10Q",
+          "answer": "PYPL, NASDAQ Global Select Market",
+          "correct": true,
+          "retrieved_token_count": 60,
+          "cost_ratio": 0.001012,
+          "rules_applied": [
+            "rule_section_12b_trading_table",
+            "rule_single_common_stock_labeled_row"
+          ]
+        },
+        {
+          "doc_name": "SALESFORCE_2023Q3_10Q",
+          "answer": "CRM, New York Stock Exchange",
+          "correct": true,
+          "retrieved_token_count": 54,
+          "cost_ratio": 0.000871,
+          "rules_applied": [
+            "rule_section_12b_trading_table",
+            "rule_single_common_stock_labeled_row"
+          ]
+        },
+        {
+          "doc_name": "WALMART_2024Q1_10Q",
+          "answer": "WMT — New York Stock Exchange; WMT26 — New York Stock Exchange",
+          "correct": true,
+          "retrieved_token_count": 39,
+          "cost_ratio": 0.000959,
+          "rules_applied": [
+            "rule_section_12b_trading_table"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T06:25:55.368656+00:00"
+    }
+  ]
+}

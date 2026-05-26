@@ -1,0 +1,82 @@
+{
+  "strategy": "agentic_rule_full_data",
+  "phase": "rule_generation",
+  "status": "ok",
+  "dataset": "court",
+  "question": "What legal subject matter does the court staff SUMMARY identify as the topic of this opinion?",
+  "question_slug": "what_legal_subject_matter_does_the_court_staff_summary_ident",
+  "model": "gpt54",
+  "split": "all_docs",
+  "doc_count": 294,
+  "question_count": 1,
+  "rules_dir": "rules/court/agentic_rule_full_data_gpt54_adaptive/all_docs/q10_what_legal_subject_matter_does_the_court_staff_summary_ident",
+  "results_report_path": "results/court/agentic_rule_full_data_gpt54_adaptive/all_docs/q10_what_legal_subject_matter_does_the_court_staff_summary_ident_rule_gen.json",
+  "verify_accuracy_ledger_path": "results/court/agentic_rule_full_data_gpt54_adaptive/all_docs/q10_what_legal_subject_matter_does_the_court_staff_summary_ident.verify_accuracy_ledger.json",
+  "rule_files": [
+    "rules/court/agentic_rule_full_data_gpt54_adaptive/all_docs/q10_what_legal_subject_matter_does_the_court_staff_summary_ident/rule_summary_topic.py"
+  ],
+  "rules_final": [
+    "rule_summary_topic"
+  ],
+  "num_rules_final": 1,
+  "rule_gen": {
+    "latency_seconds": 712.01,
+    "input_tokens": 4620573,
+    "output_tokens": 34904,
+    "cached_input_tokens": 4028928,
+    "reasoning_tokens": 14522,
+    "working_sample": [
+      "20250723_state_of_washington_v._trump",
+      "20250725_international_partners_for_ethical_care_inc_v._inslee",
+      "20250728_todd_yukutake_v._anne_e._lopez",
+      "20250801_king_v._navy_federal_credit_union",
+      "20250815_in_re_subpoena_internet_subscribers_of_cox_communications_llc_and_coxcom",
+      "20250819_the_geo_group_inc._v._inslee",
+      "20250820_united_states_v._robert_manning",
+      "20250827_ambrosetti_v._oregon_catholic_press",
+      "20250828_searle_v._allen",
+      "20250904_garcia_v._county_of_alameda",
+      "20250909_united_states_v._stennerson",
+      "20250912_pacito_v._trump",
+      "20250923_detwiler_v._mid-columbia_medical_center",
+      "20251003_caldrone_v._circle_k_stores_inc.",
+      "20251020_state_of_oregon_v._trump",
+      "20251030_doe_v._deutsche_lufthansa_aktiengesellschaft",
+      "20251110_hunt_v._pricewaterhousecoopers_llp_pwc",
+      "20251120_rosa_a._camacho_v._nmi_settlement_fund",
+      "20251204_state_of_washington_v._united_states_department_of_education",
+      "20251222_united_states_v._holmes",
+      "20251229_milliken_v._bank_of_america_n.a.",
+      "20260105_walker_specialty_constr._inc._v._bd._of_tr._of_the_constr._indus._and",
+      "20260113_malheur_forest_fairness_coalition_v._iron_triangle_llc",
+      "20260128_avery_v._teksystems_inc.",
+      "20260130_kalbers_v._volkswagen_ag",
+      "20260227_l.b._v._san_diego_unified_school_district",
+      "20260310_rojas-espinoza_v._bondi",
+      "20260312_olympus_spa_v._armstrong",
+      "20260317_adventist_health_system_of_west_v._abbvie_inc."
+    ],
+    "num_working_sample": 29,
+    "num_working_sample_iterations": 4,
+    "verify_accuracy_calls": {
+      "total": 4,
+      "input_tokens": 27438,
+      "output_tokens": 1213
+    },
+    "num_rules_written": 1,
+    "num_rules_rejected": 1,
+    "rules_final": [
+      "rule_summary_topic"
+    ],
+    "num_rules_final": 1,
+    "avg_cost_ratio_sample": 0.001305,
+    "match_rate_sample": 0.758621,
+    "notes": "Final rule extracts the subject heading immediately after SUMMARY and appends one supporting summary sentence. A broader no-summary fallback was tested and rejected because it materially increased cost without improving verification; non-summary documents remained consistently unscorable for this question in the paid verifier."
+  },
+  "agent_log_path": "results/court/agentic_rule_full_data_gpt54_adaptive/all_docs/q10_what_legal_subject_matter_does_the_court_staff_summary_ident.codex.jsonl",
+  "agent_last_message_path": "results/court/agentic_rule_full_data_gpt54_adaptive/all_docs/q10_what_legal_subject_matter_does_the_court_staff_summary_ident.codex.last.txt",
+  "stderr": "2026-05-26T06:25:46.333815Z ERROR codex_models_manager::manager: failed to refresh available models: stream disconnected before completion: failed to decode models response: missing field `models` at line 3243 column 1; body: {\n  \"data\": [\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1772582400\n      },\n      \"id\": \"dall-e-3-3.0\",\n      \"created_at\": 1691712000,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1737936000\n      },\n      \"id\": \"dall-e-2-2.0\",\n      \"created_at\": 1713139200,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": true,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"fine_tune\": 1718323200,\n        \"inference\": 1718323200\n      },\n      \"id\": \"code-cushman-001\",\n      \"created_at\": 1642809600,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": false,\n        \"completion\": true,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"fine_tune\": 1720137600,\n        \"inference\": 1720137600\n      },\n      \"id\": \"code-cushman-fine-tune-002\",\n      \"created_at\": 1677456000,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"generally-available\",\n      \"deprecation\": {\n        \"inference\": 1797292800\n      },\n      \"id\": \"whisper-001\",\n      \"created_at\": 1694649600,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1746057600\n      },\n      \"id\": \"gpt-4-0125-Preview\",\n      \"created_at\": 1706140800,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1746057600\n      },\n      \"id\": \"gpt-4-1106-Preview\",\n      \"created_at\": 1700006400,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycl",
+  "codex_thread_id": "019e62f5-f360-7c11-ac8a-2d16ba21c538",
+  "codex_event_count": 155,
+  "codex_error_message": null
+}

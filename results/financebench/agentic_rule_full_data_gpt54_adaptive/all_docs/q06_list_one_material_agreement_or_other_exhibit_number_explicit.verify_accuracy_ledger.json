@@ -1,0 +1,80 @@
+{
+  "verify_accuracy_calls": [
+    {
+      "doc_names": [
+        "3M_2023Q2_10Q",
+        "AMCOR_2023Q2_10Q",
+        "BOEING_2018_10K",
+        "FOOTLOCKER_2022_10K",
+        "WALMART_2024Q1_10Q"
+      ],
+      "rule_names": [
+        "rule_exhibit_index_entry"
+      ],
+      "n": 5,
+      "n_correct": 5,
+      "accuracy": 1.0,
+      "avg_cost_ratio": 7.7e-05,
+      "qa_input_tokens": 832,
+      "qa_output_tokens": 47,
+      "judge_input_tokens": 955,
+      "judge_output_tokens": 30,
+      "input_tokens_total": 1787,
+      "output_tokens_total": 77,
+      "latency_seconds": 4.516,
+      "results": [
+        {
+          "doc_name": "3M_2023Q2_10Q",
+          "answer": "Exhibit 10.1: Settlement Agreement",
+          "correct": true,
+          "retrieved_token_count": 9,
+          "cost_ratio": 0.000114,
+          "rules_applied": [
+            "rule_exhibit_index_entry"
+          ]
+        },
+        {
+          "doc_name": "AMCOR_2023Q2_10Q",
+          "answer": "none listed",
+          "correct": true,
+          "retrieved_token_count": 2,
+          "cost_ratio": 6.7e-05,
+          "rules_applied": [
+            "rule_exhibit_index_entry"
+          ]
+        },
+        {
+          "doc_name": "BOEING_2018_10K",
+          "answer": "Exhibit 10.1: 364-Day Credit Agreement",
+          "correct": true,
+          "retrieved_token_count": 12,
+          "cost_ratio": 0.000132,
+          "rules_applied": [
+            "rule_exhibit_index_entry"
+          ]
+        },
+        {
+          "doc_name": "FOOTLOCKER_2022_10K",
+          "answer": "none listed",
+          "correct": true,
+          "retrieved_token_count": 2,
+          "cost_ratio": 2.3e-05,
+          "rules_applied": [
+            "rule_exhibit_index_entry"
+          ]
+        },
+        {
+          "doc_name": "WALMART_2024Q1_10Q",
+          "answer": "none listed",
+          "correct": true,
+          "retrieved_token_count": 2,
+          "cost_ratio": 4.9e-05,
+          "rules_applied": [
+            "rule_exhibit_index_entry"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T06:13:48.767480+00:00"
+    }
+  ]
+}

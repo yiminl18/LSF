@@ -1,0 +1,29 @@
+{
+  "doc_name": "APPLE_2017_10K",
+  "question": "List one material agreement or other exhibit number explicitly identified in the Exhibit Index (e.g., \"Exhibit 10.1: Credit Agreement\")—or record \"none listed\" if no material agreements are identified.",
+  "question_slug": "list_one_material_agreement_or_other_exhibit_number_explicit",
+  "split": "all_docs",
+  "ground_truth": "Exhibit 10.8: 2014 Employee Stock Plan",
+  "answer": "Exhibit 10.8: 2014 Employee Stock Plan",
+  "correct": true,
+  "status": "ok",
+  "input_tokens": 137,
+  "output_tokens": 17,
+  "latency_seconds": 1.063,
+  "model": "gpt54",
+  "doc_token_count": 101740,
+  "cost_ratio": 0.0013,
+  "retrieved_token_count": 13,
+  "rules_with_hits": [
+    "rule_exhibit_index_entry"
+  ],
+  "rules_with_no_hits": [],
+  "num_spans_before_dedup": 1,
+  "num_spans_after_dedup": 1,
+  "rule_names": [
+    "rule_exhibit_index_entry"
+  ],
+  "rule_question_dir": "q06_list_one_material_agreement_or_other_exhibit_number_explicit",
+  "rule_generation_report_path": "results/financebench/agentic_rule_full_data_gpt54_adaptive/all_docs/q06_list_one_material_agreement_or_other_exhibit_number_explicit_rule_gen.json",
+  "rule_apply_trace_path": "results/financebench/agentic_rule_full_data_gpt54_adaptive/all_docs/rule_apply_merge/_trace/q06_list_one_material_agreement_or_other_exhibit_number_explicit/rule_exhibit_index_entry_merge.json"
+}

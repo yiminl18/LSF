@@ -1,0 +1,81 @@
+{
+  "verify_accuracy_calls": [
+    {
+      "doc_names": [
+        "3M_2023Q2_10Q",
+        "AMCOR_2023Q2_10Q",
+        "BOEING_2018_10K",
+        "FOOTLOCKER_2022_10Q",
+        "WALMART_2024Q1_10Q"
+      ],
+      "rule_names": [
+        "rule_principal_offices_cover_location",
+        "rule_principal_offices_press_release_dateline"
+      ],
+      "n": 5,
+      "n_correct": 5,
+      "accuracy": 1.0,
+      "avg_cost_ratio": 0.000127,
+      "qa_input_tokens": 720,
+      "qa_output_tokens": 45,
+      "judge_input_tokens": 843,
+      "judge_output_tokens": 30,
+      "input_tokens_total": 1563,
+      "output_tokens_total": 75,
+      "latency_seconds": 4.312,
+      "results": [
+        {
+          "doc_name": "3M_2023Q2_10Q",
+          "answer": "St. Paul, Minnesota",
+          "correct": true,
+          "retrieved_token_count": 5,
+          "cost_ratio": 6.4e-05,
+          "rules_applied": [
+            "rule_principal_offices_cover_location"
+          ]
+        },
+        {
+          "doc_name": "AMCOR_2023Q2_10Q",
+          "answer": "Warmley, Bristol, United Kingdom",
+          "correct": true,
+          "retrieved_token_count": 7,
+          "cost_ratio": 0.000235,
+          "rules_applied": [
+            "rule_principal_offices_cover_location"
+          ]
+        },
+        {
+          "doc_name": "BOEING_2018_10K",
+          "answer": "Chicago, Illinois",
+          "correct": true,
+          "retrieved_token_count": 3,
+          "cost_ratio": 3.3e-05,
+          "rules_applied": [
+            "rule_principal_offices_cover_location"
+          ]
+        },
+        {
+          "doc_name": "FOOTLOCKER_2022_10Q",
+          "answer": "New York, New York",
+          "correct": true,
+          "retrieved_token_count": 5,
+          "cost_ratio": 0.000182,
+          "rules_applied": [
+            "rule_principal_offices_cover_location"
+          ]
+        },
+        {
+          "doc_name": "WALMART_2024Q1_10Q",
+          "answer": "Bentonville, Arkansas",
+          "correct": true,
+          "retrieved_token_count": 5,
+          "cost_ratio": 0.000123,
+          "rules_applied": [
+            "rule_principal_offices_cover_location"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T06:00:28.200820+00:00"
+    }
+  ]
+}

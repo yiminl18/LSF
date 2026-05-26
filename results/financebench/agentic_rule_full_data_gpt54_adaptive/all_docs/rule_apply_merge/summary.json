@@ -1,0 +1,236 @@
+[
+  {
+    "question": "What stock exchange is the company's primary common stock listed on?",
+    "question_slug": "what_stock_exchange_is_the_companys_primary_common_stock_lis",
+    "split": "all_docs",
+    "model": "gpt54",
+    "n": 100,
+    "n_correct": 98,
+    "accuracy": 0.98,
+    "avg_input_tokens": 97.7,
+    "avg_output_tokens": 8.1,
+    "avg_latency_seconds": 0.84,
+    "avg_retrieved_tokens": 5.0,
+    "avg_cost_ratio": 0.0112,
+    "rule_gen_output_name": "agentic_rule_full_data_gpt54_adaptive/all_docs",
+    "rule_question_dir": "q01_what_stock_exchange_is_the_companys_primary_common_stock_lis",
+    "rule_names": [
+      "rule_common_stock_listing_narrative",
+      "rule_common_stock_listing_table"
+    ]
+  },
+  {
+    "question": "What is the reporting period covered by this document (e.g. fiscal year ended, quarter ended, or event date)?",
+    "question_slug": "what_is_the_reporting_period_covered_by_this_document_eg_fis",
+    "split": "all_docs",
+    "model": "gpt54",
+    "n": 100,
+    "n_correct": 97,
+    "accuracy": 0.97,
+    "avg_input_tokens": 119.3,
+    "avg_output_tokens": 13.5,
+    "avg_latency_seconds": 1.01,
+    "avg_retrieved_tokens": 14.3,
+    "avg_cost_ratio": 0.0139,
+    "rule_gen_output_name": "agentic_rule_full_data_gpt54_adaptive/all_docs",
+    "rule_question_dir": "q02_what_is_the_reporting_period_covered_by_this_document_eg_fis",
+    "rule_names": [
+      "rule_reporting_period"
+    ]
+  },
+  {
+    "question": "What is the exact name of the company (registrant) this document relates to?",
+    "question_slug": "what_is_the_exact_name_of_the_company_registrant_this_docume",
+    "split": "all_docs",
+    "model": "gpt54",
+    "n": 100,
+    "n_correct": 100,
+    "accuracy": 1.0,
+    "avg_input_tokens": 103.4,
+    "avg_output_tokens": 9.2,
+    "avg_latency_seconds": 0.93,
+    "avg_retrieved_tokens": 5.9,
+    "avg_cost_ratio": 0.0119,
+    "rule_gen_output_name": "agentic_rule_full_data_gpt54_adaptive/all_docs",
+    "rule_question_dir": "q03_what_is_the_exact_name_of_the_company_registrant_this_docume",
+    "rule_names": [
+      "rule_company_name_fallback",
+      "rule_cover_registrant_name"
+    ]
+  },
+  {
+    "question": "What is the company's principal executive offices address (city and state/country) as stated in this document?",
+    "question_slug": "what_is_the_companys_principal_executive_offices_address_cit",
+    "split": "all_docs",
+    "model": "gpt54",
+    "n": 100,
+    "n_correct": 98,
+    "accuracy": 0.98,
+    "avg_input_tokens": 106.3,
+    "avg_output_tokens": 8.3,
+    "avg_latency_seconds": 0.89,
+    "avg_retrieved_tokens": 4.3,
+    "avg_cost_ratio": 0.0122,
+    "rule_gen_output_name": "agentic_rule_full_data_gpt54_adaptive/all_docs",
+    "rule_question_dir": "q04_what_is_the_companys_principal_executive_offices_address_cit",
+    "rule_names": [
+      "rule_principal_offices_cover_location",
+      "rule_principal_offices_press_release_dateline"
+    ]
+  },
+  {
+    "question": "What document type or SEC form is this (e.g. 10-K, 10-Q, 8-K, earnings release, annual report)?",
+    "question_slug": "what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning",
+    "split": "all_docs",
+    "model": "gpt54",
+    "n": 100,
+    "n_correct": 100,
+    "accuracy": 1.0,
+    "avg_input_tokens": 161.3,
+    "avg_output_tokens": 6.0,
+    "avg_latency_seconds": 0.8,
+    "avg_retrieved_tokens": 50.5,
+    "avg_cost_ratio": 0.0178,
+    "rule_gen_output_name": "agentic_rule_full_data_gpt54_adaptive/all_docs",
+    "rule_question_dir": "q05_what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning",
+    "rule_names": [
+      "rule_document_type_or_sec_form"
+    ]
+  },
+  {
+    "question": "List one material agreement or other exhibit number explicitly identified in the Exhibit Index (e.g., \"Exhibit 10.1: Credit Agreement\")—or record \"none listed\" if no material agreements are identified.",
+    "question_slug": "list_one_material_agreement_or_other_exhibit_number_explicit",
+    "split": "all_docs",
+    "model": "gpt54",
+    "n": 100,
+    "n_correct": 82,
+    "accuracy": 0.82,
+    "avg_input_tokens": 134.8,
+    "avg_output_tokens": 12.8,
+    "avg_latency_seconds": 0.91,
+    "avg_retrieved_tokens": 10.9,
+    "avg_cost_ratio": 0.0157,
+    "rule_gen_output_name": "agentic_rule_full_data_gpt54_adaptive/all_docs",
+    "rule_question_dir": "q06_list_one_material_agreement_or_other_exhibit_number_explicit",
+    "rule_names": [
+      "rule_exhibit_index_entry"
+    ]
+  },
+  {
+    "question": "What is/are the trading symbol(s) and listing exchange(s)?",
+    "question_slug": "what_isare_the_trading_symbols_and_listing_exchanges",
+    "split": "all_docs",
+    "model": "gpt54",
+    "n": 100,
+    "n_correct": 84,
+    "accuracy": 0.84,
+    "avg_input_tokens": 166.8,
+    "avg_output_tokens": 15.4,
+    "avg_latency_seconds": 0.88,
+    "avg_retrieved_tokens": 73.5,
+    "avg_cost_ratio": 0.0185,
+    "rule_gen_output_name": "agentic_rule_full_data_gpt54_adaptive/all_docs",
+    "rule_question_dir": "q07_what_isare_the_trading_symbols_and_listing_exchanges",
+    "rule_names": [
+      "rule_section_12b_trading_table",
+      "rule_single_common_stock_labeled_row",
+      "rule_symbol_exchange_narrative"
+    ]
+  },
+  {
+    "question": "What is long-term debt at year-end (0 if none)?",
+    "question_slug": "what_is_longterm_debt_at_yearend_0_if_none",
+    "split": "all_docs",
+    "model": "gpt54",
+    "n": 100,
+    "n_correct": 58,
+    "accuracy": 0.58,
+    "avg_input_tokens": 98.5,
+    "avg_output_tokens": 6.5,
+    "avg_latency_seconds": 0.83,
+    "avg_retrieved_tokens": 4.5,
+    "avg_cost_ratio": 0.011,
+    "rule_gen_output_name": "agentic_rule_full_data_gpt54_adaptive/all_docs",
+    "rule_question_dir": "q08_what_is_longterm_debt_at_yearend_0_if_none",
+    "rule_names": [
+      "rule_long_term_debt_snippet",
+      "rule_zero_for_8k_docs"
+    ]
+  },
+  {
+    "question": "What is the registrant's exact name?",
+    "question_slug": "what_is_the_registrants_exact_name",
+    "split": "all_docs",
+    "model": "gpt54",
+    "n": 100,
+    "n_correct": 100,
+    "accuracy": 1.0,
+    "avg_input_tokens": 94.6,
+    "avg_output_tokens": 9.2,
+    "avg_latency_seconds": 0.88,
+    "avg_retrieved_tokens": 5.1,
+    "avg_cost_ratio": 0.0109,
+    "rule_gen_output_name": "agentic_rule_full_data_gpt54_adaptive/all_docs",
+    "rule_question_dir": "q09_what_is_the_registrants_exact_name",
+    "rule_names": [
+      "rule_registrant_exact_name"
+    ]
+  },
+  {
+    "question": "What is the address of principal executive offices and ZIP code?",
+    "question_slug": "what_is_the_address_of_principal_executive_offices_and_zip_c",
+    "split": "all_docs",
+    "model": "gpt54",
+    "n": 100,
+    "n_correct": 100,
+    "accuracy": 1.0,
+    "avg_input_tokens": 106.5,
+    "avg_output_tokens": 17.4,
+    "avg_latency_seconds": 1.04,
+    "avg_retrieved_tokens": 13.5,
+    "avg_cost_ratio": 0.0123,
+    "rule_gen_output_name": "agentic_rule_full_data_gpt54_adaptive/all_docs",
+    "rule_question_dir": "q10_what_is_the_address_of_principal_executive_offices_and_zip_c",
+    "rule_names": [
+      "rule_principal_executive_offices_cover_or_narrative"
+    ]
+  },
+  {
+    "question": "What is the registrant's telephone number?",
+    "question_slug": "what_is_the_registrants_telephone_number",
+    "split": "all_docs",
+    "model": "gpt54",
+    "n": 100,
+    "n_correct": 99,
+    "accuracy": 0.99,
+    "avg_input_tokens": 97.9,
+    "avg_output_tokens": 11.8,
+    "avg_latency_seconds": 0.88,
+    "avg_retrieved_tokens": 7.9,
+    "avg_cost_ratio": 0.0113,
+    "rule_gen_output_name": "agentic_rule_full_data_gpt54_adaptive/all_docs",
+    "rule_question_dir": "q11_what_is_the_registrants_telephone_number",
+    "rule_names": [
+      "rule_registrants_telephone_number"
+    ]
+  },
+  {
+    "question": "What is the state (or other jurisdiction) of incorporation and the IRS Employer Identification Number?",
+    "question_slug": "what_is_the_state_or_other_jurisdiction_of_incorporation_and",
+    "split": "all_docs",
+    "model": "gpt54",
+    "n": 100,
+    "n_correct": 91,
+    "accuracy": 0.91,
+    "avg_input_tokens": 138.1,
+    "avg_output_tokens": 12.4,
+    "avg_latency_seconds": 0.91,
+    "avg_retrieved_tokens": 40.0,
+    "avg_cost_ratio": 0.0148,
+    "rule_gen_output_name": "agentic_rule_full_data_gpt54_adaptive/all_docs",
+    "rule_question_dir": "q12_what_is_the_state_or_other_jurisdiction_of_incorporation_and",
+    "rule_names": [
+      "rule_cover_page_state_ein_block"
+    ]
+  }
+]

@@ -1,0 +1,1223 @@
+{
+  "dataset": "nopv",
+  "split": "all_docs",
+  "question": "What is the legal name of the pipeline operator to whom this Notice is addressed?",
+  "question_slug": "what_is_the_legal_name_of_the_pipeline_operator_to_whom_this",
+  "model": "gpt-5.4",
+  "rules_dir": "/mnt/data/LSF/rules/nopv/agentic_rule_full_data_gpt54_adaptive/all_docs/q01_what_is_the_legal_name_of_the_pipeline_operator_to_whom_this",
+  "ledger_path": "/mnt/data/LSF/results/nopv/agentic_rule_full_data_gpt54_adaptive/all_docs/q01_what_is_the_legal_name_of_the_pipeline_operator_to_whom_this.verify_accuracy_ledger.json",
+  "report_path": "/mnt/data/LSF/results/nopv/agentic_rule_full_data_gpt54_adaptive/all_docs/q01_what_is_the_legal_name_of_the_pipeline_operator_to_whom_this_rule_gen.json",
+  "verify_accuracy_budget": 30,
+  "documents": [
+    {
+      "doc_name": "12022023NOPV_PCO_03312022_(20-194651)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/12022023NOPV_PCO_03312022_(20-194651).txt",
+      "ground_truth": "Wolverine Pipe Line Company"
+    },
+    {
+      "doc_name": "12023047NOPV_PCO_12042023_(22-233293)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/12023047NOPV_PCO_12042023_(22-233293).txt",
+      "ground_truth": "ANR Pipeline Co."
+    },
+    {
+      "doc_name": "12024018NOPV_PCO_08262024_(23-263980)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/12024018NOPV_PCO_08262024_(23-263980).txt",
+      "ground_truth": "ANR Pipeline Company"
+    },
+    {
+      "doc_name": "12024039NOPV_PCO_11062024_(23-276594)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/12024039NOPV_PCO_11062024_(23-276594).txt",
+      "ground_truth": "EQT Production Company"
+    },
+    {
+      "doc_name": "12024051NOPV_PCO_07052024_(24-297439)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/12024051NOPV_PCO_07052024_(24-297439).txt",
+      "ground_truth": "ANR Pipeline Company"
+    },
+    {
+      "doc_name": "12025001NOPV_PCO_05302025_(23-265078)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/12025001NOPV_PCO_05302025_(23-265078).txt",
+      "ground_truth": "Buckeye Partners, LP"
+    },
+    {
+      "doc_name": "12025006NOPV_PCO_05082025_(23-272518)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/12025006NOPV_PCO_05082025_(23-272518).txt",
+      "ground_truth": "City of Richmond"
+    },
+    {
+      "doc_name": "12026002NOPV_PCO_01232026_(24-295891)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/12026002NOPV_PCO_01232026_(24-295891).txt",
+      "ground_truth": "Kinder Morgan Liquid Terminals, LLC"
+    },
+    {
+      "doc_name": "12026003NOPV_PCO_02132026_(24-309719)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/12026003NOPV_PCO_02132026_(24-309719).txt",
+      "ground_truth": "Buckeye Partners, LP"
+    },
+    {
+      "doc_name": "12026012NOPV_PCO_02062026_(25-329693)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/12026012NOPV_PCO_02062026_(25-329693).txt",
+      "ground_truth": "Eastern Gas Transmission and Storage, Inc."
+    },
+    {
+      "doc_name": "12026015NOPV_PCO_02122026_(24-296051)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/12026015NOPV_PCO_02122026_(24-296051).txt",
+      "ground_truth": "Columbia Gas Transmission LLC"
+    },
+    {
+      "doc_name": "12026022NOPV_PCO_02242026_(25-330072)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/12026022NOPV_PCO_02242026_(25-330072).txt",
+      "ground_truth": "Cranberry Pipeline Corporation"
+    },
+    {
+      "doc_name": "12026032NOPV_PCO_02132026_ (25-330095)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/12026032NOPV_PCO_02132026_ (25-330095).txt",
+      "ground_truth": "ANR Pipeline Company"
+    },
+    {
+      "doc_name": "22023002NOPV_PCO_07282023_(21-202409)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/22023002NOPV_PCO_07282023_(21-202409).txt",
+      "ground_truth": "Genesis Pipeline USA, LP"
+    },
+    {
+      "doc_name": "22023011NOPV_PCO_07282023_(21-202560)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/22023011NOPV_PCO_07282023_(21-202560).txt",
+      "ground_truth": "Enmark Energy, Inc."
+    },
+    {
+      "doc_name": "22023013NOPV_PCP PCO_11162023_(21-224433)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/22023013NOPV_PCP PCO_11162023_(21-224433).txt",
+      "ground_truth": "Ferrellgas, L.P."
+    },
+    {
+      "doc_name": "22024001NOPV_PCP PCO_06272024_(24-304023)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/22024001NOPV_PCP PCO_06272024_(24-304023).txt",
+      "ground_truth": "Superior Refining Company LLC"
+    },
+    {
+      "doc_name": "22024011NOPV_PCP PCO (AMENDED)_07092024_(22-235530)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/22024011NOPV_PCP PCO (AMENDED)_07092024_(22-235530).txt",
+      "ground_truth": "Colonial Pipeline Company"
+    },
+    {
+      "doc_name": "32021028NOPV_PCP PCO_11022021_(20-172212)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32021028NOPV_PCP PCO_11022021_(20-172212).txt",
+      "ground_truth": "WRB Refining LP"
+    },
+    {
+      "doc_name": "32021043NOPV_PCP PCO_12072021_(20-179274)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32021043NOPV_PCP PCO_12072021_(20-179274).txt",
+      "ground_truth": "Tallgrass Interstate Gas Transmission, LLC"
+    },
+    {
+      "doc_name": "32021045NOPV_PCP PCO_11052021_(20-172259)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32021045NOPV_PCP PCO_11052021_(20-172259).txt",
+      "ground_truth": "Tallgrass Powder River Gateway, LLC"
+    },
+    {
+      "doc_name": "32021046NOPV_PCP PCO_11232021_(20-172259)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32021046NOPV_PCP PCO_11232021_(20-172259).txt",
+      "ground_truth": "Tallgrass Pony Express Pipeline, LLC"
+    },
+    {
+      "doc_name": "32021051NOPV_PCP PCO_11102021_(21-200403)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32021051NOPV_PCP PCO_11102021_(21-200403).txt",
+      "ground_truth": "BOE Midstream"
+    },
+    {
+      "doc_name": "32021059NOPV_PCP PCO_12302021_(21-200404)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32021059NOPV_PCP PCO_12302021_(21-200404).txt",
+      "ground_truth": "Dakota Midstream"
+    },
+    {
+      "doc_name": "32021070NOPV_PCP PCO_12302021_(21-199716)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32021070NOPV_PCP PCO_12302021_(21-199716).txt",
+      "ground_truth": "Summit Midstream Partners, LLC"
+    },
+    {
+      "doc_name": "32021073NOPV_PCP PCO_12222021_(20-173072)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32021073NOPV_PCP PCO_12222021_(20-173072).txt",
+      "ground_truth": "Gulf South Pipeline Company, LLC"
+    },
+    {
+      "doc_name": "32021080NOPV_PCP PCO_12222021_(21-199715)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32021080NOPV_PCP PCO_12222021_(21-199715).txt",
+      "ground_truth": "Caliber North Dakota, LLC"
+    },
+    {
+      "doc_name": "32021082NOPV_PCO_12012021_(20-172259)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32021082NOPV_PCO_12012021_(20-172259).txt",
+      "ground_truth": "Tallgrass Powder River Gateway, LLC"
+    },
+    {
+      "doc_name": "32021087NOPV_PCP PCO_12132021_(21-210505)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32021087NOPV_PCP PCO_12132021_(21-210505).txt",
+      "ground_truth": "Rockies Express Pipeline LLC"
+    },
+    {
+      "doc_name": "32021088NOPV_PCO_11302021_(21-210503)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32021088NOPV_PCO_11302021_(21-210503).txt",
+      "ground_truth": "Tallgrass Powder River Gateway, LLC"
+    },
+    {
+      "doc_name": "32021089NOPV_PCP PCO_11302021_(21-210502)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32021089NOPV_PCP PCO_11302021_(21-210502).txt",
+      "ground_truth": "Tallgrass Pony Express Pipeline, LLC"
+    },
+    {
+      "doc_name": "32022001NOPV_PCP PCO_08082022_(21-208610)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32022001NOPV_PCP PCO_08082022_(21-208610).txt",
+      "ground_truth": "Continental Resources"
+    },
+    {
+      "doc_name": "32022006NOPV_PCP PCO_04182022_(21-200783)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32022006NOPV_PCP PCO_04182022_(21-200783).txt",
+      "ground_truth": "OKTEX Pipeline Company, LLC"
+    },
+    {
+      "doc_name": "32022016NOPV_PCO_01072022_(20-187013)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32022016NOPV_PCO_01072022_(20-187013).txt",
+      "ground_truth": "Enbridge Energy, Limited Partnership"
+    },
+    {
+      "doc_name": "32022017NOPV_PCP PCO_01112022_(21-210504)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32022017NOPV_PCP PCO_01112022_(21-210504).txt",
+      "ground_truth": "Tallgrass Interstate Gas Transmission, LLC"
+    },
+    {
+      "doc_name": "32022018NOPV_PCP PCO_01192022_(21-210993)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32022018NOPV_PCP PCO_01192022_(21-210993).txt",
+      "ground_truth": "Tallgrass Energy, LP"
+    },
+    {
+      "doc_name": "32022024NOPV_PCO_03252022_(20-179518)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32022024NOPV_PCO_03252022_(20-179518).txt",
+      "ground_truth": "Tanks R Us"
+    },
+    {
+      "doc_name": "32022025NOPV_PCP PCO_10142022_(20-182827)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32022025NOPV_PCP PCO_10142022_(20-182827).txt",
+      "ground_truth": "TC Oil Operations, Inc."
+    },
+    {
+      "doc_name": "32022026NOPV_PCP PCO_05052022_(20-173062)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32022026NOPV_PCP PCO_05052022_(20-173062).txt",
+      "ground_truth": "Colonial Pipeline Company"
+    },
+    {
+      "doc_name": "32022033NOPV_PCP PCO_03172022_(21-203212)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32022033NOPV_PCP PCO_03172022_(21-203212).txt",
+      "ground_truth": "Spire Missouri Inc. East"
+    },
+    {
+      "doc_name": "32022037NOPV_PCP PCO_03012022_(21-201004)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32022037NOPV_PCP PCO_03012022_(21-201004).txt",
+      "ground_truth": "Navajo Nation Oil and Gas"
+    },
+    {
+      "doc_name": "32022040NOPV_PCO_02172022_(20-179276)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32022040NOPV_PCO_02172022_(20-179276).txt",
+      "ground_truth": "Tallgrass Energy, LP"
+    },
+    {
+      "doc_name": "32022045NOPV_PCP PCO_04282022_(21-201001)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32022045NOPV_PCP PCO_04282022_(21-201001).txt",
+      "ground_truth": "Southern Star Central Gas Pipeline, Inc."
+    },
+    {
+      "doc_name": "32022047NOPV_PCP PCO_05122022_(21-201425)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32022047NOPV_PCP PCO_05122022_(21-201425).txt",
+      "ground_truth": "DTE Midstream Appalachia, LLC"
+    },
+    {
+      "doc_name": "32022052NOPV_PCP PCO_11102022_(21-207738)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32022052NOPV_PCP PCO_11102022_(21-207738).txt",
+      "ground_truth": "Magellan Midstream Partners, LP"
+    },
+    {
+      "doc_name": "32022053NOPV_PCP PCO_08222022_(21-210151)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32022053NOPV_PCP PCO_08222022_(21-210151).txt",
+      "ground_truth": "Gulf South Pipeline Company, LLC"
+    },
+    {
+      "doc_name": "32022055NOPV_PCO_11082022_(21-209703)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32022055NOPV_PCO_11082022_(21-209703).txt",
+      "ground_truth": "NST Transload Operating Company, LLC"
+    },
+    {
+      "doc_name": "32022056NOPV_PCP PCO_11082022_(21-209703)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32022056NOPV_PCP PCO_11082022_(21-209703).txt",
+      "ground_truth": "NST Express, LLC"
+    },
+    {
+      "doc_name": "32022058NOPV_PCP PCO (AMENDED)_09142022_(22-242811)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32022058NOPV_PCP PCO (AMENDED)_09142022_(22-242811).txt",
+      "ground_truth": "Coffeyville Resources Crude Transportation, LLC"
+    },
+    {
+      "doc_name": "32022061NOPV_PCP PCO_12222022_(21-201318)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32022061NOPV_PCP PCO_12222022_(21-201318).txt",
+      "ground_truth": "Algonquin Gas Transmission, LLC"
+    },
+    {
+      "doc_name": "32022062NOPV_PCO_09142022_(21-202559)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32022062NOPV_PCO_09142022_(21-202559).txt",
+      "ground_truth": "Explorer Pipeline Co."
+    },
+    {
+      "doc_name": "32022069NOPV_PCO_11292022_(22-233904)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32022069NOPV_PCO_11292022_(22-233904).txt",
+      "ground_truth": "Spire Missouri Inc. East"
+    },
+    {
+      "doc_name": "32023002NOPV_PCP PCO_01182023_(21-202836)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32023002NOPV_PCP PCO_01182023_(21-202836).txt",
+      "ground_truth": "Southern Star Central Gas Pipeline, Inc."
+    },
+    {
+      "doc_name": "32023005NOPV_PCP PCO_01252023_(22-261675)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32023005NOPV_PCP PCO_01252023_(22-261675).txt",
+      "ground_truth": "NuStar Pipeline Operating Partnership L.P."
+    },
+    {
+      "doc_name": "32023006NOPV_PCP PCO_05042023_(22-235672)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32023006NOPV_PCP PCO_05042023_(22-235672).txt",
+      "ground_truth": "Coffeyville Resources Crude Transportation, LLC"
+    },
+    {
+      "doc_name": "32023008NOPV_PCP PCO_06022023_(21-207275)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32023008NOPV_PCP PCO_06022023_(21-207275).txt",
+      "ground_truth": "Coffeyville Resources Crude Transportation, LLC"
+    },
+    {
+      "doc_name": "32023011NOPV_PCP PCO_09122023_(22-233376)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32023011NOPV_PCP PCO_09122023_(22-233376).txt",
+      "ground_truth": "Enbridge Energy, L.P."
+    },
+    {
+      "doc_name": "32023014NOPV_PCP PCO_07272023_(22-250434)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32023014NOPV_PCP PCO_07272023_(22-250434).txt",
+      "ground_truth": "Boardwalk Petrochemical Pipeline, LLC"
+    },
+    {
+      "doc_name": "32023016NOPV_PCP PCO_09082023_(22-238055)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32023016NOPV_PCP PCO_09082023_(22-238055).txt",
+      "ground_truth": "Tallgrass"
+    },
+    {
+      "doc_name": "32023020NOPV_PCP PCO_08112023_(22-237273)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32023020NOPV_PCP PCO_08112023_(22-237273).txt",
+      "ground_truth": "Boardwalk Petrochemical Pipeline, LLC"
+    },
+    {
+      "doc_name": "32023021NOPV_PCP PCO_09182023_(22-245404)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32023021NOPV_PCP PCO_09182023_(22-245404).txt",
+      "ground_truth": "Gary Climate Solutions, LLC"
+    },
+    {
+      "doc_name": "32023022NOPV_PCP PCO_08242023_(22-234357)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32023022NOPV_PCP PCO_08242023_(22-234357).txt",
+      "ground_truth": "Magellan Midstream Partners, LP"
+    },
+    {
+      "doc_name": "32023026NOPV_PCP PCO_09082023_(22-240208)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32023026NOPV_PCP PCO_09082023_(22-240208).txt",
+      "ground_truth": "Magellan Pipeline, LLC"
+    },
+    {
+      "doc_name": "32023033NOPV_PCO_11272023_(22-234926)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32023033NOPV_PCO_11272023_(22-234926).txt",
+      "ground_truth": "Texas Eastern Transmission, LP"
+    },
+    {
+      "doc_name": "32024001NOPV_PCO_12192024_(24-297350)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32024001NOPV_PCO_12192024_(24-297350).txt",
+      "ground_truth": "St Louis Pipeline Operating, LLC"
+    },
+    {
+      "doc_name": "32024004NOPV_PCP PCO_03012024_(22-240209)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32024004NOPV_PCP PCO_03012024_(22-240209).txt",
+      "ground_truth": "Pembina Cochin, LLC"
+    },
+    {
+      "doc_name": "32024007NOPV_PCO_01182024_(22-234928)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32024007NOPV_PCO_01182024_(22-234928).txt",
+      "ground_truth": "East Tennessee Natural Gas, LLC"
+    },
+    {
+      "doc_name": "32024008NOPV_PCP PCO_10252024_(22-237074)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32024008NOPV_PCP PCO_10252024_(22-237074).txt",
+      "ground_truth": "NuStar Pipeline Operating Partnership, L.P."
+    },
+    {
+      "doc_name": "32024011NOPV_PCO_02062024_(23-264235)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32024011NOPV_PCO_02062024_(23-264235).txt",
+      "ground_truth": "Northern Natural Gas Company"
+    },
+    {
+      "doc_name": "32024012NOPV_PCP PCO_02062024_(23-264235)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32024012NOPV_PCP PCO_02062024_(23-264235).txt",
+      "ground_truth": "Northern Natural Gas Company"
+    },
+    {
+      "doc_name": "32024016NOPV_PCO_02132024_(23-264316)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32024016NOPV_PCO_02132024_(23-264316).txt",
+      "ground_truth": "Enbridge Pipelines (Southern Lights), L.L.C."
+    },
+    {
+      "doc_name": "32024019NOPV_PCO_03042024_(22-233359)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32024019NOPV_PCO_03042024_(22-233359).txt",
+      "ground_truth": "Grayson Mill Operating, LLC"
+    },
+    {
+      "doc_name": "32024020NOPV_PCP PCO_06132024_(21-199489)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32024020NOPV_PCP PCO_06132024_(21-199489).txt",
+      "ground_truth": "Energy Transfer Company"
+    },
+    {
+      "doc_name": "32024022NOPV_PCP PCO_05082024_(23-268060)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32024022NOPV_PCP PCO_05082024_(23-268060).txt",
+      "ground_truth": "NGL Supply Terminal Company, LLC"
+    },
+    {
+      "doc_name": "32024028NOPV_PCO_12302024_(22-235481)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32024028NOPV_PCO_12302024_(22-235481).txt",
+      "ground_truth": "Flint Hills Resources, LLC"
+    },
+    {
+      "doc_name": "32024030NOPV_PCO_06032024_(23-264637)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32024030NOPV_PCO_06032024_(23-264637).txt",
+      "ground_truth": "Alliance"
+    },
+    {
+      "doc_name": "32024035NOPV_PCO_04152024_(23-270170)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32024035NOPV_PCO_04152024_(23-270170).txt",
+      "ground_truth": "Tallgrass Energy, LP"
+    },
+    {
+      "doc_name": "32024036NOPV_PCP PCO_06282024_(23-264742)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32024036NOPV_PCP PCO_06282024_(23-264742).txt",
+      "ground_truth": "DGC"
+    },
+    {
+      "doc_name": "32024038NOPV_PCP PCO_05312024_(22-233382)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32024038NOPV_PCP PCO_05312024_(22-233382).txt",
+      "ground_truth": "Zenith Energy Terminals Joliet Holdings, LLC"
+    },
+    {
+      "doc_name": "32024040NOPV_PCP PCO_09062024_(23-264452)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32024040NOPV_PCP PCO_09062024_(23-264452).txt",
+      "ground_truth": "Tallgrass Energy, LP"
+    },
+    {
+      "doc_name": "32024042NOPV_PCO_06032024_(23-264638)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32024042NOPV_PCO_06032024_(23-264638).txt",
+      "ground_truth": "Pembina Cochin, LLC"
+    },
+    {
+      "doc_name": "32024044NOPV_PCP PCO_04182024_(23-265891)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32024044NOPV_PCP PCO_04182024_(23-265891).txt",
+      "ground_truth": "Centra Pipeline Minnesota Inc."
+    },
+    {
+      "doc_name": "32024045NOPV_PCP PCO_05102024_(23-264643)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32024045NOPV_PCP PCO_05102024_(23-264643).txt",
+      "ground_truth": "Enbridge Storage (Cushing), LLC"
+    },
+    {
+      "doc_name": "32024049NOPV_PCP PCO_07022024_(23-264476)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32024049NOPV_PCP PCO_07022024_(23-264476).txt",
+      "ground_truth": "Ferrellgas, L.P."
+    },
+    {
+      "doc_name": "32024050NOPV_PCP PCO_08282024_(23-264059)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32024050NOPV_PCP PCO_08282024_(23-264059).txt",
+      "ground_truth": "ONEOK, Inc."
+    },
+    {
+      "doc_name": "32024052NOPV_PCP PCO_07032024_(24-305436)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32024052NOPV_PCP PCO_07032024_(24-305436).txt",
+      "ground_truth": "Magellan Pipeline Company, LP."
+    },
+    {
+      "doc_name": "32024053NOPV_PCO_12122024_(22-233381)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32024053NOPV_PCO_12122024_(22-233381).txt",
+      "ground_truth": "Aux Sable Liquid Products"
+    },
+    {
+      "doc_name": "32024054NOPV_PCO_08232024_(23-264382)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32024054NOPV_PCO_08232024_(23-264382).txt",
+      "ground_truth": "East Cheyenne Gas Storage, LLC (ECGS)"
+    },
+    {
+      "doc_name": "32024056NOPV_PCP PCO_10252024_(23-264602)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32024056NOPV_PCP PCO_10252024_(23-264602).txt",
+      "ground_truth": "Express Holdings (USA), LLC"
+    },
+    {
+      "doc_name": "32024058NOPV_PCO_12042024_(23-264827)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32024058NOPV_PCO_12042024_(23-264827).txt",
+      "ground_truth": "BP Oil Pipeline Company"
+    },
+    {
+      "doc_name": "32024062NOPV_PCP PCO_11212024_(23-266139)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32024062NOPV_PCP PCO_11212024_(23-266139).txt",
+      "ground_truth": "Texas Gas Transmission, LLC"
+    },
+    {
+      "doc_name": "32024066NOPV_PCP PCO_08222024_(23-282184)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32024066NOPV_PCP PCO_08222024_(23-282184).txt",
+      "ground_truth": "Boardwalk Pipelines, LP"
+    },
+    {
+      "doc_name": "32024069NOPV_PCP PCO_11142024_(23-264601)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32024069NOPV_PCP PCO_11142024_(23-264601).txt",
+      "ground_truth": "Northern Natural Gas Company"
+    },
+    {
+      "doc_name": "32024071NOPV_PCP PCO_11142024_(23-264063)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32024071NOPV_PCP PCO_11142024_(23-264063).txt",
+      "ground_truth": "Pembina Cochin, LLC"
+    },
+    {
+      "doc_name": "32025003NOPV_PCP PCO_01162025_(23-264381)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32025003NOPV_PCP PCO_01162025_(23-264381).txt",
+      "ground_truth": "Spire STL Pipeline, LLC"
+    },
+    {
+      "doc_name": "32025004NOPV_PCO_05052025_(23-264480)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32025004NOPV_PCO_05052025_(23-264480).txt",
+      "ground_truth": "Lakes Gas Company"
+    },
+    {
+      "doc_name": "32025006NOPV_PCP PCO_08182025_(23-264820)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32025006NOPV_PCP PCO_08182025_(23-264820).txt",
+      "ground_truth": "Texas Gas Transmission, LLC"
+    },
+    {
+      "doc_name": "32025007NOPV_PCP PCO_06252025_(23-264832)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32025007NOPV_PCP PCO_06252025_(23-264832).txt",
+      "ground_truth": "Viking Gas Transmission Co."
+    },
+    {
+      "doc_name": "32025008NOPV_PCP PCO_06162025_(23-264835)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32025008NOPV_PCP PCO_06162025_(23-264835).txt",
+      "ground_truth": "Tallgrass Energy Partners, LP"
+    },
+    {
+      "doc_name": "32025022NOPV_PCO_07182025_(24-297198)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32025022NOPV_PCO_07182025_(24-297198).txt",
+      "ground_truth": "CountryMark Refining and Logistics, LLC"
+    },
+    {
+      "doc_name": "32025024NOPV_PCO_11062025_(24-297583)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32025024NOPV_PCO_11062025_(24-297583).txt",
+      "ground_truth": "Black Bear Transmission, LLC"
+    },
+    {
+      "doc_name": "32025027NOPV_PCO_07012025_(24-299195)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32025027NOPV_PCO_07012025_(24-299195).txt",
+      "ground_truth": "Texas Eastern Transmission, LP"
+    },
+    {
+      "doc_name": "32025029NOPV_PCO_08152025_(24-297350)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32025029NOPV_PCO_08152025_(24-297350).txt",
+      "ground_truth": "St. Louis Pipeline Operating, LLC"
+    },
+    {
+      "doc_name": "32026004NOPV_PCO_02032026_(25-330822)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/32026004NOPV_PCO_02032026_(25-330822).txt",
+      "ground_truth": "Spire STL Pipeline, LLC"
+    },
+    {
+      "doc_name": "42021001NOPV_PCO_10042021_(20-172501)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42021001NOPV_PCO_10042021_(20-172501).txt",
+      "ground_truth": "Enable Gas Transmission, LLC"
+    },
+    {
+      "doc_name": "42021008NOPV_PCO_11152021_(20-172587)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42021008NOPV_PCO_11152021_(20-172587).txt",
+      "ground_truth": "Oryx Delaware Oil Transport LLC"
+    },
+    {
+      "doc_name": "42021010NOPV_PCO_10272021_(20-172682)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42021010NOPV_PCO_10272021_(20-172682).txt",
+      "ground_truth": "Western Refining Logistics, LP"
+    },
+    {
+      "doc_name": "42021011NOPV_PCO_11022021_(20-172601)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42021011NOPV_PCO_11022021_(20-172601).txt",
+      "ground_truth": "Holly Energy Partners - Operating, L.P."
+    },
+    {
+      "doc_name": "42021022NOPV_PCO_09232021_(20-186120)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42021022NOPV_PCO_09232021_(20-186120).txt",
+      "ground_truth": "Sabine Pass LNG, L.P."
+    },
+    {
+      "doc_name": "42021027NOPV_PCO_08182021_(20-172515)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42021027NOPV_PCO_08182021_(20-172515).txt",
+      "ground_truth": "Delfin Offshore Pipeline LLC"
+    },
+    {
+      "doc_name": "42021033NOPV_PCO_09232021_(21-220612)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42021033NOPV_PCO_09232021_(21-220612).txt",
+      "ground_truth": "Northstar Offshore Ventures, LLC"
+    },
+    {
+      "doc_name": "42021034NOPV_PCP PCO_12212021_(20-183709)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42021034NOPV_PCP PCO_12212021_(20-183709).txt",
+      "ground_truth": "Texas Eastern Transmission, L.P."
+    },
+    {
+      "doc_name": "42021039NOPV_PCO_11232021_(20-178576)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42021039NOPV_PCO_11232021_(20-178576).txt",
+      "ground_truth": "Valero Partners Operating Co. LLC"
+    },
+    {
+      "doc_name": "42021047NOPV_PCO_10212021_(21-202129)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42021047NOPV_PCO_10212021_(21-202129).txt",
+      "ground_truth": "Enable Gas Transmission, LLC"
+    },
+    {
+      "doc_name": "42021057NOPV_PCO_11012021_(21-200343)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42021057NOPV_PCO_11012021_(21-200343).txt",
+      "ground_truth": "Midship Pipeline Company, LLC"
+    },
+    {
+      "doc_name": "42022001NOPV_PCO_08042022_(21-210603)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42022001NOPV_PCO_08042022_(21-210603).txt",
+      "ground_truth": "Enterprise Crude Pipeline, LLC"
+    },
+    {
+      "doc_name": "42022007NOPV_PCP PCO_02112022_(21-230161)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42022007NOPV_PCP PCO_02112022_(21-230161).txt",
+      "ground_truth": "Kinetica Deepwater Express, LLC"
+    },
+    {
+      "doc_name": "42022009NOPV_PCP PCO_01212022_(21-199753)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42022009NOPV_PCP PCO_01212022_(21-199753).txt",
+      "ground_truth": "DCP Midstream"
+    },
+    {
+      "doc_name": "42022015NOPV_PCO_02232021_(21-500287)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42022015NOPV_PCO_02232021_(21-500287).txt",
+      "ground_truth": "Monarch Oil Pipeline, LLC"
+    },
+    {
+      "doc_name": "42022018NOPV_PCO_02142022_(21-207285)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42022018NOPV_PCO_02142022_(21-207285).txt",
+      "ground_truth": "Eagle US 2 LLC"
+    },
+    {
+      "doc_name": "42022025NOPV_PCO_02102022_(21-209144)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42022025NOPV_PCO_02102022_(21-209144).txt",
+      "ground_truth": "Chattanooga Gas Company"
+    },
+    {
+      "doc_name": "42022026NOPV_PCO_01262022_(21-209158)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42022026NOPV_PCO_01262022_(21-209158).txt",
+      "ground_truth": "East Tennessee Natural Gas, LLC"
+    },
+    {
+      "doc_name": "42022028NOPV_PCO_04082022_(21-199241)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42022028NOPV_PCO_04082022_(21-199241).txt",
+      "ground_truth": "Genesis Offshore Holdings, LLC"
+    },
+    {
+      "doc_name": "42022039NOPV_PCP PCO_06172022_(21-203269)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42022039NOPV_PCP PCO_06172022_(21-203269).txt",
+      "ground_truth": "Williams Field Services - Gulf Coast Company, LP"
+    },
+    {
+      "doc_name": "42022041NOPV_PCO_08052022_(21-199244)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42022041NOPV_PCO_08052022_(21-199244).txt",
+      "ground_truth": "Denbury Onshore, LLC"
+    },
+    {
+      "doc_name": "42022046NOPV_PCO_08052022_(22-250946)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42022046NOPV_PCO_08052022_(22-250946).txt",
+      "ground_truth": "Permian Express Partners LLC"
+    },
+    {
+      "doc_name": "42022047NOPV_PCO_08032022_(21-199242)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42022047NOPV_PCO_08032022_(21-199242).txt",
+      "ground_truth": "Enable Mississippi River Transmission, LLC"
+    },
+    {
+      "doc_name": "42022061NOPV_PCO_10312022_(22-233712)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42022061NOPV_PCO_10312022_(22-233712).txt",
+      "ground_truth": "Breitburn Operating L.P."
+    },
+    {
+      "doc_name": "42022062NOPV_PCO_12142022_(22-234365)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42022062NOPV_PCO_12142022_(22-234365).txt",
+      "ground_truth": "Enterprise Products Operating, LLC"
+    },
+    {
+      "doc_name": "42023006NOPV_PCP PCO_05082023_(21-231718)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42023006NOPV_PCP PCO_05082023_(21-231718).txt",
+      "ground_truth": "Interior Gas Utility"
+    },
+    {
+      "doc_name": "42023009NOPV_PCO_01132023_(22-232746)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42023009NOPV_PCO_01132023_(22-232746).txt",
+      "ground_truth": "UCAR Pipeline Incorporated"
+    },
+    {
+      "doc_name": "42023010NOPV_PCP PCO_06022023_(22-232749)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42023010NOPV_PCP PCO_06022023_(22-232749).txt",
+      "ground_truth": "Shell Pipeline Company, LP"
+    },
+    {
+      "doc_name": "42023016NOPV_PCO_01312023_(21-199998)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42023016NOPV_PCO_01312023_(21-199998).txt",
+      "ground_truth": "Denbury Green Pipeline Texas, LLC"
+    },
+    {
+      "doc_name": "42023017NOPV_PCO_01312023_(21-199998)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42023017NOPV_PCO_01312023_(21-199998).txt",
+      "ground_truth": "Denbury Gulf Coast Pipeline, LLC"
+    },
+    {
+      "doc_name": "42023031NOPV_PCO_04202023_(22-242818)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42023031NOPV_PCO_04202023_(22-242818).txt",
+      "ground_truth": "Valero Terminaling and Distribution Company"
+    },
+    {
+      "doc_name": "42023033NOPV_PCO_04212023_(22-249322)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42023033NOPV_PCO_04212023_(22-249322).txt",
+      "ground_truth": "Cove Point LNG, LP"
+    },
+    {
+      "doc_name": "42023039NOPV_PCO_05112023_(22-234780)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42023039NOPV_PCO_05112023_(22-234780).txt",
+      "ground_truth": "Bravo Pipeline Company"
+    },
+    {
+      "doc_name": "42023042NOPV_PCO_05232023_(22-235632)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42023042NOPV_PCO_05232023_(22-235632).txt",
+      "ground_truth": "Enable Mississippi River Transmission LLC"
+    },
+    {
+      "doc_name": "42023044NOPV_PCO_05042023_(22-234487)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42023044NOPV_PCO_05042023_(22-234487).txt",
+      "ground_truth": "Targa Downstream LLC"
+    },
+    {
+      "doc_name": "42023045NOPV_PCO_05112023_(22-232770)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42023045NOPV_PCO_05112023_(22-232770).txt",
+      "ground_truth": "Enterprise Products Operating LLC"
+    },
+    {
+      "doc_name": "42023047NOPV_PCO_10182023_(22-241127)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42023047NOPV_PCO_10182023_(22-241127).txt",
+      "ground_truth": "Enable Gas Transmission, LLC"
+    },
+    {
+      "doc_name": "42023052NOPV_PCO_10162023_(22-235649)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42023052NOPV_PCO_10162023_(22-235649).txt",
+      "ground_truth": "Panhandle Eastern Pipeline Company"
+    },
+    {
+      "doc_name": "42023053NOPV_PCO_06132023_(21-227138)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42023053NOPV_PCO_06132023_(21-227138).txt",
+      "ground_truth": "Navigator Borger Express LLC"
+    },
+    {
+      "doc_name": "42023057NOPV_PCO_11162023_(21-209415)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42023057NOPV_PCO_11162023_(21-209415).txt",
+      "ground_truth": "Crowley LNG Puerto Rico, LLC"
+    },
+    {
+      "doc_name": "42024014NOPV_PCO_01302024_(21-217155)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42024014NOPV_PCO_01302024_(21-217155).txt",
+      "ground_truth": "Rosefield Operating Company, LLC"
+    },
+    {
+      "doc_name": "42024015NOPV_PCP PCO_03252024_(22-232769)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42024015NOPV_PCP PCO_03252024_(22-232769).txt",
+      "ground_truth": "Sunoco Pipeline LP, an Energy Transfer Partnership"
+    },
+    {
+      "doc_name": "42024020NOPV_PCP PCO_11192024_(21-207841)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42024020NOPV_PCP PCO_11192024_(21-207841).txt",
+      "ground_truth": "Summit Midstream Permian 2, LLC"
+    },
+    {
+      "doc_name": "42024022NOPV_PCO_03202024_(23-264818)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42024022NOPV_PCO_03202024_(23-264818).txt",
+      "ground_truth": "Cheniere Creole Trail Pipeline, L.P."
+    },
+    {
+      "doc_name": "42024024NOPV_PCO_05022024_(23-264209)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42024024NOPV_PCO_05022024_(23-264209).txt",
+      "ground_truth": "Enterprise Products Operating, LLC"
+    },
+    {
+      "doc_name": "42024027NOPV_PCO_05312024_(23-266081)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42024027NOPV_PCO_05312024_(23-266081).txt",
+      "ground_truth": "Sunoco Pipeline, LP"
+    },
+    {
+      "doc_name": "42024034NOPV_PCO_08272024_(24-299840)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42024034NOPV_PCO_08272024_(24-299840).txt",
+      "ground_truth": "Columbia Gas Transmission LLC"
+    },
+    {
+      "doc_name": "42024036NOPV_PCO_10222024_(23-264819)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42024036NOPV_PCO_10222024_(23-264819).txt",
+      "ground_truth": "ONEOK NGL Pipeline, LLC"
+    },
+    {
+      "doc_name": "42024037NOPV_PCP PCO_10042024_(23-267490)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42024037NOPV_PCP PCO_10042024_(23-267490).txt",
+      "ground_truth": "Transwestern Pipeline Company, LLC"
+    },
+    {
+      "doc_name": "42024042NOPV_PCO_08292024_(23-267234)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42024042NOPV_PCO_08292024_(23-267234).txt",
+      "ground_truth": "Eagle LNG Partners"
+    },
+    {
+      "doc_name": "42024045NOPV_PCO_10212024_(23-266145)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42024045NOPV_PCO_10212024_(23-266145).txt",
+      "ground_truth": "Air Products & Chemicals Inc."
+    },
+    {
+      "doc_name": "42024046NOPV_PCO_08292024_(23-267231)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42024046NOPV_PCO_08292024_(23-267231).txt",
+      "ground_truth": "Interior Gas Utility"
+    },
+    {
+      "doc_name": "42024047NOPV_PCO_10222024_(23-267237)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42024047NOPV_PCO_10222024_(23-267237).txt",
+      "ground_truth": "Venture Global Calcasieu Pass, LLC"
+    },
+    {
+      "doc_name": "42024048NOPV_PCO_10222024_(23-264726)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42024048NOPV_PCO_10222024_(23-264726).txt",
+      "ground_truth": "Targa Resources Operating, LLC"
+    },
+    {
+      "doc_name": "42024052NOPV_PCO_10302024_(24-297498)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42024052NOPV_PCO_10302024_(24-297498).txt",
+      "ground_truth": "Navigator Borger Express, LLC"
+    },
+    {
+      "doc_name": "42025002NOPV_PCO_05152025_(24-296561)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42025002NOPV_PCO_05152025_(24-296561).txt",
+      "ground_truth": "Valero Terminal and Distribution Company"
+    },
+    {
+      "doc_name": "42025007NOPV_PCO_10012025_(24-301886)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42025007NOPV_PCO_10012025_(24-301886).txt",
+      "ground_truth": "UGI Energy Services, LLC"
+    },
+    {
+      "doc_name": "42025012NOPV_PCP PCO_12312025_(23-292329)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42025012NOPV_PCP PCO_12312025_(23-292329).txt",
+      "ground_truth": "Panther Operating Company, LLC"
+    },
+    {
+      "doc_name": "42025021NOPV_PCO_01082025_(23-266712)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42025021NOPV_PCO_01082025_(23-266712).txt",
+      "ground_truth": "Sinclair Transportation Company, LLC"
+    },
+    {
+      "doc_name": "42025029NOPV_PCO_05082025_(24-296566)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42025029NOPV_PCO_05082025_(24-296566).txt",
+      "ground_truth": "ExxonMobil Production Company"
+    },
+    {
+      "doc_name": "42025031NOPV_PCO_12222025_(24-296702)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42025031NOPV_PCO_12222025_(24-296702).txt",
+      "ground_truth": "Holly Energy Partners LP"
+    },
+    {
+      "doc_name": "42025034NOPV_PCO_12222025_(24-296704)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42025034NOPV_PCO_12222025_(24-296704).txt",
+      "ground_truth": "Holly Energy Partners, LP"
+    },
+    {
+      "doc_name": "42025035NOPV_PCP PCO_12232025_(24-305809)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42025035NOPV_PCP PCO_12232025_(24-305809).txt",
+      "ground_truth": "Panhandle Eastern Pipeline Company"
+    },
+    {
+      "doc_name": "42025039NOPV_PCO_07032025_(24-298760)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42025039NOPV_PCO_07032025_(24-298760).txt",
+      "ground_truth": "East Tennessee Natural Gas, LLC"
+    },
+    {
+      "doc_name": "42025040NOPV_PCO_08282025_(24-308458)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42025040NOPV_PCO_08282025_(24-308458).txt",
+      "ground_truth": "Niagara Mohawk Power Corporation"
+    },
+    {
+      "doc_name": "42025043NOPV_PCO_11252025_(24-296703)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42025043NOPV_PCO_11252025_(24-296703).txt",
+      "ground_truth": "Holly Energy Partners, LP"
+    },
+    {
+      "doc_name": "42025047NOPV_PCO_08202025_(24-296558)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42025047NOPV_PCO_08202025_(24-296558).txt",
+      "ground_truth": "EnLink Processing Services, LLC"
+    },
+    {
+      "doc_name": "42025049NOPV_PCO_07102025_(24-296979)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42025049NOPV_PCO_07102025_(24-296979).txt",
+      "ground_truth": "Energy Transfer, LP"
+    },
+    {
+      "doc_name": "42025056NOPV_PCP PCO_08292025_(24-296556)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42025056NOPV_PCP PCO_08292025_(24-296556).txt",
+      "ground_truth": "DCP Midstream Partners, LP"
+    },
+    {
+      "doc_name": "42025060NOPV_PCO_11042025_(24-296536)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42025060NOPV_PCO_11042025_(24-296536).txt",
+      "ground_truth": "Equion Enterprises, LLC DBA Shell Oil Products"
+    },
+    {
+      "doc_name": "42026004NOPV_PCO_02112026_(25-329817)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42026004NOPV_PCO_02112026_(25-329817).txt",
+      "ground_truth": "Valero Terminaling and Distribution Company"
+    },
+    {
+      "doc_name": "42026012NOPV_PCP PCO_02122026_(23-266706)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42026012NOPV_PCP PCO_02122026_(23-266706).txt",
+      "ground_truth": "Navigator Energy Services"
+    },
+    {
+      "doc_name": "42026013NOPV_PCP PCO_02182026_(23-266740)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42026013NOPV_PCP PCO_02182026_(23-266740).txt",
+      "ground_truth": "Florida Gas Transmission Co., LLC"
+    },
+    {
+      "doc_name": "42026023NOPV_PCO_02122026_(25-329815)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/42026023NOPV_PCO_02122026_(25-329815).txt",
+      "ground_truth": "Chesapeake Utilities Corporation"
+    },
+    {
+      "doc_name": "52021031NOPV_PCP PCO_08112021_(21-208158)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52021031NOPV_PCP PCO_08112021_(21-208158).txt",
+      "ground_truth": "Wyoming Refining Company"
+    },
+    {
+      "doc_name": "52021037NOPV_PCO_09172021_(21-201448)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52021037NOPV_PCO_09172021_(21-201448).txt",
+      "ground_truth": "City of Glendale, Glendale Water & Power"
+    },
+    {
+      "doc_name": "52021051NOPV_PCO_10152021_(20-173120)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52021051NOPV_PCO_10152021_(20-173120).txt",
+      "ground_truth": "City of Victorville"
+    },
+    {
+      "doc_name": "52021057NOPV_PCO_12202021_(21-199974)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52021057NOPV_PCO_12202021_(21-199974).txt",
+      "ground_truth": "Freeport-McMoRan Oil & Gas"
+    },
+    {
+      "doc_name": "52022002NOPV_PCO_03302022_(21-199723)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52022002NOPV_PCO_03302022_(21-199723).txt",
+      "ground_truth": "Harvest Alaska, LLC"
+    },
+    {
+      "doc_name": "52022006NOPV_PCO_09072022_(21-213178)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52022006NOPV_PCO_09072022_(21-213178).txt",
+      "ground_truth": "Hilcorp North Slope, LLC"
+    },
+    {
+      "doc_name": "52022008NOPV_PCO_07182022_(20-191036)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52022008NOPV_PCO_07182022_(20-191036).txt",
+      "ground_truth": "Interior Gas Utility"
+    },
+    {
+      "doc_name": "52022019NOPV_PCO_03072022_(21-201443)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52022019NOPV_PCO_03072022_(21-201443).txt",
+      "ground_truth": "Western Midstream Partners, LP"
+    },
+    {
+      "doc_name": "52022021NOPV_PCO_06152022_(21-201441)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52022021NOPV_PCO_06152022_(21-201441).txt",
+      "ground_truth": "Scm Pr, LLC"
+    },
+    {
+      "doc_name": "52022023NOPV_PCO_04272022_(21-218958)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52022023NOPV_PCO_04272022_(21-218958).txt",
+      "ground_truth": "Island Energy Service"
+    },
+    {
+      "doc_name": "52022024NOPV_PCO_04272022_(21-218959)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52022024NOPV_PCO_04272022_(21-218959).txt",
+      "ground_truth": "Signature Flight Support"
+    },
+    {
+      "doc_name": "52022028NOPV_PCO_09072022_(21-201439)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52022028NOPV_PCO_09072022_(21-201439).txt",
+      "ground_truth": "Eni US Operating Co., Inc"
+    },
+    {
+      "doc_name": "52022037NOPV_PCP PCO_04272022_(22-236002)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52022037NOPV_PCP PCO_04272022_(22-236002).txt",
+      "ground_truth": "Los Angeles Department of Water and Power"
+    },
+    {
+      "doc_name": "52022038NOPV_PCO_04122022_(21-219857)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52022038NOPV_PCO_04122022_(21-219857).txt",
+      "ground_truth": "FDL Operating, LLC"
+    },
+    {
+      "doc_name": "52022041NOPV_PCO_05092022_(21-219864)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52022041NOPV_PCO_05092022_(21-219864).txt",
+      "ground_truth": "Beacon West Energy Group, LLC"
+    },
+    {
+      "doc_name": "52022042NOPV_PCO_05132022_(21-214526)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52022042NOPV_PCO_05132022_(21-214526).txt",
+      "ground_truth": "SFPP, LP"
+    },
+    {
+      "doc_name": "52022050NOPV_PCO_12192022_(22-232643)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52022050NOPV_PCO_12192022_(22-232643).txt",
+      "ground_truth": "Mountain West Pipeline, LLC"
+    },
+    {
+      "doc_name": "52022052NOPV_PCO_12012022_(22-232653)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52022052NOPV_PCO_12012022_(22-232653).txt",
+      "ground_truth": "Elevation Midstream"
+    },
+    {
+      "doc_name": "52023003NOPV_PCP PCO_04112023_(22-236099)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52023003NOPV_PCP PCO_04112023_(22-236099).txt",
+      "ground_truth": "Kinder Morgan, LLC"
+    },
+    {
+      "doc_name": "52023009NOPV_PCP PCO_03012023_(21-217219)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52023009NOPV_PCP PCO_03012023_(21-217219).txt",
+      "ground_truth": "Interior Gas Utility"
+    },
+    {
+      "doc_name": "52023011NOPV_PCP PCO_04062023_(21-225379)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52023011NOPV_PCP PCO_04062023_(21-225379).txt",
+      "ground_truth": "Beta Offshore"
+    },
+    {
+      "doc_name": "52023012NOPV_PCO_03012023_(22-251101)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52023012NOPV_PCO_03012023_(22-251101).txt",
+      "ground_truth": "Menzies Aviation"
+    },
+    {
+      "doc_name": "52023016NOPV_PCO_03242023_(21-207466)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52023016NOPV_PCO_03242023_(21-207466).txt",
+      "ground_truth": "Norgasco, Inc."
+    },
+    {
+      "doc_name": "52023019NOPV_PCP PCO_12272023_(22-236528)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52023019NOPV_PCP PCO_12272023_(22-236528).txt",
+      "ground_truth": "Eni US Operating Co., Inc."
+    },
+    {
+      "doc_name": "52023021NOPV_PCO_02062023_(22-239515)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52023021NOPV_PCO_02062023_(22-239515).txt",
+      "ground_truth": "Calumet Montana Refining, LLC"
+    },
+    {
+      "doc_name": "52023025NOPV_PCP PCO_04062023_(21-200502)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52023025NOPV_PCP PCO_04062023_(21-200502).txt",
+      "ground_truth": "Amplify Energy Corp."
+    },
+    {
+      "doc_name": "52023027NOPV_PCO_01192023_(22-232634)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52023027NOPV_PCO_01192023_(22-232634).txt",
+      "ground_truth": "NAFTEX Operating Company"
+    },
+    {
+      "doc_name": "52023029NOPV_PCP PCO_06222023_(22-251181)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52023029NOPV_PCP PCO_06222023_(22-251181).txt",
+      "ground_truth": "AmeriGas Propane LP"
+    },
+    {
+      "doc_name": "52023030NOPV_PCO_04172023_(21-200923)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52023030NOPV_PCO_04172023_(21-200923).txt",
+      "ground_truth": "SFPP, LP"
+    },
+    {
+      "doc_name": "52023031NOPV_PCP PCO_10112023_(22-232626)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52023031NOPV_PCP PCO_10112023_(22-232626).txt",
+      "ground_truth": "Freeport-McMoRan Oil & Gas"
+    },
+    {
+      "doc_name": "52023033NOPV_PCO_07192023_(22-239213)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52023033NOPV_PCO_07192023_(22-239213).txt",
+      "ground_truth": "Black Hills Shoshone Pipeline, LLC"
+    },
+    {
+      "doc_name": "52023035NOPV_PCO_10252023_(22-239214)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52023035NOPV_PCO_10252023_(22-239214).txt",
+      "ground_truth": "Contango Resources"
+    },
+    {
+      "doc_name": "52023037NOPV_PCP PCO_09182023_(22-232625)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52023037NOPV_PCP PCO_09182023_(22-232625).txt",
+      "ground_truth": "DCOR, LLC"
+    },
+    {
+      "doc_name": "52023039NOPV_PCO_11022023_(22-254201)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52023039NOPV_PCO_11022023_(22-254201).txt",
+      "ground_truth": "North Slope Borough Energy Management"
+    },
+    {
+      "doc_name": "52023040NOPV_PCO_07262023_(23-264043)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52023040NOPV_PCO_07262023_(23-264043).txt",
+      "ground_truth": "E&B Natural Resources Management Corp"
+    },
+    {
+      "doc_name": "52023042NOPV_PCO_12262023_(22-232644)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52023042NOPV_PCO_12262023_(22-232644).txt",
+      "ground_truth": "Amplify Energy Corp."
+    },
+    {
+      "doc_name": "52023043NOPV_PCO_10252023_(22-239216)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52023043NOPV_PCO_10252023_(22-239216).txt",
+      "ground_truth": "PAR Hawaii Refining, LLC"
+    },
+    {
+      "doc_name": "52023046NOPV_PCP PCO_12272023_(22-257275)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52023046NOPV_PCP PCO_12272023_(22-257275).txt",
+      "ground_truth": "Barrow Utilities and Electric Cooperative, Inc."
+    },
+    {
+      "doc_name": "52023048NOPV_PCO_11022023_(22-239215)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52023048NOPV_PCO_11022023_(22-239215).txt",
+      "ground_truth": "Clear Creek Storage Company, LLC"
+    },
+    {
+      "doc_name": "52023052NOPV_PCO_10272023_(22-246104)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52023052NOPV_PCO_10272023_(22-246104).txt",
+      "ground_truth": "City of Palo Alto"
+    },
+    {
+      "doc_name": "52023054NOPV_PCO_08212023_(23-264167)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52023054NOPV_PCO_08212023_(23-264167).txt",
+      "ground_truth": "Tres Palacios Holdings LLC"
+    },
+    {
+      "doc_name": "52024001NOPV_PCO_12122024_(24-297227)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52024001NOPV_PCO_12122024_(24-297227).txt",
+      "ground_truth": "Par Hawaii"
+    },
+    {
+      "doc_name": "52024002NOPV_PCP PCO_01292024_22-258385",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52024002NOPV_PCP PCO_01292024_22-258385.txt",
+      "ground_truth": "Town of Walden"
+    },
+    {
+      "doc_name": "52024003NOPV_PCP PCO_05222024_(22-232568)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52024003NOPV_PCP PCO_05222024_(22-232568).txt",
+      "ground_truth": "Idaho Pipeline Corporation"
+    },
+    {
+      "doc_name": "52024009NOPV_PCO_ 03042024_(22-239217)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52024009NOPV_PCO_ 03042024_(22-239217).txt",
+      "ground_truth": "Midway Sunset Generation Company"
+    },
+    {
+      "doc_name": "52024010NOPV_PCO_01102024_(23-264168)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52024010NOPV_PCO_01102024_(23-264168).txt",
+      "ground_truth": "Phillips 66 Pipeline LLC"
+    },
+    {
+      "doc_name": "52024011NOPV_PCO_02232024_(23-264348)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52024011NOPV_PCO_02232024_(23-264348).txt",
+      "ground_truth": "DCOR LLC"
+    },
+    {
+      "doc_name": "52024015NOPV_PCO_04152024_(23-264582)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52024015NOPV_PCO_04152024_(23-264582).txt",
+      "ground_truth": "Xcel Energy"
+    },
+    {
+      "doc_name": "52024016NOPV_PCO_05232024_(23-264378)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52024016NOPV_PCO_05232024_(23-264378).txt",
+      "ground_truth": "Alaska Pipeline Company"
+    },
+    {
+      "doc_name": "52024023NOPV_PCP PCO_08232024_(23-264166)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52024023NOPV_PCP PCO_08232024_(23-264166).txt",
+      "ground_truth": "Spire Storage West LLC"
+    },
+    {
+      "doc_name": "52024026NOPV_PCO_12102024_(23-265653)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52024026NOPV_PCO_12102024_(23-265653).txt",
+      "ground_truth": "NRG Energy Services"
+    },
+    {
+      "doc_name": "52024039NOPV_PCO_12062024_(24-297378)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52024039NOPV_PCO_12062024_(24-297378).txt",
+      "ground_truth": "TransMontaigne Operating Company L.P."
+    },
+    {
+      "doc_name": "52024040NOPV_PCO_11182024_(24-297214)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52024040NOPV_PCO_11182024_(24-297214).txt",
+      "ground_truth": "Seaport Midstream Partners, LLC."
+    },
+    {
+      "doc_name": "52024041NOPV_PCO_12182024_(24-295915)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52024041NOPV_PCO_12182024_(24-295915).txt",
+      "ground_truth": "ConocoPhillips Alaska"
+    },
+    {
+      "doc_name": "52025006NOPV_PCP PCO_07302025_(24-296481)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52025006NOPV_PCP PCO_07302025_(24-296481).txt",
+      "ground_truth": "Twin Eagle Midstream Assets, LLC"
+    },
+    {
+      "doc_name": "52025010NOPV_PCO_04252025_(24-298502)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52025010NOPV_PCO_04252025_(24-298502).txt",
+      "ground_truth": "Alyeska Pipeline Service Company"
+    },
+    {
+      "doc_name": "52025011NOPV_PCO_05022025_(24-305759)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52025011NOPV_PCO_05022025_(24-305759).txt",
+      "ground_truth": "Interior Gas Utility"
+    },
+    {
+      "doc_name": "52025014NOPV_PCO_05022025_(24-297328)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52025014NOPV_PCO_05022025_(24-297328).txt",
+      "ground_truth": "Chevron Pipeline Co."
+    },
+    {
+      "doc_name": "52025023NOPV_PCP PCO_10022025_(25-329886)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52025023NOPV_PCP PCO_10022025_(25-329886).txt",
+      "ground_truth": "Alyeska Pipeline Service Company"
+    },
+    {
+      "doc_name": "52025026NOPV_PCO_07292025_(24-297246)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52025026NOPV_PCO_07292025_(24-297246).txt",
+      "ground_truth": "Westgas Interstate, Inc."
+    },
+    {
+      "doc_name": "52025028NOPV_PCP PCO_11172025_(24-298503)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52025028NOPV_PCP PCO_11172025_(24-298503).txt",
+      "ground_truth": "SFPP, LP"
+    },
+    {
+      "doc_name": "52025033NOPV_PCO_11212025_(24-297332)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52025033NOPV_PCO_11212025_(24-297332).txt",
+      "ground_truth": "CPN Pipeline Company"
+    },
+    {
+      "doc_name": "52025039NOPV_PCO_12082025_(24-296470)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52025039NOPV_PCO_12082025_(24-296470).txt",
+      "ground_truth": "WBI Energy Transmission Inc."
+    },
+    {
+      "doc_name": "52026002NOPV_PCO_01222026_(25-331927)",
+      "doc_path": "/mnt/data/LSF/data/nopv/text/52026002NOPV_PCO_01222026_(25-331927).txt",
+      "ground_truth": "Tallgrass Interstate Gas Transmission LLC"
+    }
+  ]
+}
