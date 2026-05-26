@@ -1,0 +1,29 @@
+{
+  "doc_name": "AMAZON_2017_10K",
+  "question": "List one material agreement or other exhibit number explicitly identified in the Exhibit Index (e.g., \"Exhibit 10.1: Credit Agreement\")—or record \"none listed\" if no material agreements are identified.",
+  "question_slug": "list_one_material_agreement_or_other_exhibit_number_explicit",
+  "split": "all_docs",
+  "ground_truth": "Exhibit 10.1: 1997 Stock Incentive Plan (amended and restated)",
+  "answer": "10.1: 1997 Stock Incentive Plan (amended and restated)",
+  "correct": true,
+  "status": "ok",
+  "input_tokens": 141,
+  "output_tokens": 22,
+  "latency_seconds": 0.895,
+  "model": "gpt54",
+  "doc_token_count": 64184,
+  "cost_ratio": 0.0022,
+  "retrieved_token_count": 19,
+  "rules_with_hits": [
+    "rule_exhibit_index_candidates"
+  ],
+  "rules_with_no_hits": [],
+  "num_spans_before_dedup": 1,
+  "num_spans_after_dedup": 1,
+  "rule_names": [
+    "rule_exhibit_index_candidates"
+  ],
+  "rule_question_dir": "q06_list_one_material_agreement_or_other_exhibit_number_explicit",
+  "rule_generation_report_path": "results/financebench/agentic_rule_full_data_gpt54mini/all_docs/q06_list_one_material_agreement_or_other_exhibit_number_explicit_rule_gen.json",
+  "rule_apply_trace_path": "results/financebench/agentic_rule_full_data_gpt54mini/all_docs/rule_apply_merge/_trace/q06_list_one_material_agreement_or_other_exhibit_number_explicit/rule_exhibit_index_candidates_merge.json"
+}

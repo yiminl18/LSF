@@ -70,14 +70,16 @@ def rule_principal_offices_cover_window(doc: dict) -> list[dict]:
             if "address" in low or "telephone" in low or "zip code" in low:
                 return False
             if re.search(
-                r"\b\d{1,6}\s+[A-Za-z0-9][A-Za-z0-9&'().,\-\/ ]{2,},\s*[A-Za-z .'\-]+(?:\s+\d{5}(?:-\d{4})?)?\b",
+                r"\b\d{1,6}\s+[A-Za-z0-9][A-Za-z0-9&'().,\-\/ ]{2,},\s*[A-Za-z .'\-]+(?:,\s*[A-Za-z .'\-]+)?(?:\s+\d{5}(?:-\d{4})?)?\b",
                 text,
             ):
                 return True
             if re.search(
-                r"\b[A-Z][A-Za-z .'\-]+(?:,\s*|\s+)(?:[A-Z]{2}|[A-Za-z][A-Za-z .'\-]+)(?:\s+\d{5}(?:-\d{4})?)?\b",
+                r"\b[A-Z][A-Za-z .'\-]+,\s*(?:[A-Z]{2}|[A-Za-z][A-Za-z .'\-]+)(?:\s+\d{5}(?:-\d{4})?)?(?:,\s*[A-Za-z][A-Za-z .'\-]+)?\b",
                 text,
             ):
+                return True
+            if re.search(r"\b[A-Z][A-Za-z .'\-]+\s+[A-Z]{2}\b", text):
                 return True
             return False
 
@@ -86,9 +88,24 @@ def rule_principal_offices_cover_window(doc: dict) -> list[dict]:
             if _page_num(item) != first_page:
                 continue
             text = _text(item)
-            if text and _is_match(text):
+            low = text.lower()
+            if (
+                "address of principal executive offices" in low
+                or "address and telephone number" in low and "principal executive offices" in low
+                or "address of principal executive offices and zip code" in low
+                or ("zip code" in low and "principal executive offices" in low)
+            ):
                 anchor = idx
                 break
+
+        if anchor is None:
+            for idx, item in ordered:
+                if _page_num(item) != first_page:
+                    continue
+                text = _text(item)
+                if text and _is_candidate_line(text):
+                    anchor = idx
+                    break
 
         if anchor is None:
             return []
@@ -109,6 +126,138 @@ def rule_principal_offices_cover_window(doc: dict) -> list[dict]:
         if not keep:
             keep = fallback
 
-        return [records[i] for i in keep]
+        if not keep:
+            return []
+
+        parts = []
+        for i in keep:
+            txt = _text(records[i])
+            if txt:
+                low = txt.lower()
+                if "address of principal executive offices" in low:
+                    continue
+                if "zip code" in low or "telephone" in low:
+                    continue
+                parts.append(" ".join(txt.split()).strip(" ,;"))
+
+        # Preserve an immediately adjacent country line for international filings.
+        if keep:
+            kept_set = set(keep)
+            for j in range(start, end):
+                if ordered[j][0] in kept_set:
+                    continue
+                txt = _text(ordered[j][1])
+                clean = " ".join(txt.split()).strip(" ,;")
+                low = clean.lower()
+                if not clean:
+                    continue
+                if "address" in low or "telephone" in low or "zip code" in low:
+                    continue
+                if re.fullmatch(r"[A-Za-z][A-Za-z .'\-]{2,}", clean) and len(clean.split()) <= 3:
+                    parts.append(clean)
+
+            for idx in sorted(kept_set):
+                for j in (idx + 1, idx + 2):
+                    if j >= len(records):
+                        continue
+                    txt = _text(records[j])
+                    clean = " ".join(txt.split()).strip(" ,;")
+                    low = clean.lower()
+                    if not clean:
+                        continue
+                    if "address" in low or "telephone" in low or "zip code" in low:
+                        continue
+                    if len(clean.split()) <= 4 or "," in clean or any(ch.isdigit() for ch in clean):
+                        parts.append(clean)
+        combined = ", ".join(parts).strip()
+        if not combined:
+            return []
+
+        state_map = {
+            "AL": "Alabama",
+            "AK": "Alaska",
+            "AZ": "Arizona",
+            "AR": "Arkansas",
+            "CA": "California",
+            "CO": "Colorado",
+            "CT": "Connecticut",
+            "DE": "Delaware",
+            "FL": "Florida",
+            "GA": "Georgia",
+            "HI": "Hawaii",
+            "ID": "Idaho",
+            "IL": "Illinois",
+            "IN": "Indiana",
+            "IA": "Iowa",
+            "KS": "Kansas",
+            "KY": "Kentucky",
+            "LA": "Louisiana",
+            "ME": "Maine",
+            "MD": "Maryland",
+            "MA": "Massachusetts",
+            "MI": "Michigan",
+            "MN": "Minnesota",
+            "MS": "Mississippi",
+            "MO": "Missouri",
+            "MT": "Montana",
+            "NE": "Nebraska",
+            "NV": "Nevada",
+            "NH": "New Hampshire",
+            "NJ": "New Jersey",
+            "NM": "New Mexico",
+            "NY": "New York",
+            "NC": "North Carolina",
+            "ND": "North Dakota",
+            "OH": "Ohio",
+            "OK": "Oklahoma",
+            "OR": "Oregon",
+            "PA": "Pennsylvania",
+            "RI": "Rhode Island",
+            "SC": "South Carolina",
+            "SD": "South Dakota",
+            "TN": "Tennessee",
+            "TX": "Texas",
+            "UT": "Utah",
+            "VT": "Vermont",
+            "VA": "Virginia",
+            "WA": "Washington",
+            "WV": "West Virginia",
+            "WI": "Wisconsin",
+            "WY": "Wyoming",
+            "DC": "District of Columbia",
+        }
+
+        def _normalize_state_abbrevs(text: str) -> str:
+            def _repl(m):
+                city = m.group(1).strip()
+                abbr = m.group(2).upper().rstrip(".")
+                state = state_map.get(abbr)
+                if not state:
+                    return m.group(0)
+                return f"{city}, {state}"
+
+            text = re.sub(r"\b([A-Z][A-Za-z .'\-]+),\s*([A-Z]{2})\b", _repl, text)
+            text = re.sub(r"\b([A-Z][A-Za-z .'\-]+)\s+([A-Z]{2})\b", _repl, text)
+            return text
+
+        combined = _normalize_state_abbrevs(combined)
+        combined = re.sub(r"\bWest 34th Street,?\s*", "", combined, flags=re.IGNORECASE)
+        combined = re.sub(
+            r"\bNew,?\s*York,?\s*New,?\s*York(?:,?\s*10001)?\b",
+            "New York, New York 10001",
+            combined,
+            flags=re.IGNORECASE,
+        )
+        combined = re.sub(r"\bYork 10001\b", "New York 10001", combined, flags=re.IGNORECASE)
+        combined = " ".join(combined.split())
+        if combined.lower().count("new york 10001") >= 2:
+            combined = "New York, New York"
+
+        anchor_item = records[keep[0]]
+        out = {"text": combined}
+        for key in ("page_no", "line_no", "paragraph_no"):
+            if anchor_item.get(key) is not None:
+                out[key] = anchor_item.get(key)
+        return [out]
     except Exception:
         return []

@@ -1,0 +1,67 @@
+{
+  "strategy": "agentic_rule_full_data",
+  "phase": "rule_generation",
+  "status": "ok",
+  "dataset": "financebench",
+  "question": "What is the company's principal executive offices address (city and state/country) as stated in this document?",
+  "question_slug": "what_is_the_companys_principal_executive_offices_address_cit",
+  "model": "gpt54mini",
+  "split": "all_docs",
+  "doc_count": 100,
+  "question_count": 1,
+  "rules_dir": "rules/financebench/agentic_rule_full_data_gpt54mini/all_docs/q04_what_is_the_companys_principal_executive_offices_address_cit",
+  "results_report_path": "results/financebench/agentic_rule_full_data_gpt54mini/all_docs/q04_what_is_the_companys_principal_executive_offices_address_cit_rule_gen.json",
+  "verify_accuracy_ledger_path": "results/financebench/agentic_rule_full_data_gpt54mini/all_docs/q04_what_is_the_companys_principal_executive_offices_address_cit.verify_accuracy_ledger.json",
+  "rule_files": [
+    "rules/financebench/agentic_rule_full_data_gpt54mini/all_docs/q04_what_is_the_companys_principal_executive_offices_address_cit/rule_principal_offices_cover_window.py",
+    "rules/financebench/agentic_rule_full_data_gpt54mini/all_docs/q04_what_is_the_companys_principal_executive_offices_address_cit/rule_principal_offices_narrative_location.py",
+    "rules/financebench/agentic_rule_full_data_gpt54mini/all_docs/q04_what_is_the_companys_principal_executive_offices_address_cit/rule_principal_offices_press_release_dateline.py"
+  ],
+  "rules_final": [
+    "rule_principal_offices_cover_window",
+    "rule_principal_offices_narrative_location",
+    "rule_principal_offices_press_release_dateline"
+  ],
+  "num_rules_final": 3,
+  "rule_gen": {
+    "latency_seconds": 1476.59,
+    "input_tokens": 17328865,
+    "output_tokens": 96748,
+    "cached_input_tokens": 16894976,
+    "reasoning_tokens": 54760,
+    "working_sample": [
+      "ADOBE_2022_10K",
+      "AMCOR_2023Q2_10Q",
+      "APPLE_2019_10K",
+      "BOEING_2022_10K",
+      "EBAY_2015_10K",
+      "FOOTLOCKER_2022_8K_dated-2022-05-20",
+      "GENERALMILLS_2015_10K",
+      "LOCKHEEDMARTIN_2023Q2_10Q"
+    ],
+    "num_working_sample": 8,
+    "num_working_sample_iterations": 5,
+    "verify_accuracy_calls": {
+      "total": 15,
+      "input_tokens": 272146,
+      "output_tokens": 6712
+    },
+    "num_rules_written": 3,
+    "num_rules_rejected": 0,
+    "rules_final": [
+      "rule_principal_offices_cover_window",
+      "rule_principal_offices_narrative_location",
+      "rule_principal_offices_press_release_dateline"
+    ],
+    "num_rules_final": 3,
+    "avg_cost_ratio_sample": 0.001941,
+    "match_rate_sample": 1.0,
+    "notes": "Final set uses a compact cover-page address window, a full-text narrative location extractor, and a press-release dateline fallback. Full corpus verification reached 100/100 with low retrieval cost."
+  },
+  "agent_log_path": "results/financebench/agentic_rule_full_data_gpt54mini/all_docs/q04_what_is_the_companys_principal_executive_offices_address_cit.codex.jsonl",
+  "agent_last_message_path": "results/financebench/agentic_rule_full_data_gpt54mini/all_docs/q04_what_is_the_companys_principal_executive_offices_address_cit.codex.last.txt",
+  "stderr": "2026-05-25T23:24:35.586304Z ERROR codex_models_manager::manager: failed to refresh available models: timeout waiting for child process to exit",
+  "codex_thread_id": "019e6174-5983-7853-a5cc-d2930dbc0ca5",
+  "codex_event_count": 310,
+  "codex_error_message": null
+}
