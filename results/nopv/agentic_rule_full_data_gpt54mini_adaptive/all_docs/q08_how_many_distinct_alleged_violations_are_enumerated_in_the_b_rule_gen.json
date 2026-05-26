@@ -1,0 +1,65 @@
+{
+  "strategy": "agentic_rule_full_data",
+  "phase": "rule_generation",
+  "status": "ok",
+  "dataset": "nopv",
+  "question": "How many distinct alleged violations are enumerated in the body of this Notice?",
+  "question_slug": "how_many_distinct_alleged_violations_are_enumerated_in_the_b",
+  "model": "gpt54mini",
+  "split": "all_docs",
+  "doc_count": 242,
+  "question_count": 1,
+  "rules_dir": "rules/nopv/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q08_how_many_distinct_alleged_violations_are_enumerated_in_the_b",
+  "results_report_path": "results/nopv/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q08_how_many_distinct_alleged_violations_are_enumerated_in_the_b_rule_gen.json",
+  "verify_accuracy_ledger_path": "results/nopv/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q08_how_many_distinct_alleged_violations_are_enumerated_in_the_b.verify_accuracy_ledger.json",
+  "rule_files": [
+    "rules/nopv/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q08_how_many_distinct_alleged_violations_are_enumerated_in_the_b/rule_alleged_violations_body_section.py"
+  ],
+  "rules_final": [
+    "rule_alleged_violations_body_section"
+  ],
+  "num_rules_final": 1,
+  "rule_gen": {
+    "latency_seconds": 351.35,
+    "input_tokens": 2948522,
+    "output_tokens": 42190,
+    "cached_input_tokens": 2808064,
+    "reasoning_tokens": 25458,
+    "working_sample": [
+      "12022023NOPV_PCO_03312022_(20-194651)",
+      "32021051NOPV_PCP PCO_11102021_(21-200403)",
+      "32022052NOPV_PCP PCO_11102022_(21-207738)",
+      "32024007NOPV_PCO_01182024_(22-234928)",
+      "32024056NOPV_PCP PCO_10252024_(23-264602)",
+      "42021033NOPV_PCO_09232021_(21-220612)",
+      "42023016NOPV_PCO_01312023_(21-199998)",
+      "42024045NOPV_PCO_10212024_(23-266145)",
+      "42026013NOPV_PCP PCO_02182026_(23-266740)",
+      "52023011NOPV_PCP PCO_04062023_(21-225379)",
+      "52024002NOPV_PCP PCO_01292024_22-258385",
+      "52026002NOPV_PCO_01222026_(25-331927)"
+    ],
+    "num_working_sample": 12,
+    "num_working_sample_iterations": 2,
+    "verify_accuracy_calls": {
+      "total": 2,
+      "input_tokens": 35244,
+      "output_tokens": 272
+    },
+    "num_rules_written": 1,
+    "num_rules_rejected": 0,
+    "rules_final": [
+      "rule_alleged_violations_body_section"
+    ],
+    "num_rules_final": 1,
+    "avg_cost_ratio_sample": 0.468893,
+    "match_rate_sample": 1.0,
+    "notes": "Single broad rule retrieves the full notice allegation block from the probable-violation lead-in through the penalty/order boundary, preserving nested numbering and page breaks so the count can be inferred reliably."
+  },
+  "agent_log_path": "results/nopv/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q08_how_many_distinct_alleged_violations_are_enumerated_in_the_b.codex.jsonl",
+  "agent_last_message_path": "results/nopv/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q08_how_many_distinct_alleged_violations_are_enumerated_in_the_b.codex.last.txt",
+  "stderr": "2026-05-26T01:31:58.428024Z ERROR codex_models_manager::manager: failed to refresh available models: stream disconnected before completion: failed to decode models response: missing field `models` at line 3243 column 1; body: {\n  \"data\": [\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1772582400\n      },\n      \"id\": \"dall-e-3-3.0\",\n      \"created_at\": 1691712000,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1737936000\n      },\n      \"id\": \"dall-e-2-2.0\",\n      \"created_at\": 1713139200,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": true,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"fine_tune\": 1718323200,\n        \"inference\": 1718323200\n      },\n      \"id\": \"code-cushman-001\",\n      \"created_at\": 1642809600,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": false,\n        \"completion\": true,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"fine_tune\": 1720137600,\n        \"inference\": 1720137600\n      },\n      \"id\": \"code-cushman-fine-tune-002\",\n      \"created_at\": 1677456000,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"generally-available\",\n      \"deprecation\": {\n        \"inference\": 1797292800\n      },\n      \"id\": \"whisper-001\",\n      \"created_at\": 1694649600,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1746057600\n      },\n      \"id\": \"gpt-4-0125-Preview\",\n      \"created_at\": 1706140800,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1746057600\n      },\n      \"id\": \"gpt-4-1106-Preview\",\n      \"created_at\": 1700006400,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycl",
+  "codex_thread_id": "019e61e8-f85e-7513-b132-342841b07727",
+  "codex_event_count": 136,
+  "codex_error_message": null
+}

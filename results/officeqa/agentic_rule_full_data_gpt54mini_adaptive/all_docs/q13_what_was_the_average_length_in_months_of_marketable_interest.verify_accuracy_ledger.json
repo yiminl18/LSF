@@ -1,0 +1,379 @@
+{
+  "verify_accuracy_calls": [
+    {
+      "doc_names": [
+        "treasury_bulletin_1980_07",
+        "treasury_bulletin_1982_05",
+        "treasury_bulletin_1986_12",
+        "treasury_bulletin_1992_06",
+        "treasury_bulletin_1997_12",
+        "treasury_bulletin_2003_09",
+        "treasury_bulletin_2009_03",
+        "treasury_bulletin_2014_09",
+        "treasury_bulletin_2020_03",
+        "treasury_bulletin_2025_09"
+      ],
+      "rule_names": [
+        "rule_marketable_debt_average_length"
+      ],
+      "n": 10,
+      "n_correct": 3,
+      "accuracy": 0.3,
+      "avg_cost_ratio": 0.003921,
+      "qa_input_tokens": 5513,
+      "qa_output_tokens": 63,
+      "judge_input_tokens": 838,
+      "judge_output_tokens": 39,
+      "input_tokens_total": 6351,
+      "output_tokens_total": 102,
+      "latency_seconds": 7.636,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_1980_07",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "treasury_bulletin_1982_05",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "treasury_bulletin_1986_12",
+          "answer": "23",
+          "correct": false,
+          "retrieved_token_count": 554,
+          "cost_ratio": 0.010215,
+          "rules_applied": [
+            "rule_marketable_debt_average_length"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1992_06",
+          "answer": "69.4",
+          "correct": false,
+          "retrieved_token_count": 319,
+          "cost_ratio": 0.004399,
+          "rules_applied": [
+            "rule_marketable_debt_average_length"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1997_12",
+          "answer": "3 mos.",
+          "correct": false,
+          "retrieved_token_count": 532,
+          "cost_ratio": 0.002421,
+          "rules_applied": [
+            "rule_marketable_debt_average_length"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2003_09",
+          "answer": "5 yrs. 4 mos.",
+          "correct": true,
+          "retrieved_token_count": 457,
+          "cost_ratio": 0.003169,
+          "rules_applied": [
+            "rule_marketable_debt_average_length"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2009_03",
+          "answer": "49",
+          "correct": true,
+          "retrieved_token_count": 875,
+          "cost_ratio": 0.004918,
+          "rules_applied": [
+            "rule_marketable_debt_average_length"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2014_09",
+          "answer": "54",
+          "correct": false,
+          "retrieved_token_count": 484,
+          "cost_ratio": 0.006268,
+          "rules_applied": [
+            "rule_marketable_debt_average_length"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2020_03",
+          "answer": "65",
+          "correct": true,
+          "retrieved_token_count": 889,
+          "cost_ratio": 0.007818,
+          "rules_applied": [
+            "rule_marketable_debt_average_length"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_09",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        }
+      ],
+      "timestamp": "2026-05-26T02:52:17.162389+00:00"
+    },
+    {
+      "doc_names": [
+        "treasury_bulletin_1980_07",
+        "treasury_bulletin_1982_05",
+        "treasury_bulletin_1986_12",
+        "treasury_bulletin_1992_06",
+        "treasury_bulletin_1997_12",
+        "treasury_bulletin_2003_09",
+        "treasury_bulletin_2009_03",
+        "treasury_bulletin_2014_09",
+        "treasury_bulletin_2020_03",
+        "treasury_bulletin_2025_09"
+      ],
+      "rule_names": [
+        "rule_marketable_debt_average_length"
+      ],
+      "n": 10,
+      "n_correct": 2,
+      "accuracy": 0.2,
+      "avg_cost_ratio": 0.002857,
+      "qa_input_tokens": 3676,
+      "qa_output_tokens": 62,
+      "judge_input_tokens": 836,
+      "judge_output_tokens": 40,
+      "input_tokens_total": 4512,
+      "output_tokens_total": 102,
+      "latency_seconds": 7.867,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_1980_07",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "treasury_bulletin_1982_05",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "treasury_bulletin_1986_12",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 473,
+          "cost_ratio": 0.008722,
+          "rules_applied": [
+            "rule_marketable_debt_average_length"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1992_06",
+          "answer": "11 mos.",
+          "correct": false,
+          "retrieved_token_count": 639,
+          "cost_ratio": 0.008811,
+          "rules_applied": [
+            "rule_marketable_debt_average_length"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1997_12",
+          "answer": "5 yrs. 3 mos.",
+          "correct": false,
+          "retrieved_token_count": 62,
+          "cost_ratio": 0.000282,
+          "rules_applied": [
+            "rule_marketable_debt_average_length"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2003_09",
+          "answer": "61",
+          "correct": false,
+          "retrieved_token_count": 447,
+          "cost_ratio": 0.0031,
+          "rules_applied": [
+            "rule_marketable_debt_average_length"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2009_03",
+          "answer": "49",
+          "correct": true,
+          "retrieved_token_count": 54,
+          "cost_ratio": 0.000304,
+          "rules_applied": [
+            "rule_marketable_debt_average_length"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2014_09",
+          "answer": "56",
+          "correct": false,
+          "retrieved_token_count": 521,
+          "cost_ratio": 0.006748,
+          "rules_applied": [
+            "rule_marketable_debt_average_length"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2020_03",
+          "answer": "65",
+          "correct": true,
+          "retrieved_token_count": 69,
+          "cost_ratio": 0.000607,
+          "rules_applied": [
+            "rule_marketable_debt_average_length"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_09",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        }
+      ],
+      "timestamp": "2026-05-26T02:54:07.481960+00:00"
+    },
+    {
+      "doc_names": [
+        "treasury_bulletin_1980_07",
+        "treasury_bulletin_1982_05",
+        "treasury_bulletin_1986_12",
+        "treasury_bulletin_1992_06",
+        "treasury_bulletin_1997_12",
+        "treasury_bulletin_2003_09",
+        "treasury_bulletin_2009_03",
+        "treasury_bulletin_2014_09",
+        "treasury_bulletin_2020_03",
+        "treasury_bulletin_2025_09"
+      ],
+      "rule_names": [
+        "rule_marketable_debt_average_length"
+      ],
+      "n": 10,
+      "n_correct": 2,
+      "accuracy": 0.2,
+      "avg_cost_ratio": 0.002328,
+      "qa_input_tokens": 3295,
+      "qa_output_tokens": 58,
+      "judge_input_tokens": 832,
+      "judge_output_tokens": 40,
+      "input_tokens_total": 4127,
+      "output_tokens_total": 98,
+      "latency_seconds": 8.124,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_1980_07",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "treasury_bulletin_1982_05",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "treasury_bulletin_1986_12",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 437,
+          "cost_ratio": 0.008058,
+          "rules_applied": [
+            "rule_marketable_debt_average_length"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1992_06",
+          "answer": "11 mos.",
+          "correct": false,
+          "retrieved_token_count": 437,
+          "cost_ratio": 0.006026,
+          "rules_applied": [
+            "rule_marketable_debt_average_length"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1997_12",
+          "answer": "63",
+          "correct": false,
+          "retrieved_token_count": 62,
+          "cost_ratio": 0.000282,
+          "rules_applied": [
+            "rule_marketable_debt_average_length"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2003_09",
+          "answer": "1 mo.",
+          "correct": false,
+          "retrieved_token_count": 447,
+          "cost_ratio": 0.0031,
+          "rules_applied": [
+            "rule_marketable_debt_average_length"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2009_03",
+          "answer": "49",
+          "correct": true,
+          "retrieved_token_count": 54,
+          "cost_ratio": 0.000304,
+          "rules_applied": [
+            "rule_marketable_debt_average_length"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2014_09",
+          "answer": "56",
+          "correct": false,
+          "retrieved_token_count": 379,
+          "cost_ratio": 0.004908,
+          "rules_applied": [
+            "rule_marketable_debt_average_length"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2020_03",
+          "answer": "65",
+          "correct": true,
+          "retrieved_token_count": 69,
+          "cost_ratio": 0.000607,
+          "rules_applied": [
+            "rule_marketable_debt_average_length"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_09",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        }
+      ],
+      "timestamp": "2026-05-26T02:55:07.543596+00:00"
+    }
+  ]
+}

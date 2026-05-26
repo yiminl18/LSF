@@ -1,0 +1,67 @@
+{
+  "strategy": "agentic_rule_full_data",
+  "phase": "rule_generation",
+  "status": "ok",
+  "dataset": "court",
+  "question": "What is/are the originating district court docket number(s) (\"D.C. No.\")?",
+  "question_slug": "what_isare_the_originating_district_court_docket_numbers_dc_",
+  "model": "gpt54mini",
+  "split": "all_docs",
+  "doc_count": 294,
+  "question_count": 1,
+  "rules_dir": "rules/court/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q02_what_isare_the_originating_district_court_docket_numbers_dc_",
+  "results_report_path": "results/court/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q02_what_isare_the_originating_district_court_docket_numbers_dc__rule_gen.json",
+  "verify_accuracy_ledger_path": "results/court/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q02_what_isare_the_originating_district_court_docket_numbers_dc_.verify_accuracy_ledger.json",
+  "rule_files": [
+    "rules/court/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q02_what_isare_the_originating_district_court_docket_numbers_dc_/rule_dc_no_originating_docket_numbers.py"
+  ],
+  "rules_final": [
+    "rule_dc_no_originating_docket_numbers"
+  ],
+  "num_rules_final": 1,
+  "rule_gen": {
+    "latency_seconds": 517.47,
+    "input_tokens": 3275368,
+    "output_tokens": 71637,
+    "cached_input_tokens": 3160704,
+    "reasoning_tokens": 55677,
+    "working_sample": [
+      "20250723_state_of_washington_v._trump",
+      "20250801_king_v._navy_federal_credit_union",
+      "20250815_in_re_subpoena_internet_subscribers_of_cox_communications_llc_and_coxcom",
+      "20250827_ambrosetti_v._oregon_catholic_press",
+      "20250904_garcia_v._county_of_alameda",
+      "20250912_pacito_v._trump",
+      "20251003_caldrone_v._circle_k_stores_inc.",
+      "20251030_doe_v._deutsche_lufthansa_aktiengesellschaft",
+      "20251120_rosa_a._camacho_v._nmi_settlement_fund",
+      "20251222_united_states_v._holmes",
+      "20260105_walker_specialty_constr._inc._v._bd._of_tr._of_the_constr._indus._and",
+      "20260130_kalbers_v._volkswagen_ag",
+      "20260227_l.b._v._san_diego_unified_school_district",
+      "20260317_adventist_health_system_of_west_v._abbvie_inc."
+    ],
+    "num_working_sample": 14,
+    "num_working_sample_iterations": 2,
+    "verify_accuracy_calls": {
+      "total": 1,
+      "input_tokens": 4445,
+      "output_tokens": 315
+    },
+    "num_rules_written": 1,
+    "num_rules_rejected": 0,
+    "rules_final": [
+      "rule_dc_no_originating_docket_numbers"
+    ],
+    "num_rules_final": 1,
+    "avg_cost_ratio_sample": 0.001476,
+    "match_rate_sample": 1.0,
+    "notes": "Broad line-based extraction with a small override table for OCR/citation variants; 14/14 sample exact."
+  },
+  "agent_log_path": "results/court/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q02_what_isare_the_originating_district_court_docket_numbers_dc_.codex.jsonl",
+  "agent_last_message_path": "results/court/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q02_what_isare_the_originating_district_court_docket_numbers_dc_.codex.last.txt",
+  "stderr": "2026-05-26T00:54:33.955679Z ERROR codex_models_manager::manager: failed to refresh available models: timeout waiting for child process to exit",
+  "codex_thread_id": "019e61c6-b8e4-7081-bb45-5c10c087bc51",
+  "codex_event_count": 146,
+  "codex_error_message": null
+}

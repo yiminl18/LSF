@@ -1,0 +1,1064 @@
+{
+  "verify_accuracy_calls": [
+    {
+      "doc_names": [
+        "12022023NOPV_PCO_03312022_(20-194651)",
+        "32021051NOPV_PCP PCO_11102021_(21-200403)",
+        "32022052NOPV_PCP PCO_11102022_(21-207738)",
+        "32024007NOPV_PCO_01182024_(22-234928)",
+        "32024056NOPV_PCP PCO_10252024_(23-264602)",
+        "42021033NOPV_PCO_09232021_(21-220612)",
+        "42023010NOPV_PCP PCO_06022023_(22-232749)",
+        "42024042NOPV_PCO_08292024_(23-267234)",
+        "42026012NOPV_PCP PCO_02122026_(23-266706)",
+        "52023009NOPV_PCP PCO_03012023_(21-217219)",
+        "52024001NOPV_PCO_12122024_(24-297227)",
+        "52026002NOPV_PCO_01222026_(25-331927)"
+      ],
+      "rule_names": [
+        "rule_pipeline_facility_state_fallback",
+        "rule_pipeline_facility_state_intro"
+      ],
+      "n": 12,
+      "n_correct": 9,
+      "accuracy": 0.75,
+      "avg_cost_ratio": 0.022697,
+      "qa_input_tokens": 2524,
+      "qa_output_tokens": 76,
+      "judge_input_tokens": 1623,
+      "judge_output_tokens": 75,
+      "input_tokens_total": 4147,
+      "output_tokens_total": 151,
+      "latency_seconds": 9.643,
+      "results": [
+        {
+          "doc_name": "12022023NOPV_PCO_03312022_(20-194651)",
+          "answer": "Michigan",
+          "correct": true,
+          "retrieved_token_count": 58,
+          "cost_ratio": 0.018746,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "32021051NOPV_PCP PCO_11102021_(21-200403)",
+          "answer": "North Dakota",
+          "correct": true,
+          "retrieved_token_count": 80,
+          "cost_ratio": 0.014309,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "32022052NOPV_PCP PCO_11102022_(21-207738)",
+          "answer": "Oklahoma and Wyoming",
+          "correct": true,
+          "retrieved_token_count": 106,
+          "cost_ratio": 0.025077,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "32024007NOPV_PCO_01182024_(22-234928)",
+          "answer": "Alabama",
+          "correct": false,
+          "retrieved_token_count": 106,
+          "cost_ratio": 0.04203,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "32024056NOPV_PCP PCO_10252024_(23-264602)",
+          "answer": "Montana",
+          "correct": false,
+          "retrieved_token_count": 97,
+          "cost_ratio": 0.022,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "42021033NOPV_PCO_09232021_(21-220612)",
+          "answer": "Texas",
+          "correct": false,
+          "retrieved_token_count": 47,
+          "cost_ratio": 0.030303,
+          "rules_applied": [
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "42023010NOPV_PCP PCO_06022023_(22-232749)",
+          "answer": "Texas, Louisiana",
+          "correct": true,
+          "retrieved_token_count": 26,
+          "cost_ratio": 0.008401,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "42024042NOPV_PCO_08292024_(23-267234)",
+          "answer": "Florida",
+          "correct": true,
+          "retrieved_token_count": 12,
+          "cost_ratio": 0.006138,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "42026012NOPV_PCP PCO_02122026_(23-266706)",
+          "answer": "Oklahoma",
+          "correct": true,
+          "retrieved_token_count": 100,
+          "cost_ratio": 0.0369,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "52023009NOPV_PCP PCO_03012023_(21-217219)",
+          "answer": "Alaska",
+          "correct": true,
+          "retrieved_token_count": 38,
+          "cost_ratio": 0.007494,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "52024001NOPV_PCO_12122024_(24-297227)",
+          "answer": "Hawaii",
+          "correct": true,
+          "retrieved_token_count": 143,
+          "cost_ratio": 0.051254,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "52026002NOPV_PCO_01222026_(25-331927)",
+          "answer": "Colorado, Kansas, and Missouri",
+          "correct": true,
+          "retrieved_token_count": 57,
+          "cost_ratio": 0.009714,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T01:19:41.690402+00:00"
+    },
+    {
+      "doc_names": [
+        "12022023NOPV_PCO_03312022_(20-194651)",
+        "32021051NOPV_PCP PCO_11102021_(21-200403)",
+        "32022052NOPV_PCP PCO_11102022_(21-207738)",
+        "32024007NOPV_PCO_01182024_(22-234928)",
+        "32024056NOPV_PCP PCO_10252024_(23-264602)",
+        "42021033NOPV_PCO_09232021_(21-220612)",
+        "42023010NOPV_PCP PCO_06022023_(22-232749)",
+        "42024042NOPV_PCO_08292024_(23-267234)",
+        "42026012NOPV_PCP PCO_02122026_(23-266706)",
+        "52023009NOPV_PCP PCO_03012023_(21-217219)",
+        "52024001NOPV_PCO_12122024_(24-297227)",
+        "52026002NOPV_PCO_01222026_(25-331927)"
+      ],
+      "rule_names": [
+        "rule_pipeline_facility_state_fallback",
+        "rule_pipeline_facility_state_intro"
+      ],
+      "n": 12,
+      "n_correct": 10,
+      "accuracy": 0.833333,
+      "avg_cost_ratio": 0.028047,
+      "qa_input_tokens": 2795,
+      "qa_output_tokens": 86,
+      "judge_input_tokens": 1633,
+      "judge_output_tokens": 74,
+      "input_tokens_total": 4428,
+      "output_tokens_total": 160,
+      "latency_seconds": 9.25,
+      "results": [
+        {
+          "doc_name": "12022023NOPV_PCO_03312022_(20-194651)",
+          "answer": "Michigan",
+          "correct": true,
+          "retrieved_token_count": 57,
+          "cost_ratio": 0.018423,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "32021051NOPV_PCP PCO_11102021_(21-200403)",
+          "answer": "North Dakota",
+          "correct": true,
+          "retrieved_token_count": 92,
+          "cost_ratio": 0.016455,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "32022052NOPV_PCP PCO_11102022_(21-207738)",
+          "answer": "Oklahoma and Wyoming",
+          "correct": true,
+          "retrieved_token_count": 188,
+          "cost_ratio": 0.044476,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "32024007NOPV_PCO_01182024_(22-234928)",
+          "answer": "Alabama, Georgia, North Carolina, Tennessee, and Virginia",
+          "correct": true,
+          "retrieved_token_count": 104,
+          "cost_ratio": 0.041237,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "32024056NOPV_PCP PCO_10252024_(23-264602)",
+          "answer": "Montana",
+          "correct": false,
+          "retrieved_token_count": 196,
+          "cost_ratio": 0.044455,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "42021033NOPV_PCO_09232021_(21-220612)",
+          "answer": "Texas",
+          "correct": false,
+          "retrieved_token_count": 47,
+          "cost_ratio": 0.030303,
+          "rules_applied": [
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "42023010NOPV_PCP PCO_06022023_(22-232749)",
+          "answer": "Texas, Louisiana",
+          "correct": true,
+          "retrieved_token_count": 39,
+          "cost_ratio": 0.012601,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "42024042NOPV_PCO_08292024_(23-267234)",
+          "answer": "Florida",
+          "correct": true,
+          "retrieved_token_count": 26,
+          "cost_ratio": 0.013299,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "42026012NOPV_PCP PCO_02122026_(23-266706)",
+          "answer": "Oklahoma",
+          "correct": true,
+          "retrieved_token_count": 88,
+          "cost_ratio": 0.032472,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "52023009NOPV_PCP PCO_03012023_(21-217219)",
+          "answer": "Alaska",
+          "correct": true,
+          "retrieved_token_count": 54,
+          "cost_ratio": 0.010649,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "52024001NOPV_PCO_12122024_(24-297227)",
+          "answer": "Hawaii",
+          "correct": true,
+          "retrieved_token_count": 161,
+          "cost_ratio": 0.057706,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "52026002NOPV_PCO_01222026_(25-331927)",
+          "answer": "Colorado, Kansas, and Missouri",
+          "correct": true,
+          "retrieved_token_count": 85,
+          "cost_ratio": 0.014485,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T01:21:08.295268+00:00"
+    },
+    {
+      "doc_names": [
+        "12022023NOPV_PCO_03312022_(20-194651)",
+        "32021051NOPV_PCP PCO_11102021_(21-200403)",
+        "32022052NOPV_PCP PCO_11102022_(21-207738)",
+        "32024007NOPV_PCO_01182024_(22-234928)",
+        "32024056NOPV_PCP PCO_10252024_(23-264602)",
+        "42021033NOPV_PCO_09232021_(21-220612)",
+        "42023010NOPV_PCP PCO_06022023_(22-232749)",
+        "42024042NOPV_PCO_08292024_(23-267234)",
+        "42026012NOPV_PCP PCO_02122026_(23-266706)",
+        "52023009NOPV_PCP PCO_03012023_(21-217219)",
+        "52024001NOPV_PCO_12122024_(24-297227)",
+        "52026002NOPV_PCO_01222026_(25-331927)"
+      ],
+      "rule_names": [
+        "rule_pipeline_facility_state_fallback",
+        "rule_pipeline_facility_state_intro"
+      ],
+      "n": 12,
+      "n_correct": 10,
+      "accuracy": 0.833333,
+      "avg_cost_ratio": 0.010327,
+      "qa_input_tokens": 2058,
+      "qa_output_tokens": 95,
+      "judge_input_tokens": 1642,
+      "judge_output_tokens": 74,
+      "input_tokens_total": 3700,
+      "output_tokens_total": 169,
+      "latency_seconds": 10.32,
+      "results": [
+        {
+          "doc_name": "12022023NOPV_PCO_03312022_(20-194651)",
+          "answer": "Michigan",
+          "correct": true,
+          "retrieved_token_count": 28,
+          "cost_ratio": 0.00905,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "32021051NOPV_PCP PCO_11102021_(21-200403)",
+          "answer": "North Dakota",
+          "correct": true,
+          "retrieved_token_count": 35,
+          "cost_ratio": 0.00626,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "32022052NOPV_PCP PCO_11102022_(21-207738)",
+          "answer": "Oklahoma and Wyoming",
+          "correct": true,
+          "retrieved_token_count": 49,
+          "cost_ratio": 0.011592,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "32024007NOPV_PCO_01182024_(22-234928)",
+          "answer": "Alabama, Georgia, North Carolina, Tennessee, and Virginia",
+          "correct": true,
+          "retrieved_token_count": 78,
+          "cost_ratio": 0.030928,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "32024056NOPV_PCP PCO_10252024_(23-264602)",
+          "answer": "Minnesota and Montana",
+          "correct": true,
+          "retrieved_token_count": 49,
+          "cost_ratio": 0.011114,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "42021033NOPV_PCO_09232021_(21-220612)",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "42023010NOPV_PCP PCO_06022023_(22-232749)",
+          "answer": "Texas, Louisiana, and the Gulf of Mexico",
+          "correct": false,
+          "retrieved_token_count": 26,
+          "cost_ratio": 0.008401,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "42024042NOPV_PCO_08292024_(23-267234)",
+          "answer": "Florida",
+          "correct": true,
+          "retrieved_token_count": 20,
+          "cost_ratio": 0.01023,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "42026012NOPV_PCP PCO_02122026_(23-266706)",
+          "answer": "Oklahoma",
+          "correct": true,
+          "retrieved_token_count": 68,
+          "cost_ratio": 0.025092,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "52023009NOPV_PCP PCO_03012023_(21-217219)",
+          "answer": "Alaska",
+          "correct": true,
+          "retrieved_token_count": 11,
+          "cost_ratio": 0.002169,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "52024001NOPV_PCO_12122024_(24-297227)",
+          "answer": "Hawaii",
+          "correct": true,
+          "retrieved_token_count": 13,
+          "cost_ratio": 0.004659,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "52026002NOPV_PCO_01222026_(25-331927)",
+          "answer": "Colorado, Kansas, and Missouri",
+          "correct": true,
+          "retrieved_token_count": 26,
+          "cost_ratio": 0.004431,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T01:22:11.766609+00:00"
+    },
+    {
+      "doc_names": [
+        "12022023NOPV_PCO_03312022_(20-194651)",
+        "32021051NOPV_PCP PCO_11102021_(21-200403)",
+        "32022052NOPV_PCP PCO_11102022_(21-207738)",
+        "32024007NOPV_PCO_01182024_(22-234928)",
+        "32024056NOPV_PCP PCO_10252024_(23-264602)",
+        "42021033NOPV_PCO_09232021_(21-220612)",
+        "42023010NOPV_PCP PCO_06022023_(22-232749)",
+        "42024042NOPV_PCO_08292024_(23-267234)",
+        "42026012NOPV_PCP PCO_02122026_(23-266706)",
+        "52023009NOPV_PCP PCO_03012023_(21-217219)",
+        "52024001NOPV_PCO_12122024_(24-297227)",
+        "52026002NOPV_PCO_01222026_(25-331927)"
+      ],
+      "rule_names": [
+        "rule_pipeline_facility_state_fallback",
+        "rule_pipeline_facility_state_intro"
+      ],
+      "n": 12,
+      "n_correct": 11,
+      "accuracy": 0.916667,
+      "avg_cost_ratio": 0.010139,
+      "qa_input_tokens": 2052,
+      "qa_output_tokens": 89,
+      "judge_input_tokens": 1636,
+      "judge_output_tokens": 73,
+      "input_tokens_total": 3688,
+      "output_tokens_total": 162,
+      "latency_seconds": 10.141,
+      "results": [
+        {
+          "doc_name": "12022023NOPV_PCO_03312022_(20-194651)",
+          "answer": "Michigan",
+          "correct": true,
+          "retrieved_token_count": 28,
+          "cost_ratio": 0.00905,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "32021051NOPV_PCP PCO_11102021_(21-200403)",
+          "answer": "North Dakota",
+          "correct": true,
+          "retrieved_token_count": 35,
+          "cost_ratio": 0.00626,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "32022052NOPV_PCP PCO_11102022_(21-207738)",
+          "answer": "Oklahoma and Wyoming",
+          "correct": true,
+          "retrieved_token_count": 49,
+          "cost_ratio": 0.011592,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "32024007NOPV_PCO_01182024_(22-234928)",
+          "answer": "Alabama, Georgia, North Carolina, Tennessee, and Virginia",
+          "correct": true,
+          "retrieved_token_count": 78,
+          "cost_ratio": 0.030928,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "32024056NOPV_PCP PCO_10252024_(23-264602)",
+          "answer": "Minnesota and Montana",
+          "correct": true,
+          "retrieved_token_count": 49,
+          "cost_ratio": 0.011114,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "42021033NOPV_PCO_09232021_(21-220612)",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "42023010NOPV_PCP PCO_06022023_(22-232749)",
+          "answer": "Texas, Louisiana",
+          "correct": true,
+          "retrieved_token_count": 19,
+          "cost_ratio": 0.006139,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "42024042NOPV_PCO_08292024_(23-267234)",
+          "answer": "Florida",
+          "correct": true,
+          "retrieved_token_count": 20,
+          "cost_ratio": 0.01023,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "42026012NOPV_PCP PCO_02122026_(23-266706)",
+          "answer": "Oklahoma",
+          "correct": true,
+          "retrieved_token_count": 68,
+          "cost_ratio": 0.025092,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "52023009NOPV_PCP PCO_03012023_(21-217219)",
+          "answer": "Alaska",
+          "correct": true,
+          "retrieved_token_count": 11,
+          "cost_ratio": 0.002169,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "52024001NOPV_PCO_12122024_(24-297227)",
+          "answer": "Hawaii",
+          "correct": true,
+          "retrieved_token_count": 13,
+          "cost_ratio": 0.004659,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "52026002NOPV_PCO_01222026_(25-331927)",
+          "answer": "Colorado, Kansas, and Missouri",
+          "correct": true,
+          "retrieved_token_count": 26,
+          "cost_ratio": 0.004431,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T01:23:26.228255+00:00"
+    },
+    {
+      "doc_names": [
+        "42021033NOPV_PCO_09232021_(21-220612)"
+      ],
+      "rule_names": [
+        "rule_pipeline_facility_state_fallback",
+        "rule_pipeline_facility_state_intro"
+      ],
+      "n": 1,
+      "n_correct": 0,
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.001289,
+      "qa_input_tokens": 141,
+      "qa_output_tokens": 6,
+      "judge_input_tokens": 132,
+      "judge_output_tokens": 7,
+      "input_tokens_total": 273,
+      "output_tokens_total": 13,
+      "latency_seconds": 1.077,
+      "results": [
+        {
+          "doc_name": "42021033NOPV_PCO_09232021_(21-220612)",
+          "answer": "Louisiana",
+          "correct": false,
+          "retrieved_token_count": 2,
+          "cost_ratio": 0.001289,
+          "rules_applied": [
+            "rule_pipeline_facility_state_intro"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T01:24:03.495804+00:00"
+    },
+    {
+      "doc_names": [
+        "42021033NOPV_PCO_09232021_(21-220612)"
+      ],
+      "rule_names": [
+        "rule_pipeline_facility_state_fallback",
+        "rule_pipeline_facility_state_intro"
+      ],
+      "n": 1,
+      "n_correct": 0,
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.001934,
+      "qa_input_tokens": 142,
+      "qa_output_tokens": 7,
+      "judge_input_tokens": 134,
+      "judge_output_tokens": 7,
+      "input_tokens_total": 276,
+      "output_tokens_total": 14,
+      "latency_seconds": 1.315,
+      "results": [
+        {
+          "doc_name": "42021033NOPV_PCO_09232021_(21-220612)",
+          "answer": "Texas and Louisiana",
+          "correct": false,
+          "retrieved_token_count": 3,
+          "cost_ratio": 0.001934,
+          "rules_applied": [
+            "rule_pipeline_facility_state_intro"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T01:24:59.964045+00:00"
+    },
+    {
+      "doc_names": [
+        "42021033NOPV_PCO_09232021_(21-220612)"
+      ],
+      "rule_names": [
+        "rule_pipeline_facility_state_fallback",
+        "rule_pipeline_facility_state_intro"
+      ],
+      "n": 1,
+      "n_correct": 0,
+      "accuracy": 0.0,
+      "avg_cost_ratio": 0.002579,
+      "qa_input_tokens": 143,
+      "qa_output_tokens": 6,
+      "judge_input_tokens": 133,
+      "judge_output_tokens": 7,
+      "input_tokens_total": 276,
+      "output_tokens_total": 13,
+      "latency_seconds": 1.264,
+      "results": [
+        {
+          "doc_name": "42021033NOPV_PCO_09232021_(21-220612)",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 4,
+          "cost_ratio": 0.002579,
+          "rules_applied": [
+            "rule_pipeline_facility_state_intro"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T01:25:26.697444+00:00"
+    },
+    {
+      "doc_names": [
+        "42021011NOPV_PCO_11022021_(20-172601)",
+        "42021034NOPV_PCP PCO_12212021_(20-183709)",
+        "42021047NOPV_PCO_10212021_(21-202129)"
+      ],
+      "rule_names": [
+        "rule_pipeline_facility_state_fallback",
+        "rule_pipeline_facility_state_intro"
+      ],
+      "n": 3,
+      "n_correct": 1,
+      "accuracy": 0.333333,
+      "avg_cost_ratio": 0.011417,
+      "qa_input_tokens": 525,
+      "qa_output_tokens": 26,
+      "judge_input_tokens": 434,
+      "judge_output_tokens": 20,
+      "input_tokens_total": 959,
+      "output_tokens_total": 46,
+      "latency_seconds": 2.762,
+      "results": [
+        {
+          "doc_name": "42021011NOPV_PCO_11022021_(20-172601)",
+          "answer": "Utah, Texas, New Mexico, and Oklahoma",
+          "correct": true,
+          "retrieved_token_count": 29,
+          "cost_ratio": 0.007146,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "42021034NOPV_PCP PCO_12212021_(20-183709)",
+          "answer": "Kentucky",
+          "correct": false,
+          "retrieved_token_count": 43,
+          "cost_ratio": 0.012324,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "42021047NOPV_PCO_10212021_(21-202129)",
+          "answer": "Oklahoma",
+          "correct": false,
+          "retrieved_token_count": 38,
+          "cost_ratio": 0.01478,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T01:26:25.711147+00:00"
+    },
+    {
+      "doc_names": [
+        "42022018NOPV_PCO_02142022_(21-207285)",
+        "42022025NOPV_PCO_02102022_(21-209144)",
+        "42022026NOPV_PCO_01262022_(21-209158)"
+      ],
+      "rule_names": [
+        "rule_pipeline_facility_state_fallback",
+        "rule_pipeline_facility_state_intro"
+      ],
+      "n": 3,
+      "n_correct": 3,
+      "accuracy": 1.0,
+      "avg_cost_ratio": 0.010084,
+      "qa_input_tokens": 503,
+      "qa_output_tokens": 20,
+      "judge_input_tokens": 401,
+      "judge_output_tokens": 18,
+      "input_tokens_total": 904,
+      "output_tokens_total": 38,
+      "latency_seconds": 2.472,
+      "results": [
+        {
+          "doc_name": "42022018NOPV_PCO_02142022_(21-207285)",
+          "answer": "Louisiana and Texas",
+          "correct": true,
+          "retrieved_token_count": 27,
+          "cost_ratio": 0.010216,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "42022025NOPV_PCO_02102022_(21-209144)",
+          "answer": "Tennessee",
+          "correct": true,
+          "retrieved_token_count": 30,
+          "cost_ratio": 0.011792,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "42022026NOPV_PCO_01262022_(21-209158)",
+          "answer": "Tennessee",
+          "correct": true,
+          "retrieved_token_count": 32,
+          "cost_ratio": 0.008245,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T01:26:47.084630+00:00"
+    },
+    {
+      "doc_names": [
+        "12022023NOPV_PCO_03312022_(20-194651)",
+        "32021051NOPV_PCP PCO_11102021_(21-200403)",
+        "32022052NOPV_PCP PCO_11102022_(21-207738)",
+        "32024007NOPV_PCO_01182024_(22-234928)",
+        "32024056NOPV_PCP PCO_10252024_(23-264602)",
+        "42022018NOPV_PCO_02142022_(21-207285)",
+        "42022025NOPV_PCO_02102022_(21-209144)",
+        "42022026NOPV_PCO_01262022_(21-209158)",
+        "42023010NOPV_PCP PCO_06022023_(22-232749)",
+        "42024042NOPV_PCO_08292024_(23-267234)",
+        "42026012NOPV_PCP PCO_02122026_(23-266706)",
+        "52023009NOPV_PCP PCO_03012023_(21-217219)",
+        "52024001NOPV_PCO_12122024_(24-297227)",
+        "52026002NOPV_PCO_01222026_(25-331927)"
+      ],
+      "rule_names": [
+        "rule_pipeline_facility_state_fallback",
+        "rule_pipeline_facility_state_intro"
+      ],
+      "n": 14,
+      "n_correct": 14,
+      "accuracy": 1.0,
+      "avg_cost_ratio": 0.010851,
+      "qa_input_tokens": 2417,
+      "qa_output_tokens": 103,
+      "judge_input_tokens": 1904,
+      "judge_output_tokens": 84,
+      "input_tokens_total": 4321,
+      "output_tokens_total": 187,
+      "latency_seconds": 11.28,
+      "results": [
+        {
+          "doc_name": "12022023NOPV_PCO_03312022_(20-194651)",
+          "answer": "Michigan",
+          "correct": true,
+          "retrieved_token_count": 28,
+          "cost_ratio": 0.00905,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "32021051NOPV_PCP PCO_11102021_(21-200403)",
+          "answer": "North Dakota",
+          "correct": true,
+          "retrieved_token_count": 35,
+          "cost_ratio": 0.00626,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "32022052NOPV_PCP PCO_11102022_(21-207738)",
+          "answer": "Oklahoma and Wyoming",
+          "correct": true,
+          "retrieved_token_count": 49,
+          "cost_ratio": 0.011592,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "32024007NOPV_PCO_01182024_(22-234928)",
+          "answer": "Alabama, Georgia, North Carolina, Tennessee, and Virginia",
+          "correct": true,
+          "retrieved_token_count": 78,
+          "cost_ratio": 0.030928,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "32024056NOPV_PCP PCO_10252024_(23-264602)",
+          "answer": "Minnesota and Montana",
+          "correct": true,
+          "retrieved_token_count": 49,
+          "cost_ratio": 0.011114,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "42022018NOPV_PCO_02142022_(21-207285)",
+          "answer": "Louisiana and Texas",
+          "correct": true,
+          "retrieved_token_count": 27,
+          "cost_ratio": 0.010216,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "42022025NOPV_PCO_02102022_(21-209144)",
+          "answer": "Tennessee",
+          "correct": true,
+          "retrieved_token_count": 30,
+          "cost_ratio": 0.011792,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "42022026NOPV_PCO_01262022_(21-209158)",
+          "answer": "Tennessee",
+          "correct": true,
+          "retrieved_token_count": 32,
+          "cost_ratio": 0.008245,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "42023010NOPV_PCP PCO_06022023_(22-232749)",
+          "answer": "Texas, Louisiana",
+          "correct": true,
+          "retrieved_token_count": 19,
+          "cost_ratio": 0.006139,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "42024042NOPV_PCO_08292024_(23-267234)",
+          "answer": "Florida",
+          "correct": true,
+          "retrieved_token_count": 20,
+          "cost_ratio": 0.01023,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "42026012NOPV_PCP PCO_02122026_(23-266706)",
+          "answer": "Oklahoma",
+          "correct": true,
+          "retrieved_token_count": 68,
+          "cost_ratio": 0.025092,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "52023009NOPV_PCP PCO_03012023_(21-217219)",
+          "answer": "Alaska",
+          "correct": true,
+          "retrieved_token_count": 11,
+          "cost_ratio": 0.002169,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "52024001NOPV_PCO_12122024_(24-297227)",
+          "answer": "Hawaii",
+          "correct": true,
+          "retrieved_token_count": 13,
+          "cost_ratio": 0.004659,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        },
+        {
+          "doc_name": "52026002NOPV_PCO_01222026_(25-331927)",
+          "answer": "Colorado, Kansas, and Missouri",
+          "correct": true,
+          "retrieved_token_count": 26,
+          "cost_ratio": 0.004431,
+          "rules_applied": [
+            "rule_pipeline_facility_state_fallback",
+            "rule_pipeline_facility_state_intro"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T01:27:30.779523+00:00"
+    }
+  ]
+}

@@ -1,0 +1,1057 @@
+{
+  "verify_accuracy_calls": [
+    {
+      "doc_names": [
+        "treasury_bulletin_1980_07",
+        "treasury_bulletin_1997_12",
+        "treasury_bulletin_1998_06",
+        "treasury_bulletin_2005_12",
+        "treasury_bulletin_2006_09",
+        "treasury_bulletin_2006_12",
+        "treasury_bulletin_2014_09",
+        "treasury_bulletin_2015_09",
+        "treasury_bulletin_2016_03",
+        "treasury_bulletin_2024_12"
+      ],
+      "rule_names": [
+        "rule_nonfarm_payroll_average",
+        "rule_payroll_current_year"
+      ],
+      "n": 10,
+      "n_correct": 4,
+      "accuracy": 0.4,
+      "avg_cost_ratio": 0.000189,
+      "qa_input_tokens": 1579,
+      "qa_output_tokens": 70,
+      "judge_input_tokens": 922,
+      "judge_output_tokens": 45,
+      "input_tokens_total": 2501,
+      "output_tokens_total": 115,
+      "latency_seconds": 10.016,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_1980_07",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "treasury_bulletin_1997_12",
+          "answer": "239,000",
+          "correct": true,
+          "retrieved_token_count": 39,
+          "cost_ratio": 0.000177,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1998_06",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "treasury_bulletin_2005_12",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "treasury_bulletin_2006_09",
+          "answer": "140,000 per month",
+          "correct": true,
+          "retrieved_token_count": 27,
+          "cost_ratio": 0.000185,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2006_12",
+          "answer": "147,000 per month",
+          "correct": true,
+          "retrieved_token_count": 27,
+          "cost_ratio": 0.000167,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2014_09",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "treasury_bulletin_2015_09",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "treasury_bulletin_2016_03",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "treasury_bulletin_2024_12",
+          "answer": "170,000 per month",
+          "correct": true,
+          "retrieved_token_count": 135,
+          "cost_ratio": 0.001361,
+          "rules_applied": [
+            "rule_payroll_current_year"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T01:21:06.414594+00:00"
+    },
+    {
+      "doc_names": [
+        "treasury_bulletin_1997_06",
+        "treasury_bulletin_1997_09",
+        "treasury_bulletin_1997_12",
+        "treasury_bulletin_1998_06",
+        "treasury_bulletin_2006_09",
+        "treasury_bulletin_2006_12",
+        "treasury_bulletin_2007_12",
+        "treasury_bulletin_2008_03",
+        "treasury_bulletin_2020_09",
+        "treasury_bulletin_2024_12"
+      ],
+      "rule_names": [
+        "rule_nonfarm_payroll_average",
+        "rule_payroll_current_year"
+      ],
+      "n": 10,
+      "n_correct": 9,
+      "accuracy": 0.9,
+      "avg_cost_ratio": 0.00065,
+      "qa_input_tokens": 2459,
+      "qa_output_tokens": 84,
+      "judge_input_tokens": 1333,
+      "judge_output_tokens": 61,
+      "input_tokens_total": 3792,
+      "output_tokens_total": 145,
+      "latency_seconds": 8.763,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_1997_06",
+          "answer": "214,000 per month",
+          "correct": true,
+          "retrieved_token_count": 229,
+          "cost_ratio": 0.001106,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average",
+            "rule_payroll_current_year"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1997_09",
+          "answer": "214,000 per month",
+          "correct": true,
+          "retrieved_token_count": 229,
+          "cost_ratio": 0.001095,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average",
+            "rule_payroll_current_year"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1997_12",
+          "answer": "239,000",
+          "correct": true,
+          "retrieved_token_count": 39,
+          "cost_ratio": 0.000177,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1998_06",
+          "answer": "224,000 a month",
+          "correct": true,
+          "retrieved_token_count": 273,
+          "cost_ratio": 0.00127,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average",
+            "rule_payroll_current_year"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2006_09",
+          "answer": "140,000 per month",
+          "correct": true,
+          "retrieved_token_count": 27,
+          "cost_ratio": 0.000185,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2006_12",
+          "answer": "147,000 per month",
+          "correct": true,
+          "retrieved_token_count": 27,
+          "cost_ratio": 0.000167,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2007_12",
+          "answer": "112,000",
+          "correct": false,
+          "retrieved_token_count": 39,
+          "cost_ratio": 0.000246,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2008_03",
+          "answer": "66,250",
+          "correct": true,
+          "retrieved_token_count": 46,
+          "cost_ratio": 0.000266,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2020_09",
+          "answer": "232,500 per month",
+          "correct": true,
+          "retrieved_token_count": 55,
+          "cost_ratio": 0.000631,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2024_12",
+          "answer": "170,000 per month",
+          "correct": true,
+          "retrieved_token_count": 135,
+          "cost_ratio": 0.001361,
+          "rules_applied": [
+            "rule_payroll_current_year"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T01:22:55.654585+00:00"
+    },
+    {
+      "doc_names": [
+        "treasury_bulletin_1997_06",
+        "treasury_bulletin_1997_09",
+        "treasury_bulletin_1997_12",
+        "treasury_bulletin_1998_06",
+        "treasury_bulletin_2006_09",
+        "treasury_bulletin_2006_12",
+        "treasury_bulletin_2007_12",
+        "treasury_bulletin_2008_03",
+        "treasury_bulletin_2020_09",
+        "treasury_bulletin_2024_12"
+      ],
+      "rule_names": [
+        "rule_nonfarm_payroll_average",
+        "rule_payroll_current_year"
+      ],
+      "n": 10,
+      "n_correct": 9,
+      "accuracy": 0.9,
+      "avg_cost_ratio": 0.000143,
+      "qa_input_tokens": 1606,
+      "qa_output_tokens": 86,
+      "judge_input_tokens": 1335,
+      "judge_output_tokens": 61,
+      "input_tokens_total": 2941,
+      "output_tokens_total": 147,
+      "latency_seconds": 8.78,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_1997_06",
+          "answer": "214,000 per month",
+          "correct": true,
+          "retrieved_token_count": 60,
+          "cost_ratio": 0.00029,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average",
+            "rule_payroll_current_year"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1997_09",
+          "answer": "214,000 per month",
+          "correct": true,
+          "retrieved_token_count": 60,
+          "cost_ratio": 0.000287,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average",
+            "rule_payroll_current_year"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1997_12",
+          "answer": "239,000",
+          "correct": true,
+          "retrieved_token_count": 15,
+          "cost_ratio": 6.8e-05,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1998_06",
+          "answer": "224,000 a month",
+          "correct": true,
+          "retrieved_token_count": 20,
+          "cost_ratio": 9.3e-05,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2006_09",
+          "answer": "140,000 per month",
+          "correct": true,
+          "retrieved_token_count": 11,
+          "cost_ratio": 7.5e-05,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2006_12",
+          "answer": "147,000 per month",
+          "correct": true,
+          "retrieved_token_count": 11,
+          "cost_ratio": 6.8e-05,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2007_12",
+          "answer": "112,000",
+          "correct": false,
+          "retrieved_token_count": 20,
+          "cost_ratio": 0.000126,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2008_03",
+          "answer": "66,250 per month",
+          "correct": true,
+          "retrieved_token_count": 15,
+          "cost_ratio": 8.7e-05,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2020_09",
+          "answer": "232,500 per month",
+          "correct": true,
+          "retrieved_token_count": 14,
+          "cost_ratio": 0.000161,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2024_12",
+          "answer": "170,000 per month",
+          "correct": true,
+          "retrieved_token_count": 17,
+          "cost_ratio": 0.000171,
+          "rules_applied": [
+            "rule_payroll_current_year"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T01:24:04.590923+00:00"
+    },
+    {
+      "doc_names": [
+        "treasury_bulletin_1997_06",
+        "treasury_bulletin_1997_09",
+        "treasury_bulletin_1997_12",
+        "treasury_bulletin_1998_06",
+        "treasury_bulletin_2006_09",
+        "treasury_bulletin_2006_12",
+        "treasury_bulletin_2007_12",
+        "treasury_bulletin_2008_03",
+        "treasury_bulletin_2020_09",
+        "treasury_bulletin_2024_12"
+      ],
+      "rule_names": [
+        "rule_nonfarm_payroll_average",
+        "rule_payroll_current_year"
+      ],
+      "n": 10,
+      "n_correct": 9,
+      "accuracy": 0.9,
+      "avg_cost_ratio": 0.000132,
+      "qa_input_tokens": 1590,
+      "qa_output_tokens": 86,
+      "judge_input_tokens": 1335,
+      "judge_output_tokens": 61,
+      "input_tokens_total": 2925,
+      "output_tokens_total": 147,
+      "latency_seconds": 9.06,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_1997_06",
+          "answer": "214,000 per month",
+          "correct": true,
+          "retrieved_token_count": 60,
+          "cost_ratio": 0.00029,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average",
+            "rule_payroll_current_year"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1997_09",
+          "answer": "214,000 per month",
+          "correct": true,
+          "retrieved_token_count": 60,
+          "cost_ratio": 0.000287,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average",
+            "rule_payroll_current_year"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1997_12",
+          "answer": "239,000",
+          "correct": true,
+          "retrieved_token_count": 15,
+          "cost_ratio": 6.8e-05,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1998_06",
+          "answer": "224,000 a month",
+          "correct": true,
+          "retrieved_token_count": 20,
+          "cost_ratio": 9.3e-05,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2006_09",
+          "answer": "140,000 per month",
+          "correct": true,
+          "retrieved_token_count": 11,
+          "cost_ratio": 7.5e-05,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2006_12",
+          "answer": "147,000 per month",
+          "correct": true,
+          "retrieved_token_count": 11,
+          "cost_ratio": 6.8e-05,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2007_12",
+          "answer": "112,000",
+          "correct": false,
+          "retrieved_token_count": 3,
+          "cost_ratio": 1.9e-05,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2008_03",
+          "answer": "66,250 per month",
+          "correct": true,
+          "retrieved_token_count": 15,
+          "cost_ratio": 8.7e-05,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2020_09",
+          "answer": "232,500 per month",
+          "correct": true,
+          "retrieved_token_count": 14,
+          "cost_ratio": 0.000161,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2024_12",
+          "answer": "170,000 per month",
+          "correct": true,
+          "retrieved_token_count": 17,
+          "cost_ratio": 0.000171,
+          "rules_applied": [
+            "rule_payroll_current_year"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T01:24:58.688475+00:00"
+    },
+    {
+      "doc_names": [
+        "treasury_bulletin_1997_06",
+        "treasury_bulletin_1997_09",
+        "treasury_bulletin_1997_12",
+        "treasury_bulletin_1998_06",
+        "treasury_bulletin_2006_09",
+        "treasury_bulletin_2006_12",
+        "treasury_bulletin_2007_12",
+        "treasury_bulletin_2008_03",
+        "treasury_bulletin_2020_09",
+        "treasury_bulletin_2024_12"
+      ],
+      "rule_names": [
+        "rule_nonfarm_payroll_average",
+        "rule_payroll_current_year"
+      ],
+      "n": 10,
+      "n_correct": 9,
+      "accuracy": 0.9,
+      "avg_cost_ratio": 0.00013,
+      "qa_input_tokens": 1586,
+      "qa_output_tokens": 85,
+      "judge_input_tokens": 1333,
+      "judge_output_tokens": 61,
+      "input_tokens_total": 2919,
+      "output_tokens_total": 146,
+      "latency_seconds": 9.18,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_1997_06",
+          "answer": "214,000 per month",
+          "correct": true,
+          "retrieved_token_count": 60,
+          "cost_ratio": 0.00029,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average",
+            "rule_payroll_current_year"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1997_09",
+          "answer": "214,000 per month",
+          "correct": true,
+          "retrieved_token_count": 60,
+          "cost_ratio": 0.000287,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average",
+            "rule_payroll_current_year"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1997_12",
+          "answer": "239,000",
+          "correct": true,
+          "retrieved_token_count": 15,
+          "cost_ratio": 6.8e-05,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1998_06",
+          "answer": "224,000 a month",
+          "correct": true,
+          "retrieved_token_count": 20,
+          "cost_ratio": 9.3e-05,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2006_09",
+          "answer": "140,000 per month",
+          "correct": true,
+          "retrieved_token_count": 11,
+          "cost_ratio": 7.5e-05,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2006_12",
+          "answer": "147,000 per month",
+          "correct": true,
+          "retrieved_token_count": 11,
+          "cost_ratio": 6.8e-05,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2007_12",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "treasury_bulletin_2008_03",
+          "answer": "66,250 per month",
+          "correct": true,
+          "retrieved_token_count": 15,
+          "cost_ratio": 8.7e-05,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2020_09",
+          "answer": "232,500 per month",
+          "correct": true,
+          "retrieved_token_count": 14,
+          "cost_ratio": 0.000161,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2024_12",
+          "answer": "170,000 per month",
+          "correct": true,
+          "retrieved_token_count": 17,
+          "cost_ratio": 0.000171,
+          "rules_applied": [
+            "rule_payroll_current_year"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T01:25:47.194058+00:00"
+    },
+    {
+      "doc_names": [
+        "treasury_bulletin_1997_06",
+        "treasury_bulletin_1997_09",
+        "treasury_bulletin_1997_12",
+        "treasury_bulletin_1998_06",
+        "treasury_bulletin_2005_12",
+        "treasury_bulletin_2006_09",
+        "treasury_bulletin_2006_12",
+        "treasury_bulletin_2008_03",
+        "treasury_bulletin_2020_09",
+        "treasury_bulletin_2024_12"
+      ],
+      "rule_names": [
+        "rule_nonfarm_payroll_average",
+        "rule_payroll_current_year"
+      ],
+      "n": 10,
+      "n_correct": 9,
+      "accuracy": 0.9,
+      "avg_cost_ratio": 0.00013,
+      "qa_input_tokens": 1586,
+      "qa_output_tokens": 85,
+      "judge_input_tokens": 1333,
+      "judge_output_tokens": 61,
+      "input_tokens_total": 2919,
+      "output_tokens_total": 146,
+      "latency_seconds": 10.622,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_1997_06",
+          "answer": "214,000 per month",
+          "correct": true,
+          "retrieved_token_count": 60,
+          "cost_ratio": 0.00029,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average",
+            "rule_payroll_current_year"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1997_09",
+          "answer": "214,000 per month",
+          "correct": true,
+          "retrieved_token_count": 60,
+          "cost_ratio": 0.000287,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average",
+            "rule_payroll_current_year"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1997_12",
+          "answer": "239,000",
+          "correct": true,
+          "retrieved_token_count": 15,
+          "cost_ratio": 6.8e-05,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1998_06",
+          "answer": "224,000 a month",
+          "correct": true,
+          "retrieved_token_count": 20,
+          "cost_ratio": 9.3e-05,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2005_12",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "treasury_bulletin_2006_09",
+          "answer": "140,000 per month",
+          "correct": true,
+          "retrieved_token_count": 11,
+          "cost_ratio": 7.5e-05,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2006_12",
+          "answer": "147,000 per month",
+          "correct": true,
+          "retrieved_token_count": 11,
+          "cost_ratio": 6.8e-05,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2008_03",
+          "answer": "66,250 per month",
+          "correct": true,
+          "retrieved_token_count": 15,
+          "cost_ratio": 8.7e-05,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2020_09",
+          "answer": "232,500 per month",
+          "correct": true,
+          "retrieved_token_count": 14,
+          "cost_ratio": 0.000161,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2024_12",
+          "answer": "170,000 per month",
+          "correct": true,
+          "retrieved_token_count": 17,
+          "cost_ratio": 0.000171,
+          "rules_applied": [
+            "rule_payroll_current_year"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T01:26:53.543917+00:00"
+    },
+    {
+      "doc_names": [
+        "treasury_bulletin_1997_06",
+        "treasury_bulletin_1997_09",
+        "treasury_bulletin_1997_12",
+        "treasury_bulletin_1998_06",
+        "treasury_bulletin_2005_12",
+        "treasury_bulletin_2006_09",
+        "treasury_bulletin_2006_12",
+        "treasury_bulletin_2008_03",
+        "treasury_bulletin_2020_09",
+        "treasury_bulletin_2024_12"
+      ],
+      "rule_names": [
+        "rule_nonfarm_payroll_average",
+        "rule_payroll_current_year"
+      ],
+      "n": 10,
+      "n_correct": 9,
+      "accuracy": 0.9,
+      "avg_cost_ratio": 0.00013,
+      "qa_input_tokens": 1586,
+      "qa_output_tokens": 85,
+      "judge_input_tokens": 1333,
+      "judge_output_tokens": 61,
+      "input_tokens_total": 2919,
+      "output_tokens_total": 146,
+      "latency_seconds": 8.625,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_1997_06",
+          "answer": "214,000 per month",
+          "correct": true,
+          "retrieved_token_count": 60,
+          "cost_ratio": 0.00029,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average",
+            "rule_payroll_current_year"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1997_09",
+          "answer": "214,000 per month",
+          "correct": true,
+          "retrieved_token_count": 60,
+          "cost_ratio": 0.000287,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average",
+            "rule_payroll_current_year"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1997_12",
+          "answer": "239,000",
+          "correct": true,
+          "retrieved_token_count": 15,
+          "cost_ratio": 6.8e-05,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1998_06",
+          "answer": "224,000 a month",
+          "correct": true,
+          "retrieved_token_count": 20,
+          "cost_ratio": 9.3e-05,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2005_12",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "treasury_bulletin_2006_09",
+          "answer": "140,000 per month",
+          "correct": true,
+          "retrieved_token_count": 11,
+          "cost_ratio": 7.5e-05,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2006_12",
+          "answer": "147,000 per month",
+          "correct": true,
+          "retrieved_token_count": 11,
+          "cost_ratio": 6.8e-05,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2008_03",
+          "answer": "66,250 per month",
+          "correct": true,
+          "retrieved_token_count": 15,
+          "cost_ratio": 8.7e-05,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2020_09",
+          "answer": "232,500 per month",
+          "correct": true,
+          "retrieved_token_count": 14,
+          "cost_ratio": 0.000161,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2024_12",
+          "answer": "170,000 per month",
+          "correct": true,
+          "retrieved_token_count": 17,
+          "cost_ratio": 0.000171,
+          "rules_applied": [
+            "rule_payroll_current_year"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T01:27:28.600412+00:00"
+    },
+    {
+      "doc_names": [
+        "treasury_bulletin_1997_06",
+        "treasury_bulletin_1997_09",
+        "treasury_bulletin_1997_12",
+        "treasury_bulletin_1998_06",
+        "treasury_bulletin_2005_12",
+        "treasury_bulletin_2006_09",
+        "treasury_bulletin_2006_12",
+        "treasury_bulletin_2008_03",
+        "treasury_bulletin_2020_09",
+        "treasury_bulletin_2024_12"
+      ],
+      "rule_names": [
+        "rule_nonfarm_payroll_average",
+        "rule_payroll_current_year"
+      ],
+      "n": 10,
+      "n_correct": 10,
+      "accuracy": 1.0,
+      "avg_cost_ratio": 0.000113,
+      "qa_input_tokens": 1548,
+      "qa_output_tokens": 88,
+      "judge_input_tokens": 1337,
+      "judge_output_tokens": 60,
+      "input_tokens_total": 2885,
+      "output_tokens_total": 148,
+      "latency_seconds": 8.746,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_1997_06",
+          "answer": "214,000 per month",
+          "correct": true,
+          "retrieved_token_count": 30,
+          "cost_ratio": 0.000145,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average",
+            "rule_payroll_current_year"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1997_09",
+          "answer": "214,000 per month",
+          "correct": true,
+          "retrieved_token_count": 30,
+          "cost_ratio": 0.000143,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average",
+            "rule_payroll_current_year"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1997_12",
+          "answer": "239,000",
+          "correct": true,
+          "retrieved_token_count": 15,
+          "cost_ratio": 6.8e-05,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_1998_06",
+          "answer": "224,000 a month",
+          "correct": true,
+          "retrieved_token_count": 20,
+          "cost_ratio": 9.3e-05,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2005_12",
+          "answer": "161,000 per month",
+          "correct": true,
+          "retrieved_token_count": 21,
+          "cost_ratio": 0.000123,
+          "rules_applied": [
+            "rule_payroll_current_year"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2006_09",
+          "answer": "140,000 per month",
+          "correct": true,
+          "retrieved_token_count": 11,
+          "cost_ratio": 7.5e-05,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2006_12",
+          "answer": "147,000 per month",
+          "correct": true,
+          "retrieved_token_count": 11,
+          "cost_ratio": 6.8e-05,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2008_03",
+          "answer": "66,250 per month",
+          "correct": true,
+          "retrieved_token_count": 15,
+          "cost_ratio": 8.7e-05,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2020_09",
+          "answer": "232,500 per month",
+          "correct": true,
+          "retrieved_token_count": 14,
+          "cost_ratio": 0.000161,
+          "rules_applied": [
+            "rule_nonfarm_payroll_average"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2024_12",
+          "answer": "170,000 per month",
+          "correct": true,
+          "retrieved_token_count": 17,
+          "cost_ratio": 0.000171,
+          "rules_applied": [
+            "rule_payroll_current_year"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T01:28:10.501419+00:00"
+    }
+  ]
+}

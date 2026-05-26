@@ -1,0 +1,400 @@
+{
+  "verify_accuracy_calls": [
+    {
+      "doc_names": [
+        "20250723_state_of_washington_v._trump",
+        "20250801_king_v._navy_federal_credit_union",
+        "20250815_in_re_subpoena_internet_subscribers_of_cox_communications_llc_and_coxcom",
+        "20250827_ambrosetti_v._oregon_catholic_press",
+        "20250904_garcia_v._county_of_alameda",
+        "20250912_pacito_v._trump",
+        "20251003_caldrone_v._circle_k_stores_inc.",
+        "20251030_doe_v._deutsche_lufthansa_aktiengesellschaft",
+        "20251120_rosa_a._camacho_v._nmi_settlement_fund",
+        "20251222_united_states_v._holmes",
+        "20260105_walker_specialty_constr._inc._v._bd._of_tr._of_the_constr._indus._and",
+        "20260130_kalbers_v._volkswagen_ag",
+        "20260227_l.b._v._san_diego_unified_school_district",
+        "20260317_adventist_health_system_of_west_v._abbvie_inc."
+      ],
+      "rule_names": [
+        "rule_appeal_from_us_district_court_header",
+        "rule_district_court_caption_fallback"
+      ],
+      "n": 14,
+      "n_correct": 13,
+      "accuracy": 0.928571,
+      "avg_cost_ratio": 0.002952,
+      "qa_input_tokens": 2213,
+      "qa_output_tokens": 110,
+      "judge_input_tokens": 2096,
+      "judge_output_tokens": 85,
+      "input_tokens_total": 4309,
+      "output_tokens_total": 195,
+      "latency_seconds": 11.697,
+      "results": [
+        {
+          "doc_name": "20250723_state_of_washington_v._trump",
+          "answer": "Western District of Washington",
+          "correct": true,
+          "retrieved_token_count": 22,
+          "cost_ratio": 0.000791,
+          "rules_applied": [
+            "rule_appeal_from_us_district_court_header",
+            "rule_district_court_caption_fallback"
+          ]
+        },
+        {
+          "doc_name": "20250801_king_v._navy_federal_credit_union",
+          "answer": "the Central District of California",
+          "correct": true,
+          "retrieved_token_count": 33,
+          "cost_ratio": 0.006001,
+          "rules_applied": [
+            "rule_appeal_from_us_district_court_header",
+            "rule_district_court_caption_fallback"
+          ]
+        },
+        {
+          "doc_name": "20250815_in_re_subpoena_internet_subscribers_of_cox_communications_llc_and_coxcom",
+          "answer": "District of Hawaii",
+          "correct": true,
+          "retrieved_token_count": 79,
+          "cost_ratio": 0.006851,
+          "rules_applied": [
+            "rule_appeal_from_us_district_court_header",
+            "rule_district_court_caption_fallback"
+          ]
+        },
+        {
+          "doc_name": "20250827_ambrosetti_v._oregon_catholic_press",
+          "answer": "District of Oregon",
+          "correct": true,
+          "retrieved_token_count": 29,
+          "cost_ratio": 0.002329,
+          "rules_applied": [
+            "rule_appeal_from_us_district_court_header",
+            "rule_district_court_caption_fallback"
+          ]
+        },
+        {
+          "doc_name": "20250904_garcia_v._county_of_alameda",
+          "answer": "Northern District of California",
+          "correct": true,
+          "retrieved_token_count": 22,
+          "cost_ratio": 0.002656,
+          "rules_applied": [
+            "rule_appeal_from_us_district_court_header",
+            "rule_district_court_caption_fallback"
+          ]
+        },
+        {
+          "doc_name": "20250912_pacito_v._trump",
+          "answer": "Western District of Washington, Seattle",
+          "correct": true,
+          "retrieved_token_count": 23,
+          "cost_ratio": 0.005736,
+          "rules_applied": [
+            "rule_district_court_caption_fallback"
+          ]
+        },
+        {
+          "doc_name": "20251003_caldrone_v._circle_k_stores_inc.",
+          "answer": "Central District of California",
+          "correct": true,
+          "retrieved_token_count": 22,
+          "cost_ratio": 0.003554,
+          "rules_applied": [
+            "rule_appeal_from_us_district_court_header",
+            "rule_district_court_caption_fallback"
+          ]
+        },
+        {
+          "doc_name": "20251030_doe_v._deutsche_lufthansa_aktiengesellschaft",
+          "answer": "Northern District of California",
+          "correct": true,
+          "retrieved_token_count": 22,
+          "cost_ratio": 0.001855,
+          "rules_applied": [
+            "rule_appeal_from_us_district_court_header",
+            "rule_district_court_caption_fallback"
+          ]
+        },
+        {
+          "doc_name": "20251120_rosa_a._camacho_v._nmi_settlement_fund",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "20251222_united_states_v._holmes",
+          "answer": "Northern District of California",
+          "correct": true,
+          "retrieved_token_count": 22,
+          "cost_ratio": 0.00099,
+          "rules_applied": [
+            "rule_appeal_from_us_district_court_header",
+            "rule_district_court_caption_fallback"
+          ]
+        },
+        {
+          "doc_name": "20260105_walker_specialty_constr._inc._v._bd._of_tr._of_the_constr._indus._and",
+          "answer": "District of Nevada",
+          "correct": true,
+          "retrieved_token_count": 20,
+          "cost_ratio": 0.002997,
+          "rules_applied": [
+            "rule_appeal_from_us_district_court_header",
+            "rule_district_court_caption_fallback"
+          ]
+        },
+        {
+          "doc_name": "20260130_kalbers_v._volkswagen_ag",
+          "answer": "Central District of California",
+          "correct": true,
+          "retrieved_token_count": 31,
+          "cost_ratio": 0.002754,
+          "rules_applied": [
+            "rule_appeal_from_us_district_court_header",
+            "rule_district_court_caption_fallback"
+          ]
+        },
+        {
+          "doc_name": "20260227_l.b._v._san_diego_unified_school_district",
+          "answer": "Southern District of California",
+          "correct": true,
+          "retrieved_token_count": 22,
+          "cost_ratio": 0.002123,
+          "rules_applied": [
+            "rule_appeal_from_us_district_court_header",
+            "rule_district_court_caption_fallback"
+          ]
+        },
+        {
+          "doc_name": "20260317_adventist_health_system_of_west_v._abbvie_inc.",
+          "answer": "Central District of California",
+          "correct": true,
+          "retrieved_token_count": 22,
+          "cost_ratio": 0.002689,
+          "rules_applied": [
+            "rule_appeal_from_us_district_court_header",
+            "rule_district_court_caption_fallback"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T01:06:32.868943+00:00"
+    },
+    {
+      "doc_names": [
+        "20250723_state_of_washington_v._trump",
+        "20250801_king_v._navy_federal_credit_union",
+        "20250815_in_re_subpoena_internet_subscribers_of_cox_communications_llc_and_coxcom",
+        "20250827_ambrosetti_v._oregon_catholic_press",
+        "20250904_garcia_v._county_of_alameda",
+        "20250912_pacito_v._trump",
+        "20250919_american_federation_of_government_employees_afl-cio_v._trump",
+        "20250919_trump_v._united_states_district_court_for_the_northern_district_of",
+        "20251003_caldrone_v._circle_k_stores_inc.",
+        "20251030_doe_v._deutsche_lufthansa_aktiengesellschaft",
+        "20251120_rosa_a._camacho_v._nmi_settlement_fund",
+        "20251222_united_states_v._holmes",
+        "20260105_walker_specialty_constr._inc._v._bd._of_tr._of_the_constr._indus._and",
+        "20260130_kalbers_v._volkswagen_ag",
+        "20260227_l.b._v._san_diego_unified_school_district",
+        "20260317_adventist_health_system_of_west_v._abbvie_inc."
+      ],
+      "rule_names": [
+        "rule_appeal_from_us_district_court_header",
+        "rule_district_court_caption_fallback"
+      ],
+      "n": 16,
+      "n_correct": 16,
+      "accuracy": 1.0,
+      "avg_cost_ratio": 0.002809,
+      "qa_input_tokens": 2504,
+      "qa_output_tokens": 137,
+      "judge_input_tokens": 2403,
+      "judge_output_tokens": 96,
+      "input_tokens_total": 4907,
+      "output_tokens_total": 233,
+      "latency_seconds": 12.837,
+      "results": [
+        {
+          "doc_name": "20250723_state_of_washington_v._trump",
+          "answer": "Western District of Washington",
+          "correct": true,
+          "retrieved_token_count": 22,
+          "cost_ratio": 0.000791,
+          "rules_applied": [
+            "rule_appeal_from_us_district_court_header",
+            "rule_district_court_caption_fallback"
+          ]
+        },
+        {
+          "doc_name": "20250801_king_v._navy_federal_credit_union",
+          "answer": "the Central District of California",
+          "correct": true,
+          "retrieved_token_count": 33,
+          "cost_ratio": 0.006001,
+          "rules_applied": [
+            "rule_appeal_from_us_district_court_header",
+            "rule_district_court_caption_fallback"
+          ]
+        },
+        {
+          "doc_name": "20250815_in_re_subpoena_internet_subscribers_of_cox_communications_llc_and_coxcom",
+          "answer": "District of Hawaii",
+          "correct": true,
+          "retrieved_token_count": 79,
+          "cost_ratio": 0.006851,
+          "rules_applied": [
+            "rule_appeal_from_us_district_court_header",
+            "rule_district_court_caption_fallback"
+          ]
+        },
+        {
+          "doc_name": "20250827_ambrosetti_v._oregon_catholic_press",
+          "answer": "District of Oregon",
+          "correct": true,
+          "retrieved_token_count": 29,
+          "cost_ratio": 0.002329,
+          "rules_applied": [
+            "rule_appeal_from_us_district_court_header",
+            "rule_district_court_caption_fallback"
+          ]
+        },
+        {
+          "doc_name": "20250904_garcia_v._county_of_alameda",
+          "answer": "Northern District of California",
+          "correct": true,
+          "retrieved_token_count": 22,
+          "cost_ratio": 0.002656,
+          "rules_applied": [
+            "rule_appeal_from_us_district_court_header",
+            "rule_district_court_caption_fallback"
+          ]
+        },
+        {
+          "doc_name": "20250912_pacito_v._trump",
+          "answer": "Western District of Washington, Seattle",
+          "correct": true,
+          "retrieved_token_count": 23,
+          "cost_ratio": 0.005736,
+          "rules_applied": [
+            "rule_district_court_caption_fallback"
+          ]
+        },
+        {
+          "doc_name": "20250919_american_federation_of_government_employees_afl-cio_v._trump",
+          "answer": "Northern District of California, San Francisco",
+          "correct": true,
+          "retrieved_token_count": 7,
+          "cost_ratio": 0.000586,
+          "rules_applied": [
+            "rule_district_court_caption_fallback"
+          ]
+        },
+        {
+          "doc_name": "20250919_trump_v._united_states_district_court_for_the_northern_district_of",
+          "answer": "Northern District of California, San Francisco",
+          "correct": true,
+          "retrieved_token_count": 7,
+          "cost_ratio": 0.000586,
+          "rules_applied": [
+            "rule_district_court_caption_fallback"
+          ]
+        },
+        {
+          "doc_name": "20251003_caldrone_v._circle_k_stores_inc.",
+          "answer": "Central District of California",
+          "correct": true,
+          "retrieved_token_count": 22,
+          "cost_ratio": 0.003554,
+          "rules_applied": [
+            "rule_appeal_from_us_district_court_header",
+            "rule_district_court_caption_fallback"
+          ]
+        },
+        {
+          "doc_name": "20251030_doe_v._deutsche_lufthansa_aktiengesellschaft",
+          "answer": "Northern District of California",
+          "correct": true,
+          "retrieved_token_count": 22,
+          "cost_ratio": 0.001855,
+          "rules_applied": [
+            "rule_appeal_from_us_district_court_header",
+            "rule_district_court_caption_fallback"
+          ]
+        },
+        {
+          "doc_name": "20251120_rosa_a._camacho_v._nmi_settlement_fund",
+          "answer": "District Court for the Northern Mariana Islands",
+          "correct": true,
+          "retrieved_token_count": 13,
+          "cost_ratio": 0.002438,
+          "rules_applied": [
+            "rule_appeal_from_us_district_court_header"
+          ]
+        },
+        {
+          "doc_name": "20251222_united_states_v._holmes",
+          "answer": "Northern District of California",
+          "correct": true,
+          "retrieved_token_count": 22,
+          "cost_ratio": 0.00099,
+          "rules_applied": [
+            "rule_appeal_from_us_district_court_header",
+            "rule_district_court_caption_fallback"
+          ]
+        },
+        {
+          "doc_name": "20260105_walker_specialty_constr._inc._v._bd._of_tr._of_the_constr._indus._and",
+          "answer": "District of Nevada",
+          "correct": true,
+          "retrieved_token_count": 20,
+          "cost_ratio": 0.002997,
+          "rules_applied": [
+            "rule_appeal_from_us_district_court_header",
+            "rule_district_court_caption_fallback"
+          ]
+        },
+        {
+          "doc_name": "20260130_kalbers_v._volkswagen_ag",
+          "answer": "Central District of California",
+          "correct": true,
+          "retrieved_token_count": 31,
+          "cost_ratio": 0.002754,
+          "rules_applied": [
+            "rule_appeal_from_us_district_court_header",
+            "rule_district_court_caption_fallback"
+          ]
+        },
+        {
+          "doc_name": "20260227_l.b._v._san_diego_unified_school_district",
+          "answer": "Southern District of California",
+          "correct": true,
+          "retrieved_token_count": 22,
+          "cost_ratio": 0.002123,
+          "rules_applied": [
+            "rule_appeal_from_us_district_court_header",
+            "rule_district_court_caption_fallback"
+          ]
+        },
+        {
+          "doc_name": "20260317_adventist_health_system_of_west_v._abbvie_inc.",
+          "answer": "Central District of California",
+          "correct": true,
+          "retrieved_token_count": 22,
+          "cost_ratio": 0.002689,
+          "rules_applied": [
+            "rule_appeal_from_us_district_court_header",
+            "rule_district_court_caption_fallback"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T01:08:01.060950+00:00"
+    }
+  ]
+}

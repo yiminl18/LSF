@@ -1,0 +1,175 @@
+{
+  "verify_accuracy_calls": [
+    {
+      "doc_names": [
+        "treasury_bulletin_1980_07",
+        "treasury_bulletin_1982_05",
+        "treasury_bulletin_1986_12",
+        "treasury_bulletin_1992_06",
+        "treasury_bulletin_1997_12",
+        "treasury_bulletin_2003_09",
+        "treasury_bulletin_2009_03",
+        "treasury_bulletin_2024_12",
+        "treasury_bulletin_2025_03",
+        "treasury_bulletin_2025_06"
+      ],
+      "rule_names": [
+        "rule_fd1_latest_gross_federal_debt_total"
+      ],
+      "n": 10,
+      "n_correct": 3,
+      "accuracy": 0.3,
+      "avg_cost_ratio": 1.6e-05,
+      "qa_input_tokens": 1418,
+      "qa_output_tokens": 69,
+      "judge_input_tokens": 1371,
+      "judge_output_tokens": 67,
+      "input_tokens_total": 2789,
+      "output_tokens_total": 136,
+      "latency_seconds": 8.305,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_1980_07",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "treasury_bulletin_1982_05",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "treasury_bulletin_1986_12",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "treasury_bulletin_1992_06",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "treasury_bulletin_1997_12",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "treasury_bulletin_2003_09",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "treasury_bulletin_2009_03",
+          "answer": "NOT_FOUND",
+          "correct": false,
+          "retrieved_token_count": 0,
+          "cost_ratio": 0.0,
+          "rules_applied": []
+        },
+        {
+          "doc_name": "treasury_bulletin_2024_12",
+          "answer": "35,484,939",
+          "correct": true,
+          "retrieved_token_count": 5,
+          "cost_ratio": 5e-05,
+          "rules_applied": [
+            "rule_fd1_latest_gross_federal_debt_total"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_03",
+          "answer": "35,484,939",
+          "correct": true,
+          "retrieved_token_count": 5,
+          "cost_ratio": 4.7e-05,
+          "rules_applied": [
+            "rule_fd1_latest_gross_federal_debt_total"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_06",
+          "answer": "35,484,939",
+          "correct": true,
+          "retrieved_token_count": 5,
+          "cost_ratio": 6.2e-05,
+          "rules_applied": [
+            "rule_fd1_latest_gross_federal_debt_total"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T02:12:16.141814+00:00"
+    },
+    {
+      "doc_names": [
+        "treasury_bulletin_2024_12",
+        "treasury_bulletin_2025_03",
+        "treasury_bulletin_2025_06"
+      ],
+      "rule_names": [
+        "rule_fd1_latest_gross_federal_debt_total"
+      ],
+      "n": 3,
+      "n_correct": 3,
+      "accuracy": 1.0,
+      "avg_cost_ratio": 5.3e-05,
+      "qa_input_tokens": 438,
+      "qa_output_tokens": 27,
+      "judge_input_tokens": 420,
+      "judge_output_tokens": 18,
+      "input_tokens_total": 858,
+      "output_tokens_total": 45,
+      "latency_seconds": 2.95,
+      "results": [
+        {
+          "doc_name": "treasury_bulletin_2024_12",
+          "answer": "35,484,939",
+          "correct": true,
+          "retrieved_token_count": 5,
+          "cost_ratio": 5e-05,
+          "rules_applied": [
+            "rule_fd1_latest_gross_federal_debt_total"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_03",
+          "answer": "35,484,939",
+          "correct": true,
+          "retrieved_token_count": 5,
+          "cost_ratio": 4.7e-05,
+          "rules_applied": [
+            "rule_fd1_latest_gross_federal_debt_total"
+          ]
+        },
+        {
+          "doc_name": "treasury_bulletin_2025_06",
+          "answer": "35,484,939",
+          "correct": true,
+          "retrieved_token_count": 5,
+          "cost_ratio": 6.2e-05,
+          "rules_applied": [
+            "rule_fd1_latest_gross_federal_debt_total"
+          ]
+        }
+      ],
+      "timestamp": "2026-05-26T02:12:29.993731+00:00"
+    }
+  ]
+}

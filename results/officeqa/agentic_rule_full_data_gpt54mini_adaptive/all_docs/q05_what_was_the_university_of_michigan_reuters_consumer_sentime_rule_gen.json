@@ -1,0 +1,63 @@
+{
+  "strategy": "agentic_rule_full_data",
+  "phase": "rule_generation",
+  "status": "ok",
+  "dataset": "officeqa",
+  "question": "What was the University of Michigan / Reuters consumer sentiment index at the most recent reading?",
+  "question_slug": "what_was_the_university_of_michigan_reuters_consumer_sentime",
+  "model": "gpt54mini",
+  "split": "all_docs",
+  "doc_count": 200,
+  "question_count": 1,
+  "rules_dir": "rules/officeqa/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q05_what_was_the_university_of_michigan_reuters_consumer_sentime",
+  "results_report_path": "results/officeqa/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q05_what_was_the_university_of_michigan_reuters_consumer_sentime_rule_gen.json",
+  "verify_accuracy_ledger_path": "results/officeqa/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q05_what_was_the_university_of_michigan_reuters_consumer_sentime.verify_accuracy_ledger.json",
+  "rule_files": [
+    "rules/officeqa/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q05_what_was_the_university_of_michigan_reuters_consumer_sentime/rule_michigan_consumer_sentiment_latest_reading.py"
+  ],
+  "rules_final": [
+    "rule_michigan_consumer_sentiment_latest_reading"
+  ],
+  "num_rules_final": 1,
+  "rule_gen": {
+    "latency_seconds": 699.94,
+    "input_tokens": 6275378,
+    "output_tokens": 86505,
+    "cached_input_tokens": 6174720,
+    "reasoning_tokens": 51120,
+    "working_sample": [
+      "treasury_bulletin_2018_12",
+      "treasury_bulletin_2019_06",
+      "treasury_bulletin_2020_03",
+      "treasury_bulletin_2021_06",
+      "treasury_bulletin_2021_12",
+      "treasury_bulletin_2022_09",
+      "treasury_bulletin_2023_12",
+      "treasury_bulletin_2024_06",
+      "treasury_bulletin_2024_12",
+      "treasury_bulletin_2025_06"
+    ],
+    "num_working_sample": 10,
+    "num_working_sample_iterations": 3,
+    "verify_accuracy_calls": {
+      "total": 6,
+      "input_tokens": 16652,
+      "output_tokens": 787
+    },
+    "num_rules_written": 1,
+    "num_rules_rejected": 0,
+    "rules_final": [
+      "rule_michigan_consumer_sentiment_latest_reading"
+    ],
+    "num_rules_final": 1,
+    "avg_cost_ratio_sample": 0.000136,
+    "match_rate_sample": 1.0,
+    "notes": "Single rule uses local line-window extraction for the Michigan/Reuters consumer sentiment section, returns the latest reading phrase, and skips Conference Board comparison text."
+  },
+  "agent_log_path": "results/officeqa/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q05_what_was_the_university_of_michigan_reuters_consumer_sentime.codex.jsonl",
+  "agent_last_message_path": "results/officeqa/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q05_what_was_the_university_of_michigan_reuters_consumer_sentime.codex.last.txt",
+  "stderr": "2026-05-26T01:28:25.959778Z ERROR codex_models_manager::manager: failed to refresh available models: stream disconnected before completion: failed to decode models response: missing field `models` at line 3243 column 1; body: {\n  \"data\": [\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1772582400\n      },\n      \"id\": \"dall-e-3-3.0\",\n      \"created_at\": 1691712000,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1737936000\n      },\n      \"id\": \"dall-e-2-2.0\",\n      \"created_at\": 1713139200,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": true,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"fine_tune\": 1718323200,\n        \"inference\": 1718323200\n      },\n      \"id\": \"code-cushman-001\",\n      \"created_at\": 1642809600,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": false,\n        \"completion\": true,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"fine_tune\": 1720137600,\n        \"inference\": 1720137600\n      },\n      \"id\": \"code-cushman-fine-tune-002\",\n      \"created_at\": 1677456000,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"generally-available\",\n      \"deprecation\": {\n        \"inference\": 1797292800\n      },\n      \"id\": \"whisper-001\",\n      \"created_at\": 1694649600,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1746057600\n      },\n      \"id\": \"gpt-4-0125-Preview\",\n      \"created_at\": 1706140800,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1746057600\n      },\n      \"id\": \"gpt-4-1106-Preview\",\n      \"created_at\": 1700006400,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycl",
+  "codex_thread_id": "019e61e5-ba6a-7003-b888-827e52feac7b",
+  "codex_event_count": 273,
+  "codex_error_message": null
+}

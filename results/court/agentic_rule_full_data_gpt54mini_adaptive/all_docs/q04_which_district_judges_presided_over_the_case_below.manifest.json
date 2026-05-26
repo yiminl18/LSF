@@ -1,0 +1,1993 @@
+{
+  "dataset": "court",
+  "split": "all_docs",
+  "question": "Which district judge(s) presided over the case below?",
+  "question_slug": "which_district_judges_presided_over_the_case_below",
+  "model": "gpt-5.4-mini",
+  "rules_dir": "/mnt/data/LSF/rules/court/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q04_which_district_judges_presided_over_the_case_below",
+  "ledger_path": "/mnt/data/LSF/results/court/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q04_which_district_judges_presided_over_the_case_below.verify_accuracy_ledger.json",
+  "report_path": "/mnt/data/LSF/results/court/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q04_which_district_judges_presided_over_the_case_below_rule_gen.json",
+  "verify_accuracy_budget": 30,
+  "documents": [
+    {
+      "doc_name": "20250723_state_of_washington_v._trump",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250723_state_of_washington_v._trump.txt",
+      "ground_truth": [
+        "John C. Coughenour"
+      ]
+    },
+    {
+      "doc_name": "20250724_bates_v._pakseresht",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250724_bates_v._pakseresht.txt",
+      "ground_truth": [
+        "Adrienne C. Nelson"
+      ]
+    },
+    {
+      "doc_name": "20250724_gila_river_indian_community_v._schoubroek",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250724_gila_river_indian_community_v._schoubroek.txt",
+      "ground_truth": [
+        "Scott H. Rash",
+        "Susan R. Bolton"
+      ]
+    },
+    {
+      "doc_name": "20250724_rhode_v._bonta",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250724_rhode_v._bonta.txt",
+      "ground_truth": [
+        "Roger T. Benitez"
+      ]
+    },
+    {
+      "doc_name": "20250725_burch_v._city_of_chubbuck",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250725_burch_v._city_of_chubbuck.txt",
+      "ground_truth": [
+        "Hon. Amanda K. Brailsford, District Judge, Presiding"
+      ]
+    },
+    {
+      "doc_name": "20250725_international_partners_for_ethical_care_inc_v._inslee",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250725_international_partners_for_ethical_care_inc_v._inslee.txt",
+      "ground_truth": [
+        "Robert J. Bryan"
+      ]
+    },
+    {
+      "doc_name": "20250725_khatibi_v._hawkins",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250725_khatibi_v._hawkins.txt",
+      "ground_truth": [
+        "Monica Ramirez Almadani"
+      ]
+    },
+    {
+      "doc_name": "20250725_nadon_v._bisignano",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250725_nadon_v._bisignano.txt",
+      "ground_truth": [
+        "Dana L. Christensen"
+      ]
+    },
+    {
+      "doc_name": "20250725_narguess_noohi_v._johnson__johnson_consumer_inc.",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250725_narguess_noohi_v._johnson__johnson_consumer_inc..txt",
+      "ground_truth": [
+        "Terry J. Hatter, Jr."
+      ]
+    },
+    {
+      "doc_name": "20250728_hara_v._netflix_inc.",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250728_hara_v._netflix_inc..txt",
+      "ground_truth": [
+        "R. Gary Klausner"
+      ]
+    },
+    {
+      "doc_name": "20250728_johnson_v._usa",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250728_johnson_v._usa.txt",
+      "ground_truth": [
+        "John Joseph Tuchi"
+      ]
+    },
+    {
+      "doc_name": "20250728_todd_yukutake_v._anne_e._lopez",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250728_todd_yukutake_v._anne_e._lopez.txt",
+      "ground_truth": [
+        "JMS",
+        "RT"
+      ]
+    },
+    {
+      "doc_name": "20250729_cedar_park_assembly_of_god_of_kirkland_washington_v._patty_kuderer",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250729_cedar_park_assembly_of_god_of_kirkland_washington_v._patty_kuderer.txt",
+      "ground_truth": []
+    },
+    {
+      "doc_name": "20250729_handley_v._moore",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250729_handley_v._moore.txt",
+      "ground_truth": [
+        "Mark C. Scarsi"
+      ]
+    },
+    {
+      "doc_name": "20250730_center_for_investigative_reporting_v._united_states_department_of_labor",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250730_center_for_investigative_reporting_v._united_states_department_of_labor.txt",
+      "ground_truth": [
+        "William Alsup"
+      ]
+    },
+    {
+      "doc_name": "20250730_health_freedom_defense_fund_inc._v._alberto_carvalho",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250730_health_freedom_defense_fund_inc._v._alberto_carvalho.txt",
+      "ground_truth": [
+        "Dale S. Fischer"
+      ]
+    },
+    {
+      "doc_name": "20250731_epic_games_inc._v._google_llc",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250731_epic_games_inc._v._google_llc.txt",
+      "ground_truth": [
+        "James Donato"
+      ]
+    },
+    {
+      "doc_name": "20250731_lapadat_v._bondi",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250731_lapadat_v._bondi.txt",
+      "ground_truth": []
+    },
+    {
+      "doc_name": "20250731_state_bar_of_nevada_v._wike",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250731_state_bar_of_nevada_v._wike.txt",
+      "ground_truth": [
+        "William J. Lafferty",
+        "Frederick P. Corbit",
+        "Teresa H. Pearson"
+      ]
+    },
+    {
+      "doc_name": "20250801_american_federation_of_government_employees_afl-cio_v._trump",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250801_american_federation_of_government_employees_afl-cio_v._trump.txt",
+      "ground_truth": [
+        "James Donato"
+      ]
+    },
+    {
+      "doc_name": "20250801_cheairs_v._city_of_seattle",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250801_cheairs_v._city_of_seattle.txt",
+      "ground_truth": [
+        "Lauren J. King"
+      ]
+    },
+    {
+      "doc_name": "20250801_davis_v._united_states_district_court_for_the_northern_district_of",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250801_davis_v._united_states_district_court_for_the_northern_district_of.txt",
+      "ground_truth": [
+        "William H. Orrick"
+      ]
+    },
+    {
+      "doc_name": "20250801_doe_1_v._twitter_inc.",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250801_doe_1_v._twitter_inc..txt",
+      "ground_truth": [
+        "Joseph C. Spero, Magistrate Judge"
+      ]
+    },
+    {
+      "doc_name": "20250801_king_v._navy_federal_credit_union",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250801_king_v._navy_federal_credit_union.txt",
+      "ground_truth": [
+        "Sherilyn Peace Garnett"
+      ]
+    },
+    {
+      "doc_name": "20250801_vasquez_perdomo_v._noem",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250801_vasquez_perdomo_v._noem.txt",
+      "ground_truth": [
+        "Maame Ewusi-Mensah Frimpong"
+      ]
+    },
+    {
+      "doc_name": "20250804_las_vegas_sun_inc._v._adelson",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250804_las_vegas_sun_inc._v._adelson.txt",
+      "ground_truth": [
+        "Anne R. Traum"
+      ]
+    },
+    {
+      "doc_name": "20250804_lister_v._city_of_las_vegas",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250804_lister_v._city_of_las_vegas.txt",
+      "ground_truth": [
+        "Cristina D. Silva"
+      ]
+    },
+    {
+      "doc_name": "20250804_robert_platt_v._sodexo_s.a.",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250804_robert_platt_v._sodexo_s.a..txt",
+      "ground_truth": [
+        "David O. Carter"
+      ]
+    },
+    {
+      "doc_name": "20250804_united_states_v._bradford",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250804_united_states_v._bradford.txt",
+      "ground_truth": [
+        "John A. Kronstadt"
+      ]
+    },
+    {
+      "doc_name": "20250805_mcmahon_v._world_vision_inc.",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250805_mcmahon_v._world_vision_inc..txt",
+      "ground_truth": [
+        "James L. Robart"
+      ]
+    },
+    {
+      "doc_name": "20250806_powell_v._united_states_securities_and_exchange_commission",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250806_powell_v._united_states_securities_and_exchange_commission.txt",
+      "ground_truth": []
+    },
+    {
+      "doc_name": "20250811_the_satanic_temple_v._labrador",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250811_the_satanic_temple_v._labrador.txt",
+      "ground_truth": [
+        "David C. Nye"
+      ]
+    },
+    {
+      "doc_name": "20250811_united_states_securities_and_exchange_commission_v._barry",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250811_united_states_securities_and_exchange_commission_v._barry.txt",
+      "ground_truth": [
+        "Dean D. Pregerson"
+      ]
+    },
+    {
+      "doc_name": "20250812_engilis_v._monsanto_company",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250812_engilis_v._monsanto_company.txt",
+      "ground_truth": [
+        "Vince Chhabria"
+      ]
+    },
+    {
+      "doc_name": "20250812_novalpina_capital_partners_i_gp_s.a.r.l_v._read",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250812_novalpina_capital_partners_i_gp_s.a.r.l_v._read.txt",
+      "ground_truth": [
+        "Karin J. Immergut"
+      ]
+    },
+    {
+      "doc_name": "20250812_quintara_biosciences_inc._v._ruifeng_biztech_inc.",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250812_quintara_biosciences_inc._v._ruifeng_biztech_inc..txt",
+      "ground_truth": [
+        "William Alsup"
+      ]
+    },
+    {
+      "doc_name": "20250812_true_health_chiropractic_inc._v._mckesson_corporation",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250812_true_health_chiropractic_inc._v._mckesson_corporation.txt",
+      "ground_truth": []
+    },
+    {
+      "doc_name": "20250812_williams_v._j.b._hunt_transport_inc.",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250812_williams_v._j.b._hunt_transport_inc..txt",
+      "ground_truth": [
+        "Philip S. Gutierrez"
+      ]
+    },
+    {
+      "doc_name": "20250812_wyatt_b._v._kotek",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250812_wyatt_b._v._kotek.txt",
+      "ground_truth": [
+        "Ann L. Aiken"
+      ]
+    },
+    {
+      "doc_name": "20250813_susan_pitt_v._metropolitan_tower_life_insurance_company",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250813_susan_pitt_v._metropolitan_tower_life_insurance_company.txt",
+      "ground_truth": [
+        "Robert Steven Huie"
+      ]
+    },
+    {
+      "doc_name": "20250813_ugochukwu_nwauzor_v._the_geo_group_inc.",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250813_ugochukwu_nwauzor_v._the_geo_group_inc..txt",
+      "ground_truth": []
+    },
+    {
+      "doc_name": "20250814_foothills_christian_ministries_v._johnson",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250814_foothills_christian_ministries_v._johnson.txt",
+      "ground_truth": [
+        "Cynthia A. Bashant"
+      ]
+    },
+    {
+      "doc_name": "20250814_renteria-hinojosa_v._sunsweet_growers_inc.",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250814_renteria-hinojosa_v._sunsweet_growers_inc..txt",
+      "ground_truth": [
+        "Daniel J. Calabretta"
+      ]
+    },
+    {
+      "doc_name": "20250815_gibson_v._cendyn_group_llc",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250815_gibson_v._cendyn_group_llc.txt",
+      "ground_truth": [
+        "Miranda M. Du"
+      ]
+    },
+    {
+      "doc_name": "20250815_grijalva_v._adp_screening_and_selection_services_incorporated",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250815_grijalva_v._adp_screening_and_selection_services_incorporated.txt",
+      "ground_truth": [
+        "John Charles Hinderaker"
+      ]
+    },
+    {
+      "doc_name": "20250815_in_re_subpoena_internet_subscribers_of_cox_communications_llc_and_coxcom",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250815_in_re_subpoena_internet_subscribers_of_cox_communications_llc_and_coxcom.txt",
+      "ground_truth": [
+        "J. Michael Seabright"
+      ]
+    },
+    {
+      "doc_name": "20250818_spatz_v._regents_of_the_university_of_california",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250818_spatz_v._regents_of_the_university_of_california.txt",
+      "ground_truth": [
+        "Laurel D. Beeler, Magistrate Judge"
+      ]
+    },
+    {
+      "doc_name": "20250818_united_states_v._plancarte",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250818_united_states_v._plancarte.txt",
+      "ground_truth": [
+        "Larry A. Burns"
+      ]
+    },
+    {
+      "doc_name": "20250818_youth_71five_ministries_v._williams",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250818_youth_71five_ministries_v._williams.txt",
+      "ground_truth": [
+        "Mark D. Clarke, Magistrate Judge"
+      ]
+    },
+    {
+      "doc_name": "20250819_gonzalez_v._herrera",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250819_gonzalez_v._herrera.txt",
+      "ground_truth": [
+        "Dale S. Fischer"
+      ]
+    },
+    {
+      "doc_name": "20250819_the_geo_group_inc._v._inslee",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250819_the_geo_group_inc._v._inslee.txt",
+      "ground_truth": [
+        "Benjamin H. Settle"
+      ]
+    },
+    {
+      "doc_name": "20250819_united_states_v._gordon",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250819_united_states_v._gordon.txt",
+      "ground_truth": [
+        "Scott W. Skavdahl"
+      ]
+    },
+    {
+      "doc_name": "20250820_roberto_moncada_v._marco_a._rubio",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250820_roberto_moncada_v._marco_a._rubio.txt",
+      "ground_truth": [
+        "Andre Birotte, Jr."
+      ]
+    },
+    {
+      "doc_name": "20250820_sneed_v._talphera_inc.",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250820_sneed_v._talphera_inc..txt",
+      "ground_truth": [
+        "Beth Labson Freeman"
+      ]
+    },
+    {
+      "doc_name": "20250820_thomson_v._hodgson",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250820_thomson_v._hodgson.txt",
+      "ground_truth": [
+        "André Birotte, Jr."
+      ]
+    },
+    {
+      "doc_name": "20250820_united_states_of_america_v._state_of_alaska",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250820_united_states_of_america_v._state_of_alaska.txt",
+      "ground_truth": [
+        "Sharon L. Gleason, Chief District Judge"
+      ]
+    },
+    {
+      "doc_name": "20250820_united_states_v._robert_manning",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250820_united_states_v._robert_manning.txt",
+      "ground_truth": [
+        "William Alsup"
+      ]
+    },
+    {
+      "doc_name": "20250821_halverson_v._burgum_1",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250821_halverson_v._burgum_1.txt",
+      "ground_truth": [
+        "Susan P. Watters"
+      ]
+    },
+    {
+      "doc_name": "20250821_island_industries_inc._v._sigma_corporation",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250821_island_industries_inc._v._sigma_corporation.txt",
+      "ground_truth": [
+        "R. Gary Klausner"
+      ]
+    },
+    {
+      "doc_name": "20250821_kari_lake_v._bill_gates",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250821_kari_lake_v._bill_gates.txt",
+      "ground_truth": []
+    },
+    {
+      "doc_name": "20250821_thakur_v._trump",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250821_thakur_v._trump.txt",
+      "ground_truth": [
+        "Rita F. Lin"
+      ]
+    },
+    {
+      "doc_name": "20250822_flaxman_v._ferguson",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250822_flaxman_v._ferguson.txt",
+      "ground_truth": [
+        "Kymberly K. Evanson"
+      ]
+    },
+    {
+      "doc_name": "20250822_shoshone-bannock_tribes_of_the_fort_hall_reservati_v._usdoi",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250822_shoshone-bannock_tribes_of_the_fort_hall_reservati_v._usdoi.txt",
+      "ground_truth": [
+        "B. Lynn Winmill, Chief District Judge, Presiding"
+      ]
+    },
+    {
+      "doc_name": "20250825_garza_v._woods",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250825_garza_v._woods.txt",
+      "ground_truth": [
+        "John Joseph Tuchi"
+      ]
+    },
+    {
+      "doc_name": "20250825_lopez_v._bondi",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250825_lopez_v._bondi.txt",
+      "ground_truth": []
+    },
+    {
+      "doc_name": "20250825_united_states_v._sylvia_olivas",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250825_united_states_v._sylvia_olivas.txt",
+      "ground_truth": [
+        "D.S.F."
+      ]
+    },
+    {
+      "doc_name": "20250826_pharmaceutical_research_and_manufacturers_of_america_v._stolfi",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250826_pharmaceutical_research_and_manufacturers_of_america_v._stolfi.txt",
+      "ground_truth": [
+        "Michael W. Mosman"
+      ]
+    },
+    {
+      "doc_name": "20250826_popa_v._microsoft_corporation",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250826_popa_v._microsoft_corporation.txt",
+      "ground_truth": [
+        "James L. Robart"
+      ]
+    },
+    {
+      "doc_name": "20250827_ambrosetti_v._oregon_catholic_press",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250827_ambrosetti_v._oregon_catholic_press.txt",
+      "ground_truth": [
+        "Karin J. Immergut"
+      ]
+    },
+    {
+      "doc_name": "20250827_cascadia_wildlands_v._united_states_bureau_of_land_management",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250827_cascadia_wildlands_v._united_states_bureau_of_land_management.txt",
+      "ground_truth": [
+        "Michael J. McShane"
+      ]
+    },
+    {
+      "doc_name": "20250827_dudley_v._boise_state_university",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250827_dudley_v._boise_state_university.txt",
+      "ground_truth": [
+        "David C. Nye"
+      ]
+    },
+    {
+      "doc_name": "20250827_ibarra-perez_v._united_states",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250827_ibarra-perez_v._united_states.txt",
+      "ground_truth": [
+        "Dominic Lanza"
+      ]
+    },
+    {
+      "doc_name": "20250827_susan_palmer_v._jose_trevino",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250827_susan_palmer_v._jose_trevino.txt",
+      "ground_truth": [
+        "Robert S. Lasnik"
+      ]
+    },
+    {
+      "doc_name": "20250827_united_states_v._hunt",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250827_united_states_v._hunt.txt",
+      "ground_truth": [
+        "Karin J. Immergut"
+      ]
+    },
+    {
+      "doc_name": "20250828_childs_v._san_diego_family_housing_llc",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250828_childs_v._san_diego_family_housing_llc.txt",
+      "ground_truth": [
+        "Jeffrey T. Miller"
+      ]
+    },
+    {
+      "doc_name": "20250828_frankie_greer_v._county_of_san_diego",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250828_frankie_greer_v._county_of_san_diego.txt",
+      "ground_truth": []
+    },
+    {
+      "doc_name": "20250828_gladys_perez_v._william_reubart",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250828_gladys_perez_v._william_reubart.txt",
+      "ground_truth": [
+        "Andrew P. Gordon"
+      ]
+    },
+    {
+      "doc_name": "20250828_ruiz_v._the_bradford_exchange_ltd.",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250828_ruiz_v._the_bradford_exchange_ltd..txt",
+      "ground_truth": [
+        "William Q. Hayes"
+      ]
+    },
+    {
+      "doc_name": "20250828_schwartz_v._miller",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250828_schwartz_v._miller.txt",
+      "ground_truth": [
+        "James Alan Soto"
+      ]
+    },
+    {
+      "doc_name": "20250828_searle_v._allen",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250828_searle_v._allen.txt",
+      "ground_truth": [
+        "John Joseph Tuchi"
+      ]
+    },
+    {
+      "doc_name": "20250829_deana_farley_v._lincoln_benefit_life_company",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250829_deana_farley_v._lincoln_benefit_life_company.txt",
+      "ground_truth": [
+        "Kimberly J. Mueller"
+      ]
+    },
+    {
+      "doc_name": "20250829_national_tps_alliance_v._noem",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250829_national_tps_alliance_v._noem.txt",
+      "ground_truth": [
+        "Edward M. Chen"
+      ]
+    },
+    {
+      "doc_name": "20250829_sodha_v._golubowski",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250829_sodha_v._golubowski.txt",
+      "ground_truth": [
+        "Edward M. Chen"
+      ]
+    },
+    {
+      "doc_name": "20250902_mcneil_v._gittere",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250902_mcneil_v._gittere.txt",
+      "ground_truth": [
+        "Andrew P. Gordon"
+      ]
+    },
+    {
+      "doc_name": "20250902_petersen_v._snohomish_regional_fire_and_rescue",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250902_petersen_v._snohomish_regional_fire_and_rescue.txt",
+      "ground_truth": [
+        "Thomas S. Zilly"
+      ]
+    },
+    {
+      "doc_name": "20250902_the_satanic_temple_v._labrador",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250902_the_satanic_temple_v._labrador.txt",
+      "ground_truth": [
+        "David C. Nye"
+      ]
+    },
+    {
+      "doc_name": "20250903_confederated_tribes_of_the_colville_reservation_v._teck_cominco_metals_ltd",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250903_confederated_tribes_of_the_colville_reservation_v._teck_cominco_metals_ltd.txt",
+      "ground_truth": [
+        "Stanley Allen Bastian"
+      ]
+    },
+    {
+      "doc_name": "20250903_united_states_securities_and_exchange_commission_v._sripetch",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250903_united_states_securities_and_exchange_commission_v._sripetch.txt",
+      "ground_truth": [
+        "Marilyn L. Huff"
+      ]
+    },
+    {
+      "doc_name": "20250903_united_states_v._taylor",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250903_united_states_v._taylor.txt",
+      "ground_truth": [
+        "Percy Anderson"
+      ]
+    },
+    {
+      "doc_name": "20250904_asuncion_v._hegseth",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250904_asuncion_v._hegseth.txt",
+      "ground_truth": [
+        "Leslie E. Kobayashi"
+      ]
+    },
+    {
+      "doc_name": "20250904_garcia_v._county_of_alameda",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250904_garcia_v._county_of_alameda.txt",
+      "ground_truth": [
+        "Richard Seeborg, Chief District Judge"
+      ]
+    },
+    {
+      "doc_name": "20250904_sterling_v._feek",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250904_sterling_v._feek.txt",
+      "ground_truth": [
+        "David G. Estudillo"
+      ]
+    },
+    {
+      "doc_name": "20250905_costar_group_inc._v._commercial_real_estate_exchange_inc.",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250905_costar_group_inc._v._commercial_real_estate_exchange_inc..txt",
+      "ground_truth": [
+        "Consuelo B. Marshall"
+      ]
+    },
+    {
+      "doc_name": "20250905_pacific_coast_fedn_of_fishermens_assns_inc._v._adam_nickels",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250905_pacific_coast_fedn_of_fishermens_assns_inc._v._adam_nickels.txt",
+      "ground_truth": [
+        "Dale A. Drozd"
+      ]
+    },
+    {
+      "doc_name": "20250905_reed_day_v._ben_henry",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250905_reed_day_v._ben_henry.txt",
+      "ground_truth": [
+        "G. Murray Snow"
+      ]
+    },
+    {
+      "doc_name": "20250905_united_states_v._rice",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250905_united_states_v._rice.txt",
+      "ground_truth": [
+        "Michael H. Simon"
+      ]
+    },
+    {
+      "doc_name": "20250908_biani_v._showtime_networks_inc.",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250908_biani_v._showtime_networks_inc..txt",
+      "ground_truth": [
+        "Dolly M. Gee"
+      ]
+    },
+    {
+      "doc_name": "20250908_jones_v._city_of_north_las_vegas",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250908_jones_v._city_of_north_las_vegas.txt",
+      "ground_truth": [
+        "Cristina D. Silva"
+      ]
+    },
+    {
+      "doc_name": "20250908_people_of_the_state_of_california_v._express_scripts_inc.",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250908_people_of_the_state_of_california_v._express_scripts_inc..txt",
+      "ground_truth": [
+        "Sherilyn Peace Garnett"
+      ]
+    },
+    {
+      "doc_name": "20250908_trader_joes_company_v._trader_joes_united",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250908_trader_joes_company_v._trader_joes_united.txt",
+      "ground_truth": [
+        "Hernán D. Vera"
+      ]
+    },
+    {
+      "doc_name": "20250909_netchoice_llc_v._bonta",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250909_netchoice_llc_v._bonta.txt",
+      "ground_truth": [
+        "Edward J. Davila"
+      ]
+    },
+    {
+      "doc_name": "20250909_united_states_v._stennerson",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250909_united_states_v._stennerson.txt",
+      "ground_truth": [
+        "Susan P. Watters"
+      ]
+    },
+    {
+      "doc_name": "20250909_united_states_v._younes_nasri",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250909_united_states_v._younes_nasri.txt",
+      "ground_truth": [
+        "WQH",
+        "BLM"
+      ]
+    },
+    {
+      "doc_name": "20250910_galvez_v._bisignano",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250910_galvez_v._bisignano.txt",
+      "ground_truth": [
+        "Edward F. Shea"
+      ]
+    },
+    {
+      "doc_name": "20250910_sam_jones_company_llc_v._biotronik_inc.",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250910_sam_jones_company_llc_v._biotronik_inc..txt",
+      "ground_truth": [
+        "Philip S. Gutierrez"
+      ]
+    },
+    {
+      "doc_name": "20250910_united_states_v._green",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250910_united_states_v._green.txt",
+      "ground_truth": [
+        "Cathy Ann Bencivengo"
+      ]
+    },
+    {
+      "doc_name": "20250910_united_states_v._keast",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250910_united_states_v._keast.txt",
+      "ground_truth": [
+        "Marco A. Hernández"
+      ]
+    },
+    {
+      "doc_name": "20250911_rearden_llc_v._walt_disney_pictures",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250911_rearden_llc_v._walt_disney_pictures.txt",
+      "ground_truth": [
+        "Jon S. Tigar"
+      ]
+    },
+    {
+      "doc_name": "20250911_united_states_v._holcomb",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250911_united_states_v._holcomb.txt",
+      "ground_truth": [
+        "The Honorable Jed S. Rakoff"
+      ]
+    },
+    {
+      "doc_name": "20250911_woolard_v._thurmond",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250911_woolard_v._thurmond.txt",
+      "ground_truth": [
+        "John A. Mendez"
+      ]
+    },
+    {
+      "doc_name": "20250912_ambrosio_v._progressive_preferred_insurance_company",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250912_ambrosio_v._progressive_preferred_insurance_company.txt",
+      "ground_truth": [
+        "Susan M. Brnovich"
+      ]
+    },
+    {
+      "doc_name": "20250912_epic_games_inc._v._google_llc",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250912_epic_games_inc._v._google_llc.txt",
+      "ground_truth": []
+    },
+    {
+      "doc_name": "20250912_in_re_svenhards_swedish_bakery_v._bakery_and_confectionery_union_and",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250912_in_re_svenhards_swedish_bakery_v._bakery_and_confectionery_union_and.txt",
+      "ground_truth": []
+    },
+    {
+      "doc_name": "20250912_pacito_v._trump",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250912_pacito_v._trump.txt",
+      "ground_truth": [
+        "JNW"
+      ]
+    },
+    {
+      "doc_name": "20250915_fantasia_v._diodato",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250915_fantasia_v._diodato.txt",
+      "ground_truth": [
+        "Dominic Lanza"
+      ]
+    },
+    {
+      "doc_name": "20250915_united_states_v._patrick",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250915_united_states_v._patrick.txt",
+      "ground_truth": [
+        "B. Lynn Winmill"
+      ]
+    },
+    {
+      "doc_name": "20250916_american_encore_v._fontes",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250916_american_encore_v._fontes.txt",
+      "ground_truth": [
+        "Michael T. Liburdi"
+      ]
+    },
+    {
+      "doc_name": "20250917_national_tps_alliance_v._noem",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250917_national_tps_alliance_v._noem.txt",
+      "ground_truth": []
+    },
+    {
+      "doc_name": "20250917_rajabian_v._mercedes-benz_usa_llc",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250917_rajabian_v._mercedes-benz_usa_llc.txt",
+      "ground_truth": [
+        "Michael T. Liburdi"
+      ]
+    },
+    {
+      "doc_name": "20250917_stockton_v._brown",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250917_stockton_v._brown.txt",
+      "ground_truth": [
+        "Thomas O. Rice"
+      ]
+    },
+    {
+      "doc_name": "20250918_united_states_v._leopoldo_rivera-valdes",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250918_united_states_v._leopoldo_rivera-valdes.txt",
+      "ground_truth": [
+        "Karin J. Immergut"
+      ]
+    },
+    {
+      "doc_name": "20250919_american_federation_of_government_employees_afl-cio_v._trump",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250919_american_federation_of_government_employees_afl-cio_v._trump.txt",
+      "ground_truth": [
+        "Susan Illston"
+      ]
+    },
+    {
+      "doc_name": "20250919_trump_v._united_states_district_court_for_the_northern_district_of",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250919_trump_v._united_states_district_court_for_the_northern_district_of.txt",
+      "ground_truth": [
+        "Susan Illston"
+      ]
+    },
+    {
+      "doc_name": "20250922_promise_arizona_v._petersen",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250922_promise_arizona_v._petersen.txt",
+      "ground_truth": []
+    },
+    {
+      "doc_name": "20250923_detwiler_v._mid-columbia_medical_center",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250923_detwiler_v._mid-columbia_medical_center.txt",
+      "ground_truth": [
+        "Karin J. Immergut"
+      ]
+    },
+    {
+      "doc_name": "20250923_st._clair_v._county_of_okanogan",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250923_st._clair_v._county_of_okanogan.txt",
+      "ground_truth": [
+        "Thomas O. Rice"
+      ]
+    },
+    {
+      "doc_name": "20250923_thomson_v._hodgson",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250923_thomson_v._hodgson.txt",
+      "ground_truth": [
+        "Andre Birotte Jr.",
+        "Michael R. Wilner"
+      ]
+    },
+    {
+      "doc_name": "20250923_united_states_v._metcalf",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250923_united_states_v._metcalf.txt",
+      "ground_truth": [
+        "Susan P. Watters"
+      ]
+    },
+    {
+      "doc_name": "20250924_rosenwald_v._kimberly-clark_corporation",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250924_rosenwald_v._kimberly-clark_corporation.txt",
+      "ground_truth": [
+        "Laurel D. Beeler, Magistrate Judge"
+      ]
+    },
+    {
+      "doc_name": "20250926_united_states_v._wells",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250926_united_states_v._wells.txt",
+      "ground_truth": [
+        "Sharon L. Gleason, Chief District Judge"
+      ]
+    },
+    {
+      "doc_name": "20250929_estate_of_jill_ann_esche_v._bunuel-jordana",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250929_estate_of_jill_ann_esche_v._bunuel-jordana.txt",
+      "ground_truth": [
+        "Miranda M. Du"
+      ]
+    },
+    {
+      "doc_name": "20250930_alvarado_v._wal-mart_associates_inc.",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250930_alvarado_v._wal-mart_associates_inc..txt",
+      "ground_truth": [
+        "André Birotte, Jr."
+      ]
+    },
+    {
+      "doc_name": "20250930_uc_encarnacion_v._bondi",
+      "doc_path": "/mnt/data/LSF/data/court/text/20250930_uc_encarnacion_v._bondi.txt",
+      "ground_truth": []
+    },
+    {
+      "doc_name": "20251001_goldtooth_v._united_states_office_of_navajo_and_hopi_indian_relocation",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251001_goldtooth_v._united_states_office_of_navajo_and_hopi_indian_relocation.txt",
+      "ground_truth": []
+    },
+    {
+      "doc_name": "20251002_william_kivett_v._flagstar_bank_fsb",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251002_william_kivett_v._flagstar_bank_fsb.txt",
+      "ground_truth": [
+        "William Alsup"
+      ]
+    },
+    {
+      "doc_name": "20251003_caldrone_v._circle_k_stores_inc.",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251003_caldrone_v._circle_k_stores_inc..txt",
+      "ground_truth": [
+        "George H. Wu"
+      ]
+    },
+    {
+      "doc_name": "20251003_paris_v._brown",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251003_paris_v._brown.txt",
+      "ground_truth": [
+        "Ann Aiken"
+      ]
+    },
+    {
+      "doc_name": "20251006_curtis_v._inslee",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251006_curtis_v._inslee.txt",
+      "ground_truth": [
+        "Robert J. Bryan"
+      ]
+    },
+    {
+      "doc_name": "20251008_state_of_oregon_v._trump",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251008_state_of_oregon_v._trump.txt",
+      "ground_truth": []
+    },
+    {
+      "doc_name": "20251009_gopher_media_llc_v._melone",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251009_gopher_media_llc_v._melone.txt",
+      "ground_truth": [
+        "Ruth Bermudez Montenegro"
+      ]
+    },
+    {
+      "doc_name": "20251010_community_legal_services_in_east_palo_alto_v._united_states_department_of",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251010_community_legal_services_in_east_palo_alto_v._united_states_department_of.txt",
+      "ground_truth": [
+        "AMO"
+      ]
+    },
+    {
+      "doc_name": "20251010_united_states_v._tainewasher",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251010_united_states_v._tainewasher.txt",
+      "ground_truth": [
+        "Stanley Allen Bastian"
+      ]
+    },
+    {
+      "doc_name": "20251014_sandra_munoz_v._dos",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251014_sandra_munoz_v._dos.txt",
+      "ground_truth": []
+    },
+    {
+      "doc_name": "20251014_warfield_v._nance",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251014_warfield_v._nance.txt",
+      "ground_truth": [
+        "Dominic Lanza"
+      ]
+    },
+    {
+      "doc_name": "20251016_ani_v._bondi",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251016_ani_v._bondi.txt",
+      "ground_truth": [
+        "Brian M. Morris, Chief District Judge"
+      ]
+    },
+    {
+      "doc_name": "20251020_king_v._villegas",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251020_king_v._villegas.txt",
+      "ground_truth": [
+        "Jennifer L. Thurston",
+        "Judge Ishii"
+      ]
+    },
+    {
+      "doc_name": "20251020_state_of_oregon_v._trump",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251020_state_of_oregon_v._trump.txt",
+      "ground_truth": [
+        "IM"
+      ]
+    },
+    {
+      "doc_name": "20251020_united_states_v._davis",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251020_united_states_v._davis.txt",
+      "ground_truth": [
+        "Dana L. Christensen"
+      ]
+    },
+    {
+      "doc_name": "20251021_national_labor_relations_board_v._macys_inc.",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251021_national_labor_relations_board_v._macys_inc..txt",
+      "ground_truth": []
+    },
+    {
+      "doc_name": "20251021_united_states_v._kroytor",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251021_united_states_v._kroytor.txt",
+      "ground_truth": [
+        "John A. Mendez"
+      ]
+    },
+    {
+      "doc_name": "20251022_newsom_v._trump",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251022_newsom_v._trump.txt",
+      "ground_truth": [
+        "Charles R. Breyer"
+      ]
+    },
+    {
+      "doc_name": "20251022_walker_v._state_of_arizona",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251022_walker_v._state_of_arizona.txt",
+      "ground_truth": [
+        "Dominic Lanza"
+      ]
+    },
+    {
+      "doc_name": "20251023_supertech_inc._v._my_choice_software_llc",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251023_supertech_inc._v._my_choice_software_llc.txt",
+      "ground_truth": [
+        "Ramona V. Manglona"
+      ]
+    },
+    {
+      "doc_name": "20251024_gilbert_v._7-eleven_inc.",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251024_gilbert_v._7-eleven_inc..txt",
+      "ground_truth": [
+        "William B. Shubb"
+      ]
+    },
+    {
+      "doc_name": "20251027_united_states_v._vandyke",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251027_united_states_v._vandyke.txt",
+      "ground_truth": [
+        "B. Lynn Winmill"
+      ]
+    },
+    {
+      "doc_name": "20251028_national_labor_relations_board_v._north_mountain_foothills_apartments_llc",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251028_national_labor_relations_board_v._north_mountain_foothills_apartments_llc.txt",
+      "ground_truth": [
+        "Jed S. Rakoff"
+      ]
+    },
+    {
+      "doc_name": "20251028_state_of_oregon_v._trump",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251028_state_of_oregon_v._trump.txt",
+      "ground_truth": [
+        "IM"
+      ]
+    },
+    {
+      "doc_name": "20251028_united_states_v._1106775_in_us_currency",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251028_united_states_v._1106775_in_us_currency.txt",
+      "ground_truth": []
+    },
+    {
+      "doc_name": "20251030_doe_v._deutsche_lufthansa_aktiengesellschaft",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251030_doe_v._deutsche_lufthansa_aktiengesellschaft.txt",
+      "ground_truth": [
+        "Susan Illston"
+      ]
+    },
+    {
+      "doc_name": "20251030_state_of_oregon_v._trump",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251030_state_of_oregon_v._trump.txt",
+      "ground_truth": []
+    },
+    {
+      "doc_name": "20251031_natural_grocers_v._brooke_rollins",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251031_natural_grocers_v._brooke_rollins.txt",
+      "ground_truth": [
+        "James Donato"
+      ]
+    },
+    {
+      "doc_name": "20251031_oregon_right_to_life_v._stolfi_1",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251031_oregon_right_to_life_v._stolfi_1.txt",
+      "ground_truth": [
+        "Ann L. Aiken"
+      ]
+    },
+    {
+      "doc_name": "20251031_united_states_v._pheasant",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251031_united_states_v._pheasant.txt",
+      "ground_truth": []
+    },
+    {
+      "doc_name": "20251104_pena_v._city_of_los_angeles",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251104_pena_v._city_of_los_angeles.txt",
+      "ground_truth": [
+        "John F. Walter"
+      ]
+    },
+    {
+      "doc_name": "20251104_valame_v._trump",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251104_valame_v._trump.txt",
+      "ground_truth": [
+        "Nathanael M. Cousins"
+      ]
+    },
+    {
+      "doc_name": "20251105_coastal_environmental_rights_foundation_v._naples_restaurant_group_llc",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251105_coastal_environmental_rights_foundation_v._naples_restaurant_group_llc.txt",
+      "ground_truth": [
+        "Mark C. Scarsi"
+      ]
+    },
+    {
+      "doc_name": "20251107_hawatmeh_v._city_of_henderson",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251107_hawatmeh_v._city_of_henderson.txt",
+      "ground_truth": [
+        "Andrew P. Gordon"
+      ]
+    },
+    {
+      "doc_name": "20251107_phillips_v._goldman",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251107_phillips_v._goldman.txt",
+      "ground_truth": [
+        "MWF"
+      ]
+    },
+    {
+      "doc_name": "20251107_state_of_california_v._del_rosa",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251107_state_of_california_v._del_rosa.txt",
+      "ground_truth": [
+        "Kimberly J. Mueller"
+      ]
+    },
+    {
+      "doc_name": "20251110_hunt_v._pricewaterhousecoopers_llp_pwc",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251110_hunt_v._pricewaterhousecoopers_llp_pwc.txt",
+      "ground_truth": [
+        "Haywood S. Gilliam, Jr."
+      ]
+    },
+    {
+      "doc_name": "20251110_rene_lemus-escobar_v._pamela_bondi",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251110_rene_lemus-escobar_v._pamela_bondi.txt",
+      "ground_truth": []
+    },
+    {
+      "doc_name": "20251110_rojas-espinoza_v._bondi",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251110_rojas-espinoza_v._bondi.txt",
+      "ground_truth": []
+    },
+    {
+      "doc_name": "20251112_united_states_v._sullivan",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251112_united_states_v._sullivan.txt",
+      "ground_truth": [
+        "William Horsley Orrick"
+      ]
+    },
+    {
+      "doc_name": "20251113_united_states_v._steinman",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251113_united_states_v._steinman.txt",
+      "ground_truth": [
+        "Anne R. Traum"
+      ]
+    },
+    {
+      "doc_name": "20251114_faulk_v._jeld-wen_inc.",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251114_faulk_v._jeld-wen_inc..txt",
+      "ground_truth": [
+        "Sharon L. Gleason"
+      ]
+    },
+    {
+      "doc_name": "20251117_pritchard_v._blue_cross_blue_shield_of_illinois",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251117_pritchard_v._blue_cross_blue_shield_of_illinois.txt",
+      "ground_truth": [
+        "Robert J. Bryan"
+      ]
+    },
+    {
+      "doc_name": "20251117_united_states_v._allen",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251117_united_states_v._allen.txt",
+      "ground_truth": [
+        "Rosanna Malouf Peterson"
+      ]
+    },
+    {
+      "doc_name": "20251117_united_states_v._hutton",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251117_united_states_v._hutton.txt",
+      "ground_truth": [
+        "Mary K. Dimke"
+      ]
+    },
+    {
+      "doc_name": "20251118_kazarian_v._bondi",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251118_kazarian_v._bondi.txt",
+      "ground_truth": []
+    },
+    {
+      "doc_name": "20251119_state_of_oregon_v._trump",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251119_state_of_oregon_v._trump.txt",
+      "ground_truth": []
+    },
+    {
+      "doc_name": "20251120_rosa_a._camacho_v._nmi_settlement_fund",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251120_rosa_a._camacho_v._nmi_settlement_fund.txt",
+      "ground_truth": [
+        "Frances Tydingco-Gatewood, Chief District Judge"
+      ]
+    },
+    {
+      "doc_name": "20251124_federal_trade_commission_v._noland",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251124_federal_trade_commission_v._noland.txt",
+      "ground_truth": [
+        "Dominic Lanza"
+      ]
+    },
+    {
+      "doc_name": "20251125_gessele_v._jack_in_the_box_inc.",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251125_gessele_v._jack_in_the_box_inc..txt",
+      "ground_truth": [
+        "Marco A. Hernandez"
+      ]
+    },
+    {
+      "doc_name": "20251125_rojas-espinoza_v._bondi",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251125_rojas-espinoza_v._bondi.txt",
+      "ground_truth": []
+    },
+    {
+      "doc_name": "20251126_youth_71five_ministries_v._williams",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251126_youth_71five_ministries_v._williams.txt",
+      "ground_truth": [
+        "Mark D. Clarke, Magistrate Judge"
+      ]
+    },
+    {
+      "doc_name": "20251128_united_states_v._mark_dencklau",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251128_united_states_v._mark_dencklau.txt",
+      "ground_truth": [
+        "Michael W. Mosman"
+      ]
+    },
+    {
+      "doc_name": "20251201_rhode_v._bonta",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251201_rhode_v._bonta.txt",
+      "ground_truth": [
+        "BEN",
+        "JLB"
+      ]
+    },
+    {
+      "doc_name": "20251201_singh_v._bondi",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251201_singh_v._bondi.txt",
+      "ground_truth": []
+    },
+    {
+      "doc_name": "20251202_antonio_doyle_v._terry_royal",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251202_antonio_doyle_v._terry_royal.txt",
+      "ground_truth": [
+        "Robert Clive Jones"
+      ]
+    },
+    {
+      "doc_name": "20251203_li_v._arcsoft_inc.",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251203_li_v._arcsoft_inc..txt",
+      "ground_truth": [
+        "Jeffrey S. White"
+      ]
+    },
+    {
+      "doc_name": "20251203_san_luis_obispo_coastkeeper_v._county_of_san_luis_obispo",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251203_san_luis_obispo_coastkeeper_v._county_of_san_luis_obispo.txt",
+      "ground_truth": [
+        "Sherilyn Peace Garnett"
+      ]
+    },
+    {
+      "doc_name": "20251204_state_of_washington_v._united_states_department_of_education",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251204_state_of_washington_v._united_states_department_of_education.txt",
+      "ground_truth": [
+        "Kymberly K. Evanson"
+      ]
+    },
+    {
+      "doc_name": "20251205_international_partners_for_ethical_care_inc_v._ferguson",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251205_international_partners_for_ethical_care_inc_v._ferguson.txt",
+      "ground_truth": [
+        "DGE"
+      ]
+    },
+    {
+      "doc_name": "20251208_state_of_oregon_v._trump",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251208_state_of_oregon_v._trump.txt",
+      "ground_truth": [
+        "IM"
+      ]
+    },
+    {
+      "doc_name": "20251210_united_states_v._kittson",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251210_united_states_v._kittson.txt",
+      "ground_truth": [
+        "Karin J. Immergut"
+      ]
+    },
+    {
+      "doc_name": "20251211_epic_games_inc._v._apple_inc.",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251211_epic_games_inc._v._apple_inc..txt",
+      "ground_truth": [
+        "Yvonne Gonzalez Rogers"
+      ]
+    },
+    {
+      "doc_name": "20251211_human_rights_defense_center_inc._v._uttecht",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251211_human_rights_defense_center_inc._v._uttecht.txt",
+      "ground_truth": [
+        "Thomas O. Rice"
+      ]
+    },
+    {
+      "doc_name": "20251216_international_longshore_and_warehouse_union_v._national_labor_relations",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251216_international_longshore_and_warehouse_union_v._national_labor_relations.txt",
+      "ground_truth": []
+    },
+    {
+      "doc_name": "20251217_united_states_v._avalos",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251217_united_states_v._avalos.txt",
+      "ground_truth": [
+        "Dana M. Sabraw"
+      ]
+    },
+    {
+      "doc_name": "20251219_reges_v._cauce",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251219_reges_v._cauce.txt",
+      "ground_truth": [
+        "John H. Chun"
+      ]
+    },
+    {
+      "doc_name": "20251219_united_states_v._patrick",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251219_united_states_v._patrick.txt",
+      "ground_truth": [
+        "B. Lynn Winmill"
+      ]
+    },
+    {
+      "doc_name": "20251219_weldeyohannes_v._state_of_washington",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251219_weldeyohannes_v._state_of_washington.txt",
+      "ground_truth": [
+        "John C. Coughenour"
+      ]
+    },
+    {
+      "doc_name": "20251222_ruiz_v._bondi",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251222_ruiz_v._bondi.txt",
+      "ground_truth": []
+    },
+    {
+      "doc_name": "20251222_united_states_v._holmes",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251222_united_states_v._holmes.txt",
+      "ground_truth": [
+        "Edward J. Davila"
+      ]
+    },
+    {
+      "doc_name": "20251222_united_states_v._rodriguez",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251222_united_states_v._rodriguez.txt",
+      "ground_truth": [
+        "Sherilyn Peace Garnett"
+      ]
+    },
+    {
+      "doc_name": "20251222_vip_mortgage_incorporated_v._gates",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251222_vip_mortgage_incorporated_v._gates.txt",
+      "ground_truth": [
+        "Dominic Lanza"
+      ]
+    },
+    {
+      "doc_name": "20251223_industrial_park_center_llc_v._great_northern_insurance_company",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251223_industrial_park_center_llc_v._great_northern_insurance_company.txt",
+      "ground_truth": []
+    },
+    {
+      "doc_name": "20251223_powers_v._mcdonough",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251223_powers_v._mcdonough.txt",
+      "ground_truth": [
+        "David O. Carter"
+      ]
+    },
+    {
+      "doc_name": "20251223_thakur_v._trump",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251223_thakur_v._trump.txt",
+      "ground_truth": [
+        "Rita F. Lin"
+      ]
+    },
+    {
+      "doc_name": "20251229_amazon.com_services_llc_v._national_labor_relations_board",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251229_amazon.com_services_llc_v._national_labor_relations_board.txt",
+      "ground_truth": [
+        "Sherilyn Peace Garnett"
+      ]
+    },
+    {
+      "doc_name": "20251229_employees_at_the_clark_county_government_center_and_or_on_its_property_v.",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251229_employees_at_the_clark_county_government_center_and_or_on_its_property_v..txt",
+      "ground_truth": [
+        "Andrew P. Gordon"
+      ]
+    },
+    {
+      "doc_name": "20251229_employees_at_the_clark_county_government_center_and_or_on_its_property_v._1",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251229_employees_at_the_clark_county_government_center_and_or_on_its_property_v._1.txt",
+      "ground_truth": [
+        "Andrew P. Gordon"
+      ]
+    },
+    {
+      "doc_name": "20251229_insinkerator_llc_v._joneca_company_llc",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251229_insinkerator_llc_v._joneca_company_llc.txt",
+      "ground_truth": [
+        "James V. Selna"
+      ]
+    },
+    {
+      "doc_name": "20251229_khatibi_v._hawkins",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251229_khatibi_v._hawkins.txt",
+      "ground_truth": [
+        "MRA"
+      ]
+    },
+    {
+      "doc_name": "20251229_milliken_v._bank_of_america_n.a.",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251229_milliken_v._bank_of_america_n.a..txt",
+      "ground_truth": [
+        "Araceli Martinez-Olguin"
+      ]
+    },
+    {
+      "doc_name": "20251229_state_of_oregon_v._trump",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251229_state_of_oregon_v._trump.txt",
+      "ground_truth": []
+    },
+    {
+      "doc_name": "20251229_thompson_v._central_valley_school_district_no_365",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251229_thompson_v._central_valley_school_district_no_365.txt",
+      "ground_truth": [
+        "Stanley Allen Bastian"
+      ]
+    },
+    {
+      "doc_name": "20251229_wilkins_v._united_states",
+      "doc_path": "/mnt/data/LSF/data/court/text/20251229_wilkins_v._united_states.txt",
+      "ground_truth": [
+        "Dana L. Christensen"
+      ]
+    },
+    {
+      "doc_name": "20260102_daisey_trust_v._federal_housing_finance_agency",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260102_daisey_trust_v._federal_housing_finance_agency.txt",
+      "ground_truth": [
+        "Andrew P. Gordon, Chief District Judge"
+      ]
+    },
+    {
+      "doc_name": "20260102_k.c._v._las_vegas_metropolitan_police_department",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260102_k.c._v._las_vegas_metropolitan_police_department.txt",
+      "ground_truth": [
+        "Andrew P. Gordon, Chief District Judge"
+      ]
+    },
+    {
+      "doc_name": "20260102_peridot_tree_inc._v._city_of_sacramento",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260102_peridot_tree_inc._v._city_of_sacramento.txt",
+      "ground_truth": [
+        "Tiffany M. Cartwright",
+        "Kimberly J. Mueller"
+      ]
+    },
+    {
+      "doc_name": "20260102_sedlik_v._von_drachenberg",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260102_sedlik_v._von_drachenberg.txt",
+      "ground_truth": [
+        "Dale S. Fischer"
+      ]
+    },
+    {
+      "doc_name": "20260102_united_states_v._vazquez-ramirez",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260102_united_states_v._vazquez-ramirez.txt",
+      "ground_truth": [
+        "Rosanna Malouf Peterson"
+      ]
+    },
+    {
+      "doc_name": "20260102_yonay_v._paramount_pictures_corporation",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260102_yonay_v._paramount_pictures_corporation.txt",
+      "ground_truth": [
+        "Percy Anderson"
+      ]
+    },
+    {
+      "doc_name": "20260105_american_federation_of_government_employees_afl-cio_v._trump",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260105_american_federation_of_government_employees_afl-cio_v._trump.txt",
+      "ground_truth": [
+        "Susan Illston"
+      ]
+    },
+    {
+      "doc_name": "20260105_walker_specialty_constr._inc._v._bd._of_tr._of_the_constr._indus._and",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260105_walker_specialty_constr._inc._v._bd._of_tr._of_the_constr._indus._and.txt",
+      "ground_truth": [
+        "Andrew P. Gordon"
+      ]
+    },
+    {
+      "doc_name": "20260106_nevada_resort_association-international_alliance_of_theatrical_stage",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260106_nevada_resort_association-international_alliance_of_theatrical_stage.txt",
+      "ground_truth": [
+        "Jennifer A. Dorsey"
+      ]
+    },
+    {
+      "doc_name": "20260106_union_gospel_mission_of_yakima_washington_v._brown",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260106_union_gospel_mission_of_yakima_washington_v._brown.txt",
+      "ground_truth": [
+        "Mary K. Dimke"
+      ]
+    },
+    {
+      "doc_name": "20260107_united_states_v._ruiz",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260107_united_states_v._ruiz.txt",
+      "ground_truth": [
+        "Gonzalo P. Curiel"
+      ]
+    },
+    {
+      "doc_name": "20260108_alivecor_inc._v._apple_inc.",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260108_alivecor_inc._v._apple_inc..txt",
+      "ground_truth": [
+        "Jeffrey S. White"
+      ]
+    },
+    {
+      "doc_name": "20260108_gonzalez_v._city_of_phoenix",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260108_gonzalez_v._city_of_phoenix.txt",
+      "ground_truth": [
+        "Michael T. Liburdi"
+      ]
+    },
+    {
+      "doc_name": "20260108_seagate_technology_llc_v._nhk_spring_co._ltd.",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260108_seagate_technology_llc_v._nhk_spring_co._ltd..txt",
+      "ground_truth": [
+        "Maxine M. Chesney"
+      ]
+    },
+    {
+      "doc_name": "20260108_state_of_oregon_v._trump",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260108_state_of_oregon_v._trump.txt",
+      "ground_truth": []
+    },
+    {
+      "doc_name": "20260108_united_states_v._soto",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260108_united_states_v._soto.txt",
+      "ground_truth": []
+    },
+    {
+      "doc_name": "20260109_healy_v._milliman_inc._1",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260109_healy_v._milliman_inc._1.txt",
+      "ground_truth": [
+        "John C. Coughenour"
+      ]
+    },
+    {
+      "doc_name": "20260113_howard_v._republican_national_committee",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260113_howard_v._republican_national_committee.txt",
+      "ground_truth": [
+        "Steven P. Logan"
+      ]
+    },
+    {
+      "doc_name": "20260113_malheur_forest_fairness_coalition_v._iron_triangle_llc",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260113_malheur_forest_fairness_coalition_v._iron_triangle_llc.txt",
+      "ground_truth": [
+        "Marco A. Hernández"
+      ]
+    },
+    {
+      "doc_name": "20260114_friends_of_animals_v._burgum",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260114_friends_of_animals_v._burgum.txt",
+      "ground_truth": [
+        "Anne R. Traum"
+      ]
+    },
+    {
+      "doc_name": "20260116_diamond_sands_apartments_llc_v._clark_county_nevada",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260116_diamond_sands_apartments_llc_v._clark_county_nevada.txt",
+      "ground_truth": [
+        "Anne R. Traum"
+      ]
+    },
+    {
+      "doc_name": "20260120_akhlaghpour_v._orantes",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260120_akhlaghpour_v._orantes.txt",
+      "ground_truth": []
+    },
+    {
+      "doc_name": "20260120_guevara-serrano_v._bondi",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260120_guevara-serrano_v._bondi.txt",
+      "ground_truth": []
+    },
+    {
+      "doc_name": "20260123_rodney_beeler_v._ron_broomfield",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260123_rodney_beeler_v._ron_broomfield.txt",
+      "ground_truth": [
+        "George H. Wu"
+      ]
+    },
+    {
+      "doc_name": "20260128_avery_v._teksystems_inc.",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260128_avery_v._teksystems_inc..txt",
+      "ground_truth": [
+        "Jacqueline Scott Corley"
+      ]
+    },
+    {
+      "doc_name": "20260128_national_tps_alliance_v._noem",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260128_national_tps_alliance_v._noem.txt",
+      "ground_truth": [
+        "Edward M. Chen"
+      ]
+    },
+    {
+      "doc_name": "20260129_cardenas-ornelas_v._johnson",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260129_cardenas-ornelas_v._johnson.txt",
+      "ground_truth": [
+        "Anne R. Traum"
+      ]
+    },
+    {
+      "doc_name": "20260129_gibson_v._city_of_portland",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260129_gibson_v._city_of_portland.txt",
+      "ground_truth": [
+        "Marco A. Hernandez",
+        "Karin J. Immergut"
+      ]
+    },
+    {
+      "doc_name": "20260129_northwest_association_of_independent_schools_v._labrador",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260129_northwest_association_of_independent_schools_v._labrador.txt",
+      "ground_truth": [
+        "Amanda K. Brailsford"
+      ]
+    },
+    {
+      "doc_name": "20260130_fiedler_v._united_states",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260130_fiedler_v._united_states.txt",
+      "ground_truth": [
+        "Percy Anderson"
+      ]
+    },
+    {
+      "doc_name": "20260130_kalbers_v._volkswagen_ag",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260130_kalbers_v._volkswagen_ag.txt",
+      "ground_truth": [
+        "Fernando M. Olguin"
+      ]
+    },
+    {
+      "doc_name": "20260203_guam_society_of_obstetricians_and_gynecologists_v._douglas_moylan",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260203_guam_society_of_obstetricians_and_gynecologists_v._douglas_moylan.txt",
+      "ground_truth": []
+    },
+    {
+      "doc_name": "20260204_construction_laborers_pension_trust_of_greater_st._louis_v._funko_inc_1",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260204_construction_laborers_pension_trust_of_greater_st._louis_v._funko_inc_1.txt",
+      "ground_truth": [
+        "James L. Robart"
+      ]
+    },
+    {
+      "doc_name": "20260204_harris_v._muhammad_1",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260204_harris_v._muhammad_1.txt",
+      "ground_truth": [
+        "Haywood S. Gilliam, Jr."
+      ]
+    },
+    {
+      "doc_name": "20260205_montejo-gonzalez_v._bondi",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260205_montejo-gonzalez_v._bondi.txt",
+      "ground_truth": []
+    },
+    {
+      "doc_name": "20260205_united_states_v._engstrom",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260205_united_states_v._engstrom.txt",
+      "ground_truth": [
+        "Anne R. Traum"
+      ]
+    },
+    {
+      "doc_name": "20260211_cox_v._gritman_medical_center",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260211_cox_v._gritman_medical_center.txt",
+      "ground_truth": [
+        "Mary K. Dimke"
+      ]
+    },
+    {
+      "doc_name": "20260211_the_geo_group_inc._v._inslee",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260211_the_geo_group_inc._v._inslee.txt",
+      "ground_truth": []
+    },
+    {
+      "doc_name": "20260212_northwest_association_of_independent_schools_v._labrador",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260212_northwest_association_of_independent_schools_v._labrador.txt",
+      "ground_truth": [
+        "Amanda K. Brailsford"
+      ]
+    },
+    {
+      "doc_name": "20260213_bates_v._pakseresht",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260213_bates_v._pakseresht.txt",
+      "ground_truth": []
+    },
+    {
+      "doc_name": "20260217_state_of_oregon_v._trump",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260217_state_of_oregon_v._trump.txt",
+      "ground_truth": []
+    },
+    {
+      "doc_name": "20260218_garcia_morales_v._bondi",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260218_garcia_morales_v._bondi.txt",
+      "ground_truth": [
+        "Mustafa T. Kasubhai"
+      ]
+    },
+    {
+      "doc_name": "20260218_united_states_v._ho-romero",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260218_united_states_v._ho-romero.txt",
+      "ground_truth": [
+        "Dana M. Sabraw"
+      ]
+    },
+    {
+      "doc_name": "20260220_keo_ratha_v._rubicon_resources_llc",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260220_keo_ratha_v._rubicon_resources_llc.txt",
+      "ground_truth": [
+        "John F. Walter"
+      ]
+    },
+    {
+      "doc_name": "20260220_rojas-espinoza_v._bondi",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260220_rojas-espinoza_v._bondi.txt",
+      "ground_truth": []
+    },
+    {
+      "doc_name": "20260220_united_states_v._castro_alavez",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260220_united_states_v._castro_alavez.txt",
+      "ground_truth": [
+        "Susan O. Mollway"
+      ]
+    },
+    {
+      "doc_name": "20260220_united_states_v._ruiz",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260220_united_states_v._ruiz.txt",
+      "ground_truth": [
+        "Gonzalo P. Curiel"
+      ]
+    },
+    {
+      "doc_name": "20260224_la_international_corp._v._prestige_brands_holdings_inc.",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260224_la_international_corp._v._prestige_brands_holdings_inc..txt",
+      "ground_truth": [
+        "Michael W. Fitzgerald"
+      ]
+    },
+    {
+      "doc_name": "20260224_state_of_washington_v._united_states_department_of_education",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260224_state_of_washington_v._united_states_department_of_education.txt",
+      "ground_truth": [
+        "Kymberly K. Evanson"
+      ]
+    },
+    {
+      "doc_name": "20260224_united_states_v._motley",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260224_united_states_v._motley.txt",
+      "ground_truth": [
+        "Stanley Blumenfeld, Jr."
+      ]
+    },
+    {
+      "doc_name": "20260224_wells_v._bnsf_railway_company",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260224_wells_v._bnsf_railway_company.txt",
+      "ground_truth": [
+        "Brian M. Morris, Chief District Judge"
+      ]
+    },
+    {
+      "doc_name": "20260226_american_federation_of_government_employees_afl-cio_v._trump",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260226_american_federation_of_government_employees_afl-cio_v._trump.txt",
+      "ground_truth": [
+        "James Donato"
+      ]
+    },
+    {
+      "doc_name": "20260227_l.b._v._san_diego_unified_school_district",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260227_l.b._v._san_diego_unified_school_district.txt",
+      "ground_truth": [
+        "Anthony J. Battaglia"
+      ]
+    },
+    {
+      "doc_name": "20260302_city_of_malibu_v._federal_aviation_administration",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260302_city_of_malibu_v._federal_aviation_administration.txt",
+      "ground_truth": []
+    },
+    {
+      "doc_name": "20260303_center_for_biological_diversity_v._united_states_environmental_protection",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260303_center_for_biological_diversity_v._united_states_environmental_protection.txt",
+      "ground_truth": [
+        "John Charles Hinderaker"
+      ]
+    },
+    {
+      "doc_name": "20260303_talon_diversified_holdings_inc._v._white",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260303_talon_diversified_holdings_inc._v._white.txt",
+      "ground_truth": [
+        "Stephen V. Wilson"
+      ]
+    },
+    {
+      "doc_name": "20260303_united_states_v._boylan",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260303_united_states_v._boylan.txt",
+      "ground_truth": [
+        "George H. Wu"
+      ]
+    },
+    {
+      "doc_name": "20260304_uber_technologies_inc._v._city_of_seattle",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260304_uber_technologies_inc._v._city_of_seattle.txt",
+      "ground_truth": [
+        "Marsha J. Pechman"
+      ]
+    },
+    {
+      "doc_name": "20260305_chairez_v._mayorkas",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260305_chairez_v._mayorkas.txt",
+      "ground_truth": [
+        "Amanda K. Brailsford"
+      ]
+    },
+    {
+      "doc_name": "20260305_pacito_v._trump",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260305_pacito_v._trump.txt",
+      "ground_truth": [
+        "Jamal N. Whitehead"
+      ]
+    },
+    {
+      "doc_name": "20260306_jones_v._city_of_north_las_vegas",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260306_jones_v._city_of_north_las_vegas.txt",
+      "ground_truth": [
+        "Cristina D. Silva"
+      ]
+    },
+    {
+      "doc_name": "20260309_united_states_v._tekola",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260309_united_states_v._tekola.txt",
+      "ground_truth": [
+        "Sherilyn Peace Garnett"
+      ]
+    },
+    {
+      "doc_name": "20260310_b.b._v._capistrano_unified_school_district",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260310_b.b._v._capistrano_unified_school_district.txt",
+      "ground_truth": [
+        "David O. Carter"
+      ]
+    },
+    {
+      "doc_name": "20260310_rojas-espinoza_v._bondi",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260310_rojas-espinoza_v._bondi.txt",
+      "ground_truth": []
+    },
+    {
+      "doc_name": "20260311_hudacko_v._regents_of_the_university_of_california",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260311_hudacko_v._regents_of_the_university_of_california.txt",
+      "ground_truth": []
+    },
+    {
+      "doc_name": "20260311_national_tps_alliance_v._noem",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260311_national_tps_alliance_v._noem.txt",
+      "ground_truth": []
+    },
+    {
+      "doc_name": "20260311_payan_v._los_angeles_community_college_district",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260311_payan_v._los_angeles_community_college_district.txt",
+      "ground_truth": [
+        "Stephen V. Wilson"
+      ]
+    },
+    {
+      "doc_name": "20260312_michael_combs_v._ron_broomfield",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260312_michael_combs_v._ron_broomfield.txt",
+      "ground_truth": [
+        "Otis D. Wright II"
+      ]
+    },
+    {
+      "doc_name": "20260312_netchoice_llc_v._bonta",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260312_netchoice_llc_v._bonta.txt",
+      "ground_truth": [
+        "Beth Labson Freeman"
+      ]
+    },
+    {
+      "doc_name": "20260312_olympus_spa_v._armstrong",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260312_olympus_spa_v._armstrong.txt",
+      "ground_truth": [
+        "Barbara Jacobs Rothstein"
+      ]
+    },
+    {
+      "doc_name": "20260313_hector_cervantes-torres_v._united_states",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260313_hector_cervantes-torres_v._united_states.txt",
+      "ground_truth": [
+        "David O. Carter"
+      ]
+    },
+    {
+      "doc_name": "20260313_imperial_sovereign_court_of_the_state_of_montana_v._knudsen",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260313_imperial_sovereign_court_of_the_state_of_montana_v._knudsen.txt",
+      "ground_truth": [
+        "Brian M. Morris, Chief District Judge"
+      ]
+    },
+    {
+      "doc_name": "20260313_san_carlos_apache_tribe_v._united_states_forest_service",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260313_san_carlos_apache_tribe_v._united_states_forest_service.txt",
+      "ground_truth": [
+        "Dominic Lanza"
+      ]
+    },
+    {
+      "doc_name": "20260316_cox_v._gritman_medical_center",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260316_cox_v._gritman_medical_center.txt",
+      "ground_truth": [
+        "Mary K. Dimke"
+      ]
+    },
+    {
+      "doc_name": "20260316_united_states_v._torres-gonzalez",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260316_united_states_v._torres-gonzalez.txt",
+      "ground_truth": [
+        "Janis L. Sammartino"
+      ]
+    },
+    {
+      "doc_name": "20260317_adventist_health_system_of_west_v._abbvie_inc.",
+      "doc_path": "/mnt/data/LSF/data/court/text/20260317_adventist_health_system_of_west_v._abbvie_inc..txt",
+      "ground_truth": [
+        "Dale S. Fischer"
+      ]
+    }
+  ]
+}

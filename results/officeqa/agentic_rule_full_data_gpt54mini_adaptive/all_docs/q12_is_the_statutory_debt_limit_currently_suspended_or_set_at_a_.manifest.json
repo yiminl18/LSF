@@ -1,0 +1,1013 @@
+{
+  "dataset": "officeqa",
+  "split": "all_docs",
+  "question": "Is the statutory debt limit currently suspended or set at a specific dollar amount?",
+  "question_slug": "is_the_statutory_debt_limit_currently_suspended_or_set_at_a_",
+  "model": "gpt-5.4-mini",
+  "rules_dir": "/mnt/data/LSF/rules/officeqa/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q12_is_the_statutory_debt_limit_currently_suspended_or_set_at_a_",
+  "ledger_path": "/mnt/data/LSF/results/officeqa/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q12_is_the_statutory_debt_limit_currently_suspended_or_set_at_a_.verify_accuracy_ledger.json",
+  "report_path": "/mnt/data/LSF/results/officeqa/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q12_is_the_statutory_debt_limit_currently_suspended_or_set_at_a__rule_gen.json",
+  "verify_accuracy_budget": 30,
+  "documents": [
+    {
+      "doc_name": "treasury_bulletin_1980_07",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1980_07.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1980_08",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1980_08.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1980_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1980_09.txt",
+      "ground_truth": "$925 billion"
+    },
+    {
+      "doc_name": "treasury_bulletin_1980_10",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1980_10.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1980_11",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1980_11.txt",
+      "ground_truth": "$925,000"
+    },
+    {
+      "doc_name": "treasury_bulletin_1980_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1980_12.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1981_01",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1981_01.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1981_02",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1981_02.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1981_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1981_03.txt",
+      "ground_truth": "$985,000"
+    },
+    {
+      "doc_name": "treasury_bulletin_1981_04",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1981_04.txt",
+      "ground_truth": "$935 billion"
+    },
+    {
+      "doc_name": "treasury_bulletin_1981_05",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1981_05.txt",
+      "ground_truth": "$985,000"
+    },
+    {
+      "doc_name": "treasury_bulletin_1981_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1981_06.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1981_07",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1981_07.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1981_08",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1981_08.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1981_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1981_09.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1981_10",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1981_10.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1981_11",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1981_11.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1981_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1981_12.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1982_01",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1982_01.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1982_02",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1982_02.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1982_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1982_03.txt",
+      "ground_truth": "$1,079,800 million"
+    },
+    {
+      "doc_name": "treasury_bulletin_1982_04",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1982_04.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1982_05",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1982_05.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1982_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1982_06.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1982_07",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1982_07.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1982_08",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1982_08.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1982_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1982_09.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1982_10",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1982_10.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1982_11",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1982_11.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1983_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1983_03.txt",
+      "ground_truth": "NOT FOUND"
+    },
+    {
+      "doc_name": "treasury_bulletin_1983_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1983_06.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1983_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1983_09.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1983_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1983_12.txt",
+      "ground_truth": "NOT FOUND"
+    },
+    {
+      "doc_name": "treasury_bulletin_1984_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1984_03.txt",
+      "ground_truth": "$1,490 billion"
+    },
+    {
+      "doc_name": "treasury_bulletin_1984_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1984_06.txt",
+      "ground_truth": "NOT FOUND"
+    },
+    {
+      "doc_name": "treasury_bulletin_1984_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1984_09.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1984_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1984_12.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1985_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1985_03.txt",
+      "ground_truth": "NOT FOUND"
+    },
+    {
+      "doc_name": "treasury_bulletin_1985_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1985_06.txt",
+      "ground_truth": "NOT FOUND"
+    },
+    {
+      "doc_name": "treasury_bulletin_1985_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1985_09.txt",
+      "ground_truth": "NOT FOUND"
+    },
+    {
+      "doc_name": "treasury_bulletin_1985_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1985_12.txt",
+      "ground_truth": "NOT FOUND"
+    },
+    {
+      "doc_name": "treasury_bulletin_1986_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1986_03.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1986_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1986_06.txt",
+      "ground_truth": "NOT FOUND"
+    },
+    {
+      "doc_name": "treasury_bulletin_1986_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1986_09.txt",
+      "ground_truth": "NOT FOUND"
+    },
+    {
+      "doc_name": "treasury_bulletin_1986_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1986_12.txt",
+      "ground_truth": "NOT FOUND"
+    },
+    {
+      "doc_name": "treasury_bulletin_1987_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1987_03.txt",
+      "ground_truth": "$2,300,000 million"
+    },
+    {
+      "doc_name": "treasury_bulletin_1987_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1987_06.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1987_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1987_09.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1987_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1987_12.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1988_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1988_03.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1988_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1988_06.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1988_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1988_09.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1988_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1988_12.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1989_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1989_03.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1989_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1989_06.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1989_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1989_09.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1989_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1989_12.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1990_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1990_03.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1990_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1990_06.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1990_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1990_09.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1990_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1990_12.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1991_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1991_03.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1991_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1991_06.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1991_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1991_09.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1991_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1991_12.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1992_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1992_03.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1992_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1992_06.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1992_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1992_09.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1992_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1992_12.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1993_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1993_03.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1993_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1993_06.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1993_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1993_09.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1993_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1993_12.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1994_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1994_03.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1994_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1994_06.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1994_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1994_09.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1994_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1994_12.txt",
+      "ground_truth": "$4,900,000 million"
+    },
+    {
+      "doc_name": "treasury_bulletin_1995_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1995_03.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1995_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1995_06.txt",
+      "ground_truth": "$4,900,000 million"
+    },
+    {
+      "doc_name": "treasury_bulletin_1995_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1995_09.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1995_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1995_12.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1996_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1996_03.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1996_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1996_06.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1996_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1996_09.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1996_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1996_12.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1997_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1997_03.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1997_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1997_06.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1997_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1997_09.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1997_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1997_12.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1998_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1998_03.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1998_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1998_06.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1998_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1998_09.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1998_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1998_12.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1999_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1999_03.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1999_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1999_06.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1999_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1999_09.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_1999_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1999_12.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2000_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2000_03.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2000_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2000_06.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2000_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2000_09.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2000_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2000_12.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2001_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2001_03.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2001_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2001_06.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2001_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2001_09.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2001_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2001_12.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2002_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2002_03.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2002_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2002_06.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2002_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2002_09.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2002_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2002_12.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2003_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2003_03.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2003_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2003_06.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2003_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2003_09.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2003_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2003_12.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2004_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2004_03.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2004_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2004_06.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2004_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2004_09.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2004_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2004_12.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2005_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2005_03.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2005_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2005_06.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2005_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2005_09.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2005_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2005_12.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2006_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2006_03.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2006_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2006_06.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2006_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2006_09.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2006_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2006_12.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2007_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2007_03.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2007_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2007_06.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2007_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2007_09.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2007_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2007_12.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2008_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2008_03.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2008_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2008_06.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2008_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2008_09.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2008_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2008_12.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2009_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2009_03.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2009_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2009_06.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2009_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2009_09.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2009_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2009_12.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2010_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2010_03.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2010_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2010_06.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2010_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2010_09.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2010_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2010_12.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2011_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2011_03.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2011_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2011_06.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2011_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2011_09.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2011_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2011_12.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2012_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2012_03.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2012_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2012_06.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2012_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2012_09.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2012_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2012_12.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2013_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2013_03.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2013_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2013_06.txt",
+      "ground_truth": "suspended"
+    },
+    {
+      "doc_name": "treasury_bulletin_2013_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2013_09.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2013_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2013_12.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2014_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2014_03.txt",
+      "ground_truth": "suspended"
+    },
+    {
+      "doc_name": "treasury_bulletin_2014_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2014_06.txt",
+      "ground_truth": "suspended"
+    },
+    {
+      "doc_name": "treasury_bulletin_2014_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2014_09.txt",
+      "ground_truth": "suspended"
+    },
+    {
+      "doc_name": "treasury_bulletin_2014_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2014_12.txt",
+      "ground_truth": "suspended"
+    },
+    {
+      "doc_name": "treasury_bulletin_2015_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2015_03.txt",
+      "ground_truth": "suspended"
+    },
+    {
+      "doc_name": "treasury_bulletin_2015_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2015_06.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2015_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2015_09.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2015_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2015_12.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2016_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2016_03.txt",
+      "ground_truth": "suspended"
+    },
+    {
+      "doc_name": "treasury_bulletin_2016_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2016_06.txt",
+      "ground_truth": "suspended"
+    },
+    {
+      "doc_name": "treasury_bulletin_2016_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2016_09.txt",
+      "ground_truth": "suspended"
+    },
+    {
+      "doc_name": "treasury_bulletin_2016_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2016_12.txt",
+      "ground_truth": "suspended"
+    },
+    {
+      "doc_name": "treasury_bulletin_2017_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2017_03.txt",
+      "ground_truth": "suspended"
+    },
+    {
+      "doc_name": "treasury_bulletin_2017_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2017_06.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2017_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2017_09.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2017_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2017_12.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2018_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2018_03.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2018_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2018_06.txt",
+      "ground_truth": "suspended"
+    },
+    {
+      "doc_name": "treasury_bulletin_2018_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2018_09.txt",
+      "ground_truth": "suspended"
+    },
+    {
+      "doc_name": "treasury_bulletin_2018_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2018_12.txt",
+      "ground_truth": "suspended"
+    },
+    {
+      "doc_name": "treasury_bulletin_2019_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2019_03.txt",
+      "ground_truth": "suspended"
+    },
+    {
+      "doc_name": "treasury_bulletin_2019_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2019_06.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2019_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2019_09.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2019_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2019_12.txt",
+      "ground_truth": "suspended"
+    },
+    {
+      "doc_name": "treasury_bulletin_2020_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2020_03.txt",
+      "ground_truth": "suspended"
+    },
+    {
+      "doc_name": "treasury_bulletin_2020_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2020_06.txt",
+      "ground_truth": "suspended"
+    },
+    {
+      "doc_name": "treasury_bulletin_2020_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2020_09.txt",
+      "ground_truth": "suspended"
+    },
+    {
+      "doc_name": "treasury_bulletin_2020_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2020_12.txt",
+      "ground_truth": "suspended"
+    },
+    {
+      "doc_name": "treasury_bulletin_2021_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2021_03.txt",
+      "ground_truth": "suspended"
+    },
+    {
+      "doc_name": "treasury_bulletin_2021_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2021_06.txt",
+      "ground_truth": "suspended"
+    },
+    {
+      "doc_name": "treasury_bulletin_2021_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2021_09.txt",
+      "ground_truth": "suspended"
+    },
+    {
+      "doc_name": "treasury_bulletin_2021_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2021_12.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2022_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2022_03.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2022_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2022_06.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2022_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2022_09.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2022_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2022_12.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2023_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2023_03.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2023_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2023_06.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2023_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2023_09.txt",
+      "ground_truth": "suspended"
+    },
+    {
+      "doc_name": "treasury_bulletin_2023_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2023_12.txt",
+      "ground_truth": "suspended"
+    },
+    {
+      "doc_name": "treasury_bulletin_2024_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2024_03.txt",
+      "ground_truth": "suspended"
+    },
+    {
+      "doc_name": "treasury_bulletin_2024_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2024_06.txt",
+      "ground_truth": "suspended"
+    },
+    {
+      "doc_name": "treasury_bulletin_2024_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2024_09.txt",
+      "ground_truth": "suspended"
+    },
+    {
+      "doc_name": "treasury_bulletin_2024_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2024_12.txt",
+      "ground_truth": "suspended"
+    },
+    {
+      "doc_name": "treasury_bulletin_2025_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2025_03.txt",
+      "ground_truth": "suspended"
+    },
+    {
+      "doc_name": "treasury_bulletin_2025_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2025_06.txt",
+      "ground_truth": "set at a specific dollar amount"
+    },
+    {
+      "doc_name": "treasury_bulletin_2025_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2025_09.txt",
+      "ground_truth": "NOT FOUND"
+    }
+  ]
+}

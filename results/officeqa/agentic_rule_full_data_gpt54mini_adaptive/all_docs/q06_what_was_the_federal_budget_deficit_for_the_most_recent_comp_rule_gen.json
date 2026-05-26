@@ -1,0 +1,58 @@
+{
+  "strategy": "agentic_rule_full_data",
+  "phase": "rule_generation",
+  "status": "ok",
+  "dataset": "officeqa",
+  "question": "What was the federal budget deficit for the most recent completed fiscal year, as a percentage of GDP?",
+  "question_slug": "what_was_the_federal_budget_deficit_for_the_most_recent_comp",
+  "model": "gpt54mini",
+  "split": "all_docs",
+  "doc_count": 200,
+  "question_count": 1,
+  "rules_dir": "rules/officeqa/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q06_what_was_the_federal_budget_deficit_for_the_most_recent_comp",
+  "results_report_path": "results/officeqa/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q06_what_was_the_federal_budget_deficit_for_the_most_recent_comp_rule_gen.json",
+  "verify_accuracy_ledger_path": "results/officeqa/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q06_what_was_the_federal_budget_deficit_for_the_most_recent_comp.verify_accuracy_ledger.json",
+  "rule_files": [
+    "rules/officeqa/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q06_what_was_the_federal_budget_deficit_for_the_most_recent_comp/rule_federal_budget_deficit_fy2024.py"
+  ],
+  "rules_final": [
+    "rule_federal_budget_deficit_fy2024"
+  ],
+  "num_rules_final": 1,
+  "rule_gen": {
+    "latency_seconds": 235.96,
+    "input_tokens": 1678603,
+    "output_tokens": 26498,
+    "cached_input_tokens": 1615488,
+    "reasoning_tokens": 15620,
+    "working_sample": [
+      "treasury_bulletin_2024_06",
+      "treasury_bulletin_2024_09",
+      "treasury_bulletin_2024_12",
+      "treasury_bulletin_2025_03",
+      "treasury_bulletin_2025_06"
+    ],
+    "num_working_sample": 5,
+    "num_working_sample_iterations": 2,
+    "verify_accuracy_calls": {
+      "total": 5,
+      "input_tokens": 14569,
+      "output_tokens": 398
+    },
+    "num_rules_written": 1,
+    "num_rules_rejected": 0,
+    "rules_final": [
+      "rule_federal_budget_deficit_fy2024"
+    ],
+    "num_rules_final": 1,
+    "avg_cost_ratio_sample": 0.00522,
+    "match_rate_sample": 1.0,
+    "notes": "Rule scans the local budget-deficit section and accepts the completed fiscal year paragraph for FY 2023/FY 2024 Treasury Bulletin variants; verified on the five answer-bearing modern bulletins."
+  },
+  "agent_log_path": "results/officeqa/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q06_what_was_the_federal_budget_deficit_for_the_most_recent_comp.codex.jsonl",
+  "agent_last_message_path": "results/officeqa/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q06_what_was_the_federal_budget_deficit_for_the_most_recent_comp.codex.last.txt",
+  "stderr": "2026-05-26T01:40:08.413434Z ERROR codex_models_manager::manager: failed to refresh available models: stream disconnected before completion: failed to decode models response: missing field `models` at line 3243 column 1; body: {\n  \"data\": [\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1772582400\n      },\n      \"id\": \"dall-e-3-3.0\",\n      \"created_at\": 1691712000,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1737936000\n      },\n      \"id\": \"dall-e-2-2.0\",\n      \"created_at\": 1713139200,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": true,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"fine_tune\": 1718323200,\n        \"inference\": 1718323200\n      },\n      \"id\": \"code-cushman-001\",\n      \"created_at\": 1642809600,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": false,\n        \"completion\": true,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"fine_tune\": 1720137600,\n        \"inference\": 1720137600\n      },\n      \"id\": \"code-cushman-fine-tune-002\",\n      \"created_at\": 1677456000,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"generally-available\",\n      \"deprecation\": {\n        \"inference\": 1797292800\n      },\n      \"id\": \"whisper-001\",\n      \"created_at\": 1694649600,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1746057600\n      },\n      \"id\": \"gpt-4-0125-Preview\",\n      \"created_at\": 1706140800,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1746057600\n      },\n      \"id\": \"gpt-4-1106-Preview\",\n      \"created_at\": 1700006400,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycl",
+  "codex_thread_id": "019e61f0-725f-7cf1-9f1d-5eba90261a8f",
+  "codex_event_count": 142,
+  "codex_error_message": null
+}

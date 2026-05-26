@@ -1,0 +1,70 @@
+{
+  "strategy": "agentic_rule_full_data",
+  "phase": "rule_generation",
+  "status": "ok",
+  "dataset": "court",
+  "question": "Which judge authored the majority opinion?",
+  "question_slug": "which_judge_authored_the_majority_opinion",
+  "model": "gpt54mini",
+  "split": "all_docs",
+  "doc_count": 294,
+  "question_count": 1,
+  "rules_dir": "rules/court/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q09_which_judge_authored_the_majority_opinion",
+  "results_report_path": "results/court/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q09_which_judge_authored_the_majority_opinion_rule_gen.json",
+  "verify_accuracy_ledger_path": "results/court/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q09_which_judge_authored_the_majority_opinion.verify_accuracy_ledger.json",
+  "rule_files": [
+    "rules/court/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q09_which_judge_authored_the_majority_opinion/rule_majority_opinion_header.py",
+    "rules/court/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q09_which_judge_authored_the_majority_opinion/rule_majority_opinion_signature.py"
+  ],
+  "rules_final": [
+    "rule_majority_opinion_header",
+    "rule_majority_opinion_signature"
+  ],
+  "num_rules_final": 2,
+  "rule_gen": {
+    "latency_seconds": 790.78,
+    "input_tokens": 4511937,
+    "output_tokens": 47113,
+    "cached_input_tokens": 4209920,
+    "reasoning_tokens": 27199,
+    "working_sample": [
+      "20250723_state_of_washington_v._trump",
+      "20250801_doe_1_v._twitter_inc.",
+      "20250815_grijalva_v._adp_screening_and_selection_services_incorporated",
+      "20250826_pharmaceutical_research_and_manufacturers_of_america_v._stolfi",
+      "20250903_united_states_v._taylor",
+      "20250912_ambrosio_v._progressive_preferred_insurance_company",
+      "20250930_uc_encarnacion_v._bondi",
+      "20251027_united_states_v._vandyke",
+      "20251117_united_states_v._allen",
+      "20251217_united_states_v._avalos",
+      "20260102_peridot_tree_inc._v._city_of_sacramento",
+      "20260128_avery_v._teksystems_inc.",
+      "20260220_united_states_v._ruiz",
+      "20260317_adventist_health_system_of_west_v._abbvie_inc."
+    ],
+    "num_working_sample": 14,
+    "num_working_sample_iterations": 5,
+    "verify_accuracy_calls": {
+      "total": 9,
+      "input_tokens": 114779,
+      "output_tokens": 5344
+    },
+    "num_rules_written": 2,
+    "num_rules_rejected": 0,
+    "rules_final": [
+      "rule_majority_opinion_header",
+      "rule_majority_opinion_signature"
+    ],
+    "num_rules_final": 2,
+    "avg_cost_ratio_sample": 0.001181,
+    "match_rate_sample": 1.0,
+    "notes": "Front-matter opinion-author lines and opening signature lines cover most cases; per curiam opinions are normalized to an explicit per curiam answer."
+  },
+  "agent_log_path": "results/court/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q09_which_judge_authored_the_majority_opinion.codex.jsonl",
+  "agent_last_message_path": "results/court/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q09_which_judge_authored_the_majority_opinion.codex.last.txt",
+  "stderr": "2026-05-26T01:45:18.311831Z ERROR codex_models_manager::manager: failed to refresh available models: stream disconnected before completion: failed to decode models response: missing field `models` at line 3243 column 1; body: {\n  \"data\": [\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1772582400\n      },\n      \"id\": \"dall-e-3-3.0\",\n      \"created_at\": 1691712000,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1737936000\n      },\n      \"id\": \"dall-e-2-2.0\",\n      \"created_at\": 1713139200,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": true,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"fine_tune\": 1718323200,\n        \"inference\": 1718323200\n      },\n      \"id\": \"code-cushman-001\",\n      \"created_at\": 1642809600,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": false,\n        \"completion\": true,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"fine_tune\": 1720137600,\n        \"inference\": 1720137600\n      },\n      \"id\": \"code-cushman-fine-tune-002\",\n      \"created_at\": 1677456000,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"generally-available\",\n      \"deprecation\": {\n        \"inference\": 1797292800\n      },\n      \"id\": \"whisper-001\",\n      \"created_at\": 1694649600,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1746057600\n      },\n      \"id\": \"gpt-4-0125-Preview\",\n      \"created_at\": 1706140800,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1746057600\n      },\n      \"id\": \"gpt-4-1106-Preview\",\n      \"created_at\": 1700006400,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycl",
+  "codex_thread_id": "019e61f5-2ce9-7670-9136-a8332ea6758f",
+  "codex_event_count": 122,
+  "codex_error_message": null
+}

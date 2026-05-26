@@ -1,0 +1,74 @@
+{
+  "strategy": "agentic_rule_full_data",
+  "phase": "rule_generation",
+  "status": "ok",
+  "dataset": "court",
+  "question": "On what date was this opinion filed?",
+  "question_slug": "on_what_date_was_this_opinion_filed",
+  "model": "gpt54mini",
+  "split": "all_docs",
+  "doc_count": 294,
+  "question_count": 1,
+  "rules_dir": "rules/court/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q07_on_what_date_was_this_opinion_filed",
+  "results_report_path": "results/court/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q07_on_what_date_was_this_opinion_filed_rule_gen.json",
+  "verify_accuracy_ledger_path": "results/court/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q07_on_what_date_was_this_opinion_filed.verify_accuracy_ledger.json",
+  "rule_files": [
+    "rules/court/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q07_on_what_date_was_this_opinion_filed/rule_filed_date.py",
+    "rules/court/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q07_on_what_date_was_this_opinion_filed/rule_header_standalone_date.py"
+  ],
+  "rules_final": [
+    "rule_filed_date",
+    "rule_header_standalone_date"
+  ],
+  "num_rules_final": 2,
+  "rule_gen": {
+    "latency_seconds": 447.19,
+    "input_tokens": 2775852,
+    "output_tokens": 48354,
+    "cached_input_tokens": 2596480,
+    "reasoning_tokens": 31359,
+    "working_sample": [
+      "20250723_state_of_washington_v._trump",
+      "20250801_king_v._navy_federal_credit_union",
+      "20250815_in_re_subpoena_internet_subscribers_of_cox_communications_llc_and_coxcom",
+      "20250827_ambrosetti_v._oregon_catholic_press",
+      "20250829_national_tps_alliance_v._noem",
+      "20250903_united_states_securities_and_exchange_commission_v._sripetch",
+      "20250904_garcia_v._county_of_alameda",
+      "20250905_united_states_v._rice",
+      "20250912_pacito_v._trump",
+      "20251003_caldrone_v._circle_k_stores_inc.",
+      "20251030_doe_v._deutsche_lufthansa_aktiengesellschaft",
+      "20251120_rosa_a._camacho_v._nmi_settlement_fund",
+      "20251222_united_states_v._holmes",
+      "20260105_walker_specialty_constr._inc._v._bd._of_tr._of_the_constr._indus._and",
+      "20260107_united_states_v._ruiz",
+      "20260130_kalbers_v._volkswagen_ag",
+      "20260227_l.b._v._san_diego_unified_school_district",
+      "20260317_adventist_health_system_of_west_v._abbvie_inc."
+    ],
+    "num_working_sample": 18,
+    "num_working_sample_iterations": 2,
+    "verify_accuracy_calls": {
+      "total": 3,
+      "input_tokens": 10793,
+      "output_tokens": 661
+    },
+    "num_rules_written": 2,
+    "num_rules_rejected": 0,
+    "rules_final": [
+      "rule_filed_date",
+      "rule_header_standalone_date"
+    ],
+    "num_rules_final": 2,
+    "avg_cost_ratio_sample": 0.000778,
+    "match_rate_sample": 1.0,
+    "notes": "Covered both explicit Filed/FILED headers and standalone header dates; verified 18/18 on the working sample and a separate no-Filed spot check with low retrieval cost."
+  },
+  "agent_log_path": "results/court/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q07_on_what_date_was_this_opinion_filed.codex.jsonl",
+  "agent_last_message_path": "results/court/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q07_on_what_date_was_this_opinion_filed.codex.last.txt",
+  "stderr": "2026-05-26T01:30:48.549898Z ERROR codex_models_manager::manager: failed to refresh available models: stream disconnected before completion: failed to decode models response: missing field `models` at line 3243 column 1; body: {\n  \"data\": [\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1772582400\n      },\n      \"id\": \"dall-e-3-3.0\",\n      \"created_at\": 1691712000,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1737936000\n      },\n      \"id\": \"dall-e-2-2.0\",\n      \"created_at\": 1713139200,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": true,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"fine_tune\": 1718323200,\n        \"inference\": 1718323200\n      },\n      \"id\": \"code-cushman-001\",\n      \"created_at\": 1642809600,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": false,\n        \"completion\": true,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"fine_tune\": 1720137600,\n        \"inference\": 1720137600\n      },\n      \"id\": \"code-cushman-fine-tune-002\",\n      \"created_at\": 1677456000,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"generally-available\",\n      \"deprecation\": {\n        \"inference\": 1797292800\n      },\n      \"id\": \"whisper-001\",\n      \"created_at\": 1694649600,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1746057600\n      },\n      \"id\": \"gpt-4-0125-Preview\",\n      \"created_at\": 1706140800,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1746057600\n      },\n      \"id\": \"gpt-4-1106-Preview\",\n      \"created_at\": 1700006400,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycl",
+  "codex_thread_id": "019e61e7-e768-7631-90d5-b1a6ba7becc0",
+  "codex_event_count": 142,
+  "codex_error_message": null
+}

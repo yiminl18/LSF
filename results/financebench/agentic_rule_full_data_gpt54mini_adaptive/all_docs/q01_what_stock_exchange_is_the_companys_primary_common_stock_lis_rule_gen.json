@@ -1,0 +1,61 @@
+{
+  "strategy": "agentic_rule_full_data",
+  "phase": "rule_generation",
+  "status": "ok",
+  "dataset": "financebench",
+  "question": "What stock exchange is the company's primary common stock listed on?",
+  "question_slug": "what_stock_exchange_is_the_companys_primary_common_stock_lis",
+  "model": "gpt54mini",
+  "split": "all_docs",
+  "doc_count": 100,
+  "question_count": 1,
+  "rules_dir": "rules/financebench/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q01_what_stock_exchange_is_the_companys_primary_common_stock_lis",
+  "results_report_path": "results/financebench/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q01_what_stock_exchange_is_the_companys_primary_common_stock_lis_rule_gen.json",
+  "verify_accuracy_ledger_path": "results/financebench/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q01_what_stock_exchange_is_the_companys_primary_common_stock_lis.verify_accuracy_ledger.json",
+  "rule_files": [
+    "rules/financebench/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q01_what_stock_exchange_is_the_companys_primary_common_stock_lis/rule_common_stock_listing_narrative.py",
+    "rules/financebench/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q01_what_stock_exchange_is_the_companys_primary_common_stock_lis/rule_common_stock_listing_table.py"
+  ],
+  "rules_final": [
+    "rule_common_stock_listing_table",
+    "rule_common_stock_listing_narrative"
+  ],
+  "num_rules_final": 2,
+  "rule_gen": {
+    "latency_seconds": 401.14,
+    "input_tokens": 2532566,
+    "output_tokens": 31087,
+    "cached_input_tokens": 2394752,
+    "reasoning_tokens": 13903,
+    "working_sample": [
+      "3M_2023Q2_10Q",
+      "ACTIVISIONBLIZZARD_2020_10K",
+      "BOEING_2018_10K",
+      "FOOTLOCKER_2022_10Q",
+      "WALMART_2024Q1_10Q"
+    ],
+    "num_working_sample": 5,
+    "num_working_sample_iterations": 2,
+    "verify_accuracy_calls": {
+      "total": 4,
+      "input_tokens": 33709,
+      "output_tokens": 1613
+    },
+    "num_rules_written": 2,
+    "num_rules_rejected": 0,
+    "rules_final": [
+      "rule_common_stock_listing_table",
+      "rule_common_stock_listing_narrative"
+    ],
+    "num_rules_final": 2,
+    "avg_cost_ratio_sample": 8e-05,
+    "match_rate_sample": 1.0,
+    "notes": "Two-rule set for cover-page tables plus narrative/bracketed listing references; full-corpus verify-accuracy reached 100/100 with low retrieval cost."
+  },
+  "agent_log_path": "results/financebench/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q01_what_stock_exchange_is_the_companys_primary_common_stock_lis.codex.jsonl",
+  "agent_last_message_path": "results/financebench/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q01_what_stock_exchange_is_the_companys_primary_common_stock_lis.codex.last.txt",
+  "stderr": "2026-05-26T00:51:43.419890Z ERROR codex_models_manager::manager: failed to refresh available models: timeout waiting for child process to exit",
+  "codex_thread_id": "019e61c4-1ebc-7bd1-b499-94d8ed1f224b",
+  "codex_event_count": 97,
+  "codex_error_message": null
+}

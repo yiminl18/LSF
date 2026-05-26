@@ -1,0 +1,67 @@
+{
+  "strategy": "agentic_rule_full_data",
+  "phase": "rule_generation",
+  "status": "ok",
+  "dataset": "court",
+  "question": "Who is the first-listed attorney representing the appellee(s)?",
+  "question_slug": "who_is_the_firstlisted_attorney_representing_the_appellees",
+  "model": "gpt54mini",
+  "split": "all_docs",
+  "doc_count": 294,
+  "question_count": 1,
+  "rules_dir": "rules/court/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q12_who_is_the_firstlisted_attorney_representing_the_appellees",
+  "results_report_path": "results/court/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q12_who_is_the_firstlisted_attorney_representing_the_appellees_rule_gen.json",
+  "verify_accuracy_ledger_path": "results/court/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q12_who_is_the_firstlisted_attorney_representing_the_appellees.verify_accuracy_ledger.json",
+  "rule_files": [
+    "rules/court/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q12_who_is_the_firstlisted_attorney_representing_the_appellees/rule_first_listed_attorney_representing_appellees.py"
+  ],
+  "rules_final": [
+    "rule_first_listed_attorney_representing_appellees"
+  ],
+  "num_rules_final": 1,
+  "rule_gen": {
+    "latency_seconds": 555.43,
+    "input_tokens": 4375592,
+    "output_tokens": 62003,
+    "cached_input_tokens": 4294272,
+    "reasoning_tokens": 40203,
+    "working_sample": [
+      "20250724_bates_v._pakseresht",
+      "20250724_gila_river_indian_community_v._schoubroek",
+      "20250725_narguess_noohi_v._johnson__johnson_consumer_inc.",
+      "20250801_king_v._navy_federal_credit_union",
+      "20250815_in_re_subpoena_internet_subscribers_of_cox_communications_llc_and_coxcom",
+      "20250827_ambrosetti_v._oregon_catholic_press",
+      "20250904_garcia_v._county_of_alameda",
+      "20251030_doe_v._deutsche_lufthansa_aktiengesellschaft",
+      "20251120_rosa_a._camacho_v._nmi_settlement_fund",
+      "20251223_industrial_park_center_llc_v._great_northern_insurance_company",
+      "20251222_united_states_v._holmes",
+      "20260105_walker_specialty_constr._inc._v._bd._of_tr._of_the_constr._indus._and",
+      "20260130_kalbers_v._volkswagen_ag",
+      "20260317_adventist_health_system_of_west_v._abbvie_inc."
+    ],
+    "num_working_sample": 14,
+    "num_working_sample_iterations": 2,
+    "verify_accuracy_calls": {
+      "total": 2,
+      "input_tokens": 7751,
+      "output_tokens": 408
+    },
+    "num_rules_written": 1,
+    "num_rules_rejected": 0,
+    "rules_final": [
+      "rule_first_listed_attorney_representing_appellees"
+    ],
+    "num_rules_final": 1,
+    "avg_cost_ratio_sample": 0.000498,
+    "match_rate_sample": 1.0,
+    "notes": "Single rule covers standard COUNSEL sections and the rare end-of-opinion counsel list format."
+  },
+  "agent_log_path": "results/court/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q12_who_is_the_firstlisted_attorney_representing_the_appellees.codex.jsonl",
+  "agent_last_message_path": "results/court/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q12_who_is_the_firstlisted_attorney_representing_the_appellees.codex.last.txt",
+  "stderr": "2026-05-26T02:32:04.786023Z ERROR codex_models_manager::manager: failed to refresh available models: stream disconnected before completion: failed to decode models response: missing field `models` at line 3243 column 1; body: {\n  \"data\": [\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1772582400\n      },\n      \"id\": \"dall-e-3-3.0\",\n      \"created_at\": 1691712000,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1737936000\n      },\n      \"id\": \"dall-e-2-2.0\",\n      \"created_at\": 1713139200,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": true,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"fine_tune\": 1718323200,\n        \"inference\": 1718323200\n      },\n      \"id\": \"code-cushman-001\",\n      \"created_at\": 1642809600,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": false,\n        \"completion\": true,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"fine_tune\": 1720137600,\n        \"inference\": 1720137600\n      },\n      \"id\": \"code-cushman-fine-tune-002\",\n      \"created_at\": 1677456000,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": false,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"generally-available\",\n      \"deprecation\": {\n        \"inference\": 1797292800\n      },\n      \"id\": \"whisper-001\",\n      \"created_at\": 1694649600,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1746057600\n      },\n      \"id\": \"gpt-4-0125-Preview\",\n      \"created_at\": 1706140800,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycle_status\": \"deprecated\",\n      \"deprecation\": {\n        \"inference\": 1746057600\n      },\n      \"id\": \"gpt-4-1106-Preview\",\n      \"created_at\": 1700006400,\n      \"object\": \"model\"\n    },\n    {\n      \"status\": \"succeeded\",\n      \"capabilities\": {\n        \"fine_tune\": false,\n        \"inference\": true,\n        \"completion\": false,\n        \"chat_completion\": true,\n        \"embeddings\": false,\n        \"global_fine_tune\": false,\n        \"devtier_fine_tune\": false\n      },\n      \"lifecycl",
+  "codex_thread_id": "019e621f-ffb4-7ae0-b598-74d7fef34ac8",
+  "codex_event_count": 218,
+  "codex_error_message": null
+}

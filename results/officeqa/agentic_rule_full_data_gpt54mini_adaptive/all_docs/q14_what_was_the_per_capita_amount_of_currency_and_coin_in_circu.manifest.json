@@ -1,0 +1,1013 @@
+{
+  "dataset": "officeqa",
+  "split": "all_docs",
+  "question": "What was the per capita amount of currency and coin in circulation at the most recent reporting date, in dollars?",
+  "question_slug": "what_was_the_per_capita_amount_of_currency_and_coin_in_circu",
+  "model": "gpt-5.4-mini",
+  "rules_dir": "/mnt/data/LSF/rules/officeqa/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q14_what_was_the_per_capita_amount_of_currency_and_coin_in_circu",
+  "ledger_path": "/mnt/data/LSF/results/officeqa/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q14_what_was_the_per_capita_amount_of_currency_and_coin_in_circu.verify_accuracy_ledger.json",
+  "report_path": "/mnt/data/LSF/results/officeqa/agentic_rule_full_data_gpt54mini_adaptive/all_docs/q14_what_was_the_per_capita_amount_of_currency_and_coin_in_circu_rule_gen.json",
+  "verify_accuracy_budget": 30,
+  "documents": [
+    {
+      "doc_name": "treasury_bulletin_1980_07",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1980_07.txt",
+      "ground_truth": null
+    },
+    {
+      "doc_name": "treasury_bulletin_1980_08",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1980_08.txt",
+      "ground_truth": 540
+    },
+    {
+      "doc_name": "treasury_bulletin_1980_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1980_09.txt",
+      "ground_truth": null
+    },
+    {
+      "doc_name": "treasury_bulletin_1980_10",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1980_10.txt",
+      "ground_truth": 393
+    },
+    {
+      "doc_name": "treasury_bulletin_1980_11",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1980_11.txt",
+      "ground_truth": 581
+    },
+    {
+      "doc_name": "treasury_bulletin_1980_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1980_12.txt",
+      "ground_truth": 584
+    },
+    {
+      "doc_name": "treasury_bulletin_1981_01",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1981_01.txt",
+      "ground_truth": 531
+    },
+    {
+      "doc_name": "treasury_bulletin_1981_02",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1981_02.txt",
+      "ground_truth": 789
+    },
+    {
+      "doc_name": "treasury_bulletin_1981_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1981_03.txt",
+      "ground_truth": 573
+    },
+    {
+      "doc_name": "treasury_bulletin_1981_04",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1981_04.txt",
+      "ground_truth": 447
+    },
+    {
+      "doc_name": "treasury_bulletin_1981_05",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1981_05.txt",
+      "ground_truth": null
+    },
+    {
+      "doc_name": "treasury_bulletin_1981_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1981_06.txt",
+      "ground_truth": 589
+    },
+    {
+      "doc_name": "treasury_bulletin_1981_07",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1981_07.txt",
+      "ground_truth": 554
+    },
+    {
+      "doc_name": "treasury_bulletin_1981_08",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1981_08.txt",
+      "ground_truth": 600
+    },
+    {
+      "doc_name": "treasury_bulletin_1981_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1981_09.txt",
+      "ground_truth": 594
+    },
+    {
+      "doc_name": "treasury_bulletin_1981_10",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1981_10.txt",
+      "ground_truth": 584
+    },
+    {
+      "doc_name": "treasury_bulletin_1981_11",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1981_11.txt",
+      "ground_truth": 584
+    },
+    {
+      "doc_name": "treasury_bulletin_1981_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1981_12.txt",
+      "ground_truth": null
+    },
+    {
+      "doc_name": "treasury_bulletin_1982_01",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1982_01.txt",
+      "ground_truth": 645
+    },
+    {
+      "doc_name": "treasury_bulletin_1982_02",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1982_02.txt",
+      "ground_truth": 645
+    },
+    {
+      "doc_name": "treasury_bulletin_1982_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1982_03.txt",
+      "ground_truth": 584
+    },
+    {
+      "doc_name": "treasury_bulletin_1982_04",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1982_04.txt",
+      "ground_truth": null
+    },
+    {
+      "doc_name": "treasury_bulletin_1982_05",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1982_05.txt",
+      "ground_truth": null
+    },
+    {
+      "doc_name": "treasury_bulletin_1982_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1982_06.txt",
+      "ground_truth": 621
+    },
+    {
+      "doc_name": "treasury_bulletin_1982_07",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1982_07.txt",
+      "ground_truth": null
+    },
+    {
+      "doc_name": "treasury_bulletin_1982_08",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1982_08.txt",
+      "ground_truth": 638
+    },
+    {
+      "doc_name": "treasury_bulletin_1982_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1982_09.txt",
+      "ground_truth": 638
+    },
+    {
+      "doc_name": "treasury_bulletin_1982_10",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1982_10.txt",
+      "ground_truth": 643
+    },
+    {
+      "doc_name": "treasury_bulletin_1982_11",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1982_11.txt",
+      "ground_truth": 584
+    },
+    {
+      "doc_name": "treasury_bulletin_1983_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1983_03.txt",
+      "ground_truth": null
+    },
+    {
+      "doc_name": "treasury_bulletin_1983_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1983_06.txt",
+      "ground_truth": 666
+    },
+    {
+      "doc_name": "treasury_bulletin_1983_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1983_09.txt",
+      "ground_truth": 691
+    },
+    {
+      "doc_name": "treasury_bulletin_1983_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1983_12.txt",
+      "ground_truth": 693
+    },
+    {
+      "doc_name": "treasury_bulletin_1984_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1984_03.txt",
+      "ground_truth": 730
+    },
+    {
+      "doc_name": "treasury_bulletin_1984_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1984_06.txt",
+      "ground_truth": null
+    },
+    {
+      "doc_name": "treasury_bulletin_1984_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1984_09.txt",
+      "ground_truth": null
+    },
+    {
+      "doc_name": "treasury_bulletin_1984_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1984_12.txt",
+      "ground_truth": 739
+    },
+    {
+      "doc_name": "treasury_bulletin_1985_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1985_03.txt",
+      "ground_truth": 773
+    },
+    {
+      "doc_name": "treasury_bulletin_1985_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1985_06.txt",
+      "ground_truth": 752
+    },
+    {
+      "doc_name": "treasury_bulletin_1985_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1985_09.txt",
+      "ground_truth": 779
+    },
+    {
+      "doc_name": "treasury_bulletin_1985_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1985_12.txt",
+      "ground_truth": 782
+    },
+    {
+      "doc_name": "treasury_bulletin_1986_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1986_03.txt",
+      "ground_truth": null
+    },
+    {
+      "doc_name": "treasury_bulletin_1986_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1986_06.txt",
+      "ground_truth": 802
+    },
+    {
+      "doc_name": "treasury_bulletin_1986_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1986_09.txt",
+      "ground_truth": 825
+    },
+    {
+      "doc_name": "treasury_bulletin_1986_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1986_12.txt",
+      "ground_truth": 829
+    },
+    {
+      "doc_name": "treasury_bulletin_1987_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1987_03.txt",
+      "ground_truth": 584
+    },
+    {
+      "doc_name": "treasury_bulletin_1987_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1987_06.txt",
+      "ground_truth": 730
+    },
+    {
+      "doc_name": "treasury_bulletin_1987_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1987_09.txt",
+      "ground_truth": 730
+    },
+    {
+      "doc_name": "treasury_bulletin_1987_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1987_12.txt",
+      "ground_truth": 1048
+    },
+    {
+      "doc_name": "treasury_bulletin_1988_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1988_03.txt",
+      "ground_truth": 940
+    },
+    {
+      "doc_name": "treasury_bulletin_1988_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1988_06.txt",
+      "ground_truth": 925
+    },
+    {
+      "doc_name": "treasury_bulletin_1988_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1988_09.txt",
+      "ground_truth": 957
+    },
+    {
+      "doc_name": "treasury_bulletin_1988_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1988_12.txt",
+      "ground_truth": 962
+    },
+    {
+      "doc_name": "treasury_bulletin_1989_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1989_03.txt",
+      "ground_truth": 1000
+    },
+    {
+      "doc_name": "treasury_bulletin_1989_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1989_06.txt",
+      "ground_truth": 980
+    },
+    {
+      "doc_name": "treasury_bulletin_1989_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1989_09.txt",
+      "ground_truth": 1004
+    },
+    {
+      "doc_name": "treasury_bulletin_1989_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1989_12.txt",
+      "ground_truth": 995
+    },
+    {
+      "doc_name": "treasury_bulletin_1990_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1990_03.txt",
+      "ground_truth": 1042
+    },
+    {
+      "doc_name": "treasury_bulletin_1990_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1990_06.txt",
+      "ground_truth": 1034
+    },
+    {
+      "doc_name": "treasury_bulletin_1990_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1990_09.txt",
+      "ground_truth": 1070
+    },
+    {
+      "doc_name": "treasury_bulletin_1990_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1990_12.txt",
+      "ground_truth": 1090
+    },
+    {
+      "doc_name": "treasury_bulletin_1991_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1991_03.txt",
+      "ground_truth": 1154
+    },
+    {
+      "doc_name": "treasury_bulletin_1991_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1991_06.txt",
+      "ground_truth": 1138
+    },
+    {
+      "doc_name": "treasury_bulletin_1991_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1991_09.txt",
+      "ground_truth": 1164
+    },
+    {
+      "doc_name": "treasury_bulletin_1991_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1991_12.txt",
+      "ground_truth": 1168
+    },
+    {
+      "doc_name": "treasury_bulletin_1992_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1992_03.txt",
+      "ground_truth": 1458
+    },
+    {
+      "doc_name": "treasury_bulletin_1992_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1992_06.txt",
+      "ground_truth": 1574
+    },
+    {
+      "doc_name": "treasury_bulletin_1992_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1992_09.txt",
+      "ground_truth": 1218
+    },
+    {
+      "doc_name": "treasury_bulletin_1992_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1992_12.txt",
+      "ground_truth": 1248
+    },
+    {
+      "doc_name": "treasury_bulletin_1993_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1993_03.txt",
+      "ground_truth": 1380
+    },
+    {
+      "doc_name": "treasury_bulletin_1993_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1993_06.txt",
+      "ground_truth": 1293
+    },
+    {
+      "doc_name": "treasury_bulletin_1993_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1993_09.txt",
+      "ground_truth": 1400
+    },
+    {
+      "doc_name": "treasury_bulletin_1993_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1993_12.txt",
+      "ground_truth": 1358
+    },
+    {
+      "doc_name": "treasury_bulletin_1994_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1994_03.txt",
+      "ground_truth": 1408
+    },
+    {
+      "doc_name": "treasury_bulletin_1994_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1994_06.txt",
+      "ground_truth": 1438
+    },
+    {
+      "doc_name": "treasury_bulletin_1994_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1994_09.txt",
+      "ground_truth": 1465
+    },
+    {
+      "doc_name": "treasury_bulletin_1994_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1994_12.txt",
+      "ground_truth": 1474
+    },
+    {
+      "doc_name": "treasury_bulletin_1995_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1995_03.txt",
+      "ground_truth": 1574
+    },
+    {
+      "doc_name": "treasury_bulletin_1995_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1995_06.txt",
+      "ground_truth": 1618
+    },
+    {
+      "doc_name": "treasury_bulletin_1995_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1995_09.txt",
+      "ground_truth": 1678
+    },
+    {
+      "doc_name": "treasury_bulletin_1995_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1995_12.txt",
+      "ground_truth": 1658
+    },
+    {
+      "doc_name": "treasury_bulletin_1996_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1996_03.txt",
+      "ground_truth": 1606
+    },
+    {
+      "doc_name": "treasury_bulletin_1996_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1996_06.txt",
+      "ground_truth": 1573
+    },
+    {
+      "doc_name": "treasury_bulletin_1996_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1996_09.txt",
+      "ground_truth": 1601
+    },
+    {
+      "doc_name": "treasury_bulletin_1996_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1996_12.txt",
+      "ground_truth": 1619
+    },
+    {
+      "doc_name": "treasury_bulletin_1997_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1997_03.txt",
+      "ground_truth": 1691
+    },
+    {
+      "doc_name": "treasury_bulletin_1997_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1997_06.txt",
+      "ground_truth": 1664
+    },
+    {
+      "doc_name": "treasury_bulletin_1997_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1997_09.txt",
+      "ground_truth": 1694
+    },
+    {
+      "doc_name": "treasury_bulletin_1997_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1997_12.txt",
+      "ground_truth": 1708
+    },
+    {
+      "doc_name": "treasury_bulletin_1998_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1998_03.txt",
+      "ground_truth": 1792
+    },
+    {
+      "doc_name": "treasury_bulletin_1998_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1998_06.txt",
+      "ground_truth": 1762
+    },
+    {
+      "doc_name": "treasury_bulletin_1998_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1998_09.txt",
+      "ground_truth": 1791
+    },
+    {
+      "doc_name": "treasury_bulletin_1998_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1998_12.txt",
+      "ground_truth": 1825
+    },
+    {
+      "doc_name": "treasury_bulletin_1999_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1999_03.txt",
+      "ground_truth": 1904
+    },
+    {
+      "doc_name": "treasury_bulletin_1999_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1999_06.txt",
+      "ground_truth": 1902
+    },
+    {
+      "doc_name": "treasury_bulletin_1999_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1999_09.txt",
+      "ground_truth": 1949
+    },
+    {
+      "doc_name": "treasury_bulletin_1999_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_1999_12.txt",
+      "ground_truth": 1988
+    },
+    {
+      "doc_name": "treasury_bulletin_2000_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2000_03.txt",
+      "ground_truth": 2293
+    },
+    {
+      "doc_name": "treasury_bulletin_2000_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2000_06.txt",
+      "ground_truth": 2050
+    },
+    {
+      "doc_name": "treasury_bulletin_2000_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2000_09.txt",
+      "ground_truth": 2075
+    },
+    {
+      "doc_name": "treasury_bulletin_2000_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2000_12.txt",
+      "ground_truth": 2061
+    },
+    {
+      "doc_name": "treasury_bulletin_2001_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2001_03.txt",
+      "ground_truth": 2147
+    },
+    {
+      "doc_name": "treasury_bulletin_2001_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2001_06.txt",
+      "ground_truth": 2121
+    },
+    {
+      "doc_name": "treasury_bulletin_2001_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2001_09.txt",
+      "ground_truth": 2148
+    },
+    {
+      "doc_name": "treasury_bulletin_2001_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2001_12.txt",
+      "ground_truth": 2197
+    },
+    {
+      "doc_name": "treasury_bulletin_2002_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2002_03.txt",
+      "ground_truth": 2305
+    },
+    {
+      "doc_name": "treasury_bulletin_2002_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2002_06.txt",
+      "ground_truth": 2238
+    },
+    {
+      "doc_name": "treasury_bulletin_2002_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2002_09.txt",
+      "ground_truth": 2289
+    },
+    {
+      "doc_name": "treasury_bulletin_2002_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2002_12.txt",
+      "ground_truth": 2291
+    },
+    {
+      "doc_name": "treasury_bulletin_2003_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2003_03.txt",
+      "ground_truth": 2266
+    },
+    {
+      "doc_name": "treasury_bulletin_2003_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2003_06.txt",
+      "ground_truth": 2365
+    },
+    {
+      "doc_name": "treasury_bulletin_2003_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2003_09.txt",
+      "ground_truth": 2308
+    },
+    {
+      "doc_name": "treasury_bulletin_2003_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2003_12.txt",
+      "ground_truth": 2389
+    },
+    {
+      "doc_name": "treasury_bulletin_2004_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2004_03.txt",
+      "ground_truth": 2477
+    },
+    {
+      "doc_name": "treasury_bulletin_2004_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2004_06.txt",
+      "ground_truth": 2455
+    },
+    {
+      "doc_name": "treasury_bulletin_2004_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2004_09.txt",
+      "ground_truth": 2497
+    },
+    {
+      "doc_name": "treasury_bulletin_2004_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2004_12.txt",
+      "ground_truth": 2508
+    },
+    {
+      "doc_name": "treasury_bulletin_2005_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2005_03.txt",
+      "ground_truth": 2557
+    },
+    {
+      "doc_name": "treasury_bulletin_2005_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2005_06.txt",
+      "ground_truth": 2551
+    },
+    {
+      "doc_name": "treasury_bulletin_2005_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2005_09.txt",
+      "ground_truth": 2579
+    },
+    {
+      "doc_name": "treasury_bulletin_2005_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2005_12.txt",
+      "ground_truth": 2578
+    },
+    {
+      "doc_name": "treasury_bulletin_2006_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2006_03.txt",
+      "ground_truth": 2666
+    },
+    {
+      "doc_name": "treasury_bulletin_2006_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2006_06.txt",
+      "ground_truth": 2643
+    },
+    {
+      "doc_name": "treasury_bulletin_2006_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2006_09.txt",
+      "ground_truth": 2665
+    },
+    {
+      "doc_name": "treasury_bulletin_2006_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2006_12.txt",
+      "ground_truth": 2637
+    },
+    {
+      "doc_name": "treasury_bulletin_2007_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2007_03.txt",
+      "ground_truth": 2724
+    },
+    {
+      "doc_name": "treasury_bulletin_2007_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2007_06.txt",
+      "ground_truth": 2670
+    },
+    {
+      "doc_name": "treasury_bulletin_2007_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2007_09.txt",
+      "ground_truth": 2688
+    },
+    {
+      "doc_name": "treasury_bulletin_2007_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2007_12.txt",
+      "ground_truth": 2674
+    },
+    {
+      "doc_name": "treasury_bulletin_2008_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2008_03.txt",
+      "ground_truth": 2733
+    },
+    {
+      "doc_name": "treasury_bulletin_2008_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2008_06.txt",
+      "ground_truth": 2682
+    },
+    {
+      "doc_name": "treasury_bulletin_2008_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2008_09.txt",
+      "ground_truth": 2712
+    },
+    {
+      "doc_name": "treasury_bulletin_2008_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2008_12.txt",
+      "ground_truth": 2744
+    },
+    {
+      "doc_name": "treasury_bulletin_2009_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2009_03.txt",
+      "ground_truth": 2853
+    },
+    {
+      "doc_name": "treasury_bulletin_2009_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2009_06.txt",
+      "ground_truth": 2950
+    },
+    {
+      "doc_name": "treasury_bulletin_2009_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2009_09.txt",
+      "ground_truth": 2963
+    },
+    {
+      "doc_name": "treasury_bulletin_2009_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2009_12.txt",
+      "ground_truth": 2969
+    },
+    {
+      "doc_name": "treasury_bulletin_2010_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2010_03.txt",
+      "ground_truth": 3008
+    },
+    {
+      "doc_name": "treasury_bulletin_2010_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2010_06.txt",
+      "ground_truth": 3023
+    },
+    {
+      "doc_name": "treasury_bulletin_2010_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2010_09.txt",
+      "ground_truth": 3051
+    },
+    {
+      "doc_name": "treasury_bulletin_2010_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2010_12.txt",
+      "ground_truth": 3074
+    },
+    {
+      "doc_name": "treasury_bulletin_2011_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2011_03.txt",
+      "ground_truth": 3157
+    },
+    {
+      "doc_name": "treasury_bulletin_2011_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2011_06.txt",
+      "ground_truth": 3232
+    },
+    {
+      "doc_name": "treasury_bulletin_2011_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2011_09.txt",
+      "ground_truth": 3302
+    },
+    {
+      "doc_name": "treasury_bulletin_2011_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2011_12.txt",
+      "ground_truth": 3323
+    },
+    {
+      "doc_name": "treasury_bulletin_2012_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2012_03.txt",
+      "ground_truth": 3439
+    },
+    {
+      "doc_name": "treasury_bulletin_2012_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2012_06.txt",
+      "ground_truth": 3504
+    },
+    {
+      "doc_name": "treasury_bulletin_2012_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2012_09.txt",
+      "ground_truth": 3540
+    },
+    {
+      "doc_name": "treasury_bulletin_2012_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2012_12.txt",
+      "ground_truth": 3586
+    },
+    {
+      "doc_name": "treasury_bulletin_2013_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2013_03.txt",
+      "ground_truth": 3709
+    },
+    {
+      "doc_name": "treasury_bulletin_2013_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2013_06.txt",
+      "ground_truth": 3727
+    },
+    {
+      "doc_name": "treasury_bulletin_2013_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2013_09.txt",
+      "ground_truth": 3774
+    },
+    {
+      "doc_name": "treasury_bulletin_2013_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2013_12.txt",
+      "ground_truth": 3809
+    },
+    {
+      "doc_name": "treasury_bulletin_2014_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2014_03.txt",
+      "ground_truth": 3910
+    },
+    {
+      "doc_name": "treasury_bulletin_2014_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2014_06.txt",
+      "ground_truth": 3991
+    },
+    {
+      "doc_name": "treasury_bulletin_2014_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2014_09.txt",
+      "ground_truth": 4027
+    },
+    {
+      "doc_name": "treasury_bulletin_2014_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2014_12.txt",
+      "ground_truth": 4044
+    },
+    {
+      "doc_name": "treasury_bulletin_2015_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2015_03.txt",
+      "ground_truth": 4194
+    },
+    {
+      "doc_name": "treasury_bulletin_2015_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2015_06.txt",
+      "ground_truth": 4237
+    },
+    {
+      "doc_name": "treasury_bulletin_2015_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2015_09.txt",
+      "ground_truth": 4260
+    },
+    {
+      "doc_name": "treasury_bulletin_2015_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2015_12.txt",
+      "ground_truth": 4310
+    },
+    {
+      "doc_name": "treasury_bulletin_2016_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2016_03.txt",
+      "ground_truth": 4414
+    },
+    {
+      "doc_name": "treasury_bulletin_2016_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2016_06.txt",
+      "ground_truth": 4463
+    },
+    {
+      "doc_name": "treasury_bulletin_2016_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2016_09.txt",
+      "ground_truth": 4520
+    },
+    {
+      "doc_name": "treasury_bulletin_2016_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2016_12.txt",
+      "ground_truth": 4530
+    },
+    {
+      "doc_name": "treasury_bulletin_2017_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2017_03.txt",
+      "ground_truth": 4653
+    },
+    {
+      "doc_name": "treasury_bulletin_2017_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2017_06.txt",
+      "ground_truth": 4728
+    },
+    {
+      "doc_name": "treasury_bulletin_2017_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2017_09.txt",
+      "ground_truth": 4800
+    },
+    {
+      "doc_name": "treasury_bulletin_2017_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2017_12.txt",
+      "ground_truth": 4844
+    },
+    {
+      "doc_name": "treasury_bulletin_2018_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2018_03.txt",
+      "ground_truth": 4948
+    },
+    {
+      "doc_name": "treasury_bulletin_2018_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2018_06.txt",
+      "ground_truth": 4997
+    },
+    {
+      "doc_name": "treasury_bulletin_2018_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2018_09.txt",
+      "ground_truth": 5081
+    },
+    {
+      "doc_name": "treasury_bulletin_2018_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2018_12.txt",
+      "ground_truth": 5127
+    },
+    {
+      "doc_name": "treasury_bulletin_2019_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2019_03.txt",
+      "ground_truth": 5236
+    },
+    {
+      "doc_name": "treasury_bulletin_2019_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2019_06.txt",
+      "ground_truth": 5243
+    },
+    {
+      "doc_name": "treasury_bulletin_2019_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2019_09.txt",
+      "ground_truth": 5294
+    },
+    {
+      "doc_name": "treasury_bulletin_2019_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2019_12.txt",
+      "ground_truth": 5344
+    },
+    {
+      "doc_name": "treasury_bulletin_2020_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2020_03.txt",
+      "ground_truth": 5472
+    },
+    {
+      "doc_name": "treasury_bulletin_2020_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2020_06.txt",
+      "ground_truth": 5700
+    },
+    {
+      "doc_name": "treasury_bulletin_2020_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2020_09.txt",
+      "ground_truth": 5970
+    },
+    {
+      "doc_name": "treasury_bulletin_2020_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2020_12.txt",
+      "ground_truth": 6150
+    },
+    {
+      "doc_name": "treasury_bulletin_2021_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2021_03.txt",
+      "ground_truth": 6313
+    },
+    {
+      "doc_name": "treasury_bulletin_2021_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2021_06.txt",
+      "ground_truth": 6492
+    },
+    {
+      "doc_name": "treasury_bulletin_2021_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2021_09.txt",
+      "ground_truth": 6565
+    },
+    {
+      "doc_name": "treasury_bulletin_2021_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2021_12.txt",
+      "ground_truth": 6600
+    },
+    {
+      "doc_name": "treasury_bulletin_2022_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2022_03.txt",
+      "ground_truth": 6727
+    },
+    {
+      "doc_name": "treasury_bulletin_2022_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2022_06.txt",
+      "ground_truth": 6818
+    },
+    {
+      "doc_name": "treasury_bulletin_2022_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2022_09.txt",
+      "ground_truth": 6853
+    },
+    {
+      "doc_name": "treasury_bulletin_2022_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2022_12.txt",
+      "ground_truth": 6841
+    },
+    {
+      "doc_name": "treasury_bulletin_2023_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2023_03.txt",
+      "ground_truth": 6908
+    },
+    {
+      "doc_name": "treasury_bulletin_2023_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2023_06.txt",
+      "ground_truth": 6942
+    },
+    {
+      "doc_name": "treasury_bulletin_2023_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2023_09.txt",
+      "ground_truth": 6998
+    },
+    {
+      "doc_name": "treasury_bulletin_2023_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2023_12.txt",
+      "ground_truth": 6921
+    },
+    {
+      "doc_name": "treasury_bulletin_2024_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2024_03.txt",
+      "ground_truth": 6988
+    },
+    {
+      "doc_name": "treasury_bulletin_2024_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2024_06.txt",
+      "ground_truth": 6967
+    },
+    {
+      "doc_name": "treasury_bulletin_2024_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2024_09.txt",
+      "ground_truth": 6984
+    },
+    {
+      "doc_name": "treasury_bulletin_2024_12",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2024_12.txt",
+      "ground_truth": 6968
+    },
+    {
+      "doc_name": "treasury_bulletin_2025_03",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2025_03.txt",
+      "ground_truth": 6954
+    },
+    {
+      "doc_name": "treasury_bulletin_2025_06",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2025_06.txt",
+      "ground_truth": 6948
+    },
+    {
+      "doc_name": "treasury_bulletin_2025_09",
+      "doc_path": "/mnt/data/LSF/data/officeqa/text/treasury_bulletin_2025_09.txt",
+      "ground_truth": null
+    }
+  ]
+}
