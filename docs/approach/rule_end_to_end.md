@@ -144,22 +144,80 @@ Affected rules (identified and patched 2026-05-25): court `q04`, `q05`, `q11`, `
 
 ### Results
 
-Current checked-in end-to-end runs use `gpt54mini` for rule generation, then `rule_apply_merge` with `gpt54` for answer generation and `gpt54` for judging.
+Rule application uses `rule_apply_merge` with `gpt54` for answer generation and judging throughout.
 
-#### Rule Generation
+#### Variant A — Baseline (`gpt54mini` gen, no adaptive sample)
 
-| Dataset | Docs | Queries | Gen model | Avg rules/q | Avg sample match | Avg sample cost | Avg latency/q | Input | Cached input | Output | Reasoning | Path |
-|---------|-----:|--------:|-----------|------------:|-----------------:|----------------:|--------------:|------:|-------------:|-------:|----------:|------|
-| FinanceBench | 100 | 10 | `gpt54mini` | 1.44 | 0.9259 | 0.003912 | 608.25s | 40,521,866 | 38,570,112 | 420,467 | 237,735 | `results/financebench/agentic_rule_full_data_gpt54mini/all_docs` |
-| Court | 294 | 13 | `gpt54mini` | 1.08 | 1 | 0.002883 | 336.79s | 35,095,343 | 33,870,592 | 455,270 | 299,707 | `results/court/agentic_rule_full_data_gpt54mini/all_docs` |
-| NOPV | 242 | 12 | `gpt54mini` | 1 | 0.8839 | 0.049122 | 501.61s | 53,754,257 | 51,737,600 | 557,478 | 359,264 | `results/nopv/agentic_rule_full_data_gpt54mini/all_docs` |
-| OfficeQA | 200 | 16 | `gpt54mini` | 1.62 | 0.9875 | 0.019666 | 321.99s | 41,828,939 | 39,709,952 | 534,138 | 330,830 | `results/officeqa/agentic_rule_full_data_gpt54mini/all_docs` |
+##### Rule Generation
 
-#### Rule Application
+| Dataset | Docs | Q | Avg sample | Avg match | Avg latency | Total input | Total output | Path |
+|---------|-----:|--:|-----------:|----------:|------------:|------------:|-------------:|------|
+| Court | 294 | 13 | ~7 | 1.000 | 337s | 35,095,343 | 455,270 | `results/court/agentic_rule_full_data_gpt54mini/all_docs` |
+| NOPV | 242 | 12 | ~6 | 0.884 | 502s | 53,754,257 | 557,478 | `results/nopv/agentic_rule_full_data_gpt54mini/all_docs` |
+| OfficeQA | 200 | 16 | ~4 | 0.988 | 322s | 41,828,939 | 534,138 | `results/officeqa/agentic_rule_full_data_gpt54mini/all_docs` |
+| FinanceBench | 100 | 10 | ~5 | 0.926 | 608s | 40,521,866 | 420,467 | `results/financebench/agentic_rule_full_data_gpt54mini/all_docs` |
 
-| Dataset | Apply strategy | Answer model | Judge model | Docs | Queries | Accuracy | Cost ratio | Latency | Path |
-|---------|----------------|--------------|-------------|-----:|--------:|---------:|-----------:|--------:|------|
-| FinanceBench | `rule_apply_merge` | `gpt54` | `gpt54` | 100 | 10 | 0.7567 | 0.0134 | 0.84s | `results/financebench/agentic_rule_full_data_gpt54mini/all_docs/rule_apply_merge` |
-| Court | `rule_apply_merge` | `gpt54` | `gpt54` | 294 | 13 | 0.6905 | 0.0295 | 0.83s | `results/court/agentic_rule_full_data_gpt54mini/all_docs/rule_apply_merge` |
-| NOPV | `rule_apply_merge` | `gpt54` | `gpt54` | 242 | 12 | 0.6791 | 0.0464 | 0.81s | `results/nopv/agentic_rule_full_data_gpt54mini/all_docs/rule_apply_merge` |
-| OfficeQA | `rule_apply_merge` | `gpt54` | `gpt54` | 200 | 16 | 0.3738 | 0.1305 | 0.82s | `results/officeqa/agentic_rule_full_data_gpt54mini/all_docs/rule_apply_merge` |
+##### Rule Application
+
+| Dataset | Docs | Q | Accuracy | Cost ratio | Latency | Path |
+|---------|-----:|--:|---------:|-----------:|--------:|------|
+| Court | 294 | 13 | 0.735 | 0.0295 | 0.83s | `results/court/agentic_rule_full_data_gpt54mini/all_docs/rule_apply_merge` |
+| NOPV | 242 | 12 | 0.680 | 0.0464 | 0.81s | `results/nopv/agentic_rule_full_data_gpt54mini/all_docs/rule_apply_merge` |
+| OfficeQA | 200 | 16 | 0.374 | 0.1305 | 0.82s | `results/officeqa/agentic_rule_full_data_gpt54mini/all_docs/rule_apply_merge` |
+| FinanceBench | 100 | 10 | 0.757 | 0.0134 | 0.84s | `results/financebench/agentic_rule_full_data_gpt54mini/all_docs/rule_apply_merge` |
+
+---
+
+#### Variant B — Adaptive large sample (`gpt54mini` gen, `--adaptive-large-sample`)
+
+##### Rule Generation
+
+| Dataset | Docs | Q | Avg sample | Avg match | Avg latency | Total input | Total output | Path |
+|---------|-----:|--:|-----------:|----------:|------------:|------------:|-------------:|------|
+| Court | 294 | 13 | 14.5 | 0.969 | 563s | 62,487,212 | 746,101 | `results/court/agentic_rule_full_data_gpt54mini_adaptive/all_docs` |
+| NOPV | 242 | 12 | 11.3 | 0.882 | 496s | 60,435,160 | 642,221 | `results/nopv/agentic_rule_full_data_gpt54mini_adaptive/all_docs` |
+| OfficeQA | 200 | 16 | 9.3 | 0.876 | 563s | 84,751,470 | — | `results/officeqa/agentic_rule_full_data_gpt54mini_adaptive/all_docs` |
+| FinanceBench | 100 | 12 | 5.2 | 1.000 | 333s | 28,678,167 | — | `results/financebench/agentic_rule_full_data_gpt54mini_adaptive/all_docs` |
+
+##### Rule Application
+
+| Dataset | Docs | Q | Accuracy | Cost ratio | Latency | Path |
+|---------|-----:|--:|---------:|-----------:|--------:|------|
+| Court | 294 | 13 | **0.751** | 0.0332 | 0.89s | `results/court/agentic_rule_full_data_gpt54mini_adaptive/all_docs/rule_apply_merge` |
+| NOPV | 242 | 12 | **0.822** | 0.1153 | 0.90s | `results/nopv/agentic_rule_full_data_gpt54mini_adaptive/all_docs/rule_apply_merge` |
+| OfficeQA | 200 | 16 | **0.386** | 0.1285 | 0.86s | `results/officeqa/agentic_rule_full_data_gpt54mini_adaptive/all_docs/rule_apply_merge` |
+| FinanceBench | 100 | 12 | **0.879** | 0.0139 | 0.85s | `results/financebench/agentic_rule_full_data_gpt54mini_adaptive/all_docs/rule_apply_merge` |
+
+---
+
+#### Variant C — Adaptive large sample (`gpt54` gen, `--adaptive-large-sample`)
+
+##### Rule Generation
+
+| Dataset | Docs | Q | Avg sample | Avg match | Avg latency | Total input | Total output | Path |
+|---------|-----:|--:|-----------:|----------:|------------:|------------:|-------------:|------|
+| Court | 294 | 13 | 17.0 | 0.978 | 545s | 40,650,849 | 410,238 | `results/court/agentic_rule_full_data_gpt54_adaptive/all_docs` |
+| NOPV | 242 | 12 | 14.8 | 0.964 | 599s | 48,860,420 | 399,034 | `results/nopv/agentic_rule_full_data_gpt54_adaptive/all_docs` |
+| OfficeQA | 200 | 16 | 10.7 | 0.984 | 890s | — | — | `results/officeqa/agentic_rule_full_data_gpt54_adaptive/all_docs` |
+| FinanceBench | 100 | 12 | 6.4 | 0.992 | 477s | — | — | `results/financebench/agentic_rule_full_data_gpt54_adaptive/all_docs` |
+
+##### Rule Application
+
+| Dataset | Docs | Q | Accuracy | Cost ratio | Latency | Path |
+|---------|-----:|--:|---------:|-----------:|--------:|------|
+| Court | 294 | 13 | **0.807** | 0.0325 | 0.87s | `results/court/agentic_rule_full_data_gpt54_adaptive/all_docs/rule_apply_merge` |
+| NOPV | 242 | 12 | **0.831** | 0.0672 | 0.88s | `results/nopv/agentic_rule_full_data_gpt54_adaptive/all_docs/rule_apply_merge` |
+| OfficeQA | 200 | 16 | **0.522** | 0.1288 | 0.84s | `results/officeqa/agentic_rule_full_data_gpt54_adaptive/all_docs/rule_apply_merge` |
+| FinanceBench | 100 | 12 | **0.923** | 0.0135 | 0.90s | `results/financebench/agentic_rule_full_data_gpt54_adaptive/all_docs/rule_apply_merge` |
+
+---
+
+#### Summary — Rule Application Accuracy across variants
+
+| Dataset | Baseline (gpt54mini) | Adaptive gpt54mini | Adaptive gpt54 |
+|---------|---------------------:|-------------------:|---------------:|
+| Court | 0.735 | 0.751 (+1.6pp) | **0.807** (+7.2pp) |
+| NOPV | 0.680 | 0.822 (+14.2pp) | **0.831** (+15.1pp) |
+| OfficeQA | 0.374 | 0.386 (+1.2pp) | **0.522** (+14.8pp) |
+| FinanceBench | 0.757 | 0.879 (+12.2pp) | **0.923** (+16.6pp) |
+| **Average** | **0.637** | **0.710** (+7.3pp) | **0.771** (+13.4pp) |
