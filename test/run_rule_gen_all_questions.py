@@ -12,7 +12,7 @@ _ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(_ROOT / "src"))
 os.chdir(_ROOT)
 
-from rule_gen_llm_coarse import rule_gen_llm_coarse
+from rule_gen.llm_coarse import rule_gen_llm_coarse
 
 QUERIES_FILE   = "data/financebench/sample_queries.txt"
 LABELS_FILE    = "data/financebench/sample/single_cluster/random/sample_doc_labels.json"

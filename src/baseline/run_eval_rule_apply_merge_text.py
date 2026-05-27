@@ -15,7 +15,7 @@ from typing import Any
 _ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(_ROOT / "src"))
 
-from rule_apply_merge import rule_apply_merge
+from rule_apply.merge import rule_apply_merge
 
 _FINANCE_SPLITS = {
     "sampled": _ROOT / "data/financebench/sample/multi_cluster/random/sample_doc_labels.json",

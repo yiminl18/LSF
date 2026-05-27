@@ -12,13 +12,13 @@ This script runs the full rule-based QA pipeline for a set of questions on sampl
 
 ```
 [1] Rule Generation
-    rule_gen_llm_coarse  |  rule_gen_agent_coarse  |  any src/rule_gen_*.py
+    rule_gen_llm_coarse  |  rule_gen_agent_coarse  |  any src/rule_gen/*.py
          ↓
 [2] (Optional) Rule Refinement
-    src/rule_refine.py
+    src/rule_refine/v1.py
          ↓
 [3] Rule Application (sampled + unsampled docs)
-    src/rule_apply_merge.py
+    src/rule_apply/merge.py
          ↓
 [4] Evaluation (accuracy, cost ratio, latency)
     LLM-as-judge → results/
@@ -30,7 +30,7 @@ This script runs the full rule-based QA pipeline for a set of questions on sampl
 
 ```bash
 python test/rule_end_to_end.py \
-    --rule-gen-module   src/rule_gen_llm_coarse.py \
+    --rule-gen-module   src/rule_gen/llm_coarse.py \
     --queries-file      data/financebench/sample_queries.txt \
     --sample-labels     data/financebench/sample/single_cluster/random/sample_doc_labels.json \
     --unsampled-labels  data/financebench/sample/single_cluster/random/unsampled_doc_labels.json \
@@ -45,7 +45,7 @@ python test/rule_end_to_end.py \
 
 | Argument | Default | Description |
 |---|---|---|
-| `--rule-gen-module` | `src/rule_gen_llm_coarse.py` | Path to any `src/rule_gen_*.py` file — the pipeline dynamically imports its `rule_gen_*` function |
+| `--rule-gen-module` | `src/rule_gen/llm_coarse.py` | Path to any `src/rule_gen/*.py` file — the pipeline dynamically imports its `rule_gen_*` function |
 | `--queries-file` | `data/financebench/sample_queries.txt` | Questions to run |
 | `--sample-labels` | `data/financebench/sample/single_cluster/random/sample_doc_labels.json` | Sampled doc labels (`"DOCNAME.pdf" → {q: a}`) |
 | `--unsampled-labels` | `data/financebench/sample/single_cluster/random/unsampled_doc_labels.json` | Unsampled doc labels |
@@ -185,7 +185,7 @@ Schema (matches `results/eval_merge_all/summary.json`):
 ```json
 {
   "timestamp": "2026-04-30T10:00:00Z",
-  "rule_gen_module": "src/rule_gen_llm_coarse.py",
+  "rule_gen_module": "src/rule_gen/llm_coarse.py",
   "use_refine": false,
   "queries_file": "data/financebench/sample_queries.txt",
   "num_questions": 10,
@@ -229,8 +229,8 @@ Schema (matches `results/eval_merge_all/summary.json`):
 
 | Module | Stage | Role |
 |---|---|---|
-| `src/rule_gen_llm_coarse.py` | 1 | Default rule generator |
-| `src/rule_gen_agent_coarse.py` | 1 | Alternative rule generator |
-| `src/rule_refine.py` | 2 | Optional rule subset selection |
-| `src/rule_apply_merge.py` | 3 | Apply rules, union spans, call LLM |
+| `src/rule_gen/llm_coarse.py` | 1 | Default rule generator |
+| `src/rule_gen/agent_coarse.py` | 1 | Alternative rule generator |
+| `src/rule_refine/v1.py` | 2 | Optional rule subset selection |
+| `src/rule_apply/merge.py` | 3 | Apply rules, union spans, call LLM |
 | `src/eval_rule.py` | 4 | LLM-as-judge evaluation logic |

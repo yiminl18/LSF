@@ -1,7 +1,7 @@
 """Rule selection for refine_dynamic_generality: one_shot → auto-tighten selected subset.
 
 Reads one_shot rules and existing eval artefacts, runs the auto-tighten
-selection algorithm (src/rule_refinement/select_rules_auto_tighten.py),
+selection algorithm (src/rule_refine/selection/select_rules_auto_tighten.py),
 copies selected rule .py files into
 rules/.../refine_dynamic_generality/<slug>_10_refdyn/, and writes selection
 metadata to results/.../refine_dynamic_generality/rule_select/<slug>_10_refdyn.json.
@@ -25,8 +25,8 @@ _ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(_ROOT / "src"))
 os.chdir(_ROOT)
 
-from rule_refinement.cost_profile import load_or_compute_cost_profile
-from rule_refinement.select_rules_auto_tighten import run_selection_auto_tighten
+from rule_refine.selection.cost_profile import load_or_compute_cost_profile
+from rule_refine.selection.select_rules_auto_tighten import run_selection_auto_tighten
 
 # ── Paths ──────────────────────────────────────────────────────────────────────
 QUERIES_FILE         = "data/financebench/sample_queries.txt"

@@ -57,9 +57,11 @@ OBJECTIVES (in priority order)
 less than 5% of the full document). After hitting the accuracy threshold, tighten \
 high-cost rules without dropping accuracy. If meeting the cost target would require \
 sacrificing accuracy, keep accuracy and accept higher cost — accuracy always wins.
-3. Fewest rules possible. Prefer one broad rule that covers 8 of 10 documents \
-over three narrow rules that each cover 3. A rule covering fewer than 2 documents \
-should be merged into a broader rule or dropped.
+3. Aim for 5–10 rules. Fewer than 5 rules tends to overfit to the sampled docs \
+and generalize poorly to unseen documents. More than 10 adds noise without coverage \
+gains. Prefer broad rules that each cover many documents over narrow rules that \
+cover only 1–2. A rule covering fewer than 2 documents should be merged into a \
+broader rule or dropped.
 
 ---
 

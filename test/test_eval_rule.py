@@ -12,7 +12,7 @@ sys.path.insert(0, str(_ROOT / "src"))
 os.chdir(_ROOT)
 
 from eval_rule import eval_rule
-from rule_apply_individual import rule_apply_individual
+from rule_apply.individual import rule_apply_individual
 
 QUESTION = "What is the registrant's exact name?"
 QUESTION_SLUG = "what_is_the_registrants_exact_name_10"

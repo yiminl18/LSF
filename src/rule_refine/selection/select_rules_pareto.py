@@ -24,9 +24,9 @@ _ROOT = _SRC.parent
 if str(_SRC) not in sys.path:
     sys.path.insert(0, str(_SRC))
 
-from rule_refinement.select_rules      import _greedy_cover
-from rule_refinement.baseline_targets  import load_target_docs
-from rule_refinement.coverage_check    import load_or_compute_coverage, filter_by_tau
+from rule_refine.selection.select_rules      import _greedy_cover
+from rule_refine.selection.baseline_targets  import load_target_docs
+from rule_refine.selection.coverage_check    import load_or_compute_coverage, filter_by_tau
 
 _DEFAULT_OUTPUT_DIR = (
     "results/financebench/lsf/single_cluster/llm/gpt54/one_shot/selector_run_pareto"

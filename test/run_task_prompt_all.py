@@ -12,7 +12,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "src"))
 
-from rule_gen_agent_claude import run
+from rule_gen.agent_claude import run
 
 # ── CLI args ──────────────────────────────────────────────────────────────────
 

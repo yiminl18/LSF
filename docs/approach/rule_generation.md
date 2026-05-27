@@ -10,14 +10,15 @@ This document describes every rule generation approach in the LSF codebase. Each
 
 | Method | Code | Cluster | Model | sAcc | uAcc | cost\_s | cost\_u |
 |--------|------|---------|-------|-----:|-----:|--------:|--------:|
-| LLM-Coarse | `src/rule_gen_llm_coarse.py` | single | gpt54 | 0.910 | **0.892** | 0.172 | 0.169 |
-| Agent-Raw (LangChain) | `src/rule_gen_agent_langchain.py` | single | gpt54 | 0.860 | 0.754 | 0.116 | 0.106 |
-| Agent-Raw (LangChain) | `src/rule_gen_agent_langchain.py` | single | opus47 | 0.889 | 0.776 | 0.131 | 0.120 |
+| LLM-Coarse | `src/rule_gen/llm_coarse.py` | single | gpt54 | 0.910 | **0.892** | 0.172 | 0.169 |
+| Agent-Raw (LangChain) | `src/rule_gen/agent_langchain.py` | single | gpt54 | 0.860 | 0.754 | 0.116 | 0.106 |
+| Agent-Raw (LangChain) | `src/rule_gen/agent_langchain.py` | single | opus47 | 0.889 | 0.776 | 0.131 | 0.120 |
 | Agent-Refined (LangChain) | post-process on Agent-Raw | single | gpt54 | 0.880 | 0.734 | **0.036** | **0.036** |
-| Agent-Raw (LangChain) | `src/rule_gen_agent_langchain.py` | multi | gpt54 | 0.856 | 0.843 | 0.068 | 0.087 |
-| Agent-Raw (LangChain) | `src/rule_gen_agent_langchain.py` | multi | opus47 | 0.852 | 0.705 | 0.013 | 0.013 |
+| Agent-Raw (LangChain) | `src/rule_gen/agent_langchain.py` | multi | gpt54 | 0.856 | 0.843 | 0.068 | 0.087 |
+| Agent-Raw (LangChain) | `src/rule_gen/agent_langchain.py` | multi | opus47 | 0.852 | 0.705 | 0.013 | 0.013 |
 | Agentic-gen (random) | `agent/run_agent_gen.py` | single | opus47 | **0.960** | 0.820 | 0.006 | 0.005 |
 | Agentic-gen (FPS) | `agent/run_agent_gen.py` | single | opus47 | **0.960** | 0.786 | 0.008 | 0.008 |
+| Agentic-gen (Codex) | `src/rule_gen/agent_codex.py` | single | gpt54 | — | — | — | — |
 
 > "single cluster" = 10 sampled / 50 unsampled, all 10-K. "multi cluster" = 18 sampled / 96 unsampled, mixed doc types (10-K, 10-Q, 8-K, earnings).
 
@@ -29,9 +30,9 @@ This document describes every rule generation approach in the LSF codebase. Each
 
 ---
 
-## Approach 1 — LLM-Coarse
+## Approach 1 — LLM-Coarse ⭐ Recommended
 
-**Code:** `src/rule_gen_llm_coarse.py`  
+**Code:** `src/rule_gen/llm_coarse.py`  
 **Doc:** `docs/rule_gen_llm_coarse.md`
 
 ### Description
@@ -73,7 +74,7 @@ Rules output: `def rule_<name>(doc: dict) -> list[dict]` — span objects from `
 
 ## Approach 2 — Agent-Raw / LangChain
 
-**Code:** `src/rule_gen_agent_langchain.py`  
+**Code:** `src/rule_gen/agent_langchain.py`  
 **Doc:** `docs/rule_gen_agent.md`
 
 ### Description
@@ -144,9 +145,9 @@ Primary objective: `merge_accuracy >= 0.90`. Secondary: minimize `avg_cost_ratio
 
 ---
 
-## Approach 3 — Agentic-gen (Claude Code)
+## Approach 3 — Agentic-gen (Claude Code) ⭐ Recommended
 
-**Code:** `agent/run_agent_gen.py` (driver) + `src/rule_gen_agent_claude.py` (prompt builder)  
+**Code:** `agent/run_agent_gen.py` (driver) + `src/rule_gen/agent_claude.py` (prompt builder)  
 **Doc:** `docs/rule_generation_agentic_from_pdf.md`
 
 ### Description
@@ -163,14 +164,14 @@ The driver (`run_agent_gen.py`) spawns one `claude --dangerously-skip-permission
 |------|--------|-------------------|
 | Hard | `match_rate = 1.0` on every sampled doc | `verify_accuracy --d-star-mode all_labeled` |
 | Soft | Minimize `avg_cost_ratio` | `compute_cost` |
-| Soft | Keep `|R|` small | Agent working memory |
+| Soft | Keep `|R|` in range 5–10 (fewer overfits, more generalizes better) | Agent working memory |
 
-Budget: 30 `verify_accuracy` calls per question. Typical output: 1–2 rules per question.
+Budget: 30 `verify_accuracy` calls per question. Typical output: 5–10 rules per question (1–2 rules tends to overfit to the sampled docs and generalize poorly).
 
 ### Interface (prompt builder)
 
 ```python
-# src/rule_gen_agent_claude.py
+# src/rule_gen/agent_claude.py
 def build_prompt(
     question: str,
     doc_list: list[str],       # sampled doc stems
@@ -195,8 +196,8 @@ def run(
 
 | Sample set | sAcc | uAcc | cost\_s | cost\_u | Rules/question |
 |------------|-----:|-----:|--------:|--------:|---------------:|
-| random (Task 1) | **0.960** | 0.820 | 0.006 | **0.005** | ~1–2 |
-| FPS (Task 2) | **0.960** | 0.786 | 0.008 | 0.008 | ~1–2 |
+| random (Task 1) | **0.960** | 0.820 | 0.006 | **0.005** | ~5–10 |
+| FPS (Task 2) | **0.960** | 0.786 | 0.008 | 0.008 | ~5–10 |
 
 Highest sAcc of all single-cluster methods. Cost is ~37× cheaper than LLM-coarse on unsampled (0.005 vs 0.169). FPS sampling did not improve unsampled generalization over random — the random 10-doc sample was already diverse enough for these questions.
 
@@ -204,6 +205,75 @@ Highest sAcc of all single-cluster methods. Cost is ~37× cheaper than LLM-coars
 - `rules/financebench/lsf/single_cluster/agent/opus47/agentic/raw/<slug>_10_agentic/` (Task 1)
 - `rules/financebench/lsf/single_cluster/agent/opus47/agentic_fps/raw/<slug>_10_agentic_fps/` (Task 2)
 - Agent traces: `results/.../agent_trace/<slug>.jsonl`
+
+---
+
+## Approach 3b — Agentic-gen (Codex)
+
+**Code:** `src/rule_gen/agent_codex.py`
+
+### Description
+
+Direct Codex equivalent of Approach 3. Uses exactly the same task prompt, hints,
+constraints, and content — only the underlying CLI is swapped from `claude -p`
+to `codex exec`. There is **no Claude Code outer wrapper**: this driver spawns a
+single Codex agent session per question, and that session performs all rule
+generation work end to end (inspect docs, write rules, iterate).
+
+The intent is to isolate the effect of the agent backbone (Claude Opus vs. Codex
+gpt54/gpt54mini) while keeping the prompt, tool semantics, and objectives
+identical. Anything else that differs between Approach 3 and Approach 3b is a
+property of the underlying CLI, not the prompt.
+
+### Models
+
+- `gpt54` — `gpt-5.4` via Codex CLI
+- `gpt54mini` — `gpt-5.4-mini` via Codex CLI
+
+### Interface
+
+```python
+def build_prompt(
+    question: str,
+    docs: list[str],                    # DOC_NAMEs (no .pdf suffix)
+    labels_file: str = "data/financebench/sample/single_cluster/random/sample_doc_labels.json",
+    processing_dir: str = "data/financebench/processing",
+    rules_dir: str = "rules/financebench/lsf/single_cluster/agent/gpt54/codex/raw",
+    model: str = "gpt54",
+) -> str
+
+def run(
+    question: str,
+    docs: list[str],
+    labels_file: str = ...,
+    processing_dir: str = ...,
+    rules_dir: str = ...,
+    model: str = "gpt54",
+    cwd: str | None = None,
+    timeout: int = 5400,
+    output_last_message: str | None = None,
+) -> str
+```
+
+### Usage
+
+```bash
+# Print the prompt without invoking codex (for inspection)
+python src/rule_gen/agent_codex.py \
+    "What is the registrant's telephone number?" \
+    --docs AMCOR_2019_10K BOEING_2018_10K \
+    --print-prompt
+
+# Actually run codex on the question
+python src/rule_gen/agent_codex.py \
+    "What is the registrant's telephone number?" \
+    --docs AMCOR_2019_10K BOEING_2018_10K \
+    --model gpt54
+```
+
+### Status
+
+Implemented. No benchmark results yet.
 
 ---
 
@@ -223,7 +293,7 @@ It is no longer listed here as a pure rule-generation approach.
 
 ## Approach 4 — Agent-Coarse (spec only)
 
-**Code:** `src/rule_gen_agent_coarse.py` — **not yet implemented**  
+**Code:** `src/rule_gen/agent_coarse.py` — **not yet implemented**  
 **Doc:** `docs/rule_gen_agent_coarse.md`
 
 ### Description
@@ -257,7 +327,7 @@ Spec complete. No results — code not implemented.
 
 ## Approach 5 — Agent-Exact (spec only)
 
-**Code:** `src/rule_gen_agent_exact.py` — **not yet implemented**  
+**Code:** `src/rule_gen/agent_exact.py` — **not yet implemented**  
 **Doc:** `docs/rule_gen_agent_exact.md`
 
 ### Description
@@ -301,7 +371,8 @@ Spec complete. No results — code not implemented.
 |----------|-------------|-------------|---------------|---------------:|----------:|----------:|
 | LLM-Coarse | Yes | spans | None (single shot) | 1 total | 0.910 | 0.892 |
 | Agent-Raw LangChain | Yes | spans | Substring match + LLM union check | ~3–5 | 0.889 | 0.843 |
-| Agentic-gen Claude | Yes | spans | LLM verify (hard constraint) | per verify call | 0.960 | 0.820 |
+| Agentic-gen Claude | Yes | spans | LLM verify (hard constraint) | per verify call | 0.960 | 0.820 | 5–10 rules recommended |
+| Agentic-gen Codex | Yes | spans | LLM verify (hard constraint) | per verify call | — | — | Same prompt as Agentic-gen Claude; CLI swapped to `codex exec` |
 | Agent-Coarse | Spec only | spans | LLM per-rule QA | O(rules × iters) | — | — |
 | Agent-Exact | Spec only | exact string | Exact match | 0 | — | — |
 

@@ -1,7 +1,7 @@
 """Rule selection for refine_generality: one_shot → cost-optimal selected subset.
 
 Reads one_shot rules and existing eval artefacts, runs the cost-optimal
-selection algorithm (src/rule_refinement/), copies selected rule .py files
+selection algorithm (src/rule_refine/selection/), copies selected rule .py files
 into rules/.../refine_generality/<slug>_10_refgen/, and writes selection
 metadata (including latency and LLM-call counts) to
 results/.../refine_generality/rule_select/<slug>_10_refgen.json.
@@ -25,8 +25,8 @@ _ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(_ROOT / "src"))
 os.chdir(_ROOT)
 
-from rule_refinement.cost_profile import load_or_compute_cost_profile
-from rule_refinement.select_rules import run_selection
+from rule_refine.selection.cost_profile import load_or_compute_cost_profile
+from rule_refine.selection.select_rules import run_selection
 
 # ── Paths ──────────────────────────────────────────────────────────────────────
 QUERIES_FILE         = "data/financebench/sample_queries.txt"

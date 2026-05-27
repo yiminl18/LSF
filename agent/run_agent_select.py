@@ -1,6 +1,6 @@
 """Driver: spawn one Claude Code session per question to select rules.
 
-Mirrors the pattern in src/rule_gen_agent_claude.py — calls the `claude -p`
+Mirrors the pattern in src/rule_gen/agent_claude.py — calls the `claude -p`
 CLI with the task prompt from agent/task_prompt.md, captures stdout, parses
 the AGENTIC_SELECTION_DONE summary line.
 

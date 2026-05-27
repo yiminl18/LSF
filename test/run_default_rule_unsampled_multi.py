@@ -22,7 +22,7 @@ sys.path.insert(0, str(_ROOT / "src"))
 os.chdir(_ROOT)
 
 from default_rule               import apply_with_fallback
-from rule_refinement.eval_judge import judge
+from rule_refine.selection.eval_judge import judge
 
 # ── Config ────────────────────────────────────────────────────────────────────
 QUERIES_FILE    = "data/financebench/mix_doc_queries.txt"

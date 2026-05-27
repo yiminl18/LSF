@@ -9,7 +9,7 @@ Pipeline:
   6. Run FPS on v_d's with elbow stopping (stop_ratio=0.5, max_K=None).
   7. Write sample_doc_labels.json + unsampled_doc_labels.json + fps_run.json.
 
-See docs/document_sampling_fps.md for the algorithm spec.
+See docs/approach/sampling.md for the algorithm spec.
 """
 
 from __future__ import annotations
@@ -22,7 +22,7 @@ from pathlib import Path
 
 import numpy as np
 
-_ROOT = Path(__file__).resolve().parents[1]
+_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(_ROOT / "src"))
 os.chdir(_ROOT)
 

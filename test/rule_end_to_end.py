@@ -19,7 +19,7 @@ _ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(_ROOT / "src"))
 os.chdir(_ROOT)
 
-from rule_apply_merge import rule_apply_merge
+from rule_apply.merge import rule_apply_merge
 
 
 # ── Timeout helper (SIGALRM, Linux/macOS only) ─────────────────────────────────
@@ -147,7 +147,7 @@ def _update_summary(summary_path: Path, question_slug: str, question: str, split
 
 def main():
     parser = argparse.ArgumentParser(description="End-to-end rule pipeline")
-    parser.add_argument("--rule-gen-module",  default="src/rule_gen_llm_coarse.py")
+    parser.add_argument("--rule-gen-module",  default="src/rule_gen/llm_coarse.py")
     parser.add_argument("--queries-file",     default="data/financebench/sample_queries.txt")
     parser.add_argument("--sample-labels",    default="data/financebench/sample/single_cluster/random/sample_doc_labels.json")
     parser.add_argument("--unsampled-labels", default="data/financebench/sample/single_cluster/random/unsampled_doc_labels.json")
@@ -239,7 +239,7 @@ def main():
 
             # ── Stage 2: Rule Refinement (optional) ───────────────────────────
             if args.use_refine:
-                from rule_refine import rule_refine, evaluate_merge_accuracy
+                from rule_refine.v1 import rule_refine, evaluate_merge_accuracy
 
                 refine_out_path  = out / "rule_refine" / f"{question_slug}_refine.json"
                 refined_rules_dir = str(out / "refined_rules")

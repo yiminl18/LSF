@@ -160,7 +160,7 @@ def rule_refine_v2(
         pruned = prune_tokens.get("pruned", [])
 
     # ── Enrich per_doc with token counts ──────────────────────────────────────
-    from rule_refine import _count_tokens
+    from rule_refine.v1 import _count_tokens
     for entry in per_doc:
         dname = entry["doc_name"]
         doc = next((d for d in documents
@@ -320,7 +320,7 @@ def _budget_prune(
 ) -> tuple[list[str], float, list[dict], dict]:
     """Stage G: drop rules one at a time whose removal preserves merge_acc ≥ target,
     until |selection| ≤ budget or no further safe removal exists."""
-    from rule_refine import evaluate_merge_accuracy
+    from rule_refine.v1 import evaluate_merge_accuracy
     current = list(selection)
     tokens = {"qa_in": 0, "qa_out": 0, "judge_in": 0, "judge_out": 0, "llm_calls": 0, "pruned": []}
 

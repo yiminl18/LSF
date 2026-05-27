@@ -12,7 +12,7 @@ _ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(_ROOT / "src"))
 os.chdir(_ROOT)
 
-from rule_apply_individual import rule_apply_individual
+from rule_apply.individual import rule_apply_individual
 from eval_rule import eval_rule
 
 QUERIES_FILE   = "data/financebench/mix_doc_queries.txt"

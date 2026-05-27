@@ -2,7 +2,7 @@
 """Compute avg_cost_ratio for a list of rules on the sampled docs. No LLM.
 
 Reads (or builds + caches) the cost profile via
-`src/rule_refinement/cost_profile.py::load_or_compute_cost_profile`.
+`src/rule_refine/selection/cost_profile.py::load_or_compute_cost_profile`.
 
 Usage:
     python tools/compute_cost.py --question-slug <slug> \
@@ -23,7 +23,7 @@ _ROOT = _THIS.parent
 sys.path.insert(0, str(_ROOT / "src"))
 sys.path.insert(0, str(_THIS))
 
-from rule_refinement.cost_profile import load_or_compute_cost_profile  # noqa: E402
+from rule_refine.selection.cost_profile import load_or_compute_cost_profile  # noqa: E402
 from _paths import (                                                   # noqa: E402
     RULES_BASE_DIR, SAMPLED_LABELS_FILE, PROCESSING_DIR, COST_PROFILE_DIR,
 )

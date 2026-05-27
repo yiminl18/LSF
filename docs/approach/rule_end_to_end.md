@@ -26,9 +26,9 @@ This approach runs one Codex agent session per question over the full `.txt` cor
 
 This is intentionally separated from rule application. After generation, the produced rule set can be consumed by any existing application strategy in the repo, such as:
 
-- `src/rule_apply_merge.py`
+- `src/rule_apply/merge.py`
 - `src/default_rule.py`
-- `src/rule_apply_individual.py`
+- `src/rule_apply/individual.py`
 
 So this approach should be evaluated in two phases:
 1. **rule generation**: does the agent discover a compact, high-coverage rule set?
@@ -176,8 +176,8 @@ Rule application uses `rule_apply_merge` with `gpt54` for answer generation and 
 |---------|-----:|--:|-----------:|----------:|------------:|------------:|-------------:|------|
 | Court | 294 | 13 | 14.5 | 0.969 | 563s | 62,487,212 | 746,101 | `results/court/agentic_rule_full_data_gpt54mini_adaptive/all_docs` |
 | NOPV | 242 | 12 | 11.3 | 0.882 | 496s | 60,435,160 | 642,221 | `results/nopv/agentic_rule_full_data_gpt54mini_adaptive/all_docs` |
-| OfficeQA | 200 | 16 | 9.3 | 0.876 | 563s | 84,751,470 | — | `results/officeqa/agentic_rule_full_data_gpt54mini_adaptive/all_docs` |
-| FinanceBench | 100 | 12 | 5.2 | 1.000 | 333s | 28,678,167 | — | `results/financebench/agentic_rule_full_data_gpt54mini_adaptive/all_docs` |
+| OfficeQA | 200 | 16 | 9.3 | 0.876 | 563s | 84,751,470 | 909,176 | `results/officeqa/agentic_rule_full_data_gpt54mini_adaptive/all_docs` |
+| FinanceBench | 100 | 12 | 5.2 | 1.000 | 333s | 28,678,167 | 440,890 | `results/financebench/agentic_rule_full_data_gpt54mini_adaptive/all_docs` |
 
 ##### Rule Application
 
@@ -198,8 +198,8 @@ Rule application uses `rule_apply_merge` with `gpt54` for answer generation and 
 |---------|-----:|--:|-----------:|----------:|------------:|------------:|-------------:|------|
 | Court | 294 | 13 | 17.0 | 0.978 | 545s | 40,650,849 | 410,238 | `results/court/agentic_rule_full_data_gpt54_adaptive/all_docs` |
 | NOPV | 242 | 12 | 14.8 | 0.964 | 599s | 48,860,420 | 399,034 | `results/nopv/agentic_rule_full_data_gpt54_adaptive/all_docs` |
-| OfficeQA | 200 | 16 | 10.7 | 0.984 | 890s | — | — | `results/officeqa/agentic_rule_full_data_gpt54_adaptive/all_docs` |
-| FinanceBench | 100 | 12 | 6.4 | 0.992 | 477s | — | — | `results/financebench/agentic_rule_full_data_gpt54_adaptive/all_docs` |
+| OfficeQA | 200 | 16 | 10.7 | 0.984 | 890s | 101,960,116 | 669,153 | `results/officeqa/agentic_rule_full_data_gpt54_adaptive/all_docs` |
+| FinanceBench | 100 | 12 | 6.4 | 0.992 | 477s | 36,531,055 | 328,785 | `results/financebench/agentic_rule_full_data_gpt54_adaptive/all_docs` |
 
 ##### Rule Application
 

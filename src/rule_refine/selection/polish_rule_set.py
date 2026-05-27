@@ -18,8 +18,8 @@ _ROOT = _SRC.parent
 if str(_SRC) not in sys.path:
     sys.path.insert(0, str(_SRC))
 
-from rule_apply_merge import rule_apply_merge
-from rule_refinement.eval_judge import judge
+from rule_apply.merge import rule_apply_merge
+from rule_refine.selection.eval_judge import judge
 
 _DEFAULT_OUTPUT_DIR = (
     "results/financebench/lsf/single_cluster/llm/gpt54/one_shot/selector_run"

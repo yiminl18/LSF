@@ -23,8 +23,8 @@ _ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(_ROOT / "src"))
 os.chdir(_ROOT)
 
-from rule_apply_merge import rule_apply_merge
-from rule_refinement.eval_judge import judge
+from rule_apply.merge import rule_apply_merge
+from rule_refine.selection.eval_judge import judge
 
 QUERIES_FILE    = "data/financebench/sample_queries.txt"
 LABELS_FILE     = "data/financebench/sample/single_cluster/random/unsampled_doc_labels.json"

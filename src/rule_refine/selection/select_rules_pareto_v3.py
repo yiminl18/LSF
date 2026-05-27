@@ -32,12 +32,12 @@ _ROOT = _SRC.parent
 if str(_SRC) not in sys.path:
     sys.path.insert(0, str(_SRC))
 
-from rule_apply_merge                     import rule_apply_merge
-from rule_refinement.eval_judge           import judge
-from rule_refinement.baseline_targets     import load_target_docs
-from rule_refinement.coverage_check       import load_or_compute_coverage
-from rule_refinement.select_rules         import _greedy_cover
-from rule_refinement.select_rules_pareto  import (
+from rule_apply.merge                     import rule_apply_merge
+from rule_refine.selection.eval_judge           import judge
+from rule_refine.selection.baseline_targets     import load_target_docs
+from rule_refine.selection.coverage_check       import load_or_compute_coverage
+from rule_refine.selection.select_rules         import _greedy_cover
+from rule_refine.selection.select_rules_pareto  import (
     _sort_by_cost_effectiveness,
     _build_frontier,
     make_query_table,

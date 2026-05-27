@@ -27,9 +27,9 @@ _ROOT = _THIS.parent
 sys.path.insert(0, str(_ROOT / "src"))
 sys.path.insert(0, str(_THIS))
 
-from rule_apply_merge              import rule_apply_merge      # noqa: E402
-from rule_refinement.eval_judge    import judge                 # noqa: E402
-from rule_refinement.baseline_targets import load_target_docs   # noqa: E402
+from rule_apply.merge              import rule_apply_merge      # noqa: E402
+from rule_refine.selection.eval_judge    import judge                 # noqa: E402
+from rule_refine.selection.baseline_targets import load_target_docs   # noqa: E402
 
 from _paths import (
     RULES_BASE_DIR, SAMPLED_LABELS_FILE, PROCESSING_DIR,

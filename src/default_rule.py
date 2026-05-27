@@ -26,7 +26,7 @@ if str(_SRC) not in sys.path:
     sys.path.insert(0, str(_SRC))
 
 # Reuse the pure-Python retrieval helper from the proxy variant
-from rule_refinement.select_rules_pareto_proxy import _retrieve_merge
+from rule_refine.selection.select_rules_pareto_proxy import _retrieve_merge
 
 
 # ── Prompts ──────────────────────────────────────────────────────────────────

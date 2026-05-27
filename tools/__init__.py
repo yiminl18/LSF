@@ -1,6 +1,6 @@
 """CLI tools exposed to the agentic rule selector via Bash.
 
-Each script wraps a primitive from src/rule_refinement/ behind a thin CLI:
+Each script wraps a primitive from src/rule_refine/selection/ behind a thin CLI:
 
   - compute_cost.py       → cost_profile.load_or_compute_cost_profile
   - compute_coverage.py   → coverage_check.load_or_compute_coverage

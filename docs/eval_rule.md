@@ -302,7 +302,7 @@ for r in results:
 
 | Module | Role |
 |---|---|
-| `src/rule_gen_llm_coarse.py` | Generates rules and writes `doc_names` to rule_gen result |
-| `src/rule_apply_individual.py` | Runs rules and writes predictions to rule_run folder |
+| `src/rule_gen/llm_coarse.py` | Generates rules and writes `doc_names` to rule_gen result |
+| `src/rule_apply/individual.py` | Runs rules and writes predictions to rule_run folder |
 | `src/eval_rule.py` | This module — reads predictions, judges, writes eval results |
 | `test/test_eval_rule.py` | Runs eval on all rules for one question |

@@ -1,6 +1,6 @@
 """Farthest-Point Sampling (Gonzalez 1985 / farthest-first traversal).
 
-Implements §4 + §5 + §9 of docs/document_sampling_fps.md:
+Implements §4 + §5 + §9 of docs/approach/sampling.md:
   - Iterative max-min distance picks
   - Elbow stopping rule on the gap sequence
 

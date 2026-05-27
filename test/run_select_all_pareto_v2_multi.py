@@ -17,8 +17,8 @@ _ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(_ROOT / "src"))
 os.chdir(_ROOT)
 
-from rule_refinement.cost_profile        import load_or_compute_cost_profile
-from rule_refinement.select_rules_pareto_v2 import run_selection_pareto_v2
+from rule_refine.selection.cost_profile        import load_or_compute_cost_profile
+from rule_refine.selection.select_rules_pareto_v2 import run_selection_pareto_v2
 
 QUERIES_FILE        = "data/financebench/mix_doc_queries.txt"
 LABELS_FILE         = "data/financebench/sample/multi_cluster/random/sample_doc_labels.json"

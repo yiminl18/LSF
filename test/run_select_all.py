@@ -23,8 +23,8 @@ _ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(_ROOT / "src"))
 os.chdir(_ROOT)
 
-from rule_refinement.cost_profile import load_or_compute_cost_profile
-from rule_refinement.select_rules import run_selection
+from rule_refine.selection.cost_profile import load_or_compute_cost_profile
+from rule_refine.selection.select_rules import run_selection
 
 QUERIES_FILE        = "data/financebench/sample_queries.txt"
 LABELS_FILE         = "data/financebench/sample/single_cluster/random/sample_doc_labels.json"

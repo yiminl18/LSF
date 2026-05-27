@@ -11,12 +11,12 @@ This document describes every rule refinement and selection approach in the LSF 
 | Variant | Code | sAcc | uAcc | cost\_s | cost\_u | Mean rules | Overfit gap |
 |---------|------|-----:|-----:|--------:|--------:|-----------:|------------:|
 | **Base (full pool)** | — | 0.910 | **0.892** | 0.172 | 0.169 | ~63 | +0.018 |
-| **v1** | `src/rule_refine.py` | 0.890 | 0.778 | 0.029 | 0.035 | 7.8 | +0.112 |
-| **p\_mini** | `src/rule_refinement/select_rules_pareto.py` (gpt54mini) | 0.840 | 0.780 | 0.005 | 0.005 | 3.9 | +0.060 |
-| **p\_proxy** | `src/rule_refinement/select_rules_pareto_proxy.py` | 0.843\* | 0.737\* | 0.004 | 0.004 | 3.0 | +0.106 |
-| **p\_gpt54** | `src/rule_refinement/select_rules_pareto.py` (gpt54) | 0.880 | 0.748 | 0.007 | 0.005 | 4.3 | +0.132 |
-| **p\_v2** | `src/rule_refinement/select_rules_pareto_v2.py` | 0.880 | 0.806 | 0.012 | 0.010 | 5.1 | +0.074 |
-| **p\_v3** | `src/rule_refinement/select_rules_pareto_v3.py` | **0.910** | 0.804 | 0.011 | 0.009 | 4.7 | +0.106 |
+| **v1** | `src/rule_refine/v1.py` | 0.890 | 0.778 | 0.029 | 0.035 | 7.8 | +0.112 |
+| **p\_mini** | `src/rule_refine/selection/select_rules_pareto.py` (gpt54mini) | 0.840 | 0.780 | 0.005 | 0.005 | 3.9 | +0.060 |
+| **p\_proxy** | `src/rule_refine/selection/select_rules_pareto_proxy.py` | 0.843\* | 0.737\* | 0.004 | 0.004 | 3.0 | +0.106 |
+| **p\_gpt54** | `src/rule_refine/selection/select_rules_pareto.py` (gpt54) | 0.880 | 0.748 | 0.007 | 0.005 | 4.3 | +0.132 |
+| **p\_v2** | `src/rule_refine/selection/select_rules_pareto_v2.py` | 0.880 | 0.806 | 0.012 | 0.010 | 5.1 | +0.074 |
+| **p\_v3** | `src/rule_refine/selection/select_rules_pareto_v3.py` | **0.910** | 0.804 | 0.011 | 0.009 | 4.7 | +0.106 |
 | **agentic** | `agent/run_agent_select.py` | **0.940** ⭐ | 0.870 | 0.027 | 0.023 | **2.0** ⭐ | +0.070 |
 | **fallback** | `src/default_rule.py` | — | **0.892** | — | 0.030 | 5.1+on-demand | — |
 
@@ -46,7 +46,7 @@ Agentic+fallback marginally beats the full pool on uAcc (0.940 vs 0.935) at 6.5�
 
 ## Approach 1 — v1 (cost-sort + exponential search + backward prune)
 
-**Code:** `src/rule_refine.py`  
+**Code:** `src/rule_refine/v1.py`  
 **Doc:** `docs/rule_refine.md`
 
 ### Description
@@ -88,14 +88,14 @@ def rule_refine(
 
 ## Approach 2 — Pareto variants
 
-**Code:** `src/rule_refinement/` (multiple files)  
+**Code:** `src/rule_refine/selection/` (multiple files)  
 **Doc:** `docs/pareto_versions.md`, `docs/rule_selection_pareto_implementation.md`
 
 All Pareto variants share the same core primitive: **cost-effectiveness greedy cover** — sort rules by `cov(r) / avg_cost_ratio(r)` descending, then greedily admit rules that cover at least one uncovered doc under the in-loop judge.
 
 ### p\_mini — Pareto with gpt54mini judge
 
-**Code:** `src/rule_refinement/select_rules_pareto.py` (with `MODEL_NAME=gpt54mini`)  
+**Code:** `src/rule_refine/selection/select_rules_pareto.py` (with `MODEL_NAME=gpt54mini`)  
 **Driver:** `test/run_select_all_pareto.py`
 
 In-loop judge: gpt54mini. The cheap judge's noisier verdicts act as accidental regularization — marginal specialists get rejected, broader rules get admitted. Lowest overfit gap (+0.060) of all judge-aware variants.
@@ -108,7 +108,7 @@ In-loop judge: gpt54mini. The cheap judge's noisier verdicts act as accidental r
 
 ### p\_proxy — Pareto with substring-only judge (zero LLM)
 
-**Code:** `src/rule_refinement/select_rules_pareto_proxy.py`  
+**Code:** `src/rule_refine/selection/select_rules_pareto_proxy.py`  
 **Driver:** `test/run_select_all_pareto_proxy.py`
 
 In-loop judge: case-insensitive substring check `gt.lower() in retrieved_text.lower()`. Zero LLM calls during selection.
@@ -125,7 +125,7 @@ In-loop judge: case-insensitive substring check `gt.lower() in retrieved_text.lo
 
 ### p\_gpt54 — Pareto with gpt54 judge
 
-**Code:** `src/rule_refinement/select_rules_pareto.py` (with `MODEL_NAME=gpt54`)  
+**Code:** `src/rule_refine/selection/select_rules_pareto.py` (with `MODEL_NAME=gpt54`)  
 **Driver:** `test/run_select_all_pareto_gpt54.py`
 
 Same algorithm as p_mini, stronger judge. Counter-intuitively worse generalization (uAcc 0.748 vs p_mini 0.780). The gpt54 judge confidently admits narrow specialists that overfit; p_mini's noisy judge rejects them.
@@ -138,7 +138,7 @@ Same algorithm as p_mini, stronger judge. Counter-intuitively worse generalizati
 
 ### p\_v2 — Pareto with accuracy floor + backward prune *(recommended)*
 
-**Code:** `src/rule_refinement/select_rules_pareto_v2.py`  
+**Code:** `src/rule_refine/selection/select_rules_pareto_v2.py`  
 **Driver:** `test/run_select_all_pareto_v2.py`
 
 Grafts v1's accuracy guarantee onto Pareto's cost-effectiveness ordering.
@@ -158,7 +158,7 @@ Grafts v1's accuracy guarantee onto Pareto's cost-effectiveness ordering.
 
 ### p\_v3 — v2 with cumulative-prefix Phase B′
 
-**Code:** `src/rule_refinement/select_rules_pareto_v3.py`  
+**Code:** `src/rule_refine/selection/select_rules_pareto_v3.py`  
 **Driver:** `test/run_select_all_pareto_v3.py`
 
 Adds a fallback to p_v2 Phase B: if the single-rule addition loop hits `max_extra_rules` without reaching base, switch to v1-style exponential prefix search on the remaining pool.
@@ -255,7 +255,7 @@ Matches base uAcc exactly (0.892) at 18% of base retrieval cost (0.030 vs 0.169)
 
 ## Approach 5 — Static-τ and auto-tighten (spec only)
 
-**Code:** `src/rule_refinement/select_rules.py`, `src/rule_refinement/select_rules_auto_tighten.py`  
+**Code:** `src/rule_refine/selection/select_rules.py`, `src/rule_refine/selection/select_rules_auto_tighten.py`  
 **Not benchmarked.**
 
 These are earlier algorithmic variants implemented in code but without measured results:
@@ -268,7 +268,7 @@ Both are superseded by the Pareto variants and are retained for reference.
 
 ## Approach 6 — v2 refinement proposal (spec only)
 
-**Code:** `src/rule_refine_v2/`  
+**Code:** `src/rule_refine/v2/`  
 **Doc:** `docs/rule_refine_v2.md`  
 **Not implemented.**
 
@@ -307,24 +307,24 @@ The proposal replaces cost-sort + exponential search with a coverage-aware selec
 ### Selection algorithms
 | File | Variant |
 |------|---------|
-| `src/rule_refine.py` | v1 |
-| `src/rule_refinement/select_rules.py` | static-τ |
-| `src/rule_refinement/select_rules_auto_tighten.py` | auto-tighten |
-| `src/rule_refinement/select_rules_pareto.py` | p_mini + p_gpt54 |
-| `src/rule_refinement/select_rules_pareto_proxy.py` | p_proxy |
-| `src/rule_refinement/select_rules_pareto_v2.py` | p_v2 |
-| `src/rule_refinement/select_rules_pareto_v3.py` | p_v3 |
+| `src/rule_refine/v1.py` | v1 |
+| `src/rule_refine/selection/select_rules.py` | static-τ |
+| `src/rule_refine/selection/select_rules_auto_tighten.py` | auto-tighten |
+| `src/rule_refine/selection/select_rules_pareto.py` | p_mini + p_gpt54 |
+| `src/rule_refine/selection/select_rules_pareto_proxy.py` | p_proxy |
+| `src/rule_refine/selection/select_rules_pareto_v2.py` | p_v2 |
+| `src/rule_refine/selection/select_rules_pareto_v3.py` | p_v3 |
 | `agent/run_agent_select.py` | agentic |
 | `src/default_rule.py` | fallback |
 
 ### Shared primitives
 | File | Purpose |
 |------|---------|
-| `src/rule_refinement/eval_judge.py` | `judge` (LLM) + `proxy_judge` (substring) |
-| `src/rule_refinement/cost_profile.py` | Cost cache (no LLM) |
-| `src/rule_refinement/baseline_targets.py` | Loads D\* (docs answerable by full pool) |
-| `src/rule_refinement/coverage_check.py` | Per-rule coverage map |
-| `src/rule_apply_merge.py` | Apply any rule set to a doc (union retrieval) |
+| `src/rule_refine/selection/eval_judge.py` | `judge` (LLM) + `proxy_judge` (substring) |
+| `src/rule_refine/selection/cost_profile.py` | Cost cache (no LLM) |
+| `src/rule_refine/selection/baseline_targets.py` | Loads D\* (docs answerable by full pool) |
+| `src/rule_refine/selection/coverage_check.py` | Per-rule coverage map |
+| `src/rule_apply/merge.py` | Apply any rule set to a doc (union retrieval) |
 
 ### Output directories (under `results/financebench/lsf/single_cluster/llm/gpt54/one_shot/`)
 | Folder | Contents |

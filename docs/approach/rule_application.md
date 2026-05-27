@@ -8,7 +8,7 @@ This document describes the two rule application strategies in the LSF codebase.
 
 | Aspect | Individual | Merge |
 |--------|-----------|-------|
-| Code | `src/rule_apply_individual.py` | `src/rule_apply_merge.py` |
+| Code | `src/rule_apply/individual.py` | `src/rule_apply/merge.py` |
 | Rules input | single `rule_name: str` | `rule_names: list[str]` |
 | Retrieval | one rule applied | all rules applied, spans unioned + deduplicated |
 | Strategy tag | `"individual"` | `"merge"` |
@@ -19,7 +19,7 @@ This document describes the two rule application strategies in the LSF codebase.
 
 ## Strategy 1 — Individual
 
-**Code:** `src/rule_apply_individual.py`
+**Code:** `src/rule_apply/individual.py`
 
 ### Description
 
@@ -72,7 +72,7 @@ Output file is a JSON array appended incrementally (one record per document).
 
 ## Strategy 2 — Merge
 
-**Code:** `src/rule_apply_merge.py`
+**Code:** `src/rule_apply/merge.py`
 
 ### Description
 

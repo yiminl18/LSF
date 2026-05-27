@@ -13,7 +13,7 @@ _SRC = Path(__file__).resolve().parent.parent
 if str(_SRC) not in sys.path:
     sys.path.insert(0, str(_SRC))
 
-from rule_refine import evaluate_merge_accuracy  # noqa: E402
+from rule_refine.v1 import evaluate_merge_accuracy  # noqa: E402
 
 
 def verify_and_extend(

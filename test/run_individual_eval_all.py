@@ -11,7 +11,7 @@ sys.path.insert(0, str(_ROOT / "src"))
 import os
 os.chdir(_ROOT)
 
-from rule_apply_individual import rule_apply_individual
+from rule_apply.individual import rule_apply_individual
 from eval_rule import eval_rule
 
 QUESTIONS = [

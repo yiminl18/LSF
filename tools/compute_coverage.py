@@ -2,7 +2,7 @@
 """Look up cov(r) for each rule from cached eval_individual outputs. No LLM.
 
 Reads the existing `_eval.json` files via
-`src/rule_refinement/coverage_check.py::load_or_compute_coverage`.
+`src/rule_refine/selection/coverage_check.py::load_or_compute_coverage`.
 
 If `eval_individual` has not been run for a rule, cov falls back to 0.0
 (the agent can still proceed; it just won't have signal for that rule).
@@ -24,7 +24,7 @@ _ROOT = _THIS.parent
 sys.path.insert(0, str(_ROOT / "src"))
 sys.path.insert(0, str(_THIS))
 
-from rule_refinement.coverage_check import load_or_compute_coverage  # noqa: E402
+from rule_refine.selection.coverage_check import load_or_compute_coverage  # noqa: E402
 from _paths import RULES_BASE_DIR, EVAL_INDIVIDUAL_DIR               # noqa: E402
 
 
