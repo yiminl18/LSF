@@ -1,19 +1,19 @@
 # Rule Application
 
-This document describes the two rule application strategies in the LSF codebase. Both take a loaded document and one or more span-retrieval rules, retrieve matching spans, and call an LLM to answer a question from the retrieved text.
+This document describes the rule application strategies in the LSF codebase. Each takes a loaded document and one or more span-retrieval rules, retrieves matching spans, and calls an LLM to answer a question from the retrieved text.
 
 ---
 
 ## Strategy comparison
 
-| Aspect | Individual | Merge |
-|--------|-----------|-------|
-| Code | `src/rule_apply/individual.py` | `src/rule_apply/merge.py` |
-| Rules input | single `rule_name: str` | `rule_names: list[str]` |
-| Retrieval | one rule applied | all rules applied, spans unioned + deduplicated |
-| Strategy tag | `"individual"` | `"merge"` |
-| Output filename | `{rule_name}_individual.json` | `{rule_set_slug}_merge.json` |
-| Use case | Evaluate a single rule in isolation | Apply a selected rule subset at inference |
+| Aspect | Individual | Merge | Default (fallback) |
+|--------|-----------|-------|-------------------|
+| Code | `src/rule_apply/individual.py` | `src/rule_apply/merge.py` | `src/rule_apply/default.py` |
+| Rules input | single `rule_name: str` | `rule_names: list[str]` | refined subset + full pool fallback |
+| Retrieval | one rule applied | all rules applied, spans unioned + deduplicated | refined subset first, full pool if gpt54mini gate says "insufficient" |
+| Strategy tag | `"individual"` | `"merge"` | `"default_with_fallback"` |
+| Output filename | `{rule_name}_individual.json` | `{rule_set_slug}_merge.json` | per-doc JSON in caller-owned dir |
+| Use case | Evaluate a single rule in isolation | Apply a selected rule subset at inference | Deployment: cheap retrieval with safety net when refined subset misses |
 
 ---
 
@@ -122,6 +122,65 @@ Same fields as Individual, plus:
   ...
 }
 ```
+
+---
+
+## Strategy 3 — Default (refined-with-fallback)
+
+**Code:** `src/rule_apply/default.py`
+
+### Description
+
+A deployment-time strategy. At inference, applies a small refined rule subset first; if a cheap gate model judges the retrieval insufficient, falls back to applying the full rule pool. Combines the cost of a refined set with the recall of the full pool.
+
+Rule source: any refined subset (typically from `select_rules_pareto_v2`) + the corresponding full LLM-coarse pool.
+
+### Algorithm (per doc at inference)
+
+1. Apply the **refined rule subset** → `retrieved_text`.
+2. Ask **gpt54mini**: "Does this passage contain enough information to answer the question?"
+3. If YES → answer with **gpt54** on the refined retrieval.
+4. If NO → fall back to the **full pool**, then answer with gpt54.
+
+### Interface
+
+```python
+def apply_with_fallback(
+    document: dict,
+    refined_rule_names: list[str],
+    full_pool_rule_names: list[str],
+    question_slug: str,
+    question: str,
+    rules_dir: str = "rules/financebench",
+    relevance_model: str = "gpt54mini",
+    answer_model: str = "gpt54",
+) -> dict
+```
+
+### Per-doc output schema (additions over Merge)
+
+```json
+{
+  "strategy": "default_with_fallback",
+  "used_fallback": false,
+  "relevance_verdict": "YES",
+  "relevance_input_tokens": 312,
+  "relevance_output_tokens": 1,
+  "answer_input_tokens": 312,
+  "answer_output_tokens": 14,
+  ...
+}
+```
+
+### Results (FinanceBench, single cluster)
+
+| uAcc | cost_u | Mean fallback rate |
+|-----:|--------:|-------------------:|
+| **0.892** | **0.030** | 11.8% |
+
+Matches the full-pool uAcc (0.892) at 18% of base retrieval cost (0.030 vs 0.169). The gate fires on ~6 of 50 unsampled docs per question. Recovers the entire refined→base generalization gap at ~3× the refined-only retrieval cost (still 5.6× cheaper than always applying the full pool).
+
+On multi-cluster (12 questions, 68 unsampled docs, paired with agentic selection): uAcc 0.940 at cost_u 0.009 — beats the full-pool baseline (0.935) at 6.5× lower cost. Mean fallback rate 11.2%.
 
 ---
 

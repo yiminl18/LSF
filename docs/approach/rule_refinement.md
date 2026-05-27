@@ -18,7 +18,7 @@ This document describes every rule refinement and selection approach in the LSF 
 | **p\_v2** | `src/rule_refine/selection/select_rules_pareto_v2.py` | 0.880 | 0.806 | 0.012 | 0.010 | 5.1 | +0.074 |
 | **p\_v3** | `src/rule_refine/selection/select_rules_pareto_v3.py` | **0.910** | 0.804 | 0.011 | 0.009 | 4.7 | +0.106 |
 | **agentic** | `agent/run_agent_select.py` | **0.940** ⭐ | 0.870 | 0.027 | 0.023 | **2.0** ⭐ | +0.070 |
-| **fallback** | `src/default_rule.py` | — | **0.892** | — | 0.030 | 5.1+on-demand | — |
+| **fallback** | `src/rule_apply/default.py` | — | **0.892** | — | 0.030 | 5.1+on-demand | — |
 
 \* p_proxy on 7/10 questions only — fails completely on 3 where GT strings are not verbatim substrings (state/EIN, total revenue, trading symbols).
 
@@ -223,33 +223,11 @@ Highest sAcc of any variant — exceeds even the full pool base (0.910). The "le
 
 ---
 
-## Approach 4 — Fallback deployment
+## Approach 4 — Fallback deployment (moved)
 
-**Code:** `src/default_rule.py`  
-**Doc:** `docs/rule_apply_with_fallback.md`
+The fallback strategy is a deployment-time rule-application strategy, not a refinement algorithm. It's now documented in [rule_application.md](./rule_application.md) as **Strategy 3 — Default (refined-with-fallback)**. Code: `src/rule_apply/default.py`.
 
-### Description
-
-A deployment-time strategy, not a selection algorithm. Applies a refined rule subset (p_v2) at inference, but falls back to the full LLM-coarse pool when the refined retrieval is deemed insufficient by a cheap gate.
-
-**Rule source:** LLM-coarse gpt54 one-shot pool. Refined subset: p_v2 selection (~5.1 rules/Q).
-
-### Algorithm (per doc at inference)
-
-1. Apply **p_v2 refined rules** → `retrieved_text`
-2. Ask **gpt54mini**: "Does this text contain enough information to answer the question?"
-3. If YES → answer with gpt54 on refined retrieval
-4. If NO → fall back to **full pool** (~63 rules), then answer with gpt54
-
-### Results (FinanceBench, single cluster)
-
-| uAcc | cost\_u | Mean fallback rate |
-|-----:|--------:|-------------------:|
-| **0.892** | **0.030** | 11.8% |
-
-Matches base uAcc exactly (0.892) at 18% of base retrieval cost (0.030 vs 0.169). The gate triggers on ~6 of 50 unsampled docs per question. Recovers the entire p_v2→base generalization gap at ~3× the refined-only retrieval cost (still 5.6× cheaper than always using the full pool).
-
-**Beats base on long-term debt** (uAcc 0.72 vs base 0.66) — the gate filters out retrievals that would confuse gpt54.
+When paired with a refinement variant from this doc (typically p_v2) it recovers the refined→base generalization gap at a small extra LLM cost. See rule_application.md for details and results.
 
 ---
 
@@ -315,7 +293,7 @@ The proposal replaces cost-sort + exponential search with a coverage-aware selec
 | `src/rule_refine/selection/select_rules_pareto_v2.py` | p_v2 |
 | `src/rule_refine/selection/select_rules_pareto_v3.py` | p_v3 |
 | `agent/run_agent_select.py` | agentic |
-| `src/default_rule.py` | fallback |
+| `src/rule_apply/default.py` | fallback |
 
 ### Shared primitives
 | File | Purpose |

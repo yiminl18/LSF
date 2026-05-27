@@ -27,7 +27,7 @@ This approach runs one Codex agent session per question over the full `.txt` cor
 This is intentionally separated from rule application. After generation, the produced rule set can be consumed by any existing application strategy in the repo, such as:
 
 - `src/rule_apply/merge.py`
-- `src/default_rule.py`
+- `src/rule_apply/default.py`
 - `src/rule_apply/individual.py`
 
 So this approach should be evaluated in two phases:

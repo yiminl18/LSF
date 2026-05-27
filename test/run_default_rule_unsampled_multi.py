@@ -21,7 +21,7 @@ _ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(_ROOT / "src"))
 os.chdir(_ROOT)
 
-from default_rule               import apply_with_fallback
+from rule_apply.default         import apply_with_fallback
 from rule_refine.selection.eval_judge import judge
 
 # ── Config ────────────────────────────────────────────────────────────────────
