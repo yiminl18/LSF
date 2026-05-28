@@ -1,0 +1,21 @@
+{
+  "question": "What is/are the trading symbol(s) and listing exchange(s)?",
+  "question_slug": "what_isare_the_trading_symbols_and_listing_exchanges_10_llm",
+  "mode": "agentic",
+  "model": "gpt54",
+  "selected_rules": [
+    "rule_cover_page_registration_sequence",
+    "rule_page1_near_trading_symbol_label"
+  ],
+  "selected_avg_cost_ratio_sum": 0.183465,
+  "min_cov": 0.5,
+  "mean_cov": 0.7,
+  "match_rate_on_sampled": 1.0,
+  "iterations": 4,
+  "verify_calls": 4,
+  "tool_llm_calls": 80,
+  "tool_input_tokens": 109786,
+  "tool_output_tokens": 881,
+  "latency_seconds": 374.6732931137085,
+  "rationale": "I started from the best coverage-to-cost rules and verified progressively larger low-cost subsets first. Those cheaper subsets consistently failed only on AMCOR because the Boeing-driving business sentence rule over-predicted an extra Australian listing for that filing. The final pair uses a broad cover-page sequence rule to recover Boeing and most of the sample, plus a cheap page-1 trading-symbol label rule that cleanly fixes AMCOR. This misses the aggressive cost target, but it satisfies the hard constraint with only two rules and a min coverage of 0.5."
+}

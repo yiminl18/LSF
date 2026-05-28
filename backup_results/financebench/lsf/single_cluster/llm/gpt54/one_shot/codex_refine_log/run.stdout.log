@@ -1,0 +1,87 @@
+Questions to process: 10  model=gpt54  budget=30
+
+========================================================================
+Question: What is long-term debt at year-end (0 if none)?
+Slug:     what_is_longterm_debt_at_yearend_0_if_none_10_llm
+  status=ok  wall=152.2s
+  AGENTIC_SELECTION_DONE slug=what_is_longterm_debt_at_yearend_0_if_none_10_llm n_rules=1 sum_cost=0.007588 min_cov=0.6000 match_rate=0.6000 tool_calls=30 latency_s=133.714
+  rules=1  match_rate=0.6
+
+========================================================================
+Question: What is net income (loss) for the most recent fiscal year?
+Slug:     what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm
+  status=ok  wall=276.2s
+  AGENTIC_SELECTION_DONE slug=what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm n_rules=2 sum_cost=0.010236 min_cov=0.3000 match_rate=1.0000 tool_calls=25 latency_s=168.881
+  rules=2  match_rate=1.0
+
+========================================================================
+Question: What is total revenue for the most recent fiscal year (from the audited income statement)?
+Slug:     what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm
+  status=ok  wall=248.8s
+  AGENTIC_SELECTION_DONE slug=what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm n_rules=1 sum_cost=0.024791 min_cov=0.9 match_rate=1.0 tool_calls=43 latency_s=218.292
+  rules=1  match_rate=1.0
+
+========================================================================
+Question: What is total assets at year-end (from the audited balance sheet)?
+Slug:     what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm
+  status=ok  wall=436.7s
+  rules=2  match_rate=1.0
+
+========================================================================
+Question: What is the registrant's telephone number?
+Slug:     what_is_the_registrants_telephone_number_10_llm
+  status=ok  wall=149.1s
+  rules=1  match_rate=1.0
+
+========================================================================
+Question: How many shares of common stock were outstanding as of the cover-page reference date?
+Slug:     how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm
+  status=ok  wall=365.9s
+  AGENTIC_SELECTION_DONE slug=how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm n_rules=3 sum_cost=0.000404 min_cov=0.100000 match_rate=1.000000 tool_calls=65 latency_s=264.861985
+  rules=3  match_rate=1.0
+
+========================================================================
+Question: What is the registrant's exact name?
+Slug:     what_is_the_registrants_exact_name_10_llm
+  status=ok  wall=161.1s
+  rules=1  match_rate=1.0
+
+========================================================================
+Question: What is the state (or other jurisdiction) of incorporation and the IRS Employer Identification Number?
+Slug:     what_is_the_state_or_other_jurisdiction_of_incorporation_and_10_llm
+  status=ok  wall=193.0s
+  AGENTIC_SELECTION_DONE slug=what_is_the_state_or_other_jurisdiction_of_incorporation_and_10_llm n_rules=1 sum_cost=0.001237 min_cov=1.0 match_rate=1.0 tool_calls=1 latency_s=124.98561263084412
+  rules=1  match_rate=1.0
+
+========================================================================
+Question: What is the address of principal executive offices and ZIP code?
+Slug:     what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm
+  status=ok  wall=233.6s
+  AGENTIC_SELECTION_DONE slug=what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm n_rules=1 sum_cost=0.001323 min_cov=1.0 match_rate=1.0 tool_calls=1 latency_s=169.04565501213074
+  rules=1  match_rate=1.0
+
+========================================================================
+Question: What is/are the trading symbol(s) and listing exchange(s)?
+Slug:     what_isare_the_trading_symbols_and_listing_exchanges_10_llm
+  status=ok  wall=459.3s
+  AGENTIC_SELECTION_DONE slug=what_isare_the_trading_symbols_and_listing_exchanges_10_llm n_rules=2 sum_cost=0.183465 min_cov=0.500000 match_rate=1.000000 tool_calls=4 latency_s=374.6732931137085
+  rules=2  match_rate=1.0
+
+========================================================================
+Driver summary:
+  what_is_longterm_debt_at_yearend_0_if_none_10_llm   status=ok          rules= 1  match=  0.6  codex_in=1098940  codex_out= 9370  tool_in=  9135  tool_out= 136  wall=  152s
+  what_is_net_income_loss_for_the_most_recent_fiscal_year_10_llm  status=ok          rules= 2  match=  1.0  codex_in=2597207  codex_out=17626  tool_in= 11601  tool_out= 147  wall=  276s
+  what_is_total_revenue_for_the_most_recent_fiscal_year_from_t_10_llm  status=ok          rules= 1  match=  1.0  codex_in=2108908  codex_out=14702  tool_in= 45647  tool_out= 300  wall=  249s
+  what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm  status=ok          rules= 2  match=  1.0  codex_in=3875213  codex_out=20942  tool_in=231913  tool_out= 591  wall=  437s
+  what_is_the_registrants_telephone_number_10_llm     status=ok          rules= 1  match=  1.0  codex_in=1012838  codex_out= 9843  tool_in=  3069  tool_out= 178  wall=  149s
+  how_many_shares_of_common_stock_were_outstanding_as_of_the_c_10_llm  status=ok          rules= 3  match=  1.0  codex_in=2738925  codex_out=22157  tool_in=  6652  tool_out= 304  wall=  366s
+  what_is_the_registrants_exact_name_10_llm           status=ok          rules= 1  match=  1.0  codex_in= 732362  codex_out= 9699  tool_in=  2879  tool_out= 154  wall=  161s
+  what_is_the_state_or_other_jurisdiction_of_incorporation_and_10_llm  status=ok          rules= 1  match=  1.0  codex_in=1408155  codex_out=11900  tool_in=  4119  tool_out= 192  wall=  193s
+  what_is_the_address_of_principal_executive_offices_and_zip_c_10_llm  status=ok          rules= 1  match=  1.0  codex_in=1541430  codex_out=13108  tool_in=  4168  tool_out= 233  wall=  234s
+  what_isare_the_trading_symbols_and_listing_exchanges_10_llm  status=ok          rules= 2  match=  1.0  codex_in=3780171  codex_out=26606  tool_in=109786  tool_out= 881  wall=  459s
+
+========================================================================
+Totals across 10 question(s):
+  Codex tokens:      in=20,894,149  out=155,953
+  Tool gpt54 tokens: in=428,969  out=3,116  (calls=360)
+  Wallclock total:   2676s (44.6m)

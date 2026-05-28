@@ -1,0 +1,5 @@
+Selected subset: `rule_consolidated_balance_sheet_phrase` and `rule_tables_with_total_assets_and_no_revenue`.
+
+I wrote the result to [what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm.json](/mnt/data/LSF/backup_results/financebench/lsf/single_cluster/llm/gpt54/one_shot/selected_rules_agent_codex/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm.json) and the per-step trace to [what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm.jsonl](/mnt/data/LSF/backup_results/financebench/lsf/single_cluster/llm/gpt54/one_shot/agent_trace_codex/what_is_total_assets_at_yearend_from_the_audited_balance_she_10_llm.jsonl).
+
+This subset hit the hard constraint at `10/10` sampled docs with `missed_in_D_star: []`, `sum_cost=0.052582`, `min_cov=0.8`, `mean_cov=0.85`, after `4` verify calls (`80` tool-side gpt54 calls, `231913` input tokens, `591` output tokens).
