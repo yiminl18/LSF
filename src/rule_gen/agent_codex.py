@@ -333,9 +333,11 @@ def build_prompt(
     processing_dir: str = "data/financebench/processing",
     rules_dir: str = "rules/financebench/lsf/single_cluster/agent/gpt54/codex/raw",
     model: str = "gpt54",
+    question_slug: str | None = None,
 ) -> str:
     import re
-    question_slug = re.sub(r"[^\w]", "_", question.lower())[:60].rstrip("_")
+    if not question_slug:
+        question_slug = re.sub(r"[^\w]", "_", question.lower())[:60].rstrip("_")
     doc_list = "\n".join(f"    - {d}" for d in docs) if docs else "    (all docs in labels file)"
     resolved_model = _MODEL_ALIASES.get(model, model)
     model_name = resolved_model
@@ -360,6 +362,7 @@ def run(
     cwd: str | None = None,
     timeout: int = 5400,
     output_last_message: str | None = None,
+    question_slug: str | None = None,
 ) -> str:
     prompt = build_prompt(
         question=question,
@@ -368,6 +371,7 @@ def run(
         processing_dir=processing_dir,
         rules_dir=rules_dir,
         model=model,
+        question_slug=question_slug,
     )
     resolved_model = _MODEL_ALIASES.get(model, model)
     project_root = cwd or str(Path(__file__).resolve().parents[1])
@@ -428,12 +432,18 @@ if __name__ == "__main__":
                         help="Optional path to write codex's final message.")
     parser.add_argument("--print-prompt",   action="store_true",
                         help="Print the prompt and exit without running codex.")
+    parser.add_argument("--question-slug",  default=None,
+                        help="Override the auto-derived question slug. The grid "
+                             "pipeline uses this to keep slug naming consistent "
+                             "across rule_gen / refine / apply stages.")
     args = parser.parse_args()
 
     if args.print_prompt:
         print(build_prompt(args.question, args.docs, args.labels_file,
-                           args.processing_dir, args.rules_dir, args.model))
+                           args.processing_dir, args.rules_dir, args.model,
+                           question_slug=args.question_slug))
     else:
         print(run(args.question, args.docs, args.labels_file,
                   args.processing_dir, args.rules_dir, args.model,
-                  args.cwd, args.timeout, args.output_last_message))
+                  args.cwd, args.timeout, args.output_last_message,
+                  question_slug=args.question_slug))

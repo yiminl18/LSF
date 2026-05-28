@@ -331,6 +331,7 @@ def stage_rule_gen(
             "--docs", *sample_doc_names,
             "--rules-dir", str(rules_dir),
             "--model", effective_model,
+            "--question-slug", question_slug,   # keep slug consistent across stages
         ]
         proc = subprocess.run(cmd, cwd=str(_ROOT), capture_output=True, text=True, check=False)
         if proc.returncode != 0:

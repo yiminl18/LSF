@@ -325,9 +325,11 @@ def build_prompt(
     processing_dir: str = "data/financebench/processing",
     rules_dir: str = "rules/financebench/lsf/single_cluster/agent/opus47/raw",
     model: str = "opus",
+    question_slug: str | None = None,
 ) -> str:
     import re
-    question_slug = re.sub(r"[^\w]", "_", question.lower())[:60].rstrip("_")
+    if not question_slug:
+        question_slug = re.sub(r"[^\w]", "_", question.lower())[:60].rstrip("_")
     doc_list = "\n".join(f"    - {d}" for d in docs) if docs else "    (all docs in labels file)"
     resolved_model = _MODEL_ALIASES.get(model, model)
     # Extract short name after "claude-" for embedding in filenames
@@ -351,6 +353,7 @@ def run(
     rules_dir: str = "rules/financebench/lsf/single_cluster/agent/opus47/raw",
     model: str = "opus",
     cwd: str | None = None,
+    question_slug: str | None = None,
 ) -> str:
     prompt = build_prompt(
         question=question,
@@ -359,6 +362,7 @@ def run(
         processing_dir=processing_dir,
         rules_dir=rules_dir,
         model=model,
+        question_slug=question_slug,
     )
     resolved_model = _MODEL_ALIASES.get(model, model)
     project_root = cwd or str(Path(__file__).resolve().parent)
@@ -395,11 +399,17 @@ if __name__ == "__main__":
     parser.add_argument("--cwd",            default=None)
     parser.add_argument("--print-prompt",   action="store_true",
                         help="Print the prompt and exit without running claude.")
+    parser.add_argument("--question-slug",  default=None,
+                        help="Override the auto-derived question slug. The grid "
+                             "pipeline uses this to keep slug naming consistent "
+                             "across rule_gen / refine / apply stages.")
     args = parser.parse_args()
 
     if args.print_prompt:
         print(build_prompt(args.question, args.docs, args.labels_file,
-                           args.processing_dir, args.rules_dir))
+                           args.processing_dir, args.rules_dir,
+                           question_slug=args.question_slug))
     else:
         print(run(args.question, args.docs, args.labels_file,
-                  args.processing_dir, args.rules_dir, args.model, args.cwd))
+                  args.processing_dir, args.rules_dir, args.model, args.cwd,
+                  question_slug=args.question_slug))
