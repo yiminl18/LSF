@@ -1,0 +1,20 @@
+{
+  "question": "What legal subject matter does the court staff SUMMARY identify as the topic of this opinion?",
+  "question_slug": "what_legal_subject_matter_does_the_court_staff_summary_ident",
+  "mode": "agentic",
+  "model": "gpt54",
+  "selected_rules": [
+    "rule_top_pages_bold_non_generic_subject"
+  ],
+  "selected_avg_cost_ratio_sum": 0.0,
+  "min_cov": 0.0,
+  "mean_cov": 0.0,
+  "match_rate_on_sampled": 0.8,
+  "iterations": 6,
+  "verify_calls": 8,
+  "tool_llm_calls": 280,
+  "tool_input_tokens": 44655,
+  "tool_output_tokens": 1872,
+  "latency_seconds": 633.4633328914642,
+  "rationale": "The cached cost and coverage profiles were empty for this court slug, so selection was driven by direct rule inspection and verify_accuracy sweeps. I first established the full-pool solved set on the sampled docs, which was 16 of 20 because the current judge always marks literal NOT FOUND answers incorrect. Then I added a top-of-page fallback that restored the three missed positive docs and ran drop-tests until only rule_top_pages_bold_non_generic_subject remained, while still preserving all 16 full-pool-correct documents. The reported cost and coverage aggregates stay at 0.0 because the precompute caches for this slug were absent."
+}

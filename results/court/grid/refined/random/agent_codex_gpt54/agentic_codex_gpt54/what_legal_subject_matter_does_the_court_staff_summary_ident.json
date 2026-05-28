@@ -1,0 +1,20 @@
+{
+  "question": "What legal subject matter does the court staff SUMMARY identify as the topic of this opinion?",
+  "question_slug": "what_legal_subject_matter_does_the_court_staff_summary_ident",
+  "mode": "agentic",
+  "model": "gpt54",
+  "selected_rules": [
+    "rule_summary_heading_immediately_after_summary"
+  ],
+  "selected_avg_cost_ratio_sum": 0.000376,
+  "min_cov": 0.8,
+  "mean_cov": 0.8,
+  "match_rate_on_sampled": 0.65,
+  "iterations": 2,
+  "verify_calls": 3,
+  "tool_llm_calls": 120,
+  "tool_input_tokens": 17897,
+  "tool_output_tokens": 810,
+  "latency_seconds": 392.6855161190033,
+  "rationale": "A fresh verify on the current 5-rule pool showed that it only answers 13 of 20 sampled docs correctly, so preserving full-pool accuracy meant matching that solved set rather than the stale 16-rule baseline in eval_merge. The singleton rule_summary_heading_immediately_after_summary reproduced the current pool's exact sampled outcomes while being the cheapest rule in the pool. Its empirical coverage remained high at 16/20 sampled docs, so it dominates larger subsets on both cost and size without losing any of the current pool's correct cases."
+}

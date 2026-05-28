@@ -1,0 +1,49 @@
+{
+  "question": "What legal subject matter does the court staff SUMMARY identify as the topic of this opinion?",
+  "question_slug": "what_legal_subject_matter_does_the_court_staff_summary_ident",
+  "timestamp": "2026-05-28T17:15:11Z",
+  "latency_seconds": 339.886,
+  "agent_input_tokens": 5187,
+  "agent_output_tokens": 263,
+  "total_llm_calls": 40,
+  "num_rules": 5,
+  "merge_accuracy": 1.0,
+  "avg_cost_ratio": 0.000406,
+  "rules": [
+    {
+      "rule_name": "rule_summary_heading_followed_by_body_text",
+      "description": "Match a summary subject heading that is followed by ordinary body text and preceded nearby by SUMMARY.",
+      "coverage": 16,
+      "avg_cost_ratio": 0.000406,
+      "file": "rules/court/grid/random/agent_codex_gpt54/what_legal_subject_matter_does_the_court_staff_summary_ident/rule_summary_heading_followed_by_body_text.py"
+    },
+    {
+      "rule_name": "rule_summary_heading_immediately_after_summary",
+      "description": "Match a bold summary subject section header that appears immediately after a SUMMARY marker on page 2.",
+      "coverage": 16,
+      "avg_cost_ratio": 0.000376,
+      "file": "rules/court/grid/random/agent_codex_gpt54/what_legal_subject_matter_does_the_court_staff_summary_ident/rule_summary_heading_immediately_after_summary.py"
+    },
+    {
+      "rule_name": "rule_summary_heading_path_suffix",
+      "description": "Match a summary subject heading whose breadcrumb path ends with the heading text and sits just after SUMMARY.",
+      "coverage": 16,
+      "avg_cost_ratio": 0.000406,
+      "file": "rules/court/grid/random/agent_codex_gpt54/what_legal_subject_matter_does_the_court_staff_summary_ident/rule_summary_heading_path_suffix.py"
+    },
+    {
+      "rule_name": "rule_summary_heading_short_h1_h2",
+      "description": "Match a short H1 or H2 summary subject section header near SUMMARY on pages 2-3.",
+      "coverage": 16,
+      "avg_cost_ratio": 0.000406,
+      "file": "rules/court/grid/random/agent_codex_gpt54/what_legal_subject_matter_does_the_court_staff_summary_ident/rule_summary_heading_short_h1_h2.py"
+    },
+    {
+      "rule_name": "rule_summary_heading_within_two_spans",
+      "description": "Match a summary subject section header whose two nearest prior spans include a standalone SUMMARY marker.",
+      "coverage": 16,
+      "avg_cost_ratio": 0.000406,
+      "file": "rules/court/grid/random/agent_codex_gpt54/what_legal_subject_matter_does_the_court_staff_summary_ident/rule_summary_heading_within_two_spans.py"
+    }
+  ]
+}

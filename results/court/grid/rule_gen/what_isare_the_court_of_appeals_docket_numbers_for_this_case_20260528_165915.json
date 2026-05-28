@@ -1,0 +1,209 @@
+{
+  "question": "What is/are the Court of Appeals docket number(s) for this case?",
+  "question_slug": "what_isare_the_court_of_appeals_docket_numbers_for_this_case",
+  "timestamp": "2026-05-28T16:59:15Z",
+  "model": "gpt54",
+  "num_documents": 20,
+  "doc_names": [
+    "20250818_spatz_v._regents_of_the_university_of_california",
+    "20251105_coastal_environmental_rights_foundation_v._naples_restaurant_group_llc",
+    "20251021_united_states_v._kroytor",
+    "20250908_jones_v._city_of_north_las_vegas",
+    "20251204_state_of_washington_v._united_states_department_of_education",
+    "20260108_state_of_oregon_v._trump",
+    "20251118_kazarian_v._bondi",
+    "20251203_san_luis_obispo_coastkeeper_v._county_of_san_luis_obispo",
+    "20251031_united_states_v._pheasant",
+    "20250903_united_states_v._taylor",
+    "20250724_rhode_v._bonta",
+    "20260129_northwest_association_of_independent_schools_v._labrador",
+    "20250729_handley_v._moore",
+    "20260120_akhlaghpour_v._orantes",
+    "20260120_guevara-serrano_v._bondi",
+    "20250812_novalpina_capital_partners_i_gp_s.a.r.l_v._read",
+    "20260313_san_carlos_apache_tribe_v._united_states_forest_service",
+    "20251126_youth_71five_ministries_v._williams",
+    "20250917_national_tps_alliance_v._noem",
+    "20260113_howard_v._republican_national_committee"
+  ],
+  "latency_seconds": 204.948,
+  "input_tokens": 541170,
+  "output_tokens": 6563,
+  "rules": [
+    {
+      "rule_name": "rule_page1_case_caption_docket_no",
+      "description": "Match page-1 caption/body spans containing the Court of Appeals docket number label like 'No. 24-2625' or 'Nos. 25-6268, 25-7194'.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_court_of_appeals_docket_numbers_for_this_case/rule_page1_case_caption_docket_no.py"
+    },
+    {
+      "rule_name": "rule_page1_case_caption_bare_docket_number",
+      "description": "Match page-1 caption/body spans that are just the appellate docket number(s) without much surrounding text.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_court_of_appeals_docket_numbers_for_this_case/rule_page1_case_caption_bare_docket_number.py"
+    },
+    {
+      "rule_name": "rule_page1_for_the_ninth_circuit_no_line",
+      "description": "Match docket-number spans on page 1 under the top caption near 'FOR THE NINTH CIRCUIT'.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_court_of_appeals_docket_numbers_for_this_case/rule_page1_for_the_ninth_circuit_no_line.py"
+    },
+    {
+      "rule_name": "rule_page1_united_states_court_of_appeals_caption",
+      "description": "Match docket-number spans on page 1 in the opening caption under 'UNITED STATES COURT OF APPEALS'.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_court_of_appeals_docket_numbers_for_this_case/rule_page1_united_states_court_of_appeals_caption.py"
+    },
+    {
+      "rule_name": "rule_page1_no_prefix_anywhere",
+      "description": "Match any page-1 span containing a standard appellate docket number with a 'No.' or 'Nos.' prefix.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_court_of_appeals_docket_numbers_for_this_case/rule_page1_no_prefix_anywhere.py"
+    },
+    {
+      "rule_name": "rule_page1_multiple_dockets_nos",
+      "description": "Match page-1 spans listing multiple Court of Appeals docket numbers in one caption line.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_court_of_appeals_docket_numbers_for_this_case/rule_page1_multiple_dockets_nos.py"
+    },
+    {
+      "rule_name": "rule_page1_standalone_no_line",
+      "description": "Match page-1 body/text spans that begin with 'No.' and primarily consist of the appellate docket number.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_court_of_appeals_docket_numbers_for_this_case/rule_page1_standalone_no_line.py"
+    },
+    {
+      "rule_name": "rule_page1_standalone_nos_line",
+      "description": "Match page-1 body/text spans that begin with 'Nos.' and list multiple appellate docket numbers.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_court_of_appeals_docket_numbers_for_this_case/rule_page1_standalone_nos_line.py"
+    },
+    {
+      "rule_name": "rule_page1_header_text_span_contains_no",
+      "description": "Match top section_header spans whose text_span embeds the appellate docket number in the caption block.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_court_of_appeals_docket_numbers_for_this_case/rule_page1_header_text_span_contains_no.py"
+    },
+    {
+      "rule_name": "rule_page1_header_text_span_contains_bare_number",
+      "description": "Match top section_header spans whose text_span embeds a bare appellate docket number even without a separate span.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_court_of_appeals_docket_numbers_for_this_case/rule_page1_header_text_span_contains_bare_number.py"
+    },
+    {
+      "rule_name": "rule_page1_near_dc_no",
+      "description": "Match page-1 spans containing appellate docket numbers that appear near a 'D.C. No.' caption line.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_court_of_appeals_docket_numbers_for_this_case/rule_page1_near_dc_no.py"
+    },
+    {
+      "rule_name": "rule_page1_near_agency_no",
+      "description": "Match page-1 spans containing appellate docket numbers that appear near an 'Agency No.' caption line.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_court_of_appeals_docket_numbers_for_this_case/rule_page1_near_agency_no.py"
+    },
+    {
+      "rule_name": "rule_page1_before_filed_line",
+      "description": "Match docket-number spans on page 1 that occur before the 'Filed' date line in the opening caption.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_court_of_appeals_docket_numbers_for_this_case/rule_page1_before_filed_line.py"
+    },
+    {
+      "rule_name": "rule_page1_caption_body_number_only",
+      "description": "Match page-1 caption body spans that are mostly just the appellate docket number and optional prefix.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_court_of_appeals_docket_numbers_for_this_case/rule_page1_caption_body_number_only.py"
+    },
+    {
+      "rule_name": "rule_page1_caption_with_no_and_dc_no_same_span",
+      "description": "Match page-1 spans that contain both the appellate docket number and a district-court number in the same caption block.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_court_of_appeals_docket_numbers_for_this_case/rule_page1_caption_with_no_and_dc_no_same_span.py"
+    },
+    {
+      "rule_name": "rule_page1_caption_with_no_and_agency_no_same_span",
+      "description": "Match page-1 spans that contain both the appellate docket number and an agency number in the same caption block.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_court_of_appeals_docket_numbers_for_this_case/rule_page1_caption_with_no_and_agency_no_same_span.py"
+    },
+    {
+      "rule_name": "rule_page1_for_publication_orders",
+      "description": "Match page-1 docket-number spans in 'FOR PUBLICATION' order/opinion templates, including emergency orders.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_court_of_appeals_docket_numbers_for_this_case/rule_page1_for_publication_orders.py"
+    },
+    {
+      "rule_name": "rule_page1_for_the_ninth_circuit_orders",
+      "description": "Match page-1 docket-number spans in 'FOR THE NINTH CIRCUIT' caption templates.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_court_of_appeals_docket_numbers_for_this_case/rule_page1_for_the_ninth_circuit_orders.py"
+    },
+    {
+      "rule_name": "rule_page1_h1_caption_contains_docket",
+      "description": "Match H1/section_header caption spans on page 1 whose embedded caption text contains the appellate docket number.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_court_of_appeals_docket_numbers_for_this_case/rule_page1_h1_caption_contains_docket.py"
+    },
+    {
+      "rule_name": "rule_page1_h2_caption_contains_docket",
+      "description": "Match H2/section_header caption spans on page 1 whose embedded caption text contains the appellate docket number.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_court_of_appeals_docket_numbers_for_this_case/rule_page1_h2_caption_contains_docket.py"
+    },
+    {
+      "rule_name": "rule_page1_body_after_party_name_no_line",
+      "description": "Match page-1 docket-number spans that appear in the caption body after party names and before merits text.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_court_of_appeals_docket_numbers_for_this_case/rule_page1_body_after_party_name_no_line.py"
+    },
+    {
+      "rule_name": "rule_page1_any_standard_appellate_number",
+      "description": "High-recall rule for any page-1 span containing a standard Ninth Circuit appellate docket number pattern.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_court_of_appeals_docket_numbers_for_this_case/rule_page1_any_standard_appellate_number.py"
+    },
+    {
+      "rule_name": "rule_page1_any_no_prefix_in_text_or_textspan",
+      "description": "High-recall rule for any page-1 span or embedded caption block containing 'No.'/'Nos.' plus appellate docket number(s).",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_court_of_appeals_docket_numbers_for_this_case/rule_page1_any_no_prefix_in_text_or_textspan.py"
+    },
+    {
+      "rule_name": "rule_page1_case_number_not_dc_or_agency",
+      "description": "Match page-1 appellate docket spans while excluding pure district-court and agency-number lines.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_court_of_appeals_docket_numbers_for_this_case/rule_page1_case_number_not_dc_or_agency.py"
+    },
+    {
+      "rule_name": "rule_page1_no_line_excluding_dc_no",
+      "description": "Match page-1 'No.' lines that are appellate docket numbers rather than district-court numbers.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_court_of_appeals_docket_numbers_for_this_case/rule_page1_no_line_excluding_dc_no.py"
+    },
+    {
+      "rule_name": "rule_page1_nos_line_excluding_dc_no",
+      "description": "Match page-1 'Nos.' lines listing multiple appellate docket numbers rather than district-court numbers.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_court_of_appeals_docket_numbers_for_this_case/rule_page1_nos_line_excluding_dc_no.py"
+    },
+    {
+      "rule_name": "rule_page1_top_quarter_docket",
+      "description": "Match docket-number spans appearing near the top of page 1, where the caption almost always places them.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_court_of_appeals_docket_numbers_for_this_case/rule_page1_top_quarter_docket.py"
+    },
+    {
+      "rule_name": "rule_page1_caption_number_with_party_context",
+      "description": "Match docket-number spans on page 1 when nearby spans include party-role labels like Plaintiff, Petitioner, Debtor, or Appellant.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_court_of_appeals_docket_numbers_for_this_case/rule_page1_caption_number_with_party_context.py"
+    },
+    {
+      "rule_name": "rule_page1_embedded_caption_number_in_section_header",
+      "description": "Match section headers on page 1 whose embedded caption block contains the appellate docket number, useful when OCR merges lines.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_court_of_appeals_docket_numbers_for_this_case/rule_page1_embedded_caption_number_in_section_header.py"
+    },
+    {
+      "rule_name": "rule_page1_body_number_followed_by_dc_or_agency",
+      "description": "Match page-1 body spans with appellate docket numbers that are immediately followed by district-court or agency identifiers.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_court_of_appeals_docket_numbers_for_this_case/rule_page1_body_number_followed_by_dc_or_agency.py"
+    },
+    {
+      "rule_name": "rule_page1_number_before_opinion_or_order",
+      "description": "Match page-1 docket-number spans that appear before 'OPINION', 'ORDER', or 'ORDER AND AMENDED OPINION' in the caption.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_court_of_appeals_docket_numbers_for_this_case/rule_page1_number_before_opinion_or_order.py"
+    },
+    {
+      "rule_name": "rule_page1_docket_in_first_20_spans",
+      "description": "High-recall rule for docket-number spans appearing in the first 20 spans of page 1.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_court_of_appeals_docket_numbers_for_this_case/rule_page1_docket_in_first_20_spans.py"
+    },
+    {
+      "rule_name": "rule_page1_docket_with_optional_no_prefix_textspan",
+      "description": "Match merged caption blocks on page 1 where the docket number may appear in text_span with or without 'No.' prefix.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_court_of_appeals_docket_numbers_for_this_case/rule_page1_docket_with_optional_no_prefix_textspan.py"
+    },
+    {
+      "rule_name": "rule_page1_docket_number_not_followed_by_cv",
+      "description": "Match appellate docket numbers on page 1 while avoiding district-court civil/criminal case-number patterns.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_court_of_appeals_docket_numbers_for_this_case/rule_page1_docket_number_not_followed_by_cv.py"
+    },
+    {
+      "rule_name": "rule_page1_docket_number_in_caption_cluster",
+      "description": "Match docket-number spans in the dense page-1 caption cluster where party names, role labels, and court name co-occur.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_court_of_appeals_docket_numbers_for_this_case/rule_page1_docket_number_in_caption_cluster.py"
+    }
+  ]
+}

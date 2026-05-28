@@ -1,0 +1,219 @@
+{
+  "question": "What is/are the originating district court docket number(s) (\"D.C. No.\")?",
+  "question_slug": "what_isare_the_originating_district_court_docket_numbers_dc_",
+  "timestamp": "2026-05-28T17:02:40Z",
+  "model": "gpt54",
+  "num_documents": 20,
+  "doc_names": [
+    "20250818_spatz_v._regents_of_the_university_of_california",
+    "20251105_coastal_environmental_rights_foundation_v._naples_restaurant_group_llc",
+    "20251021_united_states_v._kroytor",
+    "20250908_jones_v._city_of_north_las_vegas",
+    "20251204_state_of_washington_v._united_states_department_of_education",
+    "20260108_state_of_oregon_v._trump",
+    "20251118_kazarian_v._bondi",
+    "20251203_san_luis_obispo_coastkeeper_v._county_of_san_luis_obispo",
+    "20251031_united_states_v._pheasant",
+    "20250903_united_states_v._taylor",
+    "20250724_rhode_v._bonta",
+    "20260129_northwest_association_of_independent_schools_v._labrador",
+    "20250729_handley_v._moore",
+    "20260120_akhlaghpour_v._orantes",
+    "20260120_guevara-serrano_v._bondi",
+    "20250812_novalpina_capital_partners_i_gp_s.a.r.l_v._read",
+    "20260313_san_carlos_apache_tribe_v._united_states_forest_service",
+    "20251126_youth_71five_ministries_v._williams",
+    "20250917_national_tps_alliance_v._noem",
+    "20260113_howard_v._republican_national_committee"
+  ],
+  "latency_seconds": 212.01,
+  "input_tokens": 541283,
+  "output_tokens": 6805,
+  "rules": [
+    {
+      "rule_name": "rule_dc_no_exact_span",
+      "description": "Match spans whose text directly contains 'D.C. No.'.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_originating_district_court_docket_numbers_dc_/rule_dc_no_exact_span.py"
+    },
+    {
+      "rule_name": "rule_dc_no_page_one",
+      "description": "Match page-1 spans containing 'D.C. No.' or close OCR variants.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_originating_district_court_docket_numbers_dc_/rule_dc_no_page_one.py"
+    },
+    {
+      "rule_name": "rule_dc_no_or_case_number_pattern_page_one",
+      "description": "Match page-1 spans that either say 'D.C. No.' or look like federal docket numbers.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_originating_district_court_docket_numbers_dc_/rule_dc_no_or_case_number_pattern_page_one.py"
+    },
+    {
+      "rule_name": "rule_federal_docket_pattern_anywhere",
+      "description": "Match spans containing a federal district-court docket-number pattern.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_originating_district_court_docket_numbers_dc_/rule_federal_docket_pattern_anywhere.py"
+    },
+    {
+      "rule_name": "rule_federal_docket_pattern_page_one",
+      "description": "Match page-1 spans containing a federal district-court docket-number pattern.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_originating_district_court_docket_numbers_dc_/rule_federal_docket_pattern_page_one.py"
+    },
+    {
+      "rule_name": "rule_body_under_ninth_circuit_header",
+      "description": "Match body spans under the top Ninth Circuit caption header that contain 'D.C. No.'.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_originating_district_court_docket_numbers_dc_/rule_body_under_ninth_circuit_header.py"
+    },
+    {
+      "rule_name": "rule_page_one_caption_body",
+      "description": "Match page-1 body/text spans in the caption area under the Ninth Circuit header that contain docket cues.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_originating_district_court_docket_numbers_dc_/rule_page_one_caption_body.py"
+    },
+    {
+      "rule_name": "rule_near_appeal_from_district_court",
+      "description": "Match spans near 'Appeal from the United States District Court' that contain docket cues.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_originating_district_court_docket_numbers_dc_/rule_near_appeal_from_district_court.py"
+    },
+    {
+      "rule_name": "rule_before_appeal_from_district_court",
+      "description": "Match docket-like spans appearing shortly before the 'Appeal from the United States District Court' line.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_originating_district_court_docket_numbers_dc_/rule_before_appeal_from_district_court.py"
+    },
+    {
+      "rule_name": "rule_top_of_first_page_docket_like",
+      "description": "Match docket-like spans among the first 20 spans on page 1.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_originating_district_court_docket_numbers_dc_/rule_top_of_first_page_docket_like.py"
+    },
+    {
+      "rule_name": "rule_caption_case_number_line",
+      "description": "Match caption-area spans that are mostly just the district-court docket number.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_originating_district_court_docket_numbers_dc_/rule_caption_case_number_line.py"
+    },
+    {
+      "rule_name": "rule_caption_case_number_line_page_one",
+      "description": "Match page-1 spans that are mostly just the district-court docket number.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_originating_district_court_docket_numbers_dc_/rule_caption_case_number_line_page_one.py"
+    },
+    {
+      "rule_name": "rule_split_dc_no_followed_by_docket",
+      "description": "Match spans where one span is 'D.C. No.' and a nearby following span is the docket number.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_originating_district_court_docket_numbers_dc_/rule_split_dc_no_followed_by_docket.py"
+    },
+    {
+      "rule_name": "rule_split_docket_after_dc_no_same_page",
+      "description": "Match docket-number spans that immediately follow a standalone 'D.C. No.' on the same page.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_originating_district_court_docket_numbers_dc_/rule_split_docket_after_dc_no_same_page.py"
+    },
+    {
+      "rule_name": "rule_section_header_text_span_contains_dc_no",
+      "description": "Match section_header spans whose text_span contains 'D.C. No.' or a docket number.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_originating_district_court_docket_numbers_dc_/rule_section_header_text_span_contains_dc_no.py"
+    },
+    {
+      "rule_name": "rule_first_page_large_font_docket",
+      "description": "Match page-1 larger-font spans containing 'D.C. No.' or a docket number.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_originating_district_court_docket_numbers_dc_/rule_first_page_large_font_docket.py"
+    },
+    {
+      "rule_name": "rule_first_page_body_text_with_dc_no",
+      "description": "Match page-1 body-level text spans containing 'D.C. No.'.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_originating_district_court_docket_numbers_dc_/rule_first_page_body_text_with_dc_no.py"
+    },
+    {
+      "rule_name": "rule_first_page_body_text_with_docket",
+      "description": "Match page-1 body-level text spans containing a federal docket number.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_originating_district_court_docket_numbers_dc_/rule_first_page_body_text_with_docket.py"
+    },
+    {
+      "rule_name": "rule_page_one_not_agency_or_bap",
+      "description": "Match page-1 docket cues while excluding obvious non-district-court labels like 'Agency No.' and 'BAP No.'.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_originating_district_court_docket_numbers_dc_/rule_page_one_not_agency_or_bap.py"
+    },
+    {
+      "rule_name": "rule_exclude_immigration_and_bap_non_dc",
+      "description": "Return district-court docket-like spans but suppress documents that only show agency/BAP numbers and no D.C. No.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_originating_district_court_docket_numbers_dc_/rule_exclude_immigration_and_bap_non_dc.py"
+    },
+    {
+      "rule_name": "rule_case_number_after_no_24_499_style",
+      "description": "Match spans where a circuit case number and D.C. No. appear together, capturing the D.C. No. span.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_originating_district_court_docket_numbers_dc_/rule_case_number_after_no_24_499_style.py"
+    },
+    {
+      "rule_name": "rule_dc_no_with_appeal_caption_keywords",
+      "description": "Match spans containing 'D.C. No.' when nearby caption keywords like plaintiff/appellant/appellee are present.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_originating_district_court_docket_numbers_dc_/rule_dc_no_with_appeal_caption_keywords.py"
+    },
+    {
+      "rule_name": "rule_page_one_caption_cluster",
+      "description": "Match all docket-like spans in the first-page caption cluster before the 'Appeal from' line.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_originating_district_court_docket_numbers_dc_/rule_page_one_caption_cluster.py"
+    },
+    {
+      "rule_name": "rule_multi_docket_same_span",
+      "description": "Match spans containing multiple 'D.C. No.' references or multiple docket numbers.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_originating_district_court_docket_numbers_dc_/rule_multi_docket_same_span.py"
+    },
+    {
+      "rule_name": "rule_multi_docket_page_one",
+      "description": "Match page-1 spans containing multiple district-court docket numbers, useful for consolidated appeals.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_originating_district_court_docket_numbers_dc_/rule_multi_docket_page_one.py"
+    },
+    {
+      "rule_name": "rule_consolidated_appeal_docket_spans",
+      "description": "Match page-1 spans in consolidated appeals where several D.C. Nos. appear in adjacent spans.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_originating_district_court_docket_numbers_dc_/rule_consolidated_appeal_docket_spans.py"
+    },
+    {
+      "rule_name": "rule_dc_no_in_text_span_of_header",
+      "description": "Match section headers whose OCR text_span includes 'D.C. No.' even if the visible text does not.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_originating_district_court_docket_numbers_dc_/rule_dc_no_in_text_span_of_header.py"
+    },
+    {
+      "rule_name": "rule_docket_in_text_span_of_header",
+      "description": "Match section headers whose OCR text_span includes a federal docket number.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_originating_district_court_docket_numbers_dc_/rule_docket_in_text_span_of_header.py"
+    },
+    {
+      "rule_name": "rule_page_one_caption_with_district_name",
+      "description": "Match docket-like spans on page 1 when a district-court name also appears nearby.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_originating_district_court_docket_numbers_dc_/rule_page_one_caption_with_district_name.py"
+    },
+    {
+      "rule_name": "rule_standalone_docket_number_after_dc_label",
+      "description": "Match standalone docket-number spans that appear shortly after a span containing 'D.C. No.'.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_originating_district_court_docket_numbers_dc_/rule_standalone_docket_number_after_dc_label.py"
+    },
+    {
+      "rule_name": "rule_docket_number_with_judge_suffixes",
+      "description": "Match docket numbers that include judge initials/suffixes after the main case number.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_originating_district_court_docket_numbers_dc_/rule_docket_number_with_judge_suffixes.py"
+    },
+    {
+      "rule_name": "rule_docket_number_without_dc_label",
+      "description": "Match docket-number spans even when 'D.C. No.' is omitted, as in some OCR-split captions.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_originating_district_court_docket_numbers_dc_/rule_docket_number_without_dc_label.py"
+    },
+    {
+      "rule_name": "rule_page_one_docket_number_without_dc_label",
+      "description": "Match page-1 docket-number spans even when 'D.C. No.' is omitted.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_originating_district_court_docket_numbers_dc_/rule_page_one_docket_number_without_dc_label.py"
+    },
+    {
+      "rule_name": "rule_no_dc_no_for_agency_cases",
+      "description": "Return no matches for likely agency/BIA-only cases that use 'Agency No.' instead of district-court dockets.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_originating_district_court_docket_numbers_dc_/rule_no_dc_no_for_agency_cases.py"
+    },
+    {
+      "rule_name": "rule_no_dc_no_for_bap_cases",
+      "description": "Return no matches for likely bankruptcy-appellate-panel cases that show only 'BAP No.' and no district-court docket.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_originating_district_court_docket_numbers_dc_/rule_no_dc_no_for_bap_cases.py"
+    },
+    {
+      "rule_name": "rule_collect_all_page_one_docket_candidates",
+      "description": "High-recall rule: collect all page-1 spans with 'D.C. No.' or federal docket-number patterns.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_originating_district_court_docket_numbers_dc_/rule_collect_all_page_one_docket_candidates.py"
+    },
+    {
+      "rule_name": "rule_collect_caption_adjacent_docket_candidates",
+      "description": "High-recall rule: collect caption-adjacent spans around any page-1 docket cue.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_isare_the_originating_district_court_docket_numbers_dc_/rule_collect_caption_adjacent_docket_candidates.py"
+    }
+  ]
+}

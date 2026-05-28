@@ -1,0 +1,114 @@
+{
+  "question": "What legal subject matter does the court staff SUMMARY identify as the topic of this opinion?",
+  "question_slug": "what_legal_subject_matter_does_the_court_staff_summary_ident",
+  "timestamp": "2026-05-28T17:07:39Z",
+  "model": "gpt54",
+  "num_documents": 20,
+  "doc_names": [
+    "20250818_spatz_v._regents_of_the_university_of_california",
+    "20251105_coastal_environmental_rights_foundation_v._naples_restaurant_group_llc",
+    "20251021_united_states_v._kroytor",
+    "20250908_jones_v._city_of_north_las_vegas",
+    "20251204_state_of_washington_v._united_states_department_of_education",
+    "20260108_state_of_oregon_v._trump",
+    "20251118_kazarian_v._bondi",
+    "20251203_san_luis_obispo_coastkeeper_v._county_of_san_luis_obispo",
+    "20251031_united_states_v._pheasant",
+    "20250903_united_states_v._taylor",
+    "20250724_rhode_v._bonta",
+    "20260129_northwest_association_of_independent_schools_v._labrador",
+    "20250729_handley_v._moore",
+    "20260120_akhlaghpour_v._orantes",
+    "20260120_guevara-serrano_v._bondi",
+    "20250812_novalpina_capital_partners_i_gp_s.a.r.l_v._read",
+    "20260313_san_carlos_apache_tribe_v._united_states_forest_service",
+    "20251126_youth_71five_ministries_v._williams",
+    "20250917_national_tps_alliance_v._noem",
+    "20260113_howard_v._republican_national_committee"
+  ],
+  "latency_seconds": 103.901,
+  "input_tokens": 541110,
+  "output_tokens": 3180,
+  "rules": [
+    {
+      "rule_name": "rule_summary_subject_section_header",
+      "description": "Match bold section_header spans immediately after a SUMMARY marker, which usually contain the legal subject.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_legal_subject_matter_does_the_court_staff_summary_ident/rule_summary_subject_section_header.py"
+    },
+    {
+      "rule_name": "rule_summary_subject_bold_after_summary",
+      "description": "Match the first bold non-SUMMARY span after a SUMMARY marker on page 2 or nearby pages.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_legal_subject_matter_does_the_court_staff_summary_ident/rule_summary_subject_bold_after_summary.py"
+    },
+    {
+      "rule_name": "rule_page2_bold_subject_heading",
+      "description": "Match bold heading-like spans on page 2 that are not SUMMARY/COUNSEL/OPINION and look like subject labels.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_legal_subject_matter_does_the_court_staff_summary_ident/rule_page2_bold_subject_heading.py"
+    },
+    {
+      "rule_name": "rule_page2_section_header_subject",
+      "description": "Match section_header spans on page 2 that likely serve as the court-staff summary subject heading.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_legal_subject_matter_does_the_court_staff_summary_ident/rule_page2_section_header_subject.py"
+    },
+    {
+      "rule_name": "rule_path_text_after_summary_subject",
+      "description": "Match spans whose path_text itself is the likely subject heading under SUMMARY.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_legal_subject_matter_does_the_court_staff_summary_ident/rule_path_text_after_summary_subject.py"
+    },
+    {
+      "rule_name": "rule_summary_subject_h2_under_court_header",
+      "description": "Match H2 section headers near the top under the court header that are likely summary subject labels.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_legal_subject_matter_does_the_court_staff_summary_ident/rule_summary_subject_h2_under_court_header.py"
+    },
+    {
+      "rule_name": "rule_summary_subject_h1_after_summary_text",
+      "description": "Match H1 section headers that appear immediately after a standalone SUMMARY text span.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_legal_subject_matter_does_the_court_staff_summary_ident/rule_summary_subject_h1_after_summary_text.py"
+    },
+    {
+      "rule_name": "rule_summary_subject_first_child_after_summary",
+      "description": "Match the first child heading-like span after SUMMARY, which often is the subject matter label.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_legal_subject_matter_does_the_court_staff_summary_ident/rule_summary_subject_first_child_after_summary.py"
+    },
+    {
+      "rule_name": "rule_subject_heading_with_long_summary_textspan",
+      "description": "Match heading spans whose text_span contains a long summary paragraph, indicating a summary subject heading.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_legal_subject_matter_does_the_court_staff_summary_ident/rule_subject_heading_with_long_summary_textspan.py"
+    },
+    {
+      "rule_name": "rule_subject_heading_before_counsel",
+      "description": "Match the last non-COUNSEL heading before the COUNSEL section near the top, often the summary subject.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_legal_subject_matter_does_the_court_staff_summary_ident/rule_subject_heading_before_counsel.py"
+    },
+    {
+      "rule_name": "rule_subject_heading_after_summary_before_counsel",
+      "description": "Match headings between SUMMARY and COUNSEL, excluding generic labels, as likely subject matter headings.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_legal_subject_matter_does_the_court_staff_summary_ident/rule_subject_heading_after_summary_before_counsel.py"
+    },
+    {
+      "rule_name": "rule_top_pages_bold_non_generic_subject",
+      "description": "Match bold non-generic spans on pages 1-3 that look like legal subject labels in the summary area.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_legal_subject_matter_does_the_court_staff_summary_ident/rule_top_pages_bold_non_generic_subject.py"
+    },
+    {
+      "rule_name": "rule_subject_heading_title_case_or_slash",
+      "description": "Match likely subject headings that are short title-like phrases, often including slashes or legal act names.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_legal_subject_matter_does_the_court_staff_summary_ident/rule_subject_heading_title_case_or_slash.py"
+    },
+    {
+      "rule_name": "rule_subject_heading_under_summary_page2_first",
+      "description": "Match the first bold heading on page 2 after SUMMARY, the most common location for the answer.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_legal_subject_matter_does_the_court_staff_summary_ident/rule_subject_heading_under_summary_page2_first.py"
+    },
+    {
+      "rule_name": "rule_subject_heading_with_summary_sibling_position",
+      "description": "Match heading spans with low sibling_index_norm after SUMMARY, indicating early summary subject placement.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_legal_subject_matter_does_the_court_staff_summary_ident/rule_subject_heading_with_summary_sibling_position.py"
+    },
+    {
+      "rule_name": "rule_not_found_no_summary_subject",
+      "description": "Return no spans when the document appears to lack a court-staff summary subject heading.",
+      "file": "rules/court/grid/random/llm_coarse_gpt54/what_legal_subject_matter_does_the_court_staff_summary_ident/rule_not_found_no_summary_subject.py"
+    }
+  ]
+}
