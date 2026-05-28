@@ -42,7 +42,7 @@ from tools._paths import (  # noqa: E402
 )
 
 QUERIES_FILE     = _ROOT / "data/financebench/sample_queries.txt"
-TASK_PROMPT_FILE = _THIS / "agentic_task_prompt.md"
+TASK_PROMPT_FILE = _THIS / "agentic_codex_task_prompt.md"
 
 # Output dirs are module-level so build_prompt() can reference them; CLI may override.
 SELECTED_RULES_AGENT_DIR = _DEFAULT_OUT_DIR
