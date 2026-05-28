@@ -767,14 +767,57 @@ def _apply_one(
     if apply_strategy == "default":
         if fallback_folder is None:
             raise ValueError("apply_strategy='default' requires a fallback (Stage 2 pool)")
-        from rule_apply.default import apply_with_fallback
-        return apply_with_fallback(
-            document=document,
-            refined_rule_names   = rule_names,
-            full_pool_rule_names = _list_rule_names(fallback_folder),
-            question=question, question_slug=question_slug,
-            rules_dir=str(rules_dir),
+        # `apply_with_fallback` expects a single rule_folder, but in the grid layout
+        # refined rules live in <refined_root>/<q_slug>/ and the full pool lives in
+        # <rules_root>/<q_slug>/ — different parents. Re-implement the gate+fallback
+        # logic inline, calling rule_apply_merge with the correct rules_dir each time.
+        from rule_apply.default import relevance_check, qa_call
+
+        # Step 1: merge over the refined subset (no LLM)
+        refined_res = rule_apply_merge(
+            document=document, rule_names=rule_names,
+            question_slug=question_slug, question=question,
+            rules_dir=str(rule_folder.parent), output_dir=str(output_dir),
+            model_name=model,
         )
+        refined_text = refined_res.get("retrieved_text") or ""
+
+        # Step 2: gpt54mini gate
+        has_answer, rel_in, rel_out = relevance_check(refined_text, question, model_name="gpt54mini")
+
+        # Step 3: pick retrieval source (refined vs full pool)
+        used_text  = refined_text
+        used_tokens = refined_res.get("retrieved_token_count", 0) or 0
+        full_tokens = 0
+        if not has_answer:
+            full_names = _list_rule_names(fallback_folder)
+            full_res = rule_apply_merge(
+                document=document, rule_names=full_names,
+                question_slug=question_slug, question=question,
+                rules_dir=str(fallback_folder.parent), output_dir=str(output_dir),
+                model_name=model,
+            )
+            used_text   = full_res.get("retrieved_text") or ""
+            used_tokens = full_res.get("retrieved_token_count", 0) or 0
+            full_tokens = used_tokens
+
+        # Step 4: gpt54 QA
+        predicted, qa_in, qa_out = qa_call(used_text, question, model_name=model)
+
+        return {
+            "doc_name":               document.get("doc_name"),
+            "predicted_answer":       predicted,
+            "retrieved_text":         used_text,
+            "retrieved_token_count":  used_tokens,
+            "retrieved_tokens_refined": refined_res.get("retrieved_token_count", 0) or 0,
+            "retrieved_tokens_full":  full_tokens,
+            "used_fallback":          not has_answer,
+            "relevance_verdict":      "yes" if has_answer else "no",
+            "input_tokens":           qa_in,
+            "output_tokens":          qa_out,
+            "relevance_input_tokens": rel_in,
+            "relevance_output_tokens": rel_out,
+        }
 
     raise ValueError(f"Unknown apply_strategy: {apply_strategy!r}")
 
@@ -966,8 +1009,10 @@ def run_pipeline(
             "avg_cost_ratio":         round(mean(cost_ratios),    6) if cost_ratios    else None,
         },
     }
-    _write_json(out / "pipeline_summary.json", summary)
-    print(f"\n=== Done. Summary -> {out / 'pipeline_summary.json'} ===", flush=True)
+    # Per-combo summary lives under apply_root so 64 combos don't clobber each other.
+    summary_path = apply_root / "pipeline_summary.json"
+    _write_json(summary_path, summary)
+    print(f"\n=== Done. Summary -> {summary_path} ===", flush=True)
     return summary
 
 
