@@ -17,7 +17,8 @@ This document describes every rule refinement and selection approach in the LSF 
 | **p\_gpt54** | `src/rule_refine/selection/select_rules_pareto.py` (gpt54) | 0.880 | 0.748 | 0.007 | 0.005 | 4.3 | +0.132 |
 | **p\_v2** | `src/rule_refine/selection/select_rules_pareto_v2.py` | 0.880 | 0.806 | 0.012 | 0.010 | 5.1 | +0.074 |
 | **p\_v3** | `src/rule_refine/selection/select_rules_pareto_v3.py` | **0.910** | 0.804 | 0.011 | 0.009 | 4.7 | +0.106 |
-| **agentic** | `agent/run_agent_select.py` | **0.940** ⭐ | 0.870 | 0.027 | 0.023 | **2.0** ⭐ | +0.070 |
+| **agentic** | `src/rule_refine/agentic.py` | **0.940** ⭐ | 0.870 | 0.027 | 0.023 | **2.0** ⭐ | +0.070 |
+| **agentic_codex** | `src/rule_refine/agentic_codex.py` | — | — | — | — | — | — |
 | **fallback** | `src/rule_apply/default.py` | — | **0.892** | — | 0.030 | 5.1+on-demand | — |
 
 \* p_proxy on 7/10 questions only — fails completely on 3 where GT strings are not verbatim substrings (state/EIN, total revenue, trading symbols).
@@ -93,7 +94,7 @@ def rule_refine(
 
 All Pareto variants share the same core primitive: **cost-effectiveness greedy cover** — sort rules by `cov(r) / avg_cost_ratio(r)` descending, then greedily admit rules that cover at least one uncovered doc under the in-loop judge.
 
-### p\_mini — Pareto with gpt54mini judge
+### p\_mini — Pareto with gpt54mini judge ⭐ Recommended
 
 **Code:** `src/rule_refine/selection/select_rules_pareto.py` (with `MODEL_NAME=gpt54mini`)  
 **Driver:** `test/run_select_all_pareto.py`
@@ -136,7 +137,7 @@ Same algorithm as p_mini, stronger judge. Counter-intuitively worse generalizati
 
 ---
 
-### p\_v2 — Pareto with accuracy floor + backward prune *(recommended)*
+### p\_v2 — Pareto with accuracy floor + backward prune
 
 **Code:** `src/rule_refine/selection/select_rules_pareto_v2.py`  
 **Driver:** `test/run_select_all_pareto_v2.py`
@@ -173,9 +174,9 @@ Matches base sAcc on 8/10 questions. uAcc essentially tied with p_v2 (0.804 vs 0
 
 ---
 
-## Approach 3 — Agentic selection (Claude Opus 4.7)
+## Approach 3 — Agentic selection (Claude Opus 4.7) ⭐ Recommended
 
-**Code:** `agent/run_agent_select.py` (driver), `agent/task_prompt.md` (prompt)  
+**Code:** `src/rule_refine/agentic.py` (driver), `src/rule_refine/agentic_task_prompt.md` (prompt)  
 **Doc:** `docs/rule_selection_agentic.md`
 
 ### Description
@@ -198,8 +199,8 @@ Budget: 30 `verify_accuracy` calls per question. The agent produces a natural-la
 ### Interface (driver)
 
 ```bash
-python agent/run_agent_select.py --sample-set random [--slug <slug>] [--dry-run]
-python agent/run_agent_select.py --sample-set multi
+python src/rule_refine/agentic.py --sample-set random [--slug <slug>] [--dry-run]
+python src/rule_refine/agentic.py --sample-set multi
 ```
 
 ### Results (FinanceBench, single cluster, opus47)
@@ -220,6 +221,50 @@ Highest sAcc of any variant — exceeds even the full pool base (0.910). The "le
 - `results/.../selected_rules_agent/<slug>.json`
 - `results/.../agent_trace/<slug>.jsonl`
 - `results/.../eval_agentic/<slug>_{sampled,unsampled}.json`
+
+---
+
+## Approach 3b — Agentic selection (Codex / gpt-5.4)
+
+**Code:** `src/rule_refine/agentic_codex.py` (driver), `src/rule_refine/agentic_task_prompt.md` (prompt, shared with Approach 3)
+
+### Description
+
+Direct Codex equivalent of Approach 3. Uses exactly the same task prompt, the
+same hints, the same constraints, the same output contract — only the
+underlying CLI is swapped from `claude -p` to `codex exec`, and the agent
+backbone is gpt-5.4 (or gpt-5.4-mini) instead of Claude Opus 4.7. The driver
+spawns one Codex agent session per question; there is no Claude Code wrapper.
+
+The intent is to isolate the effect of the agent backbone (Claude Opus vs.
+Codex gpt-5.4 / gpt-5.4-mini) while keeping the prompt, tool semantics, and
+objectives identical to Approach 3.
+
+### Models
+
+- `gpt54` — `gpt-5.4` via Codex CLI
+- `gpt54mini` — `gpt-5.4-mini` via Codex CLI
+
+### Invocation
+
+```bash
+# Set the Azure key once per shell (see docs/codex_setup.md for the YAML extraction)
+export AZURE_OPENAI_API_KEY=$(awk -F': ' '/^api_key:/{print $2; exit}' ~/api_keys/azure_cloudbank/gpt-54_1.txt)
+
+# All questions:
+python src/rule_refine/agentic_codex.py --model gpt54
+
+# Single question:
+python src/rule_refine/agentic_codex.py --slug what_is_the_registrants_telephone_number_10_llm
+
+# Lower verify budget:
+python src/rule_refine/agentic_codex.py --budget 20
+```
+
+### Status
+
+Implemented. No benchmark results yet — runs alongside Approach 3 in the
+pipeline test grid (`docs/pipeline.md`).
 
 ---
 
@@ -292,7 +337,7 @@ The proposal replaces cost-sort + exponential search with a coverage-aware selec
 | `src/rule_refine/selection/select_rules_pareto_proxy.py` | p_proxy |
 | `src/rule_refine/selection/select_rules_pareto_v2.py` | p_v2 |
 | `src/rule_refine/selection/select_rules_pareto_v3.py` | p_v3 |
-| `agent/run_agent_select.py` | agentic |
+| `src/rule_refine/agentic.py` | agentic |
 | `src/rule_apply/default.py` | fallback |
 
 ### Shared primitives

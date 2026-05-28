@@ -1,7 +1,7 @@
 """Driver: spawn one Claude Code session per question to select rules.
 
 Mirrors the pattern in src/rule_gen/agent_claude.py — calls the `claude -p`
-CLI with the task prompt from agent/task_prompt.md, captures stdout, parses
+CLI with the task prompt from src/rule_refine/agentic_task_prompt.md, captures stdout, parses
 the AGENTIC_SELECTION_DONE summary line.
 
 Reads the question list from data/financebench/sample_queries.txt.
@@ -9,9 +9,9 @@ Writes per-question selections to results/.../selected_rules_agent/<slug>.json
 (the agent itself writes this file; the driver just monitors).
 
 Usage:
-    python agent/run_agent_select.py                   # all 10 questions, opus model
-    python agent/run_agent_select.py --slug what_is_the_registrants_telephone_number_10_llm  # single Q
-    python agent/run_agent_select.py --budget 20       # limit verify_accuracy calls per question
+    python src/rule_refine/agentic.py                   # all 10 questions, opus model
+    python src/rule_refine/agentic.py --slug what_is_the_registrants_telephone_number_10_llm  # single Q
+    python src/rule_refine/agentic.py --budget 20       # limit verify_accuracy calls per question
 """
 
 from __future__ import annotations
@@ -27,15 +27,15 @@ from pathlib import Path
 from typing import Iterable
 
 _THIS = Path(__file__).resolve().parent
-_ROOT = _THIS.parent
+_ROOT = _THIS.parents[1]
 sys.path.insert(0, str(_ROOT))
 
 from tools._paths import (  # noqa: E402
     RULES_BASE_DIR, SELECTED_RULES_AGENT_DIR, AGENT_TRACE_DIR,
 )
 
-QUERIES_FILE = _ROOT / "data/financebench/sample_queries.txt"
-TASK_PROMPT_FILE = _THIS / "task_prompt.md"
+QUERIES_FILE     = _ROOT / "data/financebench/sample_queries.txt"
+TASK_PROMPT_FILE = _THIS / "agentic_task_prompt.md"
 
 # Model aliases — match rule_gen_agent_claude.py
 _MODEL_ALIASES = {

@@ -1,6 +1,6 @@
 """Driver: spawn one Claude Code session per question to GENERATE rules from JSON.
 
-Mirrors agent/run_agent_select.py. Difference: the agent's task is to author
+Mirrors src/rule_refine/agentic.py. Difference: the agent's task is to author
 new rules (write_rule) rather than to subset an existing pool. The rule folder
 starts empty; the agent fills it.
 

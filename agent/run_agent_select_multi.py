@@ -1,6 +1,6 @@
 """Driver: spawn one Claude Code session per question to select rules (multi-cluster).
 
-Mirrors agent/run_agent_select.py for the multi-cluster mix_doc_queries case.
+Mirrors src/rule_refine/agentic.py for the multi-cluster mix_doc_queries case.
 Uses task_prompt_multi.md, rules from financebench/lsf/multi_clusters, and the
 _18_llm slug suffix (18 sampled docs).
 
