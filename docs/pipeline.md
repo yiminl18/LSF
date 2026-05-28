@@ -108,10 +108,14 @@ For each question, produce a rule pool from the sampled docs.
 
 | Strategy | Code | Notes |
 |---|---|---|
-| `llm_coarse` ⭐ | `src/rule_gen/llm_coarse.py` | Single-shot LLM generates ~100 broad rules. Best uAcc on its own (0.892). Included in the test grid. |
+| `llm_coarse` | `src/rule_gen/llm_coarse.py` | Single-shot LLM generates ~100 broad rules. Best uAcc on its own (0.892). Backwards-compatible alias for `llm_coarse_gpt54`. |
+| `llm_coarse_gpt54` ⭐ | `src/rule_gen/llm_coarse.py` (model=gpt54) | LLM-coarse with full gpt-5.4. Included in the test grid. |
+| `llm_coarse_gpt54mini` ⭐ | `src/rule_gen/llm_coarse.py` (model=gpt54mini) | LLM-coarse with gpt-5.4-mini. Included in the test grid. |
 | `agent_langchain` | `src/rule_gen/agent_langchain.py` | LangChain AgentExecutor with substring-match feedback + LLM union check. |
 | `agent_claude` | `src/rule_gen/agent_claude.py` (driver: `agent/run_agent_gen.py`) | Claude Opus 4.7 free-form agent. ~5–10 rules/Q, highest sAcc. |
-| `agent_codex` ⭐ | `src/rule_gen/agent_codex.py` | Codex equivalent of `agent_claude` with the same prompt — uses gpt-5.4 instead of Claude Opus. Requires Azure key setup (see `docs/codex_setup.md`). Included in the test grid. |
+| `agent_codex` | `src/rule_gen/agent_codex.py` | Codex equivalent of `agent_claude` with the same prompt. Backwards-compatible alias for `agent_codex_gpt54`. |
+| `agent_codex_gpt54` ⭐ | `src/rule_gen/agent_codex.py` (model=gpt54) | Agentic Codex generation with gpt-5.4. Included in the test grid. |
+| `agent_codex_gpt54mini` ⭐ | `src/rule_gen/agent_codex.py` (model=gpt54mini) | Agentic Codex generation with gpt-5.4-mini. Included in the test grid. |
 
 See `docs/approach/rule_generation.md` for full per-strategy results.
 
@@ -127,12 +131,15 @@ Take the Stage 2 pool and select a smaller subset.
 |---|---|---|
 | `v1` | `src/rule_refine/v1.py` | Cost-sort + exponential search + backward prune. |
 | `p_mini` ⭐ | `src/rule_refine/selection/select_rules_pareto.py` (MODEL_NAME=gpt54mini) | Pareto greedy + cheap judge. Lowest cost, smallest overfit gap. |
+| `p_hybrid` ⭐ | `src/rule_refine/selection/select_rules_pareto_hybrid.py` | Hybrid: **gpt-5.4-mini** for coverage estimation (sort key), **gpt-5.4** for in-loop admission + final merge verification. Cheap signal where it's good, strong signal where correctness matters. Included in the test grid. |
 | `p_gpt54` | `src/rule_refine/selection/select_rules_pareto.py` (MODEL_NAME=gpt54) | Pareto greedy + strong judge. |
 | `p_proxy` | `src/rule_refine/selection/select_rules_pareto_proxy.py` | Pareto greedy + substring-only judge (no LLM). |
 | `p_v2` | `src/rule_refine/selection/select_rules_pareto_v2.py` | p_gpt54 + accuracy floor + backward prune. |
 | `p_v3` | `src/rule_refine/selection/select_rules_pareto_v3.py` | p_v2 + cumulative-prefix fallback for hard questions. |
 | `agentic` | `src/rule_refine/agentic.py` | Claude Opus 4.7 selector. Highest measured uAcc (0.870), fewest rules. Replaced by `agentic_codex` in the test grid to keep the pipeline Claude-free. |
-| `agentic_codex` ⭐ | `src/rule_refine/agentic_codex.py` | Codex equivalent of `agentic` — same prompt and constraints, gpt-5.4 instead of Claude Opus. Included in the test grid. |
+| `agentic_codex` | `src/rule_refine/agentic_codex.py` | Codex equivalent of `agentic` — same prompt and constraints. Backwards-compatible alias for `agentic_codex_gpt54`. |
+| `agentic_codex_gpt54` ⭐ | `src/rule_refine/agentic_codex.py --model gpt54` | Codex selector with gpt-5.4 as the agent backbone. Included in the test grid. |
+| `agentic_codex_gpt54mini` ⭐ | `src/rule_refine/agentic_codex.py --model gpt54mini` | Codex selector with gpt-5.4-mini as the agent backbone — cheaper, more variable picks. Included in the test grid. |
 
 Skip Stage 3 entirely with `--refine-strategy none` to feed the full Stage 2 pool directly into Stage 4. See `docs/approach/rule_refinement.md` for results.
 
@@ -157,46 +164,29 @@ Evaluation is identical regardless of which apply strategy ran: `gpt54`-as-judge
 
 ---
 
-## Test grid — 16 combinations
+## Test grid — 64 combinations
 
-The recommended-strategy set across the four stages spans a **2 × 2 × 2 × 2 = 16** combinations test grid. Run all 16 against each dataset to compare:
+The recommended-strategy set across the four stages spans a **2 × 4 × 4 × 2 = 64** combinations test grid. Each stage's "recommended" axis now includes model variants where the underlying strategy supports both gpt-5.4 and gpt-5.4-mini:
 
 | Stage | Recommended choices |
 |---|---|
 | Sampling | `random`, `fps` |
-| Rule Generation | `llm_coarse`, `agent_codex` |
-| Rule Refinement | `p_mini`, `agentic_codex` |
+| Rule Generation | `llm_coarse_gpt54`, `llm_coarse_gpt54mini`, `agent_codex_gpt54`, `agent_codex_gpt54mini` |
+| Rule Refinement | `p_mini`, `p_hybrid`, `agentic_codex_gpt54`, `agentic_codex_gpt54mini` |
 | Rule Application | `merge`, `default` |
 
-### Full enumeration
+Notes on the new model-explicit variants:
+- `llm_coarse_gpt54` / `llm_coarse_gpt54mini` — same `src/rule_gen/llm_coarse.py`, just `model_name=gpt54` vs `gpt54mini`.
+- `agent_codex_gpt54` / `agent_codex_gpt54mini` — same `src/rule_gen/agent_codex.py`, just `--model gpt54` vs `gpt54mini`.
+- `agentic_codex_gpt54` / `agentic_codex_gpt54mini` — same `src/rule_refine/agentic_codex.py`, just `--model gpt54` vs `gpt54mini`.
+- `p_mini` is already gpt-5.4-mini by design; `p_hybrid` uses gpt-5.4-mini for coverage + gpt-5.4 for verify by design. Neither has a model toggle in the test grid.
 
-| # | sampling | rule_gen | refine | apply |
-|--:|---|---|---|---|
-|  1 | random | llm_coarse  | p_mini  | merge   |
-|  2 | random | llm_coarse  | p_mini  | default |
-|  3 | random | llm_coarse  | agentic_codex | merge   |
-|  4 | random | llm_coarse  | agentic_codex | default |
-|  5 | random | agent_codex | p_mini  | merge   |
-|  6 | random | agent_codex | p_mini  | default |
-|  7 | random | agent_codex | agentic_codex | merge   |
-|  8 | random | agent_codex | agentic_codex | default |
-|  9 | fps    | llm_coarse  | p_mini  | merge   |
-| 10 | fps    | llm_coarse  | p_mini  | default |
-| 11 | fps    | llm_coarse  | agentic_codex | merge   |
-| 12 | fps    | llm_coarse  | agentic_codex | default |
-| 13 | fps    | agent_codex | p_mini  | merge   |
-| 14 | fps    | agent_codex | p_mini  | default |
-| 15 | fps    | agent_codex | agentic_codex | merge   |
-| 16 | fps    | agent_codex | agentic_codex | default |
-
-A driver script can sweep all 16 with one call to `src/pipeline.py` per row (or by importing `run_pipeline()` directly in a loop). Each run writes its own `pipeline_summary.json` to a distinct `--output-dir`.
-
-Example loop:
+### Sweeping the grid
 
 ```bash
 for s in random fps; do
-  for g in llm_coarse agent_codex; do
-    for r in p_mini agentic; do
+  for g in llm_coarse_gpt54 llm_coarse_gpt54mini agent_codex_gpt54 agent_codex_gpt54mini; do
+    for r in p_mini p_hybrid agentic_codex_gpt54 agentic_codex_gpt54mini; do
       for a in merge default; do
         python src/pipeline.py \
           --sampling-strategy "$s" --rule-gen-strategy "$g" \

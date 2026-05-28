@@ -29,7 +29,7 @@ os.chdir(_ROOT)
 from models.embedding3small import embed, AZURE_DEPLOYMENT      # noqa: E402
 from sampling.fps          import farthest_point_sampling       # noqa: E402
 
-# ── Config ────────────────────────────────────────────────────────────────────
+# ── Config (FinanceBench defaults; --dataset overrides) ──────────────────────
 SAMPLED_LABELS_FILE   = "data/financebench/sample/single_cluster/random/sample_doc_labels.json"
 UNSAMPLED_LABELS_FILE = "data/financebench/sample/single_cluster/random/unsampled_doc_labels.json"
 PROCESSING_DIR        = "data/financebench/processing"
@@ -37,14 +37,31 @@ OUT_DIR               = Path("data/financebench/sample/single_cluster/fps")
 
 L_BINS     = 50      # per-doc chunks (FPS spec §2 step 3)
 STOP_RATIO = 0.5     # elbow rule (FPS spec §5) — won't fire on a single-cluster pool
-MAX_K      = 10      # hard cap: take the top-10 most-diverse picks
+MAX_K      = 10      # hard cap: top-K most-diverse picks (overridden by --max-K)
 SEED       = 0
+
+# Doc-JSON filename patterns we try (matches pipeline._DOC_JSON_CANDIDATES).
+_DOC_JSON_CANDIDATES = ("{stem}_reconstructed.json", "{stem}.json")
 
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
 
 def load_doc(doc_name: str) -> dict:
-    return json.loads(Path(PROCESSING_DIR, f"{doc_name}_reconstructed.json").read_text())
+    for tmpl in _DOC_JSON_CANDIDATES:
+        path = Path(PROCESSING_DIR) / tmpl.format(stem=doc_name)
+        if path.exists():
+            return json.loads(path.read_text())
+    raise FileNotFoundError(
+        f"No JSON for {doc_name!r} in {PROCESSING_DIR} (tried "
+        + ", ".join(t.format(stem=doc_name) for t in _DOC_JSON_CANDIDATES) + ")"
+    )
+
+
+def _doc_exists(doc_name: str) -> bool:
+    for tmpl in _DOC_JSON_CANDIDATES:
+        if (Path(PROCESSING_DIR) / tmpl.format(stem=doc_name)).exists():
+            return True
+    return False
 
 
 def bin_doc_into_chunks(doc: dict, L: int) -> list[str]:
@@ -233,17 +250,62 @@ def estimate_separation(V: np.ndarray, pool_docs: list[str]) -> dict:
 
 # ── Main ──────────────────────────────────────────────────────────────────────
 
+def _parse_dataset_args():
+    """Optional CLI: --dataset <name> overrides the FinanceBench defaults.
+
+    Supported datasets:
+      financebench (default) - single_cluster legacy paths
+      court / nopv / officeqa - read from data/<ds>/all_labels.json + json/ and
+                                write the split into --output-dir (else data/<ds>/sample/all_docs/fps).
+    """
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--dataset", default="financebench")
+    ap.add_argument("--max-K",   type=int, default=None,
+                    help="hard cap on |R| (overrides module default)")
+    ap.add_argument("--output-dir", default=None,
+                    help="where to write sample/unsampled label files (overrides default)")
+    ap.add_argument("--labels-file", default=None,
+                    help="explicit labels file (only used when dataset has no pre-split)")
+    ap.add_argument("--queries-file", default=None)
+    return ap.parse_args()
+
+
 def main():
+    global SAMPLED_LABELS_FILE, UNSAMPLED_LABELS_FILE, PROCESSING_DIR, OUT_DIR, MAX_K
+
+    args = _parse_dataset_args()
+    if args.max_K:
+        MAX_K = args.max_K
+
+    if args.dataset != "financebench":
+        # Generic single-pool flow: read flat all_labels.json + queries.json
+        ds = args.dataset
+        labels_file  = args.labels_file or f"data/{ds}/all_labels.json"
+        queries_file = args.queries_file or f"data/{ds}/queries.json"
+        # Probe processing/ then json/
+        for sub in ("processing", "json"):
+            cand = Path(f"data/{ds}/{sub}")
+            if cand.is_dir():
+                PROCESSING_DIR = str(cand); break
+        else:
+            PROCESSING_DIR = f"data/{ds}/processing"
+        OUT_DIR = Path(args.output_dir or f"data/{ds}/sample/all_docs/fps")
+        SAMPLED_LABELS_FILE = labels_file
+        UNSAMPLED_LABELS_FILE = labels_file  # single source; loader dedupes
+        print(f"  [fps] dataset={ds}  labels={labels_file}  processing={PROCESSING_DIR}  out={OUT_DIR}")
+    elif args.output_dir:
+        OUT_DIR = Path(args.output_dir)
+
     OUT_DIR.mkdir(parents=True, exist_ok=True)
 
-    # 1. Merge sampled + unsampled label files
+    # 1. Merge sampled + unsampled label files (single-file datasets resolve to same path → no-op merge)
     print("[1/5] Building pool ...")
     sampled = json.loads(Path(SAMPLED_LABELS_FILE).read_text())
-    unsampled = json.loads(Path(UNSAMPLED_LABELS_FILE).read_text())
+    unsampled = json.loads(Path(UNSAMPLED_LABELS_FILE).read_text()) if UNSAMPLED_LABELS_FILE != SAMPLED_LABELS_FILE else {}
     all_labels: dict[str, dict] = {**unsampled, **sampled}  # sampled overrides on overlap
-    pool_docs = sorted(d.replace(".pdf", "") for d in all_labels.keys())
-    pool_docs = [d for d in pool_docs
-                 if Path(PROCESSING_DIR, f"{d}_reconstructed.json").exists()]
+    pool_docs = sorted(d.replace(".pdf", "").replace(".PDF","") for d in all_labels.keys())
+    pool_docs = [d for d in pool_docs if _doc_exists(d)]
     print(f"  pool size: {len(pool_docs)} unique docs (after dedup, with processing JSON)")
 
     # Question set is the union of question keys across docs (in practice identical)

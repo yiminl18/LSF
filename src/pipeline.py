@@ -46,9 +46,31 @@ if str(_SRC) not in sys.path:
 # ── Strategy registries ─────────────────────────────────────────────────────
 
 SAMPLING_STRATEGIES = ("random", "fps")
-RULE_GEN_STRATEGIES = ("llm_coarse", "agent_langchain", "agent_claude", "agent_codex")
-REFINE_STRATEGIES   = ("none", "v1", "p_mini", "p_gpt54", "p_proxy", "p_v2", "p_v3", "agentic", "agentic_codex")
+RULE_GEN_STRATEGIES = (
+    "llm_coarse", "llm_coarse_gpt54", "llm_coarse_gpt54mini",
+    "agent_langchain",
+    "agent_claude",
+    "agent_codex", "agent_codex_gpt54", "agent_codex_gpt54mini",
+)
+REFINE_STRATEGIES   = (
+    "none",
+    "v1", "p_mini", "p_gpt54", "p_proxy", "p_v2", "p_v3", "p_hybrid",
+    "agentic",
+    "agentic_codex", "agentic_codex_gpt54", "agentic_codex_gpt54mini",
+)
 APPLY_STRATEGIES    = ("merge", "default")
+
+# Suffix → model alias. Strategies ending in `_gpt54` / `_gpt54mini` are model-explicit
+# variants of an underlying base strategy. The base strategy (no suffix) defaults to gpt54.
+_MODEL_SUFFIX = {"_gpt54": "gpt54", "_gpt54mini": "gpt54mini"}
+
+
+def _split_strategy_model(strategy: str, default_model: str) -> tuple[str, str]:
+    """Split 'foo_gpt54mini' -> ('foo', 'gpt54mini'). Returns (base, model)."""
+    for suffix, model in _MODEL_SUFFIX.items():
+        if strategy.endswith(suffix):
+            return strategy[: -len(suffix)], model
+    return strategy, default_model
 
 
 # ── Small helpers ───────────────────────────────────────────────────────────
@@ -68,16 +90,43 @@ def _count_tokens(text: str) -> int:
         return int(len(text.split()) * 1.3)
 
 
+# Filename patterns we try when locating a reconstructed-JSON for a doc.
+# FinanceBench uses `<DOC>_reconstructed.json`; court uses `<DOC>.json`.
+_DOC_JSON_CANDIDATES = ("{stem}_reconstructed.json", "{stem}.json")
+
+
 def _load_docs(labels: dict, processing_dir: str) -> dict[str, dict]:
+    """Load reconstructed-JSON docs for the keys in `labels`.
+
+    Tries `<DOC>_reconstructed.json` first (FinanceBench convention), falls back
+    to `<DOC>.json` (court convention). Either layout works.
+    """
     docs: dict[str, dict] = {}
+    pdir = Path(processing_dir)
     for pdf_key in labels:
-        doc_name = pdf_key.replace(".pdf", "")
-        path = Path(processing_dir) / f"{doc_name}_reconstructed.json"
-        if path.exists():
-            docs[doc_name] = json.loads(path.read_text(encoding="utf-8"))
-        else:
-            print(f"  WARN: missing {path}", flush=True)
+        doc_name = pdf_key.replace(".pdf", "").replace(".PDF", "")
+        loaded = False
+        for tmpl in _DOC_JSON_CANDIDATES:
+            path = pdir / tmpl.format(stem=doc_name)
+            if path.exists():
+                docs[doc_name] = json.loads(path.read_text(encoding="utf-8"))
+                loaded = True
+                break
+        if not loaded:
+            tried = ", ".join(tmpl.format(stem=doc_name) for tmpl in _DOC_JSON_CANDIDATES)
+            print(f"  WARN: missing doc JSON for {doc_name!r} in {pdir} (tried: {tried})", flush=True)
     return docs
+
+
+def _default_processing_dir(dataset: str) -> Path:
+    """Return the conventional processing dir for a dataset, probing in order:
+    `data/<dataset>/processing` (FinanceBench), then `data/<dataset>/json` (court).
+    """
+    for sub in ("processing", "json"):
+        cand = _ROOT / "data" / dataset / sub
+        if cand.is_dir():
+            return cand
+    return _ROOT / "data" / dataset / "processing"   # fallback (will fail later with a clear error)
 
 
 def _list_rule_names(folder: Path) -> list[str]:
@@ -104,6 +153,47 @@ def _write_json(path: Path, payload: Any) -> None:
     path.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
 
 
+_SAMPLE_CAP = 20  # hard cap from pipeline.md
+
+
+def _load_queries(queries_file: str) -> list[str]:
+    """Read questions from a plain-text file (one per line) OR a JSON file
+    that is either ['q1', 'q2', ...] OR [{'text': 'q1', ...}, ...]. Returns
+    a list of plain question strings.
+    """
+    p = Path(queries_file)
+    raw = p.read_text(encoding="utf-8")
+    if p.suffix.lower() == ".json":
+        data = json.loads(raw)
+        if isinstance(data, list) and data and isinstance(data[0], dict):
+            return [q["text"] for q in data]
+        if isinstance(data, list):
+            return [str(q) for q in data]
+        raise ValueError(f"Unsupported queries.json shape in {queries_file}")
+    return [l.strip() for l in raw.splitlines() if l.strip()]
+
+
+def _build_random_split(all_labels_path: Path, output_dir: Path, cap: int, seed: int = 0) -> tuple[Path, Path]:
+    """Build a random sample/unsampled split from a flat all_labels.json (court/nopv style).
+
+    Writes the two label files into output_dir and returns their paths.
+    """
+    import random as _random
+    labs = json.loads(all_labels_path.read_text(encoding="utf-8"))
+    keys = sorted(labs)
+    rng  = _random.Random(seed)
+    rng.shuffle(keys)
+    k = min(cap, len(keys))
+    samp, unsamp = keys[:k], keys[k:]
+    output_dir.mkdir(parents=True, exist_ok=True)
+    sp = output_dir / "sample_doc_labels.json"
+    up = output_dir / "unsampled_doc_labels.json"
+    _write_json(sp, {k: labs[k] for k in samp})
+    _write_json(up, {k: labs[k] for k in unsamp})
+    print(f"  [sampling:random] built {k}/{len(unsamp)} split from {all_labels_path}", flush=True)
+    return sp, up
+
+
 # ── Stage 1 — Sampling ──────────────────────────────────────────────────────
 
 def stage_sampling(
@@ -114,38 +204,70 @@ def stage_sampling(
     output_dir: Path,
     skip_existing: bool,
 ) -> tuple[Path, Path]:
-    """Return (sample_labels_path, unsampled_labels_path)."""
-    base = _ROOT / "data" / dataset / "sample" / cluster
+    """Return (sample_labels_path, unsampled_labels_path).
+
+    For FinanceBench we read pre-built `data/financebench/sample/<cluster>/<sampler>/` JSONs.
+    For court/nopv/officeqa we derive the split at run-time from `data/<dataset>/all_labels.json`.
+    """
+    base       = _ROOT / "data" / dataset / "sample" / cluster
+    all_labels = _ROOT / "data" / dataset / "all_labels.json"
+    grid_dir   = output_dir / "sampling" / strategy
 
     if strategy == "random":
+        # Preferred path: a pre-built FinanceBench split.
         sample    = base / "random" / "sample_doc_labels.json"
         unsampled = base / "random" / "unsampled_doc_labels.json"
-        if not sample.exists() or not unsampled.exists():
-            raise FileNotFoundError(
-                f"random sample label files not found under {base / 'random'}. "
-                f"Either pre-build them or switch --sampling-strategy fps."
-            )
-        return sample, unsampled
+        if sample.exists() and unsampled.exists():
+            return sample, unsampled
+
+        # Fallback: derive split at run-time from a flat all_labels.json (court/nopv/officeqa).
+        if all_labels.exists():
+            sp = grid_dir / "sample_doc_labels.json"
+            up = grid_dir / "unsampled_doc_labels.json"
+            if skip_existing and sp.exists() and up.exists():
+                print(f"  [sampling:random] SKIP (exists at {grid_dir})", flush=True)
+                return sp, up
+            return _build_random_split(all_labels, grid_dir, cap=_SAMPLE_CAP)
+
+        raise FileNotFoundError(
+            f"random sample: no pre-built split at {base/'random'} and no "
+            f"{all_labels} to build from."
+        )
 
     if strategy == "fps":
-        fps_dir = base / "fps"
-        sample    = fps_dir / "sample_doc_labels.json"
-        unsampled = fps_dir / "unsampled_doc_labels.json"
-        if skip_existing and sample.exists() and unsampled.exists():
-            print(f"  [sampling:fps] SKIP (exists at {fps_dir})", flush=True)
-            return sample, unsampled
-        # Reuse the FPS driver script; it's parameterised at module level for FinanceBench.
-        # If you need fps for a different dataset, edit src/sampling/run_fps_sampling.py first.
-        print(f"  [sampling:fps] running src/sampling/run_fps_sampling.py ...", flush=True)
-        proc = subprocess.run(
-            [sys.executable, "src/sampling/run_fps_sampling.py"],
-            cwd=str(_ROOT), capture_output=True, text=True, check=False,
-        )
+        # Default to grid layout under output_dir; legacy path under data/<dataset>/sample is also accepted.
+        sp = grid_dir / "sample_doc_labels.json"
+        up = grid_dir / "unsampled_doc_labels.json"
+        if skip_existing and sp.exists() and up.exists():
+            print(f"  [sampling:fps] SKIP (exists at {grid_dir})", flush=True)
+            return sp, up
+
+        # The FPS driver currently only supports FinanceBench out of the box. For other datasets
+        # we pass through the env via CLI args once run_fps_sampling.py is parameterised.
+        print(f"  [sampling:fps] running src/sampling/run_fps_sampling.py for {dataset}…", flush=True)
+        cmd = [
+            sys.executable, "src/sampling/run_fps_sampling.py",
+            "--dataset", dataset,
+            "--max-K", str(_SAMPLE_CAP),
+            "--output-dir", str(grid_dir),
+        ]
+        proc = subprocess.run(cmd, cwd=str(_ROOT), capture_output=True, text=True, check=False)
         if proc.returncode != 0:
-            raise RuntimeError(f"FPS sampling failed:\n{proc.stderr[-2000:]}")
-        if not sample.exists() or not unsampled.exists():
-            raise FileNotFoundError(f"FPS finished but label files not at {fps_dir}")
-        return sample, unsampled
+            # Fall back to legacy hardcoded behavior (FinanceBench only) if the script
+            # doesn't yet support these args.
+            print("  [sampling:fps] driver did not accept new CLI; falling back to legacy invocation", flush=True)
+            proc = subprocess.run(
+                [sys.executable, "src/sampling/run_fps_sampling.py"],
+                cwd=str(_ROOT), capture_output=True, text=True, check=False,
+            )
+            if proc.returncode != 0:
+                raise RuntimeError(f"FPS sampling failed:\n{proc.stderr[-2000:]}")
+            legacy_dir = base / "fps"
+            return (legacy_dir / "sample_doc_labels.json",
+                    legacy_dir / "unsampled_doc_labels.json")
+        if not sp.exists() or not up.exists():
+            raise FileNotFoundError(f"FPS finished but label files not at {grid_dir}")
+        return sp, up
 
     raise ValueError(f"Unknown sampling_strategy: {strategy!r}")
 
@@ -172,8 +294,12 @@ def stage_rule_gen(
 ) -> tuple[Path, dict]:
     """Generate rules for one question. Return (rule_folder, gen_metadata)."""
 
-    rule_folder = rules_dir / f"{question_slug}_{len(sample_docs)}_{strategy}"
-    rule_gen_out = output_dir / "rule_gen" / f"{question_slug}_rule_gen.json"
+    # Strip _gpt54 / _gpt54mini suffix and override the model arg
+    base_strategy, effective_model = _split_strategy_model(strategy, default_model=model)
+
+    # rules_dir already encodes (dataset, sampling, rule_gen). The leaf is the pure slug.
+    rule_folder = rules_dir / question_slug
+    rule_gen_out = rule_folder.parent / f"{question_slug}_rule_gen.json"
 
     if skip_existing and rule_folder.is_dir() and _list_rule_names(rule_folder):
         print(f"  [gen:{strategy}] SKIP {question_slug}", flush=True)
@@ -181,8 +307,8 @@ def stage_rule_gen(
 
     rule_folder.mkdir(parents=True, exist_ok=True)
 
-    if strategy in {"llm_coarse", "agent_langchain"}:
-        mod = importlib.import_module(f"rule_gen.{strategy}")
+    if base_strategy in {"llm_coarse", "agent_langchain"}:
+        mod = importlib.import_module(f"rule_gen.{base_strategy}")
         fn  = next(v for k, v in vars(mod).items() if k.startswith("rule_gen_") and callable(v))
         result = fn(
             documents     = sample_docs,
@@ -190,30 +316,152 @@ def stage_rule_gen(
             ground_truth  = ground_truth,
             rules_dir     = str(rules_dir),
             output_dir    = str(output_dir / "rule_gen"),
-            model_name    = model,
+            model_name    = effective_model,
         )
         _write_json(rule_gen_out, result)
-        print(f"  [gen:{strategy}] {question_slug}: {len(result.get('rules', []))} rules", flush=True)
+        print(f"  [gen:{strategy} model={effective_model}] {question_slug}: {len(result.get('rules', []))} rules", flush=True)
         return rule_folder, result
 
-    if strategy in _SUBPROCESS_GEN:
-        mod_name = "agent_claude" if strategy == "agent_claude" else "agent_codex"
+    if base_strategy in _SUBPROCESS_GEN:
+        mod_name = "agent_claude" if base_strategy == "agent_claude" else "agent_codex"
         cmd = [
             sys.executable, f"src/rule_gen/{mod_name}.py",
             question,
             "--docs", *sample_doc_names,
             "--rules-dir", str(rules_dir),
-            "--model", model,
+            "--model", effective_model,
         ]
         proc = subprocess.run(cmd, cwd=str(_ROOT), capture_output=True, text=True, check=False)
         if proc.returncode != 0:
             raise RuntimeError(f"{strategy} failed for {question_slug}:\n{proc.stderr[-2000:]}")
-        result = {"strategy": strategy, "stdout_tail": proc.stdout[-500:]}
+        result = {"strategy": strategy, "model": effective_model, "stdout_tail": proc.stdout[-500:]}
         _write_json(rule_gen_out, result)
-        print(f"  [gen:{strategy}] {question_slug}: done", flush=True)
+        print(f"  [gen:{strategy} model={effective_model}] {question_slug}: done", flush=True)
         return rule_folder, result
 
     raise ValueError(f"Unknown rule_gen_strategy: {strategy!r}")
+
+
+# ── Phase C — Per-pool precompute (cost_profile, eval_individual, eval_merge_base) ──
+
+# Only refine strategies that read precomputed caches need this.
+_REFINE_NEEDS_PRECOMPUTE = {"p_mini", "p_gpt54", "p_hybrid", "p_v2", "p_v3"}
+
+
+def stage_precompute(
+    *,
+    rule_folder: Path,
+    cache_root: Path,
+    sample_docs: dict[str, dict],
+    sample_labels: dict[str, dict],
+    question: str,
+    question_slug: str,
+    rules_dir: Path,
+    needed_judges: tuple[str, ...] = ("gpt54", "gpt54mini"),
+    skip_existing: bool = True,
+) -> None:
+    """Build per-question caches needed by Pareto-family refine strategies.
+
+    Writes (under cache_root):
+      cost_profile/<q_slug>.json         (per-rule avg_cost_ratio; free)
+      eval_individual_<judge>/<q_slug>/<rule_name>_eval.json  (per-rule sampled accuracy, paid)
+      eval_merge_base/<q_slug>.json      (full-pool merge accuracy on sampled docs, paid; defines D*)
+    """
+    from rule_apply.merge       import rule_apply_merge
+    from rule_refine.selection.eval_judge import judge as _judge_fn
+
+    rule_names = _list_rule_names(rule_folder)
+    if not rule_names:
+        print(f"  [precompute] no rules in {rule_folder}; skipping", flush=True)
+        return
+
+    # ── 1. cost_profile (free) ─────────────────────────────────────────────
+    cost_out = cache_root / "cost_profile" / f"{question_slug}.json"
+    if skip_existing and cost_out.exists():
+        print(f"  [precompute:cost] SKIP {question_slug}", flush=True)
+    else:
+        profile: dict[str, dict] = {}
+        for r in rule_names:
+            costs = []
+            for d in sample_docs.values():
+                try:
+                    res = rule_apply_merge(
+                        document=d, rule_names=[r],
+                        question_slug=question_slug, question=question,
+                        model_name="gpt54", rules_dir=str(rules_dir),
+                        output_dir=str(cache_root / "_cost_tmp"),
+                    )
+                    total_tok = _count_tokens("\n".join(s.get("text","") for s in d.get("texts",[])))
+                    ret_tok   = res.get("retrieved_token_count", 0) or 0
+                    costs.append(ret_tok / total_tok if total_tok else 0.0)
+                except Exception as e:
+                    print(f"    cost {r}: {e}")
+            profile[r] = {"avg_cost_ratio": (sum(costs)/len(costs)) if costs else 0.0}
+        _write_json(cost_out, profile)
+        print(f"  [precompute:cost] {question_slug}: {len(profile)} rules profiled", flush=True)
+
+    # ── 2. eval_individual under each requested judge (paid) ──────────────
+    for judge_model in needed_judges:
+        ev_dir = cache_root / f"eval_individual_{judge_model}" / question_slug
+        if skip_existing and ev_dir.is_dir() and len(list(ev_dir.glob("*_eval.json"))) >= len(rule_names):
+            print(f"  [precompute:ev_{judge_model}] SKIP {question_slug}", flush=True)
+            continue
+        ev_dir.mkdir(parents=True, exist_ok=True)
+        for r in rule_names:
+            out_path = ev_dir / f"{r}_eval.json"
+            if skip_existing and out_path.exists():
+                continue
+            n_correct = 0
+            for doc_name, doc in sample_docs.items():
+                try:
+                    res = rule_apply_merge(
+                        document=doc, rule_names=[r],
+                        question_slug=question_slug, question=question,
+                        model_name="gpt54", rules_dir=str(rules_dir),
+                        output_dir=str(cache_root / "_ev_tmp"),
+                    )
+                    gt = sample_labels.get(doc_name + ".pdf", {}).get(question)
+                    ok, _, _ = _judge_fn(question, gt, res.get("predicted_answer"), model_name=judge_model)
+                    if ok:
+                        n_correct += 1
+                except Exception as e:
+                    print(f"    eval_ind {r}/{doc_name}: {e}")
+            _write_json(out_path, {
+                "rule_name": r, "judge_model": judge_model,
+                "accuracy": n_correct / len(sample_docs) if sample_docs else 0.0,
+                "n_correct": n_correct, "n": len(sample_docs),
+            })
+        print(f"  [precompute:ev_{judge_model}] {question_slug}: {len(rule_names)} rules evaluated", flush=True)
+
+    # ── 3. eval_merge_base (paid; defines D*) ──────────────────────────────
+    merge_out = cache_root / "eval_merge_base" / f"{question_slug}.json"
+    if skip_existing and merge_out.exists():
+        print(f"  [precompute:merge_base] SKIP {question_slug}", flush=True)
+    else:
+        per_doc: list[dict] = []
+        for doc_name, doc in sample_docs.items():
+            try:
+                res = rule_apply_merge(
+                    document=doc, rule_names=rule_names,
+                    question_slug=question_slug, question=question,
+                    model_name="gpt54", rules_dir=str(rules_dir),
+                    output_dir=str(cache_root / "_merge_tmp"),
+                )
+                gt = sample_labels.get(doc_name + ".pdf", {}).get(question)
+                ok, _, _ = _judge_fn(question, gt, res.get("predicted_answer"), model_name="gpt54")
+                per_doc.append({"doc_name": doc_name, "correct": ok})
+            except Exception as e:
+                print(f"    merge_base {doc_name}: {e}")
+                per_doc.append({"doc_name": doc_name, "correct": False, "error": str(e)})
+        n_correct = sum(1 for r in per_doc if r["correct"])
+        _write_json(merge_out, {
+            "question": question, "question_slug": question_slug,
+            "n": len(per_doc), "n_correct": n_correct,
+            "accuracy": n_correct / len(per_doc) if per_doc else 0.0,
+            "target_docs": [r["doc_name"] for r in per_doc if r["correct"]],
+            "per_doc": per_doc,
+        })
+        print(f"  [precompute:merge_base] {question_slug}: acc={n_correct}/{len(per_doc)}", flush=True)
 
 
 # ── Stage 3 — Rule Refinement ──────────────────────────────────────────────
@@ -227,15 +475,16 @@ def stage_refine(
     sample_docs: list[dict],
     ground_truth: dict[str, Any],
     rules_dir: Path,
-    output_dir: Path,
-    model: str,
-    skip_existing: bool,
+    refined_root: Path,            # <out>/refined/<sampling>/<rule_gen>/<refine>/
+    cache_root:   Path | None = None,  # <out>/cache/<sampling>/<rule_gen>/ (for p_hybrid etc.)
+    model: str = "gpt54",
+    skip_existing: bool = False,
 ) -> Path:
     """Run refinement and return the *refined* rule folder. Caller passes this folder to Stage 4."""
 
-    refined_dir = output_dir / "refined_rules"
-    refined_folder = refined_dir / question_slug
-    refine_out = output_dir / "rule_refine" / f"{question_slug}_refine.json"
+    refined_dir    = refined_root
+    refined_folder = refined_root / question_slug
+    refine_out     = refined_root / f"{question_slug}_refine.json"
 
     if skip_existing and refined_folder.is_dir() and _list_rule_names(refined_folder):
         print(f"  [refine:{strategy}] SKIP {question_slug}", flush=True)
@@ -303,19 +552,52 @@ def stage_refine(
         _write_json(refine_out, result)
         return refined_folder
 
-    if strategy in {"agentic", "agentic_codex"}:
+    if strategy == "p_hybrid":
+        from rule_refine.selection.select_rules_pareto_hybrid import run_selection_pareto_hybrid
+        if cache_root is None:
+            raise ValueError("p_hybrid needs cache_root for cost_profile + eval_individual caches")
+        cost_profile_path = cache_root / "cost_profile" / f"{question_slug}.json"
+        eval_merge_path   = cache_root / "eval_merge_base" / f"{question_slug}.json"
+        ev_ind_gpt54      = cache_root / "eval_individual_gpt54" / question_slug
+        ev_ind_mini       = cache_root / "eval_individual_gpt54mini" / question_slug
+        cost_profile = _read_json(cost_profile_path, default={}) or {}
+        docs_map = {d.get("doc_name", str(i)): d for i, d in enumerate(sample_docs)}
+        result = run_selection_pareto_hybrid(
+            rules_dir=str(rules_dir), question_slug=question_slug, question=question,
+            documents=docs_map, labels=ground_truth,
+            eval_individual_dir=ev_ind_gpt54,            # gpt54-judged (for verify-floor)
+            eval_merge_path=eval_merge_path,             # base accuracy on full pool
+            cost_profile=cost_profile,
+            output_dir=str(refined_dir),
+            coverage_eval_individual_dir=ev_ind_mini,    # mini-judged (used as sort key)
+            coverage_model="gpt54mini",
+            verify_model="gpt54",
+        )
+        _write_json(refine_out, result)
+        return refined_folder
+
+    base_strategy, effective_model = _split_strategy_model(strategy, default_model=model)
+    if base_strategy in {"agentic", "agentic_codex"}:
         # Driver script handles per-question subprocess + trace capture.
-        driver = "src/rule_refine/agentic.py" if strategy == "agentic" else "src/rule_refine/agentic_codex.py"
+        driver = ("src/rule_refine/agentic.py"
+                  if base_strategy == "agentic"
+                  else "src/rule_refine/agentic_codex.py")
         cmd = [
             sys.executable, driver,
             "--slug", question_slug,
             "--rules-dir", str(rules_dir),
             "--out-dir", str(refined_dir),
         ]
+        # The codex driver supports --model; the claude driver uses --model with claude aliases.
+        if base_strategy == "agentic_codex":
+            cmd += ["--model", effective_model]
         proc = subprocess.run(cmd, cwd=str(_ROOT), capture_output=True, text=True, check=False)
         if proc.returncode != 0:
             raise RuntimeError(f"{strategy} refine failed for {question_slug}:\n{proc.stderr[-2000:]}")
-        _write_json(refine_out, {"strategy": strategy, "stdout_tail": proc.stdout[-500:]})
+        _write_json(refine_out, {
+            "strategy": strategy, "model": effective_model,
+            "stdout_tail": proc.stdout[-500:],
+        })
         return refined_folder
 
     raise ValueError(f"Unknown refine_strategy: {strategy!r}")
@@ -359,9 +641,9 @@ def stage_apply_and_eval(
     sample_labels: dict[str, dict],
     unsampled_labels: dict[str, dict],
     rules_dir: Path,
-    output_dir: Path,
-    model: str,
-    skip_existing: bool,
+    apply_root: Path,             # <out>/apply/<sampling>/<rule_gen>/<refine>/<apply>/
+    model: str = "gpt54",
+    skip_existing: bool = False,
 ) -> dict[str, dict]:
     """Return {'sampled': eval_dict, 'unsampled': eval_dict}."""
 
@@ -374,14 +656,14 @@ def stage_apply_and_eval(
     model_mod = importlib.import_module(f"models.{model}")
 
     splits = [
-        ("sampled",   sample_docs,    sample_labels,    "rule_run"),
-        ("unsampled", unsampled_docs, unsampled_labels, "rule_run_unsampled"),
+        ("sampled",   sample_docs,    sample_labels),
+        ("unsampled", unsampled_docs, unsampled_labels),
     ]
 
-    for split, doc_map, labels_dict, subdir in splits:
-        run_dir  = output_dir / subdir / apply_strategy / question_slug
+    for split, doc_map, labels_dict in splits:
+        run_dir  = apply_root / question_slug / split
         run_file = run_dir / f"{rule_set_slug}.json"
-        eval_out = output_dir / "eval" / f"{question_slug}_{split}.json"
+        eval_out = apply_root / f"{question_slug}_{split}.json"
 
         already = set()
         existing = _read_json(run_file, default=[])
@@ -410,7 +692,7 @@ def stage_apply_and_eval(
                     question         = question,
                     question_slug    = question_slug,
                     rules_dir        = rules_dir,
-                    output_dir       = output_dir / subdir / apply_strategy,
+                    output_dir       = run_dir.parent,    # `apply_root/question_slug/`
                     model            = model,
                 )
             except Exception as e:
@@ -538,8 +820,16 @@ def run_pipeline(
 
     out = Path(output_dir)
     out.mkdir(parents=True, exist_ok=True)
-    processing_dir = processing_dir or str(_ROOT / "data" / dataset / "processing")
-    rules_root = Path(rules_dir or (_ROOT / "rules" / dataset / "lsf" / cluster / rule_gen_strategy / model))
+    processing_dir = processing_dir or str(_default_processing_dir(dataset))
+    # Default rules dir matches the grid layout: rules/<dataset>/grid/<sampling>/<rule_gen>/<q_slug>/
+    rules_root = Path(
+        rules_dir
+        or (_ROOT / "rules" / dataset / "grid" / sampling_strategy / rule_gen_strategy)
+    )
+    # All other per-stage roots live under output_dir.
+    cache_root   = out / "cache"   / sampling_strategy / rule_gen_strategy
+    refined_root = out / "refined" / sampling_strategy / rule_gen_strategy / refine_strategy
+    apply_root   = out / "apply"   / sampling_strategy / rule_gen_strategy / refine_strategy / apply_strategy
 
     print(f"\n=== Pipeline ===", flush=True)
     print(f"  sampling   : {sampling_strategy}", flush=True)
@@ -547,7 +837,11 @@ def run_pipeline(
     print(f"  refine     : {refine_strategy}", flush=True)
     print(f"  apply      : {apply_strategy}", flush=True)
     print(f"  dataset    : {dataset}  cluster : {cluster}", flush=True)
-    print(f"  output_dir : {out}\n", flush=True)
+    print(f"  output_dir : {out}", flush=True)
+    print(f"  rules_root : {rules_root}", flush=True)
+    print(f"  cache_root : {cache_root}", flush=True)
+    print(f"  refined    : {refined_root}", flush=True)
+    print(f"  apply      : {apply_root}\n", flush=True)
 
     # ── Stage 1 ──
     print("Stage 1 — Sampling", flush=True)
@@ -563,7 +857,7 @@ def run_pipeline(
     sample_doc_names  = list(sample_doc_map.keys())
     print(f"  sampled={len(sample_doc_map)}  unsampled={len(unsampled_doc_map)}", flush=True)
 
-    questions = [l.strip() for l in Path(queries_file).read_text().splitlines() if l.strip()]
+    questions = _load_queries(queries_file)
     print(f"  questions={len(questions)}\n", flush=True)
 
     # ── Per-question loop: Stages 2-4 ──
@@ -571,7 +865,7 @@ def run_pipeline(
 
     for question in questions:
         slug = _make_slug(question)
-        question_slug = f"{slug}_{len(sample_doc_map)}"
+        question_slug = slug   # pure slug; sample size lives in the labels file, not the path
         print(f"\n--- Question: {question}", flush=True)
 
         try:
@@ -590,6 +884,17 @@ def run_pipeline(
             )
             n_rules_gen = len(_list_rule_names(rule_folder_gen))
 
+            # Phase C — Per-pool precompute (only if the refine strategy needs it)
+            base_refine, _ = _split_strategy_model(refine_strategy, default_model=model)
+            if base_refine in _REFINE_NEEDS_PRECOMPUTE:
+                print("Phase C — Precompute", flush=True)
+                stage_precompute(
+                    rule_folder=rule_folder_gen, cache_root=cache_root,
+                    sample_docs=sample_doc_map, sample_labels=sample_labels,
+                    question=question, question_slug=question_slug,
+                    rules_dir=rules_root, skip_existing=skip_existing,
+                )
+
             # Stage 3 — Refinement (optional)
             if refine_strategy == "none":
                 effective_folder = rule_folder_gen
@@ -601,7 +906,8 @@ def run_pipeline(
                     strategy=refine_strategy, question=question, question_slug=question_slug,
                     rule_folder=rule_folder_gen, sample_docs=sample_docs,
                     ground_truth=ground_truth, rules_dir=rules_root,
-                    output_dir=out, model=model, skip_existing=skip_existing,
+                    refined_root=refined_root, cache_root=cache_root,
+                    model=model, skip_existing=skip_existing,
                 )
                 fallback_folder = rule_folder_gen if apply_strategy == "default" else None
                 n_rules_refined = len(_list_rule_names(effective_folder))
@@ -613,7 +919,7 @@ def run_pipeline(
                 rule_folder=effective_folder, fallback_folder=fallback_folder,
                 sample_docs=sample_doc_map, unsampled_docs=unsampled_doc_map,
                 sample_labels=sample_labels, unsampled_labels=unsampled_labels,
-                rules_dir=rules_root, output_dir=out,
+                rules_dir=rules_root, apply_root=apply_root,
                 model=model, skip_existing=skip_existing,
             )
 
