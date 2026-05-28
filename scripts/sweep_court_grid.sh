@@ -60,7 +60,7 @@ run_combo() {
   echo "[sweep] combo: sampling=$s  rule_gen=$g  refine=$r  apply=$a"
   echo "[sweep] log:   $log"
   echo "=========================================================================="
-  python src/pipeline.py \
+  python3 src/pipeline.py \
     --sampling-strategy "$s" \
     --rule-gen-strategy "$g" \
     --refine-strategy   "$r" \
