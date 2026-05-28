@@ -279,6 +279,75 @@ def stage_sampling(
 _SUBPROCESS_GEN = {"agent_claude", "agent_codex"}
 
 
+def _write_rule_gen_stats(
+    *,
+    output_dir: Path,
+    rules_dir: Path,
+    strategy: str,
+    model: str,
+    question: str,
+    question_slug: str,
+    rule_folder: Path,
+    latency_seconds: float,
+    raw_meta: dict,
+) -> None:
+    """Persist a normalized per-(sampling, rule_gen, question) stats record.
+
+    Path: <output_dir>/rule_gen/<sampling>/<rule_gen>/<q_slug>.json
+
+    Same schema regardless of which underlying rule_gen strategy ran, so the grid
+    summary can roll them up without per-strategy parsing.
+    """
+    # Derive sampling strategy from rules_dir (which is .../<sampling>/<rule_gen>)
+    try:
+        sampling_strategy = rules_dir.parent.name
+        rule_gen_strategy = rules_dir.name
+    except Exception:
+        sampling_strategy, rule_gen_strategy = "unknown", strategy
+
+    rules = sorted(p.stem for p in rule_folder.glob("rule_*.py"))
+
+    # llm_coarse returns rich metadata directly; subprocess gen returns minimal info.
+    in_tok  = int(raw_meta.get("input_tokens",  0) or 0)
+    out_tok = int(raw_meta.get("output_tokens", 0) or 0)
+
+    # If subprocess gen wrote its own *_rule_gen.json next to the rule pool, harvest tokens.
+    if in_tok == 0 and out_tok == 0:
+        candidate = sorted(rule_folder.parent.glob(f"{question_slug}*_rule_gen.json"),
+                           key=lambda p: p.stat().st_mtime, reverse=True)
+        for c in candidate:
+            try:
+                d = json.loads(c.read_text())
+                in_tok  = int(d.get("input_tokens",  d.get("agent_input_tokens",  0)) or 0)
+                out_tok = int(d.get("output_tokens", d.get("agent_output_tokens", 0)) or 0)
+                if in_tok or out_tok:
+                    break
+            except Exception:
+                pass
+
+    # Rough cost estimate at gpt-5.4 standard rates ($1.25/M in, $10/M out).
+    # gpt-5.4-mini would be ~10x cheaper; we report the gpt-5.4 ceiling.
+    cost_usd = round(in_tok / 1e6 * 1.25 + out_tok / 1e6 * 10.0, 4)
+
+    stats = {
+        "question":           question,
+        "question_slug":      question_slug,
+        "sampling_strategy":  sampling_strategy,
+        "rule_gen_strategy":  rule_gen_strategy,
+        "strategy_full":      strategy,
+        "model":              model,
+        "n_rules":            len(rules),
+        "rules":              rules,
+        "input_tokens":       in_tok,
+        "output_tokens":      out_tok,
+        "latency_seconds":    round(latency_seconds, 2),
+        "approx_cost_usd_gpt54_rate": cost_usd,
+        "timestamp":          datetime.now(timezone.utc).isoformat(),
+    }
+    stats_path = output_dir / "rule_gen" / sampling_strategy / rule_gen_strategy / f"{question_slug}.json"
+    _write_json(stats_path, stats)
+
+
 def stage_rule_gen(
     *,
     strategy: str,
@@ -292,7 +361,11 @@ def stage_rule_gen(
     model: str,
     skip_existing: bool,
 ) -> tuple[Path, dict]:
-    """Generate rules for one question. Return (rule_folder, gen_metadata)."""
+    """Generate rules for one question. Return (rule_folder, gen_metadata).
+
+    Side effect: writes a normalized stats record to
+    <output_dir>/rule_gen/<sampling>/<rule_gen>/<q_slug>.json.
+    """
 
     # Strip _gpt54 / _gpt54mini suffix and override the model arg
     base_strategy, effective_model = _split_strategy_model(strategy, default_model=model)
@@ -307,6 +380,9 @@ def stage_rule_gen(
 
     rule_folder.mkdir(parents=True, exist_ok=True)
 
+    t0 = time.time()
+    result: dict = {}
+
     if base_strategy in {"llm_coarse", "agent_langchain"}:
         mod = importlib.import_module(f"rule_gen.{base_strategy}")
         fn  = next(v for k, v in vars(mod).items() if k.startswith("rule_gen_") and callable(v))
@@ -317,13 +393,11 @@ def stage_rule_gen(
             rules_dir     = str(rules_dir),
             output_dir    = str(output_dir / "rule_gen"),
             model_name    = effective_model,
-            rule_subdir   = str(rule_folder),   # override default <q_slug>_N_llm naming
+            rule_subdir   = str(rule_folder),
         )
         _write_json(rule_gen_out, result)
         print(f"  [gen:{strategy} model={effective_model}] {question_slug}: {len(result.get('rules', []))} rules", flush=True)
-        return rule_folder, result
-
-    if base_strategy in _SUBPROCESS_GEN:
+    elif base_strategy in _SUBPROCESS_GEN:
         mod_name = "agent_claude" if base_strategy == "agent_claude" else "agent_codex"
         cmd = [
             sys.executable, f"src/rule_gen/{mod_name}.py",
@@ -331,7 +405,7 @@ def stage_rule_gen(
             "--docs", *sample_doc_names,
             "--rules-dir", str(rules_dir),
             "--model", effective_model,
-            "--question-slug", question_slug,   # keep slug consistent across stages
+            "--question-slug", question_slug,
         ]
         proc = subprocess.run(cmd, cwd=str(_ROOT), capture_output=True, text=True, check=False)
         if proc.returncode != 0:
@@ -339,9 +413,23 @@ def stage_rule_gen(
         result = {"strategy": strategy, "model": effective_model, "stdout_tail": proc.stdout[-500:]}
         _write_json(rule_gen_out, result)
         print(f"  [gen:{strategy} model={effective_model}] {question_slug}: done", flush=True)
-        return rule_folder, result
+    else:
+        raise ValueError(f"Unknown rule_gen_strategy: {strategy!r}")
 
-    raise ValueError(f"Unknown rule_gen_strategy: {strategy!r}")
+    latency_s = time.time() - t0
+
+    # Normalized per-(sampling, rule_gen, question) stats — predictable path, same schema for every strategy.
+    try:
+        _write_rule_gen_stats(
+            output_dir=output_dir, rules_dir=rules_dir,
+            strategy=strategy, model=effective_model,
+            question=question, question_slug=question_slug,
+            rule_folder=rule_folder, latency_seconds=latency_s, raw_meta=result,
+        )
+    except Exception as e:
+        print(f"  WARN: rule_gen stats writer failed: {e}", flush=True)
+
+    return rule_folder, result
 
 
 # ── Phase C — Per-pool precompute (cost_profile, eval_individual, eval_merge_base) ──
@@ -479,6 +567,8 @@ def stage_refine(
     rules_dir: Path,
     refined_root: Path,            # <out>/refined/<sampling>/<rule_gen>/<refine>/
     cache_root:   Path | None = None,  # <out>/cache/<sampling>/<rule_gen>/ (for p_hybrid etc.)
+    sample_labels_path: Path | None = None,  # sampling JSON, threaded to agentic_codex prompt
+    processing_dir:     str  | None = None,  # doc-JSON dir, threaded to agentic_codex prompt
     model: str = "gpt54",
     skip_existing: bool = False,
 ) -> Path:
@@ -587,15 +677,53 @@ def stage_refine(
         cmd = [
             sys.executable, driver,
             "--slug", question_slug,
-            "--rules-dir", str(rules_dir),
             "--out-dir", str(refined_dir),
         ]
-        # The codex driver supports --model; the claude driver uses --model with claude aliases.
         if base_strategy == "agentic_codex":
-            cmd += ["--model", effective_model]
+            # Pass explicit question + all path overrides; the codex driver bakes them into the prompt
+            # so the agent invokes helper tools (verify_accuracy, compute_cost, etc.) with the right paths.
+            cmd += [
+                "--model", effective_model,
+                "--question", question,
+                "--rules-dir",      str(rule_folder),
+                "--trace-dir",      str(refined_dir / "_trace"),
+                "--selector-run-dir", str(refined_dir / "_selector_run"),
+            ]
+            if sample_labels_path is not None:
+                cmd += ["--sampled-labels", str(sample_labels_path)]
+            if processing_dir is not None:
+                cmd += ["--processing-dir", str(processing_dir)]
+            if cache_root is not None:
+                cmd += [
+                    "--cost-cache-dir",   str(cache_root / "cost_profile"),
+                    "--cov-cache-dir",    str(cache_root / "eval_individual_gpt54"),
+                    "--eval-merge-dir",   str(cache_root / "eval_merge_base"),
+                ]
+        else:
+            # Legacy claude driver keeps single --rules-dir flag
+            cmd += ["--rules-dir", str(rules_dir)]
         proc = subprocess.run(cmd, cwd=str(_ROOT), capture_output=True, text=True, check=False)
         if proc.returncode != 0:
             raise RuntimeError(f"{strategy} refine failed for {question_slug}:\n{proc.stderr[-2000:]}")
+
+        # Both agentic drivers write their selection JSON as <out-dir>/<slug>.json
+        # (a list of selected rule names). Stage 4 reads .py files from
+        # refined_folder = <out-dir>/<slug>/, so materialise the selection by
+        # copying the chosen .py files out of the rule pool.
+        selection_json = refined_dir / f"{question_slug}.json"
+        if selection_json.exists():
+            sel = _read_json(selection_json, default={}) or {}
+            chosen = sel.get("selected_rules") or []
+            import shutil
+            for name in chosen:
+                src = rule_folder / f"{name}.py"
+                dst = refined_folder / f"{name}.py"
+                if src.exists():
+                    shutil.copy2(src, dst)
+                else:
+                    print(f"  WARN: agentic refine selected {name!r} but {src} missing", flush=True)
+            print(f"  [refine:{strategy}] copied {len(chosen)} rule(s) → {refined_folder}", flush=True)
+
         _write_json(refine_out, {
             "strategy": strategy, "model": effective_model,
             "stdout_tail": proc.stdout[-500:],
@@ -667,10 +795,11 @@ def stage_apply_and_eval(
         run_file = run_dir / f"{rule_set_slug}.json"
         eval_out = apply_root / f"{question_slug}_{split}.json"
 
-        already = set()
-        existing = _read_json(run_file, default=[])
-        if isinstance(existing, list):
-            already = {r.get("doc_name", "") for r in existing}
+        # Resume support: if run_file already has records, skip those docs and append the rest.
+        existing_records = _read_json(run_file, default=[])
+        if not isinstance(existing_records, list):
+            existing_records = []
+        already = {r.get("doc_name", "") for r in existing_records}
 
         if skip_existing and already.issuperset(doc_map.keys()) and eval_out.exists():
             print(f"  [apply+eval:{split}] SKIP", flush=True)
@@ -683,9 +812,10 @@ def stage_apply_and_eval(
         remaining = {dn: d for dn, d in doc_map.items() if dn not in already}
         print(f"  [apply:{split}] {apply_strategy}  rules={len(rule_names)}  docs={len(remaining)}", flush=True)
 
+        records = list(existing_records)   # accumulate as we go
         for doc_name, document in remaining.items():
             try:
-                _apply_one(
+                rec = _apply_one(
                     apply_strategy   = apply_strategy,
                     document         = document,
                     rule_names       = rule_names,
@@ -697,11 +827,18 @@ def stage_apply_and_eval(
                     output_dir       = run_dir.parent,    # `apply_root/question_slug/`
                     model            = model,
                 )
+                # Normalise to per-doc record shape the evaluator expects.
+                if isinstance(rec, dict):
+                    rec = dict(rec)
+                    rec.setdefault("doc_name", doc_name)
+                    records.append(rec)
             except Exception as e:
                 print(f"    ERROR apply {doc_name}: {e}", flush=True)
+                records.append({"doc_name": doc_name, "predicted_answer": None, "error": str(e)})
+            # Flush after every doc so external progress watchers see live counts.
+            _write_json(run_file, records)
 
         # ── Evaluate ──
-        records = _read_json(run_file, default=[]) or []
         preds   = {r["doc_name"]: r for r in records}
         per_doc: list[dict] = []
         for doc_name, document in doc_map.items():
@@ -773,6 +910,7 @@ def _apply_one(
         # refined rules live in <refined_root>/<q_slug>/ and the full pool lives in
         # <rules_root>/<q_slug>/ — different parents. Re-implement the gate+fallback
         # logic inline, calling rule_apply_merge with the correct rules_dir each time.
+        from rule_apply.merge import rule_apply_merge
         from rule_apply.default import relevance_check, qa_call
 
         # Step 1: merge over the refined subset (no LLM)

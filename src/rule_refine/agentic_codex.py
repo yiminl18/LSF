@@ -64,22 +64,51 @@ def make_slug(question: str) -> str:
     return s[:60] + "_10_llm"   # matches the rule folder naming convention
 
 
-def build_prompt(question: str, question_slug: str, budget: int, model: str) -> str:
-    """Build the prompt by formatting src/rule_refine/agentic_task_prompt.md.
+def build_prompt(
+    question: str,
+    question_slug: str,
+    budget: int,
+    model: str,
+    *,
+    rule_pool_dir:     str | None = None,
+    sampled_labels:    str | None = None,
+    processing_dir:    str | None = None,
+    cost_cache_dir:    str | None = None,
+    cov_cache_dir:     str | None = None,
+    eval_merge_dir:    str | None = None,
+    selector_run_dir:  str | None = None,
+) -> str:
+    """Build the prompt by formatting agentic_codex_task_prompt.md.
 
-    Same template + same placeholders as the Claude driver — the agent reads
-    the prompt and acts; the only difference at run-time is the underlying CLI.
+    All path arguments default to FinanceBench single_cluster paths for backwards
+    compatibility. Pipeline / grid callers pass dataset-specific paths to override.
     """
+    # FinanceBench defaults (kept for backwards-compat with legacy invocations)
+    rule_pool_dir    = rule_pool_dir    or "rules/financebench/lsf/single_cluster/llm/gpt54/one_shot/" + question_slug
+    sampled_labels   = sampled_labels   or "data/financebench/sample/single_cluster/random/sample_doc_labels.json"
+    processing_dir   = processing_dir   or "data/financebench/processing"
+    cost_cache_dir   = cost_cache_dir   or "results/financebench/lsf/single_cluster/llm/gpt54/one_shot/cost_profile"
+    cov_cache_dir    = cov_cache_dir    or "results/financebench/lsf/single_cluster/llm/gpt54/one_shot/eval_individual"
+    eval_merge_dir   = eval_merge_dir   or "results/financebench/lsf/single_cluster/llm/gpt54/one_shot/eval_merge"
+    selector_run_dir = selector_run_dir or "results/financebench/lsf/single_cluster/llm/gpt54/one_shot/selector_run_agent"
+
     template = TASK_PROMPT_FILE.read_text(encoding="utf-8")
     output_path = SELECTED_RULES_AGENT_DIR / f"{question_slug}.json"
     trace_path  = AGENT_TRACE_DIR / f"{question_slug}.jsonl"
     return template.format(
-        question      = question,
-        question_slug = question_slug,
-        budget        = budget,
-        model         = model,
-        output_path   = str(output_path.relative_to(_ROOT)),
-        trace_path    = str(trace_path.relative_to(_ROOT)),
+        question         = question,
+        question_slug    = question_slug,
+        budget           = budget,
+        model            = model,
+        rule_pool_dir    = rule_pool_dir,
+        sampled_labels   = sampled_labels,
+        processing_dir   = processing_dir,
+        cost_cache_dir   = cost_cache_dir,
+        cov_cache_dir    = cov_cache_dir,
+        eval_merge_dir   = eval_merge_dir,
+        selector_run_dir = selector_run_dir,
+        output_path      = str(output_path.relative_to(_ROOT)) if output_path.is_absolute() else str(output_path),
+        trace_path       = str(trace_path.relative_to(_ROOT))  if trace_path.is_absolute()  else str(trace_path),
     )
 
 
@@ -140,9 +169,23 @@ def run_agent_for_question(
     model:         str,
     timeout:       int = 5400,
     dry_run:       bool = False,
+    *,
+    rule_pool_dir:    str | None = None,
+    sampled_labels:   str | None = None,
+    processing_dir:   str | None = None,
+    cost_cache_dir:   str | None = None,
+    cov_cache_dir:    str | None = None,
+    eval_merge_dir:   str | None = None,
+    selector_run_dir: str | None = None,
 ) -> dict:
     """Spawn `codex exec <prompt>` and return the agent's outcome dict."""
-    prompt = build_prompt(question, question_slug, budget, model)
+    prompt = build_prompt(
+        question, question_slug, budget, model,
+        rule_pool_dir=rule_pool_dir, sampled_labels=sampled_labels,
+        processing_dir=processing_dir, cost_cache_dir=cost_cache_dir,
+        cov_cache_dir=cov_cache_dir, eval_merge_dir=eval_merge_dir,
+        selector_run_dir=selector_run_dir,
+    )
     resolved_model = _MODEL_ALIASES.get(model, model)
 
     if dry_run:
@@ -250,6 +293,9 @@ def run_agent_for_question(
 def main():
     ap = argparse.ArgumentParser(description="Run the agentic rule selector (Codex backbone) per question.")
     ap.add_argument("--slug", help="run a single question slug instead of all")
+    ap.add_argument("--question", default=None,
+                    help="explicit question text; bypasses QUERIES_FILE lookup. When set, --slug becomes "
+                         "the slug to use (no derivation from question text via make_slug). Used by the grid pipeline.")
     ap.add_argument("--budget", type=int, default=30,
                     help="max verify_accuracy calls per question (default 30)")
     ap.add_argument("--model", default="gpt54",
@@ -262,6 +308,14 @@ def main():
                     help="override SELECTED_RULES_AGENT_DIR (per-question <slug>.json land here)")
     ap.add_argument("--trace-dir", default=None,
                     help="override AGENT_TRACE_DIR (codex JSONL + last-message logs land here)")
+    # Dataset-aware path overrides (passed through to the prompt template)
+    ap.add_argument("--rules-dir",        default=None, help="override rule-pool dir embedded in prompt")
+    ap.add_argument("--sampled-labels",   default=None, help="override sampled labels file in prompt")
+    ap.add_argument("--processing-dir",   default=None, help="override doc JSON dir in prompt")
+    ap.add_argument("--cost-cache-dir",   default=None, help="override cost_profile dir in prompt")
+    ap.add_argument("--cov-cache-dir",    default=None, help="override eval_individual dir in prompt")
+    ap.add_argument("--eval-merge-dir",   default=None, help="override eval_merge_base dir in prompt")
+    ap.add_argument("--selector-run-dir", default=None, help="override selector_run dir in prompt")
     args = ap.parse_args()
 
     global SELECTED_RULES_AGENT_DIR, AGENT_TRACE_DIR
@@ -270,12 +324,19 @@ def main():
     if args.trace_dir:
         AGENT_TRACE_DIR = Path(args.trace_dir).resolve()
 
-    questions = [l.strip() for l in QUERIES_FILE.read_text().splitlines() if l.strip()]
-    if args.slug:
-        questions = [q for q in questions if make_slug(q) == args.slug]
-        if not questions:
-            print(f"ERROR: no question maps to slug {args.slug}", file=sys.stderr)
+    if args.question:
+        # Explicit question text supplied by caller (e.g. pipeline). Use it directly.
+        questions = [args.question]
+        if not args.slug:
+            print("ERROR: --question requires --slug as well", file=sys.stderr)
             sys.exit(2)
+    else:
+        questions = [l.strip() for l in QUERIES_FILE.read_text().splitlines() if l.strip()]
+        if args.slug:
+            questions = [q for q in questions if make_slug(q) == args.slug]
+            if not questions:
+                print(f"ERROR: no question maps to slug {args.slug}", file=sys.stderr)
+                sys.exit(2)
 
     if not os.environ.get("AZURE_OPENAI_API_KEY"):
         print(
@@ -288,13 +349,27 @@ def main():
 
     results = []
     for q in questions:
-        slug = make_slug(q)
+        # When --question + --slug are passed explicitly, use args.slug verbatim;
+        # otherwise derive it from the question text via the legacy make_slug.
+        slug = args.slug if (args.question and args.slug) else make_slug(q)
         print(f"\n{'='*72}\nQuestion: {q}\nSlug:     {slug}")
         if args.dry_run:
-            out = run_agent_for_question(q, slug, args.budget, args.model, dry_run=True)
+            out = run_agent_for_question(
+                q, slug, args.budget, args.model, dry_run=True,
+                rule_pool_dir=args.rules_dir, sampled_labels=args.sampled_labels,
+                processing_dir=args.processing_dir, cost_cache_dir=args.cost_cache_dir,
+                cov_cache_dir=args.cov_cache_dir, eval_merge_dir=args.eval_merge_dir,
+                selector_run_dir=args.selector_run_dir,
+            )
             print(f"  [dry-run] prompt length = {out['prompt_chars']} chars")
         else:
-            out = run_agent_for_question(q, slug, args.budget, args.model, timeout=args.timeout)
+            out = run_agent_for_question(
+                q, slug, args.budget, args.model, timeout=args.timeout,
+                rule_pool_dir=args.rules_dir, sampled_labels=args.sampled_labels,
+                processing_dir=args.processing_dir, cost_cache_dir=args.cost_cache_dir,
+                cov_cache_dir=args.cov_cache_dir, eval_merge_dir=args.eval_merge_dir,
+                selector_run_dir=args.selector_run_dir,
+            )
             print(f"  status={out['status']}  wall={out.get('wallclock_seconds')}s")
             if out.get("summary_line"):
                 print(f"  {out['summary_line']}")

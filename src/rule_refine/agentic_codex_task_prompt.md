@@ -3,14 +3,17 @@ subset of rules from a pre-generated rule pool that preserves the merge
 accuracy of the full pool on the sampled documents, while keeping total cost
 low and per-rule coverage high.
 
-QUESTION   : {question}
-SLUG       : {question_slug}
-RULE POOL  : rules/financebench/lsf/single_cluster/llm/gpt54/one_shot/{question_slug}/
-SAMPLED    : data/financebench/sample/single_cluster/random/sample_doc_labels.json (10 docs)
-COST CACHE : results/financebench/lsf/single_cluster/llm/gpt54/one_shot/cost_profile/{question_slug}.json
-COV CACHE  : results/financebench/lsf/single_cluster/llm/gpt54/one_shot/eval_individual/{question_slug}/
-OUTPUT     : results/financebench/lsf/single_cluster/llm/gpt54/one_shot/selected_rules_agent/{question_slug}.json
-TRACE      : results/financebench/lsf/single_cluster/llm/gpt54/one_shot/agent_trace/{question_slug}.jsonl
+QUESTION       : {question}
+SLUG           : {question_slug}
+RULE POOL      : {rule_pool_dir}/
+SAMPLED LABELS : {sampled_labels}
+PROCESSING DIR : {processing_dir}
+COST CACHE     : {cost_cache_dir}/{question_slug}.json (may not exist if precompute skipped)
+COV CACHE      : {cov_cache_dir}/{question_slug}/   (may not exist if precompute skipped)
+EVAL MERGE DIR : {eval_merge_dir}/                  (defines D*; may not exist if precompute skipped)
+SELECTOR RUN   : {selector_run_dir}/                (verify_accuracy intermediate output)
+OUTPUT         : {output_path}
+TRACE          : {trace_path}
 
 HARD CONSTRAINT (must be satisfied before you finish)
   Merge accuracy of your selected subset S must equal the merge accuracy of
@@ -25,25 +28,32 @@ SOFT TARGETS (negotiate against each other)
 REASONABLE STOPPING SOFT-TARGET CRITERIA (subjective, optional):
   - min_cov(S) >= 0.4
   - sum_avg_cost_ratio(S) <= 0.5 * sum_avg_cost_ratio(full pool)
-  - |S| <= 10
+  - |S| <= 5
   Stop when accuracy matches AND any two of these three hold, or when budget
   is exhausted.
 
-TOOLS YOU HAVE (invoke via the Bash tool, one per call)
+TOOLS YOU HAVE (invoke via the Bash tool, one per call). **You MUST pass the
+override flags shown below; the tool defaults point at FinanceBench paths.**
 
   # Free (no LLM):
-  python tools/list_rules.py --question-slug {question_slug}
-  python tools/compute_cost.py --question-slug {question_slug} --rules <r1> <r2> ...
-  python tools/compute_cost.py --question-slug {question_slug} --all
-  python tools/compute_coverage.py --question-slug {question_slug} --rules <r1> <r2> ...
-  python tools/compute_coverage.py --question-slug {question_slug} --all
-  python tools/inspect_rule.py --question-slug {question_slug} --rule <name>
+  python tools/list_rules.py --question-slug {question_slug} \
+      --rules-dir {rule_pool_dir}
+  python tools/compute_cost.py --question-slug {question_slug} --all \
+      --rules-dir {rule_pool_dir} --labels-file {sampled_labels} \
+      --processing-dir {processing_dir} --cache-dir {cost_cache_dir}
+  python tools/compute_coverage.py --question-slug {question_slug} --all \
+      --rules-dir {rule_pool_dir} --eval-individual-dir {cov_cache_dir}
+  python tools/inspect_rule.py --question-slug {question_slug} --rule <name> \
+      --rules-dir {rule_pool_dir}
 
-  # Paid (each call: ~20 gpt54 invocations on the 10 sampled docs):
+  # Paid (each call: ~20 gpt54 invocations on the sampled docs):
   python tools/verify_accuracy.py \
       --question-slug {question_slug} \
       --question "{question}" \
-      --rules <r1> <r2> ...
+      --rules <r1> <r2> ... \
+      --rules-dir {rule_pool_dir} --labels-file {sampled_labels} \
+      --processing-dir {processing_dir} --eval-merge-dir {eval_merge_dir} \
+      --output-dir {selector_run_dir} --d-star-mode all_labeled
 
 BUDGET: at most {budget} verify_accuracy calls. Use them sparingly.
 

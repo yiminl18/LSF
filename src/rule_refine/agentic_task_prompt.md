@@ -25,7 +25,7 @@ SOFT TARGETS (negotiate against each other)
 REASONABLE STOPPING SOFT-TARGET CRITERIA (subjective, optional):
   - min_cov(S) >= 0.4
   - sum_avg_cost_ratio(S) <= 0.5 * sum_avg_cost_ratio(full pool)
-  - |S| <= 10
+  - |S| <= 5
   Stop when accuracy matches AND any two of these three hold, or when budget
   is exhausted.
 

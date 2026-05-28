@@ -204,7 +204,7 @@ done
 ## CLI Interface
 
 ```bash
-python test/rule_end_to_end.py \
+python src/pipeline.py \
     --sampling-strategy   random \
     --rule-gen-strategy   llm_coarse \
     --refine-strategy     none \
@@ -213,28 +213,31 @@ python test/rule_end_to_end.py \
     --dataset             financebench \
     --cluster             single_cluster \
     --processing-dir      data/financebench/processing \
-    --output-dir          results/e2e \
+    --output-dir          results/financebench/grid \
     [--skip-existing]
 ```
+
+The CLI is a thin wrapper around `stage_sampling → stage_rule_gen →
+stage_refine → stage_apply_and_eval` (see "Running a full pipeline — proven
+step-by-step recipe" above for the per-stage Python form). Use the CLI for
+sweep runs; use the step-by-step form for debugging a single (question, combo).
 
 ### Arguments
 
 | Argument | Default | Values | Description |
 |---|---|---|---|
-| `--sampling-strategy` | `random` | `random`, `fps` | Stage 1 strategy. `random` reuses pre-built label files under `data/<dataset>/sample/<cluster>/random/`. `fps` runs `src/sampling/run_fps_sampling.py` and writes a fresh `fps/` sub-directory. |
-| `--rule-gen-strategy` | `llm_coarse` | `llm_coarse`, `agent_langchain`, `agent_claude`, `agent_codex` | Stage 2 strategy. The pipeline imports the matching module under `src/rule_gen/`. |
-| `--refine-strategy` | `none` | `none`, `v1`, `p_mini`, `p_gpt54`, `p_proxy`, `p_v2`, `p_v3`, `agentic`, `agentic_codex` | Stage 3 strategy. `none` skips refinement and passes the Stage 2 pool through. |
+| `--sampling-strategy` | `random` | `random`, `fps` | Stage 1 strategy. `random` reuses pre-built label files under `data/<dataset>/sample/<cluster>/random/` (FinanceBench) or derives a 20-doc split from `data/<dataset>/all_labels.json` (court/nopv/officeqa). `fps` runs `src/sampling/run_fps_sampling.py` and writes a fresh `fps/` sub-directory. |
+| `--rule-gen-strategy` | `llm_coarse` | `llm_coarse`, `llm_coarse_gpt54`, `llm_coarse_gpt54mini`, `agent_langchain`, `agent_claude`, `agent_codex`, `agent_codex_gpt54`, `agent_codex_gpt54mini` | Stage 2 strategy. Variants with `_gpt54` / `_gpt54mini` suffix pin the backbone model; base names default to gpt-5.4. |
+| `--refine-strategy` | `none` | `none`, `v1`, `p_mini`, `p_gpt54`, `p_proxy`, `p_v2`, `p_v3`, `p_hybrid`, `agentic`, `agentic_codex`, `agentic_codex_gpt54`, `agentic_codex_gpt54mini` | Stage 3 strategy. `none` skips refinement and passes the Stage 2 pool through. |
 | `--apply-strategy` | `merge` | `merge`, `default` | Stage 4 strategy. `default` requires a non-`none` refine strategy (it needs both a refined subset and a full pool to fall back to). |
-| `--queries-file` | `data/financebench/sample_queries.txt` | path | Questions to run. |
+| `--queries-file` | `data/financebench/sample_queries.txt` | path | Questions to run. Accepts `.txt` (one per line) or `.json` (list of strings or list of `{"text": "..."}`). |
 | `--dataset` | `financebench` | `financebench`, `court`, `nopv`, `officeqa` | Selects the data/labels/rules root paths. |
 | `--cluster` | `single_cluster` | `single_cluster`, `multi_cluster`, `all_docs` | Sub-directory under the dataset for label files. |
-| `--processing-dir` | `data/<dataset>/processing` | path | Reconstructed-JSON dir. |
-| `--output-dir` | `results/e2e` | path | Root output directory for this run. |
+| `--processing-dir` | `data/<dataset>/processing` *or* `data/<dataset>/json` (auto-probed) | path | Doc JSON dir. Files may be named `<DOC>_reconstructed.json` (FinanceBench) or `<DOC>.json` (court). |
+| `--rules-dir` | derived | path | Optional override; otherwise the pipeline writes to `rules/<dataset>/grid/<sampling>/<rule_gen>/`. |
+| `--output-dir` | `results/e2e` | path | Root output directory for this run. Recommended: `results/<dataset>/grid`. |
+| `--model` | `gpt54` | `gpt54`, `gpt54mini` | Default backbone for strategies that don't pin one in their name. |
 | `--skip-existing` | off | flag | Skip any stage whose output already exists on disk. |
-
-Backwards-compatible legacy args still accepted:
-- `--rule-gen-module <path>` — overrides `--rule-gen-strategy` by directly importing a `src/rule_gen/<name>.py` file.
-- `--use-refine` — shorthand for `--refine-strategy v1` (kept for older shell scripts).
 
 ---
 
@@ -262,13 +265,21 @@ The pipeline picks up these new files for the rest of the run. The `embeddings.n
 For each question:
 1. Load all sampled docs (from Stage 1's output).
 2. Read this question's ground-truth answers per doc from the labels JSON.
-3. Call the chosen `src/rule_gen/<strategy>.py` function and write its rule `.py` files to:
+3. Call the chosen `src/rule_gen/<strategy>.py` function (or subprocess into
+   `agent_codex` / `agent_claude` with `--question-slug`) and write rule `.py`
+   files to:
    ```
-   rules/<dataset>/lsf/<cluster>/<strategy>/<model>/<variant>/<question_slug>_<N>_<tag>/
+   rules/<dataset>/grid/<sampling>/<rule_gen>/<question_slug>/rule_*.py
    ```
-4. Save the rule-gen metadata JSON to `{output_dir}/rule_gen/{question_slug}_rule_gen.json`.
+4. Save normalized rule-gen stats to:
+   ```
+   <output_dir>/rule_gen/<sampling>/<rule_gen>/<question_slug>.json
+   ```
 
-The exact `<tag>` and naming convention is defined by each generation approach (see `docs/approach/rule_generation.md`).
+The rule-gen drivers accept an explicit `question_slug` (and `rule_subdir` for
+`llm_coarse` / `agent_langchain`) so the on-disk folder always matches the
+slug `_make_slug(question)` produces — see `docs/approach/rule_generation.md`
+for per-strategy details.
 
 ---
 
@@ -277,10 +288,24 @@ The exact `<tag>` and naming convention is defined by each generation approach (
 If a refinement strategy is selected:
 1. Load Stage 2's rule pool for each question.
 2. Run the refine algorithm — its in-loop oracle (LLM judge or substring proxy) evaluates candidate subsets on the sampled docs.
-3. Write the refined `rule_*.py` files to `{output_dir}/refined_rules/{question_slug}/`.
-4. Save the refinement trace/metadata to `{output_dir}/rule_refine/{question_slug}_refine.json`.
+3. Write the refined `rule_*.py` files to:
+   ```
+   <output_dir>/refined/<sampling>/<rule_gen>/<refine>/<question_slug>/rule_*.py
+   ```
+4. Save refinement metadata + trace to:
+   ```
+   <output_dir>/refined/<sampling>/<rule_gen>/<refine>/<question_slug>_refine.json
+   <output_dir>/refined/<sampling>/<rule_gen>/<refine>/<question_slug>.json            # agentic selection JSON
+   <output_dir>/refined/<sampling>/<rule_gen>/<refine>/_trace/<question_slug>.codex.jsonl
+   ```
 
-The effective `rules_dir` Stage 4 sees becomes `{output_dir}/refined_rules/`. For `--apply-strategy default`, Stage 4 keeps a handle to the original Stage 2 pool for fallback.
+For the agentic refiners (`agentic`, `agentic_codex*`), the driver writes a
+selection JSON listing `selected_rules`; `stage_refine` then auto-copies each
+`<name>.py` from the rule pool into the refined folder so Stage 4 finds it.
+
+The effective `rule_folder` Stage 4 sees becomes
+`<output_dir>/refined/.../<question_slug>/`. For `--apply-strategy default`,
+Stage 4 keeps a handle to the original Stage 2 pool as `fallback_folder`.
 
 ---
 
@@ -291,16 +316,21 @@ Per (question, doc) pair on **both** splits (sampled and unsampled):
 2. Run the LLM-as-judge on the predicted answer.
 3. Write per-doc records to:
    ```
-   {output_dir}/rule_run/{strategy}/{question_slug}/{rule_set_slug}.json             # sampled
-   {output_dir}/rule_run_unsampled/{strategy}/{question_slug}/{rule_set_slug}.json   # unsampled
+   <output_dir>/apply/<sampling>/<rule_gen>/<refine>/<apply>/<question_slug>/sampled/<rule_set_slug>.json
+   <output_dir>/apply/<sampling>/<rule_gen>/<refine>/<apply>/<question_slug>/unsampled/<rule_set_slug>.json
    ```
-4. Aggregate to `{output_dir}/eval/{question_slug}_{split}.json`.
+   Records are flushed after every doc, so partial runs are recoverable.
+4. Aggregate to:
+   ```
+   <output_dir>/apply/<sampling>/<rule_gen>/<refine>/<apply>/<question_slug>_sampled.json
+   <output_dir>/apply/<sampling>/<rule_gen>/<refine>/<apply>/<question_slug>_unsampled.json
+   ```
 
 Per-doc and per-question schemas are identical regardless of `apply_strategy`; `apply_strategy = default` adds `used_fallback`, `relevance_verdict`, and separate token counts for the gate vs. answer model.
 
 ### Per-question per-split eval file
 
-`{output_dir}/eval/{question_slug}_{split}.json`:
+`<output_dir>/apply/<sampling>/<rule_gen>/<refine>/<apply>/<question_slug>_<split>.json`:
 
 ```json
 {
@@ -332,7 +362,7 @@ Per-doc and per-question schemas are identical regardless of `apply_strategy`; `
 
 ### Summary file
 
-`{output_dir}/eval/summary.json`:
+`<output_dir>/apply/<sampling>/<rule_gen>/<refine>/<apply>/pipeline_summary.json`:
 
 ```json
 [
@@ -349,29 +379,64 @@ Per-doc and per-question schemas are identical regardless of `apply_strategy`; `
 
 ## Full Output Directory Structure
 
+Grid-layout outputs are namespaced by every strategy axis so 64 combos coexist
+without clobber. Two roots: `<output_dir>/` (per-run data) and `rules/<dataset>/grid/`
+(shared rule pools).
+
 ```
-{output_dir}/                                  e.g. results/e2e/
-├── sampling/                                  only if --sampling-strategy fps
+{output_dir}/                                          e.g. results/<dataset>/grid/
+├── sampling/<sampling>/
 │   ├── sample_doc_labels.json
 │   ├── unsampled_doc_labels.json
-│   ├── fps_run.json
-│   └── embeddings.npz
-├── rule_gen/
-│   └── {question_slug}_rule_gen.json
-├── refined_rules/                             only if Stage 3 ran
-│   └── {question_slug}/rule_*.py
-├── rule_refine/                               only if Stage 3 ran
-│   └── {question_slug}_refine.json
-├── rule_run/
-│   └── {apply_strategy}/{question_slug}/{rule_set_slug}.json
-├── rule_run_unsampled/
-│   └── {apply_strategy}/{question_slug}/{rule_set_slug}.json
-├── eval/
-│   ├── {question_slug}_sampled.json
-│   ├── {question_slug}_unsampled.json
-│   └── summary.json
-└── pipeline_summary.json                      full run metadata
+│   └── fps_run.json                                  (fps only)
+├── cache/<sampling>/<rule_gen>/                       (only if refine ∈ {p_mini,p_gpt54,p_hybrid,p_v2,p_v3})
+│   ├── cost_profile/<q_slug>.json
+│   ├── eval_merge_base/<q_slug>.json                  full-pool sAcc; defines D*
+│   ├── eval_individual_gpt54/<q_slug>/<rule>_eval.json
+│   └── eval_individual_gpt54mini/<q_slug>/<rule>_eval.json
+├── refined/<sampling>/<rule_gen>/<refine>/            (only if refine != none)
+│   ├── <q_slug>/rule_*.py                             selected subset
+│   └── <q_slug>_refine.json                           metadata: selected_rules, sAcc, latency, tokens
+└── apply/<sampling>/<rule_gen>/<refine>/<apply>/
+    ├── <q_slug>/sampled/<rule_set_slug>.json          per-doc apply records
+    ├── <q_slug>/unsampled/<rule_set_slug>.json
+    ├── <q_slug>_sampled.json                          per-question eval (sAcc, cost, latency)
+    ├── <q_slug>_unsampled.json
+    └── pipeline_summary.json                          overall summary for this combo
+
+rules/<dataset>/grid/<sampling>/<rule_gen>/<q_slug>/rule_*.py        full rule pool (Stage 2 output)
 ```
+
+### Concrete example — one combo on court
+
+Combo: `random + llm_coarse + agentic_codex + default`, `--output-dir results/court/grid`
+
+```
+results/court/grid/
+├── sampling/random/
+│   ├── sample_doc_labels.json                         20 docs (cap)
+│   └── unsampled_doc_labels.json                      274 docs
+│
+├── refined/random/llm_coarse/agentic_codex/<q_slug>/
+│   ├── rule_*.py                                      codex-selected subset (~2 rules/Q)
+│   └── <q_slug>_refine.json                           codex agent metadata
+│
+└── apply/random/llm_coarse/agentic_codex/default/
+    ├── <q_slug>/sampled/<rule_set_slug>.json          20 per-doc apply records
+    ├── <q_slug>/unsampled/<rule_set_slug>.json        274 per-doc apply records
+    ├── <q_slug>_sampled.json                          per-question summary
+    ├── <q_slug>_unsampled.json
+    └── pipeline_summary.json
+
+rules/court/grid/
+└── random/llm_coarse/<q_slug>/rule_*.py               LLM-coarse pool (~100 rules/Q)
+                                                       — used by Stage 2 + as fallback for `default` apply
+```
+
+`cache/` is skipped because `agentic_codex` doesn't need precompute (the agent
+uses `verify_accuracy` on demand). A Pareto-family refiner (`p_mini`, `p_hybrid`,
+etc.) would populate `cache/random/llm_coarse/` with `cost_profile`,
+`eval_merge_base`, and `eval_individual_*` caches.
 
 ### `pipeline_summary.json`
 
@@ -411,27 +476,238 @@ Per-doc and per-question schemas are identical regardless of `apply_strategy`; `
 
 ---
 
+## Running a full pipeline — proven step-by-step recipe
+
+This section is the recipe we used end-to-end on **court Q12** with `random +
+llm_coarse_gpt54 + agentic_codex_gpt54 + default`. It works for any
+(dataset, question, combo) without modification — just swap the variables. The
+one-shot CLI (next section) calls these same `stage_*` functions in order.
+
+### 0. Environment setup (one-time per shell)
+
+```bash
+cd /path/to/LSF
+
+# Azure key for any rule_gen / refine / apply step that calls gpt-5.4 / gpt-5.4-mini.
+# The key file is YAML — extract the api_key field, do NOT cat the whole file.
+export AZURE_OPENAI_API_KEY=$(awk -F': ' '/^api_key:/{print $2; exit}' \
+  ~/api_keys/azure_cloudbank/gpt-54_1.txt)
+
+# Sanity check: should be 84 chars.
+echo ${#AZURE_OPENAI_API_KEY}
+```
+
+The codex backbone (used by `agent_codex*` and `agentic_codex*`) also needs the
+`codex` binary on PATH and configured for Azure — see `docs/codex_setup.md`.
+
+### 1. Stage variables (set these once)
+
+```python
+# in a Python REPL launched from the repo root, OR write to a small driver .py
+import sys; sys.path.insert(0, "src")
+from pathlib import Path
+from pipeline import (
+    stage_sampling, stage_rule_gen, stage_refine, stage_apply_and_eval,
+    _make_slug, _load_docs, _default_processing_dir,
+)
+import json
+
+# ── choose dataset, question, combo ──────────────────────────────────────
+DATASET   = "court"
+CLUSTER   = "all_docs"                              # court / nopv / officeqa use this
+QUESTION  = "What legal subject matter does the court staff SUMMARY identify ..."
+Q_SLUG    = _make_slug(QUESTION)                    # canonical slug used by every stage
+
+SAMPLING  = "random"
+RULE_GEN  = "llm_coarse_gpt54"                      # or "agent_codex_gpt54", etc.
+REFINE    = "agentic_codex_gpt54"                   # or "none", "p_hybrid", ...
+APPLY     = "default"                               # or "merge"
+
+OUTPUT    = Path("results") / DATASET / "grid"
+RULES     = Path("rules")   / DATASET / "grid" / SAMPLING / RULE_GEN
+PROC_DIR  = _default_processing_dir(DATASET)        # auto-probes processing/ then json/
+```
+
+Two **conventions** the code depends on, surface them here so they are not surprises:
+- `_make_slug` is the *one* slug source of truth: lowercase, strip punctuation,
+  collapse whitespace to `_`, truncate to 60 chars. Every stage uses this slug
+  to find inputs/outputs. The rule_gen drivers (`agent_codex`, `agent_claude`)
+  accept `--question-slug` so they reuse the pipeline-derived slug verbatim
+  instead of redoing the derivation themselves.
+- `_load_docs` and `_default_processing_dir` accept **either** `<DOC>.json`
+  (court / nopv / officeqa) **or** `<DOC>_reconstructed.json` (FinanceBench).
+  Don't symlink — just point `--processing-dir` at the directory that holds
+  whichever convention your dataset uses.
+
+### 2. Stage 1 — Sampling
+
+```python
+sample_labels, unsampled_labels = stage_sampling(
+    strategy      = SAMPLING,
+    dataset       = DATASET,
+    cluster       = CLUSTER,
+    output_dir    = OUTPUT,
+    skip_existing = True,
+)
+print("sample:", sample_labels)        # → results/court/grid/sampling/random/sample_doc_labels.json
+print("unsamp:", unsampled_labels)
+```
+
+- For FinanceBench, this returns the **pre-built** label files under
+  `data/financebench/sample/<cluster>/random/`.
+- For court / nopv / officeqa, it **derives** a 20-doc split at run time from
+  `data/<dataset>/all_labels.json` (seed=0, hard cap `_SAMPLE_CAP = 20`).
+  Re-running with `skip_existing=True` re-uses the previously derived split.
+
+### 3. Stage 2 — Rule generation (for one question)
+
+```python
+labels             = json.loads(Path(sample_labels).read_text())
+unsampled_labels_d = json.loads(Path(unsampled_labels).read_text())
+sample_doc_map     = _load_docs(labels, str(PROC_DIR))
+unsampled_doc_map  = _load_docs(unsampled_labels_d, str(PROC_DIR))
+sample_docs        = list(sample_doc_map.values())
+sample_doc_names   = list(sample_doc_map.keys())
+gt                 = {k.replace(".pdf", "").replace(".PDF", ""): labels[k][QUESTION]
+                      for k in labels if QUESTION in labels[k]}
+
+rule_folder, gen_meta = stage_rule_gen(
+    strategy        = RULE_GEN,                      # e.g. "llm_coarse_gpt54"
+    question        = QUESTION,
+    question_slug   = Q_SLUG,
+    sample_docs     = sample_docs,
+    sample_doc_names= sample_doc_names,              # needed only by subprocess gens
+    ground_truth    = gt,
+    rules_dir       = RULES,                         # rules/<ds>/grid/<sampling>/<rule_gen>/
+    output_dir      = OUTPUT,
+    model           = "gpt54",
+    skip_existing   = True,
+)
+# → rule_folder = rules/court/grid/random/llm_coarse_gpt54/<q_slug>/
+#   contains rule_*.py files
+# → stats at      results/court/grid/rule_gen/random/llm_coarse_gpt54/<q_slug>.json
+```
+
+The `rule_subdir` override (in `llm_coarse.py` / `agent_langchain.py`) and
+`--question-slug` (in `agent_codex.py` / `agent_claude.py`) guarantee that the
+generator writes into `rules_dir/<q_slug>/` exactly — no surprise
+`<q_slug>_<N>_llm/` sub-folder.
+
+### 4. Stage 3 — Refinement (optional)
+
+If `REFINE == "none"`, skip this stage and pass `rule_folder` straight to
+Stage 4. Otherwise:
+
+```python
+refined_root = OUTPUT / "refined" / SAMPLING / RULE_GEN / REFINE
+cache_root   = OUTPUT / "cache"   / SAMPLING / RULE_GEN   # only needed by p_hybrid etc.
+
+refined_folder = stage_refine(
+    strategy           = REFINE,                       # e.g. "agentic_codex_gpt54"
+    question           = QUESTION,
+    question_slug      = Q_SLUG,
+    rule_folder        = rule_folder,                  # Stage 2's output
+    sample_docs        = sample_docs,
+    ground_truth       = gt,
+    rules_dir          = rule_folder.parent,           # parent of <q_slug>/ folder
+    refined_root       = refined_root,
+    cache_root         = cache_root,                   # pass even if refine doesn't need it
+    sample_labels_path = Path(sample_labels),          # threaded into codex prompt
+    processing_dir     = str(PROC_DIR),                # threaded into codex prompt
+    skip_existing      = True,
+)
+# → refined_folder = results/court/grid/refined/random/llm_coarse_gpt54/agentic_codex_gpt54/<q_slug>/
+#   contains the subset rule_*.py files (auto-copied from rule_folder)
+# → metadata at      results/court/grid/refined/.../<q_slug>_refine.json
+# → selection JSON   results/court/grid/refined/.../<q_slug>.json
+# → codex trace      results/court/grid/refined/.../_trace/<q_slug>.codex.jsonl
+```
+
+How the agentic-codex driver populates `refined_folder`: it writes a
+`<q_slug>.json` listing the `selected_rules` it chose, then `stage_refine`
+auto-copies each `<name>.py` from the rule pool into `refined_folder/`.
+**If a refine run finishes but `refined_folder` is empty, the auto-copy
+silently warned about a missing rule** — re-run with the warnings visible.
+
+### 5. Stage 4 — Apply + evaluate
+
+```python
+eval_results = stage_apply_and_eval(
+    apply_strategy  = APPLY,                        # "merge" or "default"
+    question        = QUESTION,
+    question_slug   = Q_SLUG,
+    rule_folder     = refined_folder,               # subset for merge / for default's primary
+    fallback_folder = rule_folder,                  # full pool — required when apply="default"
+    sample_docs     = sample_doc_map,               # dict[doc_name -> doc_json]
+    unsampled_docs  = unsampled_doc_map,
+    sample_labels   = labels,                       # the parsed sample labels dict
+    unsampled_labels= unsampled_labels_d,
+    rules_dir       = rule_folder.parent,
+    apply_root      = OUTPUT / "apply" / SAMPLING / RULE_GEN / REFINE / APPLY,
+    model           = "gpt54",
+    skip_existing   = False,                        # set True to resume partial runs
+)
+# eval_results == {"sampled": {...}, "unsampled": {...}}  per-split summary dicts
+# → per-doc records flushed after EVERY doc to:
+#   results/court/grid/apply/.../<q_slug>/sampled/<rule_set_slug>.json
+#   results/court/grid/apply/.../<q_slug>/unsampled/<rule_set_slug>.json
+# → per-question summaries: <q_slug>_sampled.json / <q_slug>_unsampled.json
+```
+
+`apply_strategy="default"`:
+1. Apply `merge` over the **refined** subset.
+2. Send retrieved-text to a gpt-5.4-mini gate: "does this answer the question?".
+3. If gate says NO, re-apply `merge` over the **fallback (full)** pool.
+4. gpt-5.4 produces the final answer from whichever retrieved-text was used.
+
+This is why Stage 4 needs **both** a `rule_folder` and a `fallback_folder` in
+different parents — they cannot be the same path.
+
+### 6. Smoke result — court Q12 (reference numbers)
+
+| combo                                                                  | sAcc  | uAcc  | wall (min) |
+|------------------------------------------------------------------------|------:|------:|----------:|
+| `random + llm_coarse_gpt54 + agentic_codex_gpt54 + default`            | 1.000 | 0.982 |  ~25      |
+| `random + agent_codex_gpt54 + agentic_codex_gpt54 + default`           | 0.850 | 0.898 |  ~30      |
+| baseline (no refine, raw pool, merge)                                  | —     | 0.860 |  —        |
+
+The llm_coarse+agentic_codex variant beat the no-refine baseline; this is the
+canonical "the pipeline works" smoke result for the court dataset.
+
+### 7. Known caveats — read before running
+
+| Caveat | Effect | Workaround |
+|---|---|---|
+| Court JSON drops ~41% of caption-block content (docket Q1/Q4) | Rules built from JSON cover only ~40% of docs for docket-style questions | Avoid JSON pipeline for docket-style court questions; pick a question with high JSON coverage (e.g. Q12 = 100%) |
+| `agent_codex` and `agent_claude` derive an internal slug that differs from `_make_slug` | Stage 2 writes rules to a folder Stage 3+4 can't find | Always pass `--question-slug $(python -c "from pipeline import _make_slug; print(_make_slug('...'))")` |
+| `default` apply requires refined ≠ fallback paths | `merge` over the same path twice gives no benefit and the gate is wasted | Always run a refine stage before `apply="default"`; if no refine wanted, use `apply="merge"` instead |
+| Codex needs the YAML key extracted, not raw cat'd | `codex exec` 401s against Azure | See section 0 above; the awk one-liner is the canonical recipe |
+| Server commits with real email are rejected by GitHub | Push fails with E_EMAIL_PRIVATE | Use `yiminl18@users.noreply.github.com` on the server side |
+
+---
+
 ## Recipes
 
-A few common combos:
+A few common combos, run via the one-shot CLI (which calls the same `stage_*`
+functions documented above):
 
 ```bash
 # Baseline: random sampling + LLM-coarse + no refinement + merge
-python test/rule_end_to_end.py \
+python src/pipeline.py \
   --sampling-strategy random --rule-gen-strategy llm_coarse \
   --refine-strategy none --apply-strategy merge
 
 # Recommended cost-conscious deployment:
-# random sampling, LLM-coarse pool, p_mini refinement, fallback application
-python test/rule_end_to_end.py \
+# random sampling, LLM-coarse pool, p_hybrid refinement, fallback application
+python src/pipeline.py \
   --sampling-strategy random --rule-gen-strategy llm_coarse \
-  --refine-strategy p_mini --apply-strategy default
+  --refine-strategy p_hybrid --apply-strategy default
 
 # Recommended accuracy-conscious deployment:
-# FPS sampling, Claude agent gen, agentic refinement, fallback application
-python test/rule_end_to_end.py \
-  --sampling-strategy fps --rule-gen-strategy agent_claude \
-  --refine-strategy agentic --apply-strategy default
+# FPS sampling, Codex agent gen, agentic-codex refinement, fallback application
+python src/pipeline.py \
+  --sampling-strategy fps --rule-gen-strategy agent_codex_gpt54 \
+  --refine-strategy agentic_codex_gpt54 --apply-strategy default
 ```
 
 ---
