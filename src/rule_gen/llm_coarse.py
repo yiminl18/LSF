@@ -171,6 +171,7 @@ def rule_gen_llm_coarse(
     model_name: str = "gpt54",
     output_dir: str = "results/financebench/lsf/single_cluster/llm/gpt54/one_shot/rule_gen",
     rules_dir: str = "rules/financebench/lsf/single_cluster/llm/gpt54/one_shot",
+    rule_subdir: str | None = None,
 ) -> dict:
     """
     Given a collection of similar documents, a question, and ground truth answers,
@@ -206,8 +207,12 @@ def rule_gen_llm_coarse(
     # Parse rule functions from LLM output
     parsed = _extract_functions(llm_text)
 
-    # Prepare output directories
-    rule_subdir = Path(rules_dir) / f"{question_slug}_{len(documents)}_llm"
+    # Prepare output directories. Caller may pass explicit `rule_subdir` to override
+    # the default `<rules_dir>/<q_slug>_<N>_llm/` convention (used by the grid pipeline).
+    rule_subdir = (
+        Path(rule_subdir) if rule_subdir
+        else Path(rules_dir) / f"{question_slug}_{len(documents)}_llm"
+    )
     rule_subdir.mkdir(parents=True, exist_ok=True)
     out_dir = Path(output_dir)
     out_dir.mkdir(parents=True, exist_ok=True)

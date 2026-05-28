@@ -317,6 +317,7 @@ def stage_rule_gen(
             rules_dir     = str(rules_dir),
             output_dir    = str(output_dir / "rule_gen"),
             model_name    = effective_model,
+            rule_subdir   = str(rule_folder),   # override default <q_slug>_N_llm naming
         )
         _write_json(rule_gen_out, result)
         print(f"  [gen:{strategy} model={effective_model}] {question_slug}: {len(result.get('rules', []))} rules", flush=True)

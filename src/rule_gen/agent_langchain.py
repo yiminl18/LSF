@@ -1134,6 +1134,7 @@ def rule_gen_agent(
     output_dir: str = "results/financebench/lsf/single_cluster/agent/gpt54/raw/rule_gen",
     logs_dir: str = "results/financebench/lsf/single_cluster/agent/gpt54/raw/log",
     max_iterations: int = 12,
+    rule_subdir: str | None = None,
 ) -> dict:
     """Use a LangChain agent with a structured tool set to iteratively generate,
     validate, and refine span-retrieval rules. Returns a result dict matching
@@ -1238,9 +1239,13 @@ def rule_gen_agent(
     rule_stats = _compute_rule_stats(registered_rules, documents, ground_truth)
 
     # ------------------------------------------------------------------
-    # Save rule files to {rules_dir}/{question_slug}_{n}_llm/
+    # Save rule files. Default convention: {rules_dir}/{question_slug}_{n}_llm/
+    # The grid pipeline passes an explicit `rule_subdir` to override.
     # ------------------------------------------------------------------
-    rule_subdir = Path(rules_dir) / f"{question_slug}_{n}_llm"
+    rule_subdir = (
+        Path(rule_subdir) if rule_subdir
+        else Path(rules_dir) / f"{question_slug}_{n}_llm"
+    )
     rule_subdir.mkdir(parents=True, exist_ok=True)
 
     rules_list: list[dict] = []
