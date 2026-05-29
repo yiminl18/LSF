@@ -571,6 +571,15 @@ def _materialize_selected(result: dict, rule_folder: Path, refined_folder: Path)
     materialize the selection here (mirrors the agentic branch's copy step)."""
     import shutil
     chosen = result.get("selected_rules") or []
+    if not chosen:
+        # The Pareto greedy cover can admit nothing on a small, COMPLEMENTARY pool
+        # (each rule retrieves a fragment, none covers a doc alone) even when the
+        # merged pool scores well. Never ship an empty refined set: fall back to
+        # the full Stage-2 pool — at worst, refinement is a no-op, not a failure.
+        chosen = _list_rule_names(rule_folder)
+        result["selected_rules"] = chosen
+        result["fallback_full_pool"] = True
+        print(f"  [refine] selection empty → fallback to full pool ({len(chosen)} rules)", flush=True)
     n = 0
     for name in chosen:
         src = rule_folder / f"{name}.py"
