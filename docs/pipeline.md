@@ -269,6 +269,72 @@ run; use the staged driver when you want fail-fast isolation per stage, want one
 broken branch to stop wasting compute downstream, or need to re-run a single
 stage across the whole grid after a fix.
 
+### Parallel tree/DAG driver — `scripts/run_grid_parallel.py`
+
+The staged driver is correct but **serial** — it finishes every combo's STEP N
+before any combo starts STEP N+1, so a slow branch (e.g. agentic Codex rule-gen)
+holds up everything. The grid is actually a **dependency tree**, and independent
+branches can run **in parallel**. This is the general model to reuse for any
+dataset.
+
+**The tree.** Imagine a virtual root. Its children are the Stage-1 (sampling)
+strategies. Each sampling node's children are the Stage-2 (rule_gen) strategies,
+and so on down the stages:
+
+```
+                          (virtual root)
+              ┌─────────────────┴─────────────────┐
+        sampling=random                      sampling=fps          ← Step 1
+        ┌──────┴──────┐                      ┌──────┴──────┐
+   rule_gen=llm   rule_gen=codex        rule_gen=llm   rule_gen=codex   ← Step 2
+        │              │                     │              │
+   precompute     precompute             precompute     precompute      ← Step 3 (Pareto refiners only)
+     ┌─┴─┐          ┌─┴─┐                  ┌─┴─┐          ┌─┴─┐
+  refine r1..rk  refine r1..rk          refine r1..rk  refine r1..rk    ← Step 4
+     │              │                     │              │
+   apply          apply                 apply          apply           ← Step 5
+```
+
+A node's path from the root is its full strategy prefix (e.g.
+`fps → agent_codex_gpt54 → p_mini → apply`). Two scheduling rules govern when a
+task may be issued:
+
+1. **Ancestors clean.** Every task on the path from the root to this node's
+   parent has completed **and passed its output check**. (If any ancestor's
+   check failed, this node — and its whole subtree — is **pruned**.)
+2. **No write collision.** No other *currently running* task writes to the same
+   output folder. In this pipeline that's automatic: every node writes to a path
+   keyed by its full strategy prefix (`rules/.../<s>/<g>/`,
+   `cache/<s>/<g>/`, `refined/<s>/<g>/<r>/`, `apply/<s>/<g>/<r>/`), so distinct
+   nodes never write the same folder. The one case to avoid is running the
+   **same** `(sampling, rule_gen)` rule-gen twice concurrently — the scheduler
+   guarantees each node runs once, so this can't happen.
+
+Any node satisfying both rules can be dispatched immediately, regardless of what
+else is running. So `fps` sampling can run while `random`'s rule-gen is going;
+`random/llm_coarse` precompute can run while `random/agent_codex` rule-gen is
+still generating; the two refiners under one pool (`p_mini`, `p_hybrid`) run
+concurrently once their shared precompute is done. A failed check prunes only
+its subtree; siblings keep going.
+
+`scripts/run_grid_parallel.py` implements exactly this: it builds the node graph,
+runs each node via `pipeline.py --stop-after <stage> --skip-existing`, checks the
+output (same checks as the staged driver), and dispatches ready nodes on a thread
+pool (`--jobs N`, default 4). It is idempotent — any work already on disk is
+reused — so it cleanly resumes an interrupted run.
+
+```bash
+python3 scripts/run_grid_parallel.py --dry-run     # print the DAG (nodes + deps)
+python3 scripts/run_grid_parallel.py --jobs 4      # run, up to 4 concurrent stages
+```
+
+**Adapting to another dataset:** edit the config block at the top of the script
+(`DATASET`, `CLUSTER`, `QUERIES`, `SAMPLINGS`, `RULEGENS`, `PARETO`/`NONPARETO`
+refiners, `APPLY`). The dependency wiring and checks are dataset-agnostic — only
+the strategy lists and paths change. Keep `--jobs` modest (≈4) so concurrent
+LLM/Codex calls don't trip Azure rate limits; a throttled call would fail a
+check and prune a branch that was actually fine.
+
 ---
 
 ## CLI Interface
