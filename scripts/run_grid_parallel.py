@@ -22,6 +22,8 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import json
+import os
 import subprocess
 import sys
 import time
@@ -29,6 +31,30 @@ from concurrent.futures import FIRST_COMPLETED, ThreadPoolExecutor, wait
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def setup_env() -> None:
+    """Make Codex reachable and authenticated for agent_codex / agentic_codex
+    stages. The gpt54/gpt54mini Python models read the key from the file
+    directly, but the codex CLI needs AZURE_OPENAI_API_KEY in the env and the
+    binary on PATH (non-interactive shells don't source ~/.bashrc)."""
+    npm_bin = str(Path.home() / ".npm-global" / "bin")
+    if npm_bin not in os.environ.get("PATH", "").split(os.pathsep):
+        os.environ["PATH"] = npm_bin + os.pathsep + os.environ.get("PATH", "")
+    if not os.environ.get("AZURE_OPENAI_API_KEY"):
+        keyfile = Path(os.environ.get("AZURE_KEY_FILE",
+                                      Path.home() / "api_keys/azure_cloudbank/gpt-54_1.txt"))
+        try:
+            for line in keyfile.read_text().splitlines():
+                if line.startswith("api_key:"):
+                    os.environ["AZURE_OPENAI_API_KEY"] = line.split(":", 1)[1].strip()
+                    break
+        except FileNotFoundError:
+            print(f"WARN: Azure key file not found: {keyfile}", flush=True)
+    codex_ok = any((Path(p) / "codex").exists() for p in os.environ["PATH"].split(os.pathsep))
+    print(f"env: codex={'found' if codex_ok else 'MISSING'} "
+          f"AZURE_OPENAI_API_KEY={'set' if os.environ.get('AZURE_OPENAI_API_KEY') else 'UNSET'}",
+          flush=True)
 
 # ── Grid config (court) ─────────────────────────────────────────────────────
 DATASET   = "court"
@@ -62,6 +88,27 @@ def nonempty(path: Path) -> bool:
     return p.is_file() and p.stat().st_size > 0
 
 
+def _n_questions() -> int:
+    try:
+        return len(json.loads((ROOT / QUERIES).read_text()))
+    except Exception:  # noqa: BLE001
+        return 0
+
+
+N_QUESTIONS = _n_questions()
+
+
+def complete_pool(dirpath: Path) -> bool:
+    """A rule pool is complete only if it has a populated (>=1 .py) sub-folder
+    for every question — not just >=1 .py somewhere. Catches a pool left partial
+    by a failed/missing generator (e.g. codex env not set up)."""
+    p = ROOT / dirpath
+    if not p.is_dir() or N_QUESTIONS == 0:
+        return False
+    populated = sum(1 for sub in p.iterdir() if sub.is_dir() and any(sub.glob("*.py")))
+    return populated >= N_QUESTIONS
+
+
 def build_graph():
     nodes: dict[tuple, dict] = {}
 
@@ -75,7 +122,7 @@ def build_graph():
     for s in SAMPLINGS:
         for g in RULEGENS:
             add(("rule_gen", s, g), "rule_gen", s, g, "p_mini", [("sampling", s)],
-                lambda s=s, g=g: have(RULES / s / g, "*.py"))
+                lambda s=s, g=g: complete_pool(RULES / s / g))
 
             add(("precompute", s, g), "precompute", s, g, "p_mini", [("rule_gen", s, g)],
                 lambda s=s, g=g: (
@@ -130,6 +177,7 @@ def main():
     ap.add_argument("--dry-run", action="store_true", help="print the DAG and exit")
     args = ap.parse_args()
 
+    setup_env()
     nodes = build_graph()
     order = list(nodes.keys())
 
