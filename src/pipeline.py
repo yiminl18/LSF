@@ -557,6 +557,26 @@ def stage_precompute(
 
 # ── Stage 3 — Rule Refinement ──────────────────────────────────────────────
 
+def _materialize_selected(result: dict, rule_folder: Path, refined_folder: Path) -> int:
+    """Copy the selected rules' .py files from the source pool into refined_folder.
+
+    Pareto-family selectors return a `selected_rules` list but do NOT write the
+    rule files themselves; Stage 4 reads .py files from refined_folder, so we
+    materialize the selection here (mirrors the agentic branch's copy step)."""
+    import shutil
+    chosen = result.get("selected_rules") or []
+    n = 0
+    for name in chosen:
+        src = rule_folder / f"{name}.py"
+        if src.exists():
+            shutil.copy2(src, refined_folder / f"{name}.py")
+            n += 1
+        else:
+            print(f"  WARN: selected {name!r} but {src} missing", flush=True)
+    print(f"  [refine] materialized {n}/{len(chosen)} rule(s) → {refined_folder}", flush=True)
+    return n
+
+
 def stage_refine(
     *,
     strategy: str,
@@ -604,14 +624,22 @@ def stage_refine(
         return refined_folder
 
     if strategy in {"p_mini", "p_gpt54"}:
-        # Same code, different MODEL_NAME global. We monkey-patch on import.
-        mod = importlib.import_module("rule_refine.selection.select_rules_pareto")
-        mod.MODEL_NAME = "gpt54mini" if strategy == "p_mini" else "gpt54"
-        result = mod.select_rules_pareto(
-            rule_names=rule_names, question=question, question_slug=question_slug,
-            documents=sample_docs, ground_truth=ground_truth,
-            rules_dir=str(rules_dir), output_dir=str(refined_dir),
+        # p_mini selects with gpt54mini; p_gpt54 with gpt54. Reads precompute caches.
+        from rule_refine.selection.select_rules_pareto import run_selection_pareto
+        if cache_root is None:
+            raise ValueError("p_mini/p_gpt54 need cache_root for cost_profile + eval caches")
+        sel_model = "gpt54mini" if strategy == "p_mini" else "gpt54"
+        cost_profile = _read_json(cache_root / "cost_profile" / f"{question_slug}.json", default={}) or {}
+        result = run_selection_pareto(
+            rules_dir=str(rules_dir),
+            eval_merge_path=cache_root / "eval_merge_base" / f"{question_slug}.json",
+            eval_individual_dir=cache_root / f"eval_individual_{sel_model}" / question_slug,
+            documents={d.get("doc_name", str(i)): d for i, d in enumerate(sample_docs)},
+            question_slug=question_slug, question=question,
+            labels=ground_truth, cost_profile=cost_profile,
+            model_name=sel_model, output_dir=str(refined_dir),
         )
+        _materialize_selected(result, rule_folder, refined_folder)
         _write_json(refine_out, result)
         return refined_folder
 
@@ -622,6 +650,7 @@ def stage_refine(
             documents=sample_docs, ground_truth=ground_truth,
             rules_dir=str(rules_dir), output_dir=str(refined_dir),
         )
+        _materialize_selected(result, rule_folder, refined_folder)
         _write_json(refine_out, result)
         return refined_folder
 
@@ -632,6 +661,7 @@ def stage_refine(
             documents=sample_docs, ground_truth=ground_truth,
             rules_dir=str(rules_dir), output_dir=str(refined_dir),
         )
+        _materialize_selected(result, rule_folder, refined_folder)
         _write_json(refine_out, result)
         return refined_folder
 
@@ -642,6 +672,7 @@ def stage_refine(
             documents=sample_docs, ground_truth=ground_truth,
             rules_dir=str(rules_dir), output_dir=str(refined_dir),
         )
+        _materialize_selected(result, rule_folder, refined_folder)
         _write_json(refine_out, result)
         return refined_folder
 
@@ -666,6 +697,7 @@ def stage_refine(
             coverage_model="gpt54mini",
             verify_model="gpt54",
         )
+        _materialize_selected(result, rule_folder, refined_folder)
         _write_json(refine_out, result)
         return refined_folder
 
