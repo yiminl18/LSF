@@ -88,6 +88,14 @@ def nonempty(path: Path) -> bool:
     return p.is_file() and p.stat().st_size > 0
 
 
+def have_n(dirpath: Path, pattern: str, n: int) -> bool:
+    """At least n files matching pattern directly under dirpath (non-recursive)."""
+    p = ROOT / dirpath
+    if not p.is_dir():
+        return False
+    return sum(1 for _ in p.glob(pattern)) >= n
+
+
 def _n_questions() -> int:
     try:
         return len(json.loads((ROOT / QUERIES).read_text()))
@@ -133,11 +141,18 @@ def build_graph():
 
             for r in REFINES:
                 dep = ("precompute", s, g) if r in PARETO else ("rule_gen", s, g)
+                # refine writes <q>_refine.json per question regardless of how many
+                # rules it selects, so that's the completeness signal (a question
+                # may legitimately select 0 rules → no .py, but still a _refine.json).
                 add(("refine", s, g, r), "refine", s, g, r, [dep],
-                    lambda s=s, g=g, r=r: have(OUTPUT / "refined" / s / g / r, "*.py"))
+                    lambda s=s, g=g, r=r: have_n(
+                        OUTPUT / "refined" / s / g / r, "*_refine.json", N_QUESTIONS))
+                # apply writes <q>_unsampled.json per question; require all of them
+                # AND the summary — not just a (possibly partial) summary file.
                 add(("apply", s, g, r), "apply", s, g, r, [("refine", s, g, r)],
-                    lambda s=s, g=g, r=r: nonempty(
-                        OUTPUT / "apply" / s / g / r / APPLY / "pipeline_summary.json"))
+                    lambda s=s, g=g, r=r: (
+                        nonempty(OUTPUT / "apply" / s / g / r / APPLY / "pipeline_summary.json")
+                        and have_n(OUTPUT / "apply" / s / g / r / APPLY, "*_unsampled.json", N_QUESTIONS)))
     return nodes
 
 
