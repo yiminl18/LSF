@@ -46,8 +46,14 @@ def rule_apply_merge(
     rules_dir: str = "rules/financebench/lsf/single_cluster/llm/gpt54/one_shot",
     output_dir: str = "results/financebench/lsf/single_cluster/llm/gpt54/one_shot/rule_run_merge",
     system_prompt: str | None = None,
+    retrieve_only: bool = False,
 ) -> dict:
-    """Apply a set of rules, union the retrieved spans, and call the LLM to answer."""
+    """Apply a set of rules, union the retrieved spans, and call the LLM to answer.
+
+    If `retrieve_only=True`, return after the retrieval step with the span/token
+    counts and `predicted_answer=None` — no LLM call. Used by cost-profiling,
+    which only needs `retrieved_token_count` (a function of retrieval, not the
+    answer model), so it costs nothing."""
 
     texts: list[dict] = document.get("texts", [])
     text_positions: dict[int, int] = {id(s): i for i, s in enumerate(texts)}
@@ -117,6 +123,22 @@ def rule_apply_merge(
 
     # Step 3 — Count tokens
     retrieved_token_count = _count_tokens(retrieved_text)
+
+    # Cost-profiling shortcut: retrieved_token_count is fully determined by
+    # retrieval, so return here without any LLM call (free).
+    if retrieve_only:
+        return {
+            "rule_names": rule_names,
+            "question_slug": question_slug,
+            "question": question,
+            "doc_name": document.get("doc_name", ""),
+            "strategy": "merge",
+            "predicted_answer": None,
+            "retrieved_token_count": retrieved_token_count,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "latency_seconds": 0.0,
+        }
 
     # Step 4 — Call LLM
     model_mod = importlib.import_module(f"models.{model_name}")

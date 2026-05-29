@@ -448,15 +448,20 @@ def stage_precompute(
     question: str,
     question_slug: str,
     rules_dir: Path,
-    needed_judges: tuple[str, ...] = ("gpt54", "gpt54mini"),
+    needed_judges: tuple[str, ...] = ("gpt54mini",),
     skip_existing: bool = True,
 ) -> None:
     """Build per-question caches needed by Pareto-family refine strategies.
 
-    Writes (under cache_root):
-      cost_profile/<q_slug>.json         (per-rule avg_cost_ratio; free)
-      eval_individual_<judge>/<q_slug>/<rule_name>_eval.json  (per-rule sampled accuracy, paid)
-      eval_merge_base/<q_slug>.json      (full-pool merge accuracy on sampled docs, paid; defines D*)
+    Model policy: COVERAGE is estimated cheaply with gpt54mini; the BASELINE /
+    target-doc set (verify) is anchored with gpt54.
+      cost_profile/<q_slug>.json         per-rule avg_cost_ratio. FREE — uses
+                                         rule_apply_merge(retrieve_only=True), so
+                                         no LLM call (only retrieved-token count).
+      eval_individual_gpt54mini/<q_slug>/<rule_name>_eval.json  per-rule coverage:
+                                         answer + judge both gpt54mini (cheap).
+      eval_merge_base/<q_slug>.json      full-pool merge accuracy on sampled docs;
+                                         answer + judge gpt54 (defines D*).
     """
     from rule_apply.merge       import rule_apply_merge
     from rule_refine.selection.eval_judge import judge as _judge_fn
@@ -479,8 +484,9 @@ def stage_precompute(
                     res = rule_apply_merge(
                         document=d, rule_names=[r],
                         question_slug=question_slug, question=question,
-                        model_name="gpt54", rules_dir=str(rules_dir),
+                        rules_dir=str(rules_dir),
                         output_dir=str(cache_root / "_cost_tmp"),
+                        retrieve_only=True,   # free: no LLM call, only token count
                     )
                     total_tok = _count_tokens("\n".join(s.get("text","") for s in d.get("texts",[])))
                     ret_tok   = res.get("retrieved_token_count", 0) or 0
@@ -491,7 +497,7 @@ def stage_precompute(
         _write_json(cost_out, profile)
         print(f"  [precompute:cost] {question_slug}: {len(profile)} rules profiled", flush=True)
 
-    # ── 2. eval_individual under each requested judge (paid) ──────────────
+    # ── 2. eval_individual — per-rule COVERAGE, gpt54mini answer + judge ──
     for judge_model in needed_judges:
         ev_dir = cache_root / f"eval_individual_{judge_model}" / question_slug
         if skip_existing and ev_dir.is_dir() and len(list(ev_dir.glob("*_eval.json"))) >= len(rule_names):
@@ -508,7 +514,7 @@ def stage_precompute(
                     res = rule_apply_merge(
                         document=doc, rule_names=[r],
                         question_slug=question_slug, question=question,
-                        model_name="gpt54", rules_dir=str(rules_dir),
+                        model_name="gpt54mini", rules_dir=str(rules_dir),
                         output_dir=str(cache_root / "_ev_tmp"),
                     )
                     gt = sample_labels.get(doc_name + ".pdf", {}).get(question)
