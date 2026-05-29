@@ -298,7 +298,7 @@ def run_selection_pareto_hybrid(
     selected = pruned
 
     covered_docs = sorted({d for s in selected for d in per_rule_gained.get(s, set())})
-    frontier = _build_frontier(selected, per_rule_gained, cost_profile)
+    frontier = _build_frontier(selected, per_rule_gained, cov_map, cost_profile, target_docs)
     query_table = make_query_table(frontier, query_thresholds)
     knee = make_knee_point(frontier, lam=knee_lambda)
 
