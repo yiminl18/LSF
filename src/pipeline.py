@@ -1011,6 +1011,7 @@ def run_pipeline(
     rules_dir:         str | None = None,
     skip_existing:     bool = False,
     model:             str = "gpt54",
+    stop_after:        str | None = None,
 ) -> dict:
     """Run the four-stage LSF pipeline once, end to end.
 
@@ -1033,6 +1034,16 @@ def run_pipeline(
         raise ValueError(f"apply_strategy must be one of {APPLY_STRATEGIES}, got {apply_strategy!r}")
     if apply_strategy == "default" and refine_strategy == "none":
         raise ValueError("apply_strategy='default' needs a refined subset; pick a refine_strategy != 'none'.")
+
+    # Staged execution: run stages up to and including `stop_after`, then stop.
+    # Every stage is idempotent (skip-existing on disk), so a later invocation
+    # with a further stop_after cheaply reuses everything already computed.
+    _STAGES = ("sampling", "rule_gen", "precompute", "refine", "apply")
+    if stop_after is not None and stop_after not in _STAGES:
+        raise ValueError(f"stop_after must be one of {_STAGES}, got {stop_after!r}")
+    _stop_idx = _STAGES.index(stop_after) if stop_after else len(_STAGES) - 1
+    def _run(stage: str) -> bool:
+        return _STAGES.index(stage) <= _stop_idx
 
     out = Path(output_dir)
     out.mkdir(parents=True, exist_ok=True)
@@ -1076,6 +1087,13 @@ def run_pipeline(
     questions = _load_queries(queries_file)
     print(f"  questions={len(questions)}\n", flush=True)
 
+    if not _run("rule_gen"):
+        print(f"\n=== Done (stop-after=sampling). Sampling complete for {sampling_strategy}. ===", flush=True)
+        return {"stop_after": stop_after, "stage_completed": "sampling",
+                "sampling_strategy": sampling_strategy,
+                "num_sampled_docs": len(sample_doc_map),
+                "num_unsampled_docs": len(unsampled_doc_map)}
+
     # ── Per-question loop: Stages 2-4 ──
     per_question_summary: list[dict] = []
 
@@ -1102,7 +1120,7 @@ def run_pipeline(
 
             # Phase C — Per-pool precompute (only if the refine strategy needs it)
             base_refine, _ = _split_strategy_model(refine_strategy, default_model=model)
-            if base_refine in _REFINE_NEEDS_PRECOMPUTE:
+            if _run("precompute") and base_refine in _REFINE_NEEDS_PRECOMPUTE:
                 print("Phase C — Precompute", flush=True)
                 stage_precompute(
                     rule_folder=rule_folder_gen, cache_root=cache_root,
@@ -1110,6 +1128,9 @@ def run_pipeline(
                     question=question, question_slug=question_slug,
                     rules_dir=rules_root, skip_existing=skip_existing,
                 )
+
+            if not _run("refine"):
+                continue
 
             # Stage 3 — Refinement (optional)
             if refine_strategy == "none":
@@ -1127,6 +1148,9 @@ def run_pipeline(
                 )
                 fallback_folder = rule_folder_gen if apply_strategy == "default" else None
                 n_rules_refined = len(_list_rule_names(effective_folder))
+
+            if not _run("apply"):
+                continue
 
             # Stage 4 — Apply + Evaluate
             print("Stage 4 — Apply + Evaluate", flush=True)
@@ -1157,6 +1181,14 @@ def run_pipeline(
                 "question_slug": question_slug,
                 "error":         str(e),
             })
+
+    # Partial (staged) run — apply did not run, so there is no eval summary to write.
+    if not _run("apply"):
+        print(f"\n=== Done (stop-after={stop_after}). "
+              f"Stages up to '{stop_after}' complete for {len(questions)} question(s). ===", flush=True)
+        return {"stop_after": stop_after, "stage_completed": stop_after,
+                "sampling_strategy": sampling_strategy, "rule_gen_strategy": rule_gen_strategy,
+                "refine_strategy": refine_strategy, "num_questions": len(questions)}
 
     # ── Overall summary ──
     sampled_accs   = [q["sampled_accuracy"]   for q in per_question_summary if q.get("sampled_accuracy")   is not None]
@@ -1208,6 +1240,10 @@ def _build_cli():
     p.add_argument("--output-dir",        default="results/e2e")
     p.add_argument("--model",             default="gpt54")
     p.add_argument("--skip-existing",     action="store_true")
+    p.add_argument("--stop-after",        default=None,
+                   choices=["sampling", "rule_gen", "precompute", "refine", "apply"],
+                   help="Run stages up to and including this one, then stop. "
+                        "Stages are idempotent, so later invocations reuse prior output.")
     return p
 
 
@@ -1226,6 +1262,7 @@ def main():
         output_dir        = args.output_dir,
         model             = args.model,
         skip_existing     = args.skip_existing,
+        stop_after        = args.stop_after,
     )
 
 

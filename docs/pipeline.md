@@ -130,7 +130,7 @@ Take the Stage 2 pool and select a smaller subset.
 | Strategy | Code | Notes |
 |---|---|---|
 | `v1` | `src/rule_refine/v1.py` | Cost-sort + exponential search + backward prune. |
-| `p_mini` ⭐ | `src/rule_refine/selection/select_rules_pareto.py` (MODEL_NAME=gpt54mini) | Pareto greedy + cheap judge. Lowest cost, smallest overfit gap. |
+| `p_mini` ⭐ | `src/rule_refine/selection/select_rules_pareto.py` (`run_selection_pareto`, model_name=gpt54mini) | Pareto greedy + cheap judge. Lowest cost, smallest overfit gap. Reads the Phase C precompute caches (cost_profile, eval_merge_base, eval_individual). |
 | `p_hybrid` ⭐ | `src/rule_refine/selection/select_rules_pareto_hybrid.py` | Hybrid: **gpt-5.4-mini** for coverage estimation (sort key), **gpt-5.4** for in-loop admission + final merge verification. Cheap signal where it's good, strong signal where correctness matters. Included in the test grid. |
 | `p_gpt54` | `src/rule_refine/selection/select_rules_pareto.py` (MODEL_NAME=gpt54) | Pareto greedy + strong judge. |
 | `p_proxy` | `src/rule_refine/selection/select_rules_pareto_proxy.py` | Pareto greedy + substring-only judge (no LLM). |
@@ -199,6 +199,76 @@ for s in random fps; do
 done
 ```
 
+### Staged sweep — `--stop-after` + `scripts/sweep_court_grid_staged.sh`
+
+The loop above is **combo-first**: each `pipeline.py` call runs a full combo
+end-to-end. Because every stage is keyed on disk paths + `--skip-existing`, the
+shared stages (sampling, rule_gen, precompute) are computed once and reused —
+so combo-first already deduplicates work. The downside is debuggability: a bug
+in a late stage (e.g. refinement) only surfaces partway through a combo, after
+the expensive precompute for that combo has already run.
+
+`--stop-after` enables a **stage-first** driver that runs one stage across the
+*whole grid* before moving to the next. Same results, same cost, but each stage
+is a single step with its own log, and a failure shows up immediately and for
+every combo at once. The stage order is:
+
+```
+sampling → rule_gen → precompute → refine → apply
+```
+
+`pipeline.py --stop-after <stage>` runs every stage up to and including
+`<stage>`, then returns (writing `pipeline_summary.json` only when `apply` runs;
+earlier stops just print a "stage complete" line). Each prior stage SKIPs when
+its output already exists, so the staged steps chain cheaply:
+
+```bash
+# Step N reuses everything steps 1..N-1 wrote, then does only its own stage.
+python src/pipeline.py ... --stop-after sampling   --skip-existing   # step 1
+python src/pipeline.py ... --stop-after rule_gen   --skip-existing   # step 2
+python src/pipeline.py ... --stop-after precompute --skip-existing   # step 3
+python src/pipeline.py ... --stop-after refine     --skip-existing   # step 4
+python src/pipeline.py ... --stop-after apply      --skip-existing   # step 5 (full)
+```
+
+**Driver:** `scripts/sweep_court_grid_staged.sh` runs the 12-combo court grid
+this way — five steps, looping the relevant grid axes within each:
+
+| Step | Stage | Looped over | Runs once per |
+|---|---|---|---|
+| 1 | sampling | `random`, `fps` | sampling strategy |
+| 2 | rule_gen | sampling × rule_gen | (sampling, rule_gen) pair |
+| 3 | precompute | sampling × rule_gen | (sampling, rule_gen) pair |
+| 4 | refine | sampling × rule_gen × refine | (sampling, rule_gen, refine) |
+| 5 | apply | sampling × rule_gen × refine | full combo |
+
+**Per-step checks with branch pruning.** After a combo's stage runs, the driver
+checks its output. If the check passes (`[CHECK:OK]`), that branch advances to
+the next stage. If it fails, the driver **prunes the branch** (`[PRUNE]`): every
+downstream stage for that lineage is skipped, and a warning is recorded.
+Branches that pass keep going independently. The pruning key is hierarchical —
+a pruned `<s>` skips all `<s>/*`; a pruned `<s>/<g>` skips all `<s>/<g>/*`; a
+pruned `<s>/<g>/<r>` skips just that refine→apply chain.
+
+| Step | Check (prunes the branch if it fails) | Pruned key |
+|---|---|---|
+| 1 sampling | `≥ 2` `*.json` under `sampling/<s>/` | `<s>` (skips all rule_gen/refine/apply for `<s>`) |
+| 2 rule_gen | `≥ 1` `*.py` under `rules/<dataset>/grid/<s>/<g>/` | `<s>/<g>` (skips refine+apply for that pool) |
+| 3 precompute | `cost_profile/*.json` + `eval_merge_base/*.json` + `eval_individual_gpt54mini/*_eval.json` under `cache/<s>/<g>/` | `<s>/<g>/<r>` for each **Pareto** refine (`p_mini`, `p_hybrid`) only — `agentic_codex` doesn't need precompute and is left alive |
+| 4 refine | `≥ 1` `*.py` under `refined/<s>/<g>/<r>/` (catches the empty-refined-folder failure mode) | `<s>/<g>/<r>` (skips apply for that combo) |
+| 5 apply | non-empty `apply/<s>/<g>/<r>/default/pipeline_summary.json` | `<s>/<g>/<r>` |
+
+Example: if Stage 2 rule-gen for `(random, agent_codex_gpt54)` returns an empty
+pool, the driver prunes `random/agent_codex_gpt54` — Stages 3–5 for that lineage
+are skipped — while `(random, llm_coarse_gpt54)` proceeds into refinement
+normally. At the end the driver prints the pruned branches and **exits non-zero
+(2)** if any were pruned, so failures are visible in the log / exit status.
+
+The combo-first `scripts/sweep_court_grid.sh` remains for a quick end-to-end
+run; use the staged driver when you want fail-fast isolation per stage, want one
+broken branch to stop wasting compute downstream, or need to re-run a single
+stage across the whole grid after a fix.
+
 ---
 
 ## CLI Interface
@@ -238,6 +308,7 @@ sweep runs; use the step-by-step form for debugging a single (question, combo).
 | `--output-dir` | `results/e2e` | path | Root output directory for this run. Recommended: `results/<dataset>/grid`. |
 | `--model` | `gpt54` | `gpt54`, `gpt54mini` | Default backbone for strategies that don't pin one in their name. |
 | `--skip-existing` | off | flag | Skip any stage whose output already exists on disk. |
+| `--stop-after` | none (run all) | `sampling`, `rule_gen`, `precompute`, `refine`, `apply` | Run stages **up to and including** the named one, then stop. Stages are idempotent, so a later invocation with a further `--stop-after` cheaply reuses everything already on disk. Used by the staged sweep driver (below). |
 
 ---
 
@@ -299,9 +370,17 @@ If a refinement strategy is selected:
    <output_dir>/refined/<sampling>/<rule_gen>/<refine>/_trace/<question_slug>.codex.jsonl
    ```
 
-For the agentic refiners (`agentic`, `agentic_codex*`), the driver writes a
-selection JSON listing `selected_rules`; `stage_refine` then auto-copies each
-`<name>.py` from the rule pool into the refined folder so Stage 4 finds it.
+Every refiner only *selects* rules — none of them write the chosen `rule_*.py`
+files into the refined folder themselves. `stage_refine` materializes the
+selection so Stage 4 finds the files:
+- **Agentic refiners** (`agentic`, `agentic_codex*`): the driver writes a
+  `<q_slug>.json` listing `selected_rules`; `stage_refine` copies each
+  `<name>.py` from the rule pool into the refined folder.
+- **Pareto-family refiners** (`p_mini`, `p_gpt54`, `p_proxy`, `p_v2`, `p_v3`,
+  `p_hybrid`): the selector returns a dict with `selected_rules`; the shared
+  `_materialize_selected()` helper copies those `<name>.py` files into the
+  refined folder. (Without this step the refined folder would be empty and
+  Stage 4 would have nothing to apply.)
 
 The effective `rule_folder` Stage 4 sees becomes
 `<output_dir>/refined/.../<question_slug>/`. For `--apply-strategy default`,
