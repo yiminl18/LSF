@@ -1,0 +1,150 @@
+{
+  "timestamp": "2026-05-30T05:07:29.388801+00:00",
+  "sampling_strategy": "random",
+  "rule_gen_strategy": "agent_codex_gpt54",
+  "refine_strategy": "p_mini",
+  "apply_strategy": "default",
+  "queries_file": "data/court/queries.json",
+  "dataset": "court",
+  "cluster": "all_docs",
+  "num_questions": 13,
+  "num_sampled_docs": 20,
+  "num_unsampled_docs": 274,
+  "questions": [
+    {
+      "question": "What is/are the Court of Appeals docket number(s) for this case?",
+      "question_slug": "what_isare_the_court_of_appeals_docket_numbers_for_this_case",
+      "num_rules_generated": 5,
+      "num_rules_after_refine": 5,
+      "sampled_accuracy": 1,
+      "unsampled_accuracy": 0.8869,
+      "avg_cost_ratio_sampled": 0.004521,
+      "avg_cost_ratio_unsampled": 0.009404
+    },
+    {
+      "question": "What is/are the originating district court docket number(s) (\"D.C. No.\")?",
+      "question_slug": "what_isare_the_originating_district_court_docket_numbers_dc_",
+      "num_rules_generated": 6,
+      "num_rules_after_refine": 6,
+      "sampled_accuracy": 1,
+      "unsampled_accuracy": 1,
+      "avg_cost_ratio_sampled": 0.007159,
+      "avg_cost_ratio_unsampled": 0.0123
+    },
+    {
+      "question": "From which U.S. District Court(s) did this appeal originate?",
+      "question_slug": "from_which_us_district_courts_did_this_appeal_originate",
+      "num_rules_generated": 5,
+      "num_rules_after_refine": 5,
+      "sampled_accuracy": 1,
+      "unsampled_accuracy": 0.9781,
+      "avg_cost_ratio_sampled": 0.005147,
+      "avg_cost_ratio_unsampled": 0.008474
+    },
+    {
+      "question": "Which district judge(s) presided over the case below?",
+      "question_slug": "which_district_judges_presided_over_the_case_below",
+      "num_rules_generated": 5,
+      "num_rules_after_refine": 5,
+      "sampled_accuracy": 1,
+      "unsampled_accuracy": 0.8285,
+      "avg_cost_ratio_sampled": 0.002415,
+      "avg_cost_ratio_unsampled": 0.002338
+    },
+    {
+      "question": "On what date was the case argued or submitted on the briefs?",
+      "question_slug": "on_what_date_was_the_case_argued_or_submitted_on_the_briefs",
+      "num_rules_generated": 5,
+      "num_rules_after_refine": 5,
+      "sampled_accuracy": 1,
+      "unsampled_accuracy": 0.9197,
+      "avg_cost_ratio_sampled": 0.003183,
+      "avg_cost_ratio_unsampled": 0.001548
+    },
+    {
+      "question": "In what city was the case argued or submitted?",
+      "question_slug": "in_what_city_was_the_case_argued_or_submitted",
+      "num_rules_generated": 3,
+      "num_rules_after_refine": 3,
+      "sampled_accuracy": 1,
+      "unsampled_accuracy": 0.8577,
+      "avg_cost_ratio_sampled": 0.002069,
+      "avg_cost_ratio_unsampled": 0.001456
+    },
+    {
+      "question": "On what date was this opinion filed?",
+      "question_slug": "on_what_date_was_this_opinion_filed",
+      "num_rules_generated": 5,
+      "num_rules_after_refine": 5,
+      "sampled_accuracy": 1,
+      "unsampled_accuracy": 0.927,
+      "avg_cost_ratio_sampled": 0.001815,
+      "avg_cost_ratio_unsampled": 0.002623
+    },
+    {
+      "question": "Who were the judges on the panel that decided this case?",
+      "question_slug": "who_were_the_judges_on_the_panel_that_decided_this_case",
+      "num_rules_generated": 1,
+      "num_rules_after_refine": 1,
+      "sampled_accuracy": 1,
+      "unsampled_accuracy": 0.9197,
+      "avg_cost_ratio_sampled": 0.003948,
+      "avg_cost_ratio_unsampled": 0.005375
+    },
+    {
+      "question": "Which judge authored the majority opinion?",
+      "question_slug": "which_judge_authored_the_majority_opinion",
+      "num_rules_generated": 2,
+      "num_rules_after_refine": 2,
+      "sampled_accuracy": 1,
+      "unsampled_accuracy": 0.9343,
+      "avg_cost_ratio_sampled": 0.00231,
+      "avg_cost_ratio_unsampled": 0.001753
+    },
+    {
+      "question": "What legal subject matter does the court staff SUMMARY identify as the topic of this opinion?",
+      "question_slug": "what_legal_subject_matter_does_the_court_staff_summary_ident",
+      "num_rules_generated": 5,
+      "num_rules_after_refine": 5,
+      "sampled_accuracy": 0.8,
+      "unsampled_accuracy": 0.8978,
+      "avg_cost_ratio_sampled": 0.000406,
+      "avg_cost_ratio_unsampled": 0.000482
+    },
+    {
+      "question": "Who is the first-listed attorney representing the appellant(s)?",
+      "question_slug": "who_is_the_firstlisted_attorney_representing_the_appellants",
+      "num_rules_generated": 5,
+      "num_rules_after_refine": 5,
+      "sampled_accuracy": 1,
+      "unsampled_accuracy": 0.8978,
+      "avg_cost_ratio_sampled": 0.005126,
+      "avg_cost_ratio_unsampled": 0.006282
+    },
+    {
+      "question": "Who is the first-listed attorney representing the appellee(s)?",
+      "question_slug": "who_is_the_firstlisted_attorney_representing_the_appellees",
+      "num_rules_generated": 5,
+      "num_rules_after_refine": 5,
+      "sampled_accuracy": 0.95,
+      "unsampled_accuracy": 0.9234,
+      "avg_cost_ratio_sampled": 0.006997,
+      "avg_cost_ratio_unsampled": 0.008616
+    },
+    {
+      "question": "What was the panel's final disposition of the appeal?",
+      "question_slug": "what_was_the_panels_final_disposition_of_the_appeal",
+      "num_rules_generated": 6,
+      "num_rules_after_refine": 6,
+      "sampled_accuracy": 0.85,
+      "unsampled_accuracy": 0.8102,
+      "avg_cost_ratio_sampled": 0.013108,
+      "avg_cost_ratio_unsampled": 0.010956
+    }
+  ],
+  "overall": {
+    "avg_sampled_accuracy": 0.9692,
+    "avg_unsampled_accuracy": 0.9062,
+    "avg_cost_ratio": 0.005508
+  }
+}
