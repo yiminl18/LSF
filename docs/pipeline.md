@@ -337,6 +337,56 @@ check and prune a branch that was actually fine.
 
 ---
 
+## Results — court grid (12 combos × 13 questions, full 294-doc corpus)
+
+Full 2 × 2 × 3 grid (sampling × rule_gen × refine, `apply=default`) run on the
+court dataset (2026-05-29/30) via the parallel DAG driver. `sAcc` = accuracy on
+the 20 sampled docs; `uAcc` = accuracy on the 274 held-out docs; `cost` = mean
+`retrieved/total` token ratio on held-out. All 12 combos completed 13/13.
+
+| sampling | rule_gen | refine | sAcc | uAcc | cost ratio |
+|---|---|---|---:|---:|---:|
+| random | agent_codex_gpt54 | agentic_codex_gpt54 | 0.973 | 0.904 | 0.0048 |
+| random | agent_codex_gpt54 | p_mini | 0.969 | 0.906 | 0.0055 |
+| random | agent_codex_gpt54 | p_hybrid | 0.973 | 0.907 | 0.0055 |
+| fps | agent_codex_gpt54 | agentic_codex_gpt54 | 0.965 | **0.922** | **0.0047** |
+| fps | agent_codex_gpt54 | p_mini | 0.965 | 0.922 | 0.0052 |
+| fps | agent_codex_gpt54 | p_hybrid | 0.965 | 0.922 | 0.0052 |
+| random | llm_coarse_gpt54 | agentic_codex_gpt54 | 0.854 | 0.845 | 0.0178 |
+| random | llm_coarse_gpt54 | p_mini | 0.865 | 0.845 | 0.0311 |
+| random | llm_coarse_gpt54 | p_hybrid | 0.865 | 0.844 | 0.0261 |
+| fps | llm_coarse_gpt54 | agentic_codex_gpt54 | 0.854 | 0.868 | 0.0529 |
+| fps | llm_coarse_gpt54 | p_mini | 0.842 | 0.876 | 0.0753 |
+| fps | llm_coarse_gpt54 | p_hybrid | 0.846 | 0.875 | 0.0493 |
+
+**Findings**
+- **`agent_codex` ≫ `llm_coarse`:** ~0.91 uAcc at ~0.005 cost vs ~0.85–0.88 uAcc
+  at 0.018–0.075 cost — higher accuracy *and* ~10× cheaper. Small focused Codex
+  pools win decisively on court.
+- **`fps` ≥ `random`** on held-out (fps/agent_codex 0.922 vs random 0.905;
+  fps/llm_coarse 0.876 vs random 0.844).
+- **Best combo: `fps / agent_codex_gpt54 / agentic_codex_gpt54`** — uAcc 0.922 at
+  cost 0.0047.
+- **Low overfit:** uAcc ≈ sAcc throughout.
+- Refiner choice barely affects accuracy; on the large `llm_coarse` pools it
+  affects **cost** (`p_hybrid` cheapest). On the small `agent_codex` pools the
+  Pareto refiners (`p_mini`, `p_hybrid`) fall back to the full pool (greedy
+  cover admits nothing on complementary rules), so they ≈ `agentic_codex`, which
+  is marginally cheaper because it genuinely sub-selects.
+
+**Caveats**
+- **Latency not recorded** this run (`latency_seconds = 0.0` in every per-doc
+  record) — the `default` apply path did not capture per-call latency.
+- Precompute coverage used **gpt54** here (the cheaper gpt54mini-coverage policy
+  was committed but parked for later runs).
+- The `p_mini` / `p_hybrid` combos required two fixes to complete: empty-selection
+  → full-pool fallback, and a `_build_frontier` arg-count crash in `p_hybrid`.
+
+Results files synced via GitHub (summaries + per-question eval only) under
+`results/court/grid/apply/<sampling>/<rule_gen>/<refine>/default/`.
+
+---
+
 ## CLI Interface
 
 ```bash
