@@ -64,6 +64,7 @@ OUTPUT    = Path("results/court/grid")
 RULES     = Path(f"rules/{DATASET}/grid")
 APPLY     = "default"
 PROC      = None   # --processing-dir override; None lets pipeline.py auto-probe
+MAX_STAGE = "apply"   # build/run nodes only up to this stage (e.g. "rule_gen")
 
 SAMPLINGS = ["random", "fps"]
 RULEGENS  = ["llm_coarse_gpt54", "agent_codex_gpt54"]
@@ -118,10 +119,19 @@ def complete_pool(dirpath: Path) -> bool:
     return populated >= N_QUESTIONS
 
 
+_STAGE_ORDER = ["sampling", "rule_gen", "precompute", "refine", "apply"]
+
+
 def build_graph():
     nodes: dict[tuple, dict] = {}
+    _maxrank = _STAGE_ORDER.index(MAX_STAGE)
 
     def add(nid, stage, s, g, r, deps, check):
+        # Skip any node beyond the requested max stage (e.g. --max-stage rule_gen
+        # builds only sampling + rule_gen nodes). Deps to skipped nodes never
+        # arise because earlier stages are always kept.
+        if _STAGE_ORDER.index(stage) > _maxrank:
+            return
         nodes[nid] = {"stage": stage, "s": s, "g": g, "r": r, "deps": deps, "check": check}
 
     for s in SAMPLINGS:
@@ -190,7 +200,7 @@ def run_node(nid: tuple, node: dict) -> tuple[bool, str]:
 
 
 def main():
-    global DATASET, CLUSTER, QUERIES, OUTPUT, RULES, PROC, LOGDIR, N_QUESTIONS
+    global DATASET, CLUSTER, QUERIES, OUTPUT, RULES, PROC, LOGDIR, N_QUESTIONS, MAX_STAGE
     ap = argparse.ArgumentParser()
     ap.add_argument("--jobs", type=int, default=4, help="max concurrent pipeline.py processes")
     ap.add_argument("--dry-run", action="store_true", help="print the DAG and exit")
@@ -200,8 +210,11 @@ def main():
     ap.add_argument("--output",  default=str(OUTPUT))
     ap.add_argument("--rules",   default=str(RULES))
     ap.add_argument("--proc-dir", default=None, help="--processing-dir for pipeline.py (e.g. data/nopv/json)")
+    ap.add_argument("--max-stage", default="apply", choices=_STAGE_ORDER,
+                    help="run nodes only up to this stage (e.g. rule_gen = sampling+rule_gen only)")
     args = ap.parse_args()
 
+    MAX_STAGE = args.max_stage
     DATASET, CLUSTER, QUERIES = args.dataset, args.cluster, args.queries
     OUTPUT, RULES, PROC = Path(args.output), Path(args.rules), args.proc_dir
     LOGDIR = Path(f"logs/{DATASET}_grid_parallel")
