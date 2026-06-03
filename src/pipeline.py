@@ -759,18 +759,24 @@ def stage_refine(
         # refined_folder = <out-dir>/<slug>/, so materialise the selection by
         # copying the chosen .py files out of the rule pool.
         selection_json = refined_dir / f"{question_slug}.json"
-        if selection_json.exists():
-            sel = _read_json(selection_json, default={}) or {}
-            chosen = sel.get("selected_rules") or []
-            import shutil
-            for name in chosen:
-                src = rule_folder / f"{name}.py"
-                dst = refined_folder / f"{name}.py"
-                if src.exists():
-                    shutil.copy2(src, dst)
-                else:
-                    print(f"  WARN: agentic refine selected {name!r} but {src} missing", flush=True)
-            print(f"  [refine:{strategy}] copied {len(chosen)} rule(s) → {refined_folder}", flush=True)
+        sel = (_read_json(selection_json, default={}) or {}) if selection_json.exists() else {}
+        chosen = sel.get("selected_rules") or []
+        if not chosen:
+            # Agent selected nothing (e.g. it misjudged the labels) or wrote no
+            # selection — never ship an empty refined set: fall back to the full
+            # Step-2 pool, same floor as the Pareto refiners (_materialize_selected).
+            # Worst case refinement is a no-op, not a silently dropped question.
+            chosen = _list_rule_names(rule_folder)
+            print(f"  [refine:{strategy}] empty selection → fallback to full pool ({len(chosen)} rules)", flush=True)
+        import shutil
+        for name in chosen:
+            src = rule_folder / f"{name}.py"
+            dst = refined_folder / f"{name}.py"
+            if src.exists():
+                shutil.copy2(src, dst)
+            else:
+                print(f"  WARN: agentic refine selected {name!r} but {src} missing", flush=True)
+        print(f"  [refine:{strategy}] copied {len(chosen)} rule(s) → {refined_folder}", flush=True)
 
         _write_json(refine_out, {
             "strategy": strategy, "model": effective_model,
