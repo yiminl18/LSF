@@ -268,6 +268,9 @@ def _parse_dataset_args():
     ap.add_argument("--labels-file", default=None,
                     help="explicit labels file (only used when dataset has no pre-split)")
     ap.add_argument("--queries-file", default=None)
+    ap.add_argument("--doc-dir", default=None,
+                    help="explicit dir of reconstructed (texts-schema) doc JSONs; "
+                         "overrides the processing/->json/ probe (e.g. data/officeqa/normalized_json)")
     return ap.parse_args()
 
 
@@ -283,13 +286,17 @@ def main():
         ds = args.dataset
         labels_file  = args.labels_file or f"data/{ds}/all_labels.json"
         queries_file = args.queries_file or f"data/{ds}/queries.json"
-        # Probe processing/ then json/
-        for sub in ("processing", "json"):
-            cand = Path(f"data/{ds}/{sub}")
-            if cand.is_dir():
-                PROCESSING_DIR = str(cand); break
+        # Explicit --doc-dir wins (same texts-schema docs the rest of the pipeline
+        # uses, e.g. officeqa's normalized_json); otherwise probe processing/ then json/.
+        if args.doc_dir:
+            PROCESSING_DIR = args.doc_dir
         else:
-            PROCESSING_DIR = f"data/{ds}/processing"
+            for sub in ("processing", "json"):
+                cand = Path(f"data/{ds}/{sub}")
+                if cand.is_dir():
+                    PROCESSING_DIR = str(cand); break
+            else:
+                PROCESSING_DIR = f"data/{ds}/processing"
         OUT_DIR = Path(args.output_dir or f"data/{ds}/sample/all_docs/fps")
         SAMPLED_LABELS_FILE = labels_file
         UNSAMPLED_LABELS_FILE = labels_file  # single source; loader dedupes

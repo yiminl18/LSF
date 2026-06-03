@@ -204,6 +204,7 @@ def stage_sampling(
     cluster: str,
     output_dir: Path,
     skip_existing: bool,
+    processing_dir: str | None = None,
 ) -> tuple[Path, Path]:
     """Return (sample_labels_path, unsampled_labels_path).
 
@@ -252,6 +253,11 @@ def stage_sampling(
             "--max-K", str(_SAMPLE_CAP),
             "--output-dir", str(grid_dir),
         ]
+        if processing_dir:
+            # FPS embeds doc CONTENT, so it must read the same reconstructed
+            # (texts-schema) docs as the rest of the pipeline (e.g. officeqa's
+            # normalized_json), not the raw json/ it would otherwise probe.
+            cmd += ["--doc-dir", str(processing_dir)]
         proc = subprocess.run(cmd, cwd=str(_ROOT), capture_output=True, text=True, check=False)
         if proc.returncode != 0:
             # Fall back to legacy hardcoded behavior (FinanceBench only) if the script
@@ -1095,7 +1101,7 @@ def run_pipeline(
     print("Stage 1 — Sampling", flush=True)
     sample_path, unsampled_path = stage_sampling(
         strategy=sampling_strategy, dataset=dataset, cluster=cluster,
-        output_dir=out, skip_existing=skip_existing,
+        output_dir=out, skip_existing=skip_existing, processing_dir=processing_dir,
     )
     sample_labels    = json.loads(sample_path.read_text(encoding="utf-8"))
     unsampled_labels = json.loads(unsampled_path.read_text(encoding="utf-8"))
