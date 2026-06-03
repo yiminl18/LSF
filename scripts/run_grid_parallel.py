@@ -63,6 +63,7 @@ QUERIES   = "data/court/queries.json"
 OUTPUT    = Path("results/court/grid")
 RULES     = Path(f"rules/{DATASET}/grid")
 APPLY     = "default"
+PROC      = None   # --processing-dir override; None lets pipeline.py auto-probe
 
 SAMPLINGS = ["random", "fps"]
 RULEGENS  = ["llm_coarse_gpt54", "agent_codex_gpt54"]
@@ -178,6 +179,8 @@ def run_node(nid: tuple, node: dict) -> tuple[bool, str]:
         "--stop-after",        node["stage"],
         "--skip-existing",
     ]
+    if PROC:
+        cmd += ["--processing-dir", str(PROC)]
     with open(ROOT / log, "w") as fh:
         rc = subprocess.run(cmd, cwd=str(ROOT), stdout=fh, stderr=subprocess.STDOUT).returncode
     ok = node["check"]()
@@ -187,10 +190,22 @@ def run_node(nid: tuple, node: dict) -> tuple[bool, str]:
 
 
 def main():
+    global DATASET, CLUSTER, QUERIES, OUTPUT, RULES, PROC, LOGDIR, N_QUESTIONS
     ap = argparse.ArgumentParser()
     ap.add_argument("--jobs", type=int, default=4, help="max concurrent pipeline.py processes")
     ap.add_argument("--dry-run", action="store_true", help="print the DAG and exit")
+    ap.add_argument("--dataset", default=DATASET)
+    ap.add_argument("--cluster", default=CLUSTER)
+    ap.add_argument("--queries", default=QUERIES)
+    ap.add_argument("--output",  default=str(OUTPUT))
+    ap.add_argument("--rules",   default=str(RULES))
+    ap.add_argument("--proc-dir", default=None, help="--processing-dir for pipeline.py (e.g. data/nopv/json)")
     args = ap.parse_args()
+
+    DATASET, CLUSTER, QUERIES = args.dataset, args.cluster, args.queries
+    OUTPUT, RULES, PROC = Path(args.output), Path(args.rules), args.proc_dir
+    LOGDIR = Path(f"logs/{DATASET}_grid_parallel")
+    N_QUESTIONS = _n_questions()
 
     setup_env()
     nodes = build_graph()
