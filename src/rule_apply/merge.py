@@ -140,6 +140,19 @@ def rule_apply_merge(
             "latency_seconds": 0.0,
         }
 
+    # Cap retrieved text to the model context budget. Large docs (e.g. officeqa)
+    # with broad rule pools can produce passages over the model's token limit
+    # (~272K), which 400s with context_length_exceeded; truncate so apply
+    # degrades gracefully instead of erroring. (Applied only on the LLM path,
+    # not retrieve_only, so cost profiling still sees the true retrieval size.)
+    _CTX_TOKEN_CAP = 250_000
+    if retrieved_token_count > _CTX_TOKEN_CAP and retrieved_text:
+        keep = max(1, int(len(retrieved_text) * _CTX_TOKEN_CAP / retrieved_token_count))
+        retrieved_text = retrieved_text[:keep]
+        retrieved_token_count = _count_tokens(retrieved_text)
+        print(f"  [merge] retrieved text exceeded context limit; truncated to "
+              f"~{retrieved_token_count} tokens for {document.get('doc_name','')}", flush=True)
+
     # Step 4 — Call LLM
     model_mod = importlib.import_module(f"models.{model_name}")
 
