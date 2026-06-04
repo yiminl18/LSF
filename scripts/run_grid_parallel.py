@@ -200,7 +200,7 @@ def run_node(nid: tuple, node: dict) -> tuple[bool, str]:
 
 
 def main():
-    global DATASET, CLUSTER, QUERIES, OUTPUT, RULES, PROC, LOGDIR, N_QUESTIONS, MAX_STAGE
+    global DATASET, CLUSTER, QUERIES, OUTPUT, RULES, PROC, LOGDIR, N_QUESTIONS, MAX_STAGE, RULEGENS
     ap = argparse.ArgumentParser()
     ap.add_argument("--jobs", type=int, default=4, help="max concurrent pipeline.py processes")
     ap.add_argument("--dry-run", action="store_true", help="print the DAG and exit")
@@ -212,9 +212,13 @@ def main():
     ap.add_argument("--proc-dir", default=None, help="--processing-dir for pipeline.py (e.g. data/nopv/json)")
     ap.add_argument("--max-stage", default="apply", choices=_STAGE_ORDER,
                     help="run nodes only up to this stage (e.g. rule_gen = sampling+rule_gen only)")
+    ap.add_argument("--rule-gens", default=None,
+                    help="comma-separated subset of rule_gen strategies to run (e.g. agent_codex_gpt54)")
     args = ap.parse_args()
 
     MAX_STAGE = args.max_stage
+    if args.rule_gens:
+        RULEGENS = [x.strip() for x in args.rule_gens.split(",") if x.strip()]
     DATASET, CLUSTER, QUERIES = args.dataset, args.cluster, args.queries
     OUTPUT, RULES, PROC = Path(args.output), Path(args.rules), args.proc_dir
     LOGDIR = Path(f"logs/{DATASET}_grid_parallel")
