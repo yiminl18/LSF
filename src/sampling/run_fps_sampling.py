@@ -237,7 +237,13 @@ def estimate_separation(V: np.ndarray, pool_docs: list[str]) -> dict:
     else:
         delta_intra = float(max(same))
     delta_inter = float(min(diff)) if diff else None
-    ratio = (delta_inter / delta_intra) if (delta_intra and delta_intra > 0) else None
+    # delta_inter is None when the pool forms a single cluster (no inter-cluster
+    # pairs) — e.g. officeqa, whose doc names don't split into company×form
+    # clusters. This separation estimate is diagnostic only (doesn't affect FPS),
+    # so just report ratio=None instead of crashing on None/float.
+    ratio = (delta_inter / delta_intra
+             if (delta_inter is not None and delta_intra and delta_intra > 0)
+             else None)
     return {
         "delta_intra_observed":         delta_intra,
         "delta_inter_observed":         delta_inter,
