@@ -387,6 +387,71 @@ Results files synced via GitHub (summaries + per-question eval only) under
 
 ---
 
+## Results — nopv grid (12 combos × 12 questions, full 242-doc corpus)
+
+Full 2 × 2 × 3 grid on nopv (`apply=default`). `sAcc` = 20 sampled docs;
+`uAcc` = 222 held-out docs; `cost` = mean retrieved/total token ratio on held-out.
+All 12 combos completed 12/12.
+
+| sampling | rule_gen | refine | sAcc | uAcc | cost ratio |
+|---|---|---|---:|---:|---:|
+| fps | agent_codex_gpt54 | agentic_codex_gpt54 | 0.942 | 0.845 | 0.0393 |
+| fps | agent_codex_gpt54 | p_mini | 0.917 | 0.847 | 0.0401 |
+| fps | agent_codex_gpt54 | p_hybrid | 0.942 | 0.845 | 0.0401 |
+| random | agent_codex_gpt54 | agentic_codex_gpt54 | 0.917 | 0.836 | 0.0374 |
+| random | agent_codex_gpt54 | p_mini | 0.925 | 0.839 | 0.0388 |
+| random | agent_codex_gpt54 | p_hybrid | 0.925 | 0.839 | 0.0388 |
+| fps | llm_coarse_gpt54 | agentic_codex_gpt54 | 0.950 | 0.929 | 0.2807 |
+| fps | llm_coarse_gpt54 | p_mini | 0.938 | 0.931 | 0.3880 |
+| fps | llm_coarse_gpt54 | p_hybrid | 0.929 | **0.929** | 0.2036 |
+| random | llm_coarse_gpt54 | agentic_codex_gpt54 | 0.850 | 0.906 | 0.3000 |
+| random | llm_coarse_gpt54 | p_mini | 0.913 | **0.937** | 0.4242 |
+| random | llm_coarse_gpt54 | p_hybrid | 0.888 | 0.931 | 0.3655 |
+
+**Findings (nopv contrasts with court):**
+- **`llm_coarse` wins accuracy** (uAcc 0.91–0.94) but is **expensive** (cost 0.20–0.42);
+  **`agent_codex` is ~8–10× cheaper** (0.037–0.040) but ~8 pts lower uAcc (0.84–0.85).
+- So on nopv it's a genuine **accuracy↔cost trade-off, with no dominator** — the
+  opposite of court, where `agent_codex` dominated on both axes.
+- Best held-out accuracy: `random/llm_coarse/p_mini` (uAcc 0.937, cost 0.424);
+  cheapest strong option: any `agent_codex` combo (~0.84 uAcc at ~0.04).
+- Refiner choice barely moves accuracy within a pool; on `llm_coarse` it mainly
+  affects cost (`p_hybrid` cheapest of the three).
+
+## Results — officeqa grid (agent_codex only, 6 combos × 16 questions, 200-doc corpus)
+
+OfficeQA docs are layout-detector JSON converted to the `texts` schema via
+`scripts/convert_officeqa_to_texts.py` (→ `data/officeqa/normalized_json/`).
+**Only the `agent_codex` rule-gen was run.** `llm_coarse` is **omitted on purpose**:
+officeqa's large documents + `llm_coarse`'s ~43 broad rules/question produce merged
+retrieval over the model's context limit (`context_length_exceeded`, up to ~333K
+tokens > 272K) — so the `llm_coarse` officeqa combos are not viable as-is.
+
+| sampling | rule_gen | refine | sAcc | uAcc | cost ratio |
+|---|---|---|---:|---:|---:|
+| fps | agent_codex_gpt54 | agentic_codex_gpt54 | 0.441 | 0.583 | 0.0035 |
+| fps | agent_codex_gpt54 | p_mini | 0.441 | 0.586 | 0.0036 |
+| fps | agent_codex_gpt54 | p_hybrid | 0.444 | 0.586 | 0.0036 |
+| random | agent_codex_gpt54 | agentic_codex_gpt54 | 0.600 | 0.550 | 0.0041 |
+| random | agent_codex_gpt54 | p_mini | 0.644 | 0.578 | 0.0053 |
+| random | agent_codex_gpt54 | p_hybrid | 0.641 | 0.578 | 0.0053 |
+
+**Findings (officeqa):**
+- **Much harder dataset:** uAcc ~0.55–0.59 (vs ~0.84–0.92 on court/nopv) — agent_codex's
+  small focused pools cover officeqa's 16 (often computational) questions less well.
+- Cost is **very low** (~0.004–0.005) — the small pools retrieve little.
+- `fps` vs `random` is mixed: `random` has higher sAcc (0.60–0.64) but `fps` edges
+  uAcc (~0.58); refiner choice barely matters (Pareto refiners fall back to the
+  full small pool here, as on court/nopv).
+- **Caveat:** `llm_coarse` (often the accuracy leader on nopv) is unavailable on
+  officeqa pending a fix for the context overflow (fewer/narrower rules or chunked
+  apply). So these officeqa numbers are agent_codex-only.
+
+Result files for all three datasets are synced under
+`results/<dataset>/grid/apply/<sampling>/<rule_gen>/<refine>/default/`.
+
+---
+
 ## CLI Interface
 
 ```bash
