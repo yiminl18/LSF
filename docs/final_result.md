@@ -371,28 +371,42 @@ the QA cost ratio above.
 | multi_clusters / llm_coarse / raw | gpt54 | 0.846 | 0.0829 |
 | multi_clusters / llm_coarse / agentic+fallback | gpt54 | 0.848§ | **0.0090** |
 
-### FINANCEBENCH — 10 easy questions (pipelines only)
+### FINANCEBENCH — 10 easy questions (baselines vs pipelines)
 
 The 12-question set contains 2 structurally hard questions — **long-term debt** (uAcc ≈ 0.50;
 numeric extraction across varied tables) and **exhibit / material-agreement listing** (uAcc ≈
 0.28; free-form extraction across heterogeneous indices) — that drag every pipeline's mean down.
-This table drops those 2 and reports the remaining **10 "easy" questions**. Eval scopes are
-unchanged (†/‡/§). Baselines use a different (old single-cluster) question set and can't be
-sliced to this subset, so they are omitted here.
+This table drops those 2 and reports the remaining **10 "easy" questions**. Pipeline eval scopes
+are unchanged (†/‡/§). **Baselines were re-run on the 5 easy questions absent from their original
+set** (`run_easy5_baselines.sh`, 50 docs with ground truth), then combined with their 5 shared
+questions for a full easy-10 mean.
 
 | Strategy (cluster / rule_gen / refine) | Model | Accuracy | Cost ratio |
 |---|---|---:|---:|
-| all_docs / agentic_full_data_adaptive / none | gpt54 | **0.967** | 0.0135 |
+| **Baseline 1** — Agentic Codex QA (per-pair) | gpt54 | **0.986** | 1.45 |
+| **Baseline 1** — Agentic Codex QA (per-pair) | gpt54mini | 0.976 | 1.30 |
+| all_docs / agentic_full_data_adaptive / none | gpt54 | 0.967 | 0.0135 |
+| **Baseline 2** — Agentic Codex QA All | gpt54mini | 0.960 | 0.17 |
+| **Baseline 2** — Agentic Codex QA All | gpt54 | 0.957¶ | 0.15 |
 | multi_clusters / llm_coarse / raw | gpt54 | 0.943 | 0.0540 |
 | multi_clusters / llm_coarse / agentic+fallback | gpt54 | 0.940§ | **0.0090** |
 | all_docs / agentic_full_data / none | gpt54mini | 0.935 | 0.0141 |
 | all_docs / agentic_full_data_adaptive / none | gpt54mini | 0.923 | 0.0140 |
 
-**On the easy 10, every pipeline clears 0.92.** `agentic_full_data_adaptive` (gpt54) leads at
-**0.967**, and `agentic+fallback` reaches **0.940 at the lowest cost (0.0090)** — matching the
-full-pool raw (0.943) at ~6× lower apply cost. The full-pool raw's per-split numbers here
-(sAcc 0.972 / uAcc 0.935 @ 0.0356 / 0.0589) are the source of the `Table 5` screenshot. Note the
-gpt54mini ordering flips vs the 12-question table: non-adaptive (0.935) edges adaptive (0.923) on
+¶ All-gpt54 `reporting period` was re-judged 0.00 → 1.00: codex answered the correct fiscal-year-end
+date (e.g. "December 31, 2017") but the standard judge rejected all 50 for omitting the
+"fiscal year ended" prefix; both a clarified LLM judge and a date-equivalence check score 50/50.
+Without this fix All-gpt54 easy-10 reads 0.757.
+
+**On the easy 10, baselines lead on accuracy but at 10–160× the cost.** The per-pair gpt54
+baseline tops the table at **0.986**, but the best pipeline — `agentic_full_data_adaptive` (gpt54,
+**0.967**) — sits *above* both "All" baselines (0.957–0.960) while costing **~11× less than "All"
+gpt54 and ~107× less than per-pair gpt54**. The cheapest pipeline, `agentic+fallback`, holds
+**0.940 at 0.0090** — within ~5 pts of the per-pair baseline at a tiny fraction of the cost. So
+even on the questions most favorable to the baselines (easy cover-page facts), the accuracy gap is
+small and the cost gap is enormous. The full-pool raw's per-split numbers here (sAcc 0.972 /
+uAcc 0.935 @ 0.0356 / 0.0589) are the source of the `Table 5` screenshot. Note the gpt54mini
+*pipeline* ordering flips vs the 12-question table: non-adaptive (0.935) edges adaptive (0.923) on
 the easy subset, where the adaptive sampler's extra rules mainly helped the 2 hard questions.
 
 ### FINANCEBENCH — matched comparison (6 shared questions, baselines vs pipelines)
