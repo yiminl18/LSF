@@ -158,6 +158,8 @@ def main() -> None:
     ap.add_argument("--split", choices=("sampled", "unsampled", "all_docs"), default="all_docs")
     ap.add_argument("--labels-file", default=None, help="Optional labels JSON path; overrides --split")
     ap.add_argument("--question-slug", default=None, help="Run only questions whose slug starts with this prefix")
+    ap.add_argument("--queries-file", default=None,
+                    help="Optional path to a queries .txt (one question per line); overrides the default QUERIES_FILE")
     ap.add_argument(
         "--output-name",
         default=None,
@@ -180,7 +182,8 @@ def main() -> None:
         raise AttributeError(f"{args.baseline} does not expose run_dataset(...)")
     gpt54_mod = importlib.import_module("models.gpt54")
 
-    questions = [line.strip() for line in QUERIES_FILE.read_text().splitlines() if line.strip()]
+    queries_file = Path(args.queries_file) if args.queries_file else QUERIES_FILE
+    questions = [line.strip() for line in queries_file.read_text().splitlines() if line.strip()]
     labels, labels_source = _load_labels(args.split, args.labels_file)
 
     out_name = args.output_name or _default_output_name(args.baseline, args.split)

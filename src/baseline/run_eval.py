@@ -112,6 +112,8 @@ def main() -> None:
                     help="Optional path to a labels JSON file; overrides --split")
     ap.add_argument("--question-slug", default=None,
                     help="Run only questions whose slug starts with this prefix")
+    ap.add_argument("--queries-file", default=None,
+                    help="Optional path to a queries .txt (one question per line); overrides the default QUERIES_FILE")
     ap.add_argument("--output-name", default=None,
                     help="Optional custom output directory name under baseline_results/<dataset>/")
     ap.add_argument("--max-docs", type=int, default=None,
@@ -126,7 +128,8 @@ def main() -> None:
     baseline_mod = importlib.import_module(f"baseline.{args.baseline}")
     gpt54_mod    = importlib.import_module("models.gpt54")
 
-    questions    = [l.strip() for l in QUERIES_FILE.read_text().splitlines() if l.strip()]
+    queries_file = Path(args.queries_file) if args.queries_file else QUERIES_FILE
+    questions    = [l.strip() for l in queries_file.read_text().splitlines() if l.strip()]
     labels_path  = Path(args.labels_file) if args.labels_file else _SPLIT_LABELS[args.split]
     labels: dict[str, dict] = json.loads(labels_path.read_text(encoding="utf-8"))
 
