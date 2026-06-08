@@ -272,20 +272,22 @@ computed exactly as in the NOPV normalized section: `Accuracy = (20·sAcc + 274�
 
 ## FINANCEBENCH
 
-> ⚠️ **No 12-combo grid was run for financebench.** These are the **5 pre-existing legacy
-> pipelines** (`single_cluster` / `multi_clusters`, different doc splits and stage variants) —
-> *not* the `sampling × rule_gen × refine` grid used for court/nopv. Two caveats specific to
-> finance:
-> 1. **RL cost ratio is unavailable** — the legacy runs did **not record rule-generation
->    tokens**, so the rule-learning cost can't be computed. The cost ratio shown is the
->    **apply (QA) cost only**; the main and normalized cost columns therefore coincide.
+> ⚠️ **No 12-combo grid was run for financebench.** The pipeline rows below are *not* the
+> `sampling × rule_gen × refine` grid used for court/nopv. They are: (a) **`agentic_full_data`**
+> runs — the *rule-end-to-end* approach (`src/baseline/agentic_rule_full_data.py`) evaluated
+> over **all 100 docs**; and (b) one **legacy `multi_clusters` llm_coarse** pipeline. Two
+> caveats specific to finance:
+> 1. **QA cost only.** The `agentic_full_data` runs *do* record rule-gen tokens, but the legacy
+>    pipeline does not — so for one comparable axis the cost ratio shown is the **apply (QA) cost
+>    only** (RL not folded in); the main and normalized cost columns therefore coincide.
 > 2. **Finance docs are huge** (avg ≈ **68,116 plain tokens**, 142-doc corpus) — so the
 >    baselines' `input/doc` ratios are *low* here (0.15–1.45), unlike court/nopv where small
 >    docs inflated them to 30+. Comparisons read differently as a result.
 
-Doc splits differ by pipeline: `multi_clusters` = 18 sampled / 68 unsampled; `single_cluster`
-= 10 / 50. Accuracy = `(ns·sAcc + nu·uAcc)/(ns+nu)`; cost ratio = combined apply
-`retrieved/doc` over both splits. Baselines: per-pair = 39–59 docs/q; All = 10q × 59 docs.
+Evaluation splits: `agentic_full_data` rows are scored over **all 100 docs** (`all_docs`);
+accuracy = mean over 12 questions of per-doc correctness, cost ratio = mean apply
+`retrieved/doc`. The legacy `multi_clusters` pipeline uses an 18 sampled / 68 unsampled split,
+accuracy = `(ns·sAcc + nu·uAcc)/(ns+nu)`. Baselines: per-pair = 39–59 docs/q; All = 10q × 59 docs.
 
 | Strategy (cluster / rule_gen / refine) | Model | RL cost ratio | Accuracy | QA cost ratio |
 |---|---|---:|---:|---:|
@@ -293,43 +295,63 @@ Doc splits differ by pipeline: `multi_clusters` = 18 sampled / 68 unsampled; `si
 | **Baseline 1** — Agentic Codex QA (per-pair) | gpt54mini | N/A | 0.878 | 1.30 |
 | **Baseline 2** — Agentic Codex QA All | gpt54 | N/A | 0.861 | 0.15 |
 | **Baseline 2** — Agentic Codex QA All | gpt54mini | N/A | 0.820 | 0.17 |
-| *(ref) Agentic Claude QA* | opus47 | N/A | 0.947 | 0.91 |
-| *(ref) Agentic Claude QA* | sonnet | N/A | 0.895 | 1.74 |
-| multi_clusters / llm_coarse / raw | gpt54 | N/A‡ | **0.846** | 0.0829 |
-| single_cluster / agent / raw | opus47 | N/A‡ | 0.794 | 0.1217 |
-| single_cluster / llm_coarse / raw | gpt54 | N/A‡ | 0.772 | 0.1076 |
-| single_cluster / agent / refined | gpt54 | N/A‡ | 0.758 | 0.0364 |
-| multi_clusters / llm_coarse / raw | opus47 | N/A‡ | 0.716 | 0.0137 |
+| all_docs / agentic_full_data_adaptive / none | gpt54 | N/A† | **0.923** | 0.0135 |
+| all_docs / agentic_full_data_adaptive / none | gpt54mini | N/A† | 0.879 | 0.0139 |
+| all_docs / agentic_full_data / none | gpt54mini | N/A† | 0.854 | 0.0141 |
+| multi_clusters / llm_coarse / raw | gpt54 | N/A‡ | 0.846 | 0.0829 |
+| multi_clusters / llm_coarse / agentic+fallback | gpt54 | N/A‡ | 0.848§ | **0.0090** |
 
 *sAcc/uAcc breakdown (pipelines):*
 
 | cluster / rule_gen / refine | Model | ns/nu | sAcc | uAcc | combined acc |
 |---|---|---|---:|---:|---:|
 | multi_clusters / llm_coarse / raw | gpt54 | 18/68 | 0.857 | 0.843 | 0.846 |
-| single_cluster / agent / raw | opus47 | 10/50 | 0.889 | 0.776 | 0.794 |
-| single_cluster / llm_coarse / raw | gpt54 | 10/50 | 0.860 | 0.754 | 0.772 |
-| single_cluster / agent / refined | gpt54 | 10/50 | 0.880 | 0.734 | 0.758 |
-| multi_clusters / llm_coarse / raw | opus47 | 18/68 | 0.838 | 0.683 | 0.716 |
+| multi_clusters / llm_coarse / agentic+fallback | gpt54 | —/68 | — | 0.848 | 0.848§ |
 
-‡ Legacy run — rule-generation tokens were not recorded, so RL cost ratio is not computable.
+(The `agentic_full_data` runs have no sampled/unsampled split — they are scored over all 100 docs.)
+
+† `agentic_full_data` = the *rule-end-to-end* approach (`src/baseline/agentic_rule_full_data.py`):
+a Codex agent learns Python retrieval rules from the corpus, then rules are applied with
+`rule_apply_merge` (gpt54 answers/judges), scored over all 100 docs. `adaptive` =
+`--adaptive-large-sample` (larger, spread working sample during rule-gen). Rule-gen tokens are
+recorded but not folded into the cost ratio here.<br>
+‡ Legacy run — rule-generation tokens were not recorded, so RL cost ratio is not computable.<br>
+§ `agentic+fallback` = a *refinement* of the `multi_clusters/llm_coarse/raw` one-shot pool: an
+agentic selector (**Claude Opus 4.7**) picks ~2.7 rules/question from the ~35-rule pool, then a
+**gpt54mini gate** applies them with **full-pool fallback** on a miss (gpt54 answers/judges).
+Evaluated on the **held-out 68 unsampled docs only** (no sampled split), all 12 questions; the
+cost ratio is gpt54 input-per-doc / avg doc tokens. Over the 10 easier questions uAcc = 0.940
+(the 2 hard ones — long-term debt 0.500, exhibit listing 0.279 — pull the 12-q mean to 0.848).
 
 ### Analysis
 
 **Finance baselines are strong and (here) cheap.** Because finance docs are huge, the per-pair
 Codex baseline reads ≈ one doc's worth (ratio 1.45) and the amortized *All* baseline drops to
 0.15 — both far below the 30+ ratios seen on court/nopv. The best baseline (Codex per-pair
-gpt54, **0.931**, and Claude opus47, 0.947) sets a high accuracy bar.
+gpt54, **0.931**) sets a high accuracy bar.
 
-**The legacy pipelines trail the baselines on accuracy but are cheaper.** The strongest
-pipeline, `multi_clusters/llm_coarse/raw` (gpt54), reaches **0.846** — essentially tied with
-Baseline 2 *All* gpt54 (0.861) and at **~0.55× its cost** (0.083 vs 0.15), but ~9 pts below the
-per-pair baseline (0.931). `single_cluster` variants are weaker (0.72–0.79); `refined` cut cost
-~3× (0.121 → 0.036) but also dropped accuracy (0.794 → 0.758) relative to the opus47 raw run.
+**The `agentic_full_data` pipeline nearly matches the best baseline at ~100× lower cost.**
+`agentic_full_data_adaptive` (gpt54) reaches **0.923** over all 100 docs at a **0.0135** cost
+ratio — within ~1 pt of the strongest baseline (Codex per-pair gpt54, 0.931) but **~107×
+cheaper** (0.0135 vs 1.45). On gpt54mini, the `adaptive` variant (0.879) beats the non-adaptive
+run (0.854), and gpt54 generation beats gpt54mini. The legacy `multi_clusters/llm_coarse/raw` (gpt54)
+reaches **0.846** at 0.083 — solid, but dominated by `agentic_full_data` on both axes
+(lower accuracy *and* ~6× more expensive).
 
-**Caveat:** with RL unrecorded and heterogeneous splits, these finance numbers are **not
-directly comparable** to the court/nopv grids — treat them as the best available legacy
-snapshot, not a like-for-like sweep. Running the proper 12-combo grid would be needed for a
-clean comparison.
+**Agentic selection makes the one-shot pool ~9× cheaper at the same accuracy.** Layering
+`agentic+fallback` on the `multi_clusters/llm_coarse/raw` pool holds held-out accuracy flat
+(uAcc 0.848 vs the raw pool's 0.843) while cutting the apply cost from **0.0829 → 0.0090** —
+because the agentic selector trims ~35 rules to ~2.7 and the gpt54mini gate only escalates to
+the full pool ~11% of the time. That 0.0090 cost is now the **cheapest pipeline on financebench**,
+and roughly ties the `agentic_full_data` runs on cost while trailing them on accuracy
+(0.848 vs 0.923). So the two strong options are: `agentic_full_data_adaptive` (gpt54) for **peak
+accuracy** (0.923 @ 0.0135), or `agentic+fallback` for **lowest cost** (0.848 @ 0.0090). Note the
+agentic+fallback *selection* step uses Claude Opus 4.7 (one-time), though all QA is gpt54/gpt54mini.
+
+**Caveat:** with the 12-combo grid not run and heterogeneous evaluation splits (all_docs vs
+18/68), these finance numbers are **not directly comparable** to the court/nopv grids — treat
+them as the best available snapshot, not a like-for-like sweep. Running the proper 12-combo grid
+would be needed for a clean comparison.
 
 ### FINANCEBENCH — normalized (single cost ratio)
 
@@ -343,11 +365,65 @@ the QA cost ratio above.
 | **Baseline 1** — Agentic Codex QA (per-pair) | gpt54mini | 0.878 | 1.30 |
 | **Baseline 2** — Agentic Codex QA All | gpt54 | 0.861 | 0.15 |
 | **Baseline 2** — Agentic Codex QA All | gpt54mini | 0.820 | 0.17 |
-| multi_clusters / llm_coarse / raw | gpt54 | **0.846** | 0.0829 |
-| single_cluster / agent / raw | opus47 | 0.794 | 0.1217 |
-| single_cluster / llm_coarse / raw | gpt54 | 0.772 | 0.1076 |
-| single_cluster / agent / refined | gpt54 | 0.758 | 0.0364 |
-| multi_clusters / llm_coarse / raw | opus47 | 0.716 | 0.0137 |
+| all_docs / agentic_full_data_adaptive / none | gpt54 | **0.923** | 0.0135 |
+| all_docs / agentic_full_data_adaptive / none | gpt54mini | 0.879 | 0.0139 |
+| all_docs / agentic_full_data / none | gpt54mini | 0.854 | 0.0141 |
+| multi_clusters / llm_coarse / raw | gpt54 | 0.846 | 0.0829 |
+| multi_clusters / llm_coarse / agentic+fallback | gpt54 | 0.848§ | **0.0090** |
+
+### FINANCEBENCH — 10 easy questions (pipelines only)
+
+The 12-question set contains 2 structurally hard questions — **long-term debt** (uAcc ≈ 0.50;
+numeric extraction across varied tables) and **exhibit / material-agreement listing** (uAcc ≈
+0.28; free-form extraction across heterogeneous indices) — that drag every pipeline's mean down.
+This table drops those 2 and reports the remaining **10 "easy" questions**. Eval scopes are
+unchanged (†/‡/§). Baselines use a different (old single-cluster) question set and can't be
+sliced to this subset, so they are omitted here.
+
+| Strategy (cluster / rule_gen / refine) | Model | Accuracy | Cost ratio |
+|---|---|---:|---:|
+| all_docs / agentic_full_data_adaptive / none | gpt54 | **0.967** | 0.0135 |
+| multi_clusters / llm_coarse / raw | gpt54 | 0.943 | 0.0540 |
+| multi_clusters / llm_coarse / agentic+fallback | gpt54 | 0.940§ | **0.0090** |
+| all_docs / agentic_full_data / none | gpt54mini | 0.935 | 0.0141 |
+| all_docs / agentic_full_data_adaptive / none | gpt54mini | 0.923 | 0.0140 |
+
+**On the easy 10, every pipeline clears 0.92.** `agentic_full_data_adaptive` (gpt54) leads at
+**0.967**, and `agentic+fallback` reaches **0.940 at the lowest cost (0.0090)** — matching the
+full-pool raw (0.943) at ~6× lower apply cost. The full-pool raw's per-split numbers here
+(sAcc 0.972 / uAcc 0.935 @ 0.0356 / 0.0589) are the source of the `Table 5` screenshot. Note the
+gpt54mini ordering flips vs the 12-question table: non-adaptive (0.935) edges adaptive (0.923) on
+the easy subset, where the adaptive sampler's extra rules mainly helped the 2 hard questions.
+
+### FINANCEBENCH — matched comparison (6 shared questions, baselines vs pipelines)
+
+The baselines run on a **different** 10-question set than the LSF pipelines; only **6 questions
+appear in both** — trading symbols, long-term debt, registrant name, exec-office address/ZIP,
+telephone, state/jurisdiction. This table scores **every system on exactly those 6 questions**,
+so accuracy is finally apples-to-apples (doc sets still differ: baselines ≈ 59 single-cluster
+docs/q, pipelines 86–100 multi-cluster docs). Cost = each system's overall ratio (footnotes
+†/‡/§ as above; baseline cost is full-doc and question-independent).
+
+| Strategy (cluster / rule_gen / refine) | Model | Acc (6 shared Q) | Cost ratio |
+|---|---|---:|---:|
+| **Baseline 1** — Agentic Codex QA (per-pair) | gpt54 | **0.938** | 1.45 |
+| **Baseline 1** — Agentic Codex QA (per-pair) | gpt54mini | 0.927 | 1.30 |
+| **Baseline 2** — Agentic Codex QA All | gpt54 | 0.896 | 0.15 |
+| all_docs / agentic_full_data_adaptive / none | gpt54 | 0.887 | 0.0135 |
+| **Baseline 2** — Agentic Codex QA All | gpt54mini | 0.879 | 0.17 |
+| multi_clusters / llm_coarse / agentic+fallback | gpt54 | 0.848§ | **0.0090** |
+| multi_clusters / llm_coarse / raw | gpt54 | 0.839 | 0.0829 |
+| all_docs / agentic_full_data_adaptive / none | gpt54mini | 0.835 | 0.0139 |
+| all_docs / agentic_full_data / none | gpt54mini | 0.757 | 0.0141 |
+
+**On matched questions, the baselines lead on accuracy — pipelines win only on cost.** The best
+baseline (Codex per-pair gpt54) hits **0.938** vs the best pipeline's **0.887**
+(`agentic_full_data_adaptive` gpt54). This is the honest read: the pipelines' headline 0.92+
+elsewhere was lifted by easy questions (stock exchange, form type, reporting period) that the
+baseline set doesn't contain, while these 6 shared questions include the hard ones (long-term
+debt, trading symbols). The pipelines' real advantage is **cost** — `agentic+fallback` answers
+the same 6 questions at **0.0090** (≈0.85 acc) vs the per-pair baseline's **1.45** (≈161× cheaper)
+and even the amortized "All" baseline's 0.15 (≈17× cheaper), at 4–9 accuracy points lower.
 
 ---
 

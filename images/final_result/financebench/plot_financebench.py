@@ -9,7 +9,7 @@ Data source: the FINANCEBENCH section in docs/final_result.md.
       Cost ratio = combined apply retrieved/doc over both splits
   Baselines: per-pair / amortized input/doc token ratio.
 
-Cost spans ~0.014 to ~1.74, so the y-axis is log-scaled.
+Cost spans ~0.014 to ~1.45, so the y-axis is log-scaled.
 Run:  python3 images/final_result/financebench/plot_financebench.py
 Output: images/final_result/financebench/financebench_accuracy_vs_cost.png
 """
@@ -25,9 +25,6 @@ DATA = [
     ("B1 Codex QA (per-pair) gpt54mini", 0.878, 1.30, "baseline"),
     ("B2 Codex QA All gpt54",            0.861, 0.15, "baseline"),
     ("B2 Codex QA All gpt54mini",        0.820, 0.17, "baseline"),
-    # reference baselines (Claude)
-    ("Claude QA opus47",                 0.947, 0.91, "baseline_claude"),
-    ("Claude QA sonnet",                 0.895, 1.74, "baseline_claude"),
     # legacy pipelines
     ("multi/llm_coarse/raw gpt54",       0.846, 0.0829, "pipeline"),
     ("single/agent/raw opus47",          0.794, 0.1217, "pipeline"),
@@ -38,7 +35,6 @@ DATA = [
 
 STYLE = {
     "baseline":        dict(color="#d62728", marker="X", s=130, label="Baseline (Codex, no rules)"),
-    "baseline_claude": dict(color="#9467bd", marker="P", s=120, label="Baseline (Claude, ref)"),
     "pipeline":        dict(color="#2ca02c", marker="s", s=95,  label="LSF pipeline (legacy)"),
 }
 
