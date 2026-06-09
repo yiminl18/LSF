@@ -27,7 +27,7 @@ client = AzureOpenAI(
     api_version=AZURE_API_VERSION,
     azure_endpoint=AZURE_ENDPOINT,
     api_key=api_key,
-    timeout=120.0,     # abort a stalled request instead of hanging forever
+    timeout=600.0,     # large llm_coarse rule-gen prompts on big finance docs need >120s
     max_retries=3,     # retry transient failures / timeouts
 )
 
