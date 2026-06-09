@@ -1,0 +1,118 @@
+{
+  "question": "What is/are the trading symbol(s) and listing exchange(s)?",
+  "question_slug": "what_isare_the_trading_symbols_and_listing_exchanges",
+  "mode": "pareto_hybrid",
+  "selected_rules": [
+    "rule_page12_listing_ticker_spans",
+    "rule_page12_section12b_listing_tables",
+    "rule_listing_exchange_spans_and_market_prose",
+    "rule_page12_section12b_listing_headers",
+    "rule_page12_listing_security_titles"
+  ],
+  "covered_docs": [],
+  "baseline_accuracy": 0.85,
+  "selector_accuracy": 0.0,
+  "frontier": [
+    {
+      "cost": 0.0,
+      "accuracy_match": 0.0,
+      "rules_admitted": [],
+      "added_rule": null,
+      "rule_cov": null,
+      "rule_avg_cost": null
+    },
+    {
+      "cost": 0.019403,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_page12_listing_ticker_spans"
+      ],
+      "added_rule": "rule_page12_listing_ticker_spans",
+      "rule_cov": 0.65,
+      "rule_avg_cost": 0.019403
+    },
+    {
+      "cost": 0.030837,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_page12_listing_ticker_spans",
+        "rule_page12_section12b_listing_tables"
+      ],
+      "added_rule": "rule_page12_section12b_listing_tables",
+      "rule_cov": 0.25,
+      "rule_avg_cost": 0.011434
+    },
+    {
+      "cost": 0.050889,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_page12_listing_ticker_spans",
+        "rule_page12_section12b_listing_tables",
+        "rule_listing_exchange_spans_and_market_prose"
+      ],
+      "added_rule": "rule_listing_exchange_spans_and_market_prose",
+      "rule_cov": 0.4,
+      "rule_avg_cost": 0.020053
+    },
+    {
+      "cost": 0.068933,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_page12_listing_ticker_spans",
+        "rule_page12_section12b_listing_tables",
+        "rule_listing_exchange_spans_and_market_prose",
+        "rule_page12_section12b_listing_headers"
+      ],
+      "added_rule": "rule_page12_section12b_listing_headers",
+      "rule_cov": 0.25,
+      "rule_avg_cost": 0.018044
+    },
+    {
+      "cost": 0.070159,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_page12_listing_ticker_spans",
+        "rule_page12_section12b_listing_tables",
+        "rule_listing_exchange_spans_and_market_prose",
+        "rule_page12_section12b_listing_headers",
+        "rule_page12_listing_security_titles"
+      ],
+      "added_rule": "rule_page12_listing_security_titles",
+      "rule_cov": 0.0,
+      "rule_avg_cost": 0.001226
+    }
+  ],
+  "query_table": {
+    "0.50": null,
+    "0.80": null,
+    "0.90": null,
+    "0.95": null,
+    "1.00": null
+  },
+  "knee_point": {
+    "cost": 0.019403,
+    "accuracy_match": 0.0,
+    "n_rules": 1,
+    "rules": [
+      "rule_page12_listing_ticker_spans"
+    ]
+  },
+  "phases": {
+    "coverage": "gpt54mini",
+    "verify": "gpt54",
+    "Phase_B_extras_added": 5,
+    "Phase_C_kept": 5
+  },
+  "llm_calls": {
+    "phase_2_qa": 85,
+    "phase_2_judge": 85,
+    "phase_B_qa": 102,
+    "phase_B_judge": 102,
+    "phase_C_qa": 85,
+    "phase_C_judge": 85
+  },
+  "token_usage": {
+    "input": 44165,
+    "output": 3685
+  }
+}

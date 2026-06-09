@@ -1,0 +1,118 @@
+{
+  "question": "What is the address of principal executive offices and ZIP code?",
+  "question_slug": "what_is_the_address_of_principal_executive_offices_and_zip_c",
+  "mode": "pareto_hybrid",
+  "selected_rules": [
+    "rule_page12_cover_address_value_before_offices_label",
+    "rule_page12_cover_locality_fragments_before_offices_label",
+    "rule_page12_cover_street_line_before_offices_label",
+    "rule_item2_properties_headquarters_sentence",
+    "rule_page12_cover_zip_or_postcode_near_offices_label"
+  ],
+  "covered_docs": [],
+  "baseline_accuracy": 0.9444444444444444,
+  "selector_accuracy": 0.0,
+  "frontier": [
+    {
+      "cost": 0.0,
+      "accuracy_match": 0.0,
+      "rules_admitted": [],
+      "added_rule": null,
+      "rule_cov": null,
+      "rule_avg_cost": null
+    },
+    {
+      "cost": 0.001298,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_page12_cover_address_value_before_offices_label"
+      ],
+      "added_rule": "rule_page12_cover_address_value_before_offices_label",
+      "rule_cov": 0.6667,
+      "rule_avg_cost": 0.001298
+    },
+    {
+      "cost": 0.002604,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_page12_cover_address_value_before_offices_label",
+        "rule_page12_cover_locality_fragments_before_offices_label"
+      ],
+      "added_rule": "rule_page12_cover_locality_fragments_before_offices_label",
+      "rule_cov": 0.6667,
+      "rule_avg_cost": 0.001306
+    },
+    {
+      "cost": 0.003911,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_page12_cover_address_value_before_offices_label",
+        "rule_page12_cover_locality_fragments_before_offices_label",
+        "rule_page12_cover_street_line_before_offices_label"
+      ],
+      "added_rule": "rule_page12_cover_street_line_before_offices_label",
+      "rule_cov": 0.6667,
+      "rule_avg_cost": 0.001307
+    },
+    {
+      "cost": 0.00422,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_page12_cover_address_value_before_offices_label",
+        "rule_page12_cover_locality_fragments_before_offices_label",
+        "rule_page12_cover_street_line_before_offices_label",
+        "rule_item2_properties_headquarters_sentence"
+      ],
+      "added_rule": "rule_item2_properties_headquarters_sentence",
+      "rule_cov": 0.0,
+      "rule_avg_cost": 0.000309
+    },
+    {
+      "cost": 0.004962,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_page12_cover_address_value_before_offices_label",
+        "rule_page12_cover_locality_fragments_before_offices_label",
+        "rule_page12_cover_street_line_before_offices_label",
+        "rule_item2_properties_headquarters_sentence",
+        "rule_page12_cover_zip_or_postcode_near_offices_label"
+      ],
+      "added_rule": "rule_page12_cover_zip_or_postcode_near_offices_label",
+      "rule_cov": 0.0,
+      "rule_avg_cost": 0.000742
+    }
+  ],
+  "query_table": {
+    "0.50": null,
+    "0.80": null,
+    "0.90": null,
+    "0.95": null,
+    "1.00": null
+  },
+  "knee_point": {
+    "cost": 0.001298,
+    "accuracy_match": 0.0,
+    "n_rules": 1,
+    "rules": [
+      "rule_page12_cover_address_value_before_offices_label"
+    ]
+  },
+  "phases": {
+    "coverage": "gpt54mini",
+    "verify": "gpt54",
+    "Phase_B_extras_added": 5,
+    "Phase_C_kept": 5
+  },
+  "llm_calls": {
+    "phase_2_qa": 85,
+    "phase_2_judge": 85,
+    "phase_B_qa": 102,
+    "phase_B_judge": 102,
+    "phase_C_qa": 85,
+    "phase_C_judge": 85
+  },
+  "token_usage": {
+    "input": 30724,
+    "output": 4031
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "question": "What is long-term debt at year-end (0 if none)?",
+  "question_slug": "what_is_longterm_debt_at_yearend_0_if_none",
+  "mode": "agentic",
+  "model": "gpt54",
+  "selected_rules": [
+    "rule_financial_statement_balance_sheet_debt_tables",
+    "rule_debt_note_tables_with_carrying_or_face_value",
+    "rule_selected_financial_data_longterm_debt_or_obligations"
+  ],
+  "selected_avg_cost_ratio_sum": 0.017168,
+  "min_cov": 0.1,
+  "mean_cov": 0.3,
+  "match_rate_on_sampled": 0.8,
+  "iterations": 6,
+  "verify_calls": 9,
+  "tool_llm_calls": 180,
+  "tool_input_tokens": 128635,
+  "tool_output_tokens": 1241,
+  "latency_seconds": 461.598,
+  "rationale": "The best sampled-accuracy subset was the three-rule set combining the broad balance-sheet rule with the debt-note and selected-financial-data complements. It improves sampled match rate to 0.8 while dropping the zero-hit 8-K rule and the noisy MD&A rule; the full five-rule pool only reached 0.6 on this sampled set. The hard constraint could not be met under d-star-mode=all_labeled because AMAZON_2018_10K and LOCKHEEDMARTIN_2022_10K remained unsolved with the available rule pool, and the full pool itself missed more documents."
+}

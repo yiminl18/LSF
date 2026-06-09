@@ -1,0 +1,21 @@
+{
+  "question": "What is long-term debt at year-end (0 if none)?",
+  "question_slug": "what_is_longterm_debt_at_yearend_0_if_none",
+  "sampling_strategy": "fps",
+  "rule_gen_strategy": "agent_codex_gpt54",
+  "strategy_full": "agent_codex_gpt54",
+  "model": "gpt54",
+  "n_rules": 5,
+  "rules": [
+    "rule_balance_sheet_longterm_debt_tables",
+    "rule_debt_note_tables",
+    "rule_fair_value_longterm_debt_tables",
+    "rule_liquidity_capital_resources_debt_tables",
+    "rule_selected_financial_data_debt_rows"
+  ],
+  "input_tokens": 19091,
+  "output_tokens": 151,
+  "latency_seconds": 474.82,
+  "approx_cost_usd_gpt54_rate": 0.0254,
+  "timestamp": "2026-06-09T04:54:19.314294+00:00"
+}

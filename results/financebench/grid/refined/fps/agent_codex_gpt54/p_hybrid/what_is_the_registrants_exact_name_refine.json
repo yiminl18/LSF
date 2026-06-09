@@ -1,0 +1,118 @@
+{
+  "question": "What is the registrant's exact name?",
+  "question_slug": "what_is_the_registrants_exact_name",
+  "mode": "pareto_hybrid",
+  "selected_rules": [
+    "rule_page12_bold_body_company_names",
+    "rule_page12_top_company_headers",
+    "rule_page12_company_span_before_exact_name_anchor",
+    "rule_page225_financial_statement_company_headers",
+    "rule_page13_signature_registrant_company_spans"
+  ],
+  "covered_docs": [],
+  "baseline_accuracy": 1.0,
+  "selector_accuracy": 0.0,
+  "frontier": [
+    {
+      "cost": 0.0,
+      "accuracy_match": 0.0,
+      "rules_admitted": [],
+      "added_rule": null,
+      "rule_cov": null,
+      "rule_avg_cost": null
+    },
+    {
+      "cost": 1e-05,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_page12_bold_body_company_names"
+      ],
+      "added_rule": "rule_page12_bold_body_company_names",
+      "rule_cov": 0.1,
+      "rule_avg_cost": 1e-05
+    },
+    {
+      "cost": 0.001426,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_page12_bold_body_company_names",
+        "rule_page12_top_company_headers"
+      ],
+      "added_rule": "rule_page12_top_company_headers",
+      "rule_cov": 0.95,
+      "rule_avg_cost": 0.001416
+    },
+    {
+      "cost": 0.002853,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_page12_bold_body_company_names",
+        "rule_page12_top_company_headers",
+        "rule_page12_company_span_before_exact_name_anchor"
+      ],
+      "added_rule": "rule_page12_company_span_before_exact_name_anchor",
+      "rule_cov": 0.95,
+      "rule_avg_cost": 0.001427
+    },
+    {
+      "cost": 0.003738,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_page12_bold_body_company_names",
+        "rule_page12_top_company_headers",
+        "rule_page12_company_span_before_exact_name_anchor",
+        "rule_page225_financial_statement_company_headers"
+      ],
+      "added_rule": "rule_page225_financial_statement_company_headers",
+      "rule_cov": 0.1,
+      "rule_avg_cost": 0.000885
+    },
+    {
+      "cost": 0.006723,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_page12_bold_body_company_names",
+        "rule_page12_top_company_headers",
+        "rule_page12_company_span_before_exact_name_anchor",
+        "rule_page225_financial_statement_company_headers",
+        "rule_page13_signature_registrant_company_spans"
+      ],
+      "added_rule": "rule_page13_signature_registrant_company_spans",
+      "rule_cov": 0.25,
+      "rule_avg_cost": 0.002985
+    }
+  ],
+  "query_table": {
+    "0.50": null,
+    "0.80": null,
+    "0.90": null,
+    "0.95": null,
+    "1.00": null
+  },
+  "knee_point": {
+    "cost": 1e-05,
+    "accuracy_match": 0.0,
+    "n_rules": 1,
+    "rules": [
+      "rule_page12_bold_body_company_names"
+    ]
+  },
+  "phases": {
+    "coverage": "gpt54mini",
+    "verify": "gpt54",
+    "Phase_B_extras_added": 5,
+    "Phase_C_kept": 5
+  },
+  "llm_calls": {
+    "phase_2_qa": 100,
+    "phase_2_judge": 100,
+    "phase_B_qa": 120,
+    "phase_B_judge": 120,
+    "phase_C_qa": 100,
+    "phase_C_judge": 100
+  },
+  "token_usage": {
+    "input": 32500,
+    "output": 2604
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "question": "What is the company's principal executive offices address (city and state/country) as stated in this document?",
+  "question_slug": "what_is_the_companys_principal_executive_offices_address_cit",
+  "mode": "agentic",
+  "model": "gpt54",
+  "selected_rules": [
+    "rule_early_narrative_principal_offices_sentence",
+    "rule_page12_address_span_before_label"
+  ],
+  "selected_avg_cost_ratio_sum": 0.002733,
+  "min_cov": 0.4,
+  "mean_cov": 0.5,
+  "match_rate_on_sampled": 0.7,
+  "iterations": 2,
+  "verify_calls": 2,
+  "tool_llm_calls": 40,
+  "tool_input_tokens": 6970,
+  "tool_output_tokens": 283,
+  "latency_seconds": 306.5280010700226,
+  "rationale": "The provided sampled-labels file had `None` for this question on all 10 sampled docs, so I reconstructed usable labels by filling answers from `new_query_labels_cache.json` and deriving the remaining three from the existing full-address label. On that repaired sample, the full five-rule pool solved 6/10 docs; I used that empirical full-pool result as D* and verified that `rule_page12_address_span_before_label` plus `rule_early_narrative_principal_offices_sentence` preserved all six target docs while also recovering `AMCOR_2019_10K` that the full pool missed. This cuts cached cost from 0.006806 to 0.002733 with two comparatively broad rules whose local hit coverage is 0.6 and 0.4."
+}

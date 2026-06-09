@@ -1,0 +1,21 @@
+{
+  "question": "What is the reporting period covered by this document (e.g. fiscal year ended, quarter ended, or event date)?",
+  "question_slug": "what_is_the_reporting_period_covered_by_this_document_eg_fis",
+  "sampling_strategy": "fps",
+  "rule_gen_strategy": "agent_codex_gpt54",
+  "strategy_full": "agent_codex_gpt54",
+  "model": "gpt54",
+  "n_rules": 5,
+  "rules": [
+    "rule_page13_8k_event_report_date_spans",
+    "rule_page13_8k_parenthetical_event_date_spans",
+    "rule_page13_fiscal_year_ended_cover_spans",
+    "rule_page13_quarter_ended_alt_spans",
+    "rule_page13_quarterly_period_cover_spans"
+  ],
+  "input_tokens": 26495,
+  "output_tokens": 1237,
+  "latency_seconds": 778.52,
+  "approx_cost_usd_gpt54_rate": 0.0455,
+  "timestamp": "2026-06-09T03:51:41.352010+00:00"
+}

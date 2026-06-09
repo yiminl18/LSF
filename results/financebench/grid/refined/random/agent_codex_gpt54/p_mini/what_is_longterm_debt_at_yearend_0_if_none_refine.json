@@ -1,0 +1,53 @@
+{
+  "question": "What is long-term debt at year-end (0 if none)?",
+  "question_slug": "what_is_longterm_debt_at_yearend_0_if_none",
+  "mode": "pareto",
+  "baseline_accuracy": 0.2778,
+  "selected_rules": [
+    "rule_8k_cover_current_report_context",
+    "rule_debt_note_tables_with_carrying_or_face_value",
+    "rule_financial_statement_balance_sheet_debt_tables",
+    "rule_mda_or_market_risk_debt_summary_tables",
+    "rule_selected_financial_data_longterm_debt_or_obligations"
+  ],
+  "selected_avg_cost_ratio_sum": 0,
+  "covered_docs": [],
+  "uncovered_docs": [
+    "ADOBE_2020_10K",
+    "ADOBE_2021_10K",
+    "AMCOR_2023Q2_10Q",
+    "BOEING_2019_10K",
+    "COSTCO_2018_10K"
+  ],
+  "selector_accuracy": 0.0,
+  "tau_safety_floor": 0.0,
+  "banned_rules": [],
+  "frontier": [
+    {
+      "cost": 0.0,
+      "accuracy_match": 0.0,
+      "rules_admitted": [],
+      "added_rule": null,
+      "rule_cov": null,
+      "rule_avg_cost": null
+    }
+  ],
+  "query_table": {
+    "0.50": null,
+    "0.80": null,
+    "0.90": null,
+    "0.95": null,
+    "1.00": null
+  },
+  "knee_point": null,
+  "knee_lambda": 10.0,
+  "llm_calls": {
+    "phase_2_incremental": 25,
+    "phase_2_judge": 25
+  },
+  "token_usage": {
+    "total_input_tokens": 10919,
+    "total_output_tokens": 150
+  },
+  "fallback_full_pool": true
+}

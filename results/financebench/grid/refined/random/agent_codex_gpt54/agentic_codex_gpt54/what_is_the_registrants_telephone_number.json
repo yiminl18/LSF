@@ -1,0 +1,21 @@
+{
+  "question": "What is the registrant's telephone number?",
+  "question_slug": "what_is_the_registrants_telephone_number",
+  "mode": "agentic",
+  "model": "gpt54",
+  "selected_rules": [
+    "rule_page1_inline_telephone_label_with_phone",
+    "rule_page1_phone_before_area_code_cover_label"
+  ],
+  "selected_avg_cost_ratio_sum": 0.001162,
+  "min_cov": 0.5,
+  "mean_cov": 0.5,
+  "match_rate_on_sampled": 1.0,
+  "iterations": 4,
+  "verify_calls": 6,
+  "tool_llm_calls": 120,
+  "tool_input_tokens": 17949,
+  "tool_output_tokens": 977,
+  "latency_seconds": 292.7835772037506,
+  "rationale": "I started from the broad page-1 cover-page phone patterns and verified that the three-rule set matched all sampled documents. Drop-tests showed that removing either the inline-label rule or the area-code follower rule breaks coverage, while their two-rule combination still matches every sampled document, so the third rule was unnecessary. Because the cached per-rule coverage files were missing, I measured coverage for the selected rules with single-rule verify runs; each covers 50% of sampled docs on its own."
+}

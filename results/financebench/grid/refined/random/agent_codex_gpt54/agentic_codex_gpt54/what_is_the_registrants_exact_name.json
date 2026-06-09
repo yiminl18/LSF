@@ -1,0 +1,20 @@
+{
+  "question": "What is the registrant's exact name?",
+  "question_slug": "what_is_the_registrants_exact_name",
+  "mode": "agentic",
+  "model": "gpt54",
+  "selected_rules": [
+    "rule_page1_exact_name_label_previous_header"
+  ],
+  "selected_avg_cost_ratio_sum": 0.000673,
+  "min_cov": 1.0,
+  "mean_cov": 1.0,
+  "match_rate_on_sampled": 1.0,
+  "iterations": 1,
+  "verify_calls": 1,
+  "tool_llm_calls": 20,
+  "tool_input_tokens": 2879,
+  "tool_output_tokens": 154,
+  "latency_seconds": 201.8160536289215,
+  "rationale": "The eval_individual coverage cache was absent for this question, so I ranked rules by docstring simplicity, cost, and a free proxy that measured whether each rule fired on the 10 sampled documents. rule_page1_exact_name_label_previous_header was the simplest broad candidate: it fired once on every sampled doc and had low cost. One verify_accuracy call confirmed perfect sampled accuracy with missed_in_D_star empty, so adding narrower page-1 variants would only raise cost without improving accuracy."
+}

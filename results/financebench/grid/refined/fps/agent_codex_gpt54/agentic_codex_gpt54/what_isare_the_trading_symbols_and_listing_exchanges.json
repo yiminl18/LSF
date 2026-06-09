@@ -1,0 +1,21 @@
+{
+  "question": "What is/are the trading symbol(s) and listing exchange(s)?",
+  "question_slug": "what_isare_the_trading_symbols_and_listing_exchanges",
+  "mode": "agentic",
+  "model": "gpt54",
+  "selected_rules": [
+    "rule_listing_exchange_spans_and_market_prose",
+    "rule_page12_listing_ticker_spans"
+  ],
+  "selected_avg_cost_ratio_sum": 0.039456,
+  "min_cov": 0.0,
+  "mean_cov": 0.0,
+  "match_rate_on_sampled": 0.7,
+  "iterations": 6,
+  "verify_calls": 7,
+  "tool_llm_calls": 140,
+  "tool_input_tokens": 23818,
+  "tool_output_tokens": 1065,
+  "latency_seconds": 294.917673,
+  "rationale": "I kept `rule_listing_exchange_spans_and_market_prose` and `rule_page12_listing_ticker_spans` because they are the smallest subset that exactly reproduces the full pool's seven correct sampled-doc matches under the required `--d-star-mode all_labeled` verification mode. Drop-tests showed that `rule_page12_section12b_listing_tables` alone or paired with one value rule collapses to 0.0-0.3 match rate, and the security-title/header rules never recovered an additional document beyond the chosen pair. The required verification mode makes the full-pool ceiling 0.7 on this sample, and the specified gpt54 coverage cache was absent, so `min_cov` and `mean_cov` fall back to 0.0 from `compute_coverage.py`."
+}

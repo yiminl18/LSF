@@ -1,0 +1,21 @@
+{
+  "question": "What stock exchange is the company's primary common stock listed on?",
+  "question_slug": "what_stock_exchange_is_the_companys_primary_common_stock_lis",
+  "sampling_strategy": "fps",
+  "rule_gen_strategy": "agent_codex_gpt54",
+  "strategy_full": "agent_codex_gpt54",
+  "model": "gpt54",
+  "n_rules": 5,
+  "rules": [
+    "rule_apple_page1_first_exchange_after_section12b",
+    "rule_page12_common_stock_spans_near_section12b",
+    "rule_page12_exchange_spans_near_section12b",
+    "rule_page12_section12b_common_stock_tables",
+    "rule_page12_section12b_listing_headers"
+  ],
+  "input_tokens": 7137,
+  "output_tokens": 286,
+  "latency_seconds": 472.31,
+  "approx_cost_usd_gpt54_rate": 0.0118,
+  "timestamp": "2026-06-09T03:38:42.832869+00:00"
+}

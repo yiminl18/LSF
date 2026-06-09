@@ -1,0 +1,20 @@
+{
+  "question": "What is long-term debt at year-end (0 if none)?",
+  "question_slug": "what_is_longterm_debt_at_yearend_0_if_none",
+  "mode": "agentic",
+  "model": "gpt54",
+  "selected_rules": [
+    "rule_balance_sheet_longterm_debt_tables"
+  ],
+  "selected_avg_cost_ratio_sum": 0.00748,
+  "min_cov": 1.0,
+  "mean_cov": 1.0,
+  "match_rate_on_sampled": 0.6,
+  "iterations": 5,
+  "verify_calls": 5,
+  "tool_llm_calls": 100,
+  "tool_input_tokens": 54140,
+  "tool_output_tokens": 699,
+  "latency_seconds": 338.19835138320923,
+  "rationale": "The hard constraint was unattainable under the required all_labeled verification mode because the full five-rule pool itself only reached 0.6 match rate on the 10 sampled documents. Among the subsets tied at that best-achievable rate, rule_balance_sheet_longterm_debt_tables was strictly best: it used one rule, had the lowest cost sum (0.00748 versus 0.009729 for the two-rule tie), and empirically matched spans in all 10 sampled documents. The remaining misses were driven by gaps in the pool itself, especially selected-financial-data cases such as Amazon 2018 and Lockheed Martin 2022 that no current rule surfaces."
+}

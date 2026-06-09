@@ -1,0 +1,20 @@
+{
+  "question": "What document type or SEC form is this (e.g. 10-K, 10-Q, 8-K, earnings release, annual report)?",
+  "question_slug": "what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning",
+  "mode": "agentic",
+  "model": "gpt54",
+  "selected_rules": [
+    "rule_page13_bold_cover_title_form_10k"
+  ],
+  "selected_avg_cost_ratio_sum": 0.00010490446684431937,
+  "min_cov": 1.0,
+  "mean_cov": 1.0,
+  "match_rate_on_sampled": 1.0,
+  "iterations": 1,
+  "verify_calls": 4,
+  "tool_llm_calls": 54,
+  "tool_input_tokens": 6868,
+  "tool_output_tokens": 264,
+  "latency_seconds": 281.351411819458,
+  "rationale": "I kept only rule_page13_bold_cover_title_form_10k because it is the broadest rule in the pool on the current sampled set: it directly matches all 10 sampled documents, while the section-header 10-K variant misses one and the 10-Q/8-K rules have zero reach on this sample. That reduces total avg_cost_ratio from 0.000594 for the full pool to 0.000105 with a one-rule subset. The provided sampled-label file omitted this question, so I validated with a corrected 10-doc label file built from the cached new-query labels where available and explicit *_10K filenames for the three missing entries."
+}

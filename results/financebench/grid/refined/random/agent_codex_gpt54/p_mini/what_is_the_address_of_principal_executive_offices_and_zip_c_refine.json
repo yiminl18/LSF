@@ -1,0 +1,65 @@
+{
+  "question": "What is the address of principal executive offices and ZIP code?",
+  "question_slug": "what_is_the_address_of_principal_executive_offices_and_zip_c",
+  "mode": "pareto",
+  "baseline_accuracy": 0.9444,
+  "selected_rules": [
+    "rule_item2_properties_headquarters_sentence",
+    "rule_page12_cover_address_value_before_offices_label",
+    "rule_page12_cover_locality_fragments_before_offices_label",
+    "rule_page12_cover_street_line_before_offices_label",
+    "rule_page12_cover_zip_or_postcode_near_offices_label"
+  ],
+  "selected_avg_cost_ratio_sum": 0,
+  "covered_docs": [],
+  "uncovered_docs": [
+    "3M_2023Q2_10Q",
+    "ACTIVSIONBLIZZARD_2023Q2_10Q",
+    "ADOBE_2019_10K",
+    "ADOBE_2020_10K",
+    "ADOBE_2021_10K",
+    "ADOBE_2022Q2_10Q",
+    "AMAZON_2019_10K",
+    "AMAZON_2020_10K",
+    "AMCOR_2019_10K",
+    "AMCOR_2022_8K_2022-07-01",
+    "AMCOR_2023Q2_10Q",
+    "BOEING_2019_10K",
+    "COSTCO_2018_10K",
+    "COSTCO_2023_8K_dated-2023-08-09",
+    "COSTCO_2023_8K_dated-2023-08-16",
+    "EBAY_2022_10K",
+    "FOOTLOCKER_2022_8K_dated-2022-05-20"
+  ],
+  "selector_accuracy": 0.0,
+  "tau_safety_floor": 0.0,
+  "banned_rules": [],
+  "frontier": [
+    {
+      "cost": 0.0,
+      "accuracy_match": 0.0,
+      "rules_admitted": [],
+      "added_rule": null,
+      "rule_cov": null,
+      "rule_avg_cost": null
+    }
+  ],
+  "query_table": {
+    "0.50": null,
+    "0.80": null,
+    "0.90": null,
+    "0.95": null,
+    "1.00": null
+  },
+  "knee_point": null,
+  "knee_lambda": 10.0,
+  "llm_calls": {
+    "phase_2_incremental": 85,
+    "phase_2_judge": 85
+  },
+  "token_usage": {
+    "total_input_tokens": 8849,
+    "total_output_tokens": 1015
+  },
+  "fallback_full_pool": true
+}

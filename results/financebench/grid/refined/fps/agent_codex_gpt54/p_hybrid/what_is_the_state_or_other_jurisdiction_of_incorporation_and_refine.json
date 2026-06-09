@@ -1,0 +1,118 @@
+{
+  "question": "What is the state (or other jurisdiction) of incorporation and the IRS Employer Identification Number?",
+  "question_slug": "what_is_the_state_or_other_jurisdiction_of_incorporation_and",
+  "mode": "pareto_hybrid",
+  "selected_rules": [
+    "rule_page12_inline_ein_cover_span",
+    "rule_page12_inline_state_incorporation_span",
+    "rule_page12_ein_immediately_before_irs_label",
+    "rule_page12_state_within_four_spans_before_incorporation_label",
+    "rule_page12_ein_before_commission_with_following_irs"
+  ],
+  "covered_docs": [],
+  "baseline_accuracy": 0.95,
+  "selector_accuracy": 0.0,
+  "frontier": [
+    {
+      "cost": 0.0,
+      "accuracy_match": 0.0,
+      "rules_admitted": [],
+      "added_rule": null,
+      "rule_cov": null,
+      "rule_avg_cost": null
+    },
+    {
+      "cost": 0.002768,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_page12_inline_ein_cover_span"
+      ],
+      "added_rule": "rule_page12_inline_ein_cover_span",
+      "rule_cov": 0.1,
+      "rule_avg_cost": 0.002768
+    },
+    {
+      "cost": 0.00279,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_page12_inline_ein_cover_span",
+        "rule_page12_inline_state_incorporation_span"
+      ],
+      "added_rule": "rule_page12_inline_state_incorporation_span",
+      "rule_cov": 0.0,
+      "rule_avg_cost": 2.1e-05
+    },
+    {
+      "cost": 0.002828,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_page12_inline_ein_cover_span",
+        "rule_page12_inline_state_incorporation_span",
+        "rule_page12_ein_immediately_before_irs_label"
+      ],
+      "added_rule": "rule_page12_ein_immediately_before_irs_label",
+      "rule_cov": 0.0,
+      "rule_avg_cost": 3.8e-05
+    },
+    {
+      "cost": 0.003159,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_page12_inline_ein_cover_span",
+        "rule_page12_inline_state_incorporation_span",
+        "rule_page12_ein_immediately_before_irs_label",
+        "rule_page12_state_within_four_spans_before_incorporation_label"
+      ],
+      "added_rule": "rule_page12_state_within_four_spans_before_incorporation_label",
+      "rule_cov": 0.0,
+      "rule_avg_cost": 0.00033
+    },
+    {
+      "cost": 0.003987,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_page12_inline_ein_cover_span",
+        "rule_page12_inline_state_incorporation_span",
+        "rule_page12_ein_immediately_before_irs_label",
+        "rule_page12_state_within_four_spans_before_incorporation_label",
+        "rule_page12_ein_before_commission_with_following_irs"
+      ],
+      "added_rule": "rule_page12_ein_before_commission_with_following_irs",
+      "rule_cov": 0.0,
+      "rule_avg_cost": 0.000828
+    }
+  ],
+  "query_table": {
+    "0.50": null,
+    "0.80": null,
+    "0.90": null,
+    "0.95": null,
+    "1.00": null
+  },
+  "knee_point": {
+    "cost": 0.002768,
+    "accuracy_match": 0.0,
+    "n_rules": 1,
+    "rules": [
+      "rule_page12_inline_ein_cover_span"
+    ]
+  },
+  "phases": {
+    "coverage": "gpt54mini",
+    "verify": "gpt54",
+    "Phase_B_extras_added": 5,
+    "Phase_C_kept": 5
+  },
+  "llm_calls": {
+    "phase_2_qa": 95,
+    "phase_2_judge": 95,
+    "phase_B_qa": 114,
+    "phase_B_judge": 114,
+    "phase_C_qa": 95,
+    "phase_C_judge": 95
+  },
+  "token_usage": {
+    "input": 32004,
+    "output": 2540
+  }
+}

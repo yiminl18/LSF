@@ -1,0 +1,64 @@
+{
+  "question": "What is the reporting period covered by this document (e.g. fiscal year ended, quarter ended, or event date)?",
+  "question_slug": "what_is_the_reporting_period_covered_by_this_document_eg_fis",
+  "mode": "pareto",
+  "baseline_accuracy": 0.8889,
+  "selected_rules": [
+    "rule_page12_8k_event_line",
+    "rule_page12_fiscal_year_period",
+    "rule_page12_form_path_period",
+    "rule_page12_quarterly_period",
+    "rule_page13_bold_period_heading"
+  ],
+  "selected_avg_cost_ratio_sum": 0,
+  "covered_docs": [],
+  "uncovered_docs": [
+    "ACTIVISIONBLIZZARD_2020_10K",
+    "ACTIVSIONBLIZZARD_2023Q2_10Q",
+    "ADOBE_2019_10K",
+    "ADOBE_2020_10K",
+    "ADOBE_2021_10K",
+    "ADOBE_2022Q2_10Q",
+    "AMAZON_2019_10K",
+    "AMAZON_2020_10K",
+    "AMCOR_2019_10K",
+    "AMCOR_2022_8K_2022-07-01",
+    "BOEING_2019_10K",
+    "COSTCO_2018_10K",
+    "COSTCO_2023_8K_dated-2023-08-09",
+    "COSTCO_2023_8K_dated-2023-08-16",
+    "EBAY_2022_10K",
+    "FOOTLOCKER_2022_8K_dated-2022-05-20"
+  ],
+  "selector_accuracy": 0.0,
+  "tau_safety_floor": 0.0,
+  "banned_rules": [],
+  "frontier": [
+    {
+      "cost": 0.0,
+      "accuracy_match": 0.0,
+      "rules_admitted": [],
+      "added_rule": null,
+      "rule_cov": null,
+      "rule_avg_cost": null
+    }
+  ],
+  "query_table": {
+    "0.50": null,
+    "0.80": null,
+    "0.90": null,
+    "0.95": null,
+    "1.00": null
+  },
+  "knee_point": null,
+  "knee_lambda": 10.0,
+  "llm_calls": {
+    "phase_2_incremental": 80,
+    "phase_2_judge": 80
+  },
+  "token_usage": {
+    "total_input_tokens": 9467,
+    "total_output_tokens": 829
+  },
+  "fallback_full_pool": true
+}

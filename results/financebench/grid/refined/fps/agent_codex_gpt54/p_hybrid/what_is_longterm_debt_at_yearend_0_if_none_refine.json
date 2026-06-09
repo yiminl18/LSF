@@ -1,0 +1,118 @@
+{
+  "question": "What is long-term debt at year-end (0 if none)?",
+  "question_slug": "what_is_longterm_debt_at_yearend_0_if_none",
+  "mode": "pareto_hybrid",
+  "selected_rules": [
+    "rule_debt_note_tables",
+    "rule_fair_value_longterm_debt_tables",
+    "rule_selected_financial_data_debt_rows",
+    "rule_balance_sheet_longterm_debt_tables",
+    "rule_liquidity_capital_resources_debt_tables"
+  ],
+  "covered_docs": [],
+  "baseline_accuracy": 0.25,
+  "selector_accuracy": 0.0,
+  "frontier": [
+    {
+      "cost": 0.0,
+      "accuracy_match": 0.0,
+      "rules_admitted": [],
+      "added_rule": null,
+      "rule_cov": null,
+      "rule_avg_cost": null
+    },
+    {
+      "cost": 0.002249,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_debt_note_tables"
+      ],
+      "added_rule": "rule_debt_note_tables",
+      "rule_cov": 0.35,
+      "rule_avg_cost": 0.002249
+    },
+    {
+      "cost": 0.002613,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_debt_note_tables",
+        "rule_fair_value_longterm_debt_tables"
+      ],
+      "added_rule": "rule_fair_value_longterm_debt_tables",
+      "rule_cov": 0.05,
+      "rule_avg_cost": 0.000364
+    },
+    {
+      "cost": 0.003315,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_debt_note_tables",
+        "rule_fair_value_longterm_debt_tables",
+        "rule_selected_financial_data_debt_rows"
+      ],
+      "added_rule": "rule_selected_financial_data_debt_rows",
+      "rule_cov": 0.05,
+      "rule_avg_cost": 0.000702
+    },
+    {
+      "cost": 0.010795,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_debt_note_tables",
+        "rule_fair_value_longterm_debt_tables",
+        "rule_selected_financial_data_debt_rows",
+        "rule_balance_sheet_longterm_debt_tables"
+      ],
+      "added_rule": "rule_balance_sheet_longterm_debt_tables",
+      "rule_cov": 0.35,
+      "rule_avg_cost": 0.00748
+    },
+    {
+      "cost": 0.011095,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_debt_note_tables",
+        "rule_fair_value_longterm_debt_tables",
+        "rule_selected_financial_data_debt_rows",
+        "rule_balance_sheet_longterm_debt_tables",
+        "rule_liquidity_capital_resources_debt_tables"
+      ],
+      "added_rule": "rule_liquidity_capital_resources_debt_tables",
+      "rule_cov": 0.0,
+      "rule_avg_cost": 0.0003
+    }
+  ],
+  "query_table": {
+    "0.50": null,
+    "0.80": null,
+    "0.90": null,
+    "0.95": null,
+    "1.00": null
+  },
+  "knee_point": {
+    "cost": 0.002249,
+    "accuracy_match": 0.0,
+    "n_rules": 1,
+    "rules": [
+      "rule_debt_note_tables"
+    ]
+  },
+  "phases": {
+    "coverage": "gpt54mini",
+    "verify": "gpt54",
+    "Phase_B_extras_added": 5,
+    "Phase_C_kept": 5
+  },
+  "llm_calls": {
+    "phase_2_qa": 25,
+    "phase_2_judge": 25,
+    "phase_B_qa": 30,
+    "phase_B_judge": 30,
+    "phase_C_qa": 25,
+    "phase_C_judge": 25
+  },
+  "token_usage": {
+    "input": 72983,
+    "output": 503
+  }
+}

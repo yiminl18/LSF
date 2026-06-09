@@ -1,0 +1,21 @@
+{
+  "question": "What is/are the trading symbol(s) and listing exchange(s)?",
+  "question_slug": "what_isare_the_trading_symbols_and_listing_exchanges",
+  "mode": "agentic",
+  "model": "gpt54",
+  "selected_rules": [
+    "rule_item5_common_stock_symbol_exchange_sentence",
+    "rule_page1_cover_path_symbol_exchange_values"
+  ],
+  "selected_avg_cost_ratio_sum": 0.000658,
+  "min_cov": 0.1,
+  "mean_cov": 0.45,
+  "match_rate_on_sampled": 0.9,
+  "iterations": 3,
+  "verify_calls": 8,
+  "tool_llm_calls": 160,
+  "tool_input_tokens": 28067,
+  "tool_output_tokens": 1453,
+  "latency_seconds": 389.3042459487915,
+  "rationale": "I selected the cheapest two-rule subset that covers the two distinct observed patterns in the sample: a broad Item 5/common-stock sentence rule and a cheap page-1 cover-value rule for short symbol/exchange breadcrumbs. The Item 5 rule alone covered 8/10 sampled docs, and the cover-path rule added AMCOR at low incremental cost; the other page-1 rules did not improve sampled accuracy. The remaining JOHNSON_JOHNSON_2022_10K miss is not recoverable by subset selection because the processed document contains a five-row Section 12(b) table, but no rule in this pool matches that table, so no subset can satisfy the hard constraint on that document."
+}

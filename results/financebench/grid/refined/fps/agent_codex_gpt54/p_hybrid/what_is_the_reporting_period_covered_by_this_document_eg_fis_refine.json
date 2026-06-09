@@ -1,0 +1,118 @@
+{
+  "question": "What is the reporting period covered by this document (e.g. fiscal year ended, quarter ended, or event date)?",
+  "question_slug": "what_is_the_reporting_period_covered_by_this_document_eg_fis",
+  "mode": "pareto_hybrid",
+  "selected_rules": [
+    "rule_page13_fiscal_year_ended_cover_spans",
+    "rule_page13_quarterly_period_cover_spans",
+    "rule_page13_quarter_ended_alt_spans",
+    "rule_page13_8k_event_report_date_spans",
+    "rule_page13_8k_parenthetical_event_date_spans"
+  ],
+  "covered_docs": [],
+  "baseline_accuracy": 1.0,
+  "selector_accuracy": 0.0,
+  "frontier": [
+    {
+      "cost": 0.0,
+      "accuracy_match": 0.0,
+      "rules_admitted": [],
+      "added_rule": null,
+      "rule_cov": null,
+      "rule_avg_cost": null
+    },
+    {
+      "cost": 7.6e-05,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_page13_fiscal_year_ended_cover_spans"
+      ],
+      "added_rule": "rule_page13_fiscal_year_ended_cover_spans",
+      "rule_cov": 0.45,
+      "rule_avg_cost": 7.6e-05
+    },
+    {
+      "cost": 0.00012,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_page13_fiscal_year_ended_cover_spans",
+        "rule_page13_quarterly_period_cover_spans"
+      ],
+      "added_rule": "rule_page13_quarterly_period_cover_spans",
+      "rule_cov": 0.1,
+      "rule_avg_cost": 4.4e-05
+    },
+    {
+      "cost": 0.001341,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_page13_fiscal_year_ended_cover_spans",
+        "rule_page13_quarterly_period_cover_spans",
+        "rule_page13_quarter_ended_alt_spans"
+      ],
+      "added_rule": "rule_page13_quarter_ended_alt_spans",
+      "rule_cov": 0.1,
+      "rule_avg_cost": 0.001221
+    },
+    {
+      "cost": 0.006533,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_page13_fiscal_year_ended_cover_spans",
+        "rule_page13_quarterly_period_cover_spans",
+        "rule_page13_quarter_ended_alt_spans",
+        "rule_page13_8k_event_report_date_spans"
+      ],
+      "added_rule": "rule_page13_8k_event_report_date_spans",
+      "rule_cov": 0.4,
+      "rule_avg_cost": 0.005192
+    },
+    {
+      "cost": 0.007927,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_page13_fiscal_year_ended_cover_spans",
+        "rule_page13_quarterly_period_cover_spans",
+        "rule_page13_quarter_ended_alt_spans",
+        "rule_page13_8k_event_report_date_spans",
+        "rule_page13_8k_parenthetical_event_date_spans"
+      ],
+      "added_rule": "rule_page13_8k_parenthetical_event_date_spans",
+      "rule_cov": 0.1,
+      "rule_avg_cost": 0.001394
+    }
+  ],
+  "query_table": {
+    "0.50": null,
+    "0.80": null,
+    "0.90": null,
+    "0.95": null,
+    "1.00": null
+  },
+  "knee_point": {
+    "cost": 7.6e-05,
+    "accuracy_match": 0.0,
+    "n_rules": 1,
+    "rules": [
+      "rule_page13_fiscal_year_ended_cover_spans"
+    ]
+  },
+  "phases": {
+    "coverage": "gpt54mini",
+    "verify": "gpt54",
+    "Phase_B_extras_added": 5,
+    "Phase_C_kept": 5
+  },
+  "llm_calls": {
+    "phase_2_qa": 100,
+    "phase_2_judge": 100,
+    "phase_B_qa": 120,
+    "phase_B_judge": 120,
+    "phase_C_qa": 100,
+    "phase_C_judge": 100
+  },
+  "token_usage": {
+    "input": 37896,
+    "output": 3210
+  }
+}

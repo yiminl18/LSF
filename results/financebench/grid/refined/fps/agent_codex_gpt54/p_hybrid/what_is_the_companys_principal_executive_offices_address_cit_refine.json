@@ -1,0 +1,118 @@
+{
+  "question": "What is the company's principal executive offices address (city and state/country) as stated in this document?",
+  "question_slug": "what_is_the_companys_principal_executive_offices_address_cit",
+  "mode": "pareto_hybrid",
+  "selected_rules": [
+    "rule_page12_split_cover_address_components",
+    "rule_early_narrative_principal_offices_sentence",
+    "rule_page12_address_span_before_label",
+    "rule_page12_address_before_zip_label",
+    "rule_page12_inline_address_label_span"
+  ],
+  "covered_docs": [],
+  "baseline_accuracy": 1.0,
+  "selector_accuracy": 0.0,
+  "frontier": [
+    {
+      "cost": 0.0,
+      "accuracy_match": 0.0,
+      "rules_admitted": [],
+      "added_rule": null,
+      "rule_cov": null,
+      "rule_avg_cost": null
+    },
+    {
+      "cost": 2.1e-05,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_page12_split_cover_address_components"
+      ],
+      "added_rule": "rule_page12_split_cover_address_components",
+      "rule_cov": 0.15,
+      "rule_avg_cost": 2.1e-05
+    },
+    {
+      "cost": 0.000311,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_page12_split_cover_address_components",
+        "rule_early_narrative_principal_offices_sentence"
+      ],
+      "added_rule": "rule_early_narrative_principal_offices_sentence",
+      "rule_cov": 0.1,
+      "rule_avg_cost": 0.00029
+    },
+    {
+      "cost": 0.002754,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_page12_split_cover_address_components",
+        "rule_early_narrative_principal_offices_sentence",
+        "rule_page12_address_span_before_label"
+      ],
+      "added_rule": "rule_page12_address_span_before_label",
+      "rule_cov": 0.7,
+      "rule_avg_cost": 0.002443
+    },
+    {
+      "cost": 0.003448,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_page12_split_cover_address_components",
+        "rule_early_narrative_principal_offices_sentence",
+        "rule_page12_address_span_before_label",
+        "rule_page12_address_before_zip_label"
+      ],
+      "added_rule": "rule_page12_address_before_zip_label",
+      "rule_cov": 0.15,
+      "rule_avg_cost": 0.000694
+    },
+    {
+      "cost": 0.006806,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_page12_split_cover_address_components",
+        "rule_early_narrative_principal_offices_sentence",
+        "rule_page12_address_span_before_label",
+        "rule_page12_address_before_zip_label",
+        "rule_page12_inline_address_label_span"
+      ],
+      "added_rule": "rule_page12_inline_address_label_span",
+      "rule_cov": 0.2,
+      "rule_avg_cost": 0.003358
+    }
+  ],
+  "query_table": {
+    "0.50": null,
+    "0.80": null,
+    "0.90": null,
+    "0.95": null,
+    "1.00": null
+  },
+  "knee_point": {
+    "cost": 2.1e-05,
+    "accuracy_match": 0.0,
+    "n_rules": 1,
+    "rules": [
+      "rule_page12_split_cover_address_components"
+    ]
+  },
+  "phases": {
+    "coverage": "gpt54mini",
+    "verify": "gpt54",
+    "Phase_B_extras_added": 5,
+    "Phase_C_kept": 5
+  },
+  "llm_calls": {
+    "phase_2_qa": 100,
+    "phase_2_judge": 100,
+    "phase_B_qa": 120,
+    "phase_B_judge": 120,
+    "phase_C_qa": 100,
+    "phase_C_judge": 100
+  },
+  "token_usage": {
+    "input": 35570,
+    "output": 2355
+  }
+}

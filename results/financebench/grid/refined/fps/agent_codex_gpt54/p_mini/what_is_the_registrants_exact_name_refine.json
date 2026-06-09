@@ -1,0 +1,68 @@
+{
+  "question": "What is the registrant's exact name?",
+  "question_slug": "what_is_the_registrants_exact_name",
+  "mode": "pareto",
+  "baseline_accuracy": 1.0,
+  "selected_rules": [
+    "rule_page12_bold_body_company_names",
+    "rule_page12_company_span_before_exact_name_anchor",
+    "rule_page12_top_company_headers",
+    "rule_page13_signature_registrant_company_spans",
+    "rule_page225_financial_statement_company_headers"
+  ],
+  "selected_avg_cost_ratio_sum": 0,
+  "covered_docs": [],
+  "uncovered_docs": [
+    "AMCOR_2021_10K",
+    "AMCOR_2022_8K_dated-2022-07-01",
+    "AMD_2019_10K",
+    "AMD_2020_10K",
+    "AMERICANWATERWORKS_2023Q2_10Q",
+    "APPLE_2018_10K",
+    "APPLE_2023Q3_10Q",
+    "BESTBUY_2015_10K",
+    "BESTBUY_2022_10K",
+    "BESTBUY_2023_8K_dated-2023-04-24",
+    "BLOCK_2022_8K_dated-2022-01-28",
+    "BOEING_2022_10K",
+    "CORNING_2022_10K",
+    "COSTCO_2022_10K",
+    "COSTCO_2023_8K_dated-2023-08-16",
+    "EBAY_2023Q2_8K",
+    "FOOTLOCKER_2022_8K_dated_2023-02-21",
+    "JOHNSON_JOHNSON_2023_8K_dated-2023-08-23",
+    "JOHNSON_JOHNSON_2023_8K_dated-2023-08-30",
+    "LOCKHEEDMARTIN_2023Q1_10Q"
+  ],
+  "selector_accuracy": 0.0,
+  "tau_safety_floor": 0.0,
+  "banned_rules": [],
+  "frontier": [
+    {
+      "cost": 0.0,
+      "accuracy_match": 0.0,
+      "rules_admitted": [],
+      "added_rule": null,
+      "rule_cov": null,
+      "rule_avg_cost": null
+    }
+  ],
+  "query_table": {
+    "0.50": null,
+    "0.80": null,
+    "0.90": null,
+    "0.95": null,
+    "1.00": null
+  },
+  "knee_point": null,
+  "knee_lambda": 10.0,
+  "llm_calls": {
+    "phase_2_incremental": 100,
+    "phase_2_judge": 100
+  },
+  "token_usage": {
+    "total_input_tokens": 9472,
+    "total_output_tokens": 744
+  },
+  "fallback_full_pool": true
+}

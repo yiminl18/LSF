@@ -1,0 +1,4877 @@
+[
+  {
+    "rule_names": [
+      "rule_selected_financial_data_longterm_debt_or_obligations"
+    ],
+    "rule_set_slug": "rule_selected_financial_data_longterm_debt_or_obligations",
+    "question_slug": "what_is_longterm_debt_at_yearend_0_if_none",
+    "question": "What is long-term debt at year-end (0 if none)?",
+    "doc_name": "BOEING_2019_10K",
+    "strategy": "merge",
+    "predicted_answer": "NOT FOUND",
+    "latency_seconds": 0.995,
+    "input_tokens": 92,
+    "output_tokens": 6,
+    "retrieved_token_count": 0,
+    "rules_with_hits": [],
+    "rules_with_no_hits": [
+      "rule_selected_financial_data_longterm_debt_or_obligations"
+    ],
+    "num_spans_before_dedup": 0,
+    "num_spans_after_dedup": 0,
+    "retrieved_spans": [],
+    "retrieved_text": ""
+  },
+  {
+    "rule_names": [
+      "rule_selected_financial_data_longterm_debt_or_obligations"
+    ],
+    "rule_set_slug": "rule_selected_financial_data_longterm_debt_or_obligations",
+    "question_slug": "what_is_longterm_debt_at_yearend_0_if_none",
+    "question": "What is long-term debt at year-end (0 if none)?",
+    "doc_name": "ADOBE_2020_10K",
+    "strategy": "merge",
+    "predicted_answer": "4117",
+    "latency_seconds": 1.069,
+    "input_tokens": 705,
+    "output_tokens": 6,
+    "retrieved_token_count": 613,
+    "rules_with_hits": [
+      "rule_selected_financial_data_longterm_debt_or_obligations"
+    ],
+    "rules_with_no_hits": [],
+    "num_spans_before_dedup": 1,
+    "num_spans_after_dedup": 1,
+    "retrieved_spans": [
+      {
+        "text": "| (in millions, except per share amounts and employee data) | Fiscal Years |  |  |  |  |\n|  | 2020 | 2019 | 2018 | 2017 | 2016 (2) |\n| --- | --- | --- | --- | --- | --- |\n| Operations: |  |  |  |  |  |\n| Revenue | $ 12,868 | $ 11,171 | $ 9,030 | $ 7,302 | $ 5,854 |\n| Gross profit | $ 11,146 | $ 9,498 | $ 7,835 | $ 6,291 | $ 5,035 |\n| Income before income taxes | $ 4,176 | $ 3,205 | $ 2,794 | $ 2,138 | $ 1,435 |\n| Net income | $ 5,260 | $ 2,951 | $ 2,591 | $ 1,694 | $ 1,169 |\n| Net income per share: |  |  |  |  |  |\n| Basic | $ 10.94 | $ 6.07 | $ 5.28 | $ 3.43 | $ 2.35 |\n| Diluted | $ 10.83 | $ 6.00 | $ 5.20 | $ 3.38 | $ 2.32 |\n| Shares used to compute basic net income per share | 481 | 486 | 491 | 494 | 498 |\n| Shares used to compute diluted net income per share | 485 | 492 | 498 | 501 | 504 |\n| Financial position: |  |  |  |  |  |\n| Cash, cash equivalents and short-term investments | $ 5,992 | $ 4,177 | $ 3,229 | $ 5,820 | $ 4,761 |\n| Working capital (1) | $ 2,634 | $ (1,696) | $ 556 | $ 3,720 | $ 3,028 |\n| Total assets | $ 24,284 | $ 20,762 | $ 18,769 | $ 14,536 | $ 12,697 |\n| Debt, current | $ - | $ 3,149 | $ - | $ - | $ - |\n| Debt, non-current | $ 4,117 | $ 989 | $ 4,125 | $ 1,881 | $ 1,892 |\n| Stockholders' equity | $ 13,264 | $ 10,530 | $ 9,362 | $ 8,460 | $ 7,425 |\n| Additional data: |  |  |  |  |  |\n| Worldwide employees | 22,516 | 22,634 | 21,357 | 17,973 | 15,706 |",
+        "text_span": "",
+        "size": 10.0,
+        "bold": 0,
+        "font": "TimesNewRoman",
+        "all_cap": 0,
+        "num_st": 0,
+        "is_center": 0,
+        "is_underline": 0,
+        "label": "table",
+        "page_no": 41,
+        "structure": {
+          "level": "Body",
+          "level_index": 4,
+          "parent_id": 479,
+          "path_text": "ADOBE INC. | PART II | ITEM 6. SELECTED FINANCIAL DATA",
+          "depth": 4,
+          "h1_index_norm": 0.75,
+          "sibling_index_norm": 0.3333333333333333,
+          "is_first_child": false,
+          "is_last_child": false
+        },
+        "table_data": {
+          "num_rows": 21,
+          "num_cols": 6,
+          "cells": [
+            {
+              "row": 0,
+              "col": 0,
+              "text": "(in millions, except per share amounts and employee data)",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 0,
+              "col": 1,
+              "text": "Fiscal Years",
+              "row_span": 1,
+              "col_span": 5,
+              "is_column_header": true,
+              "is_row_header": false
+            },
+            {
+              "row": 1,
+              "col": 1,
+              "text": "2020",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": true,
+              "is_row_header": false
+            },
+            {
+              "row": 1,
+              "col": 2,
+              "text": "2019",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": true,
+              "is_row_header": false
+            },
+            {
+              "row": 1,
+              "col": 3,
+              "text": "2018",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": true,
+              "is_row_header": false
+            },
+            {
+              "row": 1,
+              "col": 4,
+              "text": "2017",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": true,
+              "is_row_header": false
+            },
+            {
+              "row": 1,
+              "col": 5,
+              "text": "2016 (2)",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": true,
+              "is_row_header": false
+            },
+            {
+              "row": 2,
+              "col": 0,
+              "text": "Operations:",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 3,
+              "col": 0,
+              "text": "Revenue",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 3,
+              "col": 1,
+              "text": "$ 12,868",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 3,
+              "col": 2,
+              "text": "$ 11,171",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 3,
+              "col": 3,
+              "text": "$ 9,030",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 3,
+              "col": 4,
+              "text": "$ 7,302",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 3,
+              "col": 5,
+              "text": "$ 5,854",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 4,
+              "col": 0,
+              "text": "Gross profit",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 4,
+              "col": 1,
+              "text": "$ 11,146",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 4,
+              "col": 2,
+              "text": "$ 9,498",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 4,
+              "col": 3,
+              "text": "$ 7,835",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 4,
+              "col": 4,
+              "text": "$ 6,291",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 4,
+              "col": 5,
+              "text": "$ 5,035",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 5,
+              "col": 0,
+              "text": "Income before income taxes",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 5,
+              "col": 1,
+              "text": "$ 4,176",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 5,
+              "col": 2,
+              "text": "$ 3,205",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 5,
+              "col": 3,
+              "text": "$ 2,794",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 5,
+              "col": 4,
+              "text": "$ 2,138",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 5,
+              "col": 5,
+              "text": "$ 1,435",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 6,
+              "col": 0,
+              "text": "Net income",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 6,
+              "col": 1,
+              "text": "$ 5,260",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 6,
+              "col": 2,
+              "text": "$ 2,951",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 6,
+              "col": 3,
+              "text": "$ 2,591",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 6,
+              "col": 4,
+              "text": "$ 1,694",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 6,
+              "col": 5,
+              "text": "$ 1,169",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 7,
+              "col": 0,
+              "text": "Net income per share:",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 8,
+              "col": 0,
+              "text": "Basic",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 8,
+              "col": 1,
+              "text": "$ 10.94",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 8,
+              "col": 2,
+              "text": "$ 6.07",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 8,
+              "col": 3,
+              "text": "$ 5.28",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 8,
+              "col": 4,
+              "text": "$ 3.43",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 8,
+              "col": 5,
+              "text": "$ 2.35",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 9,
+              "col": 0,
+              "text": "Diluted",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 9,
+              "col": 1,
+              "text": "$ 10.83",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 9,
+              "col": 2,
+              "text": "$ 6.00",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 9,
+              "col": 3,
+              "text": "$ 5.20",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 9,
+              "col": 4,
+              "text": "$ 3.38",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 9,
+              "col": 5,
+              "text": "$ 2.32",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 10,
+              "col": 0,
+              "text": "Shares used to compute basic net income per share",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 10,
+              "col": 1,
+              "text": "481",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 10,
+              "col": 2,
+              "text": "486",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 10,
+              "col": 3,
+              "text": "491",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 10,
+              "col": 4,
+              "text": "494",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 10,
+              "col": 5,
+              "text": "498",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 11,
+              "col": 0,
+              "text": "Shares used to compute diluted net income per share",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 11,
+              "col": 1,
+              "text": "485",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 11,
+              "col": 2,
+              "text": "492",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 11,
+              "col": 3,
+              "text": "498",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 11,
+              "col": 4,
+              "text": "501",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 11,
+              "col": 5,
+              "text": "504",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 12,
+              "col": 0,
+              "text": "Financial position:",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 13,
+              "col": 0,
+              "text": "Cash, cash equivalents and short-term investments",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 13,
+              "col": 1,
+              "text": "$ 5,992",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 13,
+              "col": 2,
+              "text": "$ 4,177",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 13,
+              "col": 3,
+              "text": "$ 3,229",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 13,
+              "col": 4,
+              "text": "$ 5,820",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 13,
+              "col": 5,
+              "text": "$ 4,761",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 14,
+              "col": 0,
+              "text": "Working capital (1)",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 14,
+              "col": 1,
+              "text": "$ 2,634",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 14,
+              "col": 2,
+              "text": "$ (1,696)",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 14,
+              "col": 3,
+              "text": "$ 556",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 14,
+              "col": 4,
+              "text": "$ 3,720",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 14,
+              "col": 5,
+              "text": "$ 3,028",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 15,
+              "col": 0,
+              "text": "Total assets",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 15,
+              "col": 1,
+              "text": "$ 24,284",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 15,
+              "col": 2,
+              "text": "$ 20,762",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 15,
+              "col": 3,
+              "text": "$ 18,769",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 15,
+              "col": 4,
+              "text": "$ 14,536",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 15,
+              "col": 5,
+              "text": "$ 12,697",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 16,
+              "col": 0,
+              "text": "Debt, current",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 16,
+              "col": 1,
+              "text": "$ -",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 16,
+              "col": 2,
+              "text": "$ 3,149",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 16,
+              "col": 3,
+              "text": "$ -",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 16,
+              "col": 4,
+              "text": "$ -",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 16,
+              "col": 5,
+              "text": "$ -",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 17,
+              "col": 0,
+              "text": "Debt, non-current",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 17,
+              "col": 1,
+              "text": "$ 4,117",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 17,
+              "col": 2,
+              "text": "$ 989",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 17,
+              "col": 3,
+              "text": "$ 4,125",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 17,
+              "col": 4,
+              "text": "$ 1,881",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 17,
+              "col": 5,
+              "text": "$ 1,892",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 18,
+              "col": 0,
+              "text": "Stockholders' equity",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 18,
+              "col": 1,
+              "text": "$ 13,264",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 18,
+              "col": 2,
+              "text": "$ 10,530",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 18,
+              "col": 3,
+              "text": "$ 9,362",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 18,
+              "col": 4,
+              "text": "$ 8,460",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 18,
+              "col": 5,
+              "text": "$ 7,425",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 19,
+              "col": 0,
+              "text": "Additional data:",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 20,
+              "col": 0,
+              "text": "Worldwide employees",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 20,
+              "col": 1,
+              "text": "22,516",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 20,
+              "col": 2,
+              "text": "22,634",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 20,
+              "col": 3,
+              "text": "21,357",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 20,
+              "col": 4,
+              "text": "17,973",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 20,
+              "col": 5,
+              "text": "15,706",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            }
+          ]
+        }
+      }
+    ],
+    "retrieved_text": "| (in millions, except per share amounts and employee data) | Fiscal Years |  |  |  |  |\n|  | 2020 | 2019 | 2018 | 2017 | 2016 (2) |\n| --- | --- | --- | --- | --- | --- |\n| Operations: |  |  |  |  |  |\n| Revenue | $ 12,868 | $ 11,171 | $ 9,030 | $ 7,302 | $ 5,854 |\n| Gross profit | $ 11,146 | $ 9,498 | $ 7,835 | $ 6,291 | $ 5,035 |\n| Income before income taxes | $ 4,176 | $ 3,205 | $ 2,794 | $ 2,138 | $ 1,435 |\n| Net income | $ 5,260 | $ 2,951 | $ 2,591 | $ 1,694 | $ 1,169 |\n| Net income per share: |  |  |  |  |  |\n| Basic | $ 10.94 | $ 6.07 | $ 5.28 | $ 3.43 | $ 2.35 |\n| Diluted | $ 10.83 | $ 6.00 | $ 5.20 | $ 3.38 | $ 2.32 |\n| Shares used to compute basic net income per share | 481 | 486 | 491 | 494 | 498 |\n| Shares used to compute diluted net income per share | 485 | 492 | 498 | 501 | 504 |\n| Financial position: |  |  |  |  |  |\n| Cash, cash equivalents and short-term investments | $ 5,992 | $ 4,177 | $ 3,229 | $ 5,820 | $ 4,761 |\n| Working capital (1) | $ 2,634 | $ (1,696) | $ 556 | $ 3,720 | $ 3,028 |\n| Total assets | $ 24,284 | $ 20,762 | $ 18,769 | $ 14,536 | $ 12,697 |\n| Debt, current | $ - | $ 3,149 | $ - | $ - | $ - |\n| Debt, non-current | $ 4,117 | $ 989 | $ 4,125 | $ 1,881 | $ 1,892 |\n| Stockholders' equity | $ 13,264 | $ 10,530 | $ 9,362 | $ 8,460 | $ 7,425 |\n| Additional data: |  |  |  |  |  |\n| Worldwide employees | 22,516 | 22,634 | 21,357 | 17,973 | 15,706 |"
+  },
+  {
+    "rule_names": [
+      "rule_selected_financial_data_longterm_debt_or_obligations"
+    ],
+    "rule_set_slug": "rule_selected_financial_data_longterm_debt_or_obligations",
+    "question_slug": "what_is_longterm_debt_at_yearend_0_if_none",
+    "question": "What is long-term debt at year-end (0 if none)?",
+    "doc_name": "ACTIVISIONBLIZZARD_2020_10K",
+    "strategy": "merge",
+    "predicted_answer": "NOT FOUND",
+    "latency_seconds": 1.016,
+    "input_tokens": 92,
+    "output_tokens": 6,
+    "retrieved_token_count": 0,
+    "rules_with_hits": [],
+    "rules_with_no_hits": [
+      "rule_selected_financial_data_longterm_debt_or_obligations"
+    ],
+    "num_spans_before_dedup": 0,
+    "num_spans_after_dedup": 0,
+    "retrieved_spans": [],
+    "retrieved_text": ""
+  },
+  {
+    "rule_names": [
+      "rule_selected_financial_data_longterm_debt_or_obligations"
+    ],
+    "rule_set_slug": "rule_selected_financial_data_longterm_debt_or_obligations",
+    "question_slug": "what_is_longterm_debt_at_yearend_0_if_none",
+    "question": "What is long-term debt at year-end (0 if none)?",
+    "doc_name": "COSTCO_2018_10K",
+    "strategy": "merge",
+    "predicted_answer": "6487",
+    "latency_seconds": 0.648,
+    "input_tokens": 945,
+    "output_tokens": 6,
+    "retrieved_token_count": 854,
+    "rules_with_hits": [
+      "rule_selected_financial_data_longterm_debt_or_obligations"
+    ],
+    "rules_with_no_hits": [],
+    "num_spans_before_dedup": 1,
+    "num_spans_after_dedup": 1,
+    "retrieved_spans": [
+      {
+        "text": "| As of and for the year ended | Sept. 2, 2018 (52 weeks) | Sept. 3, 2017 (53 weeks) | Aug. 28, 2016 (52 weeks) | Aug. 30, 2015 (52 weeks) | Aug. 31, 2014 (52 weeks) |\n| --- | --- | --- | --- | --- | --- |\n| RESULTS OF OPERATIONS |  |  |  |  |  |\n| Net sales | $ 138,434 | $ 126,172 | $ 116,073 | $ 113,666 | $ 110,212 |\n| Membership fees | 3,142 | 2,853 | 2,646 | 2,533 | 2,428 |\n| Gross margin (1) as a percentage of net sales | 11.04% | 11.33% | 11.35% | 11.09% | 10.66% |\n| Selling, general and administrative expenses as a percentage of net sales | 10.02% | 10.26% | 10.40% | 10.07% | 9.89% |\n| Operating income | $ 4,480 | $ 4,111 | $ 3,672 | $ 3,624 | $ 3,220 |\n| Net income attributable to Costco | 3,134 | 2,679 | 2,350 | 2,377 | 2,058 |\n| Net income per diluted common share attributable to Costco | 7.09 | 6.08 | 5.33 | 5.37 | 4.65 |\n| Cash dividends declared per common share | 2.14 | 8.90 | 1.70 | 6.51 | 1.33 |\n| Changes in comparable sales (2) |  |  |  |  |  |\n| United States | 9% | 4% | 1% | 3% | 5% |\n| Canada | 9% | 5% | (3)% | (5)% | 2% |\n| Other International | 11% | 2% | (3)% | (3)% | 3% |\n| Total Company | 9% | 4% | 0% | 1% | 4% |\n| Changes in Total Company comparable sales excluding the impact of foreign currency and gasoline prices | 7% | 4% | 4% | 7% | 6% |\n| BALANCE SHEET DATA |  |  |  |  |  |\n| Net property and equipment | $ 19,681 | $ 18,161 | $ 17,043 | $ 15,401 | $ 14,830 |\n| Total assets | 40,830 | 36,347 | 33,163 | 33,017 | 32,662 |\n| Long-term debt, excluding current portion | 6,487 | 6,573 | 4,061 | 4,852 | 5,084 |\n| Costco stockholders' equity | 12,799 | 10,778 | 12,079 | 10,617 | 12,303 |\n| WAREHOUSE INFORMATION |  |  |  |  |  |\n| Warehouses in Operation |  |  |  |  |  |\n| Beginning of year | 741 | 715 | 686 | 663 | 634 |\n| Opened | 25 | 28 | 33 | 26 | 30 |\n| Closed due to relocation | (4) | (2) | (4) | (3) | (1) |\n| End of year | 762 | 741 | 715 | 686 | 663 |\n| MEMBERSHIP INFORMATION |  |  |  |  |  |\n| Total paid members (000's) | 51,600 | 49,400 | 47,600 | 44,600 | 42,000 |",
+        "text_span": "",
+        "size": 8.0,
+        "bold": 0,
+        "font": "Arial",
+        "all_cap": 0,
+        "num_st": 0,
+        "is_center": 0,
+        "is_underline": 0,
+        "label": "table",
+        "page_no": 20,
+        "structure": {
+          "level": "Body",
+          "level_index": 5,
+          "parent_id": 614,
+          "path_text": "Costco Wholesale Corporation | PART II | SELECTED FINANCIAL DATA | (dollars in millions, except per share data)",
+          "depth": 5,
+          "h1_index_norm": 0,
+          "sibling_index_norm": 0.0,
+          "is_first_child": true,
+          "is_last_child": false
+        },
+        "table_data": {
+          "num_rows": 29,
+          "num_cols": 6,
+          "cells": [
+            {
+              "row": 0,
+              "col": 0,
+              "text": "As of and for the year ended",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 0,
+              "col": 1,
+              "text": "Sept. 2, 2018 (52 weeks)",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": true,
+              "is_row_header": false
+            },
+            {
+              "row": 0,
+              "col": 2,
+              "text": "Sept. 3, 2017 (53 weeks)",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": true,
+              "is_row_header": false
+            },
+            {
+              "row": 0,
+              "col": 3,
+              "text": "Aug. 28, 2016 (52 weeks)",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": true,
+              "is_row_header": false
+            },
+            {
+              "row": 0,
+              "col": 4,
+              "text": "Aug. 30, 2015 (52 weeks)",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": true,
+              "is_row_header": false
+            },
+            {
+              "row": 0,
+              "col": 5,
+              "text": "Aug. 31, 2014 (52 weeks)",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": true,
+              "is_row_header": false
+            },
+            {
+              "row": 1,
+              "col": 0,
+              "text": "RESULTS OF OPERATIONS",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 2,
+              "col": 0,
+              "text": "Net sales",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 2,
+              "col": 1,
+              "text": "$ 138,434",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 2,
+              "col": 2,
+              "text": "$ 126,172",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 2,
+              "col": 3,
+              "text": "$ 116,073",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 2,
+              "col": 4,
+              "text": "$ 113,666",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 2,
+              "col": 5,
+              "text": "$ 110,212",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 3,
+              "col": 0,
+              "text": "Membership fees",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 3,
+              "col": 1,
+              "text": "3,142",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 3,
+              "col": 2,
+              "text": "2,853",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 3,
+              "col": 3,
+              "text": "2,646",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 3,
+              "col": 4,
+              "text": "2,533",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 3,
+              "col": 5,
+              "text": "2,428",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 4,
+              "col": 0,
+              "text": "Gross margin (1) as a percentage of net sales",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 4,
+              "col": 1,
+              "text": "11.04%",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 4,
+              "col": 2,
+              "text": "11.33%",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 4,
+              "col": 3,
+              "text": "11.35%",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 4,
+              "col": 4,
+              "text": "11.09%",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 4,
+              "col": 5,
+              "text": "10.66%",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 5,
+              "col": 0,
+              "text": "Selling, general and administrative expenses as a percentage of net sales",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 5,
+              "col": 1,
+              "text": "10.02%",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 5,
+              "col": 2,
+              "text": "10.26%",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 5,
+              "col": 3,
+              "text": "10.40%",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 5,
+              "col": 4,
+              "text": "10.07%",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 5,
+              "col": 5,
+              "text": "9.89%",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 6,
+              "col": 0,
+              "text": "Operating income",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 6,
+              "col": 1,
+              "text": "$ 4,480",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 6,
+              "col": 2,
+              "text": "$ 4,111",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 6,
+              "col": 3,
+              "text": "$ 3,672",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 6,
+              "col": 4,
+              "text": "$ 3,624",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 6,
+              "col": 5,
+              "text": "$ 3,220",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 7,
+              "col": 0,
+              "text": "Net income attributable to Costco",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 7,
+              "col": 1,
+              "text": "3,134",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 7,
+              "col": 2,
+              "text": "2,679",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 7,
+              "col": 3,
+              "text": "2,350",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 7,
+              "col": 4,
+              "text": "2,377",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 7,
+              "col": 5,
+              "text": "2,058",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 8,
+              "col": 0,
+              "text": "Net income per diluted common share attributable to Costco",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 8,
+              "col": 1,
+              "text": "7.09",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 8,
+              "col": 2,
+              "text": "6.08",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 8,
+              "col": 3,
+              "text": "5.33",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 8,
+              "col": 4,
+              "text": "5.37",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 8,
+              "col": 5,
+              "text": "4.65",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 9,
+              "col": 0,
+              "text": "Cash dividends declared per common share",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 9,
+              "col": 1,
+              "text": "2.14",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 9,
+              "col": 2,
+              "text": "8.90",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 9,
+              "col": 3,
+              "text": "1.70",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 9,
+              "col": 4,
+              "text": "6.51",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 9,
+              "col": 5,
+              "text": "1.33",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 10,
+              "col": 0,
+              "text": "Changes in comparable sales (2)",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 11,
+              "col": 0,
+              "text": "United States",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 11,
+              "col": 1,
+              "text": "9%",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 11,
+              "col": 2,
+              "text": "4%",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 11,
+              "col": 3,
+              "text": "1%",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 11,
+              "col": 4,
+              "text": "3%",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 11,
+              "col": 5,
+              "text": "5%",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 12,
+              "col": 0,
+              "text": "Canada",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 12,
+              "col": 1,
+              "text": "9%",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 12,
+              "col": 2,
+              "text": "5%",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 12,
+              "col": 3,
+              "text": "(3)%",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 12,
+              "col": 4,
+              "text": "(5)%",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 12,
+              "col": 5,
+              "text": "2%",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 13,
+              "col": 0,
+              "text": "Other International",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 13,
+              "col": 1,
+              "text": "11%",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 13,
+              "col": 2,
+              "text": "2%",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 13,
+              "col": 3,
+              "text": "(3)%",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 13,
+              "col": 4,
+              "text": "(3)%",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 13,
+              "col": 5,
+              "text": "3%",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 14,
+              "col": 0,
+              "text": "Total Company",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 14,
+              "col": 1,
+              "text": "9%",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 14,
+              "col": 2,
+              "text": "4%",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 14,
+              "col": 3,
+              "text": "0%",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 14,
+              "col": 4,
+              "text": "1%",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 14,
+              "col": 5,
+              "text": "4%",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 15,
+              "col": 0,
+              "text": "Changes in Total Company comparable sales excluding the impact of foreign currency and gasoline prices",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 15,
+              "col": 1,
+              "text": "7%",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 15,
+              "col": 2,
+              "text": "4%",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 15,
+              "col": 3,
+              "text": "4%",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 15,
+              "col": 4,
+              "text": "7%",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 15,
+              "col": 5,
+              "text": "6%",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 16,
+              "col": 0,
+              "text": "BALANCE SHEET DATA",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 17,
+              "col": 0,
+              "text": "Net property and equipment",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 17,
+              "col": 1,
+              "text": "$ 19,681",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 17,
+              "col": 2,
+              "text": "$ 18,161",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 17,
+              "col": 3,
+              "text": "$ 17,043",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 17,
+              "col": 4,
+              "text": "$ 15,401",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 17,
+              "col": 5,
+              "text": "$ 14,830",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 18,
+              "col": 0,
+              "text": "Total assets",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 18,
+              "col": 1,
+              "text": "40,830",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 18,
+              "col": 2,
+              "text": "36,347",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 18,
+              "col": 3,
+              "text": "33,163",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 18,
+              "col": 4,
+              "text": "33,017",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 18,
+              "col": 5,
+              "text": "32,662",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 19,
+              "col": 0,
+              "text": "Long-term debt, excluding current portion",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 19,
+              "col": 1,
+              "text": "6,487",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 19,
+              "col": 2,
+              "text": "6,573",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 19,
+              "col": 3,
+              "text": "4,061",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 19,
+              "col": 4,
+              "text": "4,852",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 19,
+              "col": 5,
+              "text": "5,084",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 20,
+              "col": 0,
+              "text": "Costco stockholders' equity",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 20,
+              "col": 1,
+              "text": "12,799",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 20,
+              "col": 2,
+              "text": "10,778",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 20,
+              "col": 3,
+              "text": "12,079",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 20,
+              "col": 4,
+              "text": "10,617",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 20,
+              "col": 5,
+              "text": "12,303",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 21,
+              "col": 0,
+              "text": "WAREHOUSE INFORMATION",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 22,
+              "col": 0,
+              "text": "Warehouses in Operation",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 23,
+              "col": 0,
+              "text": "Beginning of year",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 23,
+              "col": 1,
+              "text": "741",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 23,
+              "col": 2,
+              "text": "715",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 23,
+              "col": 3,
+              "text": "686",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 23,
+              "col": 4,
+              "text": "663",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 23,
+              "col": 5,
+              "text": "634",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 24,
+              "col": 0,
+              "text": "Opened",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 24,
+              "col": 1,
+              "text": "25",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 24,
+              "col": 2,
+              "text": "28",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 24,
+              "col": 3,
+              "text": "33",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 24,
+              "col": 4,
+              "text": "26",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 24,
+              "col": 5,
+              "text": "30",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 25,
+              "col": 0,
+              "text": "Closed due to relocation",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 25,
+              "col": 1,
+              "text": "(4)",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 25,
+              "col": 2,
+              "text": "(2)",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 25,
+              "col": 3,
+              "text": "(4)",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 25,
+              "col": 4,
+              "text": "(3)",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 25,
+              "col": 5,
+              "text": "(1)",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 26,
+              "col": 0,
+              "text": "End of year",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 26,
+              "col": 1,
+              "text": "762",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 26,
+              "col": 2,
+              "text": "741",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 26,
+              "col": 3,
+              "text": "715",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 26,
+              "col": 4,
+              "text": "686",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 26,
+              "col": 5,
+              "text": "663",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 27,
+              "col": 0,
+              "text": "MEMBERSHIP INFORMATION",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 28,
+              "col": 0,
+              "text": "Total paid members (000's)",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 28,
+              "col": 1,
+              "text": "51,600",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 28,
+              "col": 2,
+              "text": "49,400",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 28,
+              "col": 3,
+              "text": "47,600",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 28,
+              "col": 4,
+              "text": "44,600",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 28,
+              "col": 5,
+              "text": "42,000",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            }
+          ]
+        }
+      }
+    ],
+    "retrieved_text": "| As of and for the year ended | Sept. 2, 2018 (52 weeks) | Sept. 3, 2017 (53 weeks) | Aug. 28, 2016 (52 weeks) | Aug. 30, 2015 (52 weeks) | Aug. 31, 2014 (52 weeks) |\n| --- | --- | --- | --- | --- | --- |\n| RESULTS OF OPERATIONS |  |  |  |  |  |\n| Net sales | $ 138,434 | $ 126,172 | $ 116,073 | $ 113,666 | $ 110,212 |\n| Membership fees | 3,142 | 2,853 | 2,646 | 2,533 | 2,428 |\n| Gross margin (1) as a percentage of net sales | 11.04% | 11.33% | 11.35% | 11.09% | 10.66% |\n| Selling, general and administrative expenses as a percentage of net sales | 10.02% | 10.26% | 10.40% | 10.07% | 9.89% |\n| Operating income | $ 4,480 | $ 4,111 | $ 3,672 | $ 3,624 | $ 3,220 |\n| Net income attributable to Costco | 3,134 | 2,679 | 2,350 | 2,377 | 2,058 |\n| Net income per diluted common share attributable to Costco | 7.09 | 6.08 | 5.33 | 5.37 | 4.65 |\n| Cash dividends declared per common share | 2.14 | 8.90 | 1.70 | 6.51 | 1.33 |\n| Changes in comparable sales (2) |  |  |  |  |  |\n| United States | 9% | 4% | 1% | 3% | 5% |\n| Canada | 9% | 5% | (3)% | (5)% | 2% |\n| Other International | 11% | 2% | (3)% | (3)% | 3% |\n| Total Company | 9% | 4% | 0% | 1% | 4% |\n| Changes in Total Company comparable sales excluding the impact of foreign currency and gasoline prices | 7% | 4% | 4% | 7% | 6% |\n| BALANCE SHEET DATA |  |  |  |  |  |\n| Net property and equipment | $ 19,681 | $ 18,161 | $ 17,043 | $ 15,401 | $ 14,830 |\n| Total assets | 40,830 | 36,347 | 33,163 | 33,017 | 32,662 |\n| Long-term debt, excluding current portion | 6,487 | 6,573 | 4,061 | 4,852 | 5,084 |\n| Costco stockholders' equity | 12,799 | 10,778 | 12,079 | 10,617 | 12,303 |\n| WAREHOUSE INFORMATION |  |  |  |  |  |\n| Warehouses in Operation |  |  |  |  |  |\n| Beginning of year | 741 | 715 | 686 | 663 | 634 |\n| Opened | 25 | 28 | 33 | 26 | 30 |\n| Closed due to relocation | (4) | (2) | (4) | (3) | (1) |\n| End of year | 762 | 741 | 715 | 686 | 663 |\n| MEMBERSHIP INFORMATION |  |  |  |  |  |\n| Total paid members (000's) | 51,600 | 49,400 | 47,600 | 44,600 | 42,000 |"
+  },
+  {
+    "rule_names": [
+      "rule_selected_financial_data_longterm_debt_or_obligations"
+    ],
+    "rule_set_slug": "rule_selected_financial_data_longterm_debt_or_obligations",
+    "question_slug": "what_is_longterm_debt_at_yearend_0_if_none",
+    "question": "What is long-term debt at year-end (0 if none)?",
+    "doc_name": "AMCOR_2019_10K",
+    "strategy": "merge",
+    "predicted_answer": "5314.4",
+    "latency_seconds": 0.571,
+    "input_tokens": 683,
+    "output_tokens": 8,
+    "retrieved_token_count": 591,
+    "rules_with_hits": [
+      "rule_selected_financial_data_longterm_debt_or_obligations"
+    ],
+    "rules_with_no_hits": [],
+    "num_spans_before_dedup": 1,
+    "num_spans_after_dedup": 1,
+    "retrieved_spans": [
+      {
+        "text": "|  | Years ended June 30, |  |  |  |  |\n| (dollars in millions, except per share amounts) | 2019 (1) | 2018 | 2017 | 2016 | 2015 |\n| --- | --- | --- | --- | --- | --- |\n| Selected Consolidated Income Statement Data |  |  |  |  |  |\n| Net sales | $ 9,458.2 | $ 9,319.1 | $ 9,101.0 | $ 9,421.3 | $ 9,611.8 |\n| Operating income | 791.7 | 993.9 | 916.1 | 589.1 | 1,008.7 |\n| Income from continuing operations | 436.7 | 586.6 | 581.0 | 305.0 | 575.6 |\n| Net income attributable to Amcor plc | 430.2 | 575.2 | 564.0 | 309.3 | 549.7 |\n| Selected Consolidated Balance Sheet Data |  |  |  |  |  |\n| Cash and cash equivalents | 601.6 | 620.8 | 561.5 | 515.7 | 477.1 |\n| Total assets | 17,165.0 | 9,057.5 | 9,087.0 | 8,531.8 | 8,289.1 |\n| Long-term debt (including capital lease obligations) | 5,314.4 | 3,674.5 | 3,831.6 | 3,754.3 | 2,741.0 |\n| Total shareholder' equity | 5,674.7 | 695.4 | 587.6 | 528.5 | 1,262.9 |\n| Selected Per Share Data |  |  |  |  |  |\n| Basic earnings per share from continuing operations | 0.36 | 0.50 | 0.49 | 0.27 | 0.46 |\n| Diluted earnings per share from continuing operations | 0.36 | 0.49 | 0.48 | 0.26 | 0.45 |\n| Dividends per share (2) | 0.58 | 0.45 | 0.42 | 0.40 | 0.40 |\n| Other Operating Data |  |  |  |  |  |\n| Capital expenditures | 332.2 | 365.0 | 379.3 | 346.7 | 302.9 |\n| Depreciation and amortization | 349.7 | 352.7 | 351.8 | 351.0 | 353.9 |",
+        "text_span": "",
+        "size": 8.0,
+        "bold": 0,
+        "font": "TimesNewRomanPSMT",
+        "all_cap": 0,
+        "num_st": 0,
+        "is_center": 0,
+        "is_underline": 0,
+        "label": "table",
+        "page_no": 21,
+        "structure": {
+          "level": "Body",
+          "level_index": 5,
+          "parent_id": 206,
+          "path_text": "AMCOR PLC | PART II | Item 6. - Selected Financial Data | Five-Year Consolidated Review of Selected Financial Data",
+          "depth": 5,
+          "h1_index_norm": 0.6666666666666666,
+          "sibling_index_norm": 0.0,
+          "is_first_child": true,
+          "is_last_child": false
+        },
+        "table_data": {
+          "num_rows": 19,
+          "num_cols": 6,
+          "cells": [
+            {
+              "row": 0,
+              "col": 1,
+              "text": "Years ended June 30,",
+              "row_span": 1,
+              "col_span": 5,
+              "is_column_header": true,
+              "is_row_header": false
+            },
+            {
+              "row": 1,
+              "col": 0,
+              "text": "(dollars in millions, except per share amounts)",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 1,
+              "col": 1,
+              "text": "2019 (1)",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": true,
+              "is_row_header": false
+            },
+            {
+              "row": 1,
+              "col": 2,
+              "text": "2018",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": true,
+              "is_row_header": false
+            },
+            {
+              "row": 1,
+              "col": 3,
+              "text": "2017",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": true,
+              "is_row_header": false
+            },
+            {
+              "row": 1,
+              "col": 4,
+              "text": "2016",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": true,
+              "is_row_header": false
+            },
+            {
+              "row": 1,
+              "col": 5,
+              "text": "2015",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": true,
+              "is_row_header": false
+            },
+            {
+              "row": 2,
+              "col": 0,
+              "text": "Selected Consolidated Income Statement Data",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 3,
+              "col": 0,
+              "text": "Net sales",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 3,
+              "col": 1,
+              "text": "$ 9,458.2",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 3,
+              "col": 2,
+              "text": "$ 9,319.1",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 3,
+              "col": 3,
+              "text": "$ 9,101.0",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 3,
+              "col": 4,
+              "text": "$ 9,421.3",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 3,
+              "col": 5,
+              "text": "$ 9,611.8",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 4,
+              "col": 0,
+              "text": "Operating income",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 4,
+              "col": 1,
+              "text": "791.7",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 4,
+              "col": 2,
+              "text": "993.9",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 4,
+              "col": 3,
+              "text": "916.1",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 4,
+              "col": 4,
+              "text": "589.1",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 4,
+              "col": 5,
+              "text": "1,008.7",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 5,
+              "col": 0,
+              "text": "Income from continuing operations",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 5,
+              "col": 1,
+              "text": "436.7",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 5,
+              "col": 2,
+              "text": "586.6",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 5,
+              "col": 3,
+              "text": "581.0",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 5,
+              "col": 4,
+              "text": "305.0",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 5,
+              "col": 5,
+              "text": "575.6",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 6,
+              "col": 0,
+              "text": "Net income attributable to Amcor plc",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 6,
+              "col": 1,
+              "text": "430.2",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 6,
+              "col": 2,
+              "text": "575.2",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 6,
+              "col": 3,
+              "text": "564.0",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 6,
+              "col": 4,
+              "text": "309.3",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 6,
+              "col": 5,
+              "text": "549.7",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 7,
+              "col": 0,
+              "text": "Selected Consolidated Balance Sheet Data",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 8,
+              "col": 0,
+              "text": "Cash and cash equivalents",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 8,
+              "col": 1,
+              "text": "601.6",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 8,
+              "col": 2,
+              "text": "620.8",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 8,
+              "col": 3,
+              "text": "561.5",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 8,
+              "col": 4,
+              "text": "515.7",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 8,
+              "col": 5,
+              "text": "477.1",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 9,
+              "col": 0,
+              "text": "Total assets",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 9,
+              "col": 1,
+              "text": "17,165.0",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 9,
+              "col": 2,
+              "text": "9,057.5",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 9,
+              "col": 3,
+              "text": "9,087.0",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 9,
+              "col": 4,
+              "text": "8,531.8",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 9,
+              "col": 5,
+              "text": "8,289.1",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 10,
+              "col": 0,
+              "text": "Long-term debt (including capital lease obligations)",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 10,
+              "col": 1,
+              "text": "5,314.4",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 10,
+              "col": 2,
+              "text": "3,674.5",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 10,
+              "col": 3,
+              "text": "3,831.6",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 10,
+              "col": 4,
+              "text": "3,754.3",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 10,
+              "col": 5,
+              "text": "2,741.0",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 11,
+              "col": 0,
+              "text": "Total shareholder' equity",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 11,
+              "col": 1,
+              "text": "5,674.7",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 11,
+              "col": 2,
+              "text": "695.4",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 11,
+              "col": 3,
+              "text": "587.6",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 11,
+              "col": 4,
+              "text": "528.5",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 11,
+              "col": 5,
+              "text": "1,262.9",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 12,
+              "col": 0,
+              "text": "Selected Per Share Data",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 13,
+              "col": 0,
+              "text": "Basic earnings per share from continuing operations",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 13,
+              "col": 1,
+              "text": "0.36",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 13,
+              "col": 2,
+              "text": "0.50",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 13,
+              "col": 3,
+              "text": "0.49",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 13,
+              "col": 4,
+              "text": "0.27",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 13,
+              "col": 5,
+              "text": "0.46",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 14,
+              "col": 0,
+              "text": "Diluted earnings per share from continuing operations",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 14,
+              "col": 1,
+              "text": "0.36",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 14,
+              "col": 2,
+              "text": "0.49",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 14,
+              "col": 3,
+              "text": "0.48",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 14,
+              "col": 4,
+              "text": "0.26",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 14,
+              "col": 5,
+              "text": "0.45",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 15,
+              "col": 0,
+              "text": "Dividends per share (2)",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 15,
+              "col": 1,
+              "text": "0.58",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 15,
+              "col": 2,
+              "text": "0.45",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 15,
+              "col": 3,
+              "text": "0.42",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 15,
+              "col": 4,
+              "text": "0.40",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 15,
+              "col": 5,
+              "text": "0.40",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 16,
+              "col": 0,
+              "text": "Other Operating Data",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 17,
+              "col": 0,
+              "text": "Capital expenditures",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 17,
+              "col": 1,
+              "text": "332.2",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 17,
+              "col": 2,
+              "text": "365.0",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 17,
+              "col": 3,
+              "text": "379.3",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 17,
+              "col": 4,
+              "text": "346.7",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 17,
+              "col": 5,
+              "text": "302.9",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 18,
+              "col": 0,
+              "text": "Depreciation and amortization",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 18,
+              "col": 1,
+              "text": "349.7",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 18,
+              "col": 2,
+              "text": "352.7",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 18,
+              "col": 3,
+              "text": "351.8",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 18,
+              "col": 4,
+              "text": "351.0",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 18,
+              "col": 5,
+              "text": "353.9",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            }
+          ]
+        }
+      }
+    ],
+    "retrieved_text": "|  | Years ended June 30, |  |  |  |  |\n| (dollars in millions, except per share amounts) | 2019 (1) | 2018 | 2017 | 2016 | 2015 |\n| --- | --- | --- | --- | --- | --- |\n| Selected Consolidated Income Statement Data |  |  |  |  |  |\n| Net sales | $ 9,458.2 | $ 9,319.1 | $ 9,101.0 | $ 9,421.3 | $ 9,611.8 |\n| Operating income | 791.7 | 993.9 | 916.1 | 589.1 | 1,008.7 |\n| Income from continuing operations | 436.7 | 586.6 | 581.0 | 305.0 | 575.6 |\n| Net income attributable to Amcor plc | 430.2 | 575.2 | 564.0 | 309.3 | 549.7 |\n| Selected Consolidated Balance Sheet Data |  |  |  |  |  |\n| Cash and cash equivalents | 601.6 | 620.8 | 561.5 | 515.7 | 477.1 |\n| Total assets | 17,165.0 | 9,057.5 | 9,087.0 | 8,531.8 | 8,289.1 |\n| Long-term debt (including capital lease obligations) | 5,314.4 | 3,674.5 | 3,831.6 | 3,754.3 | 2,741.0 |\n| Total shareholder' equity | 5,674.7 | 695.4 | 587.6 | 528.5 | 1,262.9 |\n| Selected Per Share Data |  |  |  |  |  |\n| Basic earnings per share from continuing operations | 0.36 | 0.50 | 0.49 | 0.27 | 0.46 |\n| Diluted earnings per share from continuing operations | 0.36 | 0.49 | 0.48 | 0.26 | 0.45 |\n| Dividends per share (2) | 0.58 | 0.45 | 0.42 | 0.40 | 0.40 |\n| Other Operating Data |  |  |  |  |  |\n| Capital expenditures | 332.2 | 365.0 | 379.3 | 346.7 | 302.9 |\n| Depreciation and amortization | 349.7 | 352.7 | 351.8 | 351.0 | 353.9 |"
+  },
+  {
+    "rule_names": [
+      "rule_selected_financial_data_longterm_debt_or_obligations"
+    ],
+    "rule_set_slug": "rule_selected_financial_data_longterm_debt_or_obligations",
+    "question_slug": "what_is_longterm_debt_at_yearend_0_if_none",
+    "question": "What is long-term debt at year-end (0 if none)?",
+    "doc_name": "AMAZON_2020_10K",
+    "strategy": "merge",
+    "predicted_answer": "101406",
+    "latency_seconds": 0.604,
+    "input_tokens": 248,
+    "output_tokens": 6,
+    "retrieved_token_count": 156,
+    "rules_with_hits": [
+      "rule_selected_financial_data_longterm_debt_or_obligations"
+    ],
+    "rules_with_no_hits": [],
+    "num_spans_before_dedup": 1,
+    "num_spans_after_dedup": 1,
+    "retrieved_spans": [
+      {
+        "text": "|  | December 31, |  |  |  |  |\n|  | 2016 | 2017 | 2018 | 2019 (4) | 2020 |\n|  | (in millions) |  |  |  |  |\n| --- | --- | --- | --- | --- | --- |\n| Balance Sheets: |  |  |  |  |  |\n| Total assets | $ 83,402 | $ 131,310 | $ 162,648 | $ 225,248 | $ 321,195 |\n| Total long-term obligations | $ 20,301 | $ 45,718 | $ 50,708 | $ 75,376 | $ 101,406 |",
+        "text_span": "",
+        "size": 9.0,
+        "bold": 0,
+        "font": "Times New Roman",
+        "all_cap": 0,
+        "num_st": 0,
+        "is_center": 0,
+        "is_underline": 0,
+        "label": "table",
+        "page_no": 18,
+        "structure": {
+          "level": "Body",
+          "level_index": 4,
+          "parent_id": 264,
+          "path_text": "AMAZON.COM, INC. | PART II | Item 6. Selected Consolidated Financial Data",
+          "depth": 4,
+          "h1_index_norm": 0.6666666666666666,
+          "sibling_index_norm": 0.25,
+          "is_first_child": false,
+          "is_last_child": false
+        },
+        "table_data": {
+          "num_rows": 6,
+          "num_cols": 6,
+          "cells": [
+            {
+              "row": 0,
+              "col": 1,
+              "text": "December 31,",
+              "row_span": 1,
+              "col_span": 5,
+              "is_column_header": true,
+              "is_row_header": false
+            },
+            {
+              "row": 1,
+              "col": 1,
+              "text": "2016",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": true,
+              "is_row_header": false
+            },
+            {
+              "row": 1,
+              "col": 2,
+              "text": "2017",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": true,
+              "is_row_header": false
+            },
+            {
+              "row": 1,
+              "col": 3,
+              "text": "2018",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": true,
+              "is_row_header": false
+            },
+            {
+              "row": 1,
+              "col": 4,
+              "text": "2019 (4)",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": true,
+              "is_row_header": false
+            },
+            {
+              "row": 1,
+              "col": 5,
+              "text": "2020",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": true,
+              "is_row_header": false
+            },
+            {
+              "row": 2,
+              "col": 1,
+              "text": "(in millions)",
+              "row_span": 1,
+              "col_span": 5,
+              "is_column_header": true,
+              "is_row_header": false
+            },
+            {
+              "row": 3,
+              "col": 0,
+              "text": "Balance Sheets:",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 4,
+              "col": 0,
+              "text": "Total assets",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 4,
+              "col": 1,
+              "text": "$ 83,402",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 4,
+              "col": 2,
+              "text": "$ 131,310",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 4,
+              "col": 3,
+              "text": "$ 162,648",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 4,
+              "col": 4,
+              "text": "$ 225,248",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 4,
+              "col": 5,
+              "text": "$ 321,195",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 5,
+              "col": 0,
+              "text": "Total long-term obligations",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 5,
+              "col": 1,
+              "text": "$ 20,301",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 5,
+              "col": 2,
+              "text": "$ 45,718",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 5,
+              "col": 3,
+              "text": "$ 50,708",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 5,
+              "col": 4,
+              "text": "$ 75,376",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 5,
+              "col": 5,
+              "text": "$ 101,406",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            }
+          ]
+        }
+      }
+    ],
+    "retrieved_text": "|  | December 31, |  |  |  |  |\n|  | 2016 | 2017 | 2018 | 2019 (4) | 2020 |\n|  | (in millions) |  |  |  |  |\n| --- | --- | --- | --- | --- | --- |\n| Balance Sheets: |  |  |  |  |  |\n| Total assets | $ 83,402 | $ 131,310 | $ 162,648 | $ 225,248 | $ 321,195 |\n| Total long-term obligations | $ 20,301 | $ 45,718 | $ 50,708 | $ 75,376 | $ 101,406 |"
+  },
+  {
+    "rule_names": [
+      "rule_selected_financial_data_longterm_debt_or_obligations"
+    ],
+    "rule_set_slug": "rule_selected_financial_data_longterm_debt_or_obligations",
+    "question_slug": "what_is_longterm_debt_at_yearend_0_if_none",
+    "question": "What is long-term debt at year-end (0 if none)?",
+    "doc_name": "AMAZON_2019_10K",
+    "strategy": "merge",
+    "predicted_answer": "75,376",
+    "latency_seconds": 1.314,
+    "input_tokens": 248,
+    "output_tokens": 13,
+    "retrieved_token_count": 156,
+    "rules_with_hits": [
+      "rule_selected_financial_data_longterm_debt_or_obligations"
+    ],
+    "rules_with_no_hits": [],
+    "num_spans_before_dedup": 1,
+    "num_spans_after_dedup": 1,
+    "retrieved_spans": [
+      {
+        "text": "|  | December 31, |  |  |  |  |\n|  | 2015 | 2016 | 2017 | 2018 | 2019 (4) |\n|  | (in millions) |  |  |  |  |\n| --- | --- | --- | --- | --- | --- |\n| Balance Sheets: |  |  |  |  |  |\n| Total assets | $ 64,747 | $ 83,402 | $ 131,310 | $ 162,648 | $ 225,248 |\n| Total long-term obligations | $ 17,477 | $ 20,301 | $ 45,718 | $ 50,708 | $ 75,376 |",
+        "text_span": "",
+        "size": 9.0,
+        "bold": 0,
+        "font": "Times New Roman",
+        "all_cap": 0,
+        "num_st": 0,
+        "is_center": 0,
+        "is_underline": 0,
+        "label": "table",
+        "page_no": 18,
+        "structure": {
+          "level": "Body",
+          "level_index": 4,
+          "parent_id": 260,
+          "path_text": "AMAZON.COM, INC. | PART II | Item 6. Selected Consolidated Financial Data",
+          "depth": 4,
+          "h1_index_norm": 0.6666666666666666,
+          "sibling_index_norm": 0.25,
+          "is_first_child": false,
+          "is_last_child": false
+        },
+        "table_data": {
+          "num_rows": 6,
+          "num_cols": 6,
+          "cells": [
+            {
+              "row": 0,
+              "col": 1,
+              "text": "December 31,",
+              "row_span": 1,
+              "col_span": 5,
+              "is_column_header": true,
+              "is_row_header": false
+            },
+            {
+              "row": 1,
+              "col": 1,
+              "text": "2015",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": true,
+              "is_row_header": false
+            },
+            {
+              "row": 1,
+              "col": 2,
+              "text": "2016",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": true,
+              "is_row_header": false
+            },
+            {
+              "row": 1,
+              "col": 3,
+              "text": "2017",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": true,
+              "is_row_header": false
+            },
+            {
+              "row": 1,
+              "col": 4,
+              "text": "2018",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": true,
+              "is_row_header": false
+            },
+            {
+              "row": 1,
+              "col": 5,
+              "text": "2019 (4)",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": true,
+              "is_row_header": false
+            },
+            {
+              "row": 2,
+              "col": 1,
+              "text": "(in millions)",
+              "row_span": 1,
+              "col_span": 5,
+              "is_column_header": true,
+              "is_row_header": false
+            },
+            {
+              "row": 3,
+              "col": 0,
+              "text": "Balance Sheets:",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 4,
+              "col": 0,
+              "text": "Total assets",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 4,
+              "col": 1,
+              "text": "$ 64,747",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 4,
+              "col": 2,
+              "text": "$ 83,402",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 4,
+              "col": 3,
+              "text": "$ 131,310",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 4,
+              "col": 4,
+              "text": "$ 162,648",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 4,
+              "col": 5,
+              "text": "$ 225,248",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 5,
+              "col": 0,
+              "text": "Total long-term obligations",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 5,
+              "col": 1,
+              "text": "$ 17,477",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 5,
+              "col": 2,
+              "text": "$ 20,301",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 5,
+              "col": 3,
+              "text": "$ 45,718",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 5,
+              "col": 4,
+              "text": "$ 50,708",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 5,
+              "col": 5,
+              "text": "$ 75,376",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            }
+          ]
+        }
+      }
+    ],
+    "retrieved_text": "|  | December 31, |  |  |  |  |\n|  | 2015 | 2016 | 2017 | 2018 | 2019 (4) |\n|  | (in millions) |  |  |  |  |\n| --- | --- | --- | --- | --- | --- |\n| Balance Sheets: |  |  |  |  |  |\n| Total assets | $ 64,747 | $ 83,402 | $ 131,310 | $ 162,648 | $ 225,248 |\n| Total long-term obligations | $ 17,477 | $ 20,301 | $ 45,718 | $ 50,708 | $ 75,376 |"
+  },
+  {
+    "rule_names": [
+      "rule_selected_financial_data_longterm_debt_or_obligations"
+    ],
+    "rule_set_slug": "rule_selected_financial_data_longterm_debt_or_obligations",
+    "question_slug": "what_is_longterm_debt_at_yearend_0_if_none",
+    "question": "What is long-term debt at year-end (0 if none)?",
+    "doc_name": "ADOBE_2021_10K",
+    "strategy": "merge",
+    "predicted_answer": "NOT FOUND",
+    "latency_seconds": 1.106,
+    "input_tokens": 92,
+    "output_tokens": 6,
+    "retrieved_token_count": 0,
+    "rules_with_hits": [],
+    "rules_with_no_hits": [
+      "rule_selected_financial_data_longterm_debt_or_obligations"
+    ],
+    "num_spans_before_dedup": 0,
+    "num_spans_after_dedup": 0,
+    "retrieved_spans": [],
+    "retrieved_text": ""
+  },
+  {
+    "rule_names": [
+      "rule_selected_financial_data_longterm_debt_or_obligations"
+    ],
+    "rule_set_slug": "rule_selected_financial_data_longterm_debt_or_obligations",
+    "question_slug": "what_is_longterm_debt_at_yearend_0_if_none",
+    "question": "What is long-term debt at year-end (0 if none)?",
+    "doc_name": "EBAY_2022_10K",
+    "strategy": "merge",
+    "predicted_answer": "NOT FOUND",
+    "latency_seconds": 1.101,
+    "input_tokens": 92,
+    "output_tokens": 6,
+    "retrieved_token_count": 0,
+    "rules_with_hits": [],
+    "rules_with_no_hits": [
+      "rule_selected_financial_data_longterm_debt_or_obligations"
+    ],
+    "num_spans_before_dedup": 0,
+    "num_spans_after_dedup": 0,
+    "retrieved_spans": [],
+    "retrieved_text": ""
+  },
+  {
+    "rule_names": [
+      "rule_selected_financial_data_longterm_debt_or_obligations"
+    ],
+    "rule_set_slug": "rule_selected_financial_data_longterm_debt_or_obligations",
+    "question_slug": "what_is_longterm_debt_at_yearend_0_if_none",
+    "question": "What is long-term debt at year-end (0 if none)?",
+    "doc_name": "ADOBE_2019_10K",
+    "strategy": "merge",
+    "predicted_answer": "988,924",
+    "latency_seconds": 1.044,
+    "input_tokens": 817,
+    "output_tokens": 7,
+    "retrieved_token_count": 725,
+    "rules_with_hits": [
+      "rule_selected_financial_data_longterm_debt_or_obligations"
+    ],
+    "rules_with_no_hits": [],
+    "num_spans_before_dedup": 1,
+    "num_spans_after_dedup": 1,
+    "retrieved_spans": [
+      {
+        "text": "| (in thousands, except per share amounts and employee data) | Fiscal Years |  |  |  |  |\n|  | 2019 (1) | 2018 | 2017 | 2016 (3) | 2015 |\n| --- | --- | --- | --- | --- | --- |\n| Operations: |  |  |  |  |  |\n| Revenue: | $ 11,171,297 | $ 9,030,008 | $ 7,301,505 | $ 5,854,430 | $ 4,795,511 |\n| Gross profit | $ 9,498,577 | $ 7,835,009 | $ 6,291,014 | $ 5,034,522 | $ 4,051,194 |\n| Income before income taxes | $ 3,204,741 | $ 2,793,876 | $ 2,137,641 | $ 1,435,138 | $ 873,781 |\n| Net income | $ 2,951,458 | $ 2,590,774 | $ 1,693,954 | $ 1,168,782 | $ 629,551 |\n| Net income per share: |  |  |  |  |  |\n| Basic | $ 6.07 | $ 5.28 | $ 3.43 | $ 2.35 | $ 1.26 |\n| Diluted | $ 6.00 | $ 5.20 | $ 3.38 | $ 2.32 | $ 1.24 |\n| Shares used to compute basic net income per share | 486,291 | 490,564 | 493,632 | 498,345 | 498,764 |\n| Shares used to compute diluted net income per share | 491,572 | 497,843 | 501,123 | 504,299 | 507,164 |\n| Financial position: |  |  |  |  |  |\n| Cash, cash equivalents and short-term investments | $ 4,176,976 | $ 3,228,962 | $ 5,819,774 | $ 4,761,300 | $ 3,988,084 |\n| Working capital (2) | $ (1,696,013) | $ 555,913 | $ 3,720,356 | $ 3,028,139 | $ 2,608,336 |\n| Total assets | $ 20,762,400 | $ 18,768,682 | $ 14,535,556 | $ 12,697,246 | $ 11,714,500 |\n| Debt, current | $ 3,149,343 | $ - | $ - | $ - | $ - |\n| Debt, non-current | $ 988,924 | $ 4,124,800 | $ 1,881,421 | $ 1,892,200 | $ 1,895,259 |\n| Stockholders' equity | $ 10,530,155 | $ 9,362,114 | $ 8,459,869 | $ 7,424,835 | $ 7,001,580 |\n| Additional data: |  |  |  |  |  |\n| Worldwide employees | 22,634 | 21,357 | 17,973 | 15,706 | 13,893 |",
+        "text_span": "",
+        "size": 10.0,
+        "bold": 0,
+        "font": "TimesNewRoman",
+        "all_cap": 0,
+        "num_st": 0,
+        "is_center": 0,
+        "is_underline": 0,
+        "label": "table",
+        "page_no": 37,
+        "structure": {
+          "level": "Body",
+          "level_index": 4,
+          "parent_id": 425,
+          "path_text": "ADOBE INC. | PART II | ITEM 6. SELECTED FINANCIAL DATA",
+          "depth": 4,
+          "h1_index_norm": 0.6666666666666666,
+          "sibling_index_norm": 0.16666666666666666,
+          "is_first_child": false,
+          "is_last_child": false
+        },
+        "table_data": {
+          "num_rows": 21,
+          "num_cols": 6,
+          "cells": [
+            {
+              "row": 0,
+              "col": 0,
+              "text": "(in thousands, except per share amounts and employee data)",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 0,
+              "col": 1,
+              "text": "Fiscal Years",
+              "row_span": 1,
+              "col_span": 5,
+              "is_column_header": true,
+              "is_row_header": false
+            },
+            {
+              "row": 1,
+              "col": 1,
+              "text": "2019 (1)",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": true,
+              "is_row_header": false
+            },
+            {
+              "row": 1,
+              "col": 2,
+              "text": "2018",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": true,
+              "is_row_header": false
+            },
+            {
+              "row": 1,
+              "col": 3,
+              "text": "2017",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": true,
+              "is_row_header": false
+            },
+            {
+              "row": 1,
+              "col": 4,
+              "text": "2016 (3)",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": true,
+              "is_row_header": false
+            },
+            {
+              "row": 1,
+              "col": 5,
+              "text": "2015",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": true,
+              "is_row_header": false
+            },
+            {
+              "row": 2,
+              "col": 0,
+              "text": "Operations:",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 3,
+              "col": 0,
+              "text": "Revenue:",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 3,
+              "col": 1,
+              "text": "$ 11,171,297",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 3,
+              "col": 2,
+              "text": "$ 9,030,008",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 3,
+              "col": 3,
+              "text": "$ 7,301,505",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 3,
+              "col": 4,
+              "text": "$ 5,854,430",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 3,
+              "col": 5,
+              "text": "$ 4,795,511",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 4,
+              "col": 0,
+              "text": "Gross profit",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 4,
+              "col": 1,
+              "text": "$ 9,498,577",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 4,
+              "col": 2,
+              "text": "$ 7,835,009",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 4,
+              "col": 3,
+              "text": "$ 6,291,014",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 4,
+              "col": 4,
+              "text": "$ 5,034,522",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 4,
+              "col": 5,
+              "text": "$ 4,051,194",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 5,
+              "col": 0,
+              "text": "Income before income taxes",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 5,
+              "col": 1,
+              "text": "$ 3,204,741",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 5,
+              "col": 2,
+              "text": "$ 2,793,876",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 5,
+              "col": 3,
+              "text": "$ 2,137,641",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 5,
+              "col": 4,
+              "text": "$ 1,435,138",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 5,
+              "col": 5,
+              "text": "$ 873,781",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 6,
+              "col": 0,
+              "text": "Net income",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 6,
+              "col": 1,
+              "text": "$ 2,951,458",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 6,
+              "col": 2,
+              "text": "$ 2,590,774",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 6,
+              "col": 3,
+              "text": "$ 1,693,954",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 6,
+              "col": 4,
+              "text": "$ 1,168,782",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 6,
+              "col": 5,
+              "text": "$ 629,551",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 7,
+              "col": 0,
+              "text": "Net income per share:",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 8,
+              "col": 0,
+              "text": "Basic",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 8,
+              "col": 1,
+              "text": "$ 6.07",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 8,
+              "col": 2,
+              "text": "$ 5.28",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 8,
+              "col": 3,
+              "text": "$ 3.43",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 8,
+              "col": 4,
+              "text": "$ 2.35",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 8,
+              "col": 5,
+              "text": "$ 1.26",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 9,
+              "col": 0,
+              "text": "Diluted",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 9,
+              "col": 1,
+              "text": "$ 6.00",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 9,
+              "col": 2,
+              "text": "$ 5.20",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 9,
+              "col": 3,
+              "text": "$ 3.38",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 9,
+              "col": 4,
+              "text": "$ 2.32",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 9,
+              "col": 5,
+              "text": "$ 1.24",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 10,
+              "col": 0,
+              "text": "Shares used to compute basic net income per share",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 10,
+              "col": 1,
+              "text": "486,291",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 10,
+              "col": 2,
+              "text": "490,564",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 10,
+              "col": 3,
+              "text": "493,632",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 10,
+              "col": 4,
+              "text": "498,345",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 10,
+              "col": 5,
+              "text": "498,764",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 11,
+              "col": 0,
+              "text": "Shares used to compute diluted net income per share",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 11,
+              "col": 1,
+              "text": "491,572",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 11,
+              "col": 2,
+              "text": "497,843",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 11,
+              "col": 3,
+              "text": "501,123",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 11,
+              "col": 4,
+              "text": "504,299",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 11,
+              "col": 5,
+              "text": "507,164",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 12,
+              "col": 0,
+              "text": "Financial position:",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 13,
+              "col": 0,
+              "text": "Cash, cash equivalents and short-term investments",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 13,
+              "col": 1,
+              "text": "$ 4,176,976",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 13,
+              "col": 2,
+              "text": "$ 3,228,962",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 13,
+              "col": 3,
+              "text": "$ 5,819,774",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 13,
+              "col": 4,
+              "text": "$ 4,761,300",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 13,
+              "col": 5,
+              "text": "$ 3,988,084",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 14,
+              "col": 0,
+              "text": "Working capital (2)",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 14,
+              "col": 1,
+              "text": "$ (1,696,013)",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 14,
+              "col": 2,
+              "text": "$ 555,913",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 14,
+              "col": 3,
+              "text": "$ 3,720,356",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 14,
+              "col": 4,
+              "text": "$ 3,028,139",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 14,
+              "col": 5,
+              "text": "$ 2,608,336",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 15,
+              "col": 0,
+              "text": "Total assets",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 15,
+              "col": 1,
+              "text": "$ 20,762,400",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 15,
+              "col": 2,
+              "text": "$ 18,768,682",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 15,
+              "col": 3,
+              "text": "$ 14,535,556",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 15,
+              "col": 4,
+              "text": "$ 12,697,246",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 15,
+              "col": 5,
+              "text": "$ 11,714,500",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 16,
+              "col": 0,
+              "text": "Debt, current",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 16,
+              "col": 1,
+              "text": "$ 3,149,343",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 16,
+              "col": 2,
+              "text": "$ -",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 16,
+              "col": 3,
+              "text": "$ -",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 16,
+              "col": 4,
+              "text": "$ -",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 16,
+              "col": 5,
+              "text": "$ -",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 17,
+              "col": 0,
+              "text": "Debt, non-current",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 17,
+              "col": 1,
+              "text": "$ 988,924",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 17,
+              "col": 2,
+              "text": "$ 4,124,800",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 17,
+              "col": 3,
+              "text": "$ 1,881,421",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 17,
+              "col": 4,
+              "text": "$ 1,892,200",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 17,
+              "col": 5,
+              "text": "$ 1,895,259",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 18,
+              "col": 0,
+              "text": "Stockholders' equity",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 18,
+              "col": 1,
+              "text": "$ 10,530,155",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 18,
+              "col": 2,
+              "text": "$ 9,362,114",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 18,
+              "col": 3,
+              "text": "$ 8,459,869",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 18,
+              "col": 4,
+              "text": "$ 7,424,835",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 18,
+              "col": 5,
+              "text": "$ 7,001,580",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 19,
+              "col": 0,
+              "text": "Additional data:",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 20,
+              "col": 0,
+              "text": "Worldwide employees",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": true
+            },
+            {
+              "row": 20,
+              "col": 1,
+              "text": "22,634",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 20,
+              "col": 2,
+              "text": "21,357",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 20,
+              "col": 3,
+              "text": "17,973",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 20,
+              "col": 4,
+              "text": "15,706",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            },
+            {
+              "row": 20,
+              "col": 5,
+              "text": "13,893",
+              "row_span": 1,
+              "col_span": 1,
+              "is_column_header": false,
+              "is_row_header": false
+            }
+          ]
+        }
+      }
+    ],
+    "retrieved_text": "| (in thousands, except per share amounts and employee data) | Fiscal Years |  |  |  |  |\n|  | 2019 (1) | 2018 | 2017 | 2016 (3) | 2015 |\n| --- | --- | --- | --- | --- | --- |\n| Operations: |  |  |  |  |  |\n| Revenue: | $ 11,171,297 | $ 9,030,008 | $ 7,301,505 | $ 5,854,430 | $ 4,795,511 |\n| Gross profit | $ 9,498,577 | $ 7,835,009 | $ 6,291,014 | $ 5,034,522 | $ 4,051,194 |\n| Income before income taxes | $ 3,204,741 | $ 2,793,876 | $ 2,137,641 | $ 1,435,138 | $ 873,781 |\n| Net income | $ 2,951,458 | $ 2,590,774 | $ 1,693,954 | $ 1,168,782 | $ 629,551 |\n| Net income per share: |  |  |  |  |  |\n| Basic | $ 6.07 | $ 5.28 | $ 3.43 | $ 2.35 | $ 1.26 |\n| Diluted | $ 6.00 | $ 5.20 | $ 3.38 | $ 2.32 | $ 1.24 |\n| Shares used to compute basic net income per share | 486,291 | 490,564 | 493,632 | 498,345 | 498,764 |\n| Shares used to compute diluted net income per share | 491,572 | 497,843 | 501,123 | 504,299 | 507,164 |\n| Financial position: |  |  |  |  |  |\n| Cash, cash equivalents and short-term investments | $ 4,176,976 | $ 3,228,962 | $ 5,819,774 | $ 4,761,300 | $ 3,988,084 |\n| Working capital (2) | $ (1,696,013) | $ 555,913 | $ 3,720,356 | $ 3,028,139 | $ 2,608,336 |\n| Total assets | $ 20,762,400 | $ 18,768,682 | $ 14,535,556 | $ 12,697,246 | $ 11,714,500 |\n| Debt, current | $ 3,149,343 | $ - | $ - | $ - | $ - |\n| Debt, non-current | $ 988,924 | $ 4,124,800 | $ 1,881,421 | $ 1,892,200 | $ 1,895,259 |\n| Stockholders' equity | $ 10,530,155 | $ 9,362,114 | $ 8,459,869 | $ 7,424,835 | $ 7,001,580 |\n| Additional data: |  |  |  |  |  |\n| Worldwide employees | 22,634 | 21,357 | 17,973 | 15,706 | 13,893 |"
+  },
+  {
+    "rule_names": [
+      "rule_selected_financial_data_longterm_debt_or_obligations"
+    ],
+    "rule_set_slug": "rule_selected_financial_data_longterm_debt_or_obligations",
+    "question_slug": "what_is_longterm_debt_at_yearend_0_if_none",
+    "question": "What is long-term debt at year-end (0 if none)?",
+    "doc_name": "AMCOR_2023Q2_10Q",
+    "strategy": "merge",
+    "predicted_answer": "NOT FOUND",
+    "latency_seconds": 0.953,
+    "input_tokens": 92,
+    "output_tokens": 6,
+    "retrieved_token_count": 0,
+    "rules_with_hits": [],
+    "rules_with_no_hits": [
+      "rule_selected_financial_data_longterm_debt_or_obligations"
+    ],
+    "num_spans_before_dedup": 0,
+    "num_spans_after_dedup": 0,
+    "retrieved_spans": [],
+    "retrieved_text": ""
+  },
+  {
+    "rule_names": [
+      "rule_selected_financial_data_longterm_debt_or_obligations"
+    ],
+    "rule_set_slug": "rule_selected_financial_data_longterm_debt_or_obligations",
+    "question_slug": "what_is_longterm_debt_at_yearend_0_if_none",
+    "question": "What is long-term debt at year-end (0 if none)?",
+    "doc_name": "ADOBE_2022Q2_10Q",
+    "strategy": "merge",
+    "predicted_answer": "NOT FOUND",
+    "latency_seconds": 1.025,
+    "input_tokens": 92,
+    "output_tokens": 6,
+    "retrieved_token_count": 0,
+    "rules_with_hits": [],
+    "rules_with_no_hits": [
+      "rule_selected_financial_data_longterm_debt_or_obligations"
+    ],
+    "num_spans_before_dedup": 0,
+    "num_spans_after_dedup": 0,
+    "retrieved_spans": [],
+    "retrieved_text": ""
+  },
+  {
+    "rule_names": [
+      "rule_selected_financial_data_longterm_debt_or_obligations"
+    ],
+    "rule_set_slug": "rule_selected_financial_data_longterm_debt_or_obligations",
+    "question_slug": "what_is_longterm_debt_at_yearend_0_if_none",
+    "question": "What is long-term debt at year-end (0 if none)?",
+    "doc_name": "ACTIVSIONBLIZZARD_2023Q2_10Q",
+    "strategy": "merge",
+    "predicted_answer": "NOT FOUND",
+    "latency_seconds": 1.046,
+    "input_tokens": 92,
+    "output_tokens": 6,
+    "retrieved_token_count": 0,
+    "rules_with_hits": [],
+    "rules_with_no_hits": [
+      "rule_selected_financial_data_longterm_debt_or_obligations"
+    ],
+    "num_spans_before_dedup": 0,
+    "num_spans_after_dedup": 0,
+    "retrieved_spans": [],
+    "retrieved_text": ""
+  },
+  {
+    "rule_names": [
+      "rule_selected_financial_data_longterm_debt_or_obligations"
+    ],
+    "rule_set_slug": "rule_selected_financial_data_longterm_debt_or_obligations",
+    "question_slug": "what_is_longterm_debt_at_yearend_0_if_none",
+    "question": "What is long-term debt at year-end (0 if none)?",
+    "doc_name": "3M_2023Q2_10Q",
+    "strategy": "merge",
+    "predicted_answer": "NOT FOUND",
+    "latency_seconds": 1.026,
+    "input_tokens": 92,
+    "output_tokens": 6,
+    "retrieved_token_count": 0,
+    "rules_with_hits": [],
+    "rules_with_no_hits": [
+      "rule_selected_financial_data_longterm_debt_or_obligations"
+    ],
+    "num_spans_before_dedup": 0,
+    "num_spans_after_dedup": 0,
+    "retrieved_spans": [],
+    "retrieved_text": ""
+  },
+  {
+    "rule_names": [
+      "rule_selected_financial_data_longterm_debt_or_obligations"
+    ],
+    "rule_set_slug": "rule_selected_financial_data_longterm_debt_or_obligations",
+    "question_slug": "what_is_longterm_debt_at_yearend_0_if_none",
+    "question": "What is long-term debt at year-end (0 if none)?",
+    "doc_name": "AMCOR_2022_8K_2022-07-01",
+    "strategy": "merge",
+    "predicted_answer": "NOT FOUND",
+    "latency_seconds": 0.867,
+    "input_tokens": 92,
+    "output_tokens": 6,
+    "retrieved_token_count": 0,
+    "rules_with_hits": [],
+    "rules_with_no_hits": [
+      "rule_selected_financial_data_longterm_debt_or_obligations"
+    ],
+    "num_spans_before_dedup": 0,
+    "num_spans_after_dedup": 0,
+    "retrieved_spans": [],
+    "retrieved_text": ""
+  },
+  {
+    "rule_names": [
+      "rule_selected_financial_data_longterm_debt_or_obligations"
+    ],
+    "rule_set_slug": "rule_selected_financial_data_longterm_debt_or_obligations",
+    "question_slug": "what_is_longterm_debt_at_yearend_0_if_none",
+    "question": "What is long-term debt at year-end (0 if none)?",
+    "doc_name": "COSTCO_2023_8K_dated-2023-08-09",
+    "strategy": "merge",
+    "predicted_answer": "NOT FOUND",
+    "latency_seconds": 1.034,
+    "input_tokens": 92,
+    "output_tokens": 6,
+    "retrieved_token_count": 0,
+    "rules_with_hits": [],
+    "rules_with_no_hits": [
+      "rule_selected_financial_data_longterm_debt_or_obligations"
+    ],
+    "num_spans_before_dedup": 0,
+    "num_spans_after_dedup": 0,
+    "retrieved_spans": [],
+    "retrieved_text": ""
+  },
+  {
+    "rule_names": [
+      "rule_selected_financial_data_longterm_debt_or_obligations"
+    ],
+    "rule_set_slug": "rule_selected_financial_data_longterm_debt_or_obligations",
+    "question_slug": "what_is_longterm_debt_at_yearend_0_if_none",
+    "question": "What is long-term debt at year-end (0 if none)?",
+    "doc_name": "COSTCO_2023_8K_dated-2023-08-16",
+    "strategy": "merge",
+    "predicted_answer": "NOT FOUND",
+    "latency_seconds": 1.008,
+    "input_tokens": 92,
+    "output_tokens": 6,
+    "retrieved_token_count": 0,
+    "rules_with_hits": [],
+    "rules_with_no_hits": [
+      "rule_selected_financial_data_longterm_debt_or_obligations"
+    ],
+    "num_spans_before_dedup": 0,
+    "num_spans_after_dedup": 0,
+    "retrieved_spans": [],
+    "retrieved_text": ""
+  },
+  {
+    "rule_names": [
+      "rule_selected_financial_data_longterm_debt_or_obligations"
+    ],
+    "rule_set_slug": "rule_selected_financial_data_longterm_debt_or_obligations",
+    "question_slug": "what_is_longterm_debt_at_yearend_0_if_none",
+    "question": "What is long-term debt at year-end (0 if none)?",
+    "doc_name": "FOOTLOCKER_2022_8K_dated-2022-05-20",
+    "strategy": "merge",
+    "predicted_answer": "NOT FOUND",
+    "latency_seconds": 0.953,
+    "input_tokens": 92,
+    "output_tokens": 6,
+    "retrieved_token_count": 0,
+    "rules_with_hits": [],
+    "rules_with_no_hits": [
+      "rule_selected_financial_data_longterm_debt_or_obligations"
+    ],
+    "num_spans_before_dedup": 0,
+    "num_spans_after_dedup": 0,
+    "retrieved_spans": [],
+    "retrieved_text": ""
+  }
+]

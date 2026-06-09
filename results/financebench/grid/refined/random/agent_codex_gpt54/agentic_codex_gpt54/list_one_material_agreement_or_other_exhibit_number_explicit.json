@@ -1,0 +1,22 @@
+{
+  "question": "List one material agreement or other exhibit number explicitly identified in the Exhibit Index (e.g., \"Exhibit 10.1: Credit Agreement\")—or record \"none listed\" if no material agreements are identified.",
+  "question_slug": "list_one_material_agreement_or_other_exhibit_number_explicit",
+  "mode": "agentic",
+  "model": "gpt54",
+  "selected_rules": [
+    "rule_exhibit_section_context_headers",
+    "rule_tables_after_exhibit_index_headers",
+    "rule_tables_after_item15_or_item6_exhibits"
+  ],
+  "selected_avg_cost_ratio_sum": 0.029207,
+  "min_cov": 0.0,
+  "mean_cov": 0.0,
+  "match_rate_on_sampled": 0.1,
+  "iterations": 3,
+  "verify_calls": 8,
+  "tool_llm_calls": 160,
+  "tool_input_tokens": 172803,
+  "tool_output_tokens": 1359,
+  "latency_seconds": 355.12697863578796,
+  "rationale": "The current sampled labels file contains 10 docs, and under the required `--d-star-mode all_labeled` evaluation the full 5-rule pool itself only achieved 1/10 accuracy, so the stated hard constraint is not attainable on this sample. I dropped the two 8-K rules because direct rule-hit inspection showed they retrieve zero spans on all 10 sampled docs, and a retrieve-only comparison confirmed the remaining 3 rules produce the same retrieval footprint as the full pool. A final paid verify on the 3-rule subset reproduced the full pool's only verified win on BOEING_2018_10K while reducing summed avg cost ratio from 0.037081 to 0.029207."
+}

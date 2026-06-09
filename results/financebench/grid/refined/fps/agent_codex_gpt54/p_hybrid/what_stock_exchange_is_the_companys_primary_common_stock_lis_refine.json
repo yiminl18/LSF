@@ -1,0 +1,118 @@
+{
+  "question": "What stock exchange is the company's primary common stock listed on?",
+  "question_slug": "what_stock_exchange_is_the_companys_primary_common_stock_lis",
+  "mode": "pareto_hybrid",
+  "selected_rules": [
+    "rule_apple_page1_first_exchange_after_section12b",
+    "rule_page12_exchange_spans_near_section12b",
+    "rule_page12_section12b_common_stock_tables",
+    "rule_page12_section12b_listing_headers",
+    "rule_page12_common_stock_spans_near_section12b"
+  ],
+  "covered_docs": [],
+  "baseline_accuracy": 1.0,
+  "selector_accuracy": 0.0,
+  "frontier": [
+    {
+      "cost": 0.0,
+      "accuracy_match": 0.0,
+      "rules_admitted": [],
+      "added_rule": null,
+      "rule_cov": null,
+      "rule_avg_cost": null
+    },
+    {
+      "cost": 5.2e-05,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_apple_page1_first_exchange_after_section12b"
+      ],
+      "added_rule": "rule_apple_page1_first_exchange_after_section12b",
+      "rule_cov": 0.1,
+      "rule_avg_cost": 5.2e-05
+    },
+    {
+      "cost": 0.013044,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_apple_page1_first_exchange_after_section12b",
+        "rule_page12_exchange_spans_near_section12b"
+      ],
+      "added_rule": "rule_page12_exchange_spans_near_section12b",
+      "rule_cov": 0.95,
+      "rule_avg_cost": 0.012991
+    },
+    {
+      "cost": 0.024478,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_apple_page1_first_exchange_after_section12b",
+        "rule_page12_exchange_spans_near_section12b",
+        "rule_page12_section12b_common_stock_tables"
+      ],
+      "added_rule": "rule_page12_section12b_common_stock_tables",
+      "rule_cov": 0.25,
+      "rule_avg_cost": 0.011434
+    },
+    {
+      "cost": 0.04176,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_apple_page1_first_exchange_after_section12b",
+        "rule_page12_exchange_spans_near_section12b",
+        "rule_page12_section12b_common_stock_tables",
+        "rule_page12_section12b_listing_headers"
+      ],
+      "added_rule": "rule_page12_section12b_listing_headers",
+      "rule_cov": 0.25,
+      "rule_avg_cost": 0.017282
+    },
+    {
+      "cost": 0.060388,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_apple_page1_first_exchange_after_section12b",
+        "rule_page12_exchange_spans_near_section12b",
+        "rule_page12_section12b_common_stock_tables",
+        "rule_page12_section12b_listing_headers",
+        "rule_page12_common_stock_spans_near_section12b"
+      ],
+      "added_rule": "rule_page12_common_stock_spans_near_section12b",
+      "rule_cov": 0.25,
+      "rule_avg_cost": 0.018628
+    }
+  ],
+  "query_table": {
+    "0.50": null,
+    "0.80": null,
+    "0.90": null,
+    "0.95": null,
+    "1.00": null
+  },
+  "knee_point": {
+    "cost": 5.2e-05,
+    "accuracy_match": 0.0,
+    "n_rules": 1,
+    "rules": [
+      "rule_apple_page1_first_exchange_after_section12b"
+    ]
+  },
+  "phases": {
+    "coverage": "gpt54mini",
+    "verify": "gpt54",
+    "Phase_B_extras_added": 5,
+    "Phase_C_kept": 5
+  },
+  "llm_calls": {
+    "phase_2_qa": 100,
+    "phase_2_judge": 100,
+    "phase_B_qa": 120,
+    "phase_B_judge": 120,
+    "phase_C_qa": 100,
+    "phase_C_judge": 100
+  },
+  "token_usage": {
+    "input": 41810,
+    "output": 2354
+  }
+}

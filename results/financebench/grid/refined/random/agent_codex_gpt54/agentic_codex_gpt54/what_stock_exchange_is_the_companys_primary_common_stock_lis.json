@@ -1,0 +1,21 @@
+{
+  "question": "What stock exchange is the company's primary common stock listed on?",
+  "question_slug": "what_stock_exchange_is_the_companys_primary_common_stock_lis",
+  "mode": "agentic",
+  "model": "gpt54",
+  "selected_rules": [
+    "rule_page1_exact_exchange_value",
+    "rule_item5_common_stock_exchange_sentence"
+  ],
+  "selected_avg_cost_ratio_sum": 0.000546,
+  "min_cov": 0.8,
+  "mean_cov": 0.8,
+  "match_rate_on_sampled": 1.0,
+  "iterations": 2,
+  "verify_calls": 5,
+  "tool_llm_calls": 100,
+  "tool_input_tokens": 14532,
+  "tool_output_tokens": 658,
+  "latency_seconds": 339.28109860420227,
+  "rationale": "The provided sampled label file used a legacy question string, so I created a corrected 10-document label file for this exact question using the exact-question cache plus deterministic extraction from the legacy exchange labels where needed. A three-rule structural subset reached 9/10 and missed only BOEING_2018_10K; rule inspection showed that page-1 exact exchange spans complement the Item 5 narrative rule cleanly. The final pair rule_page1_exact_exchange_value + rule_item5_common_stock_exchange_sentence verified at 10/10 on the sampled set, while each rule alone still covered 8/10 sampled docs. This keeps the selected cost at 0.000546, which is below half of the full-pool cost 0.001127, with only two broad rules."
+}

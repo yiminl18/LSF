@@ -1,0 +1,20 @@
+{
+  "question": "What is the registrant's exact name?",
+  "question_slug": "what_is_the_registrants_exact_name",
+  "mode": "agentic",
+  "model": "gpt54",
+  "selected_rules": [
+    "rule_page12_top_company_headers"
+  ],
+  "selected_avg_cost_ratio_sum": 0.001416,
+  "min_cov": 1.0,
+  "mean_cov": 1.0,
+  "match_rate_on_sampled": 1.0,
+  "iterations": 2,
+  "verify_calls": 2,
+  "tool_llm_calls": 40,
+  "tool_input_tokens": 5805,
+  "tool_output_tokens": 308,
+  "latency_seconds": 215.82523322105408,
+  "rationale": "The early-page header rule alone matched the full sampled D* set, so it dominated every larger subset on both cost and simplicity. I first verified the two broad page-1/2 rules together, then drop-tested to the cheaper single header rule and preserved perfect match rate, making the anchor, signature, later-header, and bold-body rules unnecessary for this sample. Coverage cache files were absent, so the selected rule's cov was taken from its standalone verify pass."
+}

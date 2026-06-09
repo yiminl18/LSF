@@ -1,0 +1,21 @@
+{
+  "question": "List one material agreement or other exhibit number explicitly identified in the Exhibit Index (e.g., \"Exhibit 10.1: Credit Agreement\")—or record \"none listed\" if no material agreements are identified.",
+  "question_slug": "list_one_material_agreement_or_other_exhibit_number_explicit",
+  "mode": "agentic",
+  "model": "gpt54",
+  "selected_rules": [
+    "rule_tables_after_exhibit_index_headers",
+    "rule_tables_after_item15_or_item6_exhibits"
+  ],
+  "selected_avg_cost_ratio_sum": 0.021669,
+  "min_cov": 0.1,
+  "mean_cov": 0.1,
+  "match_rate_on_sampled": 0.2,
+  "iterations": 4,
+  "verify_calls": 7,
+  "tool_llm_calls": 140,
+  "tool_input_tokens": 171858,
+  "tool_output_tokens": 1262,
+  "latency_seconds": 417.8081567287445,
+  "rationale": "The coverage cache was absent, so I used rule inspection plus single-rule verifies to estimate empirical coverage and to narrow the search to the three long-form exhibit-section rules. Exhausting the meaningful combinations showed the two generic table rules were the best verified subset at 0.2 match rate while staying below half of the full-pool cost. The hard constraint was not satisfiable under the required `all_labeled` verification target in this environment; early-8K and short-doc fallback rules never fired on the ten labeled docs, so they could not improve accuracy."
+}

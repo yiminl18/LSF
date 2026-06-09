@@ -1,0 +1,134 @@
+{
+  "question": "What document type or SEC form is this (e.g. 10-K, 10-Q, 8-K, earnings release, annual report)?",
+  "question_slug": "what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning",
+  "mode": "pareto_hybrid",
+  "selected_rules": [
+    "rule_page12_section_header_exact_form_10k",
+    "rule_page12_section_header_exact_form_10q",
+    "rule_page13_bold_cover_title_form_10k",
+    "rule_page13_bold_cover_title_form_10q",
+    "rule_page12_bold_exact_form_8k",
+    "rule_news_release_financial_results_title_and_call"
+  ],
+  "covered_docs": [],
+  "baseline_accuracy": 1.0,
+  "selector_accuracy": 0.0,
+  "frontier": [
+    {
+      "cost": 0.0,
+      "accuracy_match": 0.0,
+      "rules_admitted": [],
+      "added_rule": null,
+      "rule_cov": null,
+      "rule_avg_cost": null
+    },
+    {
+      "cost": 2.1e-05,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_page12_section_header_exact_form_10k"
+      ],
+      "added_rule": "rule_page12_section_header_exact_form_10k",
+      "rule_cov": 0.4,
+      "rule_avg_cost": 2.1e-05
+    },
+    {
+      "cost": 3.6e-05,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_page12_section_header_exact_form_10k",
+        "rule_page12_section_header_exact_form_10q"
+      ],
+      "added_rule": "rule_page12_section_header_exact_form_10q",
+      "rule_cov": 0.1,
+      "rule_avg_cost": 1.5e-05
+    },
+    {
+      "cost": 0.000102,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_page12_section_header_exact_form_10k",
+        "rule_page12_section_header_exact_form_10q",
+        "rule_page13_bold_cover_title_form_10k"
+      ],
+      "added_rule": "rule_page13_bold_cover_title_form_10k",
+      "rule_cov": 0.45,
+      "rule_avg_cost": 6.6e-05
+    },
+    {
+      "cost": 0.000129,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_page12_section_header_exact_form_10k",
+        "rule_page12_section_header_exact_form_10q",
+        "rule_page13_bold_cover_title_form_10k",
+        "rule_page13_bold_cover_title_form_10q"
+      ],
+      "added_rule": "rule_page13_bold_cover_title_form_10q",
+      "rule_cov": 0.1,
+      "rule_avg_cost": 2.8e-05
+    },
+    {
+      "cost": 0.001237,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_page12_section_header_exact_form_10k",
+        "rule_page12_section_header_exact_form_10q",
+        "rule_page13_bold_cover_title_form_10k",
+        "rule_page13_bold_cover_title_form_10q",
+        "rule_page12_bold_exact_form_8k"
+      ],
+      "added_rule": "rule_page12_bold_exact_form_8k",
+      "rule_cov": 0.4,
+      "rule_avg_cost": 0.001108
+    },
+    {
+      "cost": 0.001675,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_page12_section_header_exact_form_10k",
+        "rule_page12_section_header_exact_form_10q",
+        "rule_page13_bold_cover_title_form_10k",
+        "rule_page13_bold_cover_title_form_10q",
+        "rule_page12_bold_exact_form_8k",
+        "rule_news_release_financial_results_title_and_call"
+      ],
+      "added_rule": "rule_news_release_financial_results_title_and_call",
+      "rule_cov": 0.05,
+      "rule_avg_cost": 0.000438
+    }
+  ],
+  "query_table": {
+    "0.50": null,
+    "0.80": null,
+    "0.90": null,
+    "0.95": null,
+    "1.00": null
+  },
+  "knee_point": {
+    "cost": 2.1e-05,
+    "accuracy_match": 0.0,
+    "n_rules": 1,
+    "rules": [
+      "rule_page12_section_header_exact_form_10k"
+    ]
+  },
+  "phases": {
+    "coverage": "gpt54mini",
+    "verify": "gpt54",
+    "Phase_B_extras_added": 6,
+    "Phase_C_kept": 6
+  },
+  "llm_calls": {
+    "phase_2_qa": 120,
+    "phase_2_judge": 120,
+    "phase_B_qa": 140,
+    "phase_B_judge": 140,
+    "phase_C_qa": 120,
+    "phase_C_judge": 120
+  },
+  "token_usage": {
+    "input": 43851,
+    "output": 2287
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "question": "What is the exact name of the company (registrant) this document relates to?",
+  "question_slug": "what_is_the_exact_name_of_the_company_registrant_this_docume",
+  "mode": "agentic",
+  "model": "gpt54",
+  "selected_rules": [
+    "rule_page12_exact_name_label_sibling"
+  ],
+  "selected_avg_cost_ratio_sum": 0.0006907795400157973,
+  "min_cov": 1.0,
+  "mean_cov": 1.0,
+  "match_rate_on_sampled": 1.0,
+  "iterations": 3,
+  "verify_calls": 6,
+  "tool_llm_calls": 120,
+  "tool_input_tokens": 13804,
+  "tool_output_tokens": 798,
+  "latency_seconds": 277.2996573448181,
+  "rationale": "I started with the two cover-field heuristics plus a cheap fallback, then used drop-tests to remove anything unnecessary. `rule_page12_exact_name_label_sibling` alone preserved 100% sampled merge accuracy, while the broader tax/state-neighbor rule by itself missed CORNING and JOHNSON_JOHNSON, so the direct label-adjacency rule was the cheapest exact match. The sampled labels use the canonical question text `What is the registrant's exact name?`, so verification used that equivalent wording even though the output metadata keeps the requested long-form question."
+}

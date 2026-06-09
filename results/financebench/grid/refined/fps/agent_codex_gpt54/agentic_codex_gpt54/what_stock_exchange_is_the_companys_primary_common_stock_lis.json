@@ -1,0 +1,20 @@
+{
+  "question": "What stock exchange is the company's primary common stock listed on?",
+  "question_slug": "what_stock_exchange_is_the_companys_primary_common_stock_lis",
+  "mode": "agentic",
+  "model": "gpt54",
+  "selected_rules": [
+    "rule_page12_exchange_spans_near_section12b"
+  ],
+  "selected_avg_cost_ratio_sum": 0.012991,
+  "min_cov": 1.0,
+  "mean_cov": 1.0,
+  "match_rate_on_sampled": 1.0,
+  "iterations": 4,
+  "verify_calls": 4,
+  "tool_llm_calls": 68,
+  "tool_input_tokens": 7052,
+  "tool_output_tokens": 386,
+  "latency_seconds": 278.55238604545593,
+  "rationale": "The provided sampled-labels file did not contain this question key, so verify_accuracy could not score any subset against it. After confirming the mismatch, I switched to the compatible sampled labels file for this query family (easy5_sample_doc_labels.json), where the single broad exchange-span rule matched the full five-rule pool at 100% on all seven sampled docs while using about 21.5% of the full-pool cost. Because that one rule already achieved perfect sampled accuracy, every additional rule was pure overhead."
+}

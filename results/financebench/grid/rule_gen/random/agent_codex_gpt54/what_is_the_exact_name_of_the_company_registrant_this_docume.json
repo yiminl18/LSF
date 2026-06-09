@@ -1,0 +1,21 @@
+{
+  "question": "What is the exact name of the company (registrant) this document relates to?",
+  "question_slug": "what_is_the_exact_name_of_the_company_registrant_this_docume",
+  "sampling_strategy": "random",
+  "rule_gen_strategy": "agent_codex_gpt54",
+  "strategy_full": "agent_codex_gpt54",
+  "model": "gpt54",
+  "n_rules": 5,
+  "rules": [
+    "rule_page12_company_before_state_label",
+    "rule_page12_company_header_matching_path",
+    "rule_page12_company_suffix_section_header",
+    "rule_page12_cover_company_near_tax_or_state",
+    "rule_page12_exact_name_label_sibling"
+  ],
+  "input_tokens": 4523,
+  "output_tokens": 278,
+  "latency_seconds": 427.35,
+  "approx_cost_usd_gpt54_rate": 0.0084,
+  "timestamp": "2026-06-09T03:51:53.176915+00:00"
+}

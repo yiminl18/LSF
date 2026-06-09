@@ -1,0 +1,118 @@
+{
+  "question": "What is long-term debt at year-end (0 if none)?",
+  "question_slug": "what_is_longterm_debt_at_yearend_0_if_none",
+  "mode": "pareto_hybrid",
+  "selected_rules": [
+    "rule_selected_financial_data_longterm_debt_or_obligations",
+    "rule_mda_or_market_risk_debt_summary_tables",
+    "rule_debt_note_tables_with_carrying_or_face_value",
+    "rule_financial_statement_balance_sheet_debt_tables",
+    "rule_8k_cover_current_report_context"
+  ],
+  "covered_docs": [],
+  "baseline_accuracy": 0.2777777777777778,
+  "selector_accuracy": 0.0,
+  "frontier": [
+    {
+      "cost": 0.0,
+      "accuracy_match": 0.0,
+      "rules_admitted": [],
+      "added_rule": null,
+      "rule_cov": null,
+      "rule_avg_cost": null
+    },
+    {
+      "cost": 0.002461,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_selected_financial_data_longterm_debt_or_obligations"
+      ],
+      "added_rule": "rule_selected_financial_data_longterm_debt_or_obligations",
+      "rule_cov": 0.2778,
+      "rule_avg_cost": 0.002461
+    },
+    {
+      "cost": 0.003019,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_selected_financial_data_longterm_debt_or_obligations",
+        "rule_mda_or_market_risk_debt_summary_tables"
+      ],
+      "added_rule": "rule_mda_or_market_risk_debt_summary_tables",
+      "rule_cov": 0.0556,
+      "rule_avg_cost": 0.000558
+    },
+    {
+      "cost": 0.005953,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_selected_financial_data_longterm_debt_or_obligations",
+        "rule_mda_or_market_risk_debt_summary_tables",
+        "rule_debt_note_tables_with_carrying_or_face_value"
+      ],
+      "added_rule": "rule_debt_note_tables_with_carrying_or_face_value",
+      "rule_cov": 0.2222,
+      "rule_avg_cost": 0.002935
+    },
+    {
+      "cost": 0.017725,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_selected_financial_data_longterm_debt_or_obligations",
+        "rule_mda_or_market_risk_debt_summary_tables",
+        "rule_debt_note_tables_with_carrying_or_face_value",
+        "rule_financial_statement_balance_sheet_debt_tables"
+      ],
+      "added_rule": "rule_financial_statement_balance_sheet_debt_tables",
+      "rule_cov": 0.3333,
+      "rule_avg_cost": 0.011772
+    },
+    {
+      "cost": 0.019801,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_selected_financial_data_longterm_debt_or_obligations",
+        "rule_mda_or_market_risk_debt_summary_tables",
+        "rule_debt_note_tables_with_carrying_or_face_value",
+        "rule_financial_statement_balance_sheet_debt_tables",
+        "rule_8k_cover_current_report_context"
+      ],
+      "added_rule": "rule_8k_cover_current_report_context",
+      "rule_cov": 0.0,
+      "rule_avg_cost": 0.002076
+    }
+  ],
+  "query_table": {
+    "0.50": null,
+    "0.80": null,
+    "0.90": null,
+    "0.95": null,
+    "1.00": null
+  },
+  "knee_point": {
+    "cost": 0.002461,
+    "accuracy_match": 0.0,
+    "n_rules": 1,
+    "rules": [
+      "rule_selected_financial_data_longterm_debt_or_obligations"
+    ]
+  },
+  "phases": {
+    "coverage": "gpt54mini",
+    "verify": "gpt54",
+    "Phase_B_extras_added": 5,
+    "Phase_C_kept": 5
+  },
+  "llm_calls": {
+    "phase_2_qa": 25,
+    "phase_2_judge": 25,
+    "phase_B_qa": 30,
+    "phase_B_judge": 30,
+    "phase_C_qa": 25,
+    "phase_C_judge": 25
+  },
+  "token_usage": {
+    "input": 73285,
+    "output": 546
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "question": "What is the reporting period covered by this document (e.g. fiscal year ended, quarter ended, or event date)?",
+  "question_slug": "what_is_the_reporting_period_covered_by_this_document_eg_fis",
+  "mode": "agentic",
+  "model": "gpt54",
+  "selected_rules": [
+    "rule_page12_form_path_period",
+    "rule_page12_8k_event_line"
+  ],
+  "selected_avg_cost_ratio_sum": 0.002245436670973288,
+  "min_cov": 0.25,
+  "mean_cov": 0.5,
+  "match_rate_on_sampled": 1.0,
+  "iterations": 1,
+  "verify_calls": 1,
+  "tool_llm_calls": 32,
+  "tool_input_tokens": 5455,
+  "tool_output_tokens": 321,
+  "latency_seconds": 317.3746237754822,
+  "rationale": "The individual coverage cache was unavailable, so I used raw hit rates on the 16 baseline D* docs from eval_merge_base as the coverage proxy. rule_page12_form_path_period is the cheapest broad rule that reaches all baseline 10-K and 10-Q docs, while rule_page12_8k_event_line is the only rule that reaches the four baseline 8-K docs. That 2-rule union matched the full baseline on all 16 target docs in a single verify call, so I stopped without adding higher-cost redundant rules."
+}

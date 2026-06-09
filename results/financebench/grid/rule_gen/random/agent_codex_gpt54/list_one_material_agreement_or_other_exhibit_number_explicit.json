@@ -1,0 +1,21 @@
+{
+  "question": "List one material agreement or other exhibit number explicitly identified in the Exhibit Index (e.g., \"Exhibit 10.1: Credit Agreement\")—or record \"none listed\" if no material agreements are identified.",
+  "question_slug": "list_one_material_agreement_or_other_exhibit_number_explicit",
+  "sampling_strategy": "random",
+  "rule_gen_strategy": "agent_codex_gpt54",
+  "strategy_full": "agent_codex_gpt54",
+  "model": "gpt54",
+  "n_rules": 5,
+  "rules": [
+    "rule_early_8k_exhibit_tables",
+    "rule_early_8k_exhibit_text_lines",
+    "rule_exhibit_section_context_headers",
+    "rule_tables_after_exhibit_index_headers",
+    "rule_tables_after_item15_or_item6_exhibits"
+  ],
+  "input_tokens": 77407,
+  "output_tokens": 444,
+  "latency_seconds": 588.13,
+  "approx_cost_usd_gpt54_rate": 0.1012,
+  "timestamp": "2026-06-09T04:19:50.988865+00:00"
+}

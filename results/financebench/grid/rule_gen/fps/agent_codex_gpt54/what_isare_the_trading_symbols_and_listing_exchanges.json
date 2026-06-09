@@ -1,0 +1,21 @@
+{
+  "question": "What is/are the trading symbol(s) and listing exchange(s)?",
+  "question_slug": "what_isare_the_trading_symbols_and_listing_exchanges",
+  "sampling_strategy": "fps",
+  "rule_gen_strategy": "agent_codex_gpt54",
+  "strategy_full": "agent_codex_gpt54",
+  "model": "gpt54",
+  "n_rules": 5,
+  "rules": [
+    "rule_listing_exchange_spans_and_market_prose",
+    "rule_page12_listing_security_titles",
+    "rule_page12_listing_ticker_spans",
+    "rule_page12_section12b_listing_headers",
+    "rule_page12_section12b_listing_tables"
+  ],
+  "input_tokens": 8753,
+  "output_tokens": 370,
+  "latency_seconds": 615.47,
+  "approx_cost_usd_gpt54_rate": 0.0146,
+  "timestamp": "2026-06-09T04:46:24.497222+00:00"
+}

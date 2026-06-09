@@ -1,0 +1,22 @@
+{
+  "question": "What document type or SEC form is this (e.g. 10-K, 10-Q, 8-K, earnings release, annual report)?",
+  "question_slug": "what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning",
+  "sampling_strategy": "fps",
+  "rule_gen_strategy": "agent_codex_gpt54",
+  "strategy_full": "agent_codex_gpt54",
+  "model": "gpt54",
+  "n_rules": 6,
+  "rules": [
+    "rule_news_release_financial_results_title_and_call",
+    "rule_page12_bold_exact_form_8k",
+    "rule_page12_section_header_exact_form_10k",
+    "rule_page12_section_header_exact_form_10q",
+    "rule_page13_bold_cover_title_form_10k",
+    "rule_page13_bold_cover_title_form_10q"
+  ],
+  "input_tokens": 7195,
+  "output_tokens": 241,
+  "latency_seconds": 439.37,
+  "approx_cost_usd_gpt54_rate": 0.0114,
+  "timestamp": "2026-06-09T04:20:58.184459+00:00"
+}

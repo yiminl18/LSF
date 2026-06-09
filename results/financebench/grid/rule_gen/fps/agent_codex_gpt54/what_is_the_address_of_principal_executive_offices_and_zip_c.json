@@ -1,0 +1,21 @@
+{
+  "question": "What is the address of principal executive offices and ZIP code?",
+  "question_slug": "what_is_the_address_of_principal_executive_offices_and_zip_c",
+  "sampling_strategy": "fps",
+  "rule_gen_strategy": "agent_codex_gpt54",
+  "strategy_full": "agent_codex_gpt54",
+  "model": "gpt54",
+  "n_rules": 5,
+  "rules": [
+    "rule_early_address_or_components_before_offices_label",
+    "rule_early_inline_address_with_offices_label",
+    "rule_early_value_before_combined_address_zip_label",
+    "rule_early_value_before_zip_label",
+    "rule_early_zip_value_same_span_as_label"
+  ],
+  "input_tokens": 5605,
+  "output_tokens": 442,
+  "latency_seconds": 617.3,
+  "approx_cost_usd_gpt54_rate": 0.0114,
+  "timestamp": "2026-06-09T05:12:13.575838+00:00"
+}

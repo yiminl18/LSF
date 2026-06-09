@@ -1,0 +1,118 @@
+{
+  "question": "What is the address of principal executive offices and ZIP code?",
+  "question_slug": "what_is_the_address_of_principal_executive_offices_and_zip_c",
+  "mode": "pareto_hybrid",
+  "selected_rules": [
+    "rule_early_value_before_zip_label",
+    "rule_early_value_before_combined_address_zip_label",
+    "rule_early_address_or_components_before_offices_label",
+    "rule_early_inline_address_with_offices_label",
+    "rule_early_zip_value_same_span_as_label"
+  ],
+  "covered_docs": [],
+  "baseline_accuracy": 0.95,
+  "selector_accuracy": 0.0,
+  "frontier": [
+    {
+      "cost": 0.0,
+      "accuracy_match": 0.0,
+      "rules_admitted": [],
+      "added_rule": null,
+      "rule_cov": null,
+      "rule_avg_cost": null
+    },
+    {
+      "cost": 0.000147,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_early_value_before_zip_label"
+      ],
+      "added_rule": "rule_early_value_before_zip_label",
+      "rule_cov": 0.1,
+      "rule_avg_cost": 0.000147
+    },
+    {
+      "cost": 0.001347,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_early_value_before_zip_label",
+        "rule_early_value_before_combined_address_zip_label"
+      ],
+      "added_rule": "rule_early_value_before_combined_address_zip_label",
+      "rule_cov": 0.2,
+      "rule_avg_cost": 0.0012
+    },
+    {
+      "cost": 0.002593,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_early_value_before_zip_label",
+        "rule_early_value_before_combined_address_zip_label",
+        "rule_early_address_or_components_before_offices_label"
+      ],
+      "added_rule": "rule_early_address_or_components_before_offices_label",
+      "rule_cov": 0.1,
+      "rule_avg_cost": 0.001246
+    },
+    {
+      "cost": 0.005399,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_early_value_before_zip_label",
+        "rule_early_value_before_combined_address_zip_label",
+        "rule_early_address_or_components_before_offices_label",
+        "rule_early_inline_address_with_offices_label"
+      ],
+      "added_rule": "rule_early_inline_address_with_offices_label",
+      "rule_cov": 0.15,
+      "rule_avg_cost": 0.002806
+    },
+    {
+      "cost": 0.006057,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_early_value_before_zip_label",
+        "rule_early_value_before_combined_address_zip_label",
+        "rule_early_address_or_components_before_offices_label",
+        "rule_early_inline_address_with_offices_label",
+        "rule_early_zip_value_same_span_as_label"
+      ],
+      "added_rule": "rule_early_zip_value_same_span_as_label",
+      "rule_cov": 0.0,
+      "rule_avg_cost": 0.000658
+    }
+  ],
+  "query_table": {
+    "0.50": null,
+    "0.80": null,
+    "0.90": null,
+    "0.95": null,
+    "1.00": null
+  },
+  "knee_point": {
+    "cost": 0.000147,
+    "accuracy_match": 0.0,
+    "n_rules": 1,
+    "rules": [
+      "rule_early_value_before_zip_label"
+    ]
+  },
+  "phases": {
+    "coverage": "gpt54mini",
+    "verify": "gpt54",
+    "Phase_B_extras_added": 5,
+    "Phase_C_kept": 5
+  },
+  "llm_calls": {
+    "phase_2_qa": 95,
+    "phase_2_judge": 95,
+    "phase_B_qa": 114,
+    "phase_B_judge": 114,
+    "phase_C_qa": 95,
+    "phase_C_judge": 95
+  },
+  "token_usage": {
+    "input": 30705,
+    "output": 3478
+  }
+}

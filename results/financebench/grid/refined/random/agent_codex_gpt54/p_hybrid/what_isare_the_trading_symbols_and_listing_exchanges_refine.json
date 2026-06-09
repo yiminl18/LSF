@@ -1,0 +1,118 @@
+{
+  "question": "What is/are the trading symbol(s) and listing exchange(s)?",
+  "question_slug": "what_isare_the_trading_symbols_and_listing_exchanges",
+  "mode": "pareto_hybrid",
+  "selected_rules": [
+    "rule_item5_common_stock_symbol_exchange_sentence",
+    "rule_page1_exact_symbol_with_registration_context",
+    "rule_page1_section12b_symbol_exchange_table",
+    "rule_page1_cover_path_symbol_exchange_values",
+    "rule_page1_exact_exchange_with_registration_context"
+  ],
+  "covered_docs": [],
+  "baseline_accuracy": 1.0,
+  "selector_accuracy": 0.0,
+  "frontier": [
+    {
+      "cost": 0.0,
+      "accuracy_match": 0.0,
+      "rules_admitted": [],
+      "added_rule": null,
+      "rule_cov": null,
+      "rule_avg_cost": null
+    },
+    {
+      "cost": 0.000279,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_item5_common_stock_symbol_exchange_sentence"
+      ],
+      "added_rule": "rule_item5_common_stock_symbol_exchange_sentence",
+      "rule_cov": 0.4444,
+      "rule_avg_cost": 0.000279
+    },
+    {
+      "cost": 0.000629,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_item5_common_stock_symbol_exchange_sentence",
+        "rule_page1_exact_symbol_with_registration_context"
+      ],
+      "added_rule": "rule_page1_exact_symbol_with_registration_context",
+      "rule_cov": 0.4444,
+      "rule_avg_cost": 0.000349
+    },
+    {
+      "cost": 0.000832,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_item5_common_stock_symbol_exchange_sentence",
+        "rule_page1_exact_symbol_with_registration_context",
+        "rule_page1_section12b_symbol_exchange_table"
+      ],
+      "added_rule": "rule_page1_section12b_symbol_exchange_table",
+      "rule_cov": 0.1111,
+      "rule_avg_cost": 0.000203
+    },
+    {
+      "cost": 0.001211,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_item5_common_stock_symbol_exchange_sentence",
+        "rule_page1_exact_symbol_with_registration_context",
+        "rule_page1_section12b_symbol_exchange_table",
+        "rule_page1_cover_path_symbol_exchange_values"
+      ],
+      "added_rule": "rule_page1_cover_path_symbol_exchange_values",
+      "rule_cov": 0.1667,
+      "rule_avg_cost": 0.000379
+    },
+    {
+      "cost": 0.001509,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_item5_common_stock_symbol_exchange_sentence",
+        "rule_page1_exact_symbol_with_registration_context",
+        "rule_page1_section12b_symbol_exchange_table",
+        "rule_page1_cover_path_symbol_exchange_values",
+        "rule_page1_exact_exchange_with_registration_context"
+      ],
+      "added_rule": "rule_page1_exact_exchange_with_registration_context",
+      "rule_cov": 0.0,
+      "rule_avg_cost": 0.000298
+    }
+  ],
+  "query_table": {
+    "0.50": null,
+    "0.80": null,
+    "0.90": null,
+    "0.95": null,
+    "1.00": null
+  },
+  "knee_point": {
+    "cost": 0.000279,
+    "accuracy_match": 0.0,
+    "n_rules": 1,
+    "rules": [
+      "rule_item5_common_stock_symbol_exchange_sentence"
+    ]
+  },
+  "phases": {
+    "coverage": "gpt54mini",
+    "verify": "gpt54",
+    "Phase_B_extras_added": 5,
+    "Phase_C_kept": 5
+  },
+  "llm_calls": {
+    "phase_2_qa": 90,
+    "phase_2_judge": 90,
+    "phase_B_qa": 108,
+    "phase_B_judge": 108,
+    "phase_C_qa": 90,
+    "phase_C_judge": 90
+  },
+  "token_usage": {
+    "input": 33192,
+    "output": 2993
+  }
+}

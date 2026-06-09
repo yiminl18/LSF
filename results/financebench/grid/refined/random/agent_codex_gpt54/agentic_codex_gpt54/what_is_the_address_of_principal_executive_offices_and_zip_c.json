@@ -1,0 +1,21 @@
+{
+  "question": "What is the address of principal executive offices and ZIP code?",
+  "question_slug": "what_is_the_address_of_principal_executive_offices_and_zip_c",
+  "mode": "agentic",
+  "model": "gpt54",
+  "selected_rules": [
+    "rule_page12_cover_locality_fragments_before_offices_label",
+    "rule_page12_cover_zip_or_postcode_near_offices_label"
+  ],
+  "selected_avg_cost_ratio_sum": 0.0020480000000000003,
+  "min_cov": 0.5,
+  "mean_cov": 0.75,
+  "match_rate_on_sampled": 1.0,
+  "iterations": 2,
+  "verify_calls": 3,
+  "tool_llm_calls": 60,
+  "tool_input_tokens": 9807,
+  "tool_output_tokens": 689,
+  "latency_seconds": 281.86412620544434,
+  "rationale": "The cached coverage files were missing for this slug, so I profiled the rules locally on the sampled documents before spending verify budget. The locality-fragment rule was the only broad rule that fired on all 10 sampled docs, and adding the ZIP rule repaired the five cases where locality-only predictions dropped required ZIP or trailing address detail. This two-rule subset preserved the full-pool 10/10 merge accuracy, while reducing summed avg_cost_ratio from 0.004962 to 0.002048; a one-rule drop-test failed on five documents, so I kept the pair."
+}

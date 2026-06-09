@@ -1,0 +1,23 @@
+{
+  "question": "What document type or SEC form is this (e.g. 10-K, 10-Q, 8-K, earnings release, annual report)?",
+  "question_slug": "what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning",
+  "mode": "agentic",
+  "model": "gpt54",
+  "selected_rules": [
+    "rule_news_release_financial_results_title_and_call",
+    "rule_page12_bold_exact_form_8k",
+    "rule_page12_section_header_exact_form_10q",
+    "rule_page13_bold_cover_title_form_10k"
+  ],
+  "selected_avg_cost_ratio_sum": 0.001627,
+  "min_cov": 0.05,
+  "mean_cov": 0.25,
+  "match_rate_on_sampled": 1.0,
+  "iterations": 2,
+  "verify_calls": 2,
+  "tool_llm_calls": 60,
+  "tool_input_tokens": 7887,
+  "tool_output_tokens": 301,
+  "latency_seconds": 344.8692820072174,
+  "rationale": "I kept one non-redundant rule for each answer class actually needed on the merge-base target set: 10-K, 10-Q, 8-K, and earnings release. Local rule-hit analysis showed the second 10-K rule was redundant on those docs, and the chosen 10-Q rule was the cheaper of the two equivalent 10-Q options. The provided single-cluster label file had no labels for this question, so I derived a 20-doc verify label file from multi_cluster_all_labels.json restricted to the merge-base target docs; the selected 4-rule subset then achieved missed_in_D_star: [] with match_rate 1.0."
+}

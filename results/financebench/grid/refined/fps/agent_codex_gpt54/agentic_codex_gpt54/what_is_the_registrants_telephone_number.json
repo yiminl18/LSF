@@ -1,0 +1,21 @@
+{
+  "question": "What is the registrant's telephone number?",
+  "question_slug": "what_is_the_registrants_telephone_number",
+  "mode": "agentic",
+  "model": "gpt54",
+  "selected_rules": [
+    "rule_page1_compact_inline_registrant_telephone",
+    "rule_page1_phone_before_registrant_telephone_label"
+  ],
+  "selected_avg_cost_ratio_sum": 0.002333,
+  "min_cov": 0.3,
+  "mean_cov": 0.35,
+  "match_rate_on_sampled": 0.7,
+  "iterations": 2,
+  "verify_calls": 5,
+  "tool_llm_calls": 100,
+  "tool_input_tokens": 14741,
+  "tool_output_tokens": 782,
+  "latency_seconds": 348.450900554657,
+  "rationale": "The full 5-rule pool only reached 7/10 on the current sampled set under the mandated all_labeled verification mode, missing AMAZON_2016_10K, AMAZON_2018_10K, and COSTCO_2017_10K. Local rule-hit checks showed that only the compact inline rule and the phone-before-label rule contributed to any of those seven correct answers, and a 2-rule verify matched the full pool exactly at much lower cost. Because the individual coverage cache was absent, I measured sampled per-rule coverage with single-rule verify runs and kept the cheaper pair with cov 0.4 and 0.3."
+}

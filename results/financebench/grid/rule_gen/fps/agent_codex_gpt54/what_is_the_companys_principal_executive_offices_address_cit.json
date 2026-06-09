@@ -1,0 +1,21 @@
+{
+  "question": "What is the company's principal executive offices address (city and state/country) as stated in this document?",
+  "question_slug": "what_is_the_companys_principal_executive_offices_address_cit",
+  "sampling_strategy": "fps",
+  "rule_gen_strategy": "agent_codex_gpt54",
+  "strategy_full": "agent_codex_gpt54",
+  "model": "gpt54",
+  "n_rules": 5,
+  "rules": [
+    "rule_early_narrative_principal_offices_sentence",
+    "rule_page12_address_before_zip_label",
+    "rule_page12_address_span_before_label",
+    "rule_page12_inline_address_label_span",
+    "rule_page12_split_cover_address_components"
+  ],
+  "input_tokens": 10109,
+  "output_tokens": 642,
+  "latency_seconds": 702.48,
+  "approx_cost_usd_gpt54_rate": 0.0191,
+  "timestamp": "2026-06-09T04:13:38.816581+00:00"
+}

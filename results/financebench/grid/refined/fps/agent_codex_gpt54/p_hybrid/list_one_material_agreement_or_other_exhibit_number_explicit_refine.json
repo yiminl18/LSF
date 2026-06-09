@@ -1,0 +1,134 @@
+{
+  "question": "List one material agreement or other exhibit number explicitly identified in the Exhibit Index (e.g., \"Exhibit 10.1: Credit Agreement\")—or record \"none listed\" if no material agreements are identified.",
+  "question_slug": "list_one_material_agreement_or_other_exhibit_number_explicit",
+  "mode": "pareto_hybrid",
+  "selected_rules": [
+    "rule_exhibit_section_context_headers",
+    "rule_early_8k_exhibit_neighbor_window",
+    "rule_early_8k_exhibit_tables",
+    "rule_short_docs_without_exhibit_section_tail",
+    "rule_tables_after_exhibit_index_headers",
+    "rule_tables_after_item15_or_item6_exhibits"
+  ],
+  "covered_docs": [],
+  "baseline_accuracy": 0.25,
+  "selector_accuracy": 0.0,
+  "frontier": [
+    {
+      "cost": 0.0,
+      "accuracy_match": 0.0,
+      "rules_admitted": [],
+      "added_rule": null,
+      "rule_cov": null,
+      "rule_avg_cost": null
+    },
+    {
+      "cost": 0.002576,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_exhibit_section_context_headers"
+      ],
+      "added_rule": "rule_exhibit_section_context_headers",
+      "rule_cov": 0.25,
+      "rule_avg_cost": 0.002576
+    },
+    {
+      "cost": 0.009678,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_exhibit_section_context_headers",
+        "rule_early_8k_exhibit_neighbor_window"
+      ],
+      "added_rule": "rule_early_8k_exhibit_neighbor_window",
+      "rule_cov": 0.35,
+      "rule_avg_cost": 0.007101
+    },
+    {
+      "cost": 0.017266,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_exhibit_section_context_headers",
+        "rule_early_8k_exhibit_neighbor_window",
+        "rule_early_8k_exhibit_tables"
+      ],
+      "added_rule": "rule_early_8k_exhibit_tables",
+      "rule_cov": 0.35,
+      "rule_avg_cost": 0.007588
+    },
+    {
+      "cost": 0.02444,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_exhibit_section_context_headers",
+        "rule_early_8k_exhibit_neighbor_window",
+        "rule_early_8k_exhibit_tables",
+        "rule_short_docs_without_exhibit_section_tail"
+      ],
+      "added_rule": "rule_short_docs_without_exhibit_section_tail",
+      "rule_cov": 0.3,
+      "rule_avg_cost": 0.007174
+    },
+    {
+      "cost": 0.032077,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_exhibit_section_context_headers",
+        "rule_early_8k_exhibit_neighbor_window",
+        "rule_early_8k_exhibit_tables",
+        "rule_short_docs_without_exhibit_section_tail",
+        "rule_tables_after_exhibit_index_headers"
+      ],
+      "added_rule": "rule_tables_after_exhibit_index_headers",
+      "rule_cov": 0.3,
+      "rule_avg_cost": 0.007637
+    },
+    {
+      "cost": 0.046108,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_exhibit_section_context_headers",
+        "rule_early_8k_exhibit_neighbor_window",
+        "rule_early_8k_exhibit_tables",
+        "rule_short_docs_without_exhibit_section_tail",
+        "rule_tables_after_exhibit_index_headers",
+        "rule_tables_after_item15_or_item6_exhibits"
+      ],
+      "added_rule": "rule_tables_after_item15_or_item6_exhibits",
+      "rule_cov": 0.25,
+      "rule_avg_cost": 0.014032
+    }
+  ],
+  "query_table": {
+    "0.50": null,
+    "0.80": null,
+    "0.90": null,
+    "0.95": null,
+    "1.00": null
+  },
+  "knee_point": {
+    "cost": 0.002576,
+    "accuracy_match": 0.0,
+    "n_rules": 1,
+    "rules": [
+      "rule_exhibit_section_context_headers"
+    ]
+  },
+  "phases": {
+    "coverage": "gpt54mini",
+    "verify": "gpt54",
+    "Phase_B_extras_added": 6,
+    "Phase_C_kept": 6
+  },
+  "llm_calls": {
+    "phase_2_qa": 30,
+    "phase_2_judge": 30,
+    "phase_B_qa": 35,
+    "phase_B_judge": 35,
+    "phase_C_qa": 30,
+    "phase_C_judge": 30
+  },
+  "token_usage": {
+    "input": 41542,
+    "output": 757
+  }
+}

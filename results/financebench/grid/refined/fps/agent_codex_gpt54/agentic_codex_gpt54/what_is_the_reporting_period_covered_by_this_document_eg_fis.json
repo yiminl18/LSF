@@ -1,0 +1,20 @@
+{
+  "question": "What is the reporting period covered by this document (e.g. fiscal year ended, quarter ended, or event date)?",
+  "question_slug": "what_is_the_reporting_period_covered_by_this_document_eg_fis",
+  "mode": "agentic",
+  "model": "gpt54",
+  "selected_rules": [
+    "rule_page13_fiscal_year_ended_cover_spans"
+  ],
+  "selected_avg_cost_ratio_sum": 7.6e-05,
+  "min_cov": 0.9,
+  "mean_cov": 0.9,
+  "match_rate_on_sampled": 0.9,
+  "iterations": 2,
+  "verify_calls": 5,
+  "tool_llm_calls": 98,
+  "tool_input_tokens": 12203,
+  "tool_output_tokens": 875,
+  "latency_seconds": 391.98250913619995,
+  "rationale": "The sampled set for this run turned out to be entirely 10-Ks, so the quarter and 8-K rules added no value on these documents. After reconstructing valid target labels for the sampled docs from multi_cluster synthetic labels plus the existing 10-K cover-date label where needed, the single broad fiscal-year cover rule matched the full pool exactly on the 9 docs the full pool solved and reduced total cost from 0.007927 to 0.000076. The full pool and the selected subset both missed NIKE_2021_10K, so the hard constraint is satisfied on D*."
+}

@@ -1,0 +1,118 @@
+{
+  "question": "What is the registrant's telephone number?",
+  "question_slug": "what_is_the_registrants_telephone_number",
+  "mode": "pareto_hybrid",
+  "selected_rules": [
+    "rule_page1_text_phone_before_telephone_label",
+    "rule_page1_phone_before_area_code_cover_label",
+    "rule_phone_with_principal_executive_offices_context",
+    "rule_page1_header_phone_adjacent_telephone_label",
+    "rule_page1_inline_telephone_label_with_phone"
+  ],
+  "covered_docs": [],
+  "baseline_accuracy": 1.0,
+  "selector_accuracy": 0.0,
+  "frontier": [
+    {
+      "cost": 0.0,
+      "accuracy_match": 0.0,
+      "rules_admitted": [],
+      "added_rule": null,
+      "rule_cov": null,
+      "rule_avg_cost": null
+    },
+    {
+      "cost": 2e-05,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_page1_text_phone_before_telephone_label"
+      ],
+      "added_rule": "rule_page1_text_phone_before_telephone_label",
+      "rule_cov": 0.2222,
+      "rule_avg_cost": 2e-05
+    },
+    {
+      "cost": 0.000177,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_page1_text_phone_before_telephone_label",
+        "rule_page1_phone_before_area_code_cover_label"
+      ],
+      "added_rule": "rule_page1_phone_before_area_code_cover_label",
+      "rule_cov": 0.5,
+      "rule_avg_cost": 0.000157
+    },
+    {
+      "cost": 0.000338,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_page1_text_phone_before_telephone_label",
+        "rule_page1_phone_before_area_code_cover_label",
+        "rule_phone_with_principal_executive_offices_context"
+      ],
+      "added_rule": "rule_phone_with_principal_executive_offices_context",
+      "rule_cov": 0.1667,
+      "rule_avg_cost": 0.00016
+    },
+    {
+      "cost": 0.000683,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_page1_text_phone_before_telephone_label",
+        "rule_page1_phone_before_area_code_cover_label",
+        "rule_phone_with_principal_executive_offices_context",
+        "rule_page1_header_phone_adjacent_telephone_label"
+      ],
+      "added_rule": "rule_page1_header_phone_adjacent_telephone_label",
+      "rule_cov": 0.2222,
+      "rule_avg_cost": 0.000345
+    },
+    {
+      "cost": 0.001689,
+      "accuracy_match": 0.0,
+      "rules_admitted": [
+        "rule_page1_text_phone_before_telephone_label",
+        "rule_page1_phone_before_area_code_cover_label",
+        "rule_phone_with_principal_executive_offices_context",
+        "rule_page1_header_phone_adjacent_telephone_label",
+        "rule_page1_inline_telephone_label_with_phone"
+      ],
+      "added_rule": "rule_page1_inline_telephone_label_with_phone",
+      "rule_cov": 0.4444,
+      "rule_avg_cost": 0.001005
+    }
+  ],
+  "query_table": {
+    "0.50": null,
+    "0.80": null,
+    "0.90": null,
+    "0.95": null,
+    "1.00": null
+  },
+  "knee_point": {
+    "cost": 2e-05,
+    "accuracy_match": 0.0,
+    "n_rules": 1,
+    "rules": [
+      "rule_page1_text_phone_before_telephone_label"
+    ]
+  },
+  "phases": {
+    "coverage": "gpt54mini",
+    "verify": "gpt54",
+    "Phase_B_extras_added": 5,
+    "Phase_C_kept": 5
+  },
+  "llm_calls": {
+    "phase_2_qa": 90,
+    "phase_2_judge": 90,
+    "phase_B_qa": 108,
+    "phase_B_judge": 108,
+    "phase_C_qa": 90,
+    "phase_C_judge": 90
+  },
+  "token_usage": {
+    "input": 29090,
+    "output": 2698
+  }
+}
