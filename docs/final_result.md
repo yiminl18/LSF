@@ -439,6 +439,32 @@ debt, trading symbols). The pipelines' real advantage is **cost** — `agentic+f
 the same 6 questions at **0.0090** (≈0.85 acc) vs the per-pair baseline's **1.45** (≈161× cheaper)
 and even the amortized "All" baseline's 0.15 (≈17× cheaper), at 4–9 accuracy points lower.
 
+### FINANCEBENCH — agent_codex grid (the proper 12-combo grid, agent_codex only)
+
+The canonical `sampling × rule_gen × refine` grid was finally run for financebench — but **only
+the 6 `agent_codex` combos** (the 6 `llm_coarse` combos time out: llm_coarse's broad prompt
+overflows on finance's ~88k-token docs, exactly as on officeqa). Run on the **multi_cluster
+86-doc subset** (14 of the 100 docs — the 10-Q/8-K filings — lack reconstructed JSON), 12
+questions; `random` = 18 sampled / 68 unsampled, `fps` = 20 / 66 (fps re-sampled on the 86-doc
+pool). Cost = combined apply `retrieved/doc`.
+
+| Strategy (sampling / rule_gen / refine) | sAcc | uAcc | combined acc | cost ratio |
+|---|---:|---:|---:|---:|
+| fps / agent_codex / agentic_codex | 0.871 | 0.806 | **0.821** | **0.0056** |
+| fps / agent_codex / p_mini | 0.863 | 0.806 | 0.819 | 0.0067 |
+| fps / agent_codex / p_hybrid | 0.858 | 0.802 | 0.815 | 0.0067 |
+| random / agent_codex / agentic_codex | 0.875 | 0.798 | 0.814 | 0.0059 |
+| random / agent_codex / p_mini | 0.861 | 0.797 | 0.810 | 0.0060 |
+| random / agent_codex / p_hybrid | 0.866 | 0.794 | 0.809 | 0.0060 |
+
+**All 6 cluster at 0.81–0.82 accuracy for ~0.006 cost** — the cheapest pipelines on financebench
+(rules retrieve ~0.6% of each doc). `fps` slightly beats `random` (0.815–0.821 vs 0.809–0.814);
+`agentic_codex` is the best+cheapest refiner (fps: 0.821 @ 0.0056); refiner choice moves accuracy
+≤1 pt. Consistent with nopv/court agent_codex (~0.84). Notably, agent_codex here (0.82) trails
+`agentic_full_data_adaptive` (0.923) — its agentic large-sample rule-gen beats the fixed 20-doc
+grid sample on finance. `llm_coarse` grid combos are **not reported — they do not complete** on
+these docs.
+
 ---
 
 ## OFFICEQA
