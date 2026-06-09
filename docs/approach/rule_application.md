@@ -2,25 +2,30 @@
 
 This document describes the rule application strategies in the LSF codebase. Each takes a loaded document and one or more span-retrieval rules, retrieves matching spans, and calls an LLM to answer a question from the retrieved text.
 
-Two production strategies are documented:
+Three production strategies are documented:
 
 1. **Merge** — apply a fixed rule set, take the union, ask the LLM once.
 2. **Merge + Default (fallback)** — same as Merge, but if a cheap gate model judges the retrieved text insufficient, retry with the full rule pool.
+3. **Cost-Descent** — like Default, but on the hit-path it keeps shrinking the context toward the *cheapest* rules (cheap-gated halving) so the expensive model reads the smallest still-sufficient subset. See [Strategy 3](#strategy-3--cost-descent) and the full design/analysis in [`rule_apply_descent.md`](rule_apply_descent.md).
 
-A third utility, **Individual**, is kept in the codebase for debugging and per-rule diagnostics; it is not a deployment strategy. See the [Debugging utility](#debugging-utility--individual) section at the end.
+A fourth utility, **Individual**, is kept in the codebase for debugging and per-rule diagnostics; it is not a deployment strategy. See the [Debugging utility](#debugging-utility--individual) section at the end.
 
 ---
 
 ## Strategy comparison
 
-| Aspect | Merge | Merge + Default (fallback) |
-|--------|-------|---------------------------|
-| Code | `src/rule_apply/merge.py` | `src/rule_apply/default.py` |
-| Rules input | `rule_names: list[str]` (the refined subset) | refined subset + full pool |
-| Retrieval | Apply all rules, union + dedupe spans, LLM answers once | Merge over refined subset first; on gate "NO" verdict, re-merge over full pool and answer from that |
-| LLM calls per doc | 1 (gpt54) | 2 on miss-path (gpt54mini gate + gpt54), 1 on hit-path |
-| Best when | You trust the refined subset to cover unseen docs | You want refined-set cost on most docs and full-pool safety net on the rest |
-| Reference results | sAcc/uAcc as reported in `rule_refinement.md` per selector | uAcc 0.892 at cost_u 0.030 (single cluster); uAcc 0.940 at cost_u 0.009 (multi cluster) |
+| Aspect | Merge | Merge + Default (fallback) | Cost-Descent |
+|--------|-------|---------------------------|--------------|
+| Code | `src/rule_apply/merge.py` | `src/rule_apply/default.py` | `src/rule_apply/descent.py` |
+| Rules input | `rule_names: list[str]` (the refined subset) | refined subset + full pool | refined subset + full pool |
+| Retrieval | Apply all rules, union + dedupe spans, LLM answers once | Merge over refined subset first; on gate "NO" verdict, re-merge over full pool and answer from that | Cost-sort the refined rules; halve toward the cheapest while the gate says YES; answer from the smallest passing subset (full-pool fallback if even the full refined set fails) |
+| gpt54 calls per doc | 1 | 1 (hit) / 1 (miss) | **1** (always) |
+| gpt54mini gate calls per doc | 0 | 1 | `1 + ⌊log₂ n⌋` (hit) / 1 (miss) |
+| gpt54 context (cost) | full refined retrieval | refined (hit) / full pool (miss) | **smallest passing subset ≤ refined** (hit) / full pool (miss) |
+| Best when | You trust the refined subset to cover unseen docs | You want refined-set cost on most docs and full-pool safety net on the rest | You want to push cost below the refined-set retrieval when the answer concentrates in a few cheap rules |
+| Reference results | sAcc/uAcc as reported in `rule_refinement.md` per selector | uAcc 0.892 at cost_u 0.030 (single cluster); uAcc 0.940 at cost_u 0.009 (multi cluster) | *not yet benchmarked* |
+
+> **Cost accounting (Cost-Descent):** both gpt54mini and gpt54 tokens are logged, but the reported **average cost ratio uses gpt54 tokens only** — the single gpt54 context size divided by doc tokens. gpt54mini gate tokens are excluded from the cost metric.
 
 ---
 
@@ -149,6 +154,61 @@ Matches the full-pool uAcc (0.892) at 18% of base retrieval cost (0.030 vs 0.169
 | **0.940** | **0.009** | 11.2% |
 
 Beats the full-pool baseline (0.935) at 6.5× lower cost.
+
+---
+
+## Strategy 3 — Cost-Descent
+
+**Code:** `src/rule_apply/descent.py` · **Design + analysis:** [`rule_apply_descent.md`](rule_apply_descent.md)
+
+### Description
+
+A deployment-time strategy that, like Default, retrieves over a refined subset and gates with gpt54mini — but instead of feeding the *whole* refined retrieval to gpt54, it shrinks the context toward the **cheapest** rules while the gate still finds the answer, then answers from the smallest passing subset. The expensive model is called **exactly once**; only the size of its context changes. Reduces to Default at both ends (single-rule sets, immediate gate failure, or refined-set failure → full-pool fallback).
+
+Rule source: any refined subset + the corresponding full pool — **or** the rule set an agent returns directly in the rule-end-to-end strategy (`agentic_rule_full_data`), in which case the applied set and fallback pool can be the same folder.
+
+### Algorithm (per doc at inference)
+
+1. Sort refined rules by **per-doc cost** ascending — a rule's cost = the tokens it retrieves on *this* document. `top-k` = the `k` cheapest rules (nested: `top-1 ⊂ … ⊂ top-n`).
+2. Retrieve `top-n` (all refined). Ask **gpt54mini** if it contains the answer.
+   - **NO** → re-merge over the **full pool**, answer with **gpt54**. (identical to Default's miss-path)
+   - **YES** → descend.
+3. Test `top-n/2`. If gpt54mini says YES, accept it and recurse to `top-n/4`, … down to `top-1`. The first **NO** stops the descent.
+4. Answer once with **gpt54** on the **last YES level** (the smallest passing subset).
+
+### Interface
+
+```python
+def apply_with_descent(
+    document, question,
+    refined_rules: list[str], all_rules: list[str],
+    rule_folder: Path, fallback_folder: Path | None = None,   # refined / full-pool dirs
+    relevance_model="gpt54mini", qa_model="gpt54",
+) -> dict
+```
+
+Wired into `src/pipeline.py` as `apply_strategy="descent"` (requires `refine_strategy != "none"`, like `default`).
+
+### Per-doc output (additions over Default)
+
+```json
+{
+  "strategy": "descent",
+  "used_fallback": false,
+  "final_k": 2,
+  "final_n": 8,
+  "descent_trace": [
+    {"k": 8, "tokens": 412, "verdict": "yes"},
+    {"k": 4, "tokens": 210, "verdict": "yes"},
+    {"k": 2, "tokens": 96,  "verdict": "yes"},
+    {"k": 1, "tokens": 38,  "verdict": "no"}
+  ],
+  "retrieved_token_count": 96,
+  "relevance_input_tokens": 740, "relevance_output_tokens": 4
+}
+```
+
+`retrieved_token_count` is the gpt54 context size (here `top-2` = 96 tokens) — the only quantity that enters the cost ratio. `final_k/final_n` records how far it shrank.
 
 ---
 

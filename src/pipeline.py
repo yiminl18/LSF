@@ -59,7 +59,7 @@ REFINE_STRATEGIES   = (
     "agentic",
     "agentic_codex", "agentic_codex_gpt54", "agentic_codex_gpt54mini",
 )
-APPLY_STRATEGIES    = ("merge", "default")
+APPLY_STRATEGIES    = ("merge", "default", "descent")
 
 # Suffix → model alias. Strategies ending in `_gpt54` / `_gpt54mini` are model-explicit
 # variants of an underlying base strategy. The base strategy (no suffix) defaults to gpt54.
@@ -1019,6 +1019,48 @@ def _apply_one(
             "relevance_output_tokens": rel_out,
         }
 
+    if apply_strategy == "descent":
+        if fallback_folder is None:
+            raise ValueError("apply_strategy='descent' requires a fallback (Stage 2 pool)")
+        # Cost-descent halving prune. refined rules live in rule_folder, the full
+        # pool in fallback_folder (different parents in the grid layout). The
+        # standalone implementation takes both folders directly.
+        import time
+        from rule_apply.descent import apply_with_descent
+
+        full_names = _list_rule_names(fallback_folder)
+        t0 = time.time()
+        res = apply_with_descent(
+            document        = document,
+            question        = question,
+            refined_rules   = rule_names,
+            all_rules       = full_names,
+            rule_folder     = rule_folder,
+            fallback_folder = fallback_folder,
+            relevance_model = "gpt54mini",
+            qa_model        = model,
+        )
+        latency = time.time() - t0
+
+        toks = res.get("tokens", {})
+        return {
+            "doc_name":                document.get("doc_name"),
+            "strategy":                "descent",
+            "predicted_answer":        res.get("predicted"),
+            "retrieved_text":          res.get("retrieved_text"),
+            # cost = the single gpt54 context size; gpt54mini is logged but excluded
+            "retrieved_token_count":   res.get("retrieved_tokens_used", 0) or 0,
+            "used_fallback":           res.get("fallback_triggered"),
+            "final_k":                 res.get("final_k"),
+            "final_n":                 res.get("final_n"),
+            "descent_trace":           res.get("descent_trace"),
+            "latency_seconds":         round(latency, 3),
+            "input_tokens":            toks.get("gpt54_in", 0),
+            "output_tokens":           toks.get("gpt54_out", 0),
+            "relevance_input_tokens":  toks.get("mini_in", 0),
+            "relevance_output_tokens": toks.get("mini_out", 0),
+        }
+
     raise ValueError(f"Unknown apply_strategy: {apply_strategy!r}")
 
 
@@ -1046,7 +1088,7 @@ def run_pipeline(
       sampling_strategy : {"random", "fps"}
       rule_gen_strategy : {"llm_coarse", "agent_langchain", "agent_claude", "agent_codex"}
       refine_strategy   : {"none", "v1", "p_mini", "p_gpt54", "p_proxy", "p_v2", "p_v3", "agentic"}
-      apply_strategy    : {"merge", "default"}
+      apply_strategy    : {"merge", "default", "descent"}
 
     Returns the same dict that is also persisted to {output_dir}/pipeline_summary.json.
     """
@@ -1059,8 +1101,8 @@ def run_pipeline(
         raise ValueError(f"refine_strategy must be one of {REFINE_STRATEGIES}, got {refine_strategy!r}")
     if apply_strategy not in APPLY_STRATEGIES:
         raise ValueError(f"apply_strategy must be one of {APPLY_STRATEGIES}, got {apply_strategy!r}")
-    if apply_strategy == "default" and refine_strategy == "none":
-        raise ValueError("apply_strategy='default' needs a refined subset; pick a refine_strategy != 'none'.")
+    if apply_strategy in ("default", "descent") and refine_strategy == "none":
+        raise ValueError(f"apply_strategy={apply_strategy!r} needs a refined subset; pick a refine_strategy != 'none'.")
 
     # Staged execution: run stages up to and including `stop_after`, then stop.
     # Every stage is idempotent (skip-existing on disk), so a later invocation
@@ -1173,7 +1215,7 @@ def run_pipeline(
                     refined_root=refined_root, cache_root=cache_root,
                     model=model, skip_existing=skip_existing,
                 )
-                fallback_folder = rule_folder_gen if apply_strategy == "default" else None
+                fallback_folder = rule_folder_gen if apply_strategy in ("default", "descent") else None
                 n_rules_refined = len(_list_rule_names(effective_folder))
 
             if not _run("apply"):
