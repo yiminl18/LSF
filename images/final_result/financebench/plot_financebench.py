@@ -37,7 +37,7 @@ DATA = [
     ("Ablation 1", 0.923, 0.0135, "ablation"),   # all_docs / agentic_full_data_adaptive (gpt54)
     ("Ablation 2", 0.915, 0.0030, "ablation"),   # fps / agent_codex / p_hybrid (gpt54)
     # LSF methods
-    ("LSF (LLM rule-gen)",   0.953, 0.0114, "lsf_llm"),    # random / llm_coarse / p_hybrid (gpt54)
+    ("LSF (LLM rule-gen)",   0.959, 0.0114, "lsf_llm"),    # random / llm_coarse / p_hybrid (gpt54)
     ("LSF (agent rule-gen)", 0.916, 0.0021, "lsf_agent"),  # fps / agent_codex / agentic_codex (gpt54)
 ]
 

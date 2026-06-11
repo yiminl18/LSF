@@ -35,7 +35,7 @@ STRATS = [
         dict(color="#7f7f7f", ls="-.", marker="o")),
     ("Ablation 2: fps/agent_codex/p_hybrid",  0.915, AGENT_CODEX_RL_TOK, 0.0030 * DOC_TOK_PLAIN,
         dict(color="#555555", ls="-.", marker="s")),
-    ("LSF (LLM rule-gen): random/llm_coarse/p_hybrid", 0.953, LLM_COARSE_RL_TOK, 0.0114 * DOC_TOK_PLAIN,
+    ("LSF (LLM rule-gen): random/llm_coarse/p_hybrid", 0.959, LLM_COARSE_RL_TOK, 0.0114 * DOC_TOK_PLAIN,
         dict(color="#9B59B6", ls="--", marker="o")),
     ("LSF (agent rule-gen): fps/agent_codex/agentic_codex", 0.916, AGENT_CODEX_RL_TOK, 0.0021 * DOC_TOK_PLAIN,
         dict(color="#1f9e89", ls="--", marker="*")),
