@@ -1,15 +1,18 @@
 #!/usr/bin/env python3
-"""Accuracy vs. cost-ratio scatter for FINANCEBENCH (baselines + legacy pipelines).
+"""Accuracy vs. cost-ratio scatter for FINANCEBENCH (selected strategies, 10 easy questions).
 
-Data source: the FINANCEBENCH section in docs/final_result.md.
-  NOTE: financebench has NO 12-combo grid. These are 5 pre-existing legacy pipelines
-  (single_cluster / multi_clusters). RL (rule-learning) tokens were not recorded for them,
-  so the cost ratio shown is the COMBINED APPLY cost only:
-      Accuracy   = (ns*sAcc + nu*uAcc) / (ns+nu)
-      Cost ratio = combined apply retrieved/doc over both splits
-  Baselines: per-pair / amortized input/doc token ratio.
+Mirrors images/final_result/nopv/plot_nopv.py. Data source: the FINANCEBENCH tables in
+docs/final_result.md (the 10-easy-question accuracy/cost, QA cost ratio — apply only,
+RL cost NOT folded in).
 
-Cost spans ~0.014 to ~1.45, so the y-axis is log-scaled.
+8 curated strategies = 4 baselines + 2 ablations + 2 LSF methods, on the 10 easy questions
+(the 12 multi_cluster questions minus long-term debt + exhibit/material-agreement):
+  LSF (LLM rule-gen)   = random / llm_coarse / p_hybrid     (gpt54)
+  LSF (agent rule-gen) = fps / agent_codex / agentic_codex   (gpt54)
+  Ablation 1           = all_docs / agentic_full_data_adaptive (gpt54)
+  Ablation 2           = fps / agent_codex / p_hybrid          (gpt54)  [distinct agent_codex refiner]
+
+Cost spans ~0.002 to ~1.45, so the y-axis is log-scaled.
 Run:  python3 images/final_result/financebench/plot_financebench.py
 Output: images/final_result/financebench/financebench_accuracy_vs_cost.png
 """
@@ -18,47 +21,70 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-# (label, accuracy, cost_ratio, group)
+# (label, accuracy, cost_ratio, group) — easy-10 accuracy + QA cost ratio (apply only)
 DATA = [
-    # baselines (Codex)
-    ("B1 Codex QA (per-pair) gpt54",     0.931, 1.45, "baseline"),
-    ("B1 Codex QA (per-pair) gpt54mini", 0.878, 1.30, "baseline"),
-    ("B2 Codex QA All gpt54",            0.861, 0.15, "baseline"),
-    ("B2 Codex QA All gpt54mini",        0.820, 0.17, "baseline"),
-    # legacy pipelines
-    ("multi/llm_coarse/raw gpt54",       0.846, 0.0829, "pipeline"),
-    ("single/agent/raw opus47",          0.794, 0.1217, "pipeline"),
-    ("single/llm_coarse/raw gpt54",      0.772, 0.1076, "pipeline"),
-    ("single/agent/refined gpt54",       0.758, 0.0364, "pipeline"),
-    ("multi/llm_coarse/raw opus47",      0.716, 0.0137, "pipeline"),
+    # baselines (Codex, no rules)
+    ("Baseline 1: Codex QA per-pair (gpt54)",     0.986, 1.45,  "baseline"),
+    ("Baseline 1: Codex QA per-pair (gpt54mini)", 0.976, 1.30,  "baseline"),
+    ("Baseline 2: Codex QA All (gpt54)",          0.957, 0.15,  "baseline"),
+    ("Baseline 2: Codex QA All (gpt54mini)",      0.960, 0.17,  "baseline"),
+    # ablations
+    ("Ablation 1", 0.967, 0.0135, "ablation"),   # all_docs / agentic_full_data_adaptive (gpt54)
+    ("Ablation 2", 0.915, 0.0030, "ablation"),   # fps / agent_codex / p_hybrid (gpt54)
+    # LSF methods
+    ("LSF (LLM rule-gen)",   0.953, 0.0114, "lsf_llm"),    # random / llm_coarse / p_hybrid (gpt54)
+    ("LSF (agent rule-gen)", 0.916, 0.0021, "lsf_agent"),  # fps / agent_codex / agentic_codex (gpt54)
 ]
 
 STYLE = {
-    "baseline":        dict(color="#d62728", marker="X", s=130, label="Baseline (Codex, no rules)"),
-    "pipeline":        dict(color="#2ca02c", marker="s", s=95,  label="LSF pipeline (legacy)"),
+    "baseline":  dict(color="#d62728", marker="X", s=140, label="Baseline (no rules)"),
+    "ablation":  dict(color="#7f7f7f", marker="D", s=95,  label="Ablation"),
+    "lsf_llm":   dict(color="#1f77b4", marker="*", s=240, label="LSF (LLM rule-gen)"),
+    "lsf_agent": dict(color="#2ca02c", marker="*", s=240, label="LSF (agent rule-gen)"),
 }
 
-fig, ax = plt.subplots(figsize=(9, 6.5))
+fig, ax = plt.subplots(figsize=(11, 7))
+
 for group, st in STYLE.items():
     xs = [d[1] for d in DATA if d[3] == group]
     ys = [d[2] for d in DATA if d[3] == group]
     ax.scatter(xs, ys, edgecolors="black", linewidths=0.6, alpha=0.9, **st)
 
+# Per-label offsets (points) with leader lines so labels never overlap.
+LABEL_OFFSETS = {
+    "Baseline 1: Codex QA per-pair (gpt54)":     (-12,  16, "right"),
+    "Baseline 1: Codex QA per-pair (gpt54mini)": (-12, -20, "right"),
+    "Baseline 2: Codex QA All (gpt54)":          ( 14, -16, "left"),
+    "Baseline 2: Codex QA All (gpt54mini)":      ( 14,  12, "left"),
+    "Ablation 1":                                (-14,  22, "right"),
+    "Ablation 2":                                ( 26,  20, "left"),
+    "LSF (LLM rule-gen)":                        (-14,  22, "right"),
+    "LSF (agent rule-gen)":                      (-16, -26, "right"),
+}
+
 for label, acc, cost, group in DATA:
-    ax.annotate(label, (acc, cost), fontsize=6.5, xytext=(4, 3),
-                textcoords="offset points", color="#333333")
+    dx, dy, ha = LABEL_OFFSETS[label]
+    text = f"{label} ({acc:.3f}, {cost:.4g})"
+    ax.annotate(text, (acc, cost), fontsize=9,
+                xytext=(dx, dy), textcoords="offset points",
+                ha=ha, color="#333333",
+                arrowprops=dict(arrowstyle="-", lw=0.5, color="#888888",
+                                shrinkA=0, shrinkB=3))
 
 ax.set_yscale("log")
-ax.set_xlabel("Accuracy  (weighted over sampled + unsampled docs)", fontsize=11)
-ax.set_ylabel("Cost ratio  (log scale; apply tokens / doc tokens, per doc)", fontsize=11)
-ax.set_title("FINANCEBENCH — Accuracy vs. Cost ratio (legacy pipelines + baselines)",
-             fontsize=12.5, fontweight="bold")
+ax.set_xlim(0.88, 1.0)
+ax.set_ylim(0.0013, 4.0)
+ax.set_xlabel("Accuracy  (10 easy questions; weighted over 18–20 sampled + 66–68 unsampled docs)",
+              fontsize=11)
+ax.set_ylabel("Cost ratio  (log scale; tokens / doc tokens, per doc)", fontsize=11)
+ax.set_title("FINANCEBENCH — Accuracy vs. Cost ratio (selected strategies, 10 easy questions)",
+             fontsize=13, fontweight="bold")
 ax.grid(True, which="both", ls="--", lw=0.4, alpha=0.5)
 ax.axhline(1.0, color="gray", lw=0.8, ls=":")
-ax.text(0.72, 1.08, "cost = 1 doc", fontsize=7, color="gray")
+ax.text(0.882, 1.08, "cost = 1 doc", fontsize=7, color="gray")
 ax.legend(loc="center left", frameon=True, fontsize=9)
-ax.text(0.005, 0.02, "← lower cost, higher accuracy is better (bottom-right);  RL cost not included (unrecorded)",
-        transform=ax.transAxes, fontsize=7.5, color="#555555")
+ax.text(0.005, 0.02, "← lower cost, higher accuracy is better (bottom-right)",
+        transform=ax.transAxes, fontsize=8, color="#555555")
 
 fig.tight_layout()
 out = Path(__file__).resolve().parent / "financebench_accuracy_vs_cost.png"
