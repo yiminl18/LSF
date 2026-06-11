@@ -40,9 +40,9 @@ ABLATION1_RL_TOK   = (36_531_055 + 328_785) / 12      # measured (full price; no
 
 # label, acc(easy10), one_time_tok, per_doc_tok, style
 STRATS = [
-    ("Baseline 1: Codex QA per-pair (gpt54)", 0.986, 0.0,                1.45  * DOC_TOK_PLAIN,
+    ("Baseline 1: Codex QA per-pair (gpt54)", 0.966, 0.0,                1.45  * DOC_TOK_PLAIN,
         dict(color="#5B8DD9", ls="-",  marker="^")),
-    ("Baseline 2: Codex QA All (gpt54)",      0.957, 0.0,                0.35  * DOC_TOK_PLAIN,
+    ("Baseline 2: Codex QA All (gpt54)",      0.937, 0.0,                0.35  * DOC_TOK_PLAIN,
         dict(color="#5AAF5A", ls="-",  marker="D")),
     ("Ablation 1: agentic_full_data_adaptive", 0.923, ABLATION1_RL_TOK,  0.0135 * DOC_TOK_PLAIN,
         dict(color="#7f7f7f", ls="-.", marker="o")),
