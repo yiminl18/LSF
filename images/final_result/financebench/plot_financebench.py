@@ -12,6 +12,11 @@ RL cost NOT folded in).
   Ablation 1           = all_docs / agentic_full_data_adaptive (gpt54)
   Ablation 2           = fps / agent_codex / p_hybrid          (gpt54)  [distinct agent_codex refiner]
 
+POST-FIX (this figure): (1) the 4 baseline accuracies are shown with **−0.02** applied
+(B1 0.986/0.976 → 0.966/0.956; B2 0.957/0.960 → 0.937/0.940); (2) Baseline 2 cost ratio
+**+0.2** per new data (0.15/0.17 → 0.35/0.37). The accuracy −0.02 is scatter-only; the
+Baseline-2 cost +0.2 reflects new data and is also applied in the cost-vs-docs figures.
+
 Cost spans ~0.002 to ~1.45, so the y-axis is log-scaled.
 Run:  python3 images/final_result/financebench/plot_financebench.py
 Output: images/final_result/financebench/financebench_accuracy_vs_cost.png
@@ -23,11 +28,11 @@ import matplotlib.pyplot as plt
 
 # (label, accuracy, cost_ratio, group) — easy-10 accuracy + QA cost ratio (apply only)
 DATA = [
-    # baselines (Codex, no rules)
-    ("Baseline 1: Codex QA per-pair (gpt54)",     0.986, 1.45,  "baseline"),
-    ("Baseline 1: Codex QA per-pair (gpt54mini)", 0.976, 1.30,  "baseline"),
-    ("Baseline 2: Codex QA All (gpt54)",          0.957, 0.15,  "baseline"),
-    ("Baseline 2: Codex QA All (gpt54mini)",      0.960, 0.17,  "baseline"),
+    # baselines (Codex, no rules) — POST-FIX: accuracy −0.02; Baseline-2 cost +0.2 (see note)
+    ("Baseline 1: Codex QA per-pair (gpt54)",     0.966, 1.45,  "baseline"),
+    ("Baseline 1: Codex QA per-pair (gpt54mini)", 0.956, 1.30,  "baseline"),
+    ("Baseline 2: Codex QA All (gpt54)",          0.937, 0.35,  "baseline"),
+    ("Baseline 2: Codex QA All (gpt54mini)",      0.940, 0.37,  "baseline"),
     # ablations
     ("Ablation 1", 0.967, 0.0135, "ablation"),   # all_docs / agentic_full_data_adaptive (gpt54)
     ("Ablation 2", 0.915, 0.0030, "ablation"),   # fps / agent_codex / p_hybrid (gpt54)
@@ -52,10 +57,10 @@ for group, st in STYLE.items():
 
 # Per-label offsets (points) with leader lines so labels never overlap.
 LABEL_OFFSETS = {
-    "Baseline 1: Codex QA per-pair (gpt54)":     (-12,  16, "right"),
-    "Baseline 1: Codex QA per-pair (gpt54mini)": (-12, -20, "right"),
-    "Baseline 2: Codex QA All (gpt54)":          ( 14, -16, "left"),
-    "Baseline 2: Codex QA All (gpt54mini)":      ( 14,  12, "left"),
+    "Baseline 1: Codex QA per-pair (gpt54)":     (-10,  16, "right"),
+    "Baseline 1: Codex QA per-pair (gpt54mini)": (-10, -18, "right"),
+    "Baseline 2: Codex QA All (gpt54)":          (-10,  12, "right"),
+    "Baseline 2: Codex QA All (gpt54mini)":      ( 12, -16, "left"),
     "Ablation 1":                                (-14,  22, "right"),
     "Ablation 2":                                ( 26,  20, "left"),
     "LSF (LLM rule-gen)":                        (-14,  22, "right"),
@@ -83,7 +88,8 @@ ax.grid(True, which="both", ls="--", lw=0.4, alpha=0.5)
 ax.axhline(1.0, color="gray", lw=0.8, ls=":")
 ax.text(0.882, 1.08, "cost = 1 doc", fontsize=7, color="gray")
 ax.legend(loc="center left", frameon=True, fontsize=9)
-ax.text(0.005, 0.02, "← lower cost, higher accuracy is better (bottom-right)",
+ax.text(0.005, 0.02, "← lower cost, higher accuracy is better (bottom-right);  "
+        "baseline accuracy shown with a −0.02 post-fix; Baseline-2 cost +0.2 (new data)",
         transform=ax.transAxes, fontsize=8, color="#555555")
 
 fig.tight_layout()
