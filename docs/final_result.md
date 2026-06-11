@@ -530,6 +530,33 @@ filings — lack reconstructed JSON), 12 questions; `random` = 18 sampled / 68 u
 - **Key fix:** llm_coarse's prompt fits context fine; the failure was a 120s *timeout*, not a token
   limit — the 120→600s client-timeout change made it viable (it ran slow but clean, 0 timeouts).
 
+#### Same 12 combos on the 10 easy questions
+
+Dropping the 2 structurally hard questions (long-term debt, exhibit/material-agreement) — the same
+easy-10 subset used above — recomputed for all 12 grid combos:
+
+| Strategy (sampling / rule_gen / refine) | acc (10 easy) | cost ratio |
+|---|---:|---:|
+| random / llm_coarse / agentic_codex | **0.959** | 0.0225 |
+| random / llm_coarse / p_hybrid | 0.953 | 0.0114 |
+| random / llm_coarse / p_mini | 0.951 | 0.0664 |
+| fps / llm_coarse / p_hybrid | 0.949 | 0.0117 |
+| fps / llm_coarse / agentic_codex | 0.947 | 0.0146 |
+| fps / llm_coarse / p_mini | 0.943 | 0.0640 |
+| fps / agent_codex / p_mini | 0.917 | 0.0030 |
+| fps / agent_codex / agentic_codex | 0.916 | **0.0021** |
+| fps / agent_codex / p_hybrid | 0.915 | 0.0030 |
+| random / agent_codex / p_hybrid | 0.907 | 0.0018 |
+| random / agent_codex / agentic_codex | 0.906 | **0.0017** |
+| random / agent_codex / p_mini | 0.906 | 0.0018 |
+
+**On the easy 10, every grid combo clears 0.90.** llm_coarse rises to **0.943–0.959** (≈ +0.09 vs the
+all-12 numbers) and agent_codex to **0.906–0.917** (≈ +0.10) — confirming the 2 hard questions were
+the main drag on both families. The tradeoff persists: llm_coarse ~0.95 at 0.011–0.066, agent_codex
+~0.91 at **~0.002** (≈5–30× cheaper). Best easy-10: `random/llm_coarse/agentic_codex` (0.959 @ 0.0225);
+best value: `random/agent_codex/agentic_codex` (0.906 @ **0.0017**). `p_hybrid` is the cheapest
+llm_coarse refiner here (0.949–0.953 @ ~0.011).
+
 ---
 
 ## OFFICEQA
