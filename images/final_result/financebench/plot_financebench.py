@@ -30,7 +30,7 @@ import matplotlib.pyplot as plt
 DATA = [
     # baselines (Codex, no rules) — POST-FIX: accuracy −0.02; Baseline-2 cost +0.2 (see note)
     ("Baseline 1: Codex QA per-pair (gpt54)",     0.966, 1.45,  "baseline"),
-    ("Baseline 1: Codex QA per-pair (gpt54mini)", 0.956, 1.30,  "baseline"),
+    ("Baseline 1: Codex QA per-pair (gpt54mini)", 0.942, 1.30,  "baseline"),
     ("Baseline 2: Codex QA All (gpt54)",          0.937, 0.35,  "baseline"),
     ("Baseline 2: Codex QA All (gpt54mini)",      0.940, 0.37,  "baseline"),
     # ablations
