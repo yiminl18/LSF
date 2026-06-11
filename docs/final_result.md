@@ -557,6 +557,44 @@ the main drag on both families. The tradeoff persists: llm_coarse ~0.95 at 0.011
 best value: `random/agent_codex/agentic_codex` (0.906 @ **0.0017**). `p_hybrid` is the cheapest
 llm_coarse refiner here (0.949–0.953 @ ~0.011).
 
+### FINANCEBENCH — ALL strategies on the 10 easy questions (unified)
+
+Every financebench strategy on the same easy-10 subset (12 multi_cluster questions minus
+long-term debt + exhibit/material-agreement), sorted by accuracy. **Doc scope differs by group**
+(baselines: ~50/49 single-cluster docs; `agentic_full_data`: all 100; legacy raw + grid: 18/68
+random or 20/66 fps) — so accuracy is comparable as a *level*, but cost ratios reflect each run's
+scope. Cost is the per-pair apply ratio (baselines read whole docs → ≫ 1).
+
+| Strategy | Model / refine | Accuracy | Cost ratio |
+|---|---|---:|---:|
+| Baseline 1 — Codex QA (per-pair) | gpt54 | **0.986** | 1.45 |
+| Baseline 1 — Codex QA (per-pair) | gpt54mini | 0.976 | 1.30 |
+| all_docs / agentic_full_data_adaptive | gpt54 | 0.967 | 0.0135 |
+| Baseline 2 — Codex QA All | gpt54mini | 0.960 | 0.17 |
+| random / llm_coarse / agentic_codex | gpt54 | 0.959 | 0.0225 |
+| Baseline 2 — Codex QA All | gpt54 | 0.957 | 0.15 |
+| random / llm_coarse / p_hybrid | gpt54 | 0.953 | 0.0114 |
+| random / llm_coarse / p_mini | gpt54 | 0.951 | 0.0664 |
+| fps / llm_coarse / p_hybrid | gpt54 | 0.949 | 0.0117 |
+| fps / llm_coarse / agentic_codex | gpt54 | 0.947 | 0.0146 |
+| multi_clusters / llm_coarse / raw | gpt54 | 0.943 | 0.0540 |
+| fps / llm_coarse / p_mini | gpt54 | 0.943 | 0.0640 |
+| multi_clusters / llm_coarse / agentic+fallback | gpt54 | 0.940 | **0.0090** |
+| all_docs / agentic_full_data | gpt54mini | 0.935 | 0.0141 |
+| all_docs / agentic_full_data_adaptive | gpt54mini | 0.923 | 0.0140 |
+| fps / agent_codex / p_mini | gpt54 | 0.917 | 0.0030 |
+| fps / agent_codex / agentic_codex | gpt54 | 0.916 | 0.0021 |
+| fps / agent_codex / p_hybrid | gpt54 | 0.915 | 0.0030 |
+| random / agent_codex / p_hybrid | gpt54 | 0.907 | 0.0018 |
+| random / agent_codex / agentic_codex | gpt54 | 0.906 | **0.0017** |
+| random / agent_codex / p_mini | gpt54 | 0.906 | 0.0018 |
+
+**Takeaway:** on the easy 10 everything is tightly bunched at **0.91–0.99**, so cost is the
+differentiator. The per-pair Codex baseline tops accuracy (0.986) but at **1.45** per pair;
+`llm_coarse` pipelines reach **0.94–0.96 at 0.01–0.07** (≈20–145× cheaper), and `agent_codex`
+holds **0.91 at ~0.002** (≈700× cheaper than the baseline). `agentic_full_data_adaptive` gpt54
+(0.967) is the best non-baseline accuracy.
+
 ---
 
 ## OFFICEQA
