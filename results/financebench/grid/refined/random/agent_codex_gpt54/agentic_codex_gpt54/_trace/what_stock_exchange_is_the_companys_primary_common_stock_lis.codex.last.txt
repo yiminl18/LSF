@@ -1,0 +1,7 @@
+Selected subset is `rule_page1_exact_exchange_value` + `rule_item5_common_stock_exchange_sentence`. That pair verified at `10/10` on the sampled docs with `missed_in_D_star: []`, `sum_cost=0.000546`, and standalone coverage `0.8` for each rule, so `min_cov=0.8` and `mean_cov=0.8`.
+
+Artifacts written:
+- [what_stock_exchange_is_the_companys_primary_common_stock_lis.json](/mnt/data/LSF/results/financebench/grid/refined/random/agent_codex_gpt54/agentic_codex_gpt54/what_stock_exchange_is_the_companys_primary_common_stock_lis.json)
+- [what_stock_exchange_is_the_companys_primary_common_stock_lis.jsonl](/mnt/data/LSF/results/financebench/grid/refined/random/agent_codex_gpt54/agentic_codex_gpt54/_trace/what_stock_exchange_is_the_companys_primary_common_stock_lis.jsonl)
+
+One repo-specific issue mattered: `sample_doc_labels.json` did not contain this exact question string, so I built a corrected sampled-label file under `_selector_run` from the exact-question cache plus deterministic extraction from the legacy exchange labels before running the final verifies.

@@ -1,0 +1,140 @@
+{
+  "timestamp": "2026-06-10T06:15:29.562414+00:00",
+  "sampling_strategy": "fps",
+  "rule_gen_strategy": "llm_coarse_gpt54",
+  "refine_strategy": "p_hybrid",
+  "apply_strategy": "default",
+  "queries_file": "data/financebench/multi_cluster_queries.json",
+  "dataset": "financebench",
+  "cluster": "multi_cluster",
+  "num_questions": 12,
+  "num_sampled_docs": 20,
+  "num_unsampled_docs": 66,
+  "questions": [
+    {
+      "question": "What stock exchange is the company's primary common stock listed on?",
+      "question_slug": "what_stock_exchange_is_the_companys_primary_common_stock_lis",
+      "num_rules_generated": 41,
+      "num_rules_after_refine": 20,
+      "sampled_accuracy": 1,
+      "unsampled_accuracy": 1,
+      "avg_cost_ratio_sampled": 0.018015,
+      "avg_cost_ratio_unsampled": 0.004283
+    },
+    {
+      "question": "What is the reporting period covered by this document (e.g. fiscal year ended, quarter ended, or event date)?",
+      "question_slug": "what_is_the_reporting_period_covered_by_this_document_eg_fis",
+      "num_rules_generated": 54,
+      "num_rules_after_refine": 20,
+      "sampled_accuracy": 0.95,
+      "unsampled_accuracy": 0.9697,
+      "avg_cost_ratio_sampled": 0.043027,
+      "avg_cost_ratio_unsampled": 0.007951
+    },
+    {
+      "question": "What is the exact name of the company (registrant) this document relates to?",
+      "question_slug": "what_is_the_exact_name_of_the_company_registrant_this_docume",
+      "num_rules_generated": 29,
+      "num_rules_after_refine": 20,
+      "sampled_accuracy": 1,
+      "unsampled_accuracy": 0.9394,
+      "avg_cost_ratio_sampled": 0.013246,
+      "avg_cost_ratio_unsampled": 0.003388
+    },
+    {
+      "question": "What is the company's principal executive offices address (city and state/country) as stated in this document?",
+      "question_slug": "what_is_the_companys_principal_executive_offices_address_cit",
+      "num_rules_generated": 32,
+      "num_rules_after_refine": 20,
+      "sampled_accuracy": 0.95,
+      "unsampled_accuracy": 0.9242,
+      "avg_cost_ratio_sampled": 0.021608,
+      "avg_cost_ratio_unsampled": 0.001384
+    },
+    {
+      "question": "What document type or SEC form is this (e.g. 10-K, 10-Q, 8-K, earnings release, annual report)?",
+      "question_slug": "what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning",
+      "num_rules_generated": 41,
+      "num_rules_after_refine": 20,
+      "sampled_accuracy": 1,
+      "unsampled_accuracy": 1,
+      "avg_cost_ratio_sampled": 0.02321,
+      "avg_cost_ratio_unsampled": 0.003812
+    },
+    {
+      "question": "List one material agreement or other exhibit number explicitly identified in the Exhibit Index (e.g., \"Exhibit 10.1: Credit Agreement\")—or record \"none listed\" if no material agreements are identified.",
+      "question_slug": "list_one_material_agreement_or_other_exhibit_number_explicit",
+      "num_rules_generated": 35,
+      "num_rules_after_refine": 20,
+      "sampled_accuracy": 0.6,
+      "unsampled_accuracy": 0.2727,
+      "avg_cost_ratio_sampled": 0.087097,
+      "avg_cost_ratio_unsampled": 0.052618
+    },
+    {
+      "question": "What is/are the trading symbol(s) and listing exchange(s)?",
+      "question_slug": "what_isare_the_trading_symbols_and_listing_exchanges",
+      "num_rules_generated": 41,
+      "num_rules_after_refine": 20,
+      "sampled_accuracy": 0.8,
+      "unsampled_accuracy": 0.8485,
+      "avg_cost_ratio_sampled": 0.085009,
+      "avg_cost_ratio_unsampled": 0.03125
+    },
+    {
+      "question": "What is long-term debt at year-end (0 if none)?",
+      "question_slug": "what_is_longterm_debt_at_yearend_0_if_none",
+      "num_rules_generated": 29,
+      "num_rules_after_refine": 20,
+      "sampled_accuracy": 0.3,
+      "unsampled_accuracy": 0.4242,
+      "avg_cost_ratio_sampled": 0.131424,
+      "avg_cost_ratio_unsampled": 0.10778
+    },
+    {
+      "question": "What is the registrant's exact name?",
+      "question_slug": "what_is_the_registrants_exact_name",
+      "num_rules_generated": 35,
+      "num_rules_after_refine": 20,
+      "sampled_accuracy": 1,
+      "unsampled_accuracy": 0.9091,
+      "avg_cost_ratio_sampled": 0.00909,
+      "avg_cost_ratio_unsampled": 0.001383
+    },
+    {
+      "question": "What is the address of principal executive offices and ZIP code?",
+      "question_slug": "what_is_the_address_of_principal_executive_offices_and_zip_c",
+      "num_rules_generated": 36,
+      "num_rules_after_refine": 20,
+      "sampled_accuracy": 0.9,
+      "unsampled_accuracy": 0.9545,
+      "avg_cost_ratio_sampled": 0.007729,
+      "avg_cost_ratio_unsampled": 0.002067
+    },
+    {
+      "question": "What is the registrant's telephone number?",
+      "question_slug": "what_is_the_registrants_telephone_number",
+      "num_rules_generated": 37,
+      "num_rules_after_refine": 20,
+      "sampled_accuracy": 0.95,
+      "unsampled_accuracy": 0.9848,
+      "avg_cost_ratio_sampled": 0.027762,
+      "avg_cost_ratio_unsampled": 0.005293
+    },
+    {
+      "question": "What is the state (or other jurisdiction) of incorporation and the IRS Employer Identification Number?",
+      "question_slug": "what_is_the_state_or_other_jurisdiction_of_incorporation_and",
+      "num_rules_generated": 29,
+      "num_rules_after_refine": 20,
+      "sampled_accuracy": 0.9,
+      "unsampled_accuracy": 0.9697,
+      "avg_cost_ratio_sampled": 0.042596,
+      "avg_cost_ratio_unsampled": 0.003207
+    }
+  ],
+  "overall": {
+    "avg_sampled_accuracy": 0.8625,
+    "avg_unsampled_accuracy": 0.8497,
+    "avg_cost_ratio": 0.018701
+  }
+}

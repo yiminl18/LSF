@@ -1,0 +1,7 @@
+Selected `rule_page1_period_keywords_in_text` as the final subset. It satisfies the hard constraint on the baseline-aligned sampled set with `missed_in_D_star: []`, `match_rate_on_sampled=1.0`, `sum_cost=0.0024523565004851648`, and `min_cov=1.0`.
+
+Artifacts written:
+[what_is_the_reporting_period_covered_by_this_document_eg_fis.json](/mnt/data/LSF/results/financebench/grid/refined/random/llm_coarse_gpt54/agentic_codex_gpt54/what_is_the_reporting_period_covered_by_this_document_eg_fis.json)
+[what_is_the_reporting_period_covered_by_this_document_eg_fis.jsonl](/mnt/data/LSF/results/financebench/grid/refined/random/llm_coarse_gpt54/agentic_codex_gpt54/_trace/what_is_the_reporting_period_covered_by_this_document_eg_fis.jsonl)
+
+One verifier call exposed inconsistencies in the provided selection inputs (`single_cluster` labels lacked this question, and `verify_accuracy.py` expected a `_sampled` baseline filename), so I aligned verification to the existing multi-cluster baseline cache before finalizing the subset.

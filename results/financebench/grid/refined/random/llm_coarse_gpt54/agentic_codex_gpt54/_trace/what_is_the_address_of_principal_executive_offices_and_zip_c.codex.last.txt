@@ -1,0 +1,10 @@
+Wrote the final selection to [what_is_the_address_of_principal_executive_offices_and_zip_c.json](/mnt/data/LSF/results/financebench/grid/refined/random/llm_coarse_gpt54/agentic_codex_gpt54/what_is_the_address_of_principal_executive_offices_and_zip_c.json) and appended the step trace to [what_is_the_address_of_principal_executive_offices_and_zip_c.jsonl](/mnt/data/LSF/results/financebench/grid/refined/random/llm_coarse_gpt54/agentic_codex_gpt54/_trace/what_is_the_address_of_principal_executive_offices_and_zip_c.jsonl).
+
+Final subset:
+`rule_page1_address_candidate_with_exact_address_keywords`
+`rule_page1_address_candidate_with_uk_postal`
+`rule_page1_address_candidate_with_plaza`
+`rule_page1_zip_code_label_spans`
+`rule_page1_after_company_name_first_15`
+
+It satisfies the hard constraint with `match_rate_on_sampled = 1.0`, uses 5 rules, and has cached `selected_avg_cost_ratio_sum = 0.05028870245980253`. The original per-rule coverage cache was missing, so `min_cov = 0.1` and `mean_cov = 0.32` are free exact-text coverage proxies over the sampled docs rather than cached judge accuracy.

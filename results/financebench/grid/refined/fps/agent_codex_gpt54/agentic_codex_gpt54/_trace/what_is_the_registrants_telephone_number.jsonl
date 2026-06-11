@@ -1,0 +1,53 @@
+{"step": 1, "tool": "exec_command", "args": "python - <<PY time.time()", "result_summary": "failed: python not found"}
+{"step": 2, "tool": "exec_command", "args": "list_rules deep rules-dir", "result_summary": "failed: nested slug path not found"}
+{"step": 3, "tool": "exec_command", "args": "compute_cost deep rules-dir", "result_summary": "failed: nested slug path not found"}
+{"step": 4, "tool": "exec_command", "args": "compute_coverage deep rules-dir", "result_summary": "failed: nested slug path not found"}
+{"step": 5, "tool": "exec_command", "args": "python3 - <<PY time.time()", "result_summary": "captured t_start=1780990629.1274347"}
+{"step": 6, "tool": "exec_command", "args": "list_rules with slug directory as base", "result_summary": "failed: tool appends question slug to rules-dir"}
+{"step": 7, "tool": "exec_command", "args": "compute_cost with slug directory as base", "result_summary": "failed: tool appends question slug to rules-dir"}
+{"step": 8, "tool": "exec_command", "args": "compute_coverage with slug directory as base", "result_summary": "failed: tool appends question slug to rules-dir"}
+{"step": 9, "tool": "exec_command", "args": "list_rules.py --help", "result_summary": "confirmed --rules-dir expects the parent base directory"}
+{"step": 10, "tool": "exec_command", "args": "inspect rules folder contents", "result_summary": "confirmed 5 rule files under the slug directory"}
+{"step": 11, "tool": "exec_command", "args": "check cost cache path", "result_summary": "found existing cost cache json"}
+{"step": 12, "tool": "exec_command", "args": "check eval_individual coverage cache path", "result_summary": "coverage cache directory absent"}
+{"step": 13, "tool": "exec_command", "args": "list_rules parent base dir", "result_summary": "listed 5 page-1 telephone rules with docstrings"}
+{"step": 14, "tool": "exec_command", "args": "compute_cost --all parent base dir", "result_summary": "sum_avg_cost_ratio=0.005545 across 5 rules"}
+{"step": 15, "tool": "exec_command", "args": "compute_coverage --all parent base dir", "result_summary": "all cov values fell back to 0.0 because eval_individual cache is missing"}
+{"step": 16, "tool": "exec_command", "args": "check eval_merge_base artifact", "result_summary": "found results/.../eval_merge_base/what_is_the_registrants_telephone_number.json"}
+{"step": 17, "tool": "exec_command", "args": "inspect eval_merge_base json keys", "result_summary": "baseline file has n=20, accuracy=0.95, per_doc list length 20"}
+{"step": 18, "tool": "exec_command", "args": "read tools/compute_coverage.py", "result_summary": "confirmed missing eval_individual files force cov fallback to 0.0"}
+{"step": 19, "tool": "exec_command", "args": "recheck eval_individual slug directory", "result_summary": "directory still missing"}
+{"step": 20, "tool": "exec_command", "args": "read src/rule_refine/selection/coverage_check.py", "result_summary": "cov(r) defined as per-rule individual accuracy on sampled docs"}
+{"step": 21, "tool": "exec_command", "args": "dump all 5 rule files", "result_summary": "identified 2 broad adjacency/inline rules plus 3 narrow page-1 special cases"}
+{"step": 22, "tool": "exec_command", "args": "inspect baseline per_doc rows", "result_summary": "baseline docs do not match the current 10 sampled label docs"}
+{"step": 23, "tool": "exec_command", "args": "inspect_rule phone_after", "result_summary": "adjacency rule: phone span immediately after telephone label"}
+{"step": 24, "tool": "exec_command", "args": "inspect_rule compact_inline", "result_summary": "inline rule: same span contains registrant/telephone plus digits"}
+{"step": 25, "tool": "exec_command", "args": "inspect_rule phone_before", "result_summary": "adjacency rule: phone span immediately before registrant-telephone label"}
+{"step": 26, "tool": "exec_command", "args": "verify_accuracy 3-rule subset (after,before,compact) all_labeled", "result_summary": "started verify run"}
+{"step": 27, "tool": "write_stdin", "args": "poll session 83106", "result_summary": "verify still running"}
+{"step": 28, "tool": "write_stdin", "args": "poll session 83106", "result_summary": "completed: match_rate=0.7, missed=AMAZON_2016_10K|AMAZON_2018_10K|COSTCO_2017_10K, tokens_in=2978, tokens_out=163"}
+{"step": 29, "tool": "exec_command", "args": "rg for missed docs", "result_summary": "failed: rg not installed in workspace"}
+{"step": 30, "tool": "exec_command", "args": "inspect_rule inline_address_and_telephone_blob", "result_summary": "narrow address-blob inline pattern"}
+{"step": 31, "tool": "exec_command", "args": "inspect_rule international_phone_header", "result_summary": "narrow international breadcrumb header pattern"}
+{"step": 32, "tool": "exec_command", "args": "locate missed docs under processing dir", "result_summary": "found reconstructed json for the 3 missed docs"}
+{"step": 33, "tool": "exec_command", "args": "run all 5 rules locally on the 3 missed docs", "result_summary": "none of the 5 rules fired on AMAZON_2016_10K, AMAZON_2018_10K, or COSTCO_2017_10K"}
+{"step": 34, "tool": "exec_command", "args": "read tools/verify_accuracy.py", "result_summary": "confirmed all_labeled mode sets D*=all 10 sampled docs"}
+{"step": 35, "tool": "exec_command", "args": "check selector_run verify artifact", "result_summary": "no persistent verify json written by the tool"}
+{"step": 36, "tool": "exec_command", "args": "inspect sample_doc_labels.json keys", "result_summary": "current sampled set has 10 docs, different from cached baseline eval_merge file"}
+{"step": 37, "tool": "exec_command", "args": "verify_accuracy full 5-rule pool all_labeled", "result_summary": "started verify run"}
+{"step": 38, "tool": "write_stdin", "args": "poll session 85208", "result_summary": "verify still running"}
+{"step": 39, "tool": "write_stdin", "args": "poll session 85208", "result_summary": "verify still running"}
+{"step": 40, "tool": "write_stdin", "args": "poll session 85208", "result_summary": "completed: full pool ceiling is also match_rate=0.7 with the same 3 missed docs; tokens_in=2978, tokens_out=163"}
+{"step": 41, "tool": "exec_command", "args": "local rule-hit matrix on all 10 sampled docs", "result_summary": "only compact_inline and phone_before fired on any solvable sample docs"}
+{"step": 42, "tool": "exec_command", "args": "list eval_merge_base matching filenames", "result_summary": "only unsuffixed baseline file exists"}
+{"step": 43, "tool": "exec_command", "args": "read baseline_targets.py", "result_summary": "file-mode D* comes from baseline per_doc entries marked correct"}
+{"step": 44, "tool": "exec_command", "args": "verify_accuracy 2-rule subset (compact,before) all_labeled", "result_summary": "started verify run"}
+{"step": 45, "tool": "write_stdin", "args": "poll session 68133", "result_summary": "verify still running"}
+{"step": 46, "tool": "write_stdin", "args": "poll session 68133", "result_summary": "completed: 2-rule subset matches full pool at match_rate=0.7 with same 3 missed docs; tokens_in=2978, tokens_out=163"}
+{"step": 47, "tool": "exec_command", "args": "verify_accuracy compact_inline only all_labeled", "result_summary": "started single-rule coverage probe"}
+{"step": 48, "tool": "exec_command", "args": "verify_accuracy phone_before only all_labeled", "result_summary": "started single-rule coverage probe"}
+{"step": 49, "tool": "write_stdin", "args": "poll session 67691", "result_summary": "single-rule verify still running"}
+{"step": 50, "tool": "write_stdin", "args": "poll session 86355", "result_summary": "single-rule verify still running"}
+{"step": 51, "tool": "write_stdin", "args": "poll session 67691", "result_summary": "completed: compact_inline coverage=0.4, tokens_in=2936, tokens_out=150"}
+{"step": 52, "tool": "write_stdin", "args": "poll session 86355", "result_summary": "completed: phone_before coverage=0.3, tokens_in=2871, tokens_out=143"}
+{"step": 53, "tool": "exec_command", "args": "write final selection json and jsonl trace", "result_summary": "wrote output json and trace; latency_seconds=348.451"}

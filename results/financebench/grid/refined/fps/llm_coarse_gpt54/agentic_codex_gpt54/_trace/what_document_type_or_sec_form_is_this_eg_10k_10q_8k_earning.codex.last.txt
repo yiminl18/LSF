@@ -1,0 +1,5 @@
+Wrote the selection to [what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning.json](/home/yiminglin/LSF/results/financebench/grid/refined/fps/llm_coarse_gpt54/agentic_codex_gpt54/what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning.json) and the trace to [what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning.jsonl](/home/yiminglin/LSF/results/financebench/grid/refined/fps/llm_coarse_gpt54/agentic_codex_gpt54/_trace/what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning.jsonl).
+
+Selected subset: `["rule_form_any_label_exact"]`. It achieved `match_rate_on_sampled=1.0` with `missed_in_D_star=[]`, `selected_avg_cost_ratio_sum=4.8e-05`, `min_cov=1.0`, `verify_calls=1`, and `tool_input_tokens/tool_output_tokens=3260/120`.
+
+One data issue mattered: the provided sampled-label file did not contain this question, so I derived a temporary labels file from the sampled document stems to make `verify_accuracy` meaningful. All 10 sampled docs were `10-K`s, which is why a single exact form-label rule was sufficient.

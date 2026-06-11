@@ -1,0 +1,7 @@
+Selected subset is `["rule_balance_sheet_longterm_debt_tables"]`.
+
+I wrote the result to [what_is_longterm_debt_at_yearend_0_if_none.json](/home/yiminglin/LSF/results/financebench/grid/refined/fps/agent_codex_gpt54/agentic_codex_gpt54/what_is_longterm_debt_at_yearend_0_if_none.json) and the step trace to [what_is_longterm_debt_at_yearend_0_if_none.jsonl](/home/yiminglin/LSF/results/financebench/grid/refined/fps/agent_codex_gpt54/agentic_codex_gpt54/_trace/what_is_longterm_debt_at_yearend_0_if_none.jsonl).
+
+The hard constraint was not satisfiable under the required `--d-star-mode all_labeled`: the full five-rule pool itself only reached `match_rate=0.6` on the 10 sampled docs. The selected single-rule subset ties that best-achievable rate while minimizing cost (`0.00748`) and has empirical sampled-doc span coverage `1.0`.
+
+`AGENTIC_SELECTION_DONE slug=what_is_longterm_debt_at_yearend_0_if_none n_rules=1 sum_cost=0.00748 min_cov=1.0 match_rate=0.6 tool_calls=5 latency_s=338.19835138320923`

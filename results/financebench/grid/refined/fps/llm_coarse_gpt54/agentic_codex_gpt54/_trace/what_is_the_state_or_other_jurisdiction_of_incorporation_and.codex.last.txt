@@ -1,0 +1,6 @@
+Wrote the selection to [what_is_the_state_or_other_jurisdiction_of_incorporation_and.json](/mnt/data/LSF/results/financebench/grid/refined/fps/llm_coarse_gpt54/agentic_codex_gpt54/what_is_the_state_or_other_jurisdiction_of_incorporation_and.json) and the step trace to [what_is_the_state_or_other_jurisdiction_of_incorporation_and.jsonl](/mnt/data/LSF/results/financebench/grid/refined/fps/llm_coarse_gpt54/agentic_codex_gpt54/_trace/what_is_the_state_or_other_jurisdiction_of_incorporation_and.jsonl).
+
+Final subset:
+`rule_cover_page_company_name_header`, `rule_section_header_value_with_label_in_text_span`, `rule_page1_numeric_ein_pattern`, `rule_page1_incorporation_or_irs_labels`, `rule_page1_identification_path_depth_2_3`
+
+It matches the full 29-rule pool’s observed sampled accuracy at `0.9` with `sum_cost=0.000864` and `|S|=5`. The full pool itself also misses `LOCKHEEDMARTIN_2022_10K` under `verify_accuracy --d-star-mode all_labeled`, so the hard constraint was not satisfiable in this run; the selected subset preserves that same ceiling with much lower cost.

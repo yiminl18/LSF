@@ -1,0 +1,5 @@
+Selected subset: `rule_form_10k_h1`.
+
+I wrote the result to [what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning.json](/home/yiminglin/LSF/results/financebench/grid/refined/random/llm_coarse_gpt54/agentic_codex_gpt54/what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning.json) and the per-step trace to [what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning.jsonl](/home/yiminglin/LSF/results/financebench/grid/refined/random/llm_coarse_gpt54/agentic_codex_gpt54/_trace/what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning.jsonl). The final subset has `sum_cost=0.00012995163586680922`, `min_cov=1.0`, and `match_rate_on_sampled=1.0`.
+
+The provided single-cluster sample labels file did not contain this question, so I synthesized a temporary labels file for the same 10 sampled docs from existing FinanceBench labels, with filename-based fallback for the remaining 3 missing docs. Paid verify then confirmed `missed_in_D_star: []` for the one-rule subset.

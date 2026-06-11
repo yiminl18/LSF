@@ -1,0 +1,7 @@
+Selection completed. The final subset is:
+
+`rule_page1_address_candidate_before_address_of_principal_executive_offices_label`, `rule_page1_preceding_span_before_address_label`, `rule_page1_text_with_street_city_state_pattern`, `rule_page1_city_state_split_before_address_label`, `rule_page1_split_address_components_cluster`
+
+It achieved `match_rate_on_sampled = 1.0` with `missed_in_D_star = []` under verification, with `selected_avg_cost_ratio_sum = 0.007529` and `|S| = 5`. I wrote the result to [what_is_the_companys_principal_executive_offices_address_cit.json](/mnt/data/LSF/results/financebench/grid/refined/random/llm_coarse_gpt54/agentic_codex_gpt54/what_is_the_companys_principal_executive_offices_address_cit.json) and appended the run trace to [what_is_the_companys_principal_executive_offices_address_cit.jsonl](/mnt/data/LSF/results/financebench/grid/refined/random/llm_coarse_gpt54/agentic_codex_gpt54/_trace/what_is_the_companys_principal_executive_offices_address_cit.jsonl).
+
+One caveat: the provided sampled label file did not contain this exact new-question key, so verification used a temporary sampled label file built from repo-resident new-query labels plus three repo-backed fallbacks for the missing docs. The coverage cache for this slug was empty, so the recorded `min_cov` and `mean_cov` remain `0.0`.

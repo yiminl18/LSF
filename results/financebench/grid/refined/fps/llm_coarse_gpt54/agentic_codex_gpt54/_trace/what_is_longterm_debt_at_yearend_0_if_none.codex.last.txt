@@ -1,0 +1,5 @@
+Selected subset: `rule_apple_balance_sheet_long_term_debt_table` + `rule_balance_sheet_total_debt_row`. On the sampled docs, that pair reaches `match_rate_on_sampled = 0.7` with `sum_cost = 0.014894`, `min_cov = 0.9`, and `mean_cov = 0.95`.
+
+The provided `--d-star-mode all_labeled` verify mode never reaches `missed_in_D_star: []` here because the full 29-rule pool itself only scores 7/10 on this sample, missing `AMCOR_2019_10K`, `AMAZON_2018_10K`, and `LOCKHEEDMARTIN_2022_10K`. This subset preserves that full-pool ceiling while cutting cost sharply and keeping the subset to 2 rules.
+
+Wrote [what_is_longterm_debt_at_yearend_0_if_none.json](/mnt/data/LSF/results/financebench/grid/refined/fps/llm_coarse_gpt54/agentic_codex_gpt54/what_is_longterm_debt_at_yearend_0_if_none.json) and appended the run trace to [what_is_longterm_debt_at_yearend_0_if_none.jsonl](/mnt/data/LSF/results/financebench/grid/refined/fps/llm_coarse_gpt54/agentic_codex_gpt54/_trace/what_is_longterm_debt_at_yearend_0_if_none.jsonl).

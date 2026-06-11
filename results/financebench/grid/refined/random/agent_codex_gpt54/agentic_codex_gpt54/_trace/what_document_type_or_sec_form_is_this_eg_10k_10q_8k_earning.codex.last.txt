@@ -1,0 +1,7 @@
+Selected subset: `["rule_page13_bold_cover_title_form_10k"]`.
+
+On the current 10-doc sampled set, that single rule is the broadest option: direct reach `10/10`, final verified `match_rate_on_sampled = 1.0`, and `missed_in_D_star = []` on the corrected 10-doc verification labels. Total avg cost drops from `0.000594` for the full 5-rule pool to `0.000105` with `|S| = 1`. The provided sampled-label file was missing this question, so I validated with a locally reconstructed label file using cached new-query labels where available plus three unambiguous `*_10K.pdf -> Form 10-K` backfills.
+
+Artifacts written:
+[selection JSON](/mnt/data/LSF/results/financebench/grid/refined/random/agent_codex_gpt54/agentic_codex_gpt54/what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning.json)
+[trace JSONL](/mnt/data/LSF/results/financebench/grid/refined/random/agent_codex_gpt54/agentic_codex_gpt54/_trace/what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning.jsonl)

@@ -1,0 +1,7 @@
+Selection written to [what_is_the_companys_principal_executive_offices_address_cit.json](/mnt/data/LSF/results/financebench/grid/refined/random/agent_codex_gpt54/agentic_codex_gpt54/what_is_the_companys_principal_executive_offices_address_cit.json) and trace to [what_is_the_companys_principal_executive_offices_address_cit.jsonl](/mnt/data/LSF/results/financebench/grid/refined/random/agent_codex_gpt54/agentic_codex_gpt54/_trace/what_is_the_companys_principal_executive_offices_address_cit.jsonl).
+
+Chosen subset:
+- `rule_item1_business_principal_offices_sentence`
+- `rule_page12_split_locality_fragments_before_offices_label`
+
+Key outcome: the 2-rule subset matched the corrected full-pool sampled accuracy at `9/10` while cutting summed average cost from `0.004504` to `0.001600`. I had to derive a temporary question-specific labels file because the provided sampled labels only contained the full-address question; with corrected labels, the full pool itself still missed `AMCOR_2019_10K`, and the singleton drop-test fell to `8/10`, so the 2-rule subset was the cheapest verified choice that preserved full-pool performance.

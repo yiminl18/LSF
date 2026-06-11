@@ -1,0 +1,81 @@
+{"step": 1, "tool": "exec_command", "args": "time_start", "result_summary": "timestamp=1781044656.4746494"}
+{"step": 2, "tool": "exec_command", "args": "list_rules wrong rules-dir", "result_summary": "error: rule folder not found"}
+{"step": 3, "tool": "exec_command", "args": "compute_cost wrong rules-dir", "result_summary": "error: rule folder not found"}
+{"step": 4, "tool": "exec_command", "args": "compute_coverage wrong rules-dir", "result_summary": "error: rule folder not found"}
+{"step": 5, "tool": "exec_command", "args": "ls rules base dir", "result_summary": "confirmed slug folder exists under parent rules dir"}
+{"step": 6, "tool": "exec_command", "args": "list_rules corrected rules-dir", "result_summary": "listed 42 candidate rules with docstrings"}
+{"step": 7, "tool": "exec_command", "args": "compute_cost --all", "result_summary": "sum_avg_cost_ratio(full)=0.175193 across 42 rules"}
+{"step": 8, "tool": "exec_command", "args": "compute_coverage --all", "result_summary": "all cov values returned 0.0 because eval_individual cache missing"}
+{"step": 9, "tool": "exec_command", "args": "ls missing eval_individual dir", "result_summary": "directory absent"}
+{"step": 10, "tool": "exec_command", "args": "rg tools lookup", "result_summary": "rg not installed"}
+{"step": 11, "tool": "exec_command", "args": "ls eval_merge_base", "result_summary": "baseline merge cache present for slug"}
+{"step": 12, "tool": "exec_command", "args": "grep compute_coverage/verify_accuracy", "result_summary": "confirmed coverage falls back to 0.0 when cache missing"}
+{"step": 13, "tool": "exec_command", "args": "read tools/compute_coverage.py", "result_summary": "coverage tool reads eval_individual/<rule>_eval.json accuracy"}
+{"step": 14, "tool": "exec_command", "args": "read tools/verify_accuracy.py", "result_summary": "verify uses all_labeled mode as requested; D*=all sampled docs"}
+{"step": 15, "tool": "exec_command", "args": "print sampled labels", "result_summary": "sample has 10 labeled 10-K docs including JNJ multi-security case"}
+{"step": 16, "tool": "exec_command", "args": "print eval_merge_base file", "result_summary": "existing baseline file is for a different sampled set; not directly usable for this run"}
+{"step": 17, "tool": "exec_command", "args": "inspect rule_page1_table_12b", "result_summary": "table matcher only"}
+{"step": 18, "tool": "exec_command", "args": "inspect rule_table_rows_under_trading_symbol_table", "result_summary": "table row matcher only"}
+{"step": 19, "tool": "exec_command", "args": "inspect rule_table_cells_symbol_column", "result_summary": "extracts ticker-like table cells"}
+{"step": 20, "tool": "exec_command", "args": "inspect rule_table_cells_exchange_column", "result_summary": "extracts exchange-like table cells"}
+{"step": 21, "tool": "exec_command", "args": "inspect rule_page1_text_spans_with_symbol_and_exchange", "result_summary": "page-1 text span matcher for ticker+exchange"}
+{"step": 22, "tool": "exec_command", "args": "inspect rule_table_with_12b_headers", "result_summary": "table header matcher for class/symbol/exchange"}
+{"step": 23, "tool": "exec_command", "args": "inspect rule_page1_table_or_text_with_multiple_securities", "result_summary": "broad multi-security cover-page matcher"}
+{"step": 24, "tool": "exec_command", "args": "inspect rule_page1_spans_with_nasdaq_or_nyse", "result_summary": "matches page-1 exchange-name spans"}
+{"step": 25, "tool": "exec_command", "args": "grep coverage_check.py", "result_summary": "cov(r)=fraction of sampled docs a rule alone answers correctly"}
+{"step": 26, "tool": "exec_command", "args": "read coverage_check.py", "result_summary": "confirmed accuracy semantics for per-rule coverage"}
+{"step": 27, "tool": "exec_command", "args": "verify subset: table rules + text span rule", "result_summary": "started session 30898"}
+{"step": 28, "tool": "write_stdin", "args": "poll session 30898", "result_summary": "still running"}
+{"step": 29, "tool": "write_stdin", "args": "poll session 30898", "result_summary": "match_rate=0.2; only NIKE and JNJ correct"}
+{"step": 30, "tool": "exec_command", "args": "fire-rate script attempt with raw cost cache", "result_summary": "failed with KeyError on cache shape"}
+{"step": 31, "tool": "exec_command", "args": "inspect page-1 listing spans in missed docs", "result_summary": "found non-table cover-page patterns with separated 12(b)/exchange spans"}
+{"step": 32, "tool": "exec_command", "args": "inspect cost cache JSON shape", "result_summary": "cache is mapping rule -> {avg_cost_ratio}"}
+{"step": 33, "tool": "exec_command", "args": "corrected fire-rate script over sampled docs", "result_summary": "identified high-hit low-cost rules like page1_before_12g and after_trading_symbol_header"}
+{"step": 34, "tool": "exec_command", "args": "inspect rule_page1_before_12g", "result_summary": "returns last six page-1 spans before Section 12(g)"}
+{"step": 35, "tool": "exec_command", "args": "inspect rule_page1_after_12b_before_12g", "result_summary": "returns full page-1 window between 12(b) and 12(g)"}
+{"step": 36, "tool": "exec_command", "args": "inspect rule_page1_after_exchange_header", "result_summary": "returns neighborhood after exchange header"}
+{"step": 37, "tool": "exec_command", "args": "inspect rule_page1_after_trading_symbol_header", "result_summary": "returns neighborhood after Trading Symbol header"}
+{"step": 38, "tool": "exec_command", "args": "dump candidate-rule outputs on sampled docs", "result_summary": "before_12g and after_trading captured concise answer-bearing snippets"}
+{"step": 39, "tool": "exec_command", "args": "search page-1 spans for explicit tickers", "result_summary": "AMZN/BA often absent from page-1 OCR spans"}
+{"step": 40, "tool": "exec_command", "args": "inspect rule_company_header_span_with_embedded_12b", "result_summary": "large section_header with issuer + embedded 12(b) block"}
+{"step": 41, "tool": "exec_command", "args": "inspect rule_company_header_with_exchange_embedded", "result_summary": "company/exchange embedded header matcher"}
+{"step": 42, "tool": "exec_command", "args": "inspect rule_page1_spans_with_trading_symbol_or_exchange_in_textspan", "result_summary": "text_span-based page-1 matcher"}
+{"step": 43, "tool": "exec_command", "args": "dump company-header candidate outputs", "result_summary": "confirmed embedded header spans include issuer context"}
+{"step": 44, "tool": "exec_command", "args": "dump JNJ/NIKE/LMT header outputs", "result_summary": "embedded header includes full JNJ table and compact single-security cases"}
+{"step": 45, "tool": "exec_command", "args": "verify single rule_company_header_span_with_embedded_12b", "result_summary": "started session 25038"}
+{"step": 46, "tool": "write_stdin", "args": "poll session 25038", "result_summary": "still running"}
+{"step": 47, "tool": "write_stdin", "args": "poll session 25038", "result_summary": "match_rate=0.0; merge returned NOT FOUND everywhere"}
+{"step": 48, "tool": "exec_command", "args": "verify subset: company_header + before_12g + after_trading", "result_summary": "started session 95678"}
+{"step": 49, "tool": "write_stdin", "args": "poll session 95678", "result_summary": "still running"}
+{"step": 50, "tool": "write_stdin", "args": "poll session 95678", "result_summary": "match_rate=0.6; fixed AMCOR/JNJ/Corning/Nike/LMT/eBay"}
+{"step": 51, "tool": "exec_command", "args": "inspect rule_page1_body_under_company_header", "result_summary": "broad page-1 child-span collector under company H1"}
+{"step": 52, "tool": "exec_command", "args": "inspect rule_page1_main_cover_block", "result_summary": "compact page-1 cover block from company H1 to checkbox boilerplate"}
+{"step": 53, "tool": "exec_command", "args": "dump body/main cover outputs on 4 missed docs", "result_summary": "main_cover_block compact but still lacked explicit Boeing/Amazon tickers"}
+{"step": 54, "tool": "exec_command", "args": "verify subset + rule_page1_main_cover_block", "result_summary": "started session 87481"}
+{"step": 55, "tool": "write_stdin", "args": "poll session 87481", "result_summary": "still running"}
+{"step": 56, "tool": "write_stdin", "args": "poll session 87481", "result_summary": "match_rate stayed 0.6; no gain from main_cover_block"}
+{"step": 57, "tool": "exec_command", "args": "verify full 42-rule pool", "result_summary": "started session 43879"}
+{"step": 58, "tool": "write_stdin", "args": "poll session 43879", "result_summary": "still running"}
+{"step": 59, "tool": "write_stdin", "args": "poll session 43879", "result_summary": "still running"}
+{"step": 60, "tool": "write_stdin", "args": "poll session 43879", "result_summary": "full pool match_rate=0.8; misses AMCOR and BOEING under all_labeled mode"}
+{"step": 61, "tool": "exec_command", "args": "inspect rule_item1_business_exchange_symbol_sentence", "result_summary": "targets Item 1/Business spans with symbol+exchange sentence"}
+{"step": 62, "tool": "exec_command", "args": "inspect rule_item1_business_stock_listed", "result_summary": "targets common stock listed/trades under symbol sentence"}
+{"step": 63, "tool": "exec_command", "args": "inspect rule_item1_business_listed_under_symbol", "result_summary": "targets listed-under-symbol phrasing"}
+{"step": 64, "tool": "exec_command", "args": "dump Item 1/Business rule outputs", "result_summary": "stock_listed cleanly covers COSTCO and both AMAZON docs"}
+{"step": 65, "tool": "exec_command", "args": "verify subset: company_header + before_12g + after_trading + stock_listed", "result_summary": "started session 3733"}
+{"step": 66, "tool": "write_stdin", "args": "poll session 3733", "result_summary": "still running"}
+{"step": 67, "tool": "write_stdin", "args": "poll session 3733", "result_summary": "match_rate=0.9; only BOEING missed"}
+{"step": 68, "tool": "exec_command", "args": "drop-test company_header from 4-rule set", "result_summary": "started session 50634"}
+{"step": 69, "tool": "write_stdin", "args": "poll session 50634", "result_summary": "still running"}
+{"step": 70, "tool": "write_stdin", "args": "poll session 50634", "result_summary": "match_rate preserved at 0.9 with 3 rules"}
+{"step": 71, "tool": "exec_command", "args": "verify individual rule_page1_before_12g", "result_summary": "started session 28889"}
+{"step": 72, "tool": "exec_command", "args": "verify individual rule_page1_after_trading_symbol_header", "result_summary": "started session 15593"}
+{"step": 73, "tool": "exec_command", "args": "verify individual rule_item1_business_stock_listed", "result_summary": "started session 35801"}
+{"step": 74, "tool": "write_stdin", "args": "poll session 28889", "result_summary": "still running"}
+{"step": 75, "tool": "write_stdin", "args": "poll session 15593", "result_summary": "still running"}
+{"step": 76, "tool": "write_stdin", "args": "poll session 35801", "result_summary": "rule_item1_business_stock_listed match_rate=0.3"}
+{"step": 77, "tool": "write_stdin", "args": "poll session 28889", "result_summary": "rule_page1_before_12g match_rate=0.4"}
+{"step": 78, "tool": "write_stdin", "args": "poll session 15593", "result_summary": "rule_page1_after_trading_symbol_header match_rate=0.4"}
+{"step": 79, "tool": "exec_command", "args": "time_end", "result_summary": "timestamp=1781045109.8780215"}
+{"step": 80, "tool": "exec_command", "args": "sum token totals", "result_summary": "tool_input_tokens=43251 tool_output_tokens=1839"}
+{"step": 81, "tool": "exec_command", "args": "compute final cost/cov aggregates", "result_summary": "sum_cost=0.009409820070406017 min_cov=0.3 mean_cov=0.3666666666666667"}

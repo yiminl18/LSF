@@ -1,0 +1,6 @@
+Wrote the selector result to [what_is_the_state_or_other_jurisdiction_of_incorporation_and.json](/mnt/data/LSF/results/financebench/grid/refined/fps/agent_codex_gpt54/agentic_codex_gpt54/what_is_the_state_or_other_jurisdiction_of_incorporation_and.json) and the step trace to [what_is_the_state_or_other_jurisdiction_of_incorporation_and.jsonl](/mnt/data/LSF/results/financebench/grid/refined/fps/agent_codex_gpt54/agentic_codex_gpt54/_trace/what_is_the_state_or_other_jurisdiction_of_incorporation_and.jsonl).
+
+The selected subset is the 3-rule set:
+`rule_page12_ein_immediately_before_irs_label`, `rule_page12_inline_ein_cover_span`, and `rule_page12_state_within_four_spans_before_incorporation_label`.
+
+It matches the full 5-rule pool’s sampled accuracy at lower cost: `match_rate_on_sampled=0.8`, `sum_cost=0.003136` vs. full-pool `0.003987`. The hard constraint could not be met because the full pool itself tops out at 8/10 on this sampled set; the remaining misses are `AMAZON_2016_10K` and `JOHNSON_JOHNSON_2022_10K`, which expose rule-pool gaps.

@@ -1,0 +1,14 @@
+Selected subset is:
+
+- `rule_news_release_financial_results_title_and_call`
+- `rule_page12_bold_exact_form_8k`
+- `rule_page12_section_header_exact_form_10q`
+- `rule_page13_bold_cover_title_form_10k`
+
+It achieved `missed_in_D_star: []` and `match_rate_on_sampled = 1.0` on the 20-doc merge-base target set, with `selected_avg_cost_ratio_sum = 0.001627`, `min_cov = 0.05`, and `mean_cov = 0.25` on that target set.
+
+Artifacts written:
+- [what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning.json](/mnt/data/LSF/results/financebench/grid/refined/fps/agent_codex_gpt54/agentic_codex_gpt54/what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning.json)
+- [what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning.jsonl](/mnt/data/LSF/results/financebench/grid/refined/fps/agent_codex_gpt54/agentic_codex_gpt54/_trace/what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning.jsonl)
+
+One caveat mattered: the user-provided `data/financebench/sample/single_cluster/random/sample_doc_labels.json` had no labels for this question, so `verify_accuracy` could not judge correctness from it. I derived a temporary 20-doc label file from `data/financebench/multi_cluster_all_labels.json` restricted to the merge-base target docs and used that for the successful final verification.
