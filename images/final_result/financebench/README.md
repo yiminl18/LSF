@@ -44,16 +44,23 @@ agent_codex refiner so the 8 points stay distinct — see `selected_strategies.t
 ## 3. `financebench_cost_vs_docs_linear.png` — `plot_cost_vs_docs_linear.py`
 - Identical to (2) with a **linear** y-axis.
 
+## 4. `financebench_cost_vs_docs_b1_lsf.png` / `..._b1_lsf_linear.png` — `plot_cost_vs_docs_b1_lsf.py`
+- Head-to-head of the **two comparable-accuracy strategies**: Baseline 1 per-pair gpt54
+  (acc 0.966) vs LSF (LLM rule-gen) `random/llm_coarse/p_hybrid` (acc 0.959). Emits log + linear.
+- Same cost model; solid over 0–86 docs, **dotted extrapolation** 86→1000 with hollow `(est.)` markers.
+- @86 docs: Baseline 1 **$20.46** vs LSF **$1.49** (~14×); extrapolated @1000: **$237.92** vs **$3.20** (~74×).
+
 > **⚠ RL caveat (cost-vs-docs only):** the financebench grid did **not** log rule-gen tokens, so
 > RL is **estimated** — `llm_coarse` ≈ one pass over the ~18-doc sample (RL ratio ≈18 × JSON size);
 > `agent_codex` ≈ 1 doc (RL ratio ≈1, from the measured nopv value); `agentic_full_data` RL is
 > **measured** (`docs/approach/rule_end_to_end.md`) but shown **full-price** (no finance cache
 > split — nopv's was ~89% cached, so this likely overstates Ablation 1 ~5×). The scatter (figure 1)
-> excludes RL and is unaffected. The `_b1_lsf` head-to-head figures are intentionally **not** produced.
+> excludes RL and is unaffected.
 
 ## Regenerating
 ```bash
 python3 images/final_result/financebench/plot_financebench.py
 python3 images/final_result/financebench/plot_cost_vs_docs.py
 python3 images/final_result/financebench/plot_cost_vs_docs_linear.py
+python3 images/final_result/financebench/plot_cost_vs_docs_b1_lsf.py
 ```
