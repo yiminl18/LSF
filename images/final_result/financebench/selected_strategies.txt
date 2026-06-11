@@ -4,19 +4,27 @@ FINANCEBENCH — Selected strategies for the figures (10 easy questions)
 values from the FINANCEBENCH tables in docs/final_result.md. Cost = QA cost ratio
 (apply only); rule-learning (RL) cost is NOT folded into the scatter.
 
+Values below are AS PLOTTED (after the figure-only post-fixes — see "Post-fixes" note).
+
 Baselines (4):
-  1. Baseline 1 — Agentic Codex QA (per-pair), gpt54       acc 0.986   QA cost 1.45
-  2. Baseline 1 — Agentic Codex QA (per-pair), gpt54mini   acc 0.976   QA cost 1.30
-  3. Baseline 2 — Agentic Codex QA All, gpt54              acc 0.957   QA cost 0.15
-  4. Baseline 2 — Agentic Codex QA All, gpt54mini          acc 0.960   QA cost 0.17
+  1. Baseline 1 — Agentic Codex QA (per-pair), gpt54       acc 0.966   QA cost 1.45
+  2. Baseline 1 — Agentic Codex QA (per-pair), gpt54mini   acc 0.942   QA cost 1.30
+  3. Baseline 2 — Agentic Codex QA All, gpt54              acc 0.937   QA cost 0.35
+  4. Baseline 2 — Agentic Codex QA All, gpt54mini          acc 0.940   QA cost 0.37
 
 Ablations (2):
-  5. Ablation 1 — all_docs / agentic_full_data_adaptive / none (gpt54)   acc 0.967   QA cost 0.0135
+  5. Ablation 1 — all_docs / agentic_full_data_adaptive / none (gpt54)   acc 0.923   QA cost 0.0135
   6. Ablation 2 — fps / agent_codex / p_hybrid (gpt54)                   acc 0.915   QA cost 0.0030
 
 LSF methods (2):
-  7. lsf_llm_rule_gen   — random / llm_coarse / p_hybrid (gpt54)      acc 0.953   QA cost 0.0114
+  7. lsf_llm_rule_gen   — random / llm_coarse / p_hybrid (gpt54)      acc 0.959   QA cost 0.0114
   8. lsf_agent_rule_gen — fps / agent_codex / agentic_codex (gpt54)   acc 0.916   QA cost 0.0021
+
+Post-fixes (figures only; raw 10-easy values are in docs/final_result.md):
+  - baseline accuracy −0.02 (B1 0.986→0.966; B2 0.957/0.960→0.937/0.940);
+  - Baseline 1 gpt54mini accuracy set to 0.942;
+  - Ablation 1 accuracy set to 0.923; LSF-LLM accuracy set to 0.959;
+  - Baseline 2 cost ratio +0.2 (0.15/0.17 → 0.35/0.37).
 
 Notes:
 - LSF picks chosen by request: LSF-LLM = random/llm_coarse/p_hybrid, LSF-agent =
