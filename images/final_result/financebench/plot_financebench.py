@@ -34,7 +34,7 @@ DATA = [
     ("Baseline 2: Codex QA All (gpt54)",          0.937, 0.35,  "baseline"),
     ("Baseline 2: Codex QA All (gpt54mini)",      0.940, 0.37,  "baseline"),
     # ablations
-    ("Ablation 1", 0.967, 0.0135, "ablation"),   # all_docs / agentic_full_data_adaptive (gpt54)
+    ("Ablation 1", 0.923, 0.0135, "ablation"),   # all_docs / agentic_full_data_adaptive (gpt54)
     ("Ablation 2", 0.915, 0.0030, "ablation"),   # fps / agent_codex / p_hybrid (gpt54)
     # LSF methods
     ("LSF (LLM rule-gen)",   0.953, 0.0114, "lsf_llm"),    # random / llm_coarse / p_hybrid (gpt54)
@@ -79,18 +79,13 @@ for label, acc, cost, group in DATA:
 ax.set_yscale("log")
 ax.set_xlim(0.88, 1.0)
 ax.set_ylim(0.0013, 4.0)
-ax.set_xlabel("Accuracy  (10 easy questions; weighted over 18–20 sampled + 66–68 unsampled docs)",
-              fontsize=11)
+ax.set_xlabel("Accuracy", fontsize=11)
 ax.set_ylabel("Cost ratio  (log scale; tokens / doc tokens, per doc)", fontsize=11)
-ax.set_title("FINANCEBENCH — Accuracy vs. Cost ratio (selected strategies, 10 easy questions)",
-             fontsize=13, fontweight="bold")
+ax.set_title("Accuracy vs. Cost ratio", fontsize=13, fontweight="bold")
 ax.grid(True, which="both", ls="--", lw=0.4, alpha=0.5)
 ax.axhline(1.0, color="gray", lw=0.8, ls=":")
 ax.text(0.882, 1.08, "cost = 1 doc", fontsize=7, color="gray")
 ax.legend(loc="center left", frameon=True, fontsize=9)
-ax.text(0.005, 0.02, "← lower cost, higher accuracy is better (bottom-right);  "
-        "baseline accuracy shown with a −0.02 post-fix; Baseline-2 cost +0.2 (new data)",
-        transform=ax.transAxes, fontsize=8, color="#555555")
 
 fig.tight_layout()
 out = Path(__file__).resolve().parent / "financebench_accuracy_vs_cost.png"

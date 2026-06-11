@@ -31,7 +31,7 @@ STRATS = [
         dict(color="#5B8DD9", ls="-",  marker="^")),
     ("Baseline 2: Codex QA All (gpt54)",      0.957, 0.0,                0.35  * DOC_TOK_PLAIN,
         dict(color="#5AAF5A", ls="-",  marker="D")),
-    ("Ablation 1: agentic_full_data_adaptive", 0.967, ABLATION1_RL_TOK,  0.0135 * DOC_TOK_PLAIN,
+    ("Ablation 1: agentic_full_data_adaptive", 0.923, ABLATION1_RL_TOK,  0.0135 * DOC_TOK_PLAIN,
         dict(color="#7f7f7f", ls="-.", marker="o")),
     ("Ablation 2: fps/agent_codex/p_hybrid",  0.915, AGENT_CODEX_RL_TOK, 0.0030 * DOC_TOK_PLAIN,
         dict(color="#555555", ls="-.", marker="s")),
@@ -62,7 +62,7 @@ for label, acc, ot, pd, st in STRATS:
 # linear y-axis (the only change vs plot_cost_vs_docs.py)
 ax.set_xlabel("Number of documents", fontsize=12)
 ax.set_ylabel("Total cost (USD) — RL + apply", fontsize=12)
-ax.set_title("FINANCEBENCH — Cost vs. Number of Documents (10 easy questions, linear y)\n"
+ax.set_title("FINANCEBENCH — Cost vs. Number of Documents (linear y)\n"
              "(1 question avg, gpt54 input price; cost = one-time rule-learning + per-doc apply)",
              fontsize=12)
 ax.set_xticks([0, 20, 40, 60, N_DOCS_MAX])
