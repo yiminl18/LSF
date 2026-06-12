@@ -1,0 +1,219 @@
+{
+  "question": "What were net individual income tax receipts for the most recent quarter reported, in billions of dollars?",
+  "question_slug": "what_were_net_individual_income_tax_receipts_for_the_most_re",
+  "timestamp": "2026-06-04T01:11:21Z",
+  "model": "gpt54",
+  "num_documents": 20,
+  "doc_names": [
+    "treasury_bulletin_1980_10",
+    "treasury_bulletin_1981_11",
+    "treasury_bulletin_1982_03",
+    "treasury_bulletin_1982_05",
+    "treasury_bulletin_1982_10",
+    "treasury_bulletin_1983_06",
+    "treasury_bulletin_1984_12",
+    "treasury_bulletin_1985_03",
+    "treasury_bulletin_1987_03",
+    "treasury_bulletin_1987_12",
+    "treasury_bulletin_1988_09",
+    "treasury_bulletin_1988_12",
+    "treasury_bulletin_1989_09",
+    "treasury_bulletin_1991_03",
+    "treasury_bulletin_1992_03",
+    "treasury_bulletin_1997_12",
+    "treasury_bulletin_2008_06",
+    "treasury_bulletin_2016_03",
+    "treasury_bulletin_2018_06",
+    "treasury_bulletin_2024_09"
+  ],
+  "latency_seconds": 154.928,
+  "input_tokens": 451794,
+  "output_tokens": 5587,
+  "rules": [
+    {
+      "rule_name": "rule_ffo2_table_budget_receipts_by_source",
+      "description": "Match table spans for Table FFO-2 / Budget Receipts by Source where the answer usually lives.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_net_individual_income_tax_receipts_for_the_most_re/rule_ffo2_table_budget_receipts_by_source.py"
+    },
+    {
+      "rule_name": "rule_ffo2_section_header",
+      "description": "Match section headers naming Table FFO-2 / Budget Receipts by Source.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_net_individual_income_tax_receipts_for_the_most_re/rule_ffo2_section_header.py"
+    },
+    {
+      "rule_name": "rule_tables_with_individual_income_tax_headers",
+      "description": "Match tables containing individual income tax column headers such as Withheld/Other/Refunds/Net.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_net_individual_income_tax_receipts_for_the_most_re/rule_tables_with_individual_income_tax_headers.py"
+    },
+    {
+      "rule_name": "rule_tables_with_net_budget_receipts_and_individual",
+      "description": "Match tables that include Net budget receipts and Individual income tax columns.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_net_individual_income_tax_receipts_for_the_most_re/rule_tables_with_net_budget_receipts_and_individual.py"
+    },
+    {
+      "rule_name": "rule_tables_with_most_recent_quarter_months",
+      "description": "Match FFO-2 tables that contain month columns/rows for quarter months like July/August/September or Oct/Nov/Dec.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_net_individual_income_tax_receipts_for_the_most_re/rule_tables_with_most_recent_quarter_months.py"
+    },
+    {
+      "rule_name": "rule_tables_with_fiscal_to_date_row_and_individual",
+      "description": "Match FFO-2 tables containing a Fiscal-to-date row and individual income tax columns.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_net_individual_income_tax_receipts_for_the_most_re/rule_tables_with_fiscal_to_date_row_and_individual.py"
+    },
+    {
+      "rule_name": "rule_tables_on_pages_named_federal_fiscal_operations",
+      "description": "Match tables on pages/paths associated with Federal Fiscal Operations.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_net_individual_income_tax_receipts_for_the_most_re/rule_tables_on_pages_named_federal_fiscal_operations.py"
+    },
+    {
+      "rule_name": "rule_tables_near_ffo2_header",
+      "description": "Match tables occurring shortly after a section header for FFO-2 / Budget Receipts by Source.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_net_individual_income_tax_receipts_for_the_most_re/rule_tables_near_ffo2_header.py"
+    },
+    {
+      "rule_name": "rule_tables_with_row_individual_income_taxes",
+      "description": "Match tables where a row label explicitly says Individual income taxes.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_net_individual_income_tax_receipts_for_the_most_re/rule_tables_with_row_individual_income_taxes.py"
+    },
+    {
+      "rule_name": "rule_tables_with_fourth_quarter_net_budget_receipts_by_source",
+      "description": "Match special analysis tables for quarter receipts by source that include Individual income taxes rows.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_net_individual_income_tax_receipts_for_the_most_re/rule_tables_with_fourth_quarter_net_budget_receipts_by_source.py"
+    },
+    {
+      "rule_name": "rule_quarter_receipts_analysis_text",
+      "description": "Match prose spans discussing quarter receipts and individual income taxes, often containing the answer directly in later-era documents.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_net_individual_income_tax_receipts_for_the_most_re/rule_quarter_receipts_analysis_text.py"
+    },
+    {
+      "rule_name": "rule_analysis_budget_results_receipts_text",
+      "description": "Match analysis prose under budget results sections that discusses receipts by source and individual income taxes.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_net_individual_income_tax_receipts_for_the_most_re/rule_analysis_budget_results_receipts_text.py"
+    },
+    {
+      "rule_name": "rule_page_range_modern_ffo2",
+      "description": "Match likely answer tables on modern documents where FFO-2 usually appears in early teen pages.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_net_individual_income_tax_receipts_for_the_most_re/rule_page_range_modern_ffo2.py"
+    },
+    {
+      "rule_name": "rule_page_range_1980s_ffo2",
+      "description": "Match likely answer tables on 1980s/early-1990s documents where FFO-2 often appears around pages 17-22.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_net_individual_income_tax_receipts_for_the_most_re/rule_page_range_1980s_ffo2.py"
+    },
+    {
+      "rule_name": "rule_table_cells_individual_net_column",
+      "description": "Match tables whose cell structure includes an Individual/Net header combination.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_net_individual_income_tax_receipts_for_the_most_re/rule_table_cells_individual_net_column.py"
+    },
+    {
+      "rule_name": "rule_table_cells_withheld_other_refunds_net",
+      "description": "Match tables whose cells include the canonical Withheld/Other/Refunds/Net individual tax breakdown.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_net_individual_income_tax_receipts_for_the_most_re/rule_table_cells_withheld_other_refunds_net.py"
+    },
+    {
+      "rule_name": "rule_table_cells_month_headers_and_individual",
+      "description": "Match tables with month headers and an Individual income taxes row, common in quarter summary tables.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_net_individual_income_tax_receipts_for_the_most_re/rule_table_cells_month_headers_and_individual.py"
+    },
+    {
+      "rule_name": "rule_modern_contents_points_to_ffo2",
+      "description": "Match contents tables that mention FFO-2 / receipts by source, useful for locating relevant pages in new docs.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_net_individual_income_tax_receipts_for_the_most_re/rule_modern_contents_points_to_ffo2.py"
+    },
+    {
+      "rule_name": "rule_on_budget_off_budget_receipts_table",
+      "description": "Match later-era FFO-2 tables titled On-Budget and Off-Budget Receipts by Source.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_net_individual_income_tax_receipts_for_the_most_re/rule_on_budget_off_budget_receipts_table.py"
+    },
+    {
+      "rule_name": "rule_receipts_by_source_with_quarter_analysis_header",
+      "description": "Match quarter-analysis headers that often precede answer-bearing prose or tables.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_net_individual_income_tax_receipts_for_the_most_re/rule_receipts_by_source_with_quarter_analysis_header.py"
+    },
+    {
+      "rule_name": "rule_spans_after_quarter_receipts_header",
+      "description": "Match text/table spans immediately after quarter receipts headers, where the answer may be stated or tabulated.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_net_individual_income_tax_receipts_for_the_most_re/rule_spans_after_quarter_receipts_header.py"
+    },
+    {
+      "rule_name": "rule_tables_with_total_budget_receipts_and_individual",
+      "description": "Match quarter summary tables listing Total budget receipts and Individual income taxes by month.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_net_individual_income_tax_receipts_for_the_most_re/rule_tables_with_total_budget_receipts_and_individual.py"
+    },
+    {
+      "rule_name": "rule_tables_with_fiscal_year_or_month_and_individual",
+      "description": "Match detailed FFO-2 tables with a Fiscal year or month stub and individual tax columns.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_net_individual_income_tax_receipts_for_the_most_re/rule_tables_with_fiscal_year_or_month_and_individual.py"
+    },
+    {
+      "rule_name": "rule_tables_with_recent_month_rows",
+      "description": "Match detailed receipt tables containing recent month rows and individual tax columns.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_net_individual_income_tax_receipts_for_the_most_re/rule_tables_with_recent_month_rows.py"
+    },
+    {
+      "rule_name": "rule_modern_financial_operations_receipts_tables",
+      "description": "Match receipt tables under Financial Operations in modern bulletins.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_net_individual_income_tax_receipts_for_the_most_re/rule_modern_financial_operations_receipts_tables.py"
+    },
+    {
+      "rule_name": "rule_early_docs_return_none_when_no_ffo2",
+      "description": "Conservative rule: if no FFO-2/receipts-by-source evidence exists, return no spans.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_net_individual_income_tax_receipts_for_the_most_re/rule_early_docs_return_none_when_no_ffo2.py"
+    },
+    {
+      "rule_name": "rule_tables_with_individual_income_taxes_and_numeric_values",
+      "description": "Match tables mentioning individual income taxes and containing decimal/numeric values likely to include the answer.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_net_individual_income_tax_receipts_for_the_most_re/rule_tables_with_individual_income_taxes_and_numeric_values.py"
+    },
+    {
+      "rule_name": "rule_text_spans_with_individual_income_tax_receipts_phrase",
+      "description": "Match prose spans explicitly saying individual income tax receipts.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_net_individual_income_tax_receipts_for_the_most_re/rule_text_spans_with_individual_income_tax_receipts_phrase.py"
+    },
+    {
+      "rule_name": "rule_text_spans_with_net_receipts_reflected",
+      "description": "Match prose spans where net receipts are described for individual income taxes.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_net_individual_income_tax_receipts_for_the_most_re/rule_text_spans_with_net_receipts_reflected.py"
+    },
+    {
+      "rule_name": "rule_tables_with_july_august_september_columns",
+      "description": "Match quarter tables with July/August/September columns, often directly containing the answer month value.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_net_individual_income_tax_receipts_for_the_most_re/rule_tables_with_july_august_september_columns.py"
+    },
+    {
+      "rule_name": "rule_tables_with_oct_nov_dec_columns",
+      "description": "Match quarter tables with October/November/December columns, often directly containing the answer month value.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_net_individual_income_tax_receipts_for_the_most_re/rule_tables_with_oct_nov_dec_columns.py"
+    },
+    {
+      "rule_name": "rule_tables_with_total_receipts_and_month_columns",
+      "description": "Match quarter summary tables with Total receipts/Total budget receipts and month columns.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_net_individual_income_tax_receipts_for_the_most_re/rule_tables_with_total_receipts_and_month_columns.py"
+    },
+    {
+      "rule_name": "rule_tables_with_on_budget_off_budget_and_individual",
+      "description": "Match later tables that combine on-budget/off-budget framing with individual tax columns.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_net_individual_income_tax_receipts_for_the_most_re/rule_tables_with_on_budget_off_budget_and_individual.py"
+    },
+    {
+      "rule_name": "rule_tables_with_receipts_source_in_path",
+      "description": "Match tables whose structural path already names Budget Receipts by Source.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_net_individual_income_tax_receipts_for_the_most_re/rule_tables_with_receipts_source_in_path.py"
+    },
+    {
+      "rule_name": "rule_tables_with_receipts_source_in_neighbor_text",
+      "description": "Match tables preceded by nearby text '(In millions of dollars)' and a receipts-by-source header.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_net_individual_income_tax_receipts_for_the_most_re/rule_tables_with_receipts_source_in_neighbor_text.py"
+    },
+    {
+      "rule_name": "rule_tables_with_individual_row_headers_in_cells",
+      "description": "Match tables whose parsed cells include row/header text for Individual income taxes.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_net_individual_income_tax_receipts_for_the_most_re/rule_tables_with_individual_row_headers_in_cells.py"
+    },
+    {
+      "rule_name": "rule_tables_with_net_column_and_recent_fiscal_year",
+      "description": "Match detailed receipt tables with Net columns and recent fiscal year rows, where the answer is usually the latest quarter/month net value.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_net_individual_income_tax_receipts_for_the_most_re/rule_tables_with_net_column_and_recent_fiscal_year.py"
+    }
+  ]
+}

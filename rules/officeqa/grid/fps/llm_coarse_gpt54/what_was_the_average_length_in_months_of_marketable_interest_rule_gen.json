@@ -1,0 +1,164 @@
+{
+  "question": "What was the average length in months of marketable interest-bearing public debt held by private investors at end of the most recent fiscal year?",
+  "question_slug": "what_was_the_average_length_in_months_of_marketable_interest",
+  "timestamp": "2026-06-04T01:22:03Z",
+  "model": "gpt54",
+  "num_documents": 20,
+  "doc_names": [
+    "treasury_bulletin_1980_10",
+    "treasury_bulletin_1981_11",
+    "treasury_bulletin_1982_03",
+    "treasury_bulletin_1982_05",
+    "treasury_bulletin_1982_10",
+    "treasury_bulletin_1983_06",
+    "treasury_bulletin_1984_12",
+    "treasury_bulletin_1985_03",
+    "treasury_bulletin_1987_03",
+    "treasury_bulletin_1987_12",
+    "treasury_bulletin_1988_09",
+    "treasury_bulletin_1988_12",
+    "treasury_bulletin_1989_09",
+    "treasury_bulletin_1991_03",
+    "treasury_bulletin_1992_03",
+    "treasury_bulletin_1997_12",
+    "treasury_bulletin_2008_06",
+    "treasury_bulletin_2016_03",
+    "treasury_bulletin_2018_06",
+    "treasury_bulletin_2024_09"
+  ],
+  "latency_seconds": 127.746,
+  "input_tokens": 451783,
+  "output_tokens": 4174,
+  "rules": [
+    {
+      "rule_name": "rule_fd5_table_title",
+      "description": "Match table/title spans for the Federal Debt table about maturity distribution and average length of marketable debt.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_average_length_in_months_of_marketable_interest/rule_fd5_table_title.py"
+    },
+    {
+      "rule_name": "rule_fd5_private_investors_phrase",
+      "description": "Match spans containing the modern phrasing 'held by private investors' or 'private investors' near average length.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_average_length_in_months_of_marketable_interest/rule_fd5_private_investors_phrase.py"
+    },
+    {
+      "rule_name": "rule_fd7_old_numbering_table_title",
+      "description": "Match older table/title spans where the table is numbered FD-7/FO-7 and mentions maturity distribution and average length.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_average_length_in_months_of_marketable_interest/rule_fd7_old_numbering_table_title.py"
+    },
+    {
+      "rule_name": "rule_federal_debt_section_spans",
+      "description": "Match spans under the Federal Debt section that mention average length and marketable debt.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_average_length_in_months_of_marketable_interest/rule_federal_debt_section_spans.py"
+    },
+    {
+      "rule_name": "rule_contents_entry_for_target_table",
+      "description": "Match contents-page entries naming the target table, useful for locating the relevant page/table.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_average_length_in_months_of_marketable_interest/rule_contents_entry_for_target_table.py"
+    },
+    {
+      "rule_name": "rule_table_cells_average_length_phrase",
+      "description": "Match table spans whose cells contain the phrase 'average length'.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_average_length_in_months_of_marketable_interest/rule_table_cells_average_length_phrase.py"
+    },
+    {
+      "rule_name": "rule_table_cells_private_investors",
+      "description": "Match table spans whose cells mention private investors together with average length.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_average_length_in_months_of_marketable_interest/rule_table_cells_private_investors.py"
+    },
+    {
+      "rule_name": "rule_table_with_average_length_row",
+      "description": "Match table spans that likely contain a dedicated row/header for average length in months.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_average_length_in_months_of_marketable_interest/rule_table_with_average_length_row.py"
+    },
+    {
+      "rule_name": "rule_numeric_cells_in_target_table",
+      "description": "Return numeric-looking cells from the target average-length table.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_average_length_in_months_of_marketable_interest/rule_numeric_cells_in_target_table.py"
+    },
+    {
+      "rule_name": "rule_rightmost_numeric_cell_in_average_length_row",
+      "description": "Return the rightmost numeric cell from rows mentioning average length in the target table.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_average_length_in_months_of_marketable_interest/rule_rightmost_numeric_cell_in_average_length_row.py"
+    },
+    {
+      "rule_name": "rule_months_row_in_target_table",
+      "description": "Return rows/cells from the target table that mention months, since the answer is a month count.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_average_length_in_months_of_marketable_interest/rule_months_row_in_target_table.py"
+    },
+    {
+      "rule_name": "rule_page_near_contents_target_page",
+      "description": "Use contents entry page number for the target table and return spans on that page and the next page.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_average_length_in_months_of_marketable_interest/rule_page_near_contents_target_page.py"
+    },
+    {
+      "rule_name": "rule_modern_fd5_page_band",
+      "description": "Match spans on pages where modern contents place FD-5 (typically around pages 15-36 depending on era) and mention average length.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_average_length_in_months_of_marketable_interest/rule_modern_fd5_page_band.py"
+    },
+    {
+      "rule_name": "rule_target_heading_neighbors",
+      "description": "Return spans immediately following a heading/title that names the target table.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_average_length_in_months_of_marketable_interest/rule_target_heading_neighbors.py"
+    },
+    {
+      "rule_name": "rule_federal_debt_pages_with_average_length",
+      "description": "Return all spans on pages containing a Federal Debt target heading mentioning average length.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_average_length_in_months_of_marketable_interest/rule_federal_debt_pages_with_average_length.py"
+    },
+    {
+      "rule_name": "rule_chart_average_length_of_marketable_debt",
+      "description": "Match chart/title spans about average length of the marketable debt, which often appear adjacent to the answer table.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_average_length_in_months_of_marketable_interest/rule_chart_average_length_of_marketable_debt.py"
+    },
+    {
+      "rule_name": "rule_private_holdings_by_maturity_chart",
+      "description": "Match chart/title spans about private holdings of Treasury marketable debt by maturity, often adjacent to the answer table.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_average_length_in_months_of_marketable_interest/rule_private_holdings_by_maturity_chart.py"
+    },
+    {
+      "rule_name": "rule_ofs2_estimated_ownership_private_investors",
+      "description": "Match OFS-2 contents/table spans about estimated ownership by private investors, a nearby supporting section in later documents.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_average_length_in_months_of_marketable_interest/rule_ofs2_estimated_ownership_private_investors.py"
+    },
+    {
+      "rule_name": "rule_fd5_or_fd7_numbering_mentions",
+      "description": "Match spans explicitly numbered FD-5, FD-7, or FO-7 and mentioning average length.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_average_length_in_months_of_marketable_interest/rule_fd5_or_fd7_numbering_mentions.py"
+    },
+    {
+      "rule_name": "rule_table_rows_with_private_investors_and_months",
+      "description": "Return row groups from tables where row text mentions private investors and months.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_average_length_in_months_of_marketable_interest/rule_table_rows_with_private_investors_and_months.py"
+    },
+    {
+      "rule_name": "rule_table_rows_with_average_length_and_numeric",
+      "description": "Return row groups from tables where row text mentions average length and contains a numeric value.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_average_length_in_months_of_marketable_interest/rule_table_rows_with_average_length_and_numeric.py"
+    },
+    {
+      "rule_name": "rule_late_era_contents_fd5_page",
+      "description": "Use late-era contents entry for FD-5 and return spans on that exact page.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_average_length_in_months_of_marketable_interest/rule_late_era_contents_fd5_page.py"
+    },
+    {
+      "rule_name": "rule_very_late_era_fcp_us_dollar_positions_exclusion",
+      "description": "High-recall rule: match average-length spans while excluding foreign currency position pages that also use month counts.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_average_length_in_months_of_marketable_interest/rule_very_late_era_fcp_us_dollar_positions_exclusion.py"
+    },
+    {
+      "rule_name": "rule_target_table_on_same_page_as_fd_section",
+      "description": "Return table spans on pages that also contain a Federal Debt section header.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_average_length_in_months_of_marketable_interest/rule_target_table_on_same_page_as_fd_section.py"
+    },
+    {
+      "rule_name": "rule_answer_like_numeric_near_average_length_text",
+      "description": "Return text spans with short numeric content near a nearby span mentioning average length.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_average_length_in_months_of_marketable_interest/rule_answer_like_numeric_near_average_length_text.py"
+    },
+    {
+      "rule_name": "rule_same_path_as_target_heading",
+      "description": "Return spans sharing the same path_text as a heading/span that names the target table.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_average_length_in_months_of_marketable_interest/rule_same_path_as_target_heading.py"
+    }
+  ]
+}

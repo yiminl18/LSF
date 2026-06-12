@@ -1,0 +1,194 @@
+{
+  "question": "Is the statutory debt limit currently suspended or set at a specific dollar amount?",
+  "question_slug": "is_the_statutory_debt_limit_currently_suspended_or_set_at_a_",
+  "timestamp": "2026-06-04T01:19:48Z",
+  "model": "gpt54",
+  "num_documents": 20,
+  "doc_names": [
+    "treasury_bulletin_1980_10",
+    "treasury_bulletin_1981_11",
+    "treasury_bulletin_1982_03",
+    "treasury_bulletin_1982_05",
+    "treasury_bulletin_1982_10",
+    "treasury_bulletin_1983_06",
+    "treasury_bulletin_1984_12",
+    "treasury_bulletin_1985_03",
+    "treasury_bulletin_1987_03",
+    "treasury_bulletin_1987_12",
+    "treasury_bulletin_1988_09",
+    "treasury_bulletin_1988_12",
+    "treasury_bulletin_1989_09",
+    "treasury_bulletin_1991_03",
+    "treasury_bulletin_1992_03",
+    "treasury_bulletin_1997_12",
+    "treasury_bulletin_2008_06",
+    "treasury_bulletin_2016_03",
+    "treasury_bulletin_2018_06",
+    "treasury_bulletin_2024_09"
+  ],
+  "latency_seconds": 135.032,
+  "input_tokens": 451837,
+  "output_tokens": 5046,
+  "rules": [
+    {
+      "rule_name": "rule_federal_debt_statutory_limit_table",
+      "description": "Match table spans in the Federal Debt section mentioning debt subject to statutory limit or statutory limitation.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/is_the_statutory_debt_limit_currently_suspended_or_set_at_a_/rule_federal_debt_statutory_limit_table.py"
+    },
+    {
+      "rule_name": "rule_federal_debt_statutory_limit_headers",
+      "description": "Match section headers in or near the Federal Debt section that mention statutory limit/limitation.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/is_the_statutory_debt_limit_currently_suspended_or_set_at_a_/rule_federal_debt_statutory_limit_headers.py"
+    },
+    {
+      "rule_name": "rule_contents_fd6_fd8_fd9_entries",
+      "description": "Match contents-page tables listing FD/FO entries for debt subject to statutory limitation or status/application of statutory limitation.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/is_the_statutory_debt_limit_currently_suspended_or_set_at_a_/rule_contents_fd6_fd8_fd9_entries.py"
+    },
+    {
+      "rule_name": "rule_page_near_fd6_or_fd8_or_fd9",
+      "description": "Match spans on pages where contents indicate FD/FO debt-subject-to-statutory-limit tables appear.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/is_the_statutory_debt_limit_currently_suspended_or_set_at_a_/rule_page_near_fd6_or_fd8_or_fd9.py"
+    },
+    {
+      "rule_name": "rule_debt_subject_to_statutory_phrase_anywhere",
+      "description": "Match any span containing the phrase debt subject to statutory limitation/limit.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/is_the_statutory_debt_limit_currently_suspended_or_set_at_a_/rule_debt_subject_to_statutory_phrase_anywhere.py"
+    },
+    {
+      "rule_name": "rule_status_and_application_of_statutory_limitation_anywhere",
+      "description": "Match any span containing status and application of statutory limitation.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/is_the_statutory_debt_limit_currently_suspended_or_set_at_a_/rule_status_and_application_of_statutory_limitation_anywhere.py"
+    },
+    {
+      "rule_name": "rule_statutory_limit_keyword_anywhere",
+      "description": "Match any span mentioning statutory limit or statutory limitation.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/is_the_statutory_debt_limit_currently_suspended_or_set_at_a_/rule_statutory_limit_keyword_anywhere.py"
+    },
+    {
+      "rule_name": "rule_federal_budget_and_debt_section",
+      "description": "Match spans under the modern Profile of the Economy subsection Federal Budget and Debt.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/is_the_statutory_debt_limit_currently_suspended_or_set_at_a_/rule_federal_budget_and_debt_section.py"
+    },
+    {
+      "rule_name": "rule_debt_ceiling_suspended_text",
+      "description": "Match spans explicitly stating the debt ceiling was suspended.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/is_the_statutory_debt_limit_currently_suspended_or_set_at_a_/rule_debt_ceiling_suspended_text.py"
+    },
+    {
+      "rule_name": "rule_debt_limit_suspended_text",
+      "description": "Match spans explicitly stating the debt limit was suspended.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/is_the_statutory_debt_limit_currently_suspended_or_set_at_a_/rule_debt_limit_suspended_text.py"
+    },
+    {
+      "rule_name": "rule_federal_budget_and_debt_with_suspension",
+      "description": "Match suspension statements specifically within the Federal Budget and Debt subsection.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/is_the_statutory_debt_limit_currently_suspended_or_set_at_a_/rule_federal_budget_and_debt_with_suspension.py"
+    },
+    {
+      "rule_name": "rule_debt_ceiling_automatically_raised",
+      "description": "Match spans saying the debt ceiling will be automatically raised after a suspension period.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/is_the_statutory_debt_limit_currently_suspended_or_set_at_a_/rule_debt_ceiling_automatically_raised.py"
+    },
+    {
+      "rule_name": "rule_debt_subject_table_cells",
+      "description": "Match table spans whose cell texts mention debt subject to statutory limit/limitation.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/is_the_statutory_debt_limit_currently_suspended_or_set_at_a_/rule_debt_subject_table_cells.py"
+    },
+    {
+      "rule_name": "rule_federal_debt_pages_20_to_40",
+      "description": "Match spans on likely Federal Debt data pages where statutory limit tables usually appear in these bulletins.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/is_the_statutory_debt_limit_currently_suspended_or_set_at_a_/rule_federal_debt_pages_20_to_40.py"
+    },
+    {
+      "rule_name": "rule_profile_federal_budget_and_debt_pages",
+      "description": "Match spans on pages containing the modern Profile of the Economy discussion of Federal Budget and Debt.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/is_the_statutory_debt_limit_currently_suspended_or_set_at_a_/rule_profile_federal_budget_and_debt_pages.py"
+    },
+    {
+      "rule_name": "rule_debt_limit_amount_dollar_pattern_near_limit",
+      "description": "Match spans mentioning debt limit/ceiling together with a dollar-denominated amount.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/is_the_statutory_debt_limit_currently_suspended_or_set_at_a_/rule_debt_limit_amount_dollar_pattern_near_limit.py"
+    },
+    {
+      "rule_name": "rule_debt_limit_amount_plain_number_near_limit",
+      "description": "Match spans mentioning debt limit/ceiling together with a large plain-number amount and unit.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/is_the_statutory_debt_limit_currently_suspended_or_set_at_a_/rule_debt_limit_amount_plain_number_near_limit.py"
+    },
+    {
+      "rule_name": "rule_modern_federal_debt_contents_fd6",
+      "description": "Match modern contents entries where FD-6 is Debt Subject to Statutory Limit.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/is_the_statutory_debt_limit_currently_suspended_or_set_at_a_/rule_modern_federal_debt_contents_fd6.py"
+    },
+    {
+      "rule_name": "rule_legacy_federal_debt_contents_fd8",
+      "description": "Match legacy contents entries where FD-8 is Debt Subject to Statutory Limitation.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/is_the_statutory_debt_limit_currently_suspended_or_set_at_a_/rule_legacy_federal_debt_contents_fd8.py"
+    },
+    {
+      "rule_name": "rule_legacy_federal_debt_contents_fd9",
+      "description": "Match legacy contents entries where FD-9 is Status and Application of Statutory Limitation.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/is_the_statutory_debt_limit_currently_suspended_or_set_at_a_/rule_legacy_federal_debt_contents_fd9.py"
+    },
+    {
+      "rule_name": "rule_federal_debt_intro_and_nearby",
+      "description": "Match spans on pages where a Federal Debt introduction/header appears, to capture nearby answer tables.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/is_the_statutory_debt_limit_currently_suspended_or_set_at_a_/rule_federal_debt_intro_and_nearby.py"
+    },
+    {
+      "rule_name": "rule_suspension_or_statutory_limit_anywhere",
+      "description": "Match any span mentioning suspension or statutory debt limit concepts.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/is_the_statutory_debt_limit_currently_suspended_or_set_at_a_/rule_suspension_or_statutory_limit_anywhere.py"
+    },
+    {
+      "rule_name": "rule_modern_profile_debt_pages_with_gross_debt",
+      "description": "Match modern Federal Budget and Debt spans mentioning gross federal debt or debt held by the public.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/is_the_statutory_debt_limit_currently_suspended_or_set_at_a_/rule_modern_profile_debt_pages_with_gross_debt.py"
+    },
+    {
+      "rule_name": "rule_answer_page_from_contents_statutory_limit",
+      "description": "Use contents references to statutory limit tables to return spans from the referenced page and adjacent page.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/is_the_statutory_debt_limit_currently_suspended_or_set_at_a_/rule_answer_page_from_contents_statutory_limit.py"
+    },
+    {
+      "rule_name": "rule_federal_debt_table_numbered_fd6_or_fd8_or_fd9",
+      "description": "Match Federal Debt tables whose title text includes FD/FO numbering associated with statutory limit tables.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/is_the_statutory_debt_limit_currently_suspended_or_set_at_a_/rule_federal_debt_table_numbered_fd6_or_fd8_or_fd9.py"
+    },
+    {
+      "rule_name": "rule_modern_suspension_sentence_on_profile_pages",
+      "description": "Match modern profile pages where a sentence states the debt ceiling was suspended until a date.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/is_the_statutory_debt_limit_currently_suspended_or_set_at_a_/rule_modern_suspension_sentence_on_profile_pages.py"
+    },
+    {
+      "rule_name": "rule_statutory_limit_or_suspension_on_same_page_as_federal_budget_and_debt",
+      "description": "Return spans on pages containing the Federal Budget and Debt header that mention limit, ceiling, or suspension.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/is_the_statutory_debt_limit_currently_suspended_or_set_at_a_/rule_statutory_limit_or_suspension_on_same_page_as_federal_budget_and_debt.py"
+    },
+    {
+      "rule_name": "rule_federal_debt_contents_page_spans",
+      "description": "Return all contents-page spans under Federal Debt, useful because the target table/page is consistently listed there.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/is_the_statutory_debt_limit_currently_suspended_or_set_at_a_/rule_federal_debt_contents_page_spans.py"
+    },
+    {
+      "rule_name": "rule_profile_debt_section_all_spans",
+      "description": "Return all spans under the Federal Budget and Debt path_text subsection.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/is_the_statutory_debt_limit_currently_suspended_or_set_at_a_/rule_profile_debt_section_all_spans.py"
+    },
+    {
+      "rule_name": "rule_statutory_limit_table_or_text_on_fd_pages",
+      "description": "Match table/text spans on Federal Debt pages that mention statutory limit concepts or likely answer amounts.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/is_the_statutory_debt_limit_currently_suspended_or_set_at_a_/rule_statutory_limit_table_or_text_on_fd_pages.py"
+    },
+    {
+      "rule_name": "rule_modern_debt_suspension_with_date",
+      "description": "Match spans that state suspension until a specific date, the modern answer pattern.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/is_the_statutory_debt_limit_currently_suspended_or_set_at_a_/rule_modern_debt_suspension_with_date.py"
+    },
+    {
+      "rule_name": "rule_debt_limit_answer_candidates_high_recall",
+      "description": "High-recall rule for any span likely to answer whether the debt limit is suspended or set at a dollar amount.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/is_the_statutory_debt_limit_currently_suspended_or_set_at_a_/rule_debt_limit_answer_candidates_high_recall.py"
+    }
+  ]
+}

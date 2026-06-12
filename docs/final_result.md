@@ -230,13 +230,14 @@ JSON-form, QA cost ratio by plain text).
 
 | Strategy (sampling / rule_gen / refine) | Model | RL cost ratio | QA accuracy | QA cost ratio |
 |---|---|---:|---:|---:|
-| **Baseline 1** — Agentic Codex QA (per-pair) | gpt54 | N/A | 0.909 | 33.32 |
+| **Baseline 1** — Agentic Codex QA (per-pair) | gpt54 | N/A | 0.918 | 33.32 |
 | **Baseline 1** — Agentic Codex QA (per-pair) | gpt54mini | N/A | 0.906 | 30.80 |
 | **Baseline 2** — Agentic Codex QA All | gpt54 | N/A | 0.880 | 1.33 |
-| **Baseline 2** — Agentic Codex QA All | gpt54mini | N/A | 0.867 | 1.61 |
+| **Baseline 2** — Agentic Codex QA All | gpt54mini | N/A | 0.846 | 1.61 |
 | fps / agent_codex / agentic_codex | gpt54 | 0.21 | **0.925** | 0.0058 |
 | fps / agent_codex / p_mini | gpt54 | 0.21 | 0.925 | 0.0063 |
 | fps / agent_codex / p_hybrid | gpt54 | 0.21 | 0.925 | 0.0063 |
+| fps / agent_codex / p_hybrid / **descent** | gpt54 | 0.21 | 0.925 | 0.0062§ |
 | random / agent_codex / p_hybrid | gpt54 | 0.22† | 0.911 | 0.0054 |
 | random / agent_codex / p_mini | gpt54 | 0.22† | 0.910 | 0.0054 |
 | random / agent_codex / agentic_codex | gpt54 | 0.22† | 0.909 | 0.0047 |
@@ -257,6 +258,7 @@ JSON-form, QA cost ratio by plain text).
 | fps / agent_codex / agentic_codex | 0.965 | 0.922 | 0.925 |
 | fps / agent_codex / p_mini | 0.965 | 0.922 | 0.925 |
 | fps / agent_codex / p_hybrid | 0.965 | 0.922 | 0.925 |
+| fps / agent_codex / p_hybrid / descent | 0.969 | 0.922 | 0.925 |
 | random / agent_codex / p_hybrid | 0.973 | 0.907 | 0.911 |
 | random / agent_codex / p_mini | 0.969 | 0.906 | 0.910 |
 | random / agent_codex / agentic_codex | 0.973 | 0.904 | 0.909 |
@@ -276,6 +278,19 @@ generation over all 294 docs (no sampled/unsampled split; apply uses `rule_apply
 gpt54-adaptive 40,650,849 / 410,238; gpt54mini-adaptive 62,487,212 / 746,101; gpt54mini-baseline
 35,095,343 / 455,270.
 
+§ `/ descent` = the same refined rules as the `fps / agent_codex / p_hybrid` row (the
+**lsf_agent_rule_gen** combo), but applied with the **Cost-Descent** strategy
+(`src/rule_apply/descent.py`, see `docs/approach/rule_apply_descent.md`) instead of `default`: rules
+are cost-sorted and the gpt54 context is halved toward the cheapest rules while a gpt54mini gate
+still finds the answer, with full-pool fallback. **Cost counts gpt54 tokens only** (gpt54mini gate
+calls are logged but excluded). Unlike nopv, descent here is a near-pure win — accuracy is flat
+(sAcc 0.965→0.969, uAcc unchanged at 0.922; combined 0.925 either way) for **~2.3% lower apply
+cost** (per-doc unsampled cost ratio 0.00518→0.00506). Gains are modest because the refined
+p_hybrid set is already lean (3–6 rules/question, little to prune) and **28.2% of unsampled docs
+(44.6% sampled) hit the full-pool fallback**. Per-doc shrink depth (`final_k/final_n`) isn't
+persisted by the eval wrapper, so fallback rate is the shrink proxy. RL cost ratio is unchanged
+(same rule generation). Run: `results/court/grid/apply/fps/agent_codex_gpt54/p_hybrid/descent`.
+
 ### Analysis
 
 **`agent_codex` Pareto-dominates on court** — the opposite of nopv. All 6 `agent_codex`
@@ -286,7 +301,7 @@ reading finds tight, accurate rules; `llm_coarse`'s broad JSON dump generates we
 rules.
 
 **Pipelines beat the best baseline on both axes.** The top pipeline `fps/agent_codex/*`
-(**0.925**) exceeds the strongest baseline (Baseline 1 gpt54, 0.909) while costing **0.006 vs
+(**0.925**) exceeds the strongest baseline (Baseline 1 gpt54, 0.918) while costing **0.006 vs
 33.32** — i.e. ~0.017 % of the baseline's QA cost (~5,700× cheaper) at *higher* accuracy.
 
 ### COURT — normalized (single cost ratio)
@@ -297,13 +312,14 @@ computed exactly as in the NOPV normalized section: `Accuracy = (20·sAcc + 274�
 
 | Strategy (sampling / rule_gen / refine) | Model | Accuracy | Cost ratio |
 |---|---|---:|---:|
-| **Baseline 1** — Agentic Codex QA (per-pair) | gpt54 | 0.909 | 33.32 |
+| **Baseline 1** — Agentic Codex QA (per-pair) | gpt54 | 0.918 | 33.32 |
 | **Baseline 1** — Agentic Codex QA (per-pair) | gpt54mini | 0.906 | 30.80 |
 | **Baseline 2** — Agentic Codex QA All | gpt54 | 0.880 | 1.33 |
-| **Baseline 2** — Agentic Codex QA All | gpt54mini | 0.867 | 1.61 |
+| **Baseline 2** — Agentic Codex QA All | gpt54mini | 0.846 | 1.61 |
 | fps / agent_codex / agentic_codex | gpt54 | **0.925** | 0.0051 |
 | fps / agent_codex / p_mini | gpt54 | 0.925 | 0.0055 |
 | fps / agent_codex / p_hybrid | gpt54 | 0.925 | 0.0055 |
+| fps / agent_codex / p_hybrid / **descent** | gpt54 | 0.925 | 0.0054§ |
 | random / agent_codex / p_hybrid | gpt54 | 0.911 | 0.0059 |
 | random / agent_codex / p_mini | gpt54 | 0.910 | 0.0059 |
 | random / agent_codex / agentic_codex | gpt54 | 0.909 | 0.0052 |
@@ -319,6 +335,11 @@ computed exactly as in the NOPV normalized section: `Accuracy = (20·sAcc + 274�
 
 (`full_data / agentic_rule` rows from `docs/approach/rule_end_to_end.md` — full-data rule-gen over
 all 294 docs, no sampled/unsampled split, so Accuracy/Cost ratio are the direct all-docs values.)
+
+§ `/ descent` normalized cost folds in the same `RL/20` term as its `default` row (`0.21/20`) over
+the 20 sampled docs, plus descent's lower unsampled apply cost (0.00506 vs 0.00518) over the 274
+held-out docs: `(20·(0.21/20) + 274·0.00506)/294 = 0.0054`. See the § footnote under the main court
+table for the strategy definition.
 
 ---
 
@@ -599,9 +620,12 @@ holds **0.91 at ~0.002** (≈700× cheaper than the baseline). `agentic_full_dat
 
 ## OFFICEQA
 
-> ⚠️ **Only the 6 `agent_codex` pipelines exist** — `llm_coarse` was stopped for officeqa
-> because its broad JSON prompt overflows the context window on these very large docs (so the
-> grid is `2 sampling × 1 rule_gen × 3 refine`, not 12).
+> ⚠️ **7 pipelines exist: the 6 `agent_codex` combos + `fps/llm_coarse/p_hybrid`.** The
+> `llm_coarse` generator was originally stopped on officeqa (its broad JSON prompt risks
+> overflowing the context window on these very large docs), but `fps/llm_coarse/p_hybrid` ran
+> successfully — rule-gen reads only the JSON `texts[:80]` slice (~16 docs' worth, RL 16.24) and
+> the apply/merge stage truncates retrieved text to ~250k tokens rather than failing. The other 5
+> `llm_coarse` combos (`random` + the two other refiners) are not yet run.
 
 officeqa avg doc size ≈ **348,961 tok** (plain text — very large office docs) / **27,816 tok**
 (JSON `texts[:80]`, inflation **0.1×** — the first 80 spans are a tiny slice of these huge docs),
@@ -614,17 +638,30 @@ Baselines: 16q × 50 docs (n = 800). Column definitions identical to the NOPV se
 | **Baseline 1** — Agentic Codex QA (per-pair) | gpt54mini | N/A | 0.796 | 164.41 |
 | **Baseline 2** — Agentic Codex QA All | gpt54 | N/A | 0.779 | 20.86 |
 | **Baseline 2** — Agentic Codex QA All | gpt54mini | N/A | 0.556 | 9.87 |
+| fps / llm_coarse / p_hybrid | gpt54 | 16.24 | **0.644** | 0.186 |
 | random / agent_codex / p_mini | gpt54 | 0.52 | 0.585 | 0.0054 |
 | random / agent_codex / p_hybrid | gpt54 | 0.52 | 0.584 | 0.0054 |
 | fps / agent_codex / p_hybrid | gpt54 | 0.06 | 0.572 | 0.0036 |
 | fps / agent_codex / p_mini | gpt54 | 0.06 | 0.572 | 0.0036 |
 | fps / agent_codex / agentic_codex | gpt54 | 0.06 | 0.569 | 0.0035 |
 | random / agent_codex / agentic_codex | gpt54 | 0.52 | 0.555 | 0.0042 |
+| all_docs / agentic_full_data_adaptive / merge ◊ | gpt54 | 18.26 | 0.522 | 0.129 |
+| all_docs / agentic_full_data_adaptive / merge ◊ | gpt54mini | 15.18 | 0.386 | 0.129 |
+| all_docs / agentic_full_data / merge ◊ | gpt54mini | 7.49 | 0.374 | 0.131 |
+
+◊ **Rule End-to-End** (full-corpus agentic generation; see `docs/approach/rule_end_to_end.md`).
+A Codex agent generates rules per question by reading the raw `.txt` corpus on demand (no
+20-doc sample split), then `rule_apply_merge` answers + judges with **gpt54 throughout** over
+**all 200 docs**. So QA accuracy here is the all-docs accuracy (not an `n=20`/`m=180` combined
+mean), directly comparable to the grid rows' combined accuracy and the baselines. RL cost ratio =
+mean per-query rule-generation `input_tokens` ÷ plain-text avg doc size (348,961 tok). `_adaptive`
+= `--adaptive-large-sample` (larger working sample during generation).
 
 *sAcc/uAcc breakdown (pipelines):*
 
 | sampling / rule_gen / refine | sAcc | uAcc | combined acc |
 |---|---:|---:|---:|
+| fps / llm_coarse / p_hybrid | 0.409 | 0.670 | **0.644** |
 | random / agent_codex / p_mini | 0.644 | 0.579 | 0.585 |
 | random / agent_codex / p_hybrid | 0.641 | 0.578 | 0.584 |
 | fps / agent_codex / p_hybrid | 0.444 | 0.586 | 0.572 |
@@ -634,21 +671,44 @@ Baselines: 16q × 50 docs (n = 800). Column definitions identical to the NOPV se
 
 ### Analysis
 
-**OfficeQA is the hardest dataset for the pipeline.** Combined accuracy tops out at **0.585**
-(`random/agent_codex/p_mini`) — far below the best baseline (Codex per-pair gpt54, **0.830**),
-a ~25-pt gap. The rules generated from a small sample of these huge, heterogeneous office docs
-generalize poorly to the held-out set (uAcc ≈ 0.55–0.59).
+**OfficeQA is the hardest dataset for the pipeline.** The best pipeline is now
+`fps/llm_coarse/p_hybrid` at combined **0.644** (uAcc **0.670**) — still below the best baseline
+(Codex per-pair gpt54, **0.830**), a ~19-pt gap, but a clear step up from the `agent_codex`
+combos, which top out at **0.585** (`random/agent_codex/p_mini`). `llm_coarse` generalizes
+notably better to the held-out set (uAcc 0.670 vs `agent_codex`'s 0.55–0.59) — its broader,
+JSON-derived rules cover these heterogeneous office docs more completely — but it pays for that
+with a far heavier QA footprint.
 
-**But the cost asymmetry is extreme.** Pipelines answer at cost ratio **0.0035–0.0054** —
-because they retrieve a sliver of a ~349K-token doc — while the baselines pay **160–164**
-(per-pair) or **10–21** (amortized *All*). So the pipeline is **~30,000–45,000× cheaper** than
-the per-pair baseline and **~2,000–4,000× cheaper** than the *All* baseline, but at ~0.58 vs
-0.78–0.83 accuracy. Notably, the pipeline (0.555–0.585) **beats Baseline 2 *All* gpt54mini**
-(0.556) outright, and approaches it on the gpt54 side only on cost, not accuracy.
+**`llm_coarse` buys accuracy with cost.** Its QA cost ratio is **0.186** — roughly **35–50×**
+the `agent_codex` pipelines (0.0035–0.0054), because its rules retrieve much more text per doc
+(and the apply/merge stage truncates to ~250k tokens on the largest treasury bulletins). Even so
+it stays well under the baselines: ~**860×** cheaper than Codex per-pair (160) and ~**112×**
+cheaper than *All* gpt54 (20.86). So `llm_coarse` is the accuracy-leaning point on officeqa's
+Pareto front, `agent_codex` the cost-leaning one.
+
+**But the cost asymmetry is extreme** (for the `agent_codex` family). Those pipelines answer at
+cost ratio **0.0035–0.0054** — because they retrieve a sliver of a ~349K-token doc — while the
+baselines pay **160–164** (per-pair) or **10–21** (amortized *All*). So `agent_codex` is
+**~30,000–45,000× cheaper** than the per-pair baseline and **~2,000–4,000× cheaper** than the
+*All* baseline, but at ~0.58 vs 0.78–0.83 accuracy. Notably, even the `agent_codex` pipelines
+(0.555–0.585) **beat Baseline 2 *All* gpt54mini** (0.556) outright, and `fps/llm_coarse/p_hybrid`
+(0.644) clears it comfortably — approaching the *All* gpt54 baseline (0.779) on accuracy at a
+fraction of its cost.
 
 **Sampling/refine effects:** `random` sampling gives higher combined accuracy for the Pareto
 refiners (0.584–0.585 vs fps 0.569–0.572) but costs ~10× more to learn (RL 0.52 vs 0.06 —
 fps Codex read almost nothing). `agentic_codex` refine is the weakest accuracy on both samplers.
+
+**Rule End-to-End (full-corpus agentic generation) underperforms the grid on officeqa.** Reading
+the *entire* corpus during generation — rather than a 20-doc sample — does not pay off here: the
+best variant, `agentic_full_data_adaptive` (gpt54), reaches only **0.522**, below both
+`fps/llm_coarse/p_hybrid` (**0.644**) and every `agent_codex` grid combo (0.555–0.585), while
+costing far more on both axes (RL **7.5–18.3** vs ≤0.52; QA **0.13** vs 0.0035–0.0054). The
+`gpt54mini` generators are weaker still (0.374–0.386). officeqa's docs are large and
+heterogeneous enough that more reading during generation mostly adds cost, not transferable rule
+quality — the opposite of FinanceBench, where the same full-data adaptive approach tops the
+pipelines (0.923). The generation model matters far more than sample size: gpt54 over gpt54mini
+is +13.6 pts (0.386→0.522), the adaptive sample only +1.2 pts on gpt54mini.
 
 ### OFFICEQA — normalized (single cost ratio)
 
@@ -661,9 +721,18 @@ Computed exactly as in the NOPV normalized section: `Accuracy = (20·sAcc + 180�
 | **Baseline 1** — Agentic Codex QA (per-pair) | gpt54mini | 0.796 | 164.41 |
 | **Baseline 2** — Agentic Codex QA All | gpt54 | 0.779 | 20.86 |
 | **Baseline 2** — Agentic Codex QA All | gpt54mini | 0.556 | 9.87 |
+| fps / llm_coarse / p_hybrid | gpt54 | **0.644** | 0.248 |
 | random / agent_codex / p_mini | gpt54 | 0.585 | 0.0074 |
 | random / agent_codex / p_hybrid | gpt54 | 0.584 | 0.0074 |
 | fps / agent_codex / p_hybrid | gpt54 | 0.572 | 0.0036 |
 | fps / agent_codex / p_mini | gpt54 | 0.572 | 0.0036 |
 | fps / agent_codex / agentic_codex | gpt54 | 0.569 | 0.0034 |
 | random / agent_codex / agentic_codex | gpt54 | 0.555 | 0.0063 |
+| all_docs / agentic_full_data_adaptive / merge ◊ | gpt54 | 0.522 | 0.220 |
+| all_docs / agentic_full_data_adaptive / merge ◊ | gpt54mini | 0.386 | 0.204 |
+| all_docs / agentic_full_data / merge ◊ | gpt54mini | 0.374 | 0.168 |
+
+◊ Rule End-to-End rows use a different amortization base: full-corpus generation has no 20-doc
+sample, so `Cost ratio = RL/200 + unsampled_cr` (one-time per-query generation amortized over the
+200-doc corpus, plus per-pair apply cost). Accuracy is the all-docs value. See the ◊ footnote on
+the unnormalized table above and `docs/approach/rule_end_to_end.md`.

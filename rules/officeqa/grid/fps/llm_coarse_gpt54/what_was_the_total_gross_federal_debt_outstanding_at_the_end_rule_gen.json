@@ -1,0 +1,219 @@
+{
+  "question": "What was the total gross federal debt outstanding at the end of the most recent fiscal year, in millions of dollars?",
+  "question_slug": "what_was_the_total_gross_federal_debt_outstanding_at_the_end",
+  "timestamp": "2026-06-04T01:13:56Z",
+  "model": "gpt54",
+  "num_documents": 20,
+  "doc_names": [
+    "treasury_bulletin_1980_10",
+    "treasury_bulletin_1981_11",
+    "treasury_bulletin_1982_03",
+    "treasury_bulletin_1982_05",
+    "treasury_bulletin_1982_10",
+    "treasury_bulletin_1983_06",
+    "treasury_bulletin_1984_12",
+    "treasury_bulletin_1985_03",
+    "treasury_bulletin_1987_03",
+    "treasury_bulletin_1987_12",
+    "treasury_bulletin_1988_09",
+    "treasury_bulletin_1988_12",
+    "treasury_bulletin_1989_09",
+    "treasury_bulletin_1991_03",
+    "treasury_bulletin_1992_03",
+    "treasury_bulletin_1997_12",
+    "treasury_bulletin_2008_06",
+    "treasury_bulletin_2016_03",
+    "treasury_bulletin_2018_06",
+    "treasury_bulletin_2024_09"
+  ],
+  "latency_seconds": 180.893,
+  "input_tokens": 451818,
+  "output_tokens": 5689,
+  "rules": [
+    {
+      "rule_name": "rule_ffo1_summary_tables",
+      "description": "Match table spans for Table FFO-1 / Summary of Fiscal Operations, where the debt answer often appears.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_gross_federal_debt_outstanding_at_the_end/rule_ffo1_summary_tables.py"
+    },
+    {
+      "rule_name": "rule_ffo1_header_nearby_tables",
+      "description": "Match tables immediately following a section header mentioning Table FFO-1 or Summary of Fiscal Operations.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_gross_federal_debt_outstanding_at_the_end/rule_ffo1_header_nearby_tables.py"
+    },
+    {
+      "rule_name": "rule_tables_with_public_debt_securities_column",
+      "description": "Match tables containing a 'Public debt securities' column, a strong signal for the answer-bearing table.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_gross_federal_debt_outstanding_at_the_end/rule_tables_with_public_debt_securities_column.py"
+    },
+    {
+      "rule_name": "rule_tables_with_selected_balances_end_of_period",
+      "description": "Match tables containing 'Selected balances end of period', which often include the year-end debt figure.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_gross_federal_debt_outstanding_at_the_end/rule_tables_with_selected_balances_end_of_period.py"
+    },
+    {
+      "rule_name": "rule_tables_with_fiscal_year_or_month_and_public_debt",
+      "description": "Match tables that contain both 'Fiscal year or month' and 'Public debt securities'.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_gross_federal_debt_outstanding_at_the_end/rule_tables_with_fiscal_year_or_month_and_public_debt.py"
+    },
+    {
+      "rule_name": "rule_tables_with_gross_federal_debt_outstanding",
+      "description": "Match tables explicitly mentioning 'gross federal debt outstanding'.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_gross_federal_debt_outstanding_at_the_end/rule_tables_with_gross_federal_debt_outstanding.py"
+    },
+    {
+      "rule_name": "rule_tables_with_total_gross_federal_debt_outstanding",
+      "description": "Match tables explicitly mentioning 'total gross federal debt outstanding'.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_gross_federal_debt_outstanding_at_the_end/rule_tables_with_total_gross_federal_debt_outstanding.py"
+    },
+    {
+      "rule_name": "rule_federal_debt_section_tables",
+      "description": "Match all table spans under a Federal Debt section.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_gross_federal_debt_outstanding_at_the_end/rule_federal_debt_section_tables.py"
+    },
+    {
+      "rule_name": "rule_fd1_summary_of_federal_debt_tables",
+      "description": "Match tables under or mentioning FD-1 / Summary of Federal Debt.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_gross_federal_debt_outstanding_at_the_end/rule_fd1_summary_of_federal_debt_tables.py"
+    },
+    {
+      "rule_name": "rule_fd1_header_following_tables",
+      "description": "Match tables immediately after a section header for FD-1 / Summary of Federal Debt.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_gross_federal_debt_outstanding_at_the_end/rule_fd1_header_following_tables.py"
+    },
+    {
+      "rule_name": "rule_tables_with_end_of_period_and_debt",
+      "description": "Match tables containing both 'end of period' and debt-related wording.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_gross_federal_debt_outstanding_at_the_end/rule_tables_with_end_of_period_and_debt.py"
+    },
+    {
+      "rule_name": "rule_tables_with_held_by_the_public",
+      "description": "Match tables containing 'Held by the public', often adjacent to the gross debt figure.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_gross_federal_debt_outstanding_at_the_end/rule_tables_with_held_by_the_public.py"
+    },
+    {
+      "rule_name": "rule_tables_with_debt_held_by_public",
+      "description": "Match tables containing 'Debt held by the public', common in later issues' Federal Debt tables.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_gross_federal_debt_outstanding_at_the_end/rule_tables_with_debt_held_by_public.py"
+    },
+    {
+      "rule_name": "rule_tables_with_gross_federal_debt_and_held_by_public",
+      "description": "Match tables containing both gross federal debt wording and held-by-public wording.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_gross_federal_debt_outstanding_at_the_end/rule_tables_with_gross_federal_debt_and_held_by_public.py"
+    },
+    {
+      "rule_name": "rule_tables_with_fiscal_year_rows_and_large_debt_numbers",
+      "description": "Match tables with fiscal-year rows and many 6+ digit numbers, a broad recall rule for debt summary tables.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_gross_federal_debt_outstanding_at_the_end/rule_tables_with_fiscal_year_rows_and_large_debt_numbers.py"
+    },
+    {
+      "rule_name": "rule_tables_on_federal_debt_pages_from_contents",
+      "description": "Match tables on pages listed in contents for Federal Debt / FD-1 when such page numbers can be inferred.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_gross_federal_debt_outstanding_at_the_end/rule_tables_on_federal_debt_pages_from_contents.py"
+    },
+    {
+      "rule_name": "rule_tables_on_ffo1_pages_from_contents",
+      "description": "Match tables on pages listed in contents for FFO-1 / Summary of Fiscal Operations.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_gross_federal_debt_outstanding_at_the_end/rule_tables_on_ffo1_pages_from_contents.py"
+    },
+    {
+      "rule_name": "rule_early_issues_summary_of_fiscal_operations_pages",
+      "description": "Match tables on early pages 15-19 under Summary of Fiscal Operations, common in older issues.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_gross_federal_debt_outstanding_at_the_end/rule_early_issues_summary_of_fiscal_operations_pages.py"
+    },
+    {
+      "rule_name": "rule_mid_late_issues_federal_debt_pages",
+      "description": "Match Federal Debt tables on mid-document pages 17-35, common in later quarterly issues.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_gross_federal_debt_outstanding_at_the_end/rule_mid_late_issues_federal_debt_pages.py"
+    },
+    {
+      "rule_name": "rule_tables_with_year_end_rows",
+      "description": "Match tables containing annual rows like 1980, 1981, 1982 etc., where the answer is often the latest annual debt value.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_gross_federal_debt_outstanding_at_the_end/rule_tables_with_year_end_rows.py"
+    },
+    {
+      "rule_name": "rule_tables_with_fiscal_yyyy_rows",
+      "description": "Match tables containing rows like 'Fiscal 1984' or 'Fiscal 1982 to date'.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_gross_federal_debt_outstanding_at_the_end/rule_tables_with_fiscal_yyyy_rows.py"
+    },
+    {
+      "rule_name": "rule_tables_with_end_of_fiscal_year_debt_phrase",
+      "description": "Match tables mentioning end-of-fiscal-year debt concepts explicitly.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_gross_federal_debt_outstanding_at_the_end/rule_tables_with_end_of_fiscal_year_debt_phrase.py"
+    },
+    {
+      "rule_name": "rule_tables_with_gross_debt_outstanding_phrase_anywhere",
+      "description": "Match any table with 'debt outstanding' phrasing.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_gross_federal_debt_outstanding_at_the_end/rule_tables_with_gross_debt_outstanding_phrase_anywhere.py"
+    },
+    {
+      "rule_name": "rule_tables_with_federal_debt_and_millions",
+      "description": "Match Federal Debt tables that are explicitly in millions of dollars.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_gross_federal_debt_outstanding_at_the_end/rule_tables_with_federal_debt_and_millions.py"
+    },
+    {
+      "rule_name": "rule_tables_with_summary_of_federal_debt_and_years",
+      "description": "Match summary-of-federal-debt tables that also contain multiple year rows.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_gross_federal_debt_outstanding_at_the_end/rule_tables_with_summary_of_federal_debt_and_years.py"
+    },
+    {
+      "rule_name": "rule_tables_with_fd1_and_debt_held_by_public",
+      "description": "Match FD-1 tables that also mention debt held by the public, common in later issues.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_gross_federal_debt_outstanding_at_the_end/rule_tables_with_fd1_and_debt_held_by_public.py"
+    },
+    {
+      "rule_name": "rule_tables_with_public_debt_securities_and_investments_of_government_accounts",
+      "description": "Match tables containing both public debt securities and investments of government accounts.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_gross_federal_debt_outstanding_at_the_end/rule_tables_with_public_debt_securities_and_investments_of_government_accounts.py"
+    },
+    {
+      "rule_name": "rule_tables_with_selected_balances_and_public_debt",
+      "description": "Match tables containing both selected balances and public debt columns.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_gross_federal_debt_outstanding_at_the_end/rule_tables_with_selected_balances_and_public_debt.py"
+    },
+    {
+      "rule_name": "rule_tables_with_gross_federal_debt_outstanding_and_total",
+      "description": "Match tables containing both 'gross federal debt outstanding' and 'total'.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_gross_federal_debt_outstanding_at_the_end/rule_tables_with_gross_federal_debt_outstanding_and_total.py"
+    },
+    {
+      "rule_name": "rule_tables_with_latest_year_and_debt",
+      "description": "Match debt tables containing the latest year in the document's date range.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_gross_federal_debt_outstanding_at_the_end/rule_tables_with_latest_year_and_debt.py"
+    },
+    {
+      "rule_name": "rule_tables_with_federal_debt_or_fiscal_operations",
+      "description": "Broad recall rule: match tables under either Federal Debt or Summary of Fiscal Operations paths.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_gross_federal_debt_outstanding_at_the_end/rule_tables_with_federal_debt_or_fiscal_operations.py"
+    },
+    {
+      "rule_name": "rule_tables_with_debt_and_yearly_totals",
+      "description": "Match debt-related tables with many yearly totals, useful for historical summary tables.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_gross_federal_debt_outstanding_at_the_end/rule_tables_with_debt_and_yearly_totals.py"
+    },
+    {
+      "rule_name": "rule_tables_with_federal_debt_summary_historical",
+      "description": "Match historical federal debt summary tables such as 'Summary of Federal Debt, Fiscal Years ...'.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_gross_federal_debt_outstanding_at_the_end/rule_tables_with_federal_debt_summary_historical.py"
+    },
+    {
+      "rule_name": "rule_tables_with_gross_federal_debt_outstanding_historical",
+      "description": "Match historical debt tables that explicitly use the phrase 'gross federal debt outstanding'.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_gross_federal_debt_outstanding_at_the_end/rule_tables_with_gross_federal_debt_outstanding_historical.py"
+    },
+    {
+      "rule_name": "rule_tables_with_end_of_period_public_debt_securities",
+      "description": "Match end-of-period balance tables with public debt securities columns.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_gross_federal_debt_outstanding_at_the_end/rule_tables_with_end_of_period_public_debt_securities.py"
+    },
+    {
+      "rule_name": "rule_tables_with_summary_of_fiscal_operations_second_half",
+      "description": "Match the second half/continued FFO-1 table where selected balances and debt totals often appear.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_gross_federal_debt_outstanding_at_the_end/rule_tables_with_summary_of_fiscal_operations_second_half.py"
+    },
+    {
+      "rule_name": "rule_tables_with_debt_held_by_public_and_latest_fiscal_year",
+      "description": "Match tables containing debt-held-by-public wording and a latest fiscal year row.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_gross_federal_debt_outstanding_at_the_end/rule_tables_with_debt_held_by_public_and_latest_fiscal_year.py"
+    }
+  ]
+}

@@ -1,0 +1,229 @@
+{
+  "question": "What was the total federal debt held by the public at the end of the most recent fiscal year, in millions of dollars?",
+  "question_slug": "what_was_the_total_federal_debt_held_by_the_public_at_the_en",
+  "timestamp": "2026-06-04T01:16:57Z",
+  "model": "gpt54",
+  "num_documents": 20,
+  "doc_names": [
+    "treasury_bulletin_1980_10",
+    "treasury_bulletin_1981_11",
+    "treasury_bulletin_1982_03",
+    "treasury_bulletin_1982_05",
+    "treasury_bulletin_1982_10",
+    "treasury_bulletin_1983_06",
+    "treasury_bulletin_1984_12",
+    "treasury_bulletin_1985_03",
+    "treasury_bulletin_1987_03",
+    "treasury_bulletin_1987_12",
+    "treasury_bulletin_1988_09",
+    "treasury_bulletin_1988_12",
+    "treasury_bulletin_1989_09",
+    "treasury_bulletin_1991_03",
+    "treasury_bulletin_1992_03",
+    "treasury_bulletin_1997_12",
+    "treasury_bulletin_2008_06",
+    "treasury_bulletin_2016_03",
+    "treasury_bulletin_2018_06",
+    "treasury_bulletin_2024_09"
+  ],
+  "latency_seconds": 170.84,
+  "input_tokens": 451816,
+  "output_tokens": 5636,
+  "rules": [
+    {
+      "rule_name": "rule_ffo1_second_table_held_by_public",
+      "description": "Match FFO-1 table spans whose text contains the 'Held by the public' selected-balances column.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_federal_debt_held_by_the_public_at_the_en/rule_ffo1_second_table_held_by_public.py"
+    },
+    {
+      "rule_name": "rule_ffo1_second_table_public_debt_securities",
+      "description": "Match the continuation FFO-1 table with selected balances including public debt securities and held by the public.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_federal_debt_held_by_the_public_at_the_en/rule_ffo1_second_table_public_debt_securities.py"
+    },
+    {
+      "rule_name": "rule_ffo1_table_path_summary_of_fiscal_operations",
+      "description": "Match table spans under the FFO-1 / Summary of Fiscal Operations path.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_federal_debt_held_by_the_public_at_the_en/rule_ffo1_table_path_summary_of_fiscal_operations.py"
+    },
+    {
+      "rule_name": "rule_federal_debt_fd1_summary_table",
+      "description": "Match Federal Debt summary tables (FD-1) that often contain the year-end debt held by the public answer.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_federal_debt_held_by_the_public_at_the_en/rule_federal_debt_fd1_summary_table.py"
+    },
+    {
+      "rule_name": "rule_federal_debt_tables_with_debt_held_by_public",
+      "description": "Match Federal Debt tables explicitly mentioning 'debt held by the public'.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_federal_debt_held_by_the_public_at_the_en/rule_federal_debt_tables_with_debt_held_by_public.py"
+    },
+    {
+      "rule_name": "rule_federal_debt_tables_with_held_by_public",
+      "description": "Match any table mentioning 'held by the public', a strong cue for the answer column.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_federal_debt_held_by_the_public_at_the_en/rule_federal_debt_tables_with_held_by_public.py"
+    },
+    {
+      "rule_name": "rule_federal_debt_tables_with_public_debt_and_government_accounts",
+      "description": "Match tables containing public debt securities, government accounts, and held-by-public style balance logic.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_federal_debt_held_by_the_public_at_the_en/rule_federal_debt_tables_with_public_debt_and_government_accounts.py"
+    },
+    {
+      "rule_name": "rule_page_around_ffo1_table",
+      "description": "Match tables on pages where a nearby header/title says Table FFO-1 / Summary of Fiscal Operations.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_federal_debt_held_by_the_public_at_the_en/rule_page_around_ffo1_table.py"
+    },
+    {
+      "rule_name": "rule_tables_on_page_after_federal_debt_header",
+      "description": "Match tables on pages containing a Federal Debt section header.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_federal_debt_held_by_the_public_at_the_en/rule_tables_on_page_after_federal_debt_header.py"
+    },
+    {
+      "rule_name": "rule_tables_under_federal_debt_path",
+      "description": "Match all table spans whose structural path is under Federal Debt.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_federal_debt_held_by_the_public_at_the_en/rule_tables_under_federal_debt_path.py"
+    },
+    {
+      "rule_name": "rule_tables_under_profile_or_financial_operations",
+      "description": "Match tables under Profile of the Economy or Financial Operations where summary debt values often appear in later vintages.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_federal_debt_held_by_the_public_at_the_en/rule_tables_under_profile_or_financial_operations.py"
+    },
+    {
+      "rule_name": "rule_fd2_debt_held_by_public_table",
+      "description": "Match FD-2 tables named Debt Held by the Public in modern Treasury Bulletins.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_federal_debt_held_by_the_public_at_the_en/rule_fd2_debt_held_by_public_table.py"
+    },
+    {
+      "rule_name": "rule_fd1_or_fd2_on_federal_debt_pages",
+      "description": "Match FD-1/FD-2 tables on Federal Debt pages.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_federal_debt_held_by_the_public_at_the_en/rule_fd1_or_fd2_on_federal_debt_pages.py"
+    },
+    {
+      "rule_name": "rule_tables_with_fiscal_year_rows",
+      "description": "Match tables that include fiscal-year rows and debt/public columns, useful for year-end answer extraction.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_federal_debt_held_by_the_public_at_the_en/rule_tables_with_fiscal_year_rows.py"
+    },
+    {
+      "rule_name": "rule_tables_with_selected_balances_end_of_period",
+      "description": "Match selected-balances end-of-period tables where the answer is often the latest fiscal-year held-by-public value.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_federal_debt_held_by_the_public_at_the_en/rule_tables_with_selected_balances_end_of_period.py"
+    },
+    {
+      "rule_name": "rule_tables_with_latest_fiscal_year_and_held_by_public",
+      "description": "Match tables containing both fiscal-year rows and a held-by-public column.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_federal_debt_held_by_the_public_at_the_en/rule_tables_with_latest_fiscal_year_and_held_by_public.py"
+    },
+    {
+      "rule_name": "rule_tables_with_debt_subject_to_limit_and_summary_of_federal_debt",
+      "description": "Match Federal Debt summary tables that list neighboring FD tables like debt subject to limit, indicating the FD section TOC/summary area.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_federal_debt_held_by_the_public_at_the_en/rule_tables_with_debt_subject_to_limit_and_summary_of_federal_debt.py"
+    },
+    {
+      "rule_name": "rule_tables_on_pages_15_to_25_with_held_by_public",
+      "description": "Match mid-document tables on pages 15-25 mentioning held by the public, common in older issues.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_federal_debt_held_by_the_public_at_the_en/rule_tables_on_pages_15_to_25_with_held_by_public.py"
+    },
+    {
+      "rule_name": "rule_tables_on_pages_15_to_25_summary_of_fiscal_operations",
+      "description": "Match FFO-1 summary-of-fiscal-operations tables in the common older page range.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_federal_debt_held_by_the_public_at_the_en/rule_tables_on_pages_15_to_25_summary_of_fiscal_operations.py"
+    },
+    {
+      "rule_name": "rule_tables_on_pages_15_to_25_summary_of_federal_debt",
+      "description": "Match FD-1 summary-of-federal-debt tables in the common older page range.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_federal_debt_held_by_the_public_at_the_en/rule_tables_on_pages_15_to_25_summary_of_federal_debt.py"
+    },
+    {
+      "rule_name": "rule_tables_with_debt_held_by_public_or_held_by_public",
+      "description": "Match any table containing either 'debt held by the public' or 'held by the public'.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_federal_debt_held_by_the_public_at_the_en/rule_tables_with_debt_held_by_public_or_held_by_public.py"
+    },
+    {
+      "rule_name": "rule_tables_with_fd_labels_and_public",
+      "description": "Match FD-labeled tables that also mention public debt/public holdings.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_federal_debt_held_by_the_public_at_the_en/rule_tables_with_fd_labels_and_public.py"
+    },
+    {
+      "rule_name": "rule_tables_with_summary_of_federal_debt_phrase",
+      "description": "Match any table containing the phrase 'Summary of Federal Debt'.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_federal_debt_held_by_the_public_at_the_en/rule_tables_with_summary_of_federal_debt_phrase.py"
+    },
+    {
+      "rule_name": "rule_tables_with_summary_of_fiscal_operations_phrase",
+      "description": "Match any table containing the phrase 'Summary of Fiscal Operations'.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_federal_debt_held_by_the_public_at_the_en/rule_tables_with_summary_of_fiscal_operations_phrase.py"
+    },
+    {
+      "rule_name": "rule_tables_with_debt_held_by_public_phrase",
+      "description": "Match any table containing the exact phrase 'Debt Held by the Public'.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_federal_debt_held_by_the_public_at_the_en/rule_tables_with_debt_held_by_public_phrase.py"
+    },
+    {
+      "rule_name": "rule_tables_with_latest_years_and_public_debt",
+      "description": "Match tables that include recent year labels and public debt wording, useful in modern issues.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_federal_debt_held_by_the_public_at_the_en/rule_tables_with_latest_years_and_public_debt.py"
+    },
+    {
+      "rule_name": "rule_near_fd2_toc_entry_pages",
+      "description": "Match tables on pages referenced by nearby contents entries for FD-2 Debt Held by the Public.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_federal_debt_held_by_the_public_at_the_en/rule_near_fd2_toc_entry_pages.py"
+    },
+    {
+      "rule_name": "rule_near_fd1_toc_entry_pages",
+      "description": "Match tables on pages referenced by nearby contents entries for FD-1 Summary of Federal Debt.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_federal_debt_held_by_the_public_at_the_en/rule_near_fd1_toc_entry_pages.py"
+    },
+    {
+      "rule_name": "rule_tables_after_federal_debt_header_same_page",
+      "description": "Match table spans occurring on the same page after a Federal Debt header appears.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_federal_debt_held_by_the_public_at_the_en/rule_tables_after_federal_debt_header_same_page.py"
+    },
+    {
+      "rule_name": "rule_modern_fd2_path_or_text",
+      "description": "Match modern FD-2 debt-held-by-public tables by path or text.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_federal_debt_held_by_the_public_at_the_en/rule_modern_fd2_path_or_text.py"
+    },
+    {
+      "rule_name": "rule_old_ffo1_continuation_table",
+      "description": "Match old two-part FFO-1 continuation tables with selected balances and held-by-public formula column.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_federal_debt_held_by_the_public_at_the_en/rule_old_ffo1_continuation_table.py"
+    },
+    {
+      "rule_name": "rule_tables_with_public_debt_securities_and_agency_securities",
+      "description": "Match debt balance tables containing public debt securities, agency securities, and government accounts.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_federal_debt_held_by_the_public_at_the_en/rule_tables_with_public_debt_securities_and_agency_securities.py"
+    },
+    {
+      "rule_name": "rule_tables_with_fiscal_year_or_month_and_held_by_public",
+      "description": "Match tables whose first column is fiscal year/month and whose last columns include held by the public.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_federal_debt_held_by_the_public_at_the_en/rule_tables_with_fiscal_year_or_month_and_held_by_public.py"
+    },
+    {
+      "rule_name": "rule_tables_with_debt_held_by_public_and_latest_years",
+      "description": "Match debt-held-by-public tables that include multiple annual rows, indicating year-end totals.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_federal_debt_held_by_the_public_at_the_en/rule_tables_with_debt_held_by_public_and_latest_years.py"
+    },
+    {
+      "rule_name": "rule_tables_with_debt_held_by_public_under_financial_operations",
+      "description": "Match held-by-public tables under Financial Operations, common in later issues.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_federal_debt_held_by_the_public_at_the_en/rule_tables_with_debt_held_by_public_under_financial_operations.py"
+    },
+    {
+      "rule_name": "rule_tables_with_fd2_and_debt_held_by_public_or_fd1_summary",
+      "description": "Match either FD-2 Debt Held by the Public or FD-1 Summary of Federal Debt tables.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_federal_debt_held_by_the_public_at_the_en/rule_tables_with_fd2_and_debt_held_by_public_or_fd1_summary.py"
+    },
+    {
+      "rule_name": "rule_tables_with_public_debt_and_latest_balance_columns",
+      "description": "Match tables that look like balance tables for public debt with end-of-period columns.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_federal_debt_held_by_the_public_at_the_en/rule_tables_with_public_debt_and_latest_balance_columns.py"
+    },
+    {
+      "rule_name": "rule_tables_with_debt_held_by_public_and_debt_subject_to_limit",
+      "description": "Match Federal Debt tables mentioning both debt held by the public and debt subject to limit/limitation.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_federal_debt_held_by_the_public_at_the_en/rule_tables_with_debt_held_by_public_and_debt_subject_to_limit.py"
+    },
+    {
+      "rule_name": "rule_tables_with_fd_section_and_year_end_answer_likely",
+      "description": "Broad high-recall rule for Federal Debt section tables likely to contain year-end totals.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_federal_debt_held_by_the_public_at_the_en/rule_tables_with_fd_section_and_year_end_answer_likely.py"
+    }
+  ]
+}

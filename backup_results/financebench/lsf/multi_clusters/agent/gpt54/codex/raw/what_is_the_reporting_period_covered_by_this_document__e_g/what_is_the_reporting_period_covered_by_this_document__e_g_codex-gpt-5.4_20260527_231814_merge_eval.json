@@ -1,0 +1,367 @@
+{
+  "question": "What is the reporting period covered by this document (e.g. fiscal year ended, quarter ended, or event date)?",
+  "question_slug": "what_is_the_reporting_period_covered_by_this_document__e_g",
+  "model": "codex-gpt-5.4",
+  "rule_names": [
+    "rule_page12_8k_event_line",
+    "rule_page12_fiscal_year_period",
+    "rule_page12_form_path_period",
+    "rule_page12_quarterly_period",
+    "rule_page13_bold_period_heading"
+  ],
+  "available_docs": [
+    "BOEING_2019_10K",
+    "ADOBE_2020_10K",
+    "ACTIVISIONBLIZZARD_2020_10K",
+    "COSTCO_2018_10K",
+    "AMCOR_2019_10K",
+    "AMAZON_2020_10K",
+    "AMAZON_2019_10K",
+    "ADOBE_2021_10K",
+    "EBAY_2022_10K",
+    "ADOBE_2019_10K",
+    "AMCOR_2023Q2_10Q",
+    "ADOBE_2022Q2_10Q",
+    "ACTIVSIONBLIZZARD_2023Q2_10Q",
+    "3M_2023Q2_10Q",
+    "AMCOR_2022_8K_2022-07-01",
+    "COSTCO_2023_8K_dated-2023-08-09",
+    "COSTCO_2023_8K_dated-2023-08-16",
+    "FOOTLOCKER_2022_8K_dated-2022-05-20"
+  ],
+  "missing_docs": [
+    "Pfizer_2023Q2_10Q",
+    "MGMRESORTS_2023_8K_dated-2023-03-01"
+  ],
+  "merge_accuracy": 0.944444,
+  "avg_cost_ratio": 0.002542,
+  "agent_input_tokens": 6657,
+  "agent_output_tokens": 358,
+  "total_llm_calls": 36,
+  "per_doc": [
+    {
+      "doc_name": "BOEING_2019_10K",
+      "ground_truth": "Fiscal year ended December 31, 2019",
+      "predicted_answer": "fiscal year ended December 31, 2019",
+      "correct": true,
+      "cost_ratio": 0.000762,
+      "retrieved_token_count": 70,
+      "rules_with_hits": [
+        "rule_page12_fiscal_year_period",
+        "rule_page12_form_path_period",
+        "rule_page13_bold_period_heading"
+      ],
+      "rules_with_no_hits": [
+        "rule_page12_8k_event_line",
+        "rule_page12_quarterly_period"
+      ],
+      "retrieved_text": "For the fiscal year ended December 31, 2019 or\n\nPart III incorporates information by reference to the registrant\u2019s definitive proxy statement, to be filed with the Securities and Exchange Commission within 120 days after the close of the fiscal year ended December 31, 2019.\n\nFor the Fiscal Year Ended December 31, 2019"
+    },
+    {
+      "doc_name": "ADOBE_2020_10K",
+      "ground_truth": "Fiscal year ended November 27, 2020",
+      "predicted_answer": "fiscal year ended November 27, 2020",
+      "correct": true,
+      "cost_ratio": 0.001109,
+      "retrieved_token_count": 101,
+      "rules_with_hits": [
+        "rule_page12_fiscal_year_period",
+        "rule_page12_form_path_period",
+        "rule_page13_bold_period_heading"
+      ],
+      "rules_with_no_hits": [
+        "rule_page12_8k_event_line",
+        "rule_page12_quarterly_period"
+      ],
+      "retrieved_text": "For the fiscal year ended November 27, 2020\n\nPortions of the Proxy Statement for the registrant\u2019s 2021 Annual Meeting of Stockholders (the \u201cProxy Statement\u201d), to be filed within 120 days of the end of the fiscal year ended November 27, 2020, are incorporated by reference in Part III hereof. Except with respect to information specifically incorporated by reference in this Form 10-K, the Proxy Statement is not deemed to be filed as part hereof."
+    },
+    {
+      "doc_name": "ACTIVISIONBLIZZARD_2020_10K",
+      "ground_truth": "Fiscal year ended December 31, 2020",
+      "predicted_answer": "Fiscal Year Ended December 31, 2020",
+      "correct": true,
+      "cost_ratio": 0.000888,
+      "retrieved_token_count": 90,
+      "rules_with_hits": [
+        "rule_page12_fiscal_year_period",
+        "rule_page12_form_path_period",
+        "rule_page13_bold_period_heading"
+      ],
+      "rules_with_no_hits": [
+        "rule_page12_8k_event_line",
+        "rule_page12_quarterly_period"
+      ],
+      "retrieved_text": "For the Fiscal Year Ended December 31, 2020\n\nPortions of the registrant\u2019s Proxy Statement for the 2021 Annual Meeting of Stockholders are incorporated herein by reference into Part III of this Form 10-K to the extent stated herein. The 2021 Proxy Statement will be filed with the U.S. Securities and Exchange Commission within 120 days of the registrant\u2019s fiscal year ended December 31, 2020."
+    },
+    {
+      "doc_name": "COSTCO_2018_10K",
+      "ground_truth": "Fiscal year ended September 2, 2018",
+      "predicted_answer": "fiscal year ended September 2, 2018",
+      "correct": true,
+      "cost_ratio": 0.000819,
+      "retrieved_token_count": 40,
+      "rules_with_hits": [
+        "rule_page12_fiscal_year_period",
+        "rule_page12_form_path_period",
+        "rule_page13_bold_period_heading"
+      ],
+      "rules_with_no_hits": [
+        "rule_page12_8k_event_line",
+        "rule_page12_quarterly_period"
+      ],
+      "retrieved_text": "For the fiscal year ended September 2, 2018 or\n\nANNUAL REPORT ON FORM 10-K FOR THE FISCAL YEAR ENDED SEPTEMBER 2, 2018"
+    },
+    {
+      "doc_name": "AMCOR_2019_10K",
+      "ground_truth": "Fiscal year ended June 30, 2019",
+      "predicted_answer": "Fiscal Year Ended June 30, 2019",
+      "correct": true,
+      "cost_ratio": 0.000143,
+      "retrieved_token_count": 12,
+      "rules_with_hits": [
+        "rule_page12_fiscal_year_period",
+        "rule_page12_form_path_period",
+        "rule_page13_bold_period_heading"
+      ],
+      "rules_with_no_hits": [
+        "rule_page12_8k_event_line",
+        "rule_page12_quarterly_period"
+      ],
+      "retrieved_text": "For the Fiscal Year Ended June 30, 2019"
+    },
+    {
+      "doc_name": "AMAZON_2020_10K",
+      "ground_truth": "Fiscal year ended December 31, 2020",
+      "predicted_answer": "fiscal year ended December 31, 2020",
+      "correct": true,
+      "cost_ratio": 0.000425,
+      "retrieved_token_count": 25,
+      "rules_with_hits": [
+        "rule_page12_fiscal_year_period",
+        "rule_page12_form_path_period",
+        "rule_page13_bold_period_heading"
+      ],
+      "rules_with_no_hits": [
+        "rule_page12_8k_event_line",
+        "rule_page12_quarterly_period"
+      ],
+      "retrieved_text": "For the fiscal year ended December 31, 2020\n\nFor the Fiscal Year Ended December 31, 2020"
+    },
+    {
+      "doc_name": "AMAZON_2019_10K",
+      "ground_truth": "Fiscal year ended December 31, 2019",
+      "predicted_answer": "fiscal year ended December 31, 2019",
+      "correct": true,
+      "cost_ratio": 0.000402,
+      "retrieved_token_count": 25,
+      "rules_with_hits": [
+        "rule_page12_fiscal_year_period",
+        "rule_page12_form_path_period",
+        "rule_page13_bold_period_heading"
+      ],
+      "rules_with_no_hits": [
+        "rule_page12_8k_event_line",
+        "rule_page12_quarterly_period"
+      ],
+      "retrieved_text": "For the fiscal year ended December 31, 2019\n\nFor the Fiscal Year Ended December 31, 2019"
+    },
+    {
+      "doc_name": "ADOBE_2021_10K",
+      "ground_truth": "Fiscal year ended December 3, 2021",
+      "predicted_answer": "fiscal year ended December 3, 2021",
+      "correct": true,
+      "cost_ratio": 0.001309,
+      "retrieved_token_count": 101,
+      "rules_with_hits": [
+        "rule_page12_fiscal_year_period",
+        "rule_page12_form_path_period",
+        "rule_page13_bold_period_heading"
+      ],
+      "rules_with_no_hits": [
+        "rule_page12_8k_event_line",
+        "rule_page12_quarterly_period"
+      ],
+      "retrieved_text": "For the fiscal year ended December 3, 2021\n\nPortions of the Proxy Statement for the registrant\u2019s 2022 Annual Meeting of Stockholders (the \u201cProxy Statement\u201d), to be filed within 120 days of the end of the fiscal year ended December 3, 2021, are incorporated by reference in Part III hereof. Except with respect to information specifically incorporated by reference in this Form 10-K, the Proxy Statement is not deemed to be filed as part hereof."
+    },
+    {
+      "doc_name": "EBAY_2022_10K",
+      "ground_truth": "Fiscal year ended December 31, 2022",
+      "predicted_answer": "fiscal year ended December 31, 2022",
+      "correct": true,
+      "cost_ratio": 0.000601,
+      "retrieved_token_count": 55,
+      "rules_with_hits": [
+        "rule_page12_fiscal_year_period",
+        "rule_page12_form_path_period",
+        "rule_page13_bold_period_heading"
+      ],
+      "rules_with_no_hits": [
+        "rule_page12_8k_event_line",
+        "rule_page12_quarterly_period"
+      ],
+      "retrieved_text": "\u2612 ANNUAL REPORT PURSUANT TO SECTION 13 OR 15(d) OF THE SECURITIES EXCHANGE ACT OF 1934 For the fiscal year ended December 31, 2022.\n\nFor the Fiscal Year Ended December 31, 2022"
+    },
+    {
+      "doc_name": "ADOBE_2019_10K",
+      "ground_truth": "Fiscal year ended November 29, 2019",
+      "predicted_answer": "fiscal year ended November 29, 2019",
+      "correct": true,
+      "cost_ratio": 0.001111,
+      "retrieved_token_count": 102,
+      "rules_with_hits": [
+        "rule_page12_fiscal_year_period",
+        "rule_page12_form_path_period",
+        "rule_page13_bold_period_heading"
+      ],
+      "rules_with_no_hits": [
+        "rule_page12_8k_event_line",
+        "rule_page12_quarterly_period"
+      ],
+      "retrieved_text": "For the fiscal year ended November 29, 2019 or\n\nPortions of the Proxy Statement for the registrant\u2019s 2020 Annual Meeting of Stockholders (the \u201cProxy Statement\u201d), to be filed within 120 days of the end of the fiscal year ended November 29, 2019, are incorporated by reference in Part III hereof. Except with respect to information specifically incorporated by reference in this Form 10-K, the Proxy Statement is not deemed to be filed as part hereof."
+    },
+    {
+      "doc_name": "AMCOR_2023Q2_10Q",
+      "ground_truth": "Quarterly period ended December 31, 2022",
+      "predicted_answer": "December 31, 2022",
+      "correct": false,
+      "cost_ratio": 0.001345,
+      "retrieved_token_count": 43,
+      "rules_with_hits": [
+        "rule_page12_form_path_period",
+        "rule_page12_quarterly_period",
+        "rule_page13_bold_period_heading"
+      ],
+      "rules_with_no_hits": [
+        "rule_page12_8k_event_line",
+        "rule_page12_fiscal_year_period"
+      ],
+      "retrieved_text": "\u2612 QUARTERLY REPORT PURSUANT TO SECTION 13 OR 15(d) OF THE SECURITIES EXCHANGE ACT OF 1934 For the Quarterly Period Ended December 31, 2022"
+    },
+    {
+      "doc_name": "ADOBE_2022Q2_10Q",
+      "ground_truth": "Quarterly period ended June 2, 2023",
+      "predicted_answer": "quarterly period ended June 2, 2023",
+      "correct": true,
+      "cost_ratio": 0.000282,
+      "retrieved_token_count": 12,
+      "rules_with_hits": [
+        "rule_page12_form_path_period",
+        "rule_page12_quarterly_period",
+        "rule_page13_bold_period_heading"
+      ],
+      "rules_with_no_hits": [
+        "rule_page12_8k_event_line",
+        "rule_page12_fiscal_year_period"
+      ],
+      "retrieved_text": "For the quarterly period ended June 2, 2023"
+    },
+    {
+      "doc_name": "ACTIVSIONBLIZZARD_2023Q2_10Q",
+      "ground_truth": "Quarterly period ended June 30, 2023",
+      "predicted_answer": "Quarterly Period Ended June 30, 2023",
+      "correct": true,
+      "cost_ratio": 0.000234,
+      "retrieved_token_count": 12,
+      "rules_with_hits": [
+        "rule_page12_form_path_period",
+        "rule_page12_quarterly_period",
+        "rule_page13_bold_period_heading"
+      ],
+      "rules_with_no_hits": [
+        "rule_page12_8k_event_line",
+        "rule_page12_fiscal_year_period"
+      ],
+      "retrieved_text": "For the Quarterly Period Ended June 30, 2023"
+    },
+    {
+      "doc_name": "3M_2023Q2_10Q",
+      "ground_truth": "Quarterly period ended June 30, 2023",
+      "predicted_answer": "quarter ended June 30, 2023",
+      "correct": true,
+      "cost_ratio": 0.000881,
+      "retrieved_token_count": 73,
+      "rules_with_hits": [
+        "rule_page12_form_path_period",
+        "rule_page12_quarterly_period",
+        "rule_page13_bold_period_heading"
+      ],
+      "rules_with_no_hits": [
+        "rule_page12_8k_event_line",
+        "rule_page12_fiscal_year_period"
+      ],
+      "retrieved_text": "\u2612 QUARTERLY REPORT PURSUANT TO SECTION 13 OR 15(d) OF THE SECURITIES EXCHANGE ACT OF 1934 For the quarterly period ended June 30, 2023\n\nForm 10-Q for the Quarterly Period Ended June 30, 2023\n\nFor the Quarterly Period Ended June 30, 2023"
+    },
+    {
+      "doc_name": "AMCOR_2022_8K_2022-07-01",
+      "ground_truth": "June 30, 2022",
+      "predicted_answer": "June 30, 2022",
+      "correct": true,
+      "cost_ratio": 0.004675,
+      "retrieved_token_count": 26,
+      "rules_with_hits": [
+        "rule_page12_8k_event_line"
+      ],
+      "rules_with_no_hits": [
+        "rule_page12_fiscal_year_period",
+        "rule_page12_form_path_period",
+        "rule_page12_quarterly_period",
+        "rule_page13_bold_period_heading"
+      ],
+      "retrieved_text": "Date of Report (Date of earliest event reported): July 1, 2022 (June 30, 2022)"
+    },
+    {
+      "doc_name": "COSTCO_2023_8K_dated-2023-08-09",
+      "ground_truth": "August 9, 2023",
+      "predicted_answer": "August 9, 2023",
+      "correct": true,
+      "cost_ratio": 0.000712,
+      "retrieved_token_count": 17,
+      "rules_with_hits": [
+        "rule_page12_8k_event_line"
+      ],
+      "rules_with_no_hits": [
+        "rule_page12_fiscal_year_period",
+        "rule_page12_form_path_period",
+        "rule_page12_quarterly_period",
+        "rule_page13_bold_period_heading"
+      ],
+      "retrieved_text": "Date of Report (Date of earliest event reported): August 9, 2023"
+    },
+    {
+      "doc_name": "COSTCO_2023_8K_dated-2023-08-16",
+      "ground_truth": "August 16, 2023",
+      "predicted_answer": "August 16, 2023",
+      "correct": true,
+      "cost_ratio": 0.015639,
+      "retrieved_token_count": 17,
+      "rules_with_hits": [
+        "rule_page12_8k_event_line"
+      ],
+      "rules_with_no_hits": [
+        "rule_page12_fiscal_year_period",
+        "rule_page12_form_path_period",
+        "rule_page12_quarterly_period",
+        "rule_page13_bold_period_heading"
+      ],
+      "retrieved_text": "Date of Report (Date of earliest event reported): August 16, 2023"
+    },
+    {
+      "doc_name": "FOOTLOCKER_2022_8K_dated-2022-05-20",
+      "ground_truth": "May 18, 2022",
+      "predicted_answer": "May 18, 2022",
+      "correct": true,
+      "cost_ratio": 0.014412,
+      "retrieved_token_count": 26,
+      "rules_with_hits": [
+        "rule_page12_8k_event_line"
+      ],
+      "rules_with_no_hits": [
+        "rule_page12_fiscal_year_period",
+        "rule_page12_form_path_period",
+        "rule_page12_quarterly_period",
+        "rule_page13_bold_period_heading"
+      ],
+      "retrieved_text": "Date of report (Date of earliest event reported): May 20, 2022 (May 18, 2022)"
+    }
+  ]
+}

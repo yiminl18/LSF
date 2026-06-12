@@ -1,0 +1,234 @@
+{
+  "question": "What was the federal budget deficit for the most recent completed fiscal year, as a percentage of GDP?",
+  "question_slug": "what_was_the_federal_budget_deficit_for_the_most_recent_comp",
+  "timestamp": "2026-06-04T01:03:26Z",
+  "model": "gpt54",
+  "num_documents": 20,
+  "doc_names": [
+    "treasury_bulletin_1980_10",
+    "treasury_bulletin_1981_11",
+    "treasury_bulletin_1982_03",
+    "treasury_bulletin_1982_05",
+    "treasury_bulletin_1982_10",
+    "treasury_bulletin_1983_06",
+    "treasury_bulletin_1984_12",
+    "treasury_bulletin_1985_03",
+    "treasury_bulletin_1987_03",
+    "treasury_bulletin_1987_12",
+    "treasury_bulletin_1988_09",
+    "treasury_bulletin_1988_12",
+    "treasury_bulletin_1989_09",
+    "treasury_bulletin_1991_03",
+    "treasury_bulletin_1992_03",
+    "treasury_bulletin_1997_12",
+    "treasury_bulletin_2008_06",
+    "treasury_bulletin_2016_03",
+    "treasury_bulletin_2018_06",
+    "treasury_bulletin_2024_09"
+  ],
+  "latency_seconds": 184.402,
+  "input_tokens": 451774,
+  "output_tokens": 6553,
+  "rules": [
+    {
+      "rule_name": "rule_profile_economy_federal_budget_deficit_paragraph",
+      "description": "Match text spans in Profile of the Economy mentioning the federal budget deficit and GDP.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_federal_budget_deficit_for_the_most_recent_comp/rule_profile_economy_federal_budget_deficit_paragraph.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_deficit_of_gdp_text",
+      "description": "Match Profile of the Economy text spans containing 'deficit' and 'of GDP'.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_federal_budget_deficit_for_the_most_recent_comp/rule_profile_economy_deficit_of_gdp_text.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_fiscal_year_deficit_percent",
+      "description": "Match Profile of the Economy spans mentioning fiscal year and deficit as percent of GDP.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_federal_budget_deficit_for_the_most_recent_comp/rule_profile_economy_fiscal_year_deficit_percent.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_budget_and_debt_section",
+      "description": "Match spans under the 'Federal Budget and Debt' subsection in Profile of the Economy.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_federal_budget_deficit_for_the_most_recent_comp/rule_profile_economy_budget_and_debt_section.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_intro_deficit_sentence",
+      "description": "Match introductory Profile of the Economy paragraphs that state the latest completed fiscal-year deficit percent.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_federal_budget_deficit_for_the_most_recent_comp/rule_profile_economy_intro_deficit_sentence.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_peak_to_latest_deficit",
+      "description": "Match Profile of the Economy spans comparing a peak deficit to the latest fiscal-year deficit.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_federal_budget_deficit_for_the_most_recent_comp/rule_profile_economy_peak_to_latest_deficit.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_deficit_fell_from_peak",
+      "description": "Match Profile of the Economy spans saying the deficit fell from a peak to a later fiscal year percent of GDP.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_federal_budget_deficit_for_the_most_recent_comp/rule_profile_economy_deficit_fell_from_peak.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_budget_deficit_and_debt_paragraph",
+      "description": "Match Profile of the Economy paragraphs mentioning both budget deficit and debt.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_federal_budget_deficit_for_the_most_recent_comp/rule_profile_economy_budget_deficit_and_debt_paragraph.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_recent_fiscal_year_deficit",
+      "description": "Match Profile of the Economy spans with 'fiscal year 20xx' and a deficit percent of GDP.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_federal_budget_deficit_for_the_most_recent_comp/rule_profile_economy_recent_fiscal_year_deficit.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_percent_of_gdp_near_deficit",
+      "description": "Match Profile of the Economy spans where 'percent of GDP' appears near 'deficit'.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_federal_budget_deficit_for_the_most_recent_comp/rule_profile_economy_percent_of_gdp_near_deficit.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_page_7_to_11_deficit",
+      "description": "Match likely answer spans on early Profile of the Economy pages where deficit percent is discussed.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_federal_budget_deficit_for_the_most_recent_comp/rule_profile_economy_page_7_to_11_deficit.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_federal_budget_and_debt_heading_neighbors",
+      "description": "Match the Federal Budget and Debt heading and nearby explanatory text.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_federal_budget_deficit_for_the_most_recent_comp/rule_profile_economy_federal_budget_and_debt_heading_neighbors.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_federal_budget_deficit_heading_neighbors",
+      "description": "Match the Federal budget deficit heading and nearby text in Profile of the Economy.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_federal_budget_deficit_for_the_most_recent_comp/rule_profile_economy_federal_budget_deficit_heading_neighbors.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_budget_results_analysis",
+      "description": "Match Profile of the Economy analysis text that summarizes budget deficit as a share of GDP.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_federal_budget_deficit_for_the_most_recent_comp/rule_profile_economy_budget_results_analysis.py"
+    },
+    {
+      "rule_name": "rule_ffo1_table_summary_of_fiscal_operations",
+      "description": "Match Table FFO-1 / Summary of Fiscal Operations tables, which may contain deficit rows/columns.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_federal_budget_deficit_for_the_most_recent_comp/rule_ffo1_table_summary_of_fiscal_operations.py"
+    },
+    {
+      "rule_name": "rule_ffo1_table_latest_fiscal_year_row",
+      "description": "Match FFO-1 tables containing fiscal-year rows and deficit columns.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_federal_budget_deficit_for_the_most_recent_comp/rule_ffo1_table_latest_fiscal_year_row.py"
+    },
+    {
+      "rule_name": "rule_ffo1_table_with_total_surplus_or_deficit",
+      "description": "Match FFO-1 tables containing 'total surplus or deficit' wording.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_federal_budget_deficit_for_the_most_recent_comp/rule_ffo1_table_with_total_surplus_or_deficit.py"
+    },
+    {
+      "rule_name": "rule_ffo1_table_with_budget_surplus_or_deficit",
+      "description": "Match FFO-1 tables containing 'budget surplus or deficit' wording.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_federal_budget_deficit_for_the_most_recent_comp/rule_ffo1_table_with_budget_surplus_or_deficit.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_deficit_numeric_percent_pattern",
+      "description": "Match Profile of the Economy text with numeric percent values tied to deficit.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_federal_budget_deficit_for_the_most_recent_comp/rule_profile_economy_deficit_numeric_percent_pattern.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_deficit_was_percent_of_gdp",
+      "description": "Match Profile of the Economy spans using the phrase 'deficit was X percent of GDP'.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_federal_budget_deficit_for_the_most_recent_comp/rule_profile_economy_deficit_was_percent_of_gdp.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_latest_completed_fiscal_year_language",
+      "description": "Match Profile of the Economy spans that mention the latest completed fiscal year explicitly.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_federal_budget_deficit_for_the_most_recent_comp/rule_profile_economy_latest_completed_fiscal_year_language.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_budget_deficit_sentence_with_peak",
+      "description": "Match Profile of the Economy spans that compare current deficit to a historical peak.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_federal_budget_deficit_for_the_most_recent_comp/rule_profile_economy_budget_deficit_sentence_with_peak.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_budget_deficit_on_intro_pages",
+      "description": "Match likely answer spans on the first Profile of the Economy article pages.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_federal_budget_deficit_for_the_most_recent_comp/rule_profile_economy_budget_deficit_on_intro_pages.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_federal_budget_and_debt_pages",
+      "description": "Match pages/spans in Profile of the Economy where the Federal Budget and Debt subsection appears.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_federal_budget_deficit_for_the_most_recent_comp/rule_profile_economy_federal_budget_and_debt_pages.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_deficit_and_publicly_held_debt",
+      "description": "Match Profile of the Economy spans that mention both deficit and publicly held debt.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_federal_budget_deficit_for_the_most_recent_comp/rule_profile_economy_deficit_and_publicly_held_debt.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_deficit_share_of_economy",
+      "description": "Match Profile of the Economy spans describing the deficit as a share of the economy/GDP.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_federal_budget_deficit_for_the_most_recent_comp/rule_profile_economy_deficit_share_of_economy.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_federal_budget_deficit_exact_phrase",
+      "description": "Match spans containing the exact phrase 'federal budget deficit'.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_federal_budget_deficit_for_the_most_recent_comp/rule_profile_economy_federal_budget_deficit_exact_phrase.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_budget_deficit_exact_phrase",
+      "description": "Match spans containing the exact phrase 'budget deficit' in the Profile of the Economy article.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_federal_budget_deficit_for_the_most_recent_comp/rule_profile_economy_budget_deficit_exact_phrase.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_federal_deficit_exact_phrase",
+      "description": "Match spans containing the exact phrase 'federal deficit' in the Profile of the Economy article.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_federal_budget_deficit_for_the_most_recent_comp/rule_profile_economy_federal_deficit_exact_phrase.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_deficit_percent_of_gdp_anywhere",
+      "description": "Match any span in Profile of the Economy that contains both deficit and percent of GDP.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_federal_budget_deficit_for_the_most_recent_comp/rule_profile_economy_deficit_percent_of_gdp_anywhere.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_gdp_percent_with_fiscal_year",
+      "description": "Match Profile of the Economy spans with a fiscal year and a GDP percentage, likely the answer sentence.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_federal_budget_deficit_for_the_most_recent_comp/rule_profile_economy_gdp_percent_with_fiscal_year.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_deficit_declined_to_percent",
+      "description": "Match Profile of the Economy spans where the deficit declined/fell to a percent of GDP.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_federal_budget_deficit_for_the_most_recent_comp/rule_profile_economy_deficit_declined_to_percent.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_deficit_rose_to_percent",
+      "description": "Match Profile of the Economy spans where the deficit rose to a percent of GDP.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_federal_budget_deficit_for_the_most_recent_comp/rule_profile_economy_deficit_rose_to_percent.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_deficit_peak_and_latest_percent",
+      "description": "Match Profile of the Economy spans containing two deficit percentages, one peak and one latest.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_federal_budget_deficit_for_the_most_recent_comp/rule_profile_economy_deficit_peak_and_latest_percent.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_federal_budget_and_debt_subsection_text",
+      "description": "Match text spans whose path_text includes the Federal Budget and Debt subsection.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_federal_budget_deficit_for_the_most_recent_comp/rule_profile_economy_federal_budget_and_debt_subsection_text.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_federal_budget_deficit_subsection_text",
+      "description": "Match text spans whose path_text includes the Federal budget deficit subsection.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_federal_budget_deficit_for_the_most_recent_comp/rule_profile_economy_federal_budget_deficit_subsection_text.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_deficit_sentence_on_right_column",
+      "description": "Match Profile of the Economy deficit/GDP spans often appearing in right-column text on later issues.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_federal_budget_deficit_for_the_most_recent_comp/rule_profile_economy_deficit_sentence_on_right_column.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_deficit_sentence_on_left_column",
+      "description": "Match Profile of the Economy deficit/GDP spans often appearing in left-column text on some issues.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_federal_budget_deficit_for_the_most_recent_comp/rule_profile_economy_deficit_sentence_on_left_column.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_deficit_with_administration_budget",
+      "description": "Match Profile of the Economy spans that mention the Administration budget and deficit/GDP.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_federal_budget_deficit_for_the_most_recent_comp/rule_profile_economy_deficit_with_administration_budget.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_deficit_with_fy_budget_projection",
+      "description": "Match Profile of the Economy spans that mention a fiscal-year budget projection and deficit percent.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_federal_budget_deficit_for_the_most_recent_comp/rule_profile_economy_deficit_with_fy_budget_projection.py"
+    }
+  ]
+}

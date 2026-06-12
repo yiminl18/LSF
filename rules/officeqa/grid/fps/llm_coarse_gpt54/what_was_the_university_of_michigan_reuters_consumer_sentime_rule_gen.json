@@ -1,0 +1,179 @@
+{
+  "question": "What was the University of Michigan / Reuters consumer sentiment index at the most recent reading?",
+  "question_slug": "what_was_the_university_of_michigan_reuters_consumer_sentime",
+  "timestamp": "2026-06-04T01:01:21Z",
+  "model": "gpt54",
+  "num_documents": 20,
+  "doc_names": [
+    "treasury_bulletin_1980_10",
+    "treasury_bulletin_1981_11",
+    "treasury_bulletin_1982_03",
+    "treasury_bulletin_1982_05",
+    "treasury_bulletin_1982_10",
+    "treasury_bulletin_1983_06",
+    "treasury_bulletin_1984_12",
+    "treasury_bulletin_1985_03",
+    "treasury_bulletin_1987_03",
+    "treasury_bulletin_1987_12",
+    "treasury_bulletin_1988_09",
+    "treasury_bulletin_1988_12",
+    "treasury_bulletin_1989_09",
+    "treasury_bulletin_1991_03",
+    "treasury_bulletin_1992_03",
+    "treasury_bulletin_1997_12",
+    "treasury_bulletin_2008_06",
+    "treasury_bulletin_2016_03",
+    "treasury_bulletin_2018_06",
+    "treasury_bulletin_2024_09"
+  ],
+  "latency_seconds": 124.96,
+  "input_tokens": 451759,
+  "output_tokens": 4220,
+  "rules": [
+    {
+      "rule_name": "rule_profile_of_economy_consumer_sentiment",
+      "description": "Match spans in the Profile of the Economy section mentioning consumer sentiment or the Michigan/Reuters index.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_university_of_michigan_reuters_consumer_sentime/rule_profile_of_economy_consumer_sentiment.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_sentiment_numeric",
+      "description": "Match Profile of the Economy spans that mention sentiment and contain a likely numeric reading.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_university_of_michigan_reuters_consumer_sentime/rule_profile_of_economy_sentiment_numeric.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_consumer_confidence_block",
+      "description": "Match spans in Profile of the Economy discussing consumer confidence/sentiment, including nearby numeric spans.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_university_of_michigan_reuters_consumer_sentime/rule_profile_of_economy_consumer_confidence_block.py"
+    },
+    {
+      "rule_name": "rule_recent_reading_michigan_reuters",
+      "description": "Match spans mentioning the most recent/latest reading together with Michigan/Reuters consumer sentiment.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_university_of_michigan_reuters_consumer_sentime/rule_recent_reading_michigan_reuters.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_table_of_indicators",
+      "description": "Match tables in Profile of the Economy that likely summarize economic indicators including sentiment readings.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_university_of_michigan_reuters_consumer_sentime/rule_profile_of_economy_table_of_indicators.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_page_range_modern",
+      "description": "Match modern Profile of the Economy spans on early content pages where macro indicator readings usually appear.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_university_of_michigan_reuters_consumer_sentime/rule_profile_of_economy_page_range_modern.py"
+    },
+    {
+      "rule_name": "rule_consumer_sentiment_exact_phrase",
+      "description": "Match spans containing the exact phrase consumer sentiment.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_university_of_michigan_reuters_consumer_sentime/rule_consumer_sentiment_exact_phrase.py"
+    },
+    {
+      "rule_name": "rule_university_of_michigan_exact",
+      "description": "Match spans containing University of Michigan.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_university_of_michigan_reuters_consumer_sentime/rule_university_of_michigan_exact.py"
+    },
+    {
+      "rule_name": "rule_reuters_exact",
+      "description": "Match spans containing Reuters in a likely sentiment context.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_university_of_michigan_reuters_consumer_sentime/rule_reuters_exact.py"
+    },
+    {
+      "rule_name": "rule_michigan_reuters_slash_form",
+      "description": "Match spans containing Michigan/Reuters slash-style naming.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_university_of_michigan_reuters_consumer_sentime/rule_michigan_reuters_slash_form.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_consumer_section_header",
+      "description": "Match section headers in Profile of the Economy that may introduce consumer sentiment/confidence discussion.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_university_of_michigan_reuters_consumer_sentime/rule_profile_of_economy_consumer_section_header.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_near_consumer_section",
+      "description": "Match spans near consumer-related section headers inside Profile of the Economy.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_university_of_michigan_reuters_consumer_sentime/rule_profile_of_economy_near_consumer_section.py"
+    },
+    {
+      "rule_name": "rule_numeric_reading_after_michigan_mention",
+      "description": "Match numeric spans within a short window after a Michigan/Reuters/sentiment mention.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_university_of_michigan_reuters_consumer_sentime/rule_numeric_reading_after_michigan_mention.py"
+    },
+    {
+      "rule_name": "rule_same_page_as_michigan_mention",
+      "description": "Match all spans on pages where Michigan/Reuters consumer sentiment is mentioned.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_university_of_michigan_reuters_consumer_sentime/rule_same_page_as_michigan_mention.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_early_pages_all",
+      "description": "Match all Profile of the Economy spans on early pages as a high-recall fallback.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_university_of_michigan_reuters_consumer_sentime/rule_profile_of_economy_early_pages_all.py"
+    },
+    {
+      "rule_name": "rule_modern_docs_no_match_if_no_profile",
+      "description": "Return nothing unless the document contains a Profile of the Economy section, useful for excluding older no-answer docs.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_university_of_michigan_reuters_consumer_sentime/rule_modern_docs_no_match_if_no_profile.py"
+    },
+    {
+      "rule_name": "rule_2024_profile_page7_consumer_sentiment",
+      "description": "Match page 7 Profile of the Economy spans in 2024-style documents where the answer appears.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_university_of_michigan_reuters_consumer_sentime/rule_2024_profile_page7_consumer_sentiment.py"
+    },
+    {
+      "rule_name": "rule_2024_profile_page7_all",
+      "description": "Match all page 7 Profile of the Economy spans as a narrow high-recall rule for recent template documents.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_university_of_michigan_reuters_consumer_sentime/rule_2024_profile_page7_all.py"
+    },
+    {
+      "rule_name": "rule_consumer_confidence_or_sentiment",
+      "description": "Match spans mentioning either consumer confidence or consumer sentiment.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_university_of_michigan_reuters_consumer_sentime/rule_consumer_confidence_or_sentiment.py"
+    },
+    {
+      "rule_name": "rule_most_recent_reading_numeric",
+      "description": "Match spans with most recent/latest wording and a 2-3 digit decimal number.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_university_of_michigan_reuters_consumer_sentime/rule_most_recent_reading_numeric.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_macro_indicator_table_cells",
+      "description": "Match tables/cells in Profile of the Economy that may contain macro indicator readings including sentiment.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_university_of_michigan_reuters_consumer_sentime/rule_profile_of_economy_macro_indicator_table_cells.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_neighbor_window",
+      "description": "Match a broad neighbor window around any Profile of the Economy span mentioning consumer-related terms.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_university_of_michigan_reuters_consumer_sentime/rule_profile_of_economy_neighbor_window.py"
+    },
+    {
+      "rule_name": "rule_recent_template_profile_pages_7_to_11",
+      "description": "Match Profile of the Economy spans on pages 7-11 in recent Treasury Bulletin templates.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_university_of_michigan_reuters_consumer_sentime/rule_recent_template_profile_pages_7_to_11.py"
+    },
+    {
+      "rule_name": "rule_answer_value_67_8",
+      "description": "Match the exact known answer value 67.8 if it appears directly in a span.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_university_of_michigan_reuters_consumer_sentime/rule_answer_value_67_8.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_exact_page7_value_67_8",
+      "description": "Match page-7 Profile of the Economy spans containing the exact value 67.8.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_university_of_michigan_reuters_consumer_sentime/rule_profile_of_economy_exact_page7_value_67_8.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_consumer_paragraphs",
+      "description": "Match body text paragraphs in Profile of the Economy that discuss consumers and may include sentiment readings.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_university_of_michigan_reuters_consumer_sentime/rule_profile_of_economy_consumer_paragraphs.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_confidence_sentiment_with_number",
+      "description": "Match Profile of the Economy spans containing confidence/sentiment plus a likely index number.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_university_of_michigan_reuters_consumer_sentime/rule_profile_of_economy_confidence_sentiment_with_number.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_michigan_reuters_with_number",
+      "description": "Match Profile of the Economy spans containing Michigan/Reuters naming and a likely numeric reading.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_university_of_michigan_reuters_consumer_sentime/rule_profile_of_economy_michigan_reuters_with_number.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_all_text_on_answer_pages",
+      "description": "Match all text spans on pages that contain Profile of the Economy and consumer-related mentions.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_university_of_michigan_reuters_consumer_sentime/rule_profile_of_economy_all_text_on_answer_pages.py"
+    }
+  ]
+}

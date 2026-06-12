@@ -1,0 +1,204 @@
+{
+  "question": "What was the annualized real GDP growth rate for the most recent quarter reported?",
+  "question_slug": "what_was_the_annualized_real_gdp_growth_rate_for_the_most_re",
+  "timestamp": "2026-06-04T00:54:20Z",
+  "model": "gpt54",
+  "num_documents": 20,
+  "doc_names": [
+    "treasury_bulletin_1980_10",
+    "treasury_bulletin_1981_11",
+    "treasury_bulletin_1982_03",
+    "treasury_bulletin_1982_05",
+    "treasury_bulletin_1982_10",
+    "treasury_bulletin_1983_06",
+    "treasury_bulletin_1984_12",
+    "treasury_bulletin_1985_03",
+    "treasury_bulletin_1987_03",
+    "treasury_bulletin_1987_12",
+    "treasury_bulletin_1988_09",
+    "treasury_bulletin_1988_12",
+    "treasury_bulletin_1989_09",
+    "treasury_bulletin_1991_03",
+    "treasury_bulletin_1992_03",
+    "treasury_bulletin_1997_12",
+    "treasury_bulletin_2008_06",
+    "treasury_bulletin_2016_03",
+    "treasury_bulletin_2018_06",
+    "treasury_bulletin_2024_09"
+  ],
+  "latency_seconds": 157.283,
+  "input_tokens": 451773,
+  "output_tokens": 5279,
+  "rules": [
+    {
+      "rule_name": "rule_profile_of_economy_real_gdp_section",
+      "description": "Match spans in the Profile of the Economy section that discuss real GDP growth.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_annualized_real_gdp_growth_rate_for_the_most_re/rule_profile_of_economy_real_gdp_section.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_growth_heading",
+      "description": "Match the Growth/Economic Growth/Real gross domestic product subsection and nearby text.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_annualized_real_gdp_growth_rate_for_the_most_re/rule_profile_of_economy_growth_heading.py"
+    },
+    {
+      "rule_name": "rule_growth_of_real_gdp_keyword",
+      "description": "Match spans explicitly mentioning 'Growth of Real GDP' or equivalent GDP growth phrasing.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_annualized_real_gdp_growth_rate_for_the_most_re/rule_growth_of_real_gdp_keyword.py"
+    },
+    {
+      "rule_name": "rule_annual_rate_gdp_sentence",
+      "description": "Match prose spans stating real GDP growth at an annual rate for a quarter.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_annualized_real_gdp_growth_rate_for_the_most_re/rule_annual_rate_gdp_sentence.py"
+    },
+    {
+      "rule_name": "rule_most_recent_quarter_prose",
+      "description": "Match prose spans that mention first/second/third/fourth quarter and a GDP annual rate.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_annualized_real_gdp_growth_rate_for_the_most_re/rule_most_recent_quarter_prose.py"
+    },
+    {
+      "rule_name": "rule_profile_page_early_gdp_text",
+      "description": "Match early-page Profile of the Economy prose about GDP growth, where answers appear in later vintages.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_annualized_real_gdp_growth_rate_for_the_most_re/rule_profile_page_early_gdp_text.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_first_pages",
+      "description": "Match all Profile of the Economy spans on the first few content pages for high recall.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_annualized_real_gdp_growth_rate_for_the_most_re/rule_profile_of_economy_first_pages.py"
+    },
+    {
+      "rule_name": "rule_real_gdp_heading_and_following_text",
+      "description": "Match the 'Real gross domestic product' heading and the next few body spans.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_annualized_real_gdp_growth_rate_for_the_most_re/rule_real_gdp_heading_and_following_text.py"
+    },
+    {
+      "rule_name": "rule_growth_of_real_gdp_chart_caption",
+      "description": "Match chart captions/titles for Growth of Real GDP and nearby explanatory text.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_annualized_real_gdp_growth_rate_for_the_most_re/rule_growth_of_real_gdp_chart_caption.py"
+    },
+    {
+      "rule_name": "rule_profile_table_of_contents_poe_a",
+      "description": "Match table-of-contents entries for Profile of the Economy GDP chart/table references.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_annualized_real_gdp_growth_rate_for_the_most_re/rule_profile_table_of_contents_poe_a.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_summary_indicators",
+      "description": "Match the Profile of the Economy summary indicators section where GDP growth is summarized.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_annualized_real_gdp_growth_rate_for_the_most_re/rule_profile_of_economy_summary_indicators.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_gdp_percent_sentence",
+      "description": "Match Profile of the Economy prose containing a percent and GDP in the same span.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_annualized_real_gdp_growth_rate_for_the_most_re/rule_profile_of_economy_gdp_percent_sentence.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_quarterly_percent_change_caption",
+      "description": "Match captions saying '(Quarterly percent change at annual rate)' near GDP growth charts.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_annualized_real_gdp_growth_rate_for_the_most_re/rule_profile_of_economy_quarterly_percent_change_caption.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_recent_vintage_pages",
+      "description": "Match likely answer spans on pages 5-11 in modern bulletins where Profile of the Economy appears.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_annualized_real_gdp_growth_rate_for_the_most_re/rule_profile_of_economy_recent_vintage_pages.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_modern_intro",
+      "description": "Match modern Profile of the Economy intro/growth spans that usually contain the latest quarter GDP rate.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_annualized_real_gdp_growth_rate_for_the_most_re/rule_profile_of_economy_modern_intro.py"
+    },
+    {
+      "rule_name": "rule_real_gdp_growth_rate_numeric_phrase",
+      "description": "Match spans with a numeric percent near 'real GDP growth' phrasing.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_annualized_real_gdp_growth_rate_for_the_most_re/rule_real_gdp_growth_rate_numeric_phrase.py"
+    },
+    {
+      "rule_name": "rule_gdp_annual_rate_with_quarter_reference",
+      "description": "Match spans with quarter reference plus annual-rate GDP growth wording.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_annualized_real_gdp_growth_rate_for_the_most_re/rule_gdp_annual_rate_with_quarter_reference.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_page_range_modern",
+      "description": "Match all spans on pages 5-10 that are under Profile of the Economy for broad recall.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_annualized_real_gdp_growth_rate_for_the_most_re/rule_profile_of_economy_page_range_modern.py"
+    },
+    {
+      "rule_name": "rule_contents_profile_of_economy_locator",
+      "description": "Match contents spans that identify where the Profile of the Economy section starts.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_annualized_real_gdp_growth_rate_for_the_most_re/rule_contents_profile_of_economy_locator.py"
+    },
+    {
+      "rule_name": "rule_no_answer_pre_1990_no_profile",
+      "description": "Return empty when the document lacks a Profile of the Economy / GDP-growth style section.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_annualized_real_gdp_growth_rate_for_the_most_re/rule_no_answer_pre_1990_no_profile.py"
+    },
+    {
+      "rule_name": "rule_modern_profile_economic_growth_first_match",
+      "description": "Match the first modern Profile of the Economy growth paragraph mentioning the latest quarter.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_annualized_real_gdp_growth_rate_for_the_most_re/rule_modern_profile_economic_growth_first_match.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_gdp_growth_first_two_pages",
+      "description": "Match GDP-growth spans in the first two pages of the Profile of the Economy article.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_annualized_real_gdp_growth_rate_for_the_most_re/rule_profile_of_economy_gdp_growth_first_two_pages.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_real_gdp_heading_modern",
+      "description": "Match modern headings and text for real GDP in Profile of the Economy.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_annualized_real_gdp_growth_rate_for_the_most_re/rule_profile_of_economy_real_gdp_heading_modern.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_percent_annual_rate_near_gdp",
+      "description": "Match any span with percent + annual rate + GDP in Profile of the Economy.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_annualized_real_gdp_growth_rate_for_the_most_re/rule_profile_of_economy_percent_annual_rate_near_gdp.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_latest_quarter_sentence",
+      "description": "Match sentences describing the most recent quarter's GDP growth in the economy profile.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_annualized_real_gdp_growth_rate_for_the_most_re/rule_profile_of_economy_latest_quarter_sentence.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_growth_paragraphs",
+      "description": "Match all body paragraphs under Growth/Economic Growth/Real GDP subsections.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_annualized_real_gdp_growth_rate_for_the_most_re/rule_profile_of_economy_growth_paragraphs.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_gdp_chart_and_text",
+      "description": "Match GDP chart title/caption plus adjacent explanatory text in the economy profile.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_annualized_real_gdp_growth_rate_for_the_most_re/rule_profile_of_economy_gdp_chart_and_text.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_modern_answer_pages",
+      "description": "Match likely answer spans on pages 7-11 in 21st-century bulletins.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_annualized_real_gdp_growth_rate_for_the_most_re/rule_profile_of_economy_modern_answer_pages.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_gdp_growth_numeric_only",
+      "description": "Match spans with GDP growth numeric statements even if wording varies.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_annualized_real_gdp_growth_rate_for_the_most_re/rule_profile_of_economy_gdp_growth_numeric_only.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_first_gdp_numeric_span",
+      "description": "Return the first span in the economy profile that contains GDP and a decimal percent.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_annualized_real_gdp_growth_rate_for_the_most_re/rule_profile_of_economy_first_gdp_numeric_span.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_growth_sentence_with_same_as_previous_quarter",
+      "description": "Match GDP growth sentences that compare the latest quarter with prior quarters.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_annualized_real_gdp_growth_rate_for_the_most_re/rule_profile_of_economy_growth_sentence_with_same_as_previous_quarter.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_page_title_and_following",
+      "description": "Match the Profile of the Economy title and the next several spans.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_annualized_real_gdp_growth_rate_for_the_most_re/rule_profile_of_economy_page_title_and_following.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_modern_contents_locator",
+      "description": "Match contents entries that point to the Profile of the Economy section in modern bulletins.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_annualized_real_gdp_growth_rate_for_the_most_re/rule_profile_of_economy_modern_contents_locator.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_gdp_growth_recent_docs",
+      "description": "Broad high-recall rule for modern docs: GDP-growth prose in Profile of the Economy.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_annualized_real_gdp_growth_rate_for_the_most_re/rule_profile_of_economy_gdp_growth_recent_docs.py"
+    }
+  ]
+}

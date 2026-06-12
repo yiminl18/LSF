@@ -1,0 +1,184 @@
+{
+  "question": "What was the Exchange Stabilization Fund total assets, in thousands of dollars?",
+  "question_slug": "what_was_the_exchange_stabilization_fund_total_assets_in_tho",
+  "timestamp": "2026-06-04T01:26:50Z",
+  "model": "gpt54",
+  "num_documents": 20,
+  "doc_names": [
+    "treasury_bulletin_1980_10",
+    "treasury_bulletin_1981_11",
+    "treasury_bulletin_1982_03",
+    "treasury_bulletin_1982_05",
+    "treasury_bulletin_1982_10",
+    "treasury_bulletin_1983_06",
+    "treasury_bulletin_1984_12",
+    "treasury_bulletin_1985_03",
+    "treasury_bulletin_1987_03",
+    "treasury_bulletin_1987_12",
+    "treasury_bulletin_1988_09",
+    "treasury_bulletin_1988_12",
+    "treasury_bulletin_1989_09",
+    "treasury_bulletin_1991_03",
+    "treasury_bulletin_1992_03",
+    "treasury_bulletin_1997_12",
+    "treasury_bulletin_2008_06",
+    "treasury_bulletin_2016_03",
+    "treasury_bulletin_2018_06",
+    "treasury_bulletin_2024_09"
+  ],
+  "latency_seconds": 141.02,
+  "input_tokens": 451806,
+  "output_tokens": 4660,
+  "rules": [
+    {
+      "rule_name": "rule_esf_section_table",
+      "description": "Match table spans whose text mentions Exchange Stabilization Fund balance sheet / ESF-1.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_exchange_stabilization_fund_total_assets_in_tho/rule_esf_section_table.py"
+    },
+    {
+      "rule_name": "rule_esf_path_text",
+      "description": "Match spans under a path_text containing Exchange Stabilization Fund.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_exchange_stabilization_fund_total_assets_in_tho/rule_esf_path_text.py"
+    },
+    {
+      "rule_name": "rule_esf_heading_and_following_table",
+      "description": "Match the first table span following an Exchange Stabilization Fund section header.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_exchange_stabilization_fund_total_assets_in_tho/rule_esf_heading_and_following_table.py"
+    },
+    {
+      "rule_name": "rule_esf_heading_same_page_table",
+      "description": "Match table spans on the same page as an Exchange Stabilization Fund header.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_exchange_stabilization_fund_total_assets_in_tho/rule_esf_heading_same_page_table.py"
+    },
+    {
+      "rule_name": "rule_esf_balance_sheet_table",
+      "description": "Match table spans mentioning balance sheet in ESF context.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_exchange_stabilization_fund_total_assets_in_tho/rule_esf_balance_sheet_table.py"
+    },
+    {
+      "rule_name": "rule_esf_total_assets_row",
+      "description": "Match ESF table spans containing a Total assets row/cell.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_exchange_stabilization_fund_total_assets_in_tho/rule_esf_total_assets_row.py"
+    },
+    {
+      "rule_name": "rule_esf_assets_liabilities_table",
+      "description": "Match ESF table spans that look like a balance sheet with assets/liabilities terminology.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_exchange_stabilization_fund_total_assets_in_tho/rule_esf_assets_liabilities_table.py"
+    },
+    {
+      "rule_name": "rule_esf_international_statistics_table",
+      "description": "Match tables in the international statistics area that mention ESF or Exchange Stabilization Fund.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_exchange_stabilization_fund_total_assets_in_tho/rule_esf_international_statistics_table.py"
+    },
+    {
+      "rule_name": "rule_page_near_esf_contents_target",
+      "description": "Use contents-page ESF-1 page references to return table spans on the referenced page and nearby pages.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_exchange_stabilization_fund_total_assets_in_tho/rule_page_near_esf_contents_target.py"
+    },
+    {
+      "rule_name": "rule_page_around_60_to_120_tables",
+      "description": "Match tables in the common page range where ESF balance sheets often appear in later bulletins.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_exchange_stabilization_fund_total_assets_in_tho/rule_page_around_60_to_120_tables.py"
+    },
+    {
+      "rule_name": "rule_page_around_100_to_120_tables",
+      "description": "Match tables in the 100-120 page range where ESF often appears in 1983-1987 quarterly issues.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_exchange_stabilization_fund_total_assets_in_tho/rule_page_around_100_to_120_tables.py"
+    },
+    {
+      "rule_name": "rule_page_around_160_to_170_tables",
+      "description": "Match tables in the 160-170 page range where ESF appears in some 1984-1985 issues.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_exchange_stabilization_fund_total_assets_in_tho/rule_page_around_160_to_170_tables.py"
+    },
+    {
+      "rule_name": "rule_esf_contents_entry",
+      "description": "Match contents-page spans that mention ESF-1 or Exchange Stabilization Fund.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_exchange_stabilization_fund_total_assets_in_tho/rule_esf_contents_entry.py"
+    },
+    {
+      "rule_name": "rule_esf_contents_section",
+      "description": "Match section headers named Exchange Stabilization Fund, often in contents pages.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_exchange_stabilization_fund_total_assets_in_tho/rule_esf_contents_section.py"
+    },
+    {
+      "rule_name": "rule_esf_table_cells",
+      "description": "Match table spans whose structured cells mention ESF, balance sheet, or total assets.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_exchange_stabilization_fund_total_assets_in_tho/rule_esf_table_cells.py"
+    },
+    {
+      "rule_name": "rule_esf_total_assets_cell_row",
+      "description": "Match table spans having a cell exactly or nearly equal to Total assets.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_exchange_stabilization_fund_total_assets_in_tho/rule_esf_total_assets_cell_row.py"
+    },
+    {
+      "rule_name": "rule_esf_table_with_thousands_units",
+      "description": "Match ESF-related tables that mention thousands or in thousands of dollars.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_exchange_stabilization_fund_total_assets_in_tho/rule_esf_table_with_thousands_units.py"
+    },
+    {
+      "rule_name": "rule_esf_nearby_text_and_table",
+      "description": "Match tables near text spans mentioning Exchange Stabilization Fund or ESF-1.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_exchange_stabilization_fund_total_assets_in_tho/rule_esf_nearby_text_and_table.py"
+    },
+    {
+      "rule_name": "rule_esf_late_document_tables",
+      "description": "Match tables in the latter half of the document, where ESF often appears.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_exchange_stabilization_fund_total_assets_in_tho/rule_esf_late_document_tables.py"
+    },
+    {
+      "rule_name": "rule_esf_after_foreign_currency_positions",
+      "description": "Match tables after the Foreign Currency Positions section, where ESF often follows.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_exchange_stabilization_fund_total_assets_in_tho/rule_esf_after_foreign_currency_positions.py"
+    },
+    {
+      "rule_name": "rule_esf_before_special_reports",
+      "description": "Match tables immediately before Special Reports when ESF is the last international-statistics subsection.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_exchange_stabilization_fund_total_assets_in_tho/rule_esf_before_special_reports.py"
+    },
+    {
+      "rule_name": "rule_esf_exchange_stabilization_fund_section_window",
+      "description": "Match all spans in a small window around the Exchange Stabilization Fund header.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_exchange_stabilization_fund_total_assets_in_tho/rule_esf_exchange_stabilization_fund_section_window.py"
+    },
+    {
+      "rule_name": "rule_esf_table_on_header_page_plus_one",
+      "description": "Match tables on the page of the ESF header or the next page.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_exchange_stabilization_fund_total_assets_in_tho/rule_esf_table_on_header_page_plus_one.py"
+    },
+    {
+      "rule_name": "rule_esf_modern_page_range",
+      "description": "Match tables in pages 60-110, common for ESF in modern bulletins.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_exchange_stabilization_fund_total_assets_in_tho/rule_esf_modern_page_range.py"
+    },
+    {
+      "rule_name": "rule_esf_legacy_page_range",
+      "description": "Match tables in pages 70-170, common for ESF in 1980s-1990s bulletins.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_exchange_stabilization_fund_total_assets_in_tho/rule_esf_legacy_page_range.py"
+    },
+    {
+      "rule_name": "rule_esf_table_with_large_numbers",
+      "description": "Match ESF-related tables containing long digit strings likely to include the total-assets value.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_exchange_stabilization_fund_total_assets_in_tho/rule_esf_table_with_large_numbers.py"
+    },
+    {
+      "rule_name": "rule_esf_any_span_keyword",
+      "description": "Match any span mentioning Exchange Stabilization Fund, ESF-1, or total assets.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_exchange_stabilization_fund_total_assets_in_tho/rule_esf_any_span_keyword.py"
+    },
+    {
+      "rule_name": "rule_esf_table_after_contents_reference",
+      "description": "Use contents references to ESF-1 and return later table spans with matching page numbers.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_exchange_stabilization_fund_total_assets_in_tho/rule_esf_table_after_contents_reference.py"
+    },
+    {
+      "rule_name": "rule_esf_exchange_stabilization_fund_or_special_reports_boundary",
+      "description": "Match tables between Exchange Stabilization Fund and Special Reports headers.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_exchange_stabilization_fund_total_assets_in_tho/rule_esf_exchange_stabilization_fund_or_special_reports_boundary.py"
+    },
+    {
+      "rule_name": "rule_esf_exchange_stabilization_fund_or_international_statistics_boundary",
+      "description": "Match tables between International Statistics and Special Reports that mention ESF or balance sheet.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_exchange_stabilization_fund_total_assets_in_tho/rule_esf_exchange_stabilization_fund_or_international_statistics_boundary.py"
+    }
+  ]
+}

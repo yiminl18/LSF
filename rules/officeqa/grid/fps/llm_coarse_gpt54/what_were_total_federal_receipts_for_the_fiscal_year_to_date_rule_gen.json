@@ -1,0 +1,184 @@
+{
+  "question": "What were total federal receipts for the fiscal year to date, in millions of dollars?",
+  "question_slug": "what_were_total_federal_receipts_for_the_fiscal_year_to_date",
+  "timestamp": "2026-06-04T01:06:31Z",
+  "model": "gpt54",
+  "num_documents": 20,
+  "doc_names": [
+    "treasury_bulletin_1980_10",
+    "treasury_bulletin_1981_11",
+    "treasury_bulletin_1982_03",
+    "treasury_bulletin_1982_05",
+    "treasury_bulletin_1982_10",
+    "treasury_bulletin_1983_06",
+    "treasury_bulletin_1984_12",
+    "treasury_bulletin_1985_03",
+    "treasury_bulletin_1987_03",
+    "treasury_bulletin_1987_12",
+    "treasury_bulletin_1988_09",
+    "treasury_bulletin_1988_12",
+    "treasury_bulletin_1989_09",
+    "treasury_bulletin_1991_03",
+    "treasury_bulletin_1992_03",
+    "treasury_bulletin_1997_12",
+    "treasury_bulletin_2008_06",
+    "treasury_bulletin_2016_03",
+    "treasury_bulletin_2018_06",
+    "treasury_bulletin_2024_09"
+  ],
+  "latency_seconds": 133.137,
+  "input_tokens": 451798,
+  "output_tokens": 4772,
+  "rules": [
+    {
+      "rule_name": "rule_ffo1_summary_table",
+      "description": "Match table spans for Table FFO-1 / Summary of Fiscal Operations.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_total_federal_receipts_for_the_fiscal_year_to_date/rule_ffo1_summary_table.py"
+    },
+    {
+      "rule_name": "rule_ffo1_path_text",
+      "description": "Match spans under a path_text containing Table FFO-1 / Summary of Fiscal Operations.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_total_federal_receipts_for_the_fiscal_year_to_date/rule_ffo1_path_text.py"
+    },
+    {
+      "rule_name": "rule_federal_fiscal_operations_pages",
+      "description": "Match table spans on pages headed Federal Fiscal Operations that mention receipts/outlays/deficit.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_total_federal_receipts_for_the_fiscal_year_to_date/rule_federal_fiscal_operations_pages.py"
+    },
+    {
+      "rule_name": "rule_row_fiscal_to_date_in_tables",
+      "description": "Match table spans containing a row labeled Fiscal ... to date.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_total_federal_receipts_for_the_fiscal_year_to_date/rule_row_fiscal_to_date_in_tables.py"
+    },
+    {
+      "rule_name": "rule_row_actual_fiscal_year_to_date",
+      "description": "Match table spans containing the phrase Actual fiscal year to date.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_total_federal_receipts_for_the_fiscal_year_to_date/rule_row_actual_fiscal_year_to_date.py"
+    },
+    {
+      "rule_name": "rule_row_total_receipts_with_actual_fytd",
+      "description": "Match summary tables containing both Total receipts and Actual fiscal year to date.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_total_federal_receipts_for_the_fiscal_year_to_date/rule_row_total_receipts_with_actual_fytd.py"
+    },
+    {
+      "rule_name": "rule_receipts_by_source_table",
+      "description": "Match FFO-2 / Budget Receipts by Source tables, which often contain the same fiscal-to-date receipts answer.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_total_federal_receipts_for_the_fiscal_year_to_date/rule_receipts_by_source_table.py"
+    },
+    {
+      "rule_name": "rule_receipts_table_with_fiscal_to_date",
+      "description": "Match receipt tables containing a fiscal-to-date row and a receipts column.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_total_federal_receipts_for_the_fiscal_year_to_date/rule_receipts_table_with_fiscal_to_date.py"
+    },
+    {
+      "rule_name": "rule_summary_analysis_table_oct_dec",
+      "description": "Match analysis summary tables with October-December and Actual fiscal year to date columns.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_total_federal_receipts_for_the_fiscal_year_to_date/rule_summary_analysis_table_oct_dec.py"
+    },
+    {
+      "rule_name": "rule_summary_analysis_table_total_receipts",
+      "description": "Match analysis summary tables containing a Total receipts row.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_total_federal_receipts_for_the_fiscal_year_to_date/rule_summary_analysis_table_total_receipts.py"
+    },
+    {
+      "rule_name": "rule_budget_results_first_quarter_summary",
+      "description": "Match first-quarter budget results summary sections/tables that state total receipts and fiscal year to date.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_total_federal_receipts_for_the_fiscal_year_to_date/rule_budget_results_first_quarter_summary.py"
+    },
+    {
+      "rule_name": "rule_fiscal_year_to_date_phrase_any_span",
+      "description": "Match any span containing fiscal year to date phrasing.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_total_federal_receipts_for_the_fiscal_year_to_date/rule_fiscal_year_to_date_phrase_any_span.py"
+    },
+    {
+      "rule_name": "rule_total_receipts_phrase_any_span",
+      "description": "Match any span containing Total receipts or Net receipts phrasing.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_total_federal_receipts_for_the_fiscal_year_to_date/rule_total_receipts_phrase_any_span.py"
+    },
+    {
+      "rule_name": "rule_table_with_fiscal_year_or_month_and_receipts",
+      "description": "Match tables whose headers include Fiscal year or month and a receipts column.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_total_federal_receipts_for_the_fiscal_year_to_date/rule_table_with_fiscal_year_or_month_and_receipts.py"
+    },
+    {
+      "rule_name": "rule_table_with_receipts_outlays_and_to_date",
+      "description": "Match tables containing receipts, outlays, and a fiscal-to-date row.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_total_federal_receipts_for_the_fiscal_year_to_date/rule_table_with_receipts_outlays_and_to_date.py"
+    },
+    {
+      "rule_name": "rule_page_range_main_financial_tables",
+      "description": "Match likely answer tables on early financial-operations pages (roughly pages 15-25 in older issues, 15-20 in later issues).",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_total_federal_receipts_for_the_fiscal_year_to_date/rule_page_range_main_financial_tables.py"
+    },
+    {
+      "rule_name": "rule_table_with_in_millions_and_receipts",
+      "description": "Match tables near '(In millions of dollars)' and receipts headers.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_total_federal_receipts_for_the_fiscal_year_to_date/rule_table_with_in_millions_and_receipts.py"
+    },
+    {
+      "rule_name": "rule_table_after_ffo1_header",
+      "description": "Match tables immediately following a section header for Table FFO-1 / Summary of Fiscal Operations.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_total_federal_receipts_for_the_fiscal_year_to_date/rule_table_after_ffo1_header.py"
+    },
+    {
+      "rule_name": "rule_table_after_ffo2_header",
+      "description": "Match tables immediately following a section header for Table FFO-2 / Budget Receipts by Source.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_total_federal_receipts_for_the_fiscal_year_to_date/rule_table_after_ffo2_header.py"
+    },
+    {
+      "rule_name": "rule_table_cells_fiscal_to_date_row",
+      "description": "Match tables whose structured cells include a fiscal-to-date row label.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_total_federal_receipts_for_the_fiscal_year_to_date/rule_table_cells_fiscal_to_date_row.py"
+    },
+    {
+      "rule_name": "rule_table_cells_total_receipts_row",
+      "description": "Match tables whose structured cells include a Total receipts row label.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_total_federal_receipts_for_the_fiscal_year_to_date/rule_table_cells_total_receipts_row.py"
+    },
+    {
+      "rule_name": "rule_table_cells_receipts_and_fytd",
+      "description": "Match tables whose cells include both a receipts label and a fiscal-to-date label.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_total_federal_receipts_for_the_fiscal_year_to_date/rule_table_cells_receipts_and_fytd.py"
+    },
+    {
+      "rule_name": "rule_summary_of_fiscal_operations_header",
+      "description": "Match section headers explicitly naming Summary of Fiscal Operations.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_total_federal_receipts_for_the_fiscal_year_to_date/rule_summary_of_fiscal_operations_header.py"
+    },
+    {
+      "rule_name": "rule_budget_receipts_by_source_header",
+      "description": "Match section headers explicitly naming Budget Receipts by Source.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_total_federal_receipts_for_the_fiscal_year_to_date/rule_budget_receipts_by_source_header.py"
+    },
+    {
+      "rule_name": "rule_financial_operations_section_tables",
+      "description": "Match tables under Financial Operations / Federal Fiscal Operations paths with receipt-related content.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_total_federal_receipts_for_the_fiscal_year_to_date/rule_financial_operations_section_tables.py"
+    },
+    {
+      "rule_name": "rule_older_template_fiscal_to_date",
+      "description": "Match older-template tables with row label 'Fiscal YYYY to date'.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_total_federal_receipts_for_the_fiscal_year_to_date/rule_older_template_fiscal_to_date.py"
+    },
+    {
+      "rule_name": "rule_newer_template_total_receipts_actual_fytd",
+      "description": "Match newer-template summary tables with Total receipts and Actual fiscal year to date columns.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_total_federal_receipts_for_the_fiscal_year_to_date/rule_newer_template_total_receipts_actual_fytd.py"
+    },
+    {
+      "rule_name": "rule_first_quarter_or_third_quarter_analysis_tables",
+      "description": "Match quarter-analysis tables that summarize receipts and fiscal year to date.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_total_federal_receipts_for_the_fiscal_year_to_date/rule_first_quarter_or_third_quarter_analysis_tables.py"
+    },
+    {
+      "rule_name": "rule_page_with_ffo1_and_in_millions",
+      "description": "Match spans on pages where a nearby header says FFO-1 and nearby text says in millions.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_total_federal_receipts_for_the_fiscal_year_to_date/rule_page_with_ffo1_and_in_millions.py"
+    },
+    {
+      "rule_name": "rule_receipts_answer_candidate_tables",
+      "description": "Broad high-recall rule for tables likely containing the fiscal-year-to-date receipts answer.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_were_total_federal_receipts_for_the_fiscal_year_to_date/rule_receipts_answer_candidate_tables.py"
+    }
+  ]
+}

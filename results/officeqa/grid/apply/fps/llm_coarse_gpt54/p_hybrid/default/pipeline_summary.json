@@ -1,0 +1,180 @@
+{
+  "timestamp": "2026-06-10T11:55:26.389393+00:00",
+  "sampling_strategy": "fps",
+  "rule_gen_strategy": "llm_coarse_gpt54",
+  "refine_strategy": "p_hybrid",
+  "apply_strategy": "default",
+  "queries_file": "data/officeqa/queries.json",
+  "dataset": "officeqa",
+  "cluster": "all_docs",
+  "num_questions": 16,
+  "num_sampled_docs": 20,
+  "num_unsampled_docs": 180,
+  "questions": [
+    {
+      "question": "What quarter and year does this Treasury Bulletin cover?",
+      "question_slug": "what_quarter_and_year_does_this_treasury_bulletin_cover",
+      "num_rules_generated": 34,
+      "num_rules_after_refine": 20,
+      "sampled_accuracy": 0.85,
+      "unsampled_accuracy": 0.8111,
+      "avg_cost_ratio_sampled": 0.117319,
+      "avg_cost_ratio_unsampled": 0.086957
+    },
+    {
+      "question": "What was the annualized real GDP growth rate for the most recent quarter reported?",
+      "question_slug": "what_was_the_annualized_real_gdp_growth_rate_for_the_most_re",
+      "num_rules_generated": 34,
+      "num_rules_after_refine": 20,
+      "sampled_accuracy": 0.3,
+      "unsampled_accuracy": 0.7111,
+      "avg_cost_ratio_sampled": 0.002965,
+      "avg_cost_ratio_unsampled": 0.006208
+    },
+    {
+      "question": "What was the unemployment rate at the most recent month reported?",
+      "question_slug": "what_was_the_unemployment_rate_at_the_most_recent_month_repo",
+      "num_rules_generated": 29,
+      "num_rules_after_refine": 20,
+      "sampled_accuracy": 0.25,
+      "unsampled_accuracy": 0.6778,
+      "avg_cost_ratio_sampled": 0.442869,
+      "avg_cost_ratio_unsampled": 0.520406
+    },
+    {
+      "question": "What was the average monthly nonfarm payroll job growth so far in the current calendar year?",
+      "question_slug": "what_was_the_average_monthly_nonfarm_payroll_job_growth_so_f",
+      "num_rules_generated": 27,
+      "num_rules_after_refine": 20,
+      "sampled_accuracy": 0.1,
+      "unsampled_accuracy": 0.3778,
+      "avg_cost_ratio_sampled": 0.000633,
+      "avg_cost_ratio_unsampled": 0.00142
+    },
+    {
+      "question": "What was the University of Michigan / Reuters consumer sentiment index at the most recent reading?",
+      "question_slug": "what_was_the_university_of_michigan_reuters_consumer_sentime",
+      "num_rules_generated": 29,
+      "num_rules_after_refine": 20,
+      "sampled_accuracy": 0.05,
+      "unsampled_accuracy": 0.1556,
+      "avg_cost_ratio_sampled": 0.057836,
+      "avg_cost_ratio_unsampled": 0.054777
+    },
+    {
+      "question": "What was the federal budget deficit for the most recent completed fiscal year, as a percentage of GDP?",
+      "question_slug": "what_was_the_federal_budget_deficit_for_the_most_recent_comp",
+      "num_rules_generated": 40,
+      "num_rules_after_refine": 20,
+      "sampled_accuracy": 0.25,
+      "unsampled_accuracy": 0.5,
+      "avg_cost_ratio_sampled": 0.011962,
+      "avg_cost_ratio_unsampled": 0.009745
+    },
+    {
+      "question": "What were total federal receipts for the fiscal year to date, in millions of dollars?",
+      "question_slug": "what_were_total_federal_receipts_for_the_fiscal_year_to_date",
+      "num_rules_generated": 30,
+      "num_rules_after_refine": 20,
+      "sampled_accuracy": 0.65,
+      "unsampled_accuracy": 0.7833,
+      "avg_cost_ratio_sampled": 0.080025,
+      "avg_cost_ratio_unsampled": 0.079654
+    },
+    {
+      "question": "What was the total surplus or deficit for the fiscal year to date, in millions of dollars?",
+      "question_slug": "what_was_the_total_surplus_or_deficit_for_the_fiscal_year_to",
+      "num_rules_generated": 38,
+      "num_rules_after_refine": 20,
+      "sampled_accuracy": 0.45,
+      "unsampled_accuracy": 0.7111,
+      "avg_cost_ratio_sampled": 0.019923,
+      "avg_cost_ratio_unsampled": 0.021768
+    },
+    {
+      "question": "What were net individual income tax receipts for the most recent quarter reported, in billions of dollars?",
+      "question_slug": "what_were_net_individual_income_tax_receipts_for_the_most_re",
+      "num_rules_generated": 37,
+      "num_rules_after_refine": 20,
+      "sampled_accuracy": 0.3,
+      "unsampled_accuracy": 0.7278,
+      "avg_cost_ratio_sampled": 0.289723,
+      "avg_cost_ratio_unsampled": 0.182144
+    },
+    {
+      "question": "What was the total gross federal debt outstanding at the end of the most recent fiscal year, in millions of dollars?",
+      "question_slug": "what_was_the_total_gross_federal_debt_outstanding_at_the_end",
+      "num_rules_generated": 37,
+      "num_rules_after_refine": 20,
+      "sampled_accuracy": 0.45,
+      "unsampled_accuracy": 0.7444,
+      "avg_cost_ratio_sampled": 0.489327,
+      "avg_cost_ratio_unsampled": 0.552273
+    },
+    {
+      "question": "What was the total federal debt held by the public at the end of the most recent fiscal year, in millions of dollars?",
+      "question_slug": "what_was_the_total_federal_debt_held_by_the_public_at_the_en",
+      "num_rules_generated": 39,
+      "num_rules_after_refine": 20,
+      "sampled_accuracy": 0.35,
+      "unsampled_accuracy": 0.7167,
+      "avg_cost_ratio_sampled": 0.174513,
+      "avg_cost_ratio_unsampled": 0.183831
+    },
+    {
+      "question": "Is the statutory debt limit currently suspended or set at a specific dollar amount?",
+      "question_slug": "is_the_statutory_debt_limit_currently_suspended_or_set_at_a_",
+      "num_rules_generated": 32,
+      "num_rules_after_refine": 20,
+      "sampled_accuracy": 0.9,
+      "unsampled_accuracy": 0.9111,
+      "avg_cost_ratio_sampled": 0.131869,
+      "avg_cost_ratio_unsampled": 0.095284
+    },
+    {
+      "question": "What was the average length in months of marketable interest-bearing public debt held by private investors at end of the most recent fiscal year?",
+      "question_slug": "what_was_the_average_length_in_months_of_marketable_interest",
+      "num_rules_generated": 26,
+      "num_rules_after_refine": 20,
+      "sampled_accuracy": 0.4,
+      "unsampled_accuracy": 0.7167,
+      "avg_cost_ratio_sampled": 0.026346,
+      "avg_cost_ratio_unsampled": 0.022725
+    },
+    {
+      "question": "What was the per capita amount of currency and coin in circulation at the most recent reporting date, in dollars?",
+      "question_slug": "what_was_the_per_capita_amount_of_currency_and_coin_in_circu",
+      "num_rules_generated": 27,
+      "num_rules_after_refine": 20,
+      "sampled_accuracy": 0.45,
+      "unsampled_accuracy": 0.7778,
+      "avg_cost_ratio_sampled": 0.457846,
+      "avg_cost_ratio_unsampled": 0.410925
+    },
+    {
+      "question": "What was the Exchange Stabilization Fund total assets, in thousands of dollars?",
+      "question_slug": "what_was_the_exchange_stabilization_fund_total_assets_in_tho",
+      "num_rules_generated": 30,
+      "num_rules_after_refine": 20,
+      "sampled_accuracy": 0.55,
+      "unsampled_accuracy": 0.7556,
+      "avg_cost_ratio_sampled": 0.51997,
+      "avg_cost_ratio_unsampled": 0.513375
+    },
+    {
+      "question": "What was the most recent weekly exchange rate of Canadian dollars per U.S. dollar reported?",
+      "question_slug": "what_was_the_most_recent_weekly_exchange_rate_of_canadian_do",
+      "num_rules_generated": 33,
+      "num_rules_after_refine": 20,
+      "sampled_accuracy": 0.25,
+      "unsampled_accuracy": 0.6444,
+      "avg_cost_ratio_sampled": 0.229505,
+      "avg_cost_ratio_unsampled": 0.230994
+    }
+  ],
+  "overall": {
+    "avg_sampled_accuracy": 0.4094,
+    "avg_unsampled_accuracy": 0.6701,
+    "avg_cost_ratio": 0.18578
+  }
+}

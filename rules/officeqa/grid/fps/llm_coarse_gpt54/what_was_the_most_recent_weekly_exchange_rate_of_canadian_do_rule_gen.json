@@ -1,0 +1,199 @@
+{
+  "question": "What was the most recent weekly exchange rate of Canadian dollars per U.S. dollar reported?",
+  "question_slug": "what_was_the_most_recent_weekly_exchange_rate_of_canadian_do",
+  "timestamp": "2026-06-04T01:29:11Z",
+  "model": "gpt54",
+  "num_documents": 20,
+  "doc_names": [
+    "treasury_bulletin_1980_10",
+    "treasury_bulletin_1981_11",
+    "treasury_bulletin_1982_03",
+    "treasury_bulletin_1982_05",
+    "treasury_bulletin_1982_10",
+    "treasury_bulletin_1983_06",
+    "treasury_bulletin_1984_12",
+    "treasury_bulletin_1985_03",
+    "treasury_bulletin_1987_03",
+    "treasury_bulletin_1987_12",
+    "treasury_bulletin_1988_09",
+    "treasury_bulletin_1988_12",
+    "treasury_bulletin_1989_09",
+    "treasury_bulletin_1991_03",
+    "treasury_bulletin_1992_03",
+    "treasury_bulletin_1997_12",
+    "treasury_bulletin_2008_06",
+    "treasury_bulletin_2016_03",
+    "treasury_bulletin_2018_06",
+    "treasury_bulletin_2024_09"
+  ],
+  "latency_seconds": 134.694,
+  "input_tokens": 451824,
+  "output_tokens": 4366,
+  "rules": [
+    {
+      "rule_name": "rule_tables_with_canadian_dollar_positions",
+      "description": "Match table spans whose text mentions Canadian dollar positions.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_most_recent_weekly_exchange_rate_of_canadian_do/rule_tables_with_canadian_dollar_positions.py"
+    },
+    {
+      "rule_name": "rule_spans_under_foreign_currency_positions",
+      "description": "Match spans under the FOREIGN CURRENCY POSITIONS section that mention Canadian dollar positions.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_most_recent_weekly_exchange_rate_of_canadian_do/rule_spans_under_foreign_currency_positions.py"
+    },
+    {
+      "rule_name": "rule_canadian_dollar_section_headers",
+      "description": "Match section headers explicitly titled CANADIAN DOLLAR POSITIONS.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_most_recent_weekly_exchange_rate_of_canadian_do/rule_canadian_dollar_section_headers.py"
+    },
+    {
+      "rule_name": "rule_tables_with_fcp_ii",
+      "description": "Match tables containing FCP-II entries, the Canadian dollar positions table family.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_most_recent_weekly_exchange_rate_of_canadian_do/rule_tables_with_fcp_ii.py"
+    },
+    {
+      "rule_name": "rule_tables_with_fcp_ii_2",
+      "description": "Match tables containing the weekly bank positions row for Canadian dollars (FCP-II-2).",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_most_recent_weekly_exchange_rate_of_canadian_do/rule_tables_with_fcp_ii_2.py"
+    },
+    {
+      "rule_name": "rule_tables_with_weekly_bank_positions_and_canadian",
+      "description": "Match tables mentioning both Canadian dollar positions and weekly bank positions.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_most_recent_weekly_exchange_rate_of_canadian_do/rule_tables_with_weekly_bank_positions_and_canadian.py"
+    },
+    {
+      "rule_name": "rule_contents_pages_for_canadian_positions",
+      "description": "Match contents-page spans that point to Canadian dollar positions pages.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_most_recent_weekly_exchange_rate_of_canadian_do/rule_contents_pages_for_canadian_positions.py"
+    },
+    {
+      "rule_name": "rule_international_statistics_contents_with_foreign_currency_positions",
+      "description": "Match contents spans where foreign currency positions and Canadian dollar positions are listed together.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_most_recent_weekly_exchange_rate_of_canadian_do/rule_international_statistics_contents_with_foreign_currency_positions.py"
+    },
+    {
+      "rule_name": "rule_tables_with_exchange_rate_changes_for_dollar",
+      "description": "Match tables for exchange-rate statistics that often neighbor the answer-bearing section.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_most_recent_weekly_exchange_rate_of_canadian_do/rule_tables_with_exchange_rate_changes_for_dollar.py"
+    },
+    {
+      "rule_name": "rule_tables_with_canadian_and_page_around_80_120",
+      "description": "Match Canadian dollar position tables on the typical page range where the answer appears.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_most_recent_weekly_exchange_rate_of_canadian_do/rule_tables_with_canadian_and_page_around_80_120.py"
+    },
+    {
+      "rule_name": "rule_tables_with_canadian_on_late_pages",
+      "description": "Match Canadian dollar position tables on later statistical pages, excluding contents/front matter.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_most_recent_weekly_exchange_rate_of_canadian_do/rule_tables_with_canadian_on_late_pages.py"
+    },
+    {
+      "rule_name": "rule_neighbor_after_canadian_header",
+      "description": "Match the next few spans after a CANADIAN DOLLAR POSITIONS header, where the answer table usually sits.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_most_recent_weekly_exchange_rate_of_canadian_do/rule_neighbor_after_canadian_header.py"
+    },
+    {
+      "rule_name": "rule_neighbor_before_and_after_fcp_ii_table",
+      "description": "Match FCP-II tables and their immediate neighboring spans.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_most_recent_weekly_exchange_rate_of_canadian_do/rule_neighbor_before_and_after_fcp_ii_table.py"
+    },
+    {
+      "rule_name": "rule_table_cells_canadian_dollar_positions",
+      "description": "Match table spans whose parsed cells mention Canadian dollar positions.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_most_recent_weekly_exchange_rate_of_canadian_do/rule_table_cells_canadian_dollar_positions.py"
+    },
+    {
+      "rule_name": "rule_table_cells_fcp_ii_2",
+      "description": "Match table spans whose parsed cells contain FCP-II-2.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_most_recent_weekly_exchange_rate_of_canadian_do/rule_table_cells_fcp_ii_2.py"
+    },
+    {
+      "rule_name": "rule_table_cells_weekly_bank_positions",
+      "description": "Match table spans whose parsed cells contain Weekly Bank Positions.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_most_recent_weekly_exchange_rate_of_canadian_do/rule_table_cells_weekly_bank_positions.py"
+    },
+    {
+      "rule_name": "rule_foreign_currency_positions_pages",
+      "description": "Match all spans on pages that contain a FOREIGN CURRENCY POSITIONS header.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_most_recent_weekly_exchange_rate_of_canadian_do/rule_foreign_currency_positions_pages.py"
+    },
+    {
+      "rule_name": "rule_canadian_positions_pages",
+      "description": "Match all spans on pages that contain a CANADIAN DOLLAR POSITIONS mention.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_most_recent_weekly_exchange_rate_of_canadian_do/rule_canadian_positions_pages.py"
+    },
+    {
+      "rule_name": "rule_numeric_spans_near_canadian_mentions",
+      "description": "Match spans with decimal numbers near Canadian dollar position mentions.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_most_recent_weekly_exchange_rate_of_canadian_do/rule_numeric_spans_near_canadian_mentions.py"
+    },
+    {
+      "rule_name": "rule_tables_with_canadian_and_no_contents",
+      "description": "Match Canadian dollar tables excluding obvious contents pages.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_most_recent_weekly_exchange_rate_of_canadian_do/rule_tables_with_canadian_and_no_contents.py"
+    },
+    {
+      "rule_name": "rule_tables_under_contents_foreign_currency_positions",
+      "description": "Match contents tables under FOREIGN CURRENCY POSITIONS that list Canadian dollar positions.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_most_recent_weekly_exchange_rate_of_canadian_do/rule_tables_under_contents_foreign_currency_positions.py"
+    },
+    {
+      "rule_name": "rule_canadian_header_and_following_table_same_page",
+      "description": "Match tables on the same page as a Canadian dollar positions header.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_most_recent_weekly_exchange_rate_of_canadian_do/rule_canadian_header_and_following_table_same_page.py"
+    },
+    {
+      "rule_name": "rule_foreign_currency_path_with_fcp_codes",
+      "description": "Match spans under foreign currency positions whose text contains FCP codes.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_most_recent_weekly_exchange_rate_of_canadian_do/rule_foreign_currency_path_with_fcp_codes.py"
+    },
+    {
+      "rule_name": "rule_tables_with_weekly_report_major_market_participants",
+      "description": "Match later-era foreign currency tables using the 'Weekly Report of Major Market Participants' wording.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_most_recent_weekly_exchange_rate_of_canadian_do/rule_tables_with_weekly_report_major_market_participants.py"
+    },
+    {
+      "rule_name": "rule_canadian_weekly_report_tables",
+      "description": "Match later-era Canadian dollar position tables with weekly/monthly/quarterly participant reports.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_most_recent_weekly_exchange_rate_of_canadian_do/rule_canadian_weekly_report_tables.py"
+    },
+    {
+      "rule_name": "rule_tables_with_fcp_i_canadian_late_era",
+      "description": "Match later-era Canadian dollar tables where Canadian positions are SECTION I / FCP-I-*.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_most_recent_weekly_exchange_rate_of_canadian_do/rule_tables_with_fcp_i_canadian_late_era.py"
+    },
+    {
+      "rule_name": "rule_tables_with_canadian_and_monthly_report",
+      "description": "Match Canadian dollar position tables mentioning monthly report of major market participants.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_most_recent_weekly_exchange_rate_of_canadian_do/rule_tables_with_canadian_and_monthly_report.py"
+    },
+    {
+      "rule_name": "rule_tables_with_canadian_and_quarterly_report",
+      "description": "Match Canadian dollar position tables mentioning quarterly report of large market participants.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_most_recent_weekly_exchange_rate_of_canadian_do/rule_tables_with_canadian_and_quarterly_report.py"
+    },
+    {
+      "rule_name": "rule_international_statistics_section_near_foreign_currency",
+      "description": "Match spans in the international statistics area that mention foreign currency positions or Canadian dollar positions.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_most_recent_weekly_exchange_rate_of_canadian_do/rule_international_statistics_section_near_foreign_currency.py"
+    },
+    {
+      "rule_name": "rule_pages_after_contents_canadian_listing",
+      "description": "Match spans on the page number listed for Canadian dollar positions in contents, when recoverable from text.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_most_recent_weekly_exchange_rate_of_canadian_do/rule_pages_after_contents_canadian_listing.py"
+    },
+    {
+      "rule_name": "rule_decimal_numbers_on_foreign_currency_pages",
+      "description": "Match decimal-number spans on pages containing foreign currency positions, useful for answer extraction.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_most_recent_weekly_exchange_rate_of_canadian_do/rule_decimal_numbers_on_foreign_currency_pages.py"
+    },
+    {
+      "rule_name": "rule_all_tables_in_foreign_currency_section",
+      "description": "Match all table spans whose path_text is within the foreign currency positions section.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_most_recent_weekly_exchange_rate_of_canadian_do/rule_all_tables_in_foreign_currency_section.py"
+    },
+    {
+      "rule_name": "rule_all_spans_on_pages_100_to_120_with_fcp",
+      "description": "Match spans in the common answer zone pages 100-120 that mention FCP or Canadian positions.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_most_recent_weekly_exchange_rate_of_canadian_do/rule_all_spans_on_pages_100_to_120_with_fcp.py"
+    }
+  ]
+}

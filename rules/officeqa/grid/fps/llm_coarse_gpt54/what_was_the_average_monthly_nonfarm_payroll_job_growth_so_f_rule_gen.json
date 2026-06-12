@@ -1,0 +1,169 @@
+{
+  "question": "What was the average monthly nonfarm payroll job growth so far in the current calendar year?",
+  "question_slug": "what_was_the_average_monthly_nonfarm_payroll_job_growth_so_f",
+  "timestamp": "2026-06-04T00:59:02Z",
+  "model": "gpt54",
+  "num_documents": 20,
+  "doc_names": [
+    "treasury_bulletin_1980_10",
+    "treasury_bulletin_1981_11",
+    "treasury_bulletin_1982_03",
+    "treasury_bulletin_1982_05",
+    "treasury_bulletin_1982_10",
+    "treasury_bulletin_1983_06",
+    "treasury_bulletin_1984_12",
+    "treasury_bulletin_1985_03",
+    "treasury_bulletin_1987_03",
+    "treasury_bulletin_1987_12",
+    "treasury_bulletin_1988_09",
+    "treasury_bulletin_1988_12",
+    "treasury_bulletin_1989_09",
+    "treasury_bulletin_1991_03",
+    "treasury_bulletin_1992_03",
+    "treasury_bulletin_1997_12",
+    "treasury_bulletin_2008_06",
+    "treasury_bulletin_2016_03",
+    "treasury_bulletin_2018_06",
+    "treasury_bulletin_2024_09"
+  ],
+  "latency_seconds": 139.627,
+  "input_tokens": 451762,
+  "output_tokens": 4635,
+  "rules": [
+    {
+      "rule_name": "rule_profile_economy_employment_paragraph",
+      "description": "Match text spans in Profile of the Economy discussing average nonfarm payroll job growth this year.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_average_monthly_nonfarm_payroll_job_growth_so_f/rule_profile_economy_employment_paragraph.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_employment_and_unemployment_section",
+      "description": "Match spans under Employment and unemployment / Labor Markets and Wages that mention average payroll job growth.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_average_monthly_nonfarm_payroll_job_growth_so_f/rule_profile_economy_employment_and_unemployment_section.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_first_months_average",
+      "description": "Match spans in Profile of the Economy that state average monthly payroll growth over the first N months of the year.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_average_monthly_nonfarm_payroll_job_growth_so_f/rule_profile_economy_first_months_average.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_thus_far_average",
+      "description": "Match spans in Profile of the Economy that say payroll/job growth has averaged X thus far this year.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_average_monthly_nonfarm_payroll_job_growth_so_f/rule_profile_economy_thus_far_average.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_average_jobs_per_month_numeric",
+      "description": "Match Profile of the Economy text spans containing a numeric 'jobs per month' average.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_average_monthly_nonfarm_payroll_job_growth_so_f/rule_profile_economy_average_jobs_per_month_numeric.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_page_6_employment",
+      "description": "Match likely answer spans on page 6 in older bulletins under Profile of the Economy employment discussion.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_average_monthly_nonfarm_payroll_job_growth_so_f/rule_profile_economy_page_6_employment.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_page_9_labor_markets",
+      "description": "Match likely answer spans on page 9 in newer bulletins under Labor Markets and Wages.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_average_monthly_nonfarm_payroll_job_growth_so_f/rule_profile_economy_page_9_labor_markets.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_page_17_summary_table",
+      "description": "Match summary tables on page 17 in 1987-style issues that may contain labor market averages.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_average_monthly_nonfarm_payroll_job_growth_so_f/rule_profile_economy_page_17_summary_table.py"
+    },
+    {
+      "rule_name": "rule_labor_markets_and_wages_average_2024",
+      "description": "Match the 2024-style Labor Markets and Wages paragraph with average payroll growth thus far in the year.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_average_monthly_nonfarm_payroll_job_growth_so_f/rule_labor_markets_and_wages_average_2024.py"
+    },
+    {
+      "rule_name": "rule_employment_unemployment_1997_average",
+      "description": "Match the 1997-style Employment and unemployment paragraph with first 10 months average payroll growth.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_average_monthly_nonfarm_payroll_job_growth_so_f/rule_employment_unemployment_1997_average.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_negative_job_growth",
+      "description": "Match Profile of the Economy spans with negative average payroll growth values.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_average_monthly_nonfarm_payroll_job_growth_so_f/rule_profile_economy_negative_job_growth.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_any_jobs_per_month",
+      "description": "Match any Profile of the Economy text span mentioning jobs per month, for high recall.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_average_monthly_nonfarm_payroll_job_growth_so_f/rule_profile_economy_any_jobs_per_month.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_any_nonfarm_payroll",
+      "description": "Match any Profile of the Economy text span mentioning nonfarm payrolls.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_average_monthly_nonfarm_payroll_job_growth_so_f/rule_profile_economy_any_nonfarm_payroll.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_any_payroll_job_creation",
+      "description": "Match any Profile of the Economy text span mentioning payroll job creation.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_average_monthly_nonfarm_payroll_job_growth_so_f/rule_profile_economy_any_payroll_job_creation.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_labor_section_neighbors",
+      "description": "Return text spans near labor-related section headers inside Profile of the Economy.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_average_monthly_nonfarm_payroll_job_growth_so_f/rule_profile_economy_labor_section_neighbors.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_page_range_modern",
+      "description": "Match likely answer spans on pages 6-11 in modern issues under Profile of the Economy with labor keywords.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_average_monthly_nonfarm_payroll_job_growth_so_f/rule_profile_economy_page_range_modern.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_page_range_older",
+      "description": "Match likely answer spans on pages 5-7 in older issues under Profile of the Economy with labor keywords.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_average_monthly_nonfarm_payroll_job_growth_so_f/rule_profile_economy_page_range_older.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_average_monthly_job_growth_phrase",
+      "description": "Match spans explicitly containing the phrase average monthly job growth or close variants.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_average_monthly_nonfarm_payroll_job_growth_so_f/rule_profile_economy_average_monthly_job_growth_phrase.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_current_year_labor_average",
+      "description": "Match labor-related spans that mention the current year and an average numeric value.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_average_monthly_nonfarm_payroll_job_growth_so_f/rule_profile_economy_current_year_labor_average.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_labor_header_span",
+      "description": "Return labor-related section headers themselves, useful as anchors for downstream extraction.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_average_monthly_nonfarm_payroll_job_growth_so_f/rule_profile_economy_labor_header_span.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_employment_header_and_following",
+      "description": "Return the employment/labor header plus following text spans likely containing the answer.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_average_monthly_nonfarm_payroll_job_growth_so_f/rule_profile_economy_employment_header_and_following.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_numeric_average_with_payroll",
+      "description": "Match spans with a numeric average and payroll-related wording anywhere in the document.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_average_monthly_nonfarm_payroll_job_growth_so_f/rule_profile_economy_numeric_average_with_payroll.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_modern_answer_exact_pattern",
+      "description": "Match modern answer pattern 'In YYYY thus far, job growth has average[d] NNN,NNN'.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_average_monthly_nonfarm_payroll_job_growth_so_f/rule_profile_economy_modern_answer_exact_pattern.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_older_answer_exact_pattern",
+      "description": "Match older answer pattern 'nonfarm payrolls averaged NNN,NNN per month over the first N months of this year'.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_average_monthly_nonfarm_payroll_job_growth_so_f/rule_profile_economy_older_answer_exact_pattern.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_employment_page6_or9",
+      "description": "Match likely answer spans on the most common answer pages 6 or 9 with labor/payroll wording.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_average_monthly_nonfarm_payroll_job_growth_so_f/rule_profile_economy_employment_page6_or9.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_labor_markets_page9_2024",
+      "description": "Match 2024-style page 9 labor markets paragraph with average 203,000 jobs.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_average_monthly_nonfarm_payroll_job_growth_so_f/rule_profile_economy_labor_markets_page9_2024.py"
+    },
+    {
+      "rule_name": "rule_profile_economy_employment_unemployment_page6_1997",
+      "description": "Match 1997-style page 6 employment paragraph with average 239,000 payroll growth.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_average_monthly_nonfarm_payroll_job_growth_so_f/rule_profile_economy_employment_unemployment_page6_1997.py"
+    }
+  ]
+}

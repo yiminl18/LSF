@@ -1,0 +1,204 @@
+{
+  "question": "What quarter and year does this Treasury Bulletin cover?",
+  "question_slug": "what_quarter_and_year_does_this_treasury_bulletin_cover",
+  "timestamp": "2026-06-04T00:51:21Z",
+  "model": "gpt54",
+  "num_documents": 20,
+  "doc_names": [
+    "treasury_bulletin_1980_10",
+    "treasury_bulletin_1981_11",
+    "treasury_bulletin_1982_03",
+    "treasury_bulletin_1982_05",
+    "treasury_bulletin_1982_10",
+    "treasury_bulletin_1983_06",
+    "treasury_bulletin_1984_12",
+    "treasury_bulletin_1985_03",
+    "treasury_bulletin_1987_03",
+    "treasury_bulletin_1987_12",
+    "treasury_bulletin_1988_09",
+    "treasury_bulletin_1988_12",
+    "treasury_bulletin_1989_09",
+    "treasury_bulletin_1991_03",
+    "treasury_bulletin_1992_03",
+    "treasury_bulletin_1997_12",
+    "treasury_bulletin_2008_06",
+    "treasury_bulletin_2016_03",
+    "treasury_bulletin_2018_06",
+    "treasury_bulletin_2024_09"
+  ],
+  "latency_seconds": 178.759,
+  "input_tokens": 451843,
+  "output_tokens": 6421,
+  "rules": [
+    {
+      "rule_name": "rule_cover_date_on_early_pages",
+      "description": "Match month/season + year/date-like spans on the first few pages where the cover date usually appears.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_quarter_and_year_does_this_treasury_bulletin_cover/rule_cover_date_on_early_pages.py"
+    },
+    {
+      "rule_name": "rule_cover_date_on_title_page",
+      "description": "Match date-like spans on pages containing a Treasury Bulletin title/header.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_quarter_and_year_does_this_treasury_bulletin_cover/rule_cover_date_on_title_page.py"
+    },
+    {
+      "rule_name": "rule_text_immediately_after_treasury_bulletin_header",
+      "description": "Match the text span immediately following a Treasury Bulletin title/header when it looks like the issue date.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_quarter_and_year_does_this_treasury_bulletin_cover/rule_text_immediately_after_treasury_bulletin_header.py"
+    },
+    {
+      "rule_name": "rule_under_treasury_bulletin_path",
+      "description": "Match date-like spans whose structure path_text contains Treasury Bulletin.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_quarter_and_year_does_this_treasury_bulletin_cover/rule_under_treasury_bulletin_path.py"
+    },
+    {
+      "rule_name": "rule_page_header_date",
+      "description": "Match page_header spans that contain the issue month/season and often repeat the bulletin date.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_quarter_and_year_does_this_treasury_bulletin_cover/rule_page_header_date.py"
+    },
+    {
+      "rule_name": "rule_top_of_document_month_year",
+      "description": "Match month/year or season/year spans appearing very early in the document.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_quarter_and_year_does_this_treasury_bulletin_cover/rule_top_of_document_month_year.py"
+    },
+    {
+      "rule_name": "rule_cover_page_centerpiece_date",
+      "description": "Match standalone date-like text on the main cover page near Treasury Bulletin title.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_quarter_and_year_does_this_treasury_bulletin_cover/rule_cover_page_centerpiece_date.py"
+    },
+    {
+      "rule_name": "rule_issue_phrase_with_fiscal_year",
+      "description": "Match spans containing issue/quarter/fiscal phrasing used in quarterly bulletins.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_quarter_and_year_does_this_treasury_bulletin_cover/rule_issue_phrase_with_fiscal_year.py"
+    },
+    {
+      "rule_name": "rule_contents_issue_banner",
+      "description": "Match issue banner/date spans on contents pages, e.g. SUMMER ISSUE, SEPTEMBER 1989.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_quarter_and_year_does_this_treasury_bulletin_cover/rule_contents_issue_banner.py"
+    },
+    {
+      "rule_name": "rule_contents_page_date_text",
+      "description": "Match date-like text on pages whose main section is Contents.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_quarter_and_year_does_this_treasury_bulletin_cover/rule_contents_page_date_text.py"
+    },
+    {
+      "rule_name": "rule_all_caps_month_year",
+      "description": "Match all-caps month/year spans, common in later bulletins.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_quarter_and_year_does_this_treasury_bulletin_cover/rule_all_caps_month_year.py"
+    },
+    {
+      "rule_name": "rule_month_year_exact",
+      "description": "Match exact month-year spans like 'October 1980' or 'June 2008'.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_quarter_and_year_does_this_treasury_bulletin_cover/rule_month_year_exact.py"
+    },
+    {
+      "rule_name": "rule_month_year_with_bulletin_same_span",
+      "description": "Match spans that combine Treasury Bulletin and the date in one text span.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_quarter_and_year_does_this_treasury_bulletin_cover/rule_month_year_with_bulletin_same_span.py"
+    },
+    {
+      "rule_name": "rule_issue_month_on_first_page",
+      "description": "Match issue month/date spans on page 1, common in modern bulletins.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_quarter_and_year_does_this_treasury_bulletin_cover/rule_issue_month_on_first_page.py"
+    },
+    {
+      "rule_name": "rule_issue_month_on_cover_pages_1_to_3",
+      "description": "Match issue date spans on pages 1-3 where later bulletins place the cover and contents.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_quarter_and_year_does_this_treasury_bulletin_cover/rule_issue_month_on_cover_pages_1_to_3.py"
+    },
+    {
+      "rule_name": "rule_quarter_fiscal_exact",
+      "description": "Match exact quarter/fiscal spans like 'FIRST QUARTER, FISCAL 1985'.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_quarter_and_year_does_this_treasury_bulletin_cover/rule_quarter_fiscal_exact.py"
+    },
+    {
+      "rule_name": "rule_issue_of_quarter_fiscal",
+      "description": "Match seasonal issue phrases that include quarter and fiscal year.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_quarter_and_year_does_this_treasury_bulletin_cover/rule_issue_of_quarter_fiscal.py"
+    },
+    {
+      "rule_name": "rule_fall_issue_december_year",
+      "description": "Match later pattern 'Fall Issue December YYYY' or 'FALL ISSUE, DECEMBER YYYY'.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_quarter_and_year_does_this_treasury_bulletin_cover/rule_fall_issue_december_year.py"
+    },
+    {
+      "rule_name": "rule_winter_issue_march_year",
+      "description": "Match combined winter issue + month/year title strings.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_quarter_and_year_does_this_treasury_bulletin_cover/rule_winter_issue_march_year.py"
+    },
+    {
+      "rule_name": "rule_summer_issue_september_year",
+      "description": "Match combined summer issue + September year strings.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_quarter_and_year_does_this_treasury_bulletin_cover/rule_summer_issue_september_year.py"
+    },
+    {
+      "rule_name": "rule_march_june_september_december_header",
+      "description": "Match modern quarterly issue month headers using March/June/September/December.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_quarter_and_year_does_this_treasury_bulletin_cover/rule_march_june_september_december_header.py"
+    },
+    {
+      "rule_name": "rule_nearby_to_contents_title",
+      "description": "Match date-like spans within a short window after a Contents/Table of Contents header.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_quarter_and_year_does_this_treasury_bulletin_cover/rule_nearby_to_contents_title.py"
+    },
+    {
+      "rule_name": "rule_first_date_like_span_after_cover_title",
+      "description": "Match the first date-like span after the first Treasury Bulletin title occurrence.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_quarter_and_year_does_this_treasury_bulletin_cover/rule_first_date_like_span_after_cover_title.py"
+    },
+    {
+      "rule_name": "rule_cover_date_typographic_title_like",
+      "description": "Match large/title-like spans on early pages that look like the issue date.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_quarter_and_year_does_this_treasury_bulletin_cover/rule_cover_date_typographic_title_like.py"
+    },
+    {
+      "rule_name": "rule_modern_contents_month_banner",
+      "description": "Match modern contents-page month banners like 'DECEMBER 1997' or 'MARCH 2016'.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_quarter_and_year_does_this_treasury_bulletin_cover/rule_modern_contents_month_banner.py"
+    },
+    {
+      "rule_name": "rule_season_issue_banner_on_contents",
+      "description": "Match seasonal issue banners on contents pages in quarterly-era bulletins.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_quarter_and_year_does_this_treasury_bulletin_cover/rule_season_issue_banner_on_contents.py"
+    },
+    {
+      "rule_name": "rule_page_header_or_footer_repeated_issue_date",
+      "description": "Match repeated issue date spans in page headers/footers across the document.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_quarter_and_year_does_this_treasury_bulletin_cover/rule_page_header_or_footer_repeated_issue_date.py"
+    },
+    {
+      "rule_name": "rule_first_pages_any_issue_marker",
+      "description": "Match any early-page span containing issue markers like Issue, Quarter, Fiscal, or month names.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_quarter_and_year_does_this_treasury_bulletin_cover/rule_first_pages_any_issue_marker.py"
+    },
+    {
+      "rule_name": "rule_exact_known_quarter_style_lowercase",
+      "description": "Match lowercase quarter/fiscal style seen in some later answers like 'third quarter, fiscal 1989'.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_quarter_and_year_does_this_treasury_bulletin_cover/rule_exact_known_quarter_style_lowercase.py"
+    },
+    {
+      "rule_name": "rule_cover_date_with_month_only_modern",
+      "description": "Match modern issue month-year spans even when not adjacent to Treasury Bulletin text.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_quarter_and_year_does_this_treasury_bulletin_cover/rule_cover_date_with_month_only_modern.py"
+    },
+    {
+      "rule_name": "rule_cover_date_in_h1_or_text_early",
+      "description": "Match early-page H1/text spans that are likely the issue date regardless of exact formatting.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_quarter_and_year_does_this_treasury_bulletin_cover/rule_cover_date_in_h1_or_text_early.py"
+    },
+    {
+      "rule_name": "rule_modern_first_page_title_month",
+      "description": "Match first-page title/header month spans in 1992+ and 2008+ bulletins.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_quarter_and_year_does_this_treasury_bulletin_cover/rule_modern_first_page_title_month.py"
+    },
+    {
+      "rule_name": "rule_issue_date_near_treasury_bulletin_same_page",
+      "description": "Match date-like spans on the same page as a Treasury Bulletin title, favoring cover-page co-location.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_quarter_and_year_does_this_treasury_bulletin_cover/rule_issue_date_near_treasury_bulletin_same_page.py"
+    },
+    {
+      "rule_name": "rule_contents_or_cover_date_priority",
+      "description": "Match date-like spans on either cover/title pages or contents pages, the two dominant locations.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_quarter_and_year_does_this_treasury_bulletin_cover/rule_contents_or_cover_date_priority.py"
+    }
+  ]
+}

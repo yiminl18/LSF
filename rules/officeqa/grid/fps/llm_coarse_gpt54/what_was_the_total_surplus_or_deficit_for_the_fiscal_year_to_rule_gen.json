@@ -1,0 +1,224 @@
+{
+  "question": "What was the total surplus or deficit for the fiscal year to date, in millions of dollars?",
+  "question_slug": "what_was_the_total_surplus_or_deficit_for_the_fiscal_year_to",
+  "timestamp": "2026-06-04T01:08:44Z",
+  "model": "gpt54",
+  "num_documents": 20,
+  "doc_names": [
+    "treasury_bulletin_1980_10",
+    "treasury_bulletin_1981_11",
+    "treasury_bulletin_1982_03",
+    "treasury_bulletin_1982_05",
+    "treasury_bulletin_1982_10",
+    "treasury_bulletin_1983_06",
+    "treasury_bulletin_1984_12",
+    "treasury_bulletin_1985_03",
+    "treasury_bulletin_1987_03",
+    "treasury_bulletin_1987_12",
+    "treasury_bulletin_1988_09",
+    "treasury_bulletin_1988_12",
+    "treasury_bulletin_1989_09",
+    "treasury_bulletin_1991_03",
+    "treasury_bulletin_1992_03",
+    "treasury_bulletin_1997_12",
+    "treasury_bulletin_2008_06",
+    "treasury_bulletin_2016_03",
+    "treasury_bulletin_2018_06",
+    "treasury_bulletin_2024_09"
+  ],
+  "latency_seconds": 157.407,
+  "input_tokens": 451787,
+  "output_tokens": 5516,
+  "rules": [
+    {
+      "rule_name": "rule_ffo1_summary_table",
+      "description": "Match table spans for FFO-1 / Summary of Fiscal Operations.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_surplus_or_deficit_for_the_fiscal_year_to/rule_ffo1_summary_table.py"
+    },
+    {
+      "rule_name": "rule_ffo1_heading_path",
+      "description": "Match spans under a path mentioning Table FFO-1 / Summary of Fiscal Operations.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_surplus_or_deficit_for_the_fiscal_year_to/rule_ffo1_heading_path.py"
+    },
+    {
+      "rule_name": "rule_federal_fiscal_operations_pages",
+      "description": "Match table spans on pages headed Federal Fiscal Operations with fiscal-operation summary wording.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_surplus_or_deficit_for_the_fiscal_year_to/rule_federal_fiscal_operations_pages.py"
+    },
+    {
+      "rule_name": "rule_total_surplus_or_deficit_column",
+      "description": "Match tables containing a 'Total surplus or deficit' column.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_surplus_or_deficit_for_the_fiscal_year_to/rule_total_surplus_or_deficit_column.py"
+    },
+    {
+      "rule_name": "rule_fiscal_year_to_date_row",
+      "description": "Match tables containing a row labeled fiscal year to date / fiscal YYYY to date.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_surplus_or_deficit_for_the_fiscal_year_to/rule_fiscal_year_to_date_row.py"
+    },
+    {
+      "rule_name": "rule_total_surplus_and_fiscal_to_date_same_table",
+      "description": "Match tables that contain both 'Total surplus or deficit' and a fiscal-to-date row.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_surplus_or_deficit_for_the_fiscal_year_to/rule_total_surplus_and_fiscal_to_date_same_table.py"
+    },
+    {
+      "rule_name": "rule_budget_results_first_quarter_summary_table",
+      "description": "Match narrative summary tables with 'Actual fiscal year to date' and 'Total surplus (+) or deficit (-)'.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_surplus_or_deficit_for_the_fiscal_year_to/rule_budget_results_first_quarter_summary_table.py"
+    },
+    {
+      "rule_name": "rule_on_budget_off_budget_results_table",
+      "description": "Match FFO-1 style tables with on-budget/off-budget receipts and outlays plus total surplus/deficit.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_surplus_or_deficit_for_the_fiscal_year_to/rule_on_budget_off_budget_results_table.py"
+    },
+    {
+      "rule_name": "rule_budget_and_off_budget_results_table",
+      "description": "Match tables headed by 'Budget and off-budget results'.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_surplus_or_deficit_for_the_fiscal_year_to/rule_budget_and_off_budget_results_table.py"
+    },
+    {
+      "rule_name": "rule_means_of_financing_table",
+      "description": "Match tables combining surplus/deficit with means of financing.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_surplus_or_deficit_for_the_fiscal_year_to/rule_means_of_financing_table.py"
+    },
+    {
+      "rule_name": "rule_fiscal_operations_page_range",
+      "description": "Match likely answer tables on early Federal Fiscal Operations pages (roughly pages 15-25 in older issues).",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_surplus_or_deficit_for_the_fiscal_year_to/rule_fiscal_operations_page_range.py"
+    },
+    {
+      "rule_name": "rule_fiscal_operations_page_range_modern",
+      "description": "Match likely answer tables on modern early content pages (roughly pages 10-25) with fiscal summary wording.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_surplus_or_deficit_for_the_fiscal_year_to/rule_fiscal_operations_page_range_modern.py"
+    },
+    {
+      "rule_name": "rule_contains_actual_fiscal_year_to_date",
+      "description": "Match tables with an 'Actual fiscal year to date' column, common in narrative summary pages.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_surplus_or_deficit_for_the_fiscal_year_to/rule_contains_actual_fiscal_year_to_date.py"
+    },
+    {
+      "rule_name": "rule_contains_total_surplus_plus_or_deficit_minus",
+      "description": "Match tables using the exact phrase 'Total surplus (+) or deficit (-)'.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_surplus_or_deficit_for_the_fiscal_year_to/rule_contains_total_surplus_plus_or_deficit_minus.py"
+    },
+    {
+      "rule_name": "rule_contains_fiscal_yyyy_to_date",
+      "description": "Match tables with a row like 'Fiscal 1982 to date' or similar.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_surplus_or_deficit_for_the_fiscal_year_to/rule_contains_fiscal_yyyy_to_date.py"
+    },
+    {
+      "rule_name": "rule_contains_fiscal_year_to_date_literal",
+      "description": "Match tables with a literal 'Fiscal year to date' row or column.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_surplus_or_deficit_for_the_fiscal_year_to/rule_contains_fiscal_year_to_date_literal.py"
+    },
+    {
+      "rule_name": "rule_summary_table_near_ffo1_header",
+      "description": "Match tables appearing on the same page as a header mentioning FFO-1 or Summary of Fiscal Operations.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_surplus_or_deficit_for_the_fiscal_year_to/rule_summary_table_near_ffo1_header.py"
+    },
+    {
+      "rule_name": "rule_fiscal_summary_with_receipts_outlays",
+      "description": "Match tables containing receipts, outlays, and total surplus/deficit together.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_surplus_or_deficit_for_the_fiscal_year_to/rule_fiscal_summary_with_receipts_outlays.py"
+    },
+    {
+      "rule_name": "rule_fiscal_summary_with_borrowing_public",
+      "description": "Match tables containing total surplus/deficit and borrowing from the public.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_surplus_or_deficit_for_the_fiscal_year_to/rule_fiscal_summary_with_borrowing_public.py"
+    },
+    {
+      "rule_name": "rule_fiscal_summary_with_cash_and_monetary_assets",
+      "description": "Match tables containing total surplus/deficit and cash/monetary assets columns.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_surplus_or_deficit_for_the_fiscal_year_to/rule_fiscal_summary_with_cash_and_monetary_assets.py"
+    },
+    {
+      "rule_name": "rule_fiscal_summary_with_total_financing",
+      "description": "Match tables where total financing appears alongside fiscal surplus/deficit.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_surplus_or_deficit_for_the_fiscal_year_to/rule_fiscal_summary_with_total_financing.py"
+    },
+    {
+      "rule_name": "rule_modern_fiscal_summary_table",
+      "description": "Match modern Treasury Bulletin fiscal summary tables with on-budget/off-budget and fiscal year to date.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_surplus_or_deficit_for_the_fiscal_year_to/rule_modern_fiscal_summary_table.py"
+    },
+    {
+      "rule_name": "rule_older_fiscal_summary_table",
+      "description": "Match older Treasury Bulletin fiscal summary tables with 'Fiscal year or month' and 'Total surplus or deficit'.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_surplus_or_deficit_for_the_fiscal_year_to/rule_older_fiscal_summary_table.py"
+    },
+    {
+      "rule_name": "rule_summary_table_with_fiscal_row_and_total_column",
+      "description": "Match tables whose cells include both a fiscal-to-date row label and a total-surplus/deficit header.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_surplus_or_deficit_for_the_fiscal_year_to/rule_summary_table_with_fiscal_row_and_total_column.py"
+    },
+    {
+      "rule_name": "rule_first_quarter_budget_results_summary",
+      "description": "Match first-quarter budget-results summary tables that restate the fiscal-year-to-date deficit.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_surplus_or_deficit_for_the_fiscal_year_to/rule_first_quarter_budget_results_summary.py"
+    },
+    {
+      "rule_name": "rule_page_with_summary_of_fiscal_operations_heading",
+      "description": "Match all table spans on pages containing a heading 'Summary of Fiscal Operations'.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_surplus_or_deficit_for_the_fiscal_year_to/rule_page_with_summary_of_fiscal_operations_heading.py"
+    },
+    {
+      "rule_name": "rule_page_with_table_ffo1_heading",
+      "description": "Match all table spans on pages containing a heading 'Table FFO-1'.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_surplus_or_deficit_for_the_fiscal_year_to/rule_page_with_table_ffo1_heading.py"
+    },
+    {
+      "rule_name": "rule_fiscal_summary_table_by_path_and_label",
+      "description": "Match table spans whose path_text itself is the FFO-1 summary section.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_surplus_or_deficit_for_the_fiscal_year_to/rule_fiscal_summary_table_by_path_and_label.py"
+    },
+    {
+      "rule_name": "rule_fiscal_summary_table_with_total_receipts_total_outlays",
+      "description": "Match summary tables with total receipts, total outlays, and total surplus/deficit.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_surplus_or_deficit_for_the_fiscal_year_to/rule_fiscal_summary_table_with_total_receipts_total_outlays.py"
+    },
+    {
+      "rule_name": "rule_fiscal_summary_table_with_actual_ytd_and_budget_estimates",
+      "description": "Match summary tables with actual fiscal year to date and budget estimates columns.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_surplus_or_deficit_for_the_fiscal_year_to/rule_fiscal_summary_table_with_actual_ytd_and_budget_estimates.py"
+    },
+    {
+      "rule_name": "rule_fiscal_summary_table_with_october_december",
+      "description": "Match quarter-summary tables with an October-December column and total surplus/deficit row.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_surplus_or_deficit_for_the_fiscal_year_to/rule_fiscal_summary_table_with_october_december.py"
+    },
+    {
+      "rule_name": "rule_fiscal_summary_table_with_row_fiscal_20xx",
+      "description": "Match tables with a row beginning 'Fiscal 20xx' and deficit columns.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_surplus_or_deficit_for_the_fiscal_year_to/rule_fiscal_summary_table_with_row_fiscal_20xx.py"
+    },
+    {
+      "rule_name": "rule_fiscal_summary_table_with_row_fiscal_19xx",
+      "description": "Match tables with a row beginning 'Fiscal 19xx' and deficit columns.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_surplus_or_deficit_for_the_fiscal_year_to/rule_fiscal_summary_table_with_row_fiscal_19xx.py"
+    },
+    {
+      "rule_name": "rule_fiscal_summary_table_with_total_on_budget_and_off_budget_results",
+      "description": "Match tables headed 'Total on-budget and off-budget results'.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_surplus_or_deficit_for_the_fiscal_year_to/rule_fiscal_summary_table_with_total_on_budget_and_off_budget_results.py"
+    },
+    {
+      "rule_name": "rule_fiscal_summary_table_with_total_on_budget_and_off_budget_financing",
+      "description": "Match tables containing 'Total on-budget and off-budget financing'.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_surplus_or_deficit_for_the_fiscal_year_to/rule_fiscal_summary_table_with_total_on_budget_and_off_budget_financing.py"
+    },
+    {
+      "rule_name": "rule_fiscal_summary_table_with_borrowing_from_public_row",
+      "description": "Match tables with a row 'Borrowing from the public' near the deficit summary.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_surplus_or_deficit_for_the_fiscal_year_to/rule_fiscal_summary_table_with_borrowing_from_public_row.py"
+    },
+    {
+      "rule_name": "rule_fiscal_summary_table_with_reduction_of_cash_and_monetary_assets",
+      "description": "Match quarter-summary tables with a row 'Reduction of cash and monetary assets'.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_surplus_or_deficit_for_the_fiscal_year_to/rule_fiscal_summary_table_with_reduction_of_cash_and_monetary_assets.py"
+    },
+    {
+      "rule_name": "rule_fiscal_summary_table_with_other_means",
+      "description": "Match quarter-summary tables with an 'Other means' financing row.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_total_surplus_or_deficit_for_the_fiscal_year_to/rule_fiscal_summary_table_with_other_means.py"
+    }
+  ]
+}

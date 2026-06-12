@@ -1,0 +1,179 @@
+{
+  "question": "What was the unemployment rate at the most recent month reported?",
+  "question_slug": "what_was_the_unemployment_rate_at_the_most_recent_month_repo",
+  "timestamp": "2026-06-04T00:56:58Z",
+  "model": "gpt54",
+  "num_documents": 20,
+  "doc_names": [
+    "treasury_bulletin_1980_10",
+    "treasury_bulletin_1981_11",
+    "treasury_bulletin_1982_03",
+    "treasury_bulletin_1982_05",
+    "treasury_bulletin_1982_10",
+    "treasury_bulletin_1983_06",
+    "treasury_bulletin_1984_12",
+    "treasury_bulletin_1985_03",
+    "treasury_bulletin_1987_03",
+    "treasury_bulletin_1987_12",
+    "treasury_bulletin_1988_09",
+    "treasury_bulletin_1988_12",
+    "treasury_bulletin_1989_09",
+    "treasury_bulletin_1991_03",
+    "treasury_bulletin_1992_03",
+    "treasury_bulletin_1997_12",
+    "treasury_bulletin_2008_06",
+    "treasury_bulletin_2016_03",
+    "treasury_bulletin_2018_06",
+    "treasury_bulletin_2024_09"
+  ],
+  "latency_seconds": 124.066,
+  "input_tokens": 451766,
+  "output_tokens": 4427,
+  "rules": [
+    {
+      "rule_name": "rule_profile_of_economy_unemployment_paragraph",
+      "description": "Match text spans in the Profile of the Economy section mentioning the unemployment rate.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_unemployment_rate_at_the_most_recent_month_repo/rule_profile_of_economy_unemployment_paragraph.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_unemployment_heading_following_text",
+      "description": "Match text spans immediately following an unemployment-related heading in the Profile of the Economy section.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_unemployment_rate_at_the_most_recent_month_repo/rule_profile_of_economy_unemployment_heading_following_text.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_lowest_unemployment_sentence",
+      "description": "Match Profile of the Economy text spans saying unemployment is at the lowest level since some year.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_unemployment_rate_at_the_most_recent_month_repo/rule_profile_of_economy_lowest_unemployment_sentence.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_unemployment_rate_percent",
+      "description": "Match Profile of the Economy text spans containing 'unemployment rate' and a percent value.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_unemployment_rate_at_the_most_recent_month_repo/rule_profile_of_economy_unemployment_rate_percent.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_labor_markets_percent",
+      "description": "Match labor-market discussion spans in Profile of the Economy that contain unemployment percentages.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_unemployment_rate_at_the_most_recent_month_repo/rule_profile_of_economy_labor_markets_percent.py"
+    },
+    {
+      "rule_name": "rule_unemployment_rate_chart_caption",
+      "description": "Match the 'Unemployment Rate' heading/caption in Profile of the Economy.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_unemployment_rate_at_the_most_recent_month_repo/rule_unemployment_rate_chart_caption.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_recent_month_unemployment",
+      "description": "Match Profile of the Economy spans that mention unemployment rate together with a recent month name.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_unemployment_rate_at_the_most_recent_month_repo/rule_profile_of_economy_recent_month_unemployment.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_employment_and_unemployment_section",
+      "description": "Match text spans under the 'Employment and unemployment' subsection.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_unemployment_rate_at_the_most_recent_month_repo/rule_profile_of_economy_employment_and_unemployment_section.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_labor_markets_section",
+      "description": "Match text spans under the 'Labor Markets' subsection.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_unemployment_rate_at_the_most_recent_month_repo/rule_profile_of_economy_labor_markets_section.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_introduction_unemployment",
+      "description": "Match introduction spans in Profile of the Economy that mention unemployment.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_unemployment_rate_at_the_most_recent_month_repo/rule_profile_of_economy_introduction_unemployment.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_first_pages_unemployment",
+      "description": "Match unemployment-related text on early pages where Profile of the Economy usually appears.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_unemployment_rate_at_the_most_recent_month_repo/rule_profile_of_economy_first_pages_unemployment.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_unemployment_rate_heading_and_nearby",
+      "description": "Match the Unemployment Rate heading and nearby text/figure spans.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_unemployment_rate_at_the_most_recent_month_repo/rule_profile_of_economy_unemployment_rate_heading_and_nearby.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_unemployment_rate_page11",
+      "description": "Match page 11 spans in Profile of the Economy around the unemployment rate chart/text.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_unemployment_rate_at_the_most_recent_month_repo/rule_profile_of_economy_unemployment_rate_page11.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_january_or_october_unemployment",
+      "description": "Match unemployment spans mentioning January or October, common report months in this collection.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_unemployment_rate_at_the_most_recent_month_repo/rule_profile_of_economy_january_or_october_unemployment.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_unemployment_rate_stood_at",
+      "description": "Match spans using the phrasing 'unemployment rate stood at ... percent'.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_unemployment_rate_at_the_most_recent_month_repo/rule_profile_of_economy_unemployment_rate_stood_at.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_unemployment_rate_dipped_to",
+      "description": "Match spans using the phrasing 'unemployment rate dipped to ... percent'.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_unemployment_rate_at_the_most_recent_month_repo/rule_profile_of_economy_unemployment_rate_dipped_to.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_unemployment_rate_declined_to",
+      "description": "Match spans using the phrasing 'unemployment rate declined to ... percent'.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_unemployment_rate_at_the_most_recent_month_repo/rule_profile_of_economy_unemployment_rate_declined_to.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_unemployment_rate_reached",
+      "description": "Match spans using the phrasing 'unemployment rate ... reached ... percent'.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_unemployment_rate_at_the_most_recent_month_repo/rule_profile_of_economy_unemployment_rate_reached.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_unemployment_rate_in_month",
+      "description": "Match spans saying 'In <Month> ... unemployment rate ... percent'.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_unemployment_rate_at_the_most_recent_month_repo/rule_profile_of_economy_unemployment_rate_in_month.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_unemployment_rate_latest_level",
+      "description": "Match spans describing unemployment as the latest or current level with a percent.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_unemployment_rate_at_the_most_recent_month_repo/rule_profile_of_economy_unemployment_rate_latest_level.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_labor_markets_unemployment_rate",
+      "description": "Match labor-market spans that explicitly state the unemployment rate value.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_unemployment_rate_at_the_most_recent_month_repo/rule_profile_of_economy_labor_markets_unemployment_rate.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_unemployment_rate_percent_only",
+      "description": "Match unemployment-related spans with decimal percent values, regardless of exact phrasing.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_unemployment_rate_at_the_most_recent_month_repo/rule_profile_of_economy_unemployment_rate_percent_only.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_unemployment_rate_near_profile_heading",
+      "description": "Match unemployment spans occurring after the Profile of the Economy heading and before the next major section.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_unemployment_rate_at_the_most_recent_month_repo/rule_profile_of_economy_unemployment_rate_near_profile_heading.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_unemployment_rate_on_profile_pages",
+      "description": "Match unemployment-related spans on the same pages as Profile of the Economy content.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_unemployment_rate_at_the_most_recent_month_repo/rule_profile_of_economy_unemployment_rate_on_profile_pages.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_unemployment_rate_with_month_and_lowest",
+      "description": "Match unemployment spans that mention a month and say it is the lowest since some earlier date.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_unemployment_rate_at_the_most_recent_month_repo/rule_profile_of_economy_unemployment_rate_with_month_and_lowest.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_unemployment_rate_numeric_band",
+      "description": "Match spans with unemployment rate values in the typical modern range 3.0-6.5 percent.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_unemployment_rate_at_the_most_recent_month_repo/rule_profile_of_economy_unemployment_rate_numeric_band.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_labor_markets_heading_following_text",
+      "description": "Match text spans immediately after the Labor Markets heading.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_unemployment_rate_at_the_most_recent_month_repo/rule_profile_of_economy_labor_markets_heading_following_text.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_employment_heading_following_text",
+      "description": "Match text spans immediately after the Employment and unemployment heading.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_unemployment_rate_at_the_most_recent_month_repo/rule_profile_of_economy_employment_heading_following_text.py"
+    },
+    {
+      "rule_name": "rule_profile_of_economy_unemployment_rate_chart_page",
+      "description": "Match all spans on pages containing an 'Unemployment Rate' heading, for high recall around chart-based layouts.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_unemployment_rate_at_the_most_recent_month_repo/rule_profile_of_economy_unemployment_rate_chart_page.py"
+    }
+  ]
+}

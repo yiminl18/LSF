@@ -1,0 +1,169 @@
+{
+  "question": "What was the per capita amount of currency and coin in circulation at the most recent reporting date, in dollars?",
+  "question_slug": "what_was_the_per_capita_amount_of_currency_and_coin_in_circu",
+  "timestamp": "2026-06-04T01:24:11Z",
+  "model": "gpt54",
+  "num_documents": 20,
+  "doc_names": [
+    "treasury_bulletin_1980_10",
+    "treasury_bulletin_1981_11",
+    "treasury_bulletin_1982_03",
+    "treasury_bulletin_1982_05",
+    "treasury_bulletin_1982_10",
+    "treasury_bulletin_1983_06",
+    "treasury_bulletin_1984_12",
+    "treasury_bulletin_1985_03",
+    "treasury_bulletin_1987_03",
+    "treasury_bulletin_1987_12",
+    "treasury_bulletin_1988_09",
+    "treasury_bulletin_1988_12",
+    "treasury_bulletin_1989_09",
+    "treasury_bulletin_1991_03",
+    "treasury_bulletin_1992_03",
+    "treasury_bulletin_1997_12",
+    "treasury_bulletin_2008_06",
+    "treasury_bulletin_2016_03",
+    "treasury_bulletin_2018_06",
+    "treasury_bulletin_2024_09"
+  ],
+  "latency_seconds": 158.506,
+  "input_tokens": 451789,
+  "output_tokens": 4725,
+  "rules": [
+    {
+      "rule_name": "rule_contents_ms1_currency_and_coin",
+      "description": "Match contents-page spans mentioning MS-1 Currency and Coin in Circulation.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_per_capita_amount_of_currency_and_coin_in_circu/rule_contents_ms1_currency_and_coin.py"
+    },
+    {
+      "rule_name": "rule_contents_currency_and_coin_outstanding_and_in_circulation",
+      "description": "Match contents-page spans mentioning U.S. Currency and Coin Outstanding and in Circulation.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_per_capita_amount_of_currency_and_coin_in_circu/rule_contents_currency_and_coin_outstanding_and_in_circulation.py"
+    },
+    {
+      "rule_name": "rule_contents_uscc_tables",
+      "description": "Match contents-page spans mentioning USCC-1 or USCC-2 tables.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_per_capita_amount_of_currency_and_coin_in_circu/rule_contents_uscc_tables.py"
+    },
+    {
+      "rule_name": "rule_contents_c2_per_capita",
+      "description": "Match contents-page spans mentioning C-2 or per capita comparative totals.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_per_capita_amount_of_currency_and_coin_in_circu/rule_contents_c2_per_capita.py"
+    },
+    {
+      "rule_name": "rule_table_title_currency_coin",
+      "description": "Match section headers or titles naming the currency/coin table directly.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_per_capita_amount_of_currency_and_coin_in_circu/rule_table_title_currency_coin.py"
+    },
+    {
+      "rule_name": "rule_under_monetary_statistics",
+      "description": "Match spans under the Monetary Statistics section mentioning currency and coin in circulation.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_per_capita_amount_of_currency_and_coin_in_circu/rule_under_monetary_statistics.py"
+    },
+    {
+      "rule_name": "rule_under_special_reports_currency_coin",
+      "description": "Match spans under Special Reports/Trust Funds mentioning currency and coin outstanding and in circulation.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_per_capita_amount_of_currency_and_coin_in_circu/rule_under_special_reports_currency_coin.py"
+    },
+    {
+      "rule_name": "rule_find_pages_from_contents",
+      "description": "Find the actual table page by reading contents entries for currency/coin tables and returning spans on those pages.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_per_capita_amount_of_currency_and_coin_in_circu/rule_find_pages_from_contents.py"
+    },
+    {
+      "rule_name": "rule_page_with_currency_coin_table",
+      "description": "Match table spans whose text suggests the currency/coin table itself.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_per_capita_amount_of_currency_and_coin_in_circu/rule_page_with_currency_coin_table.py"
+    },
+    {
+      "rule_name": "rule_table_cells_per_capita",
+      "description": "Match table spans containing a cell with per capita wording.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_per_capita_amount_of_currency_and_coin_in_circu/rule_table_cells_per_capita.py"
+    },
+    {
+      "rule_name": "rule_table_cells_most_recent_date",
+      "description": "Match table spans containing a most recent/latest date column or row, where the answer is likely taken.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_per_capita_amount_of_currency_and_coin_in_circu/rule_table_cells_most_recent_date.py"
+    },
+    {
+      "rule_name": "rule_table_cells_population_and_per_capita",
+      "description": "Match table spans containing both population and per capita concepts.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_per_capita_amount_of_currency_and_coin_in_circu/rule_table_cells_population_and_per_capita.py"
+    },
+    {
+      "rule_name": "rule_table_cells_end_of_period",
+      "description": "Match table spans containing end-of-period or reporting-date language near currency/coin terms.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_per_capita_amount_of_currency_and_coin_in_circu/rule_table_cells_end_of_period.py"
+    },
+    {
+      "rule_name": "rule_pages_near_contents_target",
+      "description": "Return spans on or near pages named in contents entries for currency/coin tables.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_per_capita_amount_of_currency_and_coin_in_circu/rule_pages_near_contents_target.py"
+    },
+    {
+      "rule_name": "rule_numeric_spans_on_currency_pages",
+      "description": "Return numeric-heavy spans on pages likely to contain the currency/coin table.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_per_capita_amount_of_currency_and_coin_in_circu/rule_numeric_spans_on_currency_pages.py"
+    },
+    {
+      "rule_name": "rule_table_with_per_capita_and_latest_column",
+      "description": "Match tables likely containing the answer by requiring both per capita and latest/current date cues.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_per_capita_amount_of_currency_and_coin_in_circu/rule_table_with_per_capita_and_latest_column.py"
+    },
+    {
+      "rule_name": "rule_table_with_circulation_and_per_capita",
+      "description": "Match tables containing both circulation and per capita wording.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_per_capita_amount_of_currency_and_coin_in_circu/rule_table_with_circulation_and_per_capita.py"
+    },
+    {
+      "rule_name": "rule_table_with_amounts_outstanding",
+      "description": "Match tables containing amounts outstanding/in circulation wording.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_per_capita_amount_of_currency_and_coin_in_circu/rule_table_with_amounts_outstanding.py"
+    },
+    {
+      "rule_name": "rule_section_and_following_table",
+      "description": "Return currency/coin section headers and the next nearby table span after them.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_per_capita_amount_of_currency_and_coin_in_circu/rule_section_and_following_table.py"
+    },
+    {
+      "rule_name": "rule_contents_page_range_early",
+      "description": "Match early-document contents spans where the currency/coin table is usually referenced.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_per_capita_amount_of_currency_and_coin_in_circu/rule_contents_page_range_early.py"
+    },
+    {
+      "rule_name": "rule_actual_table_page_late_modern",
+      "description": "Match later-document actual table pages where USCC tables often appear around pages 40-90+.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_per_capita_amount_of_currency_and_coin_in_circu/rule_actual_table_page_late_modern.py"
+    },
+    {
+      "rule_name": "rule_any_span_with_per_capita",
+      "description": "Match any span mentioning per capita, a strong cue for the answer-bearing table.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_per_capita_amount_of_currency_and_coin_in_circu/rule_any_span_with_per_capita.py"
+    },
+    {
+      "rule_name": "rule_any_span_with_currency_coin_and_circulation",
+      "description": "Match any span mentioning currency, coin, and circulation together.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_per_capita_amount_of_currency_and_coin_in_circu/rule_any_span_with_currency_coin_and_circulation.py"
+    },
+    {
+      "rule_name": "rule_any_span_with_outstanding_and_circulation",
+      "description": "Match any span mentioning outstanding and circulation together.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_per_capita_amount_of_currency_and_coin_in_circu/rule_any_span_with_outstanding_and_circulation.py"
+    },
+    {
+      "rule_name": "rule_table_cells_uscc_or_c2",
+      "description": "Match tables whose cells mention USCC/C-2 identifiers or per-capita comparative totals.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_per_capita_amount_of_currency_and_coin_in_circu/rule_table_cells_uscc_or_c2.py"
+    },
+    {
+      "rule_name": "rule_currency_coin_pages_from_section_headers",
+      "description": "Return all spans on pages where a currency/coin section header appears.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_per_capita_amount_of_currency_and_coin_in_circu/rule_currency_coin_pages_from_section_headers.py"
+    },
+    {
+      "rule_name": "rule_currency_coin_pages_from_contents_numbers",
+      "description": "Infer target pages from contents lines and return spans on those pages for currency/coin entries.",
+      "file": "/mnt/data/LSF/rules/officeqa/grid/fps/llm_coarse_gpt54/what_was_the_per_capita_amount_of_currency_and_coin_in_circu/rule_currency_coin_pages_from_contents_numbers.py"
+    }
+  ]
+}
