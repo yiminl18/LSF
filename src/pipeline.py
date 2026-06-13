@@ -52,6 +52,7 @@ RULE_GEN_STRATEGIES = (
     "agent_langchain",
     "agent_claude",
     "agent_codex", "agent_codex_gpt54", "agent_codex_gpt54mini",
+    "agent_codex_val", "agent_codex_val_gpt54", "agent_codex_val_gpt54mini",
 )
 REFINE_STRATEGIES   = (
     "none",
@@ -283,7 +284,34 @@ def stage_sampling(
 
 # Subprocess-based generators (agent_claude / agent_codex) operate per-question
 # and don't expose the same callable interface as llm_coarse / agent_langchain.
-_SUBPROCESS_GEN = {"agent_claude", "agent_codex"}
+_SUBPROCESS_GEN = {"agent_claude", "agent_codex", "agent_codex_val"}
+
+# Validation-guarded generator: how many unsampled docs to hold out as the
+# generalization-check set. Carved from the unsampled pool before rule-gen and
+# excluded from the clean-test eval (option-3 reporting). See run_pipeline.
+_VAL_SIZE = 20
+
+
+def _build_validation_split(
+    *, unsampled_doc_names: list[str], out_dir: Path, k: int = _VAL_SIZE,
+    seed: int = 0, skip_existing: bool = True,
+) -> list[str]:
+    """Deterministically pick `k` validation doc names from the unsampled pool.
+
+    Harness-fixed (seeded) so the same docs are held out across re-runs and
+    across strategies. Persisted to <out_dir>/val_doc_names.json.
+    """
+    out_dir.mkdir(parents=True, exist_ok=True)
+    f = out_dir / "val_doc_names.json"
+    if skip_existing and f.exists():
+        return _read_json(f, default=[]) or []
+    import random as _random
+    names = sorted(unsampled_doc_names)
+    rng = _random.Random(seed)
+    rng.shuffle(names)
+    chosen = names[: min(k, len(names))]
+    _write_json(f, chosen)
+    return chosen
 
 
 def _write_rule_gen_stats(
@@ -367,6 +395,9 @@ def stage_rule_gen(
     output_dir: Path,
     model: str,
     skip_existing: bool,
+    val_doc_names: list[str] | None = None,
+    labels_file: str | None = None,
+    processing_dir: str | None = None,
 ) -> tuple[Path, dict]:
     """Generate rules for one question. Return (rule_folder, gen_metadata).
 
@@ -405,7 +436,7 @@ def stage_rule_gen(
         _write_json(rule_gen_out, result)
         print(f"  [gen:{strategy} model={effective_model}] {question_slug}: {len(result.get('rules', []))} rules", flush=True)
     elif base_strategy in _SUBPROCESS_GEN:
-        mod_name = "agent_claude" if base_strategy == "agent_claude" else "agent_codex"
+        mod_name = base_strategy   # agent_claude | agent_codex | agent_codex_val
         cmd = [
             sys.executable, f"src/rule_gen/{mod_name}.py",
             question,
@@ -414,6 +445,15 @@ def stage_rule_gen(
             "--model", effective_model,
             "--question-slug", question_slug,
         ]
+        # Validation-guarded generator: pass the held-out validation docs and the
+        # explicit dataset paths so the agent can score generalization on them.
+        if base_strategy == "agent_codex_val":
+            if labels_file:
+                cmd += ["--labels-file", labels_file]
+            if processing_dir:
+                cmd += ["--processing-dir", processing_dir]
+            if val_doc_names:
+                cmd += ["--val-docs", *val_doc_names]
         proc = subprocess.run(cmd, cwd=str(_ROOT), capture_output=True, text=True, check=False)
         if proc.returncode != 0:
             raise RuntimeError(f"{strategy} failed for {question_slug}:\n{proc.stderr[-2000:]}")
@@ -1153,6 +1193,23 @@ def run_pipeline(
     sample_doc_names  = list(sample_doc_map.keys())
     print(f"  sampled={len(sample_doc_map)}  unsampled={len(unsampled_doc_map)}", flush=True)
 
+    # ── Validation-guarded rule-gen: carve a fixed held-out validation set from
+    #    the unsampled pool. apply still runs over the FULL unsampled set; the
+    #    val docs are excluded from the clean-test score (option-3 reporting).
+    rg_base, _ = _split_strategy_model(rule_gen_strategy, default_model=model)
+    val_doc_names: list[str] = []
+    val_labels_file: str | None = None
+    if rg_base == "agent_codex_val":
+        all_labels_path = _ROOT / "data" / dataset / "all_labels.json"
+        val_labels_file = str(all_labels_path) if all_labels_path.exists() else str(sample_path)
+        val_doc_names = _build_validation_split(
+            unsampled_doc_names=list(unsampled_doc_map.keys()),
+            out_dir=out / "val_split" / sampling_strategy / rule_gen_strategy,
+            k=_VAL_SIZE, skip_existing=skip_existing,
+        )
+        print(f"  [val_split] {len(val_doc_names)} validation docs held out from "
+              f"the unsampled pool (labels={val_labels_file})", flush=True)
+
     questions = _load_queries(queries_file)
     print(f"  questions={len(questions)}\n", flush=True)
 
@@ -1184,6 +1241,9 @@ def run_pipeline(
                 sample_docs=sample_docs, sample_doc_names=sample_doc_names,
                 ground_truth=ground_truth, rules_dir=rules_root,
                 output_dir=out, model=model, skip_existing=skip_existing,
+                val_doc_names=val_doc_names or None,
+                labels_file=val_labels_file,
+                processing_dir=processing_dir,
             )
             n_rules_gen = len(_list_rule_names(rule_folder_gen))
 
@@ -1232,7 +1292,7 @@ def run_pipeline(
                 model=model, skip_existing=skip_existing,
             )
 
-            per_question_summary.append({
+            q_summary = {
                 "question":                 question,
                 "question_slug":            question_slug,
                 "num_rules_generated":      n_rules_gen,
@@ -1241,7 +1301,30 @@ def run_pipeline(
                 "unsampled_accuracy":       eval_results.get("unsampled", {}).get("accuracy"),
                 "avg_cost_ratio_sampled":   eval_results.get("sampled",   {}).get("avg_cost_ratio"),
                 "avg_cost_ratio_unsampled": eval_results.get("unsampled", {}).get("avg_cost_ratio"),
-            })
+            }
+
+            # ── Option-3 reporting (validation-guarded gen only) ──
+            # `unsampled_accuracy` above is the legacy FULL-unsampled number (it
+            # includes the held-out validation docs → comparable to existing
+            # agent_codex rows). Here we additionally compute the CLEAN-TEST
+            # number (unsampled MINUS validation, no leakage) and the pipeline's
+            # own validation accuracy, by filtering the per-doc apply records.
+            if val_doc_names:
+                ud = _read_json(apply_root / f"{question_slug}_unsampled.json", default={}) or {}
+                per_doc = ud.get("per_doc", []) or []
+                val_set = set(val_doc_names)
+                test_rows = [r for r in per_doc if r.get("doc_name") not in val_set]
+                val_rows  = [r for r in per_doc if r.get("doc_name") in val_set]
+                if test_rows:
+                    q_summary["clean_test_accuracy"]       = round(mean(int(bool(r.get("correct"))) for r in test_rows), 4)
+                    q_summary["avg_cost_ratio_clean_test"] = round(mean(float(r.get("cost_ratio", 0.0)) for r in test_rows), 6)
+                    q_summary["clean_test_n"]              = len(test_rows)
+                if val_rows:
+                    q_summary["val_accuracy"]       = round(mean(int(bool(r.get("correct"))) for r in val_rows), 4)
+                    q_summary["avg_cost_ratio_val"] = round(mean(float(r.get("cost_ratio", 0.0)) for r in val_rows), 6)
+                    q_summary["val_n"]              = len(val_rows)
+
+            per_question_summary.append(q_summary)
 
         except Exception as e:
             print(f"  ERROR on {question_slug}: {e}", flush=True)
@@ -1263,6 +1346,9 @@ def run_pipeline(
     sampled_accs   = [q["sampled_accuracy"]   for q in per_question_summary if q.get("sampled_accuracy")   is not None]
     unsampled_accs = [q["unsampled_accuracy"] for q in per_question_summary if q.get("unsampled_accuracy") is not None]
     cost_ratios    = [q["avg_cost_ratio_unsampled"] for q in per_question_summary if q.get("avg_cost_ratio_unsampled") is not None]
+    clean_accs     = [q["clean_test_accuracy"] for q in per_question_summary if q.get("clean_test_accuracy") is not None]
+    val_accs       = [q["val_accuracy"]        for q in per_question_summary if q.get("val_accuracy")        is not None]
+    clean_costs    = [q["avg_cost_ratio_clean_test"] for q in per_question_summary if q.get("avg_cost_ratio_clean_test") is not None]
 
     summary = {
         "timestamp":          datetime.now(timezone.utc).isoformat(),
@@ -1281,7 +1367,18 @@ def run_pipeline(
             "avg_sampled_accuracy":   round(mean(sampled_accs),   4) if sampled_accs   else None,
             "avg_unsampled_accuracy": round(mean(unsampled_accs), 4) if unsampled_accs else None,
             "avg_cost_ratio":         round(mean(cost_ratios),    6) if cost_ratios    else None,
+            # Validation-guarded gen only (None otherwise):
+            "avg_val_accuracy":         round(mean(val_accs),    4) if val_accs    else None,
+            "avg_clean_test_accuracy":  round(mean(clean_accs),  4) if clean_accs  else None,
+            "avg_cost_ratio_clean_test": round(mean(clean_costs), 6) if clean_costs else None,
         },
+        "validation_guard": ({
+            "enabled": True,
+            "val_size": len(val_doc_names),
+            "val_doc_names": val_doc_names,
+            "note": "unsampled_accuracy = legacy full unsampled (includes val docs); "
+                    "clean_test_accuracy = unsampled minus val (no leakage).",
+        } if val_doc_names else {"enabled": False}),
     }
     # Per-combo summary lives under apply_root so 64 combos don't clobber each other.
     summary_path = apply_root / "pipeline_summary.json"
