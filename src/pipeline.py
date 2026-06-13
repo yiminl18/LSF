@@ -292,6 +292,35 @@ _SUBPROCESS_GEN = {"agent_claude", "agent_codex", "agent_codex_val"}
 _VAL_SIZE = 20
 
 
+def _parse_codex_usage(stdout: str) -> dict:
+    """Sum token usage across a codex `exec --json` event stream.
+
+    Codex emits `{"type":"turn.completed","usage":{...}}` events carrying
+    input/output/cached/reasoning token counts. Summing them captures the FULL
+    cost of the agent session — including, for agent_codex_val, the extra
+    validation-on-held-out-docs and rule-broadening passes. Mirrors the parser
+    in src/rule_refine/agentic_codex.py so gen and refine costs are comparable.
+    """
+    totals = {"input_tokens": 0, "output_tokens": 0,
+              "cached_input_tokens": 0, "reasoning_output_tokens": 0}
+    n_turns = 0
+    for line in stdout.splitlines():
+        line = line.strip()
+        if not line.startswith("{"):
+            continue
+        try:
+            ev = json.loads(line)
+        except Exception:
+            continue
+        usage = ev.get("usage")
+        if isinstance(usage, dict):
+            n_turns += 1
+            for k in totals:
+                totals[k] += int(usage.get(k) or 0)
+    totals["n_usage_events"] = n_turns
+    return totals
+
+
 def _build_validation_split(
     *, unsampled_doc_names: list[str], out_dir: Path, k: int = _VAL_SIZE,
     seed: int = 0, skip_existing: bool = True,
@@ -458,8 +487,18 @@ def stage_rule_gen(
         if proc.returncode != 0:
             raise RuntimeError(f"{strategy} failed for {question_slug}:\n{proc.stderr[-2000:]}")
         result = {"strategy": strategy, "model": effective_model, "stdout_tail": proc.stdout[-500:]}
+        # Capture authoritative codex token usage from the full --json stream
+        # (the 500-char tail above is not enough). Feeds _write_rule_gen_stats,
+        # which computes the rule-gen cost from input_tokens/output_tokens.
+        if base_strategy in {"agent_codex", "agent_codex_val"}:
+            usage = _parse_codex_usage(proc.stdout)
+            result["input_tokens"]  = usage["input_tokens"]
+            result["output_tokens"] = usage["output_tokens"]
+            result["codex_usage"]   = usage
         _write_json(rule_gen_out, result)
-        print(f"  [gen:{strategy} model={effective_model}] {question_slug}: done", flush=True)
+        _tok = f"  codex_in={result.get('input_tokens',0):,} codex_out={result.get('output_tokens',0):,}" \
+               if "input_tokens" in result else ""
+        print(f"  [gen:{strategy} model={effective_model}] {question_slug}: done{_tok}", flush=True)
     else:
         raise ValueError(f"Unknown rule_gen_strategy: {strategy!r}")
 
