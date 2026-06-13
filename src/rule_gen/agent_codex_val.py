@@ -22,7 +22,15 @@ from __future__ import annotations
 
 import shutil
 import subprocess
+import sys
 from pathlib import Path
+
+# When invoked directly as a subprocess script (python3 src/rule_gen/agent_codex_val.py),
+# `src/` is not on sys.path the way it is when pipeline.py imports this module, so the
+# `rule_gen` package isn't importable. Bootstrap it before importing the base module.
+_SRC = Path(__file__).resolve().parent.parent  # .../src
+if str(_SRC) not in sys.path:
+    sys.path.insert(0, str(_SRC))
 
 from rule_gen import agent_codex as _base
 
