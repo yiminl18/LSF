@@ -26,6 +26,45 @@ def load_azure_credentials_from_local(
     return api_key, api_version, endpoint, deployment
 
 
+def install_usage_logging(client, model_tag: str) -> None:
+    """Opt-in per-call token logging on an AzureOpenAI client.
+
+    Active ONLY when env ``LSF_LLM_USAGE_LOG`` points to a file (e.g. set by the
+    pipeline for the rule-gen subprocess). Each ``chat.completions.create`` then
+    appends one JSON line ``{"model","prompt_tokens","completion_tokens"}``. This
+    captures an agent's LLM *verification* calls during rule-gen — the QA and
+    judge calls (via rule_apply_merge / eval_rule) on the sampled AND held-out
+    validation docs — which are separate Azure calls, not part of the Codex
+    agent's own token stream. No-op when the env var is unset, so normal pipeline
+    stages (apply/eval) are completely unaffected.
+    """
+    import os
+    log_path = os.environ.get("LSF_LLM_USAGE_LOG")
+    if not log_path:
+        return
+    _orig = client.chat.completions.create
+
+    def _logged(*args, **kwargs):
+        resp = _orig(*args, **kwargs)
+        try:
+            u = getattr(resp, "usage", None)
+            if u is not None:
+                with open(log_path, "a", encoding="utf-8") as fh:
+                    fh.write(json.dumps({
+                        "model": model_tag,
+                        "prompt_tokens": int(getattr(u, "prompt_tokens", 0) or 0),
+                        "completion_tokens": int(getattr(u, "completion_tokens", 0) or 0),
+                    }) + "\n")
+        except Exception:
+            pass
+        return resp
+
+    try:
+        client.chat.completions.create = _logged
+    except Exception:
+        pass
+
+
 def load_azure_credentials_from_key_file(
     key_file_path: str | Path,
 ) -> tuple[str, str, str, str | None]:

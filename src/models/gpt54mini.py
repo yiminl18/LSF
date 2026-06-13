@@ -37,6 +37,9 @@ client = AzureOpenAI(
     max_retries=3,     # retry transient failures / timeouts
 )
 
+from azure_local import install_usage_logging as _install_usage_logging
+_install_usage_logging(client, "gpt54mini")
+
 
 def chat_completions(
     prompt: str,

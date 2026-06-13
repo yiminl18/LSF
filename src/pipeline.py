@@ -321,6 +321,35 @@ def _parse_codex_usage(stdout: str) -> dict:
     return totals
 
 
+def _parse_llm_usage_log(path: Path) -> dict:
+    """Aggregate the per-call LLM-verification usage log an agent wrote during
+    rule-gen (one JSON line per gpt54/gpt54mini completion; see
+    azure_local.install_usage_logging). Returns per-model and total token sums.
+    These are the agent's verification QA/judge calls (on sampled + validation
+    docs) — distinct from the Codex agent's own tokens in _parse_codex_usage.
+    """
+    agg = {"gpt54": {"in": 0, "out": 0, "calls": 0},
+           "gpt54mini": {"in": 0, "out": 0, "calls": 0},
+           "total_in": 0, "total_out": 0, "calls": 0}
+    if not path.exists():
+        return agg
+    for line in path.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if not line.startswith("{"):
+            continue
+        try:
+            r = json.loads(line)
+        except Exception:
+            continue
+        m = r.get("model", "gpt54")
+        pt = int(r.get("prompt_tokens") or 0)
+        ct = int(r.get("completion_tokens") or 0)
+        bucket = agg.get(m) or agg["gpt54"]
+        bucket["in"] += pt; bucket["out"] += ct; bucket["calls"] += 1
+        agg["total_in"] += pt; agg["total_out"] += ct; agg["calls"] += 1
+    return agg
+
+
 def _build_validation_split(
     *, unsampled_doc_names: list[str], out_dir: Path, k: int = _VAL_SIZE,
     seed: int = 0, skip_existing: bool = True,
@@ -389,9 +418,21 @@ def _write_rule_gen_stats(
             except Exception:
                 pass
 
-    # Rough cost estimate at gpt-5.4 standard rates ($1.25/M in, $10/M out).
-    # gpt-5.4-mini would be ~10x cheaper; we report the gpt-5.4 ceiling.
-    cost_usd = round(in_tok / 1e6 * 1.25 + out_tok / 1e6 * 10.0, 4)
+    # Agent's separate LLM verification calls during gen (QA + judge on sampled
+    # AND held-out validation docs), captured via the per-call usage log.
+    vusage = raw_meta.get("verify_usage") or {}
+    v_g    = vusage.get("gpt54", {}) or {}
+    v_m    = vusage.get("gpt54mini", {}) or {}
+    v_in   = int(vusage.get("total_in", 0) or 0)
+    v_out  = int(vusage.get("total_out", 0) or 0)
+
+    # Cost at gpt-5.4 rates ($1.25/M in, $10/M out); gpt-5.4-mini ~10x cheaper
+    # ($0.125/M in, $1.0/M out). Agent = Codex reasoning tokens (gpt54 rate);
+    # verify = the QA/judge calls split by their actual model.
+    agent_cost  = in_tok / 1e6 * 1.25 + out_tok / 1e6 * 10.0
+    verify_cost = (v_g.get("in", 0) / 1e6 * 1.25 + v_g.get("out", 0) / 1e6 * 10.0
+                   + v_m.get("in", 0) / 1e6 * 0.125 + v_m.get("out", 0) / 1e6 * 1.0)
+    cost_usd = round(agent_cost, 4)  # back-compat: agent-only (Codex) cost
 
     stats = {
         "question":           question,
@@ -402,10 +443,21 @@ def _write_rule_gen_stats(
         "model":              model,
         "n_rules":            len(rules),
         "rules":              rules,
+        # Codex agent's own tokens (reasoning/acting):
         "input_tokens":       in_tok,
         "output_tokens":      out_tok,
+        # Agent's LLM verification calls (QA + judge on sampled + validation docs):
+        "verify_input_tokens":  v_in,
+        "verify_output_tokens": v_out,
+        "verify_calls":         int(vusage.get("calls", 0) or 0),
+        "verify_usage_by_model": {"gpt54": v_g, "gpt54mini": v_m},
+        # Combined gen cost = agent + verification:
+        "total_gen_input_tokens":  in_tok + v_in,
+        "total_gen_output_tokens": out_tok + v_out,
         "latency_seconds":    round(latency_seconds, 2),
-        "approx_cost_usd_gpt54_rate": cost_usd,
+        "approx_cost_usd_gpt54_rate":  cost_usd,           # agent only (back-compat)
+        "approx_verify_cost_usd":      round(verify_cost, 4),
+        "approx_total_gen_cost_usd":   round(agent_cost + verify_cost, 4),
         "timestamp":          datetime.now(timezone.utc).isoformat(),
     }
     stats_path = output_dir / "rule_gen" / sampling_strategy / rule_gen_strategy / f"{question_slug}.json"
@@ -483,7 +535,18 @@ def stage_rule_gen(
                 cmd += ["--processing-dir", processing_dir]
             if val_doc_names:
                 cmd += ["--val-docs", *val_doc_names]
-        proc = subprocess.run(cmd, cwd=str(_ROOT), capture_output=True, text=True, check=False)
+        # Scope an LLM-verification usage log to this gen subprocess: the env var
+        # propagates to codex and any python the agent spawns, so the QA/judge
+        # calls it makes (on sampled + validation docs, via gpt54/gpt54mini) are
+        # logged. Unset elsewhere, so the pipeline's own apply stage is unaffected.
+        sub_env = dict(os.environ)
+        usage_log = (rule_folder.parent / f"{question_slug}_llm_usage.jsonl").resolve()
+        try:
+            usage_log.unlink()
+        except FileNotFoundError:
+            pass
+        sub_env["LSF_LLM_USAGE_LOG"] = str(usage_log)
+        proc = subprocess.run(cmd, cwd=str(_ROOT), capture_output=True, text=True, check=False, env=sub_env)
         if proc.returncode != 0:
             raise RuntimeError(f"{strategy} failed for {question_slug}:\n{proc.stderr[-2000:]}")
         result = {"strategy": strategy, "model": effective_model, "stdout_tail": proc.stdout[-500:]}
@@ -495,6 +558,11 @@ def stage_rule_gen(
             result["input_tokens"]  = usage["input_tokens"]
             result["output_tokens"] = usage["output_tokens"]
             result["codex_usage"]   = usage
+        # Agent's separate LLM verification calls (gpt54/gpt54mini QA + judge).
+        vusage = _parse_llm_usage_log(usage_log)
+        result["verify_usage"]        = vusage
+        result["verify_input_tokens"]  = vusage["total_in"]
+        result["verify_output_tokens"] = vusage["total_out"]
         _write_json(rule_gen_out, result)
         _tok = f"  codex_in={result.get('input_tokens',0):,} codex_out={result.get('output_tokens',0):,}" \
                if "input_tokens" in result else ""
