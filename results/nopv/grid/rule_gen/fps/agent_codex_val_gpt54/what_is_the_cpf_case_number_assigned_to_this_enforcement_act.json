@@ -1,0 +1,40 @@
+{
+  "question": "What is the CPF case number assigned to this enforcement action?",
+  "question_slug": "what_is_the_cpf_case_number_assigned_to_this_enforcement_act",
+  "sampling_strategy": "fps",
+  "rule_gen_strategy": "agent_codex_val_gpt54",
+  "strategy_full": "agent_codex_val_gpt54",
+  "model": "gpt54",
+  "n_rules": 5,
+  "rules": [
+    "rule_page1_case_number_after_dear",
+    "rule_page1_case_number_near_top",
+    "rule_page1_case_number_section_header",
+    "rule_page1_case_number_text",
+    "rule_page1_short_case_number_line"
+  ],
+  "input_tokens": 2586634,
+  "output_tokens": 30308,
+  "verify_input_tokens": 0,
+  "verify_output_tokens": 0,
+  "verify_calls": 0,
+  "verify_usage_by_model": {
+    "gpt54": {
+      "in": 0,
+      "out": 0,
+      "calls": 0
+    },
+    "gpt54mini": {
+      "in": 0,
+      "out": 0,
+      "calls": 0
+    }
+  },
+  "total_gen_input_tokens": 2586634,
+  "total_gen_output_tokens": 30308,
+  "latency_seconds": 435.87,
+  "approx_cost_usd_gpt54_rate": 3.5364,
+  "approx_verify_cost_usd": 0.0,
+  "approx_total_gen_cost_usd": 3.5364,
+  "timestamp": "2026-06-13T23:12:27.829017+00:00"
+}

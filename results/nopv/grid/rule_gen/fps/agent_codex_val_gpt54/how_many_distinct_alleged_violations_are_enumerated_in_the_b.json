@@ -1,0 +1,40 @@
+{
+  "question": "How many distinct alleged violations are enumerated in the body of this Notice?",
+  "question_slug": "how_many_distinct_alleged_violations_are_enumerated_in_the_b",
+  "sampling_strategy": "fps",
+  "rule_gen_strategy": "agent_codex_val_gpt54",
+  "strategy_full": "agent_codex_val_gpt54",
+  "model": "gpt54",
+  "n_rules": 5,
+  "rules": [
+    "rule_notice_item_number_tables",
+    "rule_notice_item_number_text_lines",
+    "rule_notice_with_respect_item_list_lines",
+    "rule_notice_with_respect_item_range_lines",
+    "rule_notice_with_respect_single_item_lines"
+  ],
+  "input_tokens": 6335069,
+  "output_tokens": 59643,
+  "verify_input_tokens": 30086,
+  "verify_output_tokens": 1058,
+  "verify_calls": 190,
+  "verify_usage_by_model": {
+    "gpt54": {
+      "in": 30086,
+      "out": 1058,
+      "calls": 190
+    },
+    "gpt54mini": {
+      "in": 0,
+      "out": 0,
+      "calls": 0
+    }
+  },
+  "total_gen_input_tokens": 6365155,
+  "total_gen_output_tokens": 60701,
+  "latency_seconds": 785.12,
+  "approx_cost_usd_gpt54_rate": 8.5153,
+  "approx_verify_cost_usd": 0.0482,
+  "approx_total_gen_cost_usd": 8.5635,
+  "timestamp": "2026-06-14T00:54:17.737540+00:00"
+}

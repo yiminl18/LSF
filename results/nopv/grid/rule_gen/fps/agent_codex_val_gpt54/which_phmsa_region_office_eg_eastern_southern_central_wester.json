@@ -1,0 +1,40 @@
+{
+  "question": "Which PHMSA Region office (e.g., Eastern, Southern, Central, Western, Southwest) issued this Notice?",
+  "question_slug": "which_phmsa_region_office_eg_eastern_southern_central_wester",
+  "sampling_strategy": "fps",
+  "rule_gen_strategy": "agent_codex_val_gpt54",
+  "strategy_full": "agent_codex_val_gpt54",
+  "model": "gpt54",
+  "n_rules": 5,
+  "rules": [
+    "rule_signature_agency_line_after_region_title",
+    "rule_signature_block_after_standalone_sincerely",
+    "rule_signature_name_before_region_title",
+    "rule_signature_title_line_with_region",
+    "rule_submit_line_to_region_director"
+  ],
+  "input_tokens": 2222284,
+  "output_tokens": 42521,
+  "verify_input_tokens": 0,
+  "verify_output_tokens": 0,
+  "verify_calls": 0,
+  "verify_usage_by_model": {
+    "gpt54": {
+      "in": 0,
+      "out": 0,
+      "calls": 0
+    },
+    "gpt54mini": {
+      "in": 0,
+      "out": 0,
+      "calls": 0
+    }
+  },
+  "total_gen_input_tokens": 2222284,
+  "total_gen_output_tokens": 42521,
+  "latency_seconds": 526.89,
+  "approx_cost_usd_gpt54_rate": 3.2031,
+  "approx_verify_cost_usd": 0.0,
+  "approx_total_gen_cost_usd": 3.2031,
+  "timestamp": "2026-06-13T23:27:30.990645+00:00"
+}

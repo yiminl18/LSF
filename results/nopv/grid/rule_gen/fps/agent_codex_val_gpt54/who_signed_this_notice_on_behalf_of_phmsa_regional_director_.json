@@ -1,0 +1,40 @@
+{
+  "question": "Who signed this Notice on behalf of PHMSA (Regional Director or Director of the issuing office)?",
+  "question_slug": "who_signed_this_notice_on_behalf_of_phmsa_regional_director_",
+  "sampling_strategy": "fps",
+  "rule_gen_strategy": "agent_codex_val_gpt54",
+  "strategy_full": "agent_codex_val_gpt54",
+  "model": "gpt54",
+  "n_rules": 5,
+  "rules": [
+    "rule_signature_block_after_digital_or_embedded_sincerely",
+    "rule_signature_block_after_standalone_sincerely",
+    "rule_signature_line_after_sincerely_with_director",
+    "rule_signature_title_line_with_region",
+    "rule_submit_line_to_named_director"
+  ],
+  "input_tokens": 2928372,
+  "output_tokens": 45796,
+  "verify_input_tokens": 0,
+  "verify_output_tokens": 0,
+  "verify_calls": 0,
+  "verify_usage_by_model": {
+    "gpt54": {
+      "in": 0,
+      "out": 0,
+      "calls": 0
+    },
+    "gpt54mini": {
+      "in": 0,
+      "out": 0,
+      "calls": 0
+    }
+  },
+  "total_gen_input_tokens": 2928372,
+  "total_gen_output_tokens": 45796,
+  "latency_seconds": 637.58,
+  "approx_cost_usd_gpt54_rate": 4.1184,
+  "approx_verify_cost_usd": 0.0,
+  "approx_total_gen_cost_usd": 4.1184,
+  "timestamp": "2026-06-14T02:58:38.514709+00:00"
+}

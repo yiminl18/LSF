@@ -1,0 +1,40 @@
+{
+  "question": "On what date or date range did PHMSA conduct the inspection that gave rise to this Notice?",
+  "question_slug": "on_what_date_or_date_range_did_phmsa_conduct_the_inspection_",
+  "sampling_strategy": "fps",
+  "rule_gen_strategy": "agent_codex_val_gpt54",
+  "strategy_full": "agent_codex_val_gpt54",
+  "model": "gpt54",
+  "n_rules": 5,
+  "rules": [
+    "rule_page1_after_cpf_marker_phmsa_inspection",
+    "rule_page1_before_as_result_of_inspection",
+    "rule_page1_between_dear_and_result_of_inspection",
+    "rule_page1_near_notice_header_and_cpf_landmarks",
+    "rule_page1_on_or_from_phmsa_inspection_paragraph"
+  ],
+  "input_tokens": 3590909,
+  "output_tokens": 43059,
+  "verify_input_tokens": 0,
+  "verify_output_tokens": 0,
+  "verify_calls": 0,
+  "verify_usage_by_model": {
+    "gpt54": {
+      "in": 0,
+      "out": 0,
+      "calls": 0
+    },
+    "gpt54mini": {
+      "in": 0,
+      "out": 0,
+      "calls": 0
+    }
+  },
+  "total_gen_input_tokens": 3590909,
+  "total_gen_output_tokens": 43059,
+  "latency_seconds": 585.59,
+  "approx_cost_usd_gpt54_rate": 4.9192,
+  "approx_verify_cost_usd": 0.0,
+  "approx_total_gen_cost_usd": 4.9192,
+  "timestamp": "2026-06-13T23:56:56.643920+00:00"
+}

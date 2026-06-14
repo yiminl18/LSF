@@ -1,0 +1,40 @@
+{
+  "question": "Under which 49 CFR Part is the operator's regulated activity covered (e.g., Part 192, Part 195, Part 199)?",
+  "question_slug": "under_which_49_cfr_part_is_the_operators_regulated_activity_",
+  "sampling_strategy": "fps",
+  "rule_gen_strategy": "agent_codex_val_gpt54",
+  "strategy_full": "agent_codex_val_gpt54",
+  "model": "gpt54",
+  "n_rules": 5,
+  "rules": [
+    "rule_page123_first_non191_part_after_reporting_item",
+    "rule_page123_following_span_after_non191_reporting_fallback",
+    "rule_page12_first_cited_part_section_header",
+    "rule_page12_first_cited_part_text_line",
+    "rule_page12_first_following_span_after_part_anchor"
+  ],
+  "input_tokens": 3985271,
+  "output_tokens": 41945,
+  "verify_input_tokens": 0,
+  "verify_output_tokens": 0,
+  "verify_calls": 0,
+  "verify_usage_by_model": {
+    "gpt54": {
+      "in": 0,
+      "out": 0,
+      "calls": 0
+    },
+    "gpt54mini": {
+      "in": 0,
+      "out": 0,
+      "calls": 0
+    }
+  },
+  "total_gen_input_tokens": 3985271,
+  "total_gen_output_tokens": 41945,
+  "latency_seconds": 614.36,
+  "approx_cost_usd_gpt54_rate": 5.401,
+  "approx_verify_cost_usd": 0.0,
+  "approx_total_gen_cost_usd": 5.401,
+  "timestamp": "2026-06-14T00:35:07.808647+00:00"
+}

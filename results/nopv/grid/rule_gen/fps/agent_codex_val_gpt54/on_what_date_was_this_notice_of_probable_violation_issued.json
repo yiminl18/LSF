@@ -1,0 +1,40 @@
+{
+  "question": "On what date was this Notice of Probable Violation issued?",
+  "question_slug": "on_what_date_was_this_notice_of_probable_violation_issued",
+  "sampling_strategy": "fps",
+  "rule_gen_strategy": "agent_codex_val_gpt54",
+  "strategy_full": "agent_codex_val_gpt54",
+  "model": "gpt54",
+  "n_rules": 5,
+  "rules": [
+    "rule_page1_date_after_mail_or_delivery_header",
+    "rule_page1_date_after_section_header_mail_block",
+    "rule_page1_date_after_split_email_header",
+    "rule_page1_date_under_mail_path",
+    "rule_page1_top_date_before_dear_and_cpf"
+  ],
+  "input_tokens": 2780472,
+  "output_tokens": 36166,
+  "verify_input_tokens": 0,
+  "verify_output_tokens": 0,
+  "verify_calls": 0,
+  "verify_usage_by_model": {
+    "gpt54": {
+      "in": 0,
+      "out": 0,
+      "calls": 0
+    },
+    "gpt54mini": {
+      "in": 0,
+      "out": 0,
+      "calls": 0
+    }
+  },
+  "total_gen_input_tokens": 2780472,
+  "total_gen_output_tokens": 36166,
+  "latency_seconds": 433.3,
+  "approx_cost_usd_gpt54_rate": 3.8373,
+  "approx_verify_cost_usd": 0.0,
+  "approx_total_gen_cost_usd": 3.8373,
+  "timestamp": "2026-06-13T23:40:46.566203+00:00"
+}

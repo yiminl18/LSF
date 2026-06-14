@@ -1,0 +1,40 @@
+{
+  "question": "How many distinct corrective action items are listed in the Proposed Compliance Order section?",
+  "question_slug": "how_many_distinct_corrective_action_items_are_listed_in_the_",
+  "sampling_strategy": "fps",
+  "rule_gen_strategy": "agent_codex_val_gpt54",
+  "strategy_full": "agent_codex_val_gpt54",
+  "model": "gpt54",
+  "n_rules": 5,
+  "rules": [
+    "rule_exact_pco_intro_paragraph",
+    "rule_exact_pco_top_level_items",
+    "rule_heading_page_pco_intro_paragraph",
+    "rule_heading_page_pco_top_level_items",
+    "rule_pco_single_intro_subactions"
+  ],
+  "input_tokens": 8495110,
+  "output_tokens": 81905,
+  "verify_input_tokens": 48410,
+  "verify_output_tokens": 480,
+  "verify_calls": 96,
+  "verify_usage_by_model": {
+    "gpt54": {
+      "in": 46645,
+      "out": 460,
+      "calls": 92
+    },
+    "gpt54mini": {
+      "in": 1765,
+      "out": 20,
+      "calls": 4
+    }
+  },
+  "total_gen_input_tokens": 8543520,
+  "total_gen_output_tokens": 82385,
+  "latency_seconds": 1622.49,
+  "approx_cost_usd_gpt54_rate": 11.4379,
+  "approx_verify_cost_usd": 0.0631,
+  "approx_total_gen_cost_usd": 11.5011,
+  "timestamp": "2026-06-14T02:19:41.079829+00:00"
+}

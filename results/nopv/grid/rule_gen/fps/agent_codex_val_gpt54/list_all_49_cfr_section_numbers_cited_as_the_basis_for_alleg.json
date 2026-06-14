@@ -1,0 +1,40 @@
+{
+  "question": "List all 49 CFR section numbers cited as the basis for alleged violations in this Notice.",
+  "question_slug": "list_all_49_cfr_section_numbers_cited_as_the_basis_for_alleg",
+  "sampling_strategy": "fps",
+  "rule_gen_strategy": "agent_codex_val_gpt54",
+  "strategy_full": "agent_codex_val_gpt54",
+  "model": "gpt54",
+  "n_rules": 5,
+  "rules": [
+    "rule_notice_conclusion_parenthetical_citations",
+    "rule_notice_direct_citation_lines",
+    "rule_notice_flat_numbered_cfr_lines",
+    "rule_notice_numbered_cfr_headers",
+    "rule_notice_shorthand_parenthetical_expansions"
+  ],
+  "input_tokens": 12202889,
+  "output_tokens": 121134,
+  "verify_input_tokens": 89653,
+  "verify_output_tokens": 3224,
+  "verify_calls": 263,
+  "verify_usage_by_model": {
+    "gpt54": {
+      "in": 89653,
+      "out": 3224,
+      "calls": 263
+    },
+    "gpt54mini": {
+      "in": 0,
+      "out": 0,
+      "calls": 0
+    }
+  },
+  "total_gen_input_tokens": 12292542,
+  "total_gen_output_tokens": 124358,
+  "latency_seconds": 2724.8,
+  "approx_cost_usd_gpt54_rate": 16.465,
+  "approx_verify_cost_usd": 0.1443,
+  "approx_total_gen_cost_usd": 16.6093,
+  "timestamp": "2026-06-14T01:46:19.707113+00:00"
+}
