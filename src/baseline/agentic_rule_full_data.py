@@ -158,6 +158,19 @@ Sample expansion rules (check after every verify-accuracy call):
 - Hard cap: never exceed min(N // 10, 30) total docs to stay within the verify-accuracy budget.
 """
 
+# Forced working-sample ablation: identical to adaptive mode EXCEPT the working sample is
+# pinned to a fixed count (a % of the corpus) and never expanded/shrunk. Only the sample
+# SIZE changes; the rest of the prompt/procedure/tools are unchanged.
+_FORCED_SAMPLE_HINT_TEMPLATE = """
+Seed sample size guidance (forced-sample mode):
+- Run list-docs to get N (total corpus size).
+- Use a working sample of EXACTLY {k} docs (forced; this is ~{pct}% of N).
+- Pick the {k} seed docs spread across the sorted list (first, last, and evenly-spaced
+  middle indices) to capture layout variation, not just the first few docs.
+- Keep the working sample fixed at exactly {k} docs for the entire session. Do NOT expand
+  or shrink it; re-verify on this same {k}-doc sample as you refine rules.
+"""
+
 
 def _resolve_model(model: str) -> str:
     return _MODEL_ALIASES.get(model, model)
@@ -631,6 +644,7 @@ def run_rule_gen(
     results_dir: str | Path | None = None,
     run_stem: str = "q01",
     adaptive_large_sample: bool = False,
+    forced_sample_frac: float | None = None,
     **_: Any,
 ) -> dict[str, Any]:
     if len(questions) != 1:
@@ -714,7 +728,14 @@ def run_rule_gen(
         ledger_path=str(ledger_path.resolve()),
         verify_budget=_VERIFY_BUDGET,
     )
-    if adaptive_large_sample:
+    forced_sample_size: int | None = None
+    if forced_sample_frac is not None:
+        # Forced-sample ablation: pin the working sample to a fixed % of the corpus.
+        forced_sample_size = max(1, round(forced_sample_frac * len(docs)))
+        prompt = prompt + _FORCED_SAMPLE_HINT_TEMPLATE.format(
+            k=forced_sample_size, pct=round(forced_sample_frac * 100)
+        )
+    elif adaptive_large_sample:
         prompt = prompt + _ADAPTIVE_LARGE_SAMPLE_HINT
 
     cmd = [
@@ -797,6 +818,8 @@ def run_rule_gen(
         "split": split_name,
         "doc_count": len(docs),
         "question_count": 1,
+        "forced_sample_frac": forced_sample_frac,
+        "forced_sample_size": forced_sample_size,
         "rules_dir": _relpath(rules_base),
         "results_report_path": _relpath(report_path),
         "verify_accuracy_ledger_path": _relpath(ledger_path),

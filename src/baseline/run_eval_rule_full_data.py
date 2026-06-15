@@ -142,6 +142,14 @@ def main() -> None:
         default=False,
         help="Append adaptive sample-size guidance to the agent prompt (see _ADAPTIVE_LARGE_SAMPLE_HINT)",
     )
+    ap.add_argument(
+        "--forced-sample-frac",
+        type=float,
+        default=None,
+        help="Forced-sample ablation: pin the working sample to this fraction of the corpus "
+             "(e.g. 0.10, 0.30, 0.50). Overrides --adaptive-large-sample. Only the sample SIZE "
+             "changes; the rest of the prompt/procedure is identical.",
+    )
     args = ap.parse_args()
 
     baseline_mod = importlib.import_module(f"baseline.{args.baseline}")
@@ -219,6 +227,7 @@ def main() -> None:
             results_dir=results_root,
             run_stem=f"q{q_index:02d}",
             adaptive_large_sample=args.adaptive_large_sample,
+            forced_sample_frac=args.forced_sample_frac,
         )
         print(
             f"  status={result.get('status')}  "
