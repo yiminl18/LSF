@@ -1,0 +1,40 @@
+{
+  "question": "What document type or SEC form is this (e.g. 10-K, 10-Q, 8-K, earnings release, annual report)?",
+  "question_slug": "what_document_type_or_sec_form_is_this_eg_10k_10q_8k_earning",
+  "sampling_strategy": "fps",
+  "rule_gen_strategy": "agent_codex_val_gpt54",
+  "strategy_full": "agent_codex_val_gpt54",
+  "model": "gpt54",
+  "n_rules": 5,
+  "rules": [
+    "rule_page12_exact_form_8k_any_label",
+    "rule_page12_section_header_exact_form_10k",
+    "rule_page12_section_header_exact_form_10q",
+    "rule_page13_bold_cover_title_form_code",
+    "rule_release_title_financial_results_or_call"
+  ],
+  "input_tokens": 3832661,
+  "output_tokens": 39463,
+  "verify_input_tokens": 0,
+  "verify_output_tokens": 0,
+  "verify_calls": 0,
+  "verify_usage_by_model": {
+    "gpt54": {
+      "in": 0,
+      "out": 0,
+      "calls": 0
+    },
+    "gpt54mini": {
+      "in": 0,
+      "out": 0,
+      "calls": 0
+    }
+  },
+  "total_gen_input_tokens": 3832661,
+  "total_gen_output_tokens": 39463,
+  "latency_seconds": 550.4,
+  "approx_cost_usd_gpt54_rate": 5.1855,
+  "approx_verify_cost_usd": 0.0,
+  "approx_total_gen_cost_usd": 5.1855,
+  "timestamp": "2026-06-14T07:07:10.959914+00:00"
+}

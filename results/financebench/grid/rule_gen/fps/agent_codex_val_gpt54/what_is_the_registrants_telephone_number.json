@@ -1,0 +1,40 @@
+{
+  "question": "What is the registrant's telephone number?",
+  "question_slug": "what_is_the_registrants_telephone_number",
+  "sampling_strategy": "fps",
+  "rule_gen_strategy": "agent_codex_val_gpt54",
+  "strategy_full": "agent_codex_val_gpt54",
+  "model": "gpt54",
+  "n_rules": 5,
+  "rules": [
+    "rule_page12_cover_phone_samepage_cue_fallback",
+    "rule_page12_embedded_telephone_cue_phone",
+    "rule_page12_phone_previous_cue_window",
+    "rule_page12_section_header_phone_next_cue",
+    "rule_page12_text_phone_next_cue"
+  ],
+  "input_tokens": 2856223,
+  "output_tokens": 34487,
+  "verify_input_tokens": 0,
+  "verify_output_tokens": 0,
+  "verify_calls": 0,
+  "verify_usage_by_model": {
+    "gpt54": {
+      "in": 0,
+      "out": 0,
+      "calls": 0
+    },
+    "gpt54mini": {
+      "in": 0,
+      "out": 0,
+      "calls": 0
+    }
+  },
+  "total_gen_input_tokens": 2856223,
+  "total_gen_output_tokens": 34487,
+  "latency_seconds": 490.9,
+  "approx_cost_usd_gpt54_rate": 3.9151,
+  "approx_verify_cost_usd": 0.0,
+  "approx_total_gen_cost_usd": 3.9151,
+  "timestamp": "2026-06-14T09:03:15.104456+00:00"
+}

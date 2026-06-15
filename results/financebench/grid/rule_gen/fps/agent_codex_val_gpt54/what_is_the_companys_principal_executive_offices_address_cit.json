@@ -1,0 +1,40 @@
+{
+  "question": "What is the company's principal executive offices address (city and state/country) as stated in this document?",
+  "question_slug": "what_is_the_companys_principal_executive_offices_address_cit",
+  "sampling_strategy": "fps",
+  "rule_gen_strategy": "agent_codex_val_gpt54",
+  "strategy_full": "agent_codex_val_gpt54",
+  "model": "gpt54",
+  "n_rules": 5,
+  "rules": [
+    "rule_narrative_office_location",
+    "rule_page12_address_cue_window",
+    "rule_page12_comma_address_line",
+    "rule_page12_country_address_line",
+    "rule_page12_embedded_address_cue_span"
+  ],
+  "input_tokens": 5586680,
+  "output_tokens": 52662,
+  "verify_input_tokens": 0,
+  "verify_output_tokens": 0,
+  "verify_calls": 0,
+  "verify_usage_by_model": {
+    "gpt54": {
+      "in": 0,
+      "out": 0,
+      "calls": 0
+    },
+    "gpt54mini": {
+      "in": 0,
+      "out": 0,
+      "calls": 0
+    }
+  },
+  "total_gen_input_tokens": 5586680,
+  "total_gen_output_tokens": 52662,
+  "latency_seconds": 670.58,
+  "approx_cost_usd_gpt54_rate": 7.51,
+  "approx_verify_cost_usd": 0.0,
+  "approx_total_gen_cost_usd": 7.51,
+  "timestamp": "2026-06-14T06:55:42.412979+00:00"
+}

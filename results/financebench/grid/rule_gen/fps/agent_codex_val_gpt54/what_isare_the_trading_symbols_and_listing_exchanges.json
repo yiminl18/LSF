@@ -1,0 +1,41 @@
+{
+  "question": "What is/are the trading symbol(s) and listing exchange(s)?",
+  "question_slug": "what_isare_the_trading_symbols_and_listing_exchanges",
+  "sampling_strategy": "fps",
+  "rule_gen_strategy": "agent_codex_val_gpt54",
+  "strategy_full": "agent_codex_val_gpt54",
+  "model": "gpt54",
+  "n_rules": 6,
+  "rules": [
+    "rule_market_info_common_stock_sentence",
+    "rule_page1_2_section12b_exchange_table",
+    "rule_page1_2_section12b_title_spans_without_table",
+    "rule_page1_2_section12b_window_without_table",
+    "rule_page1_2_short_symbol_exchange_values",
+    "rule_page1_3_bracketed_exchange_ticker_sentence"
+  ],
+  "input_tokens": 12553761,
+  "output_tokens": 77921,
+  "verify_input_tokens": 0,
+  "verify_output_tokens": 0,
+  "verify_calls": 0,
+  "verify_usage_by_model": {
+    "gpt54": {
+      "in": 0,
+      "out": 0,
+      "calls": 0
+    },
+    "gpt54mini": {
+      "in": 0,
+      "out": 0,
+      "calls": 0
+    }
+  },
+  "total_gen_input_tokens": 12553761,
+  "total_gen_output_tokens": 77921,
+  "latency_seconds": 1486.6,
+  "approx_cost_usd_gpt54_rate": 16.4714,
+  "approx_verify_cost_usd": 0.0,
+  "approx_total_gen_cost_usd": 16.4714,
+  "timestamp": "2026-06-14T08:02:16.250603+00:00"
+}

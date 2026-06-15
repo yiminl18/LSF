@@ -1,0 +1,40 @@
+{
+  "question": "What is the exact name of the company (registrant) this document relates to?",
+  "question_slug": "what_is_the_exact_name_of_the_company_registrant_this_docume",
+  "sampling_strategy": "fps",
+  "rule_gen_strategy": "agent_codex_val_gpt54",
+  "strategy_full": "agent_codex_val_gpt54",
+  "model": "gpt54",
+  "n_rules": 5,
+  "rules": [
+    "rule_page12_exact_name_cue_window",
+    "rule_page12_large_company_text",
+    "rule_page14_release_lead_company_sentence",
+    "rule_page16_business_intro_company_sentence",
+    "rule_page1_company_heading"
+  ],
+  "input_tokens": 4631343,
+  "output_tokens": 39717,
+  "verify_input_tokens": 32973,
+  "verify_output_tokens": 1200,
+  "verify_calls": 160,
+  "verify_usage_by_model": {
+    "gpt54": {
+      "in": 32973,
+      "out": 1200,
+      "calls": 160
+    },
+    "gpt54mini": {
+      "in": 0,
+      "out": 0,
+      "calls": 0
+    }
+  },
+  "total_gen_input_tokens": 4664316,
+  "total_gen_output_tokens": 40917,
+  "latency_seconds": 573.12,
+  "approx_cost_usd_gpt54_rate": 6.1863,
+  "approx_verify_cost_usd": 0.0532,
+  "approx_total_gen_cost_usd": 6.2396,
+  "timestamp": "2026-06-14T06:42:07.216640+00:00"
+}

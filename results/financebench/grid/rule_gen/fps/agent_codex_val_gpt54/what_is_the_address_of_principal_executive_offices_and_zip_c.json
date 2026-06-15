@@ -1,0 +1,40 @@
+{
+  "question": "What is the address of principal executive offices and ZIP code?",
+  "question_slug": "what_is_the_address_of_principal_executive_offices_and_zip_c",
+  "sampling_strategy": "fps",
+  "rule_gen_strategy": "agent_codex_val_gpt54",
+  "strategy_full": "agent_codex_val_gpt54",
+  "model": "gpt54",
+  "n_rules": 5,
+  "rules": [
+    "rule_narrative_office_location",
+    "rule_page12_address_components_before_cue",
+    "rule_page12_embedded_address_cue_span",
+    "rule_page12_standalone_address_line",
+    "rule_page12_zip_value_and_cue"
+  ],
+  "input_tokens": 4734264,
+  "output_tokens": 43430,
+  "verify_input_tokens": 0,
+  "verify_output_tokens": 0,
+  "verify_calls": 0,
+  "verify_usage_by_model": {
+    "gpt54": {
+      "in": 0,
+      "out": 0,
+      "calls": 0
+    },
+    "gpt54mini": {
+      "in": 0,
+      "out": 0,
+      "calls": 0
+    }
+  },
+  "total_gen_input_tokens": 4734264,
+  "total_gen_output_tokens": 43430,
+  "latency_seconds": 745.15,
+  "approx_cost_usd_gpt54_rate": 6.3521,
+  "approx_verify_cost_usd": 0.0,
+  "approx_total_gen_cost_usd": 6.3521,
+  "timestamp": "2026-06-14T08:52:56.319635+00:00"
+}

@@ -1,0 +1,40 @@
+{
+  "question": "What stock exchange is the company's primary common stock listed on?",
+  "question_slug": "what_stock_exchange_is_the_companys_primary_common_stock_lis",
+  "sampling_strategy": "fps",
+  "rule_gen_strategy": "agent_codex_val_gpt54",
+  "strategy_full": "agent_codex_val_gpt54",
+  "model": "gpt54",
+  "n_rules": 5,
+  "rules": [
+    "rule_common_stock_listing_sentence",
+    "rule_page1_2_common_stock_spans_without_table",
+    "rule_page1_2_section12b_exchange_table",
+    "rule_page1_2_section12b_window_without_table",
+    "rule_page1_2_short_exchange_values"
+  ],
+  "input_tokens": 2894694,
+  "output_tokens": 38469,
+  "verify_input_tokens": 23796,
+  "verify_output_tokens": 569,
+  "verify_calls": 80,
+  "verify_usage_by_model": {
+    "gpt54": {
+      "in": 23796,
+      "out": 569,
+      "calls": 80
+    },
+    "gpt54mini": {
+      "in": 0,
+      "out": 0,
+      "calls": 0
+    }
+  },
+  "total_gen_input_tokens": 2918490,
+  "total_gen_output_tokens": 39038,
+  "latency_seconds": 553.75,
+  "approx_cost_usd_gpt54_rate": 4.0031,
+  "approx_verify_cost_usd": 0.0354,
+  "approx_total_gen_cost_usd": 4.0385,
+  "timestamp": "2026-06-14T06:13:04.166916+00:00"
+}

@@ -1,0 +1,40 @@
+{
+  "question": "What is the reporting period covered by this document (e.g. fiscal year ended, quarter ended, or event date)?",
+  "question_slug": "what_is_the_reporting_period_covered_by_this_document_eg_fis",
+  "sampling_strategy": "fps",
+  "rule_gen_strategy": "agent_codex_val_gpt54",
+  "strategy_full": "agent_codex_val_gpt54",
+  "model": "gpt54",
+  "n_rules": 5,
+  "rules": [
+    "rule_page12_8k_event_line",
+    "rule_page12_fiscal_year_period",
+    "rule_page12_form_path_period",
+    "rule_page12_quarterly_period",
+    "rule_page13_bold_period_heading"
+  ],
+  "input_tokens": 6436242,
+  "output_tokens": 50056,
+  "verify_input_tokens": 0,
+  "verify_output_tokens": 0,
+  "verify_calls": 0,
+  "verify_usage_by_model": {
+    "gpt54": {
+      "in": 0,
+      "out": 0,
+      "calls": 0
+    },
+    "gpt54mini": {
+      "in": 0,
+      "out": 0,
+      "calls": 0
+    }
+  },
+  "total_gen_input_tokens": 6436242,
+  "total_gen_output_tokens": 50056,
+  "latency_seconds": 884.44,
+  "approx_cost_usd_gpt54_rate": 8.5459,
+  "approx_verify_cost_usd": 0.0,
+  "approx_total_gen_cost_usd": 8.5459,
+  "timestamp": "2026-06-14T06:30:23.256464+00:00"
+}

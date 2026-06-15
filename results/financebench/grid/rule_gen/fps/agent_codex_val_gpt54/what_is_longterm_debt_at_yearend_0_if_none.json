@@ -1,0 +1,42 @@
+{
+  "question": "What is long-term debt at year-end (0 if none)?",
+  "question_slug": "what_is_longterm_debt_at_yearend_0_if_none",
+  "sampling_strategy": "fps",
+  "rule_gen_strategy": "agent_codex_val_gpt54",
+  "strategy_full": "agent_codex_val_gpt54",
+  "model": "gpt54",
+  "n_rules": 7,
+  "rules": [
+    "rule_balance_sheet_longterm_debt_table",
+    "rule_balance_sheet_term_debt_table",
+    "rule_balance_sheet_unit_context_spans",
+    "rule_debt_note_longterm_table",
+    "rule_debt_note_unit_context_text",
+    "rule_form8k_cover_item_headers",
+    "rule_selected_data_or_capital_structure_debt_table"
+  ],
+  "input_tokens": 14306593,
+  "output_tokens": 86759,
+  "verify_input_tokens": 0,
+  "verify_output_tokens": 0,
+  "verify_calls": 0,
+  "verify_usage_by_model": {
+    "gpt54": {
+      "in": 0,
+      "out": 0,
+      "calls": 0
+    },
+    "gpt54mini": {
+      "in": 0,
+      "out": 0,
+      "calls": 0
+    }
+  },
+  "total_gen_input_tokens": 14306593,
+  "total_gen_output_tokens": 86759,
+  "latency_seconds": 1449.48,
+  "approx_cost_usd_gpt54_rate": 18.7508,
+  "approx_verify_cost_usd": 0.0,
+  "approx_total_gen_cost_usd": 18.7508,
+  "timestamp": "2026-06-14T08:28:47.428563+00:00"
+}

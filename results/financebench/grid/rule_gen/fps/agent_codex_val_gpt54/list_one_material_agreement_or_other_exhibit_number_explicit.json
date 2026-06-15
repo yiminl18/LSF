@@ -1,0 +1,40 @@
+{
+  "question": "List one material agreement or other exhibit number explicitly identified in the Exhibit Index (e.g., \"Exhibit 10.1: Credit Agreement\")—or record \"none listed\" if no material agreements are identified.",
+  "question_slug": "list_one_material_agreement_or_other_exhibit_number_explicit",
+  "sampling_strategy": "fps",
+  "rule_gen_strategy": "agent_codex_val_gpt54",
+  "strategy_full": "agent_codex_val_gpt54",
+  "model": "gpt54",
+  "n_rules": 5,
+  "rules": [
+    "rule_exhibit_list_items_target_rows",
+    "rule_exhibit_split_number_description_pairs",
+    "rule_exhibit_tables_target_rows",
+    "rule_exhibit_text_lines_target_rows",
+    "rule_narrative_filed_as_exhibit_reference"
+  ],
+  "input_tokens": 7478917,
+  "output_tokens": 77799,
+  "verify_input_tokens": 100392,
+  "verify_output_tokens": 1831,
+  "verify_calls": 84,
+  "verify_usage_by_model": {
+    "gpt54": {
+      "in": 100392,
+      "out": 1831,
+      "calls": 84
+    },
+    "gpt54mini": {
+      "in": 0,
+      "out": 0,
+      "calls": 0
+    }
+  },
+  "total_gen_input_tokens": 7579309,
+  "total_gen_output_tokens": 79630,
+  "latency_seconds": 1543.02,
+  "approx_cost_usd_gpt54_rate": 10.1266,
+  "approx_verify_cost_usd": 0.1438,
+  "approx_total_gen_cost_usd": 10.2704,
+  "timestamp": "2026-06-14T07:35:01.032149+00:00"
+}
