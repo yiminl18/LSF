@@ -171,6 +171,23 @@ Seed sample size guidance (forced-sample mode):
   or shrink it; re-verify on this same {k}-doc sample as you refine rules.
 """
 
+# Adaptive large-seed ablation: KEEPS the adaptive failure-targeted expansion loop (same
+# expansion rules as adaptive mode) but STARTS from a large fixed-% seed and raises the cap.
+# This isolates sample SIZE while preserving adaptivity (size-only test).
+_ADAPTIVE_SEEDED_HINT_TEMPLATE = """
+Seed sample size guidance (adaptive large-seed mode):
+- Run list-docs to get N (total corpus size).
+- Start with a working sample of EXACTLY {k} docs (~{pct}% of N).
+- Pick the {k} seed docs spread across the sorted list (first, last, and evenly-spaced
+  middle indices) to capture layout variation, not just the first few docs.
+
+Sample expansion rules (check after every verify-accuracy call):
+- match_rate < 0.90  : add ceil(current_sample_size * 0.5) more spread docs, re-verify.
+- 0.90 <= match_rate < 0.95 : add 2-3 docs targeting failure cases, re-verify.
+- match_rate >= 0.95 : do not expand unless a rule change causes a regression.
+- Hard cap: never exceed {cap} total docs.
+"""
+
 
 def _resolve_model(model: str) -> str:
     return _MODEL_ALIASES.get(model, model)
@@ -645,6 +662,7 @@ def run_rule_gen(
     run_stem: str = "q01",
     adaptive_large_sample: bool = False,
     forced_sample_frac: float | None = None,
+    adaptive_seed_frac: float | None = None,
     **_: Any,
 ) -> dict[str, Any]:
     if len(questions) != 1:
@@ -729,11 +747,18 @@ def run_rule_gen(
         verify_budget=_VERIFY_BUDGET,
     )
     forced_sample_size: int | None = None
+    adaptive_seed_size: int | None = None
     if forced_sample_frac is not None:
-        # Forced-sample ablation: pin the working sample to a fixed % of the corpus.
+        # Forced-sample ablation: pin the working sample to a fixed % of the corpus (no expansion).
         forced_sample_size = max(1, round(forced_sample_frac * len(docs)))
         prompt = prompt + _FORCED_SAMPLE_HINT_TEMPLATE.format(
             k=forced_sample_size, pct=round(forced_sample_frac * 100)
+        )
+    elif adaptive_seed_frac is not None:
+        # Adaptive large-seed ablation: keep expansion loop, start from a large % seed.
+        adaptive_seed_size = max(1, round(adaptive_seed_frac * len(docs)))
+        prompt = prompt + _ADAPTIVE_SEEDED_HINT_TEMPLATE.format(
+            k=adaptive_seed_size, pct=round(adaptive_seed_frac * 100), cap=len(docs)
         )
     elif adaptive_large_sample:
         prompt = prompt + _ADAPTIVE_LARGE_SAMPLE_HINT
@@ -820,6 +845,8 @@ def run_rule_gen(
         "question_count": 1,
         "forced_sample_frac": forced_sample_frac,
         "forced_sample_size": forced_sample_size,
+        "adaptive_seed_frac": adaptive_seed_frac,
+        "adaptive_seed_size": adaptive_seed_size,
         "rules_dir": _relpath(rules_base),
         "results_report_path": _relpath(report_path),
         "verify_accuracy_ledger_path": _relpath(ledger_path),

@@ -150,6 +150,14 @@ def main() -> None:
              "(e.g. 0.10, 0.30, 0.50). Overrides --adaptive-large-sample. Only the sample SIZE "
              "changes; the rest of the prompt/procedure is identical.",
     )
+    ap.add_argument(
+        "--adaptive-seed-frac",
+        type=float,
+        default=None,
+        help="Adaptive large-seed ablation: KEEP the adaptive failure-targeted expansion loop "
+             "but start the working sample from this fraction of the corpus (e.g. 0.50) and raise "
+             "the cap to N. Size-only test (adaptivity preserved). Overrides --adaptive-large-sample.",
+    )
     args = ap.parse_args()
 
     baseline_mod = importlib.import_module(f"baseline.{args.baseline}")
@@ -228,6 +236,7 @@ def main() -> None:
             run_stem=f"q{q_index:02d}",
             adaptive_large_sample=args.adaptive_large_sample,
             forced_sample_frac=args.forced_sample_frac,
+            adaptive_seed_frac=args.adaptive_seed_frac,
         )
         print(
             f"  status={result.get('status')}  "
