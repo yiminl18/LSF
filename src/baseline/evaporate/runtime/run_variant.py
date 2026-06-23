@@ -1,67 +1,16 @@
-"""Evaporate variant runner — subprocess target executed INSIDE `.venv-evaporate`.
+"""Evaporate variant runner — subprocess target run INSIDE `.venv-evaporate`.
 
-**Thin interception over upstream.** This runner drives the *real upstream
-Evaporate code* (`evaporate.profiler`, `evaporate.evaluate_profiler`,
-`evaporate.profiler_utils`, `evaporate.prompts`) for everything scientifically
-meaningful — keyword chunk selection, function synthesis over all generation
-templates, noisy-LLM-gold scoring with the 0.5 keep-threshold, top-k selection,
-sandboxed function execution, MV/abstention combine — and intercepts only the
-four seams that are *absolutely necessary* for a fair, runnable comparison:
+Thin interception over upstream: drives the real upstream Evaporate code
+(chunking, synthesis, scoring, selection, sandboxed exec, combine) and deviates
+in only four seams:
+  N1  LLM backend — `evaporate.utils.get_response` patched to `llm_backend`.
+  N2  Code+ WS    — snorkel 0.10 `LabelModel` shim replacing the dead MeTaL `run_ws`.
+  N3  WS prior    — class balance from the SAMPLED docs' gold only (no apply-set leak).
+  N4  scoring/split/cost — owned by `run_evaporate.py`, reusing pipeline.py.
 
-  * **N1 — LLM backend.** `evaporate.utils.get_response` is patched to route every
-    upstream LLM call through the isolated `llm_backend` (Azure gpt54mini), the
-    same backend the rest of the comparison uses. `stop` is never sent to the API
-    (gpt-5.4-mini rejects it); it is emulated by local post-truncation.
-    Reason: fairness (same backend as LSF) + dependency (manifest dropped) + API.
-  * **N2 — weak-supervision engine.** Code+ aggregation runs the modern
-    `snorkel.labeling.model.LabelModel` (snorkel 0.10) in place of the original
-    Snorkel-MeTaL `LabelModel`, which no longer runs under modern networkx. The
-    shim mirrors upstream `weak_supervision/run_ws.py:get_data` label-space
-    construction and is installed as `evaporate.profiler.run_ws`, so upstream's
-    own `combine_extractions` drives it (and its MV fallbacks). Reason: dep rot.
-  * **N3 — WS class prior.** The LabelModel is fit with NO `Y_dev`: a uniform
-    `1/k` prior. Upstream's `get_data` estimates the prior from apply-set gold,
-    which is a gold leak at apply time. Reason: fairness (absolutely necessary).
-  * **N4 — scoring/split/cost.** Final accuracy, the doc split, and cost are owned
-    by the orchestrator (`run_evaporate.py`), which reuses pipeline.py's judge,
-    split, per-doc schema and two-column cost. (N4 ≠ the upstream function-SELECTION
-    scoring, which is internal Evaporate and reused as-is via `evaluate`.)
-
-Everything between those seams is upstream code, unmodified.
-
-Variants
---------
-* **direct**    — upstream `get_model_extractions(collecting_preds=True)`: per
-                  (question, doc) the LLM reads the keyword-filtered chunks and
-                  extracts the span directly. Apply cost = real LLM tokens
-                  (phase=extraction). No synthesis.
-* **code**      — upstream synthesis (`get_all_extractions`→`get_functions`),
-                  scoring (`evaluate`), best-1 selection (`get_topk_scripts_per_field`,
-                  k=1), apply to all docs (`apply_final_ensemble`, pure Python),
-                  combine (`combine_extractions`, MV-trivial over 1 function).
-* **codeplus**  — same, but top-k functions and `combine_extractions` aggregation:
-                  combiner=ws → the N2 snorkel `run_ws` shim (with N3 uniform
-                  prior); combiner=mv → upstream majority vote.
-
-I/O contract (schema_version=1)
--------------------------------
-Input JSON  (``--input``): see `_REQUIRED_INPUT_KEYS`.
-Output JSON (``--output``):
-    {
-      "schema_version": 1,
-      "variant": "...",
-      "combiner": "ws"|"mv"|null,
-      "predictions": { q_slug: { doc_name: {"predicted": str, "extract_llm_tokens": int} } },
-      "functions":   { q_slug: [ {"source": str, "score": float, "from_doc": null} ] },
-      "codeplus_ws": { q_slug: { ws_applied, mv_fallback, fallback_reasons, ... } },
-      "ledger":         [ ... ],
-      "ledger_summary": { "by_phase": {synthesis, extraction}, ... },
-      "errors":         [ ... ]
-    }
-
-`extract_llm_tokens` is the per-doc LLM token spend of the *apply* step (Direct
-only; 0 for code/codeplus, whose apply is pure Python). The orchestrator turns
-predictions into pipeline-schema per-doc records.
+Variants: direct (per-doc LLM extract), code (best-1 synthesized fn), codeplus
+(top-k fns + WS/MV combine). I/O: input keys in `_REQUIRED_INPUT_KEYS`; output is
+per-q/per-doc predictions + functions + codeplus_ws stats + a phase-tagged ledger.
 """
 
 from __future__ import annotations
@@ -77,43 +26,30 @@ from typing import Any
 SCHEMA_VERSION = 1
 _REQUIRED_INPUT_KEYS = ("schema_version", "variant", "questions", "sampled_docs", "all_docs")
 
-# Code+ weak-supervision (N2/N3). We mirror upstream get_data's per-document,
-# rank-based local label space of fixed cardinality: each doc's classes are its
-# top-N most common distinct extractions, padded to N with dummies, abstain = -1.
-WS_NUM_ELTS = 5          # fixed LabelModel cardinality (upstream get_data num_elts default)
-
-# N1 (model compat): gpt54mini is a reasoning model, so upstream's tiny max_toks
-# (10/100) get eaten by hidden reasoning → empty output. Floor the output budget.
-_MIN_COMPLETION_TOKENS = 256
+WS_NUM_ELTS = 5  # LabelModel cardinality = upstream get_data num_elts default
+_MIN_COMPLETION_TOKENS = 256  # N1: floor output budget (reasoning models eat tiny max_toks)
 
 _HERE = Path(__file__).resolve().parent
 _UPSTREAM = _HERE.parent / "upstream"
 
-# Set by run()/import: the live backend, upstream's value cleaner (for the WS shim),
-# and the phase-tagged WS stats the orchestrator reads.
+# Module globals: the WS shim has a fixed upstream signature, so it reads its inputs
+# (cleaner, sampled gold, stats) from here rather than as arguments.
 _BACKEND: Any = None
 _CLEAN_COMPARISON: Any = None
 _WS_STATS_BY_ATTR: dict[str, dict] = {}
-# Per-attribute {sampled_doc_name: gold_value} for the N3 WS class prior. Set by
-# _run_code before combine_extractions; read by the run_ws shim (which has a fixed
-# upstream signature and can't take it as an argument).
-_SAMPLED_GOLD_BY_ATTR: dict[str, dict] = {}
+_SAMPLED_GOLD_BY_ATTR: dict[str, dict] = {}  # {attr: {sampled_doc: gold}} — N3 prior
 
 
 # ── N1: LLM backend interception ─────────────────────────────────────────────
 
 def _patched_get_response(prompt, manifest, overwrite=False, max_toks=10,
                           stop_token=None, gold_choices=None, verbose=False):
-    """Drop-in for `evaporate.utils.get_response`, routing through `llm_backend`.
+    """N1 drop-in for `evaporate.utils.get_response` → `llm_backend`.
 
-    `apply_prompt` looks up `get_response` as a module global at call time, so
-    patching `evaporate.utils.get_response` reaches every upstream LLM call even
-    though `profiler`/`evaluate_profiler` bound `apply_prompt` into their own
-    namespaces at import. We ignore `manifest`, never send `stop` (post-truncate
-    locally — N1), and return `(text, total_tokens)` like upstream does.
+    Patching the utils-module global reaches every upstream call (they all go via
+    `apply_prompt`, which resolves `get_response` at call time). No `stop` sent.
     """
-    # gold_choices is upstream's constrained/log-prob branch; the ClosedIE flow never
-    # uses it. Fail loud if that ever changes rather than silently degrading.
+    # gold_choices (upstream's constrained branch) is unused in ClosedIE — fail loud.
     assert gold_choices is None, "gold_choices (constrained scoring) unsupported in the patch"
     text, toks = _BACKEND.complete(
         (prompt or "").strip(),
@@ -126,14 +62,8 @@ def _patched_get_response(prompt, manifest, overwrite=False, max_toks=10,
 
 
 def _install_stubs() -> None:
-    """Neutralize upstream's top-level manifest/metal imports before importing it.
-
-    `utils.py` does `from manifest import Manifest`; `profiler.py` does
-    `from evaporate.weak_supervision.run_ws import run_ws` (which drags in
-    snorkel-metal/cvxpy). We never use either: LLM calls go through `llm_backend`
-    (N1) and WS uses a snorkel shim installed as `profiler.run_ws` (N2). Stub both
-    so the imports succeed.
-    """
+    """Stub upstream's top-level `manifest` and metal `run_ws` imports (we replace
+    both — N1 backend, N2 snorkel shim) so importing the profiler succeeds."""
     import types
 
     if "manifest" not in sys.modules:
@@ -176,15 +106,10 @@ def _import_upstream():
     from evaporate.evaluate_profiler import evaluate, get_topk_scripts_per_field  # noqa: E402
     from evaporate.evaluate_synthetic import clean_comparison  # noqa: E402
 
-    # The WS shim mirrors upstream get_data, which cleans votes with this exact
-    # function (only the empty string is an abstain; "none" stays a vote value).
-    _CLEAN_COMPARISON = clean_comparison
+    _CLEAN_COMPARISON = clean_comparison  # the exact cleaner upstream get_data uses
 
-    # N1: route all upstream LLM calls through llm_backend.
-    up_utils.get_response = _patched_get_response
-    # N2: drive Code+ aggregation through the snorkel shim (upstream combine_extractions
-    # imported `run_ws` into the profiler namespace — patch it there).
-    up_profiler.run_ws = _snorkel_run_ws
+    up_utils.get_response = _patched_get_response   # N1
+    up_profiler.run_ws = _snorkel_run_ws            # N2 (combine_extractions calls it here)
 
     return {
         "get_txt_parse": get_txt_parse,
@@ -205,25 +130,14 @@ def _import_upstream():
 
 def _snorkel_run_ws(all_votes, gold_extractions_file, symmetric=True, attribute="",
                     has_abstains=1.0, extraction_fraction_thresh=0.9):
-    """Snorkel 0.10 LabelModel weak supervision (N2), uniform class prior (N3).
+    """N2/N3 drop-in for upstream `run_ws`. Same `(mapped_preds, used_deps,
+    missing_files)` contract; `mapped_preds` aligns to `all_votes` order and
+    `combine_extractions` handles MV fallbacks.
 
-    Same call/return contract as upstream `weak_supervision/run_ws.py:run_ws`:
-    returns `(mapped_preds, used_deps, missing_files)` where `mapped_preds` is a
-    list aligned to `all_votes` iteration order (one per non-missing doc).
-    `combine_extractions` consumes it and applies its own MV fallbacks.
-
-    Faithful to upstream `get_data` for label-space construction (top-`WS_NUM_ELTS`
-    rank-based local classes, abstain bucket, dummy padding, `random.seed(0)`
-    shuffle, -1 abstain). DEVIATIONS from upstream, by design:
-      * N3: the class prior is estimated from the SAMPLED docs' gold only — the
-        held-in labels LSF also uses (legitimate parity). Upstream estimates it from
-        ALL docs' gold (run_ws.py:76-87), i.e. including the apply set, which is a
-        leak; we restrict it to sampled docs. Unsampled docs vote into `L` but carry
-        no class-balance label. Sampled gold arrives via `_SAMPLED_GOLD_BY_ATTR`; we
-        never read `gold_extractions_file`.
-      * N2: snorkel `LabelModel` (0..k-1, -1 abstain) instead of MeTaL (1..k, 0).
-      * cvxpy structure-learning/deps dropped — this is upstream's own
-        try/except "Not modeling dependencies" fallback path, not a new deviation.
+    Label space mirrors upstream `get_data` (top-WS_NUM_ELTS rank-based classes,
+    abstain bucket, dummy padding, seed-0 shuffle, -1 abstain). N3: the class prior
+    is from the SAMPLED docs' gold only (via `_SAMPLED_GOLD_BY_ATTR`), never the
+    apply-set gold (the leak). cvxpy dep-learning dropped (= upstream's no-deps path).
     """
     import random as _random
     import numpy as np
@@ -312,12 +226,8 @@ def _snorkel_run_ws(all_votes, gold_extractions_file, symmetric=True, attribute=
 # ── chunking (upstream txt parser, in-memory — no temp files) ────────────────
 
 def _build_file2chunks(up, docs: dict, chunk_size: int) -> tuple[dict, dict]:
-    """Build upstream-style file2chunks/file2contents from {name: text}.
-
-    Uses upstream `get_txt_parse` so chunking is identical to upstream; doc names
-    are the dict keys (upstream's synthesis/scoring/apply read from these dicts,
-    never from disk).
-    """
+    """Build file2chunks/file2contents from {name: text} via upstream `get_txt_parse`
+    (same chunking as upstream; upstream reads from these dicts, not disk)."""
     file2contents = {name: (text or "") for name, text in docs.items()}
     file2chunks = {}
     for name, text in file2contents.items():
@@ -329,11 +239,8 @@ def _build_file2chunks(up, docs: dict, chunk_size: int) -> tuple[dict, dict]:
 # ── variant: direct (upstream get_model_extractions) ─────────────────────────
 
 def _run_direct(be, up, *, attribute, all_docs, chunk_size, max_extract_chunks):
-    """Per-doc direct LLM extraction via upstream get_model_extractions.
-
-    Runs per doc so the apply (extraction-phase) token spend can be attributed
-    per doc (the orchestrator uses it as retrieved_token_count for Direct).
-    """
+    """Per-doc direct LLM extraction via upstream `get_model_extractions` (per doc
+    so the extraction-phase token spend is attributable per doc)."""
     be.set_phase("extraction")
     file2chunks, file2contents = _build_file2chunks(up, all_docs, chunk_size)
     file2chunks = up["filter_file2chunks"](file2chunks, list(all_docs.keys()), attribute) or {}
@@ -366,14 +273,9 @@ def _run_direct(be, up, *, attribute, all_docs, chunk_size, max_extract_chunks):
 
 def _run_code(be, up, *, attribute, sampled_docs, all_docs, chunk_size,
               topk, codeplus, combiner, extraction_fraction_thresh, sampled_gold_for_q=None):
-    """Drive the upstream ClosedIE function pipeline for one attribute.
-
-    Mirrors the algorithmic core of upstream `run_profiler` (do_end_to_end=False):
-      filter_file2chunks → get_all_extractions → evaluate → get_topk_scripts_per_field
-      → apply_final_ensemble (all docs) → combine_extractions (MV or N2 snorkel WS).
-    All LLM work here is function synthesis/selection → phase="synthesis".
-    Returns (preds, functions_meta, ws_stats|None).
-    """
+    """Upstream ClosedIE pipeline for one attribute (= run_profiler do_end_to_end=False):
+    filter_file2chunks → get_all_extractions → evaluate → get_topk → apply_final_ensemble
+    → combine_extractions. All LLM work is synthesis-phase."""
     be.set_phase("synthesis")
     file2chunks, file2contents = _build_file2chunks(up, all_docs, chunk_size)
     sample_files = list(sampled_docs.keys())
@@ -384,8 +286,7 @@ def _run_code(be, up, *, attribute, sampled_docs, all_docs, chunk_size,
         # No keyword chunks for this attribute anywhere in the sample → no functions.
         return ({dn: {"predicted": "", "extract_llm_tokens": 0} for dn in all_docs}, [], None)
 
-    # GOLD_KEY / "fm" are opaque dict keys + a non-"flan" model_name (selects upstream's
-    # CONTEXT prompts); the ACTUAL model is the single llm_backend (see `model` above).
+    # GOLD_KEY / "fm" are opaque keys / a non-"flan" model_name; the real model is llm_backend.
     GOLD_KEY = "gold_extraction"
     EXTRACTION_MODELS = ["fm"]
     manifest_sessions = {GOLD_KEY: [{"__name": "llm_backend"}],
@@ -436,8 +337,7 @@ def _run_code(be, up, *, attribute, sampled_docs, all_docs, chunk_size,
 
     # COMBINE: MV, or N2 snorkel WS via the patched profiler.run_ws.
     _WS_STATS_BY_ATTR.pop(attribute, None)
-    # N3: hand the SAMPLED docs' gold (held-in labels) to the WS class prior; unsampled
-    # gold is excluded (apply-time leak). Read inside the run_ws shim.
+    # N3: hand the WS prior the SAMPLED docs' gold only (read inside the shim).
     _SAMPLED_GOLD_BY_ATTR[attribute] = {
         dn: g for dn, g in (sampled_gold_for_q or {}).items() if g is not None
     }
@@ -540,12 +440,8 @@ def run(input_path: Path, output_path: Path) -> None:
 
 
 def _self_test() -> int:
-    """A4 gate: prove upstream imports + the N1/N2 patches install, no network.
-
-    Imports upstream, asserts `evaporate.utils.get_response` is our patch and
-    `evaporate.profiler.run_ws` is the snorkel shim, then exercises the snorkel WS
-    shim on a synthetic vote set (no LLM, no gold file).
-    """
+    """A4 gate (no network): assert the N1/N2 patches installed, then run the WS shim
+    on a synthetic vote set."""
     up = _import_upstream()  # noqa: F841
     import evaporate.utils as up_utils
     import evaporate.profiler as up_profiler

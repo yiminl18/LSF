@@ -1,30 +1,15 @@
 """Evaporate baseline orchestrator — fair comparison vs LSF (llm-rule-gen).
 
-Runs in the MAIN repo env. It does NOT call the LLM for synthesis/extraction
-itself; that happens inside `.venv-evaporate` via `runtime/run_variant.py`. The
-orchestrator's job is to make Evaporate *look like a pipeline.py result* by
-reusing pipeline.py's three seams (see .omc/plans/evaporate-fair-baseline.md):
+Runs in the MAIN repo env; the LLM work happens in `.venv-evaporate` via
+`runtime/run_variant.py`. The orchestrator makes Evaporate look like a pipeline.py
+result by reusing pipeline.py's three seams: the same split (`stage_sampling`,
+seed=0/cap=20 or the prebuilt financebench cluster), the same gpt54 judge
+(`_JUDGE_SYSTEM`/`_judge`), and the same per-doc schema → `pipeline_summary.json`.
+Cost is two-column (synthesis vs apply); `cost_ratio` = pipeline's
+`retrieved_token_count / _count_tokens(doc)`.
 
-  1. **Same split.** Uses pipeline.py's `stage_sampling` (random: seed=0, cap=20;
-     fps: same driver) so the sampled/unsampled doc sets are byte-identical to the
-     LSF run. Evaporate synthesizes on `sampled` only.
-  2. **Same judge.** Scores predicted answers with pipeline.py's generic
-     `_JUDGE_SYSTEM` / `_judge` on gpt54 (NOT mini) — imported directly so the
-     prompt is identical by construction.
-  3. **Same per-doc schema + aggregation.** Emits pipeline's per-doc record
-     schema and per-split aggregates + `pipeline_summary.json`, so existing
-     reporting needs zero new code.
-
-Cost (Gap C, two columns): synthesis cost (gpt54mini function generation) and
-apply cost are reported separately. `cost_ratio` uses pipeline's denominator
-(`retrieved_token_count / _count_tokens(doc)`); for Direct, retrieved tokens =
-the per-doc LLM extraction tokens; for code/code+, the tokens of the returned
-span.
-
-Usage:
-    python src/baseline/evaporate/run_evaporate.py \
-        --dataset court --variant code \
-        --output-dir baseline_results/court/evaporate_code_gpt54mini
+Usage: python src/baseline/evaporate/run_evaporate.py --dataset court --variant code \\
+       --model gpt54 --output-dir <dir>
 """
 
 from __future__ import annotations
@@ -60,10 +45,8 @@ def _doc_text(doc: dict) -> str:
     return "\n".join(s.get("text", "") for s in doc.get("texts", []))
 
 
-# Per-dataset default queries file, mirroring pipeline.py's resolution:
-#   * court/nopv: data/<dataset>/queries.json
-#   * financebench: data/financebench/sample_queries.txt (pipeline.py default,
-#     queries_file at pipeline.py:1222/1508 — there is no queries.json there).
+# Default queries per dataset (mirrors pipeline.py): court/nopv → queries.json;
+# financebench → sample_queries.txt (pipeline.py default; no queries.json there).
 _DEFAULT_QUERIES = {
     "financebench": "data/financebench/sample_queries.txt",
     "court": "data/court/queries.json",
@@ -209,11 +192,9 @@ def run(args: argparse.Namespace) -> dict:
     questions = [{"slug": pipeline._make_slug(q), "text": q} for q in queries]
 
     # ── Seam 1: SAME split as pipeline.py ──
-    # FinanceBench reads a PREBUILT split at data/financebench/sample/<cluster>/random/.
-    # Naming gotcha: the data dir is `multi_cluster` (SINGULAR) — there is no
-    # `multi_clusters`. A wrong/plural cluster would make stage_sampling fall back
-    # to building a fresh random split from all_labels.json → a DIFFERENT split
-    # than the LSF run (silent fairness break). Fail loudly instead.
+    # FinanceBench uses a PREBUILT cluster split; guard a wrong/missing --cluster
+    # (note 'multi_cluster' is SINGULAR), which would silently fall back to a fresh
+    # random split ≠ the LSF run. Fail loudly instead.
     if args.dataset == "financebench" and args.sampling_strategy == "random":
         fb_split = _ROOT / "data" / "financebench" / "sample" / args.cluster / "random"
         if not (fb_split / "sample_doc_labels.json").exists():
@@ -288,10 +269,8 @@ def run(args: argparse.Namespace) -> dict:
                            f"see {apply_root / 'evaporate_FAILED.json'}")
 
     # ── variant-error guard ──
-    # run_variant catches per-question exceptions and fills that question's docs
-    # with empty predictions, which would otherwise PASS the completeness guard
-    # above and silently score as 0% accuracy. A synthesis/extraction failure is
-    # NOT a legitimate "all wrong" result, so we fail the run loudly instead.
+    # run_variant fills a failed question's docs with empty preds (which would pass
+    # the completeness guard and silently score 0%). Fail the run loudly instead.
     var_errors = var_out.get("errors", []) or []
     if var_errors:
         fail = {"status": "FAILED", "reason": "variant subprocess reported per-question errors",

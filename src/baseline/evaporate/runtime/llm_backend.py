@@ -1,21 +1,9 @@
-"""Standalone Azure gpt54mini client for the Evaporate baseline (isolated venv).
+"""Standalone Azure client for the Evaporate baseline (isolated venv).
 
-This module is imported from *inside* `.venv-evaporate` by `run_variant.py`. That
-venv cannot import the main repo's `models.*` (different, old dependency set), so
-this file reads `local/azure.json` directly and replicates the gpt54mini call
-semantics defined in `src/models/gpt54mini.py`:
-
-  * credentials come from `key_file_cheap` in `local/azure.json`
-    (a text file with `api_key`, `api_version`, `azure_endpoint`, `deployment`);
-  * `max_completion_tokens=5000`, `temperature=0.0` defaults;
-  * the deployment defaults to `gpt-5.4-mini`.
-
-Every completion is recorded in a *phase-tagged* usage ledger so the orchestrator
-can report Evaporate's synthesis cost (function generation) and apply/extraction
-cost separately (plan Gap C, two columns). The phase is one of
-{"synthesis", "extraction"}; set it with `set_phase(...)` or per call.
-
-`local/azure.json` is the ONLY credential source (acceptance criterion #6).
+Imported from INSIDE `.venv-evaporate` by `run_variant.py`, which can't import the
+repo's `models.*`. Reads creds from `local/azure.json` (model-selectable: gpt54 or
+gpt54mini, mirroring src/models/gpt54*.py) and records every completion in a
+phase-tagged ({synthesis, extraction}) usage ledger for two-column cost reporting.
 """
 
 from __future__ import annotations
@@ -46,12 +34,10 @@ def _parse_key_file(path: str | Path) -> dict[str, str]:
 
 
 def _load_credentials(model: str) -> tuple[str, str, str, str]:
-    """Return (api_key, api_version, endpoint, deployment) for the requested model.
+    """Return (api_key, api_version, endpoint, deployment) for `model`.
 
-    `gpt54mini` follows `local/azure.json`'s `key_file_cheap` pointer (mirrors
-    `src/models/gpt54mini.py`); `gpt54` reads the inline credentials + main
-    `deployment` from `local/azure.json` (mirrors `src/models/gpt54.py`). The model
-    must match the LSF variant the baseline is compared against.
+    gpt54mini → azure.json `key_file_cheap`; gpt54 → azure.json `key_file`/inline
+    (mirrors src/models/gpt54*.py). Match the model to the compared LSF variant.
     """
     cfg = json.loads(_AZURE_JSON.read_text(encoding="utf-8"))
     if model == "gpt54mini":
@@ -122,14 +108,8 @@ class LLMBackend:
         phase: str | None = None,
         stop: list[str] | None = None,
     ) -> tuple[str, int]:
-        """Run one chat completion; return (text, total_tokens).
-
-        Call params mirror src/models/gpt54mini.py's `chat_completions` EXACTLY
-        (the semantic reference for the fair-comparison backend): it sends
-        `max_completion_tokens`, `temperature=0.0`, `top_p=1.0`,
-        `frequency_penalty=0.0`, `presence_penalty=0.0`. Records a phase-tagged
-        ledger entry. `phase` defaults to the current phase set via `set_phase`.
-        """
+        """One chat completion → (text, total_tokens). Sends gpt54*-style params
+        (temperature=0, top_p=1, no penalties); records a phase-tagged ledger entry."""
         ph = phase or self._phase
         if ph not in VALID_PHASES:
             raise ValueError(f"phase must be one of {VALID_PHASES}, got {ph!r}")
@@ -146,11 +126,8 @@ class LLMBackend:
             "frequency_penalty": frequency_penalty,
             "presence_penalty": presence_penalty,
         }
-        # NOTE: gpt-5.4(-mini) reasoning deployments REJECT the `stop` parameter
-        # (400 "Unsupported parameter: 'stop' is not supported with this model").
-        # gpt54mini.py never sends it either. So we never pass `stop` to the API;
-        # instead we emulate it by post-truncating the completion at the first
-        # stop sequence below — same effect, no unsupported param.
+        # gpt-5.4(-mini) reasoning deployments reject `stop` (400), so we never send
+        # it — emulate it by post-truncating the completion below.
         t0 = time.time()
         resp = self._client.chat.completions.create(**kwargs)
         dt = time.time() - t0
