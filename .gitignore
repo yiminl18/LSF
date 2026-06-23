@@ -26,6 +26,14 @@ rule_run_unsampled/
 
 # Local environment config (API key paths differ per machine)
 local/azure.json
+local/azure_*.txt
 
 # Backup result snapshots (kept locally, not versioned)
 backup_results/
+
+# Evaporate baseline: isolated venv + staged subprocess I/O (can embed full docs)
+src/baseline/evaporate/runtime/.venv-evaporate/
+**/staging/
+src/baseline/evaporate/upstream/function_cache/
+docs/baseline/evaporate_paper_to_code*.html
+.omx/
