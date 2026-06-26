@@ -1,43 +1,34 @@
-"""Azure OpenAI chat — gpt-5.4-mini via ``key_file_cheap`` in ``local/azure.json``."""
+"""Chat — gpt-5.4-mini. Provider (Azure vs general OpenAI) chosen by ``LSF_LLM_PROVIDER``.
+
+Azure (default): ``key_file_cheap`` in ``local/azure.json``.
+``LSF_LLM_PROVIDER=openai`` -> general key in ``local/azure.json::openai_key_file``.
+Public interface unchanged, so callers/pipelines need no edits.
+"""
 
 from __future__ import annotations
 
-import json
 import sys
 from pathlib import Path
 from typing import Any
-
-from openai import AzureOpenAI
 
 _ROOT = Path(__file__).resolve().parents[2]
 _SRC = _ROOT / "src"
 if str(_SRC) not in sys.path:
     sys.path.insert(0, str(_SRC))
 
-from azure_local import load_azure_credentials_from_key_file
+from azure_local import build_model_client, install_usage_logging as _install_usage_logging
 
 _AZURE_JSON = _ROOT / "local" / "azure.json"
 
-_cfg = json.loads(_AZURE_JSON.read_text())
-_cheap_key_file = _cfg.get("key_file_cheap", "")
-if not _cheap_key_file:
-    raise RuntimeError("key_file_cheap not set in local/azure.json")
-
-api_key, AZURE_API_VERSION, AZURE_ENDPOINT, _deployment = load_azure_credentials_from_key_file(
-    _cheap_key_file
-)
-AZURE_DEPLOYMENT = (_deployment or "gpt-5.4-mini").strip()
+_m = build_model_client(_AZURE_JSON, "chat_mini", timeout=120.0, max_retries=3)
+client = _m["client"]
+PROVIDER = _m["provider"]
+AZURE_DEPLOYMENT = _m["model"]
 deployment = AZURE_DEPLOYMENT
+api_key = _m["api_key"]
+AZURE_ENDPOINT = _m["endpoint"]
+AZURE_API_VERSION = _m["api_version"]
 
-client = AzureOpenAI(
-    api_version=AZURE_API_VERSION,
-    azure_endpoint=AZURE_ENDPOINT,
-    api_key=api_key,
-    timeout=120.0,     # abort a stalled request instead of hanging forever
-    max_retries=3,     # retry transient failures / timeouts
-)
-
-from azure_local import install_usage_logging as _install_usage_logging
 _install_usage_logging(client, "gpt54mini")
 
 
@@ -92,10 +83,11 @@ def gpt_54_mini(
 
 
 if __name__ == "__main__":
+    print("provider:", PROVIDER)
     print("azure.json:", _AZURE_JSON)
     print("endpoint:", AZURE_ENDPOINT)
-    print("api_version:", AZURE_API_VERSION)
-    print("deployment:", AZURE_DEPLOYMENT)
+    print("api_version:", AZURE_API_VERSION or "(n/a)")
+    print("model/deployment:", AZURE_DEPLOYMENT)
     print("api_key:", (api_key[:8] + "…") if len(api_key) > 8 else "***")
     print("---")
 

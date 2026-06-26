@@ -1,4 +1,10 @@
-"""Azure OpenAI chat — ``local/azure.json`` (inline credentials or ``key_file`` text)."""
+"""Chat — gpt-5.4. Provider (Azure vs general OpenAI) chosen by ``LSF_LLM_PROVIDER``.
+
+Azure (default): ``local/azure.json`` inline creds or ``key_file``.
+``LSF_LLM_PROVIDER=openai`` -> general key in ``local/azure.json::openai_key_file``.
+The public interface (``client``, ``chat_completions``, ``gpt_54``, ``AZURE_DEPLOYMENT``)
+is unchanged, so callers/pipelines need no edits.
+"""
 
 from __future__ import annotations
 
@@ -6,32 +12,25 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from openai import AzureOpenAI
-
 _ROOT = Path(__file__).resolve().parents[2]
 _SRC = _ROOT / "src"
 if str(_SRC) not in sys.path:
     sys.path.insert(0, str(_SRC))
 
-from azure_local import load_azure_credentials_from_local
+from azure_local import build_model_client, install_usage_logging as _install_usage_logging
 
 _AZURE_JSON = _ROOT / "local" / "azure.json"
 
-api_key, AZURE_API_VERSION, AZURE_ENDPOINT, _deployment = load_azure_credentials_from_local(
-    _AZURE_JSON
-)
-AZURE_DEPLOYMENT = (_deployment or "gpt-5.4").strip()
+# large llm_coarse rule-gen prompts on big finance docs need >120s
+_m = build_model_client(_AZURE_JSON, "chat_large", timeout=600.0, max_retries=3)
+client = _m["client"]
+PROVIDER = _m["provider"]
+AZURE_DEPLOYMENT = _m["model"]
 deployment = AZURE_DEPLOYMENT
+api_key = _m["api_key"]
+AZURE_ENDPOINT = _m["endpoint"]
+AZURE_API_VERSION = _m["api_version"]
 
-client = AzureOpenAI(
-    api_version=AZURE_API_VERSION,
-    azure_endpoint=AZURE_ENDPOINT,
-    api_key=api_key,
-    timeout=600.0,     # large llm_coarse rule-gen prompts on big finance docs need >120s
-    max_retries=3,     # retry transient failures / timeouts
-)
-
-from azure_local import install_usage_logging as _install_usage_logging
 _install_usage_logging(client, "gpt54")
 
 
@@ -88,10 +87,11 @@ def gpt_54(
 
 
 if __name__ == "__main__":
+    print("provider:", PROVIDER)
     print("azure.json:", _AZURE_JSON)
     print("endpoint:", AZURE_ENDPOINT)
-    print("api_version:", AZURE_API_VERSION)
-    print("deployment:", AZURE_DEPLOYMENT)
+    print("api_version:", AZURE_API_VERSION or "(n/a)")
+    print("model/deployment:", AZURE_DEPLOYMENT)
     print("api_key:", (api_key[:8] + "…") if len(api_key) > 8 else "***")
     print("---")
 
