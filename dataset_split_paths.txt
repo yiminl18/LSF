@@ -1,0 +1,52 @@
+Dataset split paths (random sampling) — sampled / unsampled / queries / ground truth
+Source: docs/final_result.md splits, verified on disk.
+
+NOTE: The split label files (sample_doc_labels.json / unsampled_doc_labels.json) and
+the master all_labels.json ARE the ground truth — each maps doc -> question -> answer.
+There is no separate ground-truth file.
+
+
+=========================================================================
+FinanceBench — 20 sampled / 80 unsampled (multi_cluster grid, 12 queries)
+=========================================================================
+Item                      | Path                                                                       | n
+--------------------------|----------------------------------------------------------------------------|----
+Sampled (random) + GT     | data/financebench/sample/multi_cluster/random/sample_doc_labels.json       | 20
+Unsampled + GT            | data/financebench/sample/multi_cluster/random/unsampled_doc_labels.json    | 80
+Queries                   | data/financebench/multi_cluster_queries.txt                                | 12
+Full ground truth         | data/financebench/multi_cluster_all_labels.json                            | 100
+(run-time copy of split also at: results/financebench/grid/sampling/random/{sample,unsampled}_doc_labels.json)
+
+
+=========================================================================
+Court — 20 sampled / 274 unsampled / 294 total (13 queries)
+=========================================================================
+Item                      | Path                                                          | n
+--------------------------|---------------------------------------------------------------|----
+Sampled (random) + GT     | results/court/grid/sampling/random/sample_doc_labels.json     | 20
+Unsampled + GT            | results/court/grid/sampling/random/unsampled_doc_labels.json  | 274
+Queries                   | data/court/queries.json                                       | 13
+Full ground truth         | data/court/all_labels.json                                    | 294
+
+
+=========================================================================
+NOPV — 20 sampled / 222 unsampled / 242 total (12 queries)
+=========================================================================
+Item                      | Path                                                  | n
+--------------------------|-------------------------------------------------------|----
+Sampled (random) + GT     | derived at runtime -> <grid_dir>/sample_doc_labels.json   | 20
+Unsampled + GT            | derived at runtime -> <grid_dir>/unsampled_doc_labels.json | 222
+Queries                   | data/nopv/queries.json                                | 12
+Full ground truth         | data/nopv/all_labels.json                             | 242
+
+
+=========================================================================
+OfficeQA — 20 sampled / 180 unsampled / 200 total (16 queries)
+=========================================================================
+Item                      | Path                                                  | n
+--------------------------|-------------------------------------------------------|----
+Sampled (random) + GT     | derived at runtime -> <grid_dir>/sample_doc_labels.json   | 20
+Unsampled + GT            | derived at runtime -> <grid_dir>/unsampled_doc_labels.json | 180
+Queries                   | data/officeqa/queries.json                            | 16
+Full ground truth         | data/officeqa/all_labels.json                        | 200
+

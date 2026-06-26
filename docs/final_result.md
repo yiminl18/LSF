@@ -73,6 +73,7 @@ normalizes by plain text (matches what apply retrieves).
 | random / agent_codex / p_hybrid | gpt54 | 1.3 | 0.846 | 0.0387 |
 | random / agent_codex / p_mini | gpt54 | 1.3 | 0.846 | 0.0387 |
 | random / agent_codex / agentic_codex | gpt54 | 1.3 | 0.843 | 0.0373 |
+| fps / **agent_codex_val** / none ¶ | gpt54 | ~250◊ | 0.906 | 0.0368 |
 
 *sAcc/uAcc breakdown (pipelines, for reference):*
 
@@ -114,6 +115,15 @@ tokens only** (gpt54mini gate calls are logged but excluded). On nopv it shrank 
 hit fallback), trading **~0.8 pt accuracy** (0.929→0.921, all on the unsampled split) for **~6%
 lower cost** (0.205→0.192). RL cost ratio is unchanged (same rule generation).
 
+¶ `agent_codex_val` = **validation-guarded** Codex rule-gen (trains on the 20 sampled docs,
+then validates on a held-out 20-doc set and broadens overfit rules; see the dedicated
+subsection below). This row uses **no refine** and **`merge`** apply (not `default` like the
+rest of the table), and reports combined accuracy (sampled 0.954 / unsampled 0.902). The
+`~250◊` RL ratio reflects the heavy multi-turn agent session (59.2M gen input tokens,
+~$80.7 total); ◊ marks it approximate (per-turn usage includes resent/cached context — treat
+as an upper bound). It improves unsampled accuracy +5.7 pt over `agent_codex` (0.845→0.902)
+but at ~190× the rule-learning cost, so it is **not** Pareto-optimal.
+
 ### Analysis
 
 **1. The pipeline's whole value is in the QA cost ratio.** Every pipeline answers from
@@ -148,6 +158,56 @@ the refiners are effectively tied on both axes (acc 0.843–0.853, cost 0.037–
 - **Max accuracy:** `random/llm_coarse/p_mini` — 0.935 acc @ 0.42 cost ratio (top accuracy, highest pipeline cost, still ≫ cheaper than any baseline).
 - **Best accuracy-per-cost:** `fps/llm_coarse/p_hybrid` — 0.929 acc @ 0.205, the cheapest of the high-accuracy tier.
 - **Cheapest overall:** `random/agent_codex/agentic_codex` — 0.843 acc @ 0.037 cost ratio, ~15× cheaper to learn than any `llm_coarse` and still above Baseline 2 mini.
+
+### Validation-guarded rule-gen (`agent_codex_val`) — new experiment (2026-06-13)
+
+A variant of `agent_codex` rule generation with a **generalization guard**: the Codex
+agent trains rules on the 20 sampled docs as usual, then validates them on a **held-out
+20-doc set** carved from the unsampled pool (never seen during rule design), broadening
+overfit rules (≤ 3 passes) until validation accuracy holds within 5 pts of sampled. Run
+with **no refine** and **`merge`** apply (generated rules applied directly — no gpt54mini
+gate, no fallback). Reported with a three-way split (option-3): `sampled` / `val`
+(held-out) / `clean-test` (unsampled **minus** val, no leakage) / `full-unsampled`
+(legacy, comparable to the rows above). fps, gpt54, all 12 questions, 222-doc unsampled.
+
+| metric | value |
+|---|---:|
+| sampled accuracy | 0.954 |
+| validation accuracy (held-out 20) | 0.917 |
+| clean-test accuracy (no leakage) | 0.900 |
+| full-unsampled accuracy | 0.902 |
+| QA cost ratio (`merge` apply) | 0.037 |
+| rule-gen tokens — codex agent | 59.2M in / 0.65M out |
+| rule-gen tokens — LLM verification | 0.17M in / 4K out |
+| rule-gen cost (gpt-5.4 rates) | **~$80.7** |
+| RL cost ratio (≈ gen-input ÷ 1-doc JSON form) | **~250** ◊ |
+
+**Comparison to the current nopv results:**
+
+| approach | sAcc | uAcc | sampled→uAcc gap | QA cost | RL ratio | gen cost |
+|---|---:|---:|---:|---:|---:|---:|
+| `fps/agent_codex/agentic_codex` (prior agentic) | 0.942 | 0.845 | 9.7 pt | 0.039 | 1.3 | ~$0.4 |
+| **`fps/agent_codex_val/merge` (new)** | 0.954 | **0.902** | **5.2 pt** | 0.037 | ~250 | **~$80.7** |
+| `fps/llm_coarse/agentic_codex` (best non-agentic gen) | 0.950 | **0.929** | 2.1 pt | 0.282 | 18.2 | — |
+
+**Takeaways:**
+- **Accuracy + generalization improved over `agent_codex`:** unsampled **0.845 → 0.902
+  (+5.7 pt)**, and the sampled→unsampled gap nearly halved (9.7 → 5.2 pt). The validation
+  guard does reduce overfitting, as intended; apply cost is unchanged (~0.037).
+- **But it is not Pareto-optimal.** It still trails `llm_coarse` on accuracy (0.902 vs
+  0.929) while costing **~190× more to learn** than `agent_codex` (59.2M vs ~0.3M gen
+  tokens; **~$80.7 vs ~$0.4**) and ~14× the rule-learning of `llm_coarse` (RL ≈ 250 vs
+  18). The gain (+5.7 pt over `agent_codex`) does not justify the ~200× rule-gen cost.
+- **Cost is highly question-dependent:** easy cover-page questions used ~2M gen tokens;
+  the hardest (list all 49 CFR sections) used **12.2M**. Most validation was done with the
+  substring proxy / the agent's own reasoning; only the counting/listing questions
+  triggered separate gpt54 judge calls (verification tokens, 0.17M total).
+
+> ◊ The RL cost ratio for `agent_codex_val` is approximate: codex `exec --json` reports
+> per-turn usage that includes resent (partly cached) context, so the 59.2M input is
+> inflated by multi-turn accumulation. Treat ~250 as an order-of-magnitude upper bound on
+> rule-learning cost, not a precise figure. (Result files:
+> `results/nopv/grid/{apply,rule_gen}/fps/agent_codex_val_gpt54/...`.)
 
 ### NOPV — normalized (single cost ratio)
 
@@ -536,6 +596,19 @@ filings — lack reconstructed JSON), 12 questions; `random` = 18 sampled / 68 u
 | random / agent_codex / agentic_codex | 0.875 | 0.798 | 0.814 | 0.0059 |
 | random / agent_codex / p_mini | 0.861 | 0.797 | 0.810 | 0.0060 |
 | random / agent_codex / p_hybrid | 0.866 | 0.794 | 0.809 | 0.0060 |
+| fps / **agent_codex_val** / merge ◊ | 0.858 | 0.866 | **0.864** | 0.0061 |
+
+◊ **Validation-guarded** Codex rule-gen (2026-06-14): trains on the 20 sampled docs, then
+validates on a held-out 20-doc set (carved from the unsampled pool) and broadens overfit rules
+(≤ 3 passes); **no refine**, **`merge`** apply (not part of the 2×2×3 grid). Reported four ways —
+sampled 0.858 / **val 0.883** / clean-test (46 docs, no leakage) **0.859** / full-unsampled
+**0.866**. It lifts `agent_codex` from **0.806 → 0.866 unsampled (+6 pt)**, essentially **matching
+the best `llm_coarse`** (0.871) while keeping agent_codex's cheap inference (0.0061) — but at a
+**~$94 rule-gen cost** (70.3M codex gen + 0.18M LLM-verification tokens; ~235× the baseline
+`agent_codex`'s ~$0.4, far above llm_coarse), so it is **not Pareto-optimal**. Unlike nopv (where
+the guard stayed ~3 pt below llm_coarse), on finance it closes the gap. The 2 hard questions still
+drag it: Q6 material-agreement **0.258**, Q8 long-term-debt **0.530**; the other 10 average ~0.96.
+Result files: `results/financebench/grid/{apply,rule_gen}/fps/agent_codex_val_gpt54/...`.
 
 **The familiar accuracy↔cost split (as on nopv/court):**
 - **`llm_coarse` wins accuracy** — **0.850–0.871** (it ingests the whole 20-doc sample) — but is
