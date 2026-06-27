@@ -809,3 +809,186 @@ Computed exactly as in the NOPV normalized section: `Accuracy = (20·sAcc + 180�
 sample, so `Cost ratio = RL/200 + unsampled_cr` (one-time per-query generation amortized over the
 200-doc corpus, plus per-pair apply cost). Accuracy is the all-docs value. See the ◊ footnote on
 the unnormalized table above and `docs/approach/rule_end_to_end.md`.
+
+---
+
+## PRODUCT (epar) & TROPIC (nhc_tcr) — strategies to run
+
+New datasets to evaluate. Data is **ready** (no doc-build needed): both have
+`all_labels.json`, `queries.json`, and a `json/` directory of `texts`-schema docs
+(court/nopv-style — the pipeline auto-tries `<doc>.json`).
+
+| Dataset | Docs | Queries | Labels | Doc JSON dir |
+|---|---:|---:|---|---|
+| **product** (EMA EPAR Product Information) | 206 | 13 | `data/product/all_labels.json` | `data/product/json` |
+| **tropic** (NHC Tropical Cyclone Reports) | 354 | 14 | `data/tropic/all_labels.json` | `data/tropic/json` |
+
+### Strategy set (per dataset)
+
+Mirrors the other datasets: **keep Baseline 1, Baseline 2, Ablation 1**, then run
+**4 grid strategies** (no Ablation 2, no extra LSF beyond these 4):
+
+| Role | Strategy |
+|---|---|
+| Baseline 1 | Agentic Codex QA per-pair (gpt54, gpt54mini) |
+| Baseline 2 | Agentic Codex QA All (gpt54, gpt54mini) |
+| Ablation 1 | `all_docs / agentic_full_data_adaptive` (rule-end-to-end) |
+| Grid | `fps / llm_coarse / p_hybrid` |
+| Grid | `fps / agent_codex / p_hybrid` |
+| Grid | `fps / agent_codex / agentic_codex` |
+| Grid | `random / llm_coarse / p_hybrid` |
+
+> Provider note: the server defaults to the **OpenAI** key (`local/azure.json::provider=openai`
+> + `~/.codex/auth.json`), so the old `AZURE_OPENAI_API_KEY` awk export is **not** needed. Set
+> `LSF_LLM_PROVIDER=openai` explicitly if running where that default isn't configured.
+
+### Commands
+
+Replace `<DS>` with `product` or `tropic`. Each grid strategy is one `pipeline.py`
+call (`sampling → rule_gen → precompute → refine → apply`); the `gpt54` rule-gen/refine
+variants use the model id, matching the existing per-dataset run scripts.
+
+**4 grid strategies** (run each once per dataset):
+
+```bash
+cd ~/LSF; export PATH=$HOME/.npm-global/bin:$PATH   # codex on PATH; provider defaults to openai
+
+# 1) fps / llm_coarse / p_hybrid
+python3 src/pipeline.py \
+  --sampling-strategy fps --rule-gen-strategy llm_coarse_gpt54 --refine-strategy p_hybrid \
+  --apply-strategy default --dataset <DS> --cluster all_docs \
+  --queries-file data/<DS>/queries.json --processing-dir data/<DS>/json \
+  --output-dir results/<DS>/grid --stop-after apply --skip-existing \
+  > logs/<DS>_fps_llmcoarse_phybrid.log 2>&1 &
+
+# 2) fps / agent_codex / p_hybrid
+python3 src/pipeline.py \
+  --sampling-strategy fps --rule-gen-strategy agent_codex_gpt54 --refine-strategy p_hybrid \
+  --apply-strategy default --dataset <DS> --cluster all_docs \
+  --queries-file data/<DS>/queries.json --processing-dir data/<DS>/json \
+  --output-dir results/<DS>/grid --stop-after apply --skip-existing \
+  > logs/<DS>_fps_agentcodex_phybrid.log 2>&1 &
+
+# 3) fps / agent_codex / agentic_codex
+python3 src/pipeline.py \
+  --sampling-strategy fps --rule-gen-strategy agent_codex_gpt54 --refine-strategy agentic_codex_gpt54 \
+  --apply-strategy default --dataset <DS> --cluster all_docs \
+  --queries-file data/<DS>/queries.json --processing-dir data/<DS>/json \
+  --output-dir results/<DS>/grid --stop-after apply --skip-existing \
+  > logs/<DS>_fps_agentcodex_agenticcodex.log 2>&1 &
+
+# 4) random / llm_coarse / p_hybrid
+python3 src/pipeline.py \
+  --sampling-strategy random --rule-gen-strategy llm_coarse_gpt54 --refine-strategy p_hybrid \
+  --apply-strategy default --dataset <DS> --cluster all_docs \
+  --queries-file data/<DS>/queries.json --processing-dir data/<DS>/json \
+  --output-dir results/<DS>/grid --stop-after apply --skip-existing \
+  > logs/<DS>_random_llmcoarse_phybrid.log 2>&1 &
+```
+
+### Run scope (IMPORTANT)
+
+- **Baseline 1 & Baseline 2 → 50 docs only, all queries.** Run on the first 50 docs
+  (`--max-docs 50`), all queries, both `gpt54` and `gpt54mini`. These 50-doc runs are
+  used to **estimate average cost, latency, and accuracy**, then extrapolate to the
+  full corpus (×206 / ×354 docs). Do **not** run baselines on the full corpus (it's the
+  expensive per-pair path — see the cost estimate below).
+- **Ablation 1 → full corpus** (all 206 product / 354 tropic docs).
+- **Grid (4 LSF strategies) → full corpus** (20-doc sample + held-out, as on court/nopv).
+
+**Ablation 1 — rule-end-to-end** (full-corpus agentic generation, adaptive sample;
+see `docs/approach/rule_end_to_end.md`):
+
+```bash
+python3 src/baseline/run_eval_rule_full_data.py \
+  --dataset <DS> --baseline agentic_rule_full_data_gpt54mini_adaptive
+# gpt54 variant: --baseline agentic_rule_full_data_gpt54_adaptive
+```
+
+**Baselines 1 & 2 — Codex QA, 50 docs × all queries** (gpt54 + gpt54mini each):
+
+```bash
+# Baseline 1 — per (question, doc) pair (reads plain text/, writes per-pair JSON + codex logs)
+python3 src/baseline/run_eval_<DS>.py     --baseline agentic_codex_qa_txt --model gpt54     --max-docs 50
+python3 src/baseline/run_eval_<DS>.py     --baseline agentic_codex_qa_txt --model gpt54mini --max-docs 50
+# Baseline 2 — all-docs amortized session (one codex session per question over the 50 docs)
+python3 src/baseline/run_eval_all_<DS>.py --baseline agentic_codex_qa_txt --model gpt54     --max-docs 50
+python3 src/baseline/run_eval_all_<DS>.py --baseline agentic_codex_qa_txt --model gpt54mini --max-docs 50
+```
+
+### Prerequisites — code that must be added first (none of these datasets are wired yet)
+
+Verified on local **and** server: `data/{product,tropic}/{all_labels.json,queries.json,json/,text/}`
+all exist, but the baseline/ablation drivers do **not** know about these datasets yet:
+
+1. **Baseline drivers** (B1/B2) are per-dataset. Create by copying the court versions and
+   swapping the 4 path constants (`DATASET`, `QUERIES_FILE`, `TEXT_DIR`, `LABELS_FILE`):
+   - `src/baseline/run_eval_product.py`, `run_eval_tropic.py`  (copy `run_eval_court.py`)
+   - `src/baseline/run_eval_all_product.py`, `run_eval_all_tropic.py`  (copy `run_eval_all_court.py`)
+2. **Ablation 1 driver** uses a registry: add `product` and `tropic` entries to
+   `_DATASET_CONFIG` in `src/baseline/run_eval_rule_full_data.py`
+   (`{queries_file, labels_file, text_dir}`) — current keys: financebench/court/nopv/officeqa.
+3. **Grid (pipeline.py)** needs no code change — `--dataset` is a free string and
+   `--processing-dir data/<DS>/json` is passed explicitly (court/nopv-style).
+
+### Artifacts to capture (must match court/nopv/officeqa)
+
+After each run, confirm the same outputs land as for the existing datasets:
+
+| Strategy | Accuracy | Cost (tokens/USD) | Latency | Rules | Agent logs | Location |
+|---|---|---|---|---|---|---|
+| Baseline 1 | `summary.json` (`accuracy`) + per-pair `<doc>.json` (`correct`) | per-pair `input/output_tokens`, `total_cost_usd`; `run_metadata.json` | per-pair `latency_seconds`, `avg_latency_seconds` | — (no rules) | `<qslug>/logs/<doc>.codex.jsonl` + `.codex.last.txt` | `baseline_results/<DS>/agentic_codex_qa_<model>/first_50/` |
+| Baseline 2 | `summary.json` | `run_total_input_tokens` + `run_total_cached_input_tokens` + `run_total_output_tokens` | `run_total_latency_seconds` | — | `logs/*.codex.jsonl` | `baseline_results/<DS>/agentic_codex_qa_<model>_all/first_50/` |
+| Ablation 1 | `rule_apply_merge/` eval | `*_rule_gen.json` (gen tokens), apply cost | per-stage timing | `rules/<DS>/agentic_rule_full_data_<model>_adaptive/all_docs/q*/` | `*.codex.jsonl`, `*.codex.last.txt`, `*.manifest.json`, `*.verify_accuracy_ledger.json` | `results/<DS>/agentic_rule_full_data_<model>_adaptive/all_docs/` |
+| Grid (4 LSF) | `rule_apply_merge`/`default` eval | cost_profile + apply cost ratio | per-stage | `rules/<DS>/grid/{fps,random}/<gen>/<qslug>/` | rule-gen traces (`agent_codex`), selector logs | `results/<DS>/grid/{rule_gen,refined,apply}/...` |
+
+> Cross-check against an existing dataset before trusting a run, e.g. `baseline_results/court/agentic_codex_qa_gpt54/first_50/`
+> (per-pair JSON + `summary.json` + `run_metadata.json` + `<qslug>/logs/*.codex.jsonl`) and
+> `results/court/agentic_rule_full_data_gpt54mini_adaptive/all_docs/` (rule-gen + traces + ledgers).
+
+### Notes
+- `--cluster all_docs` and the run-time 20-doc split (cap 20, seed 0) apply exactly as
+  for court/nopv/officeqa; `fps` writes its split under `results/<DS>/grid/sampling/fps/`.
+- 50-doc baselines → multiply per-pair mean cost/latency by full doc count (×206 product,
+  ×354 tropic) to estimate full-corpus baselines; accuracy on 50 docs is the point estimate.
+- After runs complete, add per-dataset result tables here (accuracy + cost ratio) in the
+  court/nopv/officeqa format, and record figure picks under
+  `images/final_result/<DS>/selected_strategies.txt`.
+- tropic is the largest corpus so far (354 docs) — expect longer apply stages.
+
+### PRODUCT — results (strategies completed on all 13 queries)
+
+First product run (2026-06-27). The table below lists only strategies that completed
+**all 13 queries**. Baselines scored on **50 docs**; LSF on the **full 200-doc corpus**
+(20 sampled for rule-learning + 180 held-out). Accuracy for LSF rows is the combined
+weighted mean `(20·sAcc + 180·uAcc)/200`. Cost ratio = input/apply tokens ÷ doc tokens
+(baselines: input/doc; LSF: apply retrieved/doc).
+
+| Strategy | Model | Accuracy | Cost ratio |
+|---|---|---:|---:|
+| **Baseline 1** — Agentic Codex QA (per-pair) | gpt54 | **0.902** | 2.85 |
+| **Baseline 1** — Agentic Codex QA (per-pair) | gpt54mini | 0.840 | 2.44 |
+| **Baseline 2** — Agentic Codex QA All | gpt54 | **0.920** | 0.13 |
+| **Baseline 2** — Agentic Codex QA All | gpt54mini | 0.849 | 0.28 |
+| `fps / agent_codex / agentic_codex` (A2) | gpt54 | 0.841 | **0.0024** |
+| `fps / llm_coarse (embedding) / agentic_codex` (A5) | gpt54 | **0.855** | 0.030 |
+
+*LSF sampled/unsampled breakdown:*
+
+| Strategy | sAcc | uAcc | combined |
+|---|---:|---:|---:|
+| `fps / agent_codex / agentic_codex` (A2) | 0.892 | 0.836 | 0.841 |
+| `fps / llm_coarse (embedding) / agentic_codex` (A5) | 0.850 | 0.855 | 0.855 |
+
+**Notes / caveats:**
+- **Baselines lead on accuracy** (B2-gpt54 0.920, B1-gpt54 0.902) but at **5–1200× the cost**
+  of the LSF strategies (0.13–2.85 vs 0.0024–0.030).
+- **A5 (embedding llm_coarse) edges A2 (agent_codex)** on combined accuracy (0.855 vs 0.841) —
+  the top-100 query-similar-span selection helps llm_coarse on these long EPAR docs — but
+  retrieves ~12× more (cost 0.030 vs 0.0024).
+- **Ablation 1** (`agentic_rule_full_data_gpt54_adaptive`): rule generation complete on all 13
+  queries, but the **apply step (`rule_apply_merge`) has not been run**, so no accuracy yet —
+  add once applied.
+- **Not yet at 13 queries** (still 3 sampled): A1 `fps/agent_codex/p_hybrid`,
+  A3 `fps/llm_coarse/p_hybrid`, A4 `random/llm_coarse/p_hybrid`, A6 `random/llm_coarse(embedding)/agentic_codex`.
+- These are first-pass numbers on the full query set; figure-strategy selection still pending.
