@@ -43,6 +43,16 @@ _DATASET_CONFIG = {
         "text_dir": _ROOT / "data/officeqa/text",
         "labels_file": _ROOT / "data/officeqa/all_labels.json",
     },
+    "product": {
+        "queries_file": _ROOT / "data/product/queries.json",
+        "text_dir": _ROOT / "data/product/text",
+        "labels_file": _ROOT / "data/product/all_labels.json",
+    },
+    "tropic": {
+        "queries_file": _ROOT / "data/tropic/queries.json",
+        "text_dir": _ROOT / "data/tropic/text",
+        "labels_file": _ROOT / "data/tropic/all_labels.json",
+    },
 }
 
 _APPLY_SYSTEM_BY_DATASET = {
@@ -67,6 +77,18 @@ Return only the answer, as a short value or phrase, not a full sentence.""",
     "officeqa": """\
 You are a document QA assistant.
 You are given a passage extracted from an OfficeQA text document and a question.
+Answer the question using only the provided passage.
+If the passage does not contain enough information to answer, reply exactly "NOT FOUND".
+Return only the answer, as a short value or phrase, not a full sentence.""",
+    "product": """\
+You are a document QA assistant.
+You are given a passage extracted from a medicinal product information document and a question.
+Answer the question using only the provided passage.
+If the passage does not contain enough information to answer, reply exactly "NOT FOUND".
+Return only the answer, as a short value or phrase, not a full sentence.""",
+    "tropic": """\
+You are a document QA assistant.
+You are given a passage extracted from a tropical cyclone report and a question.
 Answer the question using only the provided passage.
 If the passage does not contain enough information to answer, reply exactly "NOT FOUND".
 Return only the answer, as a short value or phrase, not a full sentence.""",
@@ -102,6 +124,22 @@ You are an answer equivalence judge for a document QA system.
 Judge whether the predicted answer is semantically equivalent to the ground truth.
 Equivalence rules:
 - Ignore capitalization, punctuation, and leading/trailing whitespace differences
+- If the predicted answer is "NOT_FOUND", "NOT FOUND", or null, always judge as incorrect
+Reply with exactly one word: CORRECT or INCORRECT""",
+    "product": """\
+You are an answer equivalence judge for a document QA system.
+Judge whether the predicted answer is semantically equivalent to the ground truth.
+Equivalence rules:
+- Ignore capitalization, punctuation, and leading/trailing whitespace differences
+- Treat abbreviations and full forms as equivalent
+- If the predicted answer is "NOT_FOUND", "NOT FOUND", or null, always judge as incorrect
+Reply with exactly one word: CORRECT or INCORRECT""",
+    "tropic": """\
+You are an answer equivalence judge for a document QA system.
+Judge whether the predicted answer is semantically equivalent to the ground truth.
+Equivalence rules:
+- Ignore capitalization, punctuation, and leading/trailing whitespace differences
+- Treat abbreviations and full forms as equivalent
 - If the predicted answer is "NOT_FOUND", "NOT FOUND", or null, always judge as incorrect
 Reply with exactly one word: CORRECT or INCORRECT""",
 }
