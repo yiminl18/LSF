@@ -38,6 +38,16 @@ _DATASET_CONFIG = {
         "text_dir": _ROOT / "data/officeqa/text",
         "labels_file": _ROOT / "data/officeqa/all_labels.json",
     },
+    "product": {
+        "queries_file": _ROOT / "data/product/queries.json",
+        "text_dir": _ROOT / "data/product/text",
+        "labels_file": _ROOT / "data/product/all_labels.json",
+    },
+    "tropic": {
+        "queries_file": _ROOT / "data/tropic/queries.json",
+        "text_dir": _ROOT / "data/tropic/text",
+        "labels_file": _ROOT / "data/tropic/all_labels.json",
+    },
 }
 
 

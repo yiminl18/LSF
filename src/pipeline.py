@@ -479,6 +479,7 @@ def stage_rule_gen(
     val_doc_names: list[str] | None = None,
     labels_file: str | None = None,
     processing_dir: str | None = None,
+    embedding_portion: bool = False,
 ) -> tuple[Path, dict]:
     """Generate rules for one question. Return (rule_folder, gen_metadata).
 
@@ -505,7 +506,7 @@ def stage_rule_gen(
     if base_strategy in {"llm_coarse", "agent_langchain"}:
         mod = importlib.import_module(f"rule_gen.{base_strategy}")
         fn  = next(v for k, v in vars(mod).items() if k.startswith("rule_gen_") and callable(v))
-        result = fn(
+        gen_kwargs = dict(
             documents     = sample_docs,
             question      = question,
             ground_truth  = ground_truth,
@@ -514,6 +515,9 @@ def stage_rule_gen(
             model_name    = effective_model,
             rule_subdir   = str(rule_folder),
         )
+        if base_strategy == "llm_coarse":
+            gen_kwargs["embedding_portion"] = embedding_portion
+        result = fn(**gen_kwargs)
         _write_json(rule_gen_out, result)
         print(f"  [gen:{strategy} model={effective_model}] {question_slug}: {len(result.get('rules', []))} rules", flush=True)
     elif base_strategy in _SUBPROCESS_GEN:
@@ -1228,6 +1232,7 @@ def run_pipeline(
     skip_existing:     bool = False,
     model:             str = "gpt54",
     stop_after:        str | None = None,
+    embedding_portion: bool = False,
 ) -> dict:
     """Run the four-stage LSF pipeline once, end to end.
 
@@ -1351,6 +1356,7 @@ def run_pipeline(
                 val_doc_names=val_doc_names or None,
                 labels_file=val_labels_file,
                 processing_dir=processing_dir,
+                embedding_portion=embedding_portion,
             )
             n_rules_gen = len(_list_rule_names(rule_folder_gen))
 
@@ -1513,6 +1519,9 @@ def _build_cli():
     p.add_argument("--output-dir",        default="results/e2e")
     p.add_argument("--model",             default="gpt54")
     p.add_argument("--skip-existing",     action="store_true")
+    p.add_argument("--embedding-portion", action="store_true",
+                   help="llm_coarse only: feed the 100 spans most similar to the query "
+                        "(per doc) instead of the first 80 spans. Ignored by other generators.")
     p.add_argument("--stop-after",        default=None,
                    choices=["sampling", "rule_gen", "precompute", "refine", "apply"],
                    help="Run stages up to and including this one, then stop. "
@@ -1536,6 +1545,7 @@ def main():
         model             = args.model,
         skip_existing     = args.skip_existing,
         stop_after        = args.stop_after,
+        embedding_portion = args.embedding_portion,
     )
 
 

@@ -106,10 +106,53 @@ def _make_question_slug(question: str) -> str:
     return slug[:60]
 
 
+# Span-budget constants for the two span-selection modes.
+_FIRST_K = 80    # default: first N spans (document order)
+_EMBED_K = 100   # --embedding_portion: top-N spans by query similarity
+
+
+def _select_relevant_spans(doc: dict, question: str, k: int = _EMBED_K) -> list[dict]:
+    """Return the ``k`` spans whose text is most cosine-similar to ``question``.
+
+    Spans are embedded with the project embedding model (text-embedding-3-small),
+    ranked by cosine similarity to the query embedding, and the top-``k`` are
+    returned **restored to original document order** so positional/structural
+    hints stay meaningful. If the doc has <= k spans, all are returned.
+    Used by the ``--embedding_portion`` variant instead of ``texts[:_FIRST_K]``.
+    """
+    texts = doc.get("texts", [])
+    if len(texts) <= k:
+        return texts
+
+    import sys as _sys
+    from pathlib import Path as _Path
+    _src = _Path(__file__).resolve().parents[1]
+    if str(_src) not in _sys.path:
+        _sys.path.insert(0, str(_src))
+    from models import embedding3small  # provider-aware (azure/openai) embedding client
+
+    span_texts = [(s.get("text") or "") for s in texts]
+    qv = embedding3small.embed([question])[0]
+    svs = embedding3small.embed(span_texts)
+
+    import math
+
+    def _cos(a: list[float], b: list[float]) -> float:
+        dot = sum(x * y for x, y in zip(a, b))
+        na = math.sqrt(sum(x * x for x in a))
+        nb = math.sqrt(sum(x * x for x in b))
+        return dot / (na * nb) if na and nb else 0.0
+
+    top = sorted(range(len(texts)), key=lambda i: _cos(qv, svs[i]), reverse=True)[:k]
+    keep = sorted(top)  # restore document order
+    return [texts[i] for i in keep]
+
+
 def _build_user_prompt(
     documents: list[dict],
     question: str,
     ground_truth: dict,
+    embedding_portion: bool = False,
 ) -> str:
     n = len(documents)
     parts: list[str] = [
@@ -123,11 +166,17 @@ def _build_user_prompt(
         doc_name = doc.get("doc_name", "unknown")
         filename = doc.get("origin", {}).get("filename", doc_name + ".pdf")
         answer = ground_truth.get(filename, ground_truth.get(doc_name, "N/A"))
-        spans_json = json.dumps(doc["texts"][:80], indent=2)
+        if embedding_portion:
+            spans = _select_relevant_spans(doc, question, _EMBED_K)
+            span_note = f"{len(spans)} spans most similar to the query shown"
+        else:
+            spans = doc["texts"][:_FIRST_K]
+            span_note = f"first {_FIRST_K} spans shown"
+        spans_json = json.dumps(spans, indent=2)
         parts.append(
             f"\n--- Document: {doc_name} ---\n"
             f"Answer: {answer}\n"
-            f"Document JSON (texts array, first 80 spans shown):\n{spans_json}\n"
+            f"Document JSON (texts array, {span_note}):\n{spans_json}\n"
         )
     parts.append(_USER_PROMPT_SUFFIX)
     return "".join(parts)
@@ -172,10 +221,15 @@ def rule_gen_llm_coarse(
     output_dir: str = "results/financebench/lsf/single_cluster/llm/gpt54/one_shot/rule_gen",
     rules_dir: str = "rules/financebench/lsf/single_cluster/llm/gpt54/one_shot",
     rule_subdir: str | None = None,
+    embedding_portion: bool = False,
 ) -> dict:
     """
     Given a collection of similar documents, a question, and ground truth answers,
     use an LLM to generate Python rules that locate the answer span in any document.
+
+    ``embedding_portion=True`` selects the 100 spans most similar to the query
+    (per doc) instead of the first 80 spans; everything else (system prompt,
+    hints, parsing) is identical.
 
     Returns a summary dict with rule names, file paths, and run metadata.
     """
@@ -184,7 +238,7 @@ def rule_gen_llm_coarse(
     timestamp_iso = now.strftime("%Y-%m-%dT%H:%M:%SZ")
     timestamp_file = now.strftime("%Y%m%d_%H%M%S")
 
-    user_prompt = _build_user_prompt(documents, question, ground_truth)
+    user_prompt = _build_user_prompt(documents, question, ground_truth, embedding_portion=embedding_portion)
 
     # LLM call — use the raw client so we get usage metadata
     t0 = time.monotonic()
@@ -245,6 +299,7 @@ def rule_gen_llm_coarse(
         "latency_seconds": round(latency_seconds, 3),
         "input_tokens": input_tokens,
         "output_tokens": output_tokens,
+        "span_selection": ("embedding_top%d" % _EMBED_K) if embedding_portion else ("first_%d" % _FIRST_K),
         "rules": rules_list,
     }
 
@@ -259,6 +314,12 @@ def rule_gen_llm_coarse(
 # ---------------------------------------------------------------------------
 
 if __name__ == "__main__":
+    import argparse
+    _ap = argparse.ArgumentParser(description="llm_coarse rule generation (quick test entrypoint)")
+    _ap.add_argument("--embedding_portion", action="store_true",
+                     help="Select the 100 spans most similar to the query instead of the first 80")
+    _cli = _ap.parse_args()
+
     os.chdir(_ROOT)
 
     _DATA = _ROOT / "data" / "financebench"
@@ -299,7 +360,7 @@ if __name__ == "__main__":
     print(f"GT entries : {len(gt)}")
     print("Calling rule_gen_llm_coarse …")
 
-    result = rule_gen_llm_coarse(docs, question, gt)
+    result = rule_gen_llm_coarse(docs, question, gt, embedding_portion=_cli.embedding_portion)
 
     print("\nResult summary:")
     print(f"  question_slug : {result['question_slug']}")
