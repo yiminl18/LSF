@@ -970,6 +970,7 @@ weighted mean `(20·sAcc + 180·uAcc)/200`. Cost ratio = input/apply tokens ÷ d
 | **Baseline 1** — Agentic Codex QA (per-pair) | gpt54mini | 0.840 | 2.44 |
 | **Baseline 2** — Agentic Codex QA All | gpt54 | **0.920** | 0.13 |
 | **Baseline 2** — Agentic Codex QA All | gpt54mini | 0.849 | 0.28 |
+| `fps / agent_codex / p_hybrid` (A1) | gpt54 | 0.844 | **0.0030** |
 | `fps / agent_codex / agentic_codex` (A2) | gpt54 | 0.841 | **0.0024** |
 | `fps / llm_coarse (embedding) / agentic_codex` (A5) | gpt54 | **0.855** | 0.030 |
 
@@ -977,6 +978,7 @@ weighted mean `(20·sAcc + 180·uAcc)/200`. Cost ratio = input/apply tokens ÷ d
 
 | Strategy | sAcc | uAcc | combined |
 |---|---:|---:|---:|
+| `fps / agent_codex / p_hybrid` (A1) | 0.881 | 0.840 | 0.844 |
 | `fps / agent_codex / agentic_codex` (A2) | 0.892 | 0.836 | 0.841 |
 | `fps / llm_coarse (embedding) / agentic_codex` (A5) | 0.850 | 0.855 | 0.855 |
 
@@ -1011,10 +1013,13 @@ queries = all 14. Baselines scored on **50 docs**; LSF/ablation on the **200-doc
 | **Baseline 2** — Agentic Codex QA All | gpt54 | 0.716 | 0.92 |
 | **Baseline 2** — Agentic Codex QA All | gpt54mini | 0.640 | 0.34 |
 | **Ablation 1** — `agentic_rule_full_data_gpt54_adaptive` | gpt54 | 0.746 | 0.025 |
+| `fps / agent_codex / p_hybrid` (A1) | gpt54 | 0.729 | 0.0091 |
 | `fps / agent_codex / agentic_codex` (A2) | gpt54 | **0.812** | **0.0082** |
 | `fps / llm_coarse (embedding) / agentic_codex` (A5) | gpt54 | **FAILED** | — |
 
-*A2 sampled/unsampled:* sAcc 0.907 / uAcc 0.801 → combined 0.812.
+*LSF sampled/unsampled:* A1 sAcc 0.761 / uAcc 0.725 → 0.729; A2 sAcc 0.907 / uAcc 0.801 → 0.812.
+On tropic the **refiner matters**: `agentic_codex` (A2, 0.812) clearly beats `p_hybrid` (A1, 0.729)
+on the same agent_codex rules — opposite of product, where they tie (0.844 vs 0.841).
 
 **Notes:**
 - **LSF wins outright on tropic**: A2 (`fps/agent_codex/agentic_codex`) is the **top accuracy
