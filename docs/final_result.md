@@ -992,3 +992,35 @@ weighted mean `(20·sAcc + 180·uAcc)/200`. Cost ratio = input/apply tokens ÷ d
 - **Not yet at 13 queries** (still 3 sampled): A1 `fps/agent_codex/p_hybrid`,
   A3 `fps/llm_coarse/p_hybrid`, A4 `random/llm_coarse/p_hybrid`, A6 `random/llm_coarse(embedding)/agentic_codex`.
 - These are first-pass numbers on the full query set; figure-strategy selection still pending.
+
+#### PRODUCT — Ablation 1 accuracy (apply now run)
+
+`agentic_rule_full_data_gpt54_adaptive` (rule-end-to-end), applied with `rule_apply_merge`
+over all 200 docs × 13 queries: **accuracy 0.844** (2194/2600 pairs), apply cost ratio ≈ 0.025.
+
+### TROPIC — results (strategies completed on all 14 queries)
+
+First tropic run (2026-06-27). 200-doc labeled corpus (the 354 files include 154 unlabeled);
+queries = all 14. Baselines scored on **50 docs**; LSF/ablation on the **200-doc corpus**
+(20 sampled + 180 held-out; LSF accuracy = combined `(20·sAcc + 180·uAcc)/200`).
+
+| Strategy | Model | Accuracy | Cost ratio |
+|---|---|---:|---:|
+| **Baseline 1** — Agentic Codex QA (per-pair) | gpt54 | 0.803 | 8.49 |
+| **Baseline 1** — Agentic Codex QA (per-pair) | gpt54mini | 0.777 | 6.90 |
+| **Baseline 2** — Agentic Codex QA All | gpt54 | 0.716 | 0.92 |
+| **Baseline 2** — Agentic Codex QA All | gpt54mini | 0.640 | 0.34 |
+| **Ablation 1** — `agentic_rule_full_data_gpt54_adaptive` | gpt54 | 0.746 | 0.025 |
+| `fps / agent_codex / agentic_codex` (A2) | gpt54 | **0.812** | **0.0082** |
+| `fps / llm_coarse (embedding) / agentic_codex` (A5) | gpt54 | **FAILED** | — |
+
+*A2 sampled/unsampled:* sAcc 0.907 / uAcc 0.801 → combined 0.812.
+
+**Notes:**
+- **LSF wins outright on tropic**: A2 (`fps/agent_codex/agentic_codex`) is the **top accuracy
+  (0.812)** — above the best baseline (B1-gpt54 0.803) — **and ~1000× cheaper** (0.0082 vs 8.49).
+- Ablation 1 (0.746) trails A2; baselines drop further on the harder later queries (the first 3
+  header facts scored ~1.0, pulling overall down once the wind/pressure/forecast queries are added).
+- **A5 FAILED** — `context_length_exceeded` on all queries (merged retrieval 1.5–2.3M tokens >
+  922k limit). The embedding-llm_coarse + agentic_codex retrieves too broadly on tropic's large
+  cyclone reports. Needs a retrieval cap or `p_hybrid` refine to be viable here.
