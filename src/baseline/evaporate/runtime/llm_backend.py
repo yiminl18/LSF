@@ -1,20 +1,26 @@
-"""Standalone Azure client for the Evaporate baseline (isolated venv).
+"""Standalone LLM client for the Evaporate baseline (isolated venv).
 
 Imported from INSIDE `.venv-evaporate` by `run_variant.py`, which can't import the
-repo's `models.*`. Reads creds from `local/azure.json` (model-selectable: gpt54 or
-gpt54mini, mirroring src/models/gpt54*.py) and records every completion in a
-phase-tagged ({synthesis, extraction}) usage ledger for two-column cost reporting.
+repo's `models.*`. Prefers the OpenAI *platform* key (`OPENAI_LSF_ONLY_API_KEY`,
+gpt54->"gpt-5.4" / gpt54mini->"gpt-5.4-mini") to mirror src/models/gpt54*.py's
+provider switch; falls back to Azure (`local/azure.json`) when that env var is
+unset. Records every completion in a phase-tagged ({synthesis, extraction}) usage
+ledger for two-column cost reporting.
 """
 
 from __future__ import annotations
 
 import json
+import os
 import threading
 import time
 from pathlib import Path
 from typing import Any
 
-from openai import AzureOpenAI
+from openai import AzureOpenAI, OpenAI
+
+# Azure deployment -> OpenAI platform model id (mirrors models/gpt54*.py).
+_OPENAI_MODEL_IDS = {"gpt54": "gpt-5.4", "gpt54mini": "gpt-5.4-mini"}
 
 # src/baseline/evaporate/runtime/llm_backend.py -> repo root is parents[4]
 _ROOT = Path(__file__).resolve().parents[4]
@@ -74,15 +80,50 @@ class LLMBackend:
 
     def __init__(self, model: str = "gpt54") -> None:
         self.model = model
-        api_key, api_version, endpoint, deployment = _load_credentials(model)
-        self.deployment = deployment
-        self._client = AzureOpenAI(
-            api_version=api_version,
-            azure_endpoint=endpoint,
-            api_key=api_key,
-            timeout=120.0,
-            max_retries=3,
-        )
+        pioneer_key = os.environ.get("PIONEER_API_KEY")
+        openai_key = os.environ.get("OPENAI_LSF_ONLY_API_KEY")
+        if pioneer_key:
+            self.provider = "pioneer"
+            self.deployment = _OPENAI_MODEL_IDS.get(model)
+            if not self.deployment:
+                raise ValueError(f"unknown model {model!r} (expected 'gpt54' or 'gpt54mini')")
+            import httpx
+            self._client = OpenAI(api_key=pioneer_key, base_url="https://api.pioneer.ai/v1",
+                                  timeout=600.0, max_retries=3,
+                                  http_client=httpx.Client(trust_env=False))
+            self._credential_source = "env:PIONEER_API_KEY (base_url=https://api.pioneer.ai/v1)"
+        elif openai_key:
+            self.provider = "openai"
+            self.deployment = _OPENAI_MODEL_IDS.get(model)
+            if not self.deployment:
+                raise ValueError(f"unknown model {model!r} (expected 'gpt54' or 'gpt54mini')")
+            self._client = OpenAI(api_key=openai_key, timeout=120.0, max_retries=3)
+            self._credential_source = "env:OPENAI_LSF_ONLY_API_KEY"
+        else:
+            self.provider = "azure"
+            api_key, api_version, endpoint, deployment = _load_credentials(model)
+            self.deployment = deployment
+            self._client = AzureOpenAI(
+                api_version=api_version,
+                azure_endpoint=endpoint,
+                api_key=api_key,
+                timeout=120.0,
+                max_retries=3,
+            )
+            self._credential_source = str(_AZURE_JSON)
+        # Per-call SQLite recorder + temperature-0 cache (shared repo
+        # .cache/llm_cache.db; same DB the main env's models.gpt54 writes to).
+        try:
+            import sys as _sys
+            _src = str(_ROOT / "src")
+            if _src not in _sys.path:
+                _sys.path.insert(0, _src)
+            from llm_usage_db import wrap_openai_create as _wrap_llm_db
+            _wrap_llm_db(self._client, provider=self.provider,
+                         model_default=self.deployment,
+                         db_path=str(_ROOT / ".cache" / "llm_cache.db"))
+        except Exception:
+            pass  # recorder is best-effort
         self._phase = "extraction"
         self._lock = threading.Lock()
         # One record per completion: {phase, model, prompt_tokens, completion_tokens, latency_s}
@@ -164,9 +205,11 @@ class LLMBackend:
             b["total_tokens"] += r["total_tokens"]
         return {
             "model": self.model,
+            "provider": getattr(self, "provider", "azure"),
+            "deployment": self.deployment,
             "by_phase": agg,
             "n_calls": len(self.ledger),
-            "credential_source": str(_AZURE_JSON),
+            "credential_source": getattr(self, "_credential_source", str(_AZURE_JSON)),
         }
 
 

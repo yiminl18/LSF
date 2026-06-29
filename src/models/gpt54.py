@@ -1,12 +1,15 @@
-"""Azure OpenAI chat — ``local/azure.json`` (inline credentials or ``key_file`` text)."""
+"""gpt-5.4 chat. Prefers the OpenAI *platform* key (``OPENAI_LSF_ONLY_API_KEY``);
+falls back to Azure (``local/azure.json``) when that env var is unset."""
 
 from __future__ import annotations
 
+import os
 import sys
 from pathlib import Path
 from typing import Any
 
-from openai import AzureOpenAI
+import httpx
+from openai import AzureOpenAI, OpenAI
 
 _ROOT = Path(__file__).resolve().parents[2]
 _SRC = _ROOT / "src"
@@ -17,22 +20,53 @@ from azure_local import load_azure_credentials_from_local
 
 _AZURE_JSON = _ROOT / "local" / "azure.json"
 
-api_key, AZURE_API_VERSION, AZURE_ENDPOINT, _deployment = load_azure_credentials_from_local(
-    _AZURE_JSON
-)
-AZURE_DEPLOYMENT = (_deployment or "gpt-5.4").strip()
-deployment = AZURE_DEPLOYMENT
-
-client = AzureOpenAI(
-    api_version=AZURE_API_VERSION,
-    azure_endpoint=AZURE_ENDPOINT,
-    api_key=api_key,
-    timeout=600.0,     # large llm_coarse rule-gen prompts on big finance docs need >120s
-    max_retries=3,     # retry transient failures / timeouts
-)
+# Provider switch (priority: Pioneer > OpenAI platform > Azure). Pioneer
+# (`PIONEER_API_KEY`, OpenAI-compatible base_url, gpt-5.4, 1200/min rate limit) is
+# preferred for high-concurrency experiments; OpenAI platform (`OPENAI_LSF_ONLY_API_KEY`)
+# next; Azure (`local/azure.json`, now 401-dead) last. `trust_env=False` on the Pioneer
+# client bypasses any HTTP(S)_PROXY env (the proxy can't route to api.pioneer.ai).
+_PIONEER_KEY = os.environ.get("PIONEER_API_KEY")
+_OPENAI_KEY = os.environ.get("OPENAI_LSF_ONLY_API_KEY")
+if _PIONEER_KEY:
+    PROVIDER = "pioneer"
+    api_key, AZURE_API_VERSION, AZURE_ENDPOINT = _PIONEER_KEY, None, None
+    AZURE_DEPLOYMENT = "gpt-5.4"
+    deployment = AZURE_DEPLOYMENT
+    client = OpenAI(api_key=api_key, base_url="https://api.pioneer.ai/v1",
+                    timeout=600.0, max_retries=3, http_client=httpx.Client(trust_env=False))
+elif _OPENAI_KEY:
+    PROVIDER = "openai"
+    api_key, AZURE_API_VERSION, AZURE_ENDPOINT = _OPENAI_KEY, None, None
+    AZURE_DEPLOYMENT = "gpt-5.4"
+    deployment = AZURE_DEPLOYMENT
+    client = OpenAI(api_key=api_key, timeout=600.0, max_retries=3)
+else:
+    PROVIDER = "azure"
+    api_key, AZURE_API_VERSION, AZURE_ENDPOINT, _deployment = load_azure_credentials_from_local(
+        _AZURE_JSON
+    )
+    AZURE_DEPLOYMENT = (_deployment or "gpt-5.4").strip()
+    deployment = AZURE_DEPLOYMENT
+    client = AzureOpenAI(
+        api_version=AZURE_API_VERSION,
+        azure_endpoint=AZURE_ENDPOINT,
+        api_key=api_key,
+        timeout=600.0,     # large llm_coarse rule-gen prompts on big finance docs need >120s
+        max_retries=3,     # retry transient failures / timeouts
+    )
 
 from azure_local import install_usage_logging as _install_usage_logging
 _install_usage_logging(client, "gpt54")
+
+# Per-call SQLite recorder + temperature-0 cache (shared .cache/llm_cache.db).
+# Captures every call through this client — judge, chat_completions, pipeline
+# rule-gen — with input/output tokens, latency, provider, model.
+try:
+    from llm_usage_db import wrap_openai_create as _wrap_llm_db
+    _wrap_llm_db(client, provider=PROVIDER, model_default=AZURE_DEPLOYMENT,
+                 db_path=str(_ROOT / ".cache" / "llm_cache.db"))
+except Exception:
+    pass  # recorder is best-effort; never block real calls
 
 
 def chat_completions(

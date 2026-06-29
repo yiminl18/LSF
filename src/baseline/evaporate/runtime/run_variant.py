@@ -38,6 +38,7 @@ _BACKEND: Any = None
 _CLEAN_COMPARISON: Any = None
 _WS_STATS_BY_ATTR: dict[str, dict] = {}
 _SAMPLED_GOLD_BY_ATTR: dict[str, dict] = {}  # {attr: {sampled_doc: gold}} — N3 prior
+_SELECTION_BY_ATTR: dict[str, dict] = {}     # {attr: selection stats} — threshold-bypass audit
 
 
 # ── N1: LLM backend interception ─────────────────────────────────────────────
@@ -323,6 +324,31 @@ def _run_code(be, up, *, attribute, sampled_docs, all_docs, chunk_size,
         for k in function_dictionary
     ]
 
+    # Threshold-bypass fallback (agreed methodology). Upstream get_topk_scripts_per_field
+    # returns [] when NO synthesized function clears keep_thresh=0.5. When >=1 function
+    # clears it, upstream's selection is used unchanged. When none do — but functions DO
+    # exist — bypass the threshold and force the top-num_top_k functions by raw F1, so the
+    # query still yields evaluable predictions (and codeplus can still aggregate via WS).
+    fn_keys_all = [k for k in all_metrics if k != GOLD_KEY and "function" in k]
+    selection_fallback = False
+    if not selected_keys:
+        ranked = sorted(
+            fn_keys_all,
+            key=lambda k: (all_metrics[k].get("average_f1", 0.0),
+                           all_metrics[k].get("median_f1", 0.0)),
+            reverse=True,
+        )
+        selected_keys = ranked[:num_top_k]
+        selection_fallback = bool(selected_keys)
+    _SELECTION_BY_ATTR[attribute] = {
+        "n_functions": len(fn_keys_all),
+        "n_selected": len(selected_keys),
+        "num_top_k": num_top_k,
+        "keep_thresh": 0.5,
+        "threshold_bypass_fallback": selection_fallback,
+        "best_f1": round(max((all_metrics[k].get("average_f1", 0.0) for k in fn_keys_all), default=0.0), 4),
+    }
+
     if not selected_keys:
         return ({dn: {"predicted": "", "extract_llm_tokens": 0} for dn in all_docs},
                 functions_meta, None)
@@ -395,6 +421,7 @@ def run(input_path: Path, output_path: Path) -> None:
     predictions: dict[str, dict] = {}
     functions: dict[str, list] = {}
     codeplus_ws: dict[str, dict] = {}
+    selection: dict[str, dict] = {}
     errors: list[str] = []
 
     for q in spec["questions"]:
@@ -407,6 +434,7 @@ def run(input_path: Path, output_path: Path) -> None:
                     chunk_size=chunk_size, max_extract_chunks=max_extract_chunks,
                 )
             else:
+                _SELECTION_BY_ATTR.pop(attribute, None)
                 preds, fns, ws_stats = _run_code(
                     be, up, attribute=attribute, sampled_docs=sampled_docs,
                     all_docs=all_docs, chunk_size=chunk_size, topk=topk,
@@ -417,6 +445,7 @@ def run(input_path: Path, output_path: Path) -> None:
                 functions[q_slug] = fns
                 if ws_stats is not None:
                     codeplus_ws[q_slug] = ws_stats
+                selection[q_slug] = _SELECTION_BY_ATTR.get(attribute, {})
             predictions[q_slug] = preds
         except Exception as e:  # noqa: BLE001
             errors.append(f"{q_slug}: {type(e).__name__}: {e}")
@@ -429,6 +458,7 @@ def run(input_path: Path, output_path: Path) -> None:
         "predictions": predictions,
         "functions": functions,
         "codeplus_ws": codeplus_ws,
+        "selection": selection,
         "ledger": be.ledger,
         "ledger_summary": be.ledger_summary(),
         "errors": errors,
