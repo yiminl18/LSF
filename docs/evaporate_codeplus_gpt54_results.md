@@ -1,4 +1,4 @@
-# Evaporate Baseline — Code+ / gpt-5.4 Results
+# Evaporate Baseline — Code / Code+ · gpt-5.4 Results
 
 **Variant:** `codeplus` (top-k synthesized functions + Snorkel weak-supervision combine)
 **Model:** `gpt-5.4` via Pioneer (`api.pioneer.ai`, OpenAI-compatible), same model for synthesis/extraction and judge
@@ -21,6 +21,34 @@ Splits: financebench 12 q · 20 sampled / 80 unsampled (100 docs); nopv 12 q · 
 Judge calls: financebench 1200, nopv 2904, court 3822, officeqa 2562, product 2600, tropic 2800 (docs×questions minus (doc,question) pairs with no ground truth, which skip the judge call).
 
 **product / tropic** (added 2026-06-29): these come from the yiming-dev `data/product` (EU drug EPAR product-information docs) and `data/tropic` (NHC tropical-cyclone reports) datasets — 200 labeled docs each. Documents were docling-reconstructed on the GPU box (identical to yiming-dev's `data/<ds>/json`, verified); evaluated with `--processing-dir datasets/{epar,nhc_tcr}/processing`. The split is **not** seed-0 runtime-derived: the 20 sampled docs are the prebuilt list in yiming-dev `data/<ds>/random_sample_20.txt`, materialized into `data/<ds>/sample/single_cluster/random/{sample,unsampled}_doc_labels.json` so `stage_sampling` picks it up.
+
+## Code variant (`code` — single best/top-1 function, no weak-supervision combine)
+
+Same datasets/splits/queries/docs as Code+ above; only the selection differs (top-1 by F1 instead of top-k + Snorkel WS). Provider: financebench/nopv via Pioneer, court/product/tropic/officeqa via OpenAI platform (Pioneer balance exhausted) — same gpt-5.4 list price ($2.50/$15), so costs are comparable. Run date 2026-06-29.
+
+| dataset | gen cost | judge cost | total cost | sampled acc | unsampled acc | total acc |
+|---|--:|--:|--:|--:|--:|--:|
+| financebench | $7.29 | $1.07 | **$8.36** | 0.196 | 0.175 | **0.179** |
+| nopv | $7.58 | $2.30 | **$9.88** | 0.288 | 0.274 | **0.275** |
+| court | $7.30 | $1.23 | **$8.53** | 0.196 | 0.185 | **0.186** |
+| product | $7.46 | $1.34 | **$8.80** | 0.250 | 0.220 | **0.223** |
+| tropic | $8.34 | $0.88 | **$9.22** | 0.268 | 0.247 | **0.249** |
+| officeqa | $9.76 | $2.27 | **$12.02** | 0.081 | 0.085 | **0.085** |
+| **total** | **$47.73** | **$9.09** | **$56.81** | | | |
+
+### Code vs Code+ (total acc · total cost)
+
+| dataset | code acc | code+ acc | code $ | code+ $ |
+|---|--:|--:|--:|--:|
+| financebench | 0.179 | **0.385** | 8.36 | 7.83 |
+| nopv | 0.275 | **0.350** | 9.88 | 8.58 |
+| court | 0.186 | **0.202** | 8.53 | 8.65 |
+| product | 0.223 | **0.443** | 8.80 | 9.93 |
+| tropic | 0.249 | **0.307** | 9.22 | 9.39 |
+| officeqa | **0.085** | 0.044 | 12.02 | 10.63 |
+
+- **Code+ wins accuracy on 5/6 datasets** — top-k + WS aggregation beats a single function. **officeqa is the exception** (code 0.085 > code+ 0.044): on these huge, messy treasury docs WS aggregation hurts, and the single best function does better.
+- **gen cost is ~identical** between variants (synthesis is shared; selection/combine is post-synthesis, no LLM). The cost gap is in **judge** — code's single-function predictions tend to be longer/noisier → larger judge inputs → higher judge cost.
 
 ## Accuracy definitions
 
