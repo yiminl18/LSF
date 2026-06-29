@@ -61,10 +61,11 @@ _install_usage_logging(client, "gpt54")
 # Per-call SQLite recorder + temperature-0 cache (shared .cache/llm_cache.db).
 # Captures every call through this client — judge, chat_completions, pipeline
 # rule-gen — with input/output tokens, latency, provider, model.
+LLM_DB = None  # set below; exposes `.totals` (cumulative tokens, cache-aware)
 try:
     from llm_usage_db import wrap_openai_create as _wrap_llm_db
-    _wrap_llm_db(client, provider=PROVIDER, model_default=AZURE_DEPLOYMENT,
-                 db_path=str(_ROOT / ".cache" / "llm_cache.db"))
+    LLM_DB = _wrap_llm_db(client, provider=PROVIDER, model_default=AZURE_DEPLOYMENT,
+                          db_path=str(_ROOT / ".cache" / "llm_cache.db"))
 except Exception:
     pass  # recorder is best-effort; never block real calls
 

@@ -60,8 +60,19 @@ class LLMUsageDB:
         Path(db_path).parent.mkdir(parents=True, exist_ok=True)
         self._db_path = str(db_path)
         self._local = threading.local()
+        # Cumulative usage over EVERY call returned through this client (cache hit
+        # OR miss). The caller reads a delta around a phase to get that phase's
+        # cost — cache-aware and run-agnostic (a hit returns its recorded tokens).
+        self.totals = {"calls": 0, "input_tokens": 0, "output_tokens": 0}
+        self._tlock = threading.Lock()
         self._conn().execute(_CREATE)
         self._conn().commit()
+
+    def add_totals(self, itok: int, otok: int) -> None:
+        with self._tlock:
+            self.totals["calls"] += 1
+            self.totals["input_tokens"] += int(itok)
+            self.totals["output_tokens"] += int(otok)
 
     def _conn(self) -> sqlite3.Connection:
         c = getattr(self._local, "conn", None)
@@ -121,6 +132,7 @@ def wrap_openai_create(client, *, provider: str, model_default: str, db_path: st
             row = db.lookup(key)
             if row is not None:
                 resp, itok, otok, _lat = row
+                db.add_totals(itok, otok)  # cache hit still counts toward workload cost
                 return _stub_response(resp, itok, otok)
 
         t0 = time.perf_counter()
@@ -135,6 +147,7 @@ def wrap_openai_create(client, *, provider: str, model_default: str, db_path: st
                 itok = _estimate_tokens(prompt)
             if not otok:
                 otok = _estimate_tokens(content)
+            db.add_totals(itok, otok)
             if cacheable:
                 db.record(key, prompt, content, itok, otok, latency_ms,
                           model, provider, max_tokens)

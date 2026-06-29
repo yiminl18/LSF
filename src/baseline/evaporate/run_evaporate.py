@@ -45,28 +45,16 @@ VARIANTS = ("direct", "code", "codeplus")
 # 32k context against degenerate huge extractions; valid answers are far shorter.
 _JUDGE_PRED_CHAR_CAP = 8000
 
-# gpt-5.4 pricing ($/token) for cost accounting (Pioneer/OpenAI: $2.50/1M in, $15/1M out).
-_PRICE_IN, _PRICE_OUT = 2.50 / 1e6, 15.0 / 1e6
-
-
-def _read_judge_usage(path: Path) -> dict:
-    """Sum per-call judge usage from the JSONL that models.gpt54 writes when
-    LSF_LLM_USAGE_LOG is set (one {model,prompt_tokens,completion_tokens} per call).
-    Corrupt lines (rare interleave under parallel judging) are skipped."""
-    calls = pin = pout = 0
-    if path.exists():
-        for line in path.read_text(encoding="utf-8").splitlines():
-            line = line.strip()
-            if not line:
-                continue
-            try:
-                r = json.loads(line)
-            except Exception:
-                continue
-            calls += 1
-            pin += int(r.get("prompt_tokens", 0) or 0)
-            pout += int(r.get("completion_tokens", 0) or 0)
-    return {"calls": calls, "prompt_tokens": pin, "completion_tokens": pout}
+def _judge_usage_totals(judge_mod) -> dict:
+    """Snapshot the judge client's cumulative usage from the per-call recorder
+    (models.<judge>.LLM_DB.totals). Cache-aware: a cache hit returns its recorded
+    tokens and is counted too, so a delta over the scoring loop = this run's judge
+    tokens regardless of cache state. Returns zeros if the recorder isn't present."""
+    db = getattr(judge_mod, "LLM_DB", None)
+    t = getattr(db, "totals", None) or {}
+    return {"calls": int(t.get("calls", 0)),
+            "input_tokens": int(t.get("input_tokens", 0)),
+            "output_tokens": int(t.get("output_tokens", 0))}
 
 
 # ── doc / query plumbing (mirrors pipeline.py conventions) ──────────────────
@@ -436,6 +424,10 @@ def run(args: argparse.Namespace) -> dict:
     os.environ["LSF_LLM_USAGE_LOG"] = str(judge_usage_path)
     judge_mod = __import__("importlib").import_module(f"models.{args.judge_model}")
     assert pipeline._JUDGE_SYSTEM, "pipeline judge system prompt missing"
+    # Snapshot the judge client's cumulative usage so the delta over the scoring
+    # loop = this run's judge tokens (cache-aware: cache hits return recorded
+    # tokens and still count). No per-run db query / run_id needed.
+    _jt_before = _judge_usage_totals(judge_mod)
 
     per_question_summary: list[dict] = []
     for q in questions:
@@ -489,21 +481,34 @@ def run(args: argparse.Namespace) -> dict:
     synth = by_phase.get("synthesis", {})
     apply_extract = by_phase.get("extraction", {})
 
-    # ── Measured cost in $ (gen = synthesis+extraction ledger; judge = per-call log) ──
+    # ── Measured cost in $ — both gen and judge from per-call token returns
+    # (cache-aware: cached calls return their recorded tokens and are counted).
+    # gen = evaporate backend ledger (synthesis+extraction); judge = the judge
+    # client's usage delta over the scoring loop. Priced via src/llm_cost. ──
+    import llm_cost as _llm_cost
     gen_in = int(synth.get("prompt_tokens", 0)) + int(apply_extract.get("prompt_tokens", 0))
     gen_out = int(synth.get("completion_tokens", 0)) + int(apply_extract.get("completion_tokens", 0))
-    ju = _read_judge_usage(judge_usage_path)
+    gen_provider = ledger_sum.get("provider") or "pioneer"
+    gen_model = ledger_sum.get("deployment") or args.model
+    _jt_after = _judge_usage_totals(judge_mod)
+    jt_in = max(0, _jt_after["input_tokens"] - _jt_before["input_tokens"])
+    jt_out = max(0, _jt_after["output_tokens"] - _jt_before["output_tokens"])
+    jt_calls = max(0, _jt_after["calls"] - _jt_before["calls"])
+    judge_provider = getattr(judge_mod, "PROVIDER", "pioneer")
+    judge_model = getattr(judge_mod, "AZURE_DEPLOYMENT", "gpt-5.4")
+    gen_cost = _llm_cost.compute_cost(gen_in, gen_out, gen_provider, gen_model)
+    judge_cost = _llm_cost.compute_cost(jt_in, jt_out, judge_provider, judge_model)
     cost_usd = {
         "measured": True,
-        "pricing_per_1m_usd": {"input": 2.50, "output": 15.0},
-        "gen": round(gen_in * _PRICE_IN + gen_out * _PRICE_OUT, 4),
-        "judge": round(ju["prompt_tokens"] * _PRICE_IN + ju["completion_tokens"] * _PRICE_OUT, 4),
-        "gen_tokens": {"input": gen_in, "output": gen_out},
-        "judge_tokens": {"input": ju["prompt_tokens"], "output": ju["completion_tokens"], "calls": ju["calls"]},
-        "note": "gen from be.ledger (per-call, synthesis+extraction); judge from judge_usage.jsonl "
-                "(per-call, via LSF_LLM_USAGE_LOG). total = gen + judge.",
+        "gen": round(gen_cost, 4),
+        "judge": round(judge_cost, 4),
+        "total": round(gen_cost + judge_cost, 4),
+        "gen_tokens": {"input": gen_in, "output": gen_out, "provider": gen_provider, "model": gen_model},
+        "judge_tokens": {"input": jt_in, "output": jt_out, "calls": jt_calls,
+                         "provider": judge_provider, "model": judge_model},
+        "note": "per-call token returns (cache-aware); priced via src/llm_cost. "
+                "gen=evaporate backend ledger; judge=judge client usage delta over scoring.",
     }
-    cost_usd["total"] = round(cost_usd["gen"] + cost_usd["judge"], 4)
     cost_columns = {
         "synthesis": (None if args.variant == "direct" else {
             "total_tokens": synth.get("total_tokens", 0),
