@@ -273,7 +273,8 @@ def _run_direct(be, up, *, attribute, all_docs, chunk_size, max_extract_chunks):
 # ── variant: code / codeplus (upstream synthesis → score → select → combine) ──
 
 def _run_code(be, up, *, attribute, sampled_docs, all_docs, chunk_size,
-              topk, codeplus, combiner, extraction_fraction_thresh, sampled_gold_for_q=None):
+              topk, codeplus, combiner, extraction_fraction_thresh, sampled_gold_for_q=None,
+              select_on="gold"):
     """Upstream ClosedIE pipeline for one attribute (= run_profiler do_end_to_end=False):
     filter_file2chunks → get_all_extractions → evaluate → get_topk → apply_final_ensemble
     → combine_extractions. All LLM work is synthesis-phase."""
@@ -305,7 +306,21 @@ def _run_code(be, up, *, attribute, sampled_docs, all_docs, chunk_size,
     if not all_extractions or not isinstance(function_dictionary, dict) or not function_dictionary:
         return ({dn: {"predicted": "", "extract_llm_tokens": 0} for dn in all_docs}, [], None)
 
-    # SCORE: upstream noisy-LLM-gold F1 (with e/τ abstention) — function selection only.
+    # Fair-comparison option (--select-on true_labels): score/select functions
+    # against the TRUE sampled-doc labels instead of the noisy LLM GOLD_KEY, so
+    # Evaporate gets the same sampled-label access LSF has. Overwrite GOLD_KEY's
+    # per-doc gold with the true label as a <=1-len list (so upstream evaluate
+    # skips pick_a_gold_label → no extra LLM). Functions are still generated from
+    # the noisy gold (unchanged); only the selection metric switches.
+    if select_on == "true_labels" and isinstance(all_extractions.get(GOLD_KEY), dict):
+        sg = sampled_gold_for_q or {}
+        for dn in list(all_extractions[GOLD_KEY].keys()):
+            v = sg.get(dn)
+            if v is None:
+                continue
+            all_extractions[GOLD_KEY][dn] = [str(x) for x in v] if isinstance(v, list) else [str(v)]
+
+    # SCORE: F1 vs gold (noisy LLM gold, or true labels if select_on=true_labels).
     all_metrics, _key2golds, _ = up["evaluate"](
         all_extractions, GOLD_KEY, field=attribute,
         manifest_session=manifest_sessions[GOLD_KEY], overwrite_cache=False,
@@ -345,6 +360,7 @@ def _run_code(be, up, *, attribute, sampled_docs, all_docs, chunk_size,
         "n_selected": len(selected_keys),
         "num_top_k": num_top_k,
         "keep_thresh": 0.5,
+        "select_on": select_on,
         "threshold_bypass_fallback": selection_fallback,
         "best_f1": round(max((all_metrics[k].get("average_f1", 0.0) for k in fn_keys_all), default=0.0), 4),
     }
@@ -412,6 +428,7 @@ def run(input_path: Path, output_path: Path) -> None:
     topk = int(cfg.get("topk", 10))                 # upstream num_top_k_scripts default
     max_extract_chunks = int(cfg.get("max_extract_chunks", 40))
     combiner = str(cfg.get("combiner", "ws"))
+    select_on = str(cfg.get("select_on", "gold"))  # gold (faithful) | true_labels (fair)
     extraction_fraction_thresh = float(cfg.get("extraction_fraction_thresh", 0.9))
 
     sampled_docs = spec["sampled_docs"]
@@ -441,6 +458,7 @@ def run(input_path: Path, output_path: Path) -> None:
                     codeplus=(variant == "codeplus"), combiner=combiner,
                     extraction_fraction_thresh=extraction_fraction_thresh,
                     sampled_gold_for_q=sampled_gold.get(q_slug, {}),
+                    select_on=select_on,
                 )
                 functions[q_slug] = fns
                 if ws_stats is not None:

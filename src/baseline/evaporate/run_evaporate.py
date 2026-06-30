@@ -355,6 +355,7 @@ def run(args: argparse.Namespace) -> dict:
             "topk": args.topk,
             "max_extract_chunks": args.max_extract_chunks,
             "combiner": args.combiner,
+            "select_on": args.select_on,
         },
     }
     output_path = staging_dir / "output.json"
@@ -713,6 +714,10 @@ def _build_cli() -> argparse.ArgumentParser:
     ap.add_argument("--max-extract-chunks", type=int, default=40, help="Direct: cap chunks/doc")
     ap.add_argument("--combiner", default="ws", choices=["ws", "mv"],
                     help="Code+ aggregation: ws (snorkel LabelModel, default) | mv (majority-vote fallback)")
+    ap.add_argument("--select-on", default="gold", choices=["gold", "true_labels"],
+                    help="function selection metric: gold (faithful Evaporate — score vs noisy LLM "
+                         "GOLD_KEY, default) | true_labels (fair — score vs the true sampled-doc labels, "
+                         "matching LSF's sampled-label access)")
     # smoke controls
     ap.add_argument("--limit-questions", type=int, default=0)
     ap.add_argument("--limit-sampled", type=int, default=0,
