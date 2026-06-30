@@ -108,7 +108,9 @@ def _make_question_slug(question: str) -> str:
 
 # Span-budget constants for the two span-selection modes.
 _FIRST_K = 80    # default: first N spans (document order)
-_EMBED_K = 100   # --embedding_portion: top-N spans by query similarity
+# --embedding_portion: top-N spans by query similarity. Configurable via LSF_EMBED_K
+# (default 100) so large-span datasets can shrink it to fit the model's input limit.
+_EMBED_K = int(os.environ.get("LSF_EMBED_K", "100"))
 
 
 def _select_relevant_spans(doc: dict, question: str, k: int = _EMBED_K) -> list[dict]:
