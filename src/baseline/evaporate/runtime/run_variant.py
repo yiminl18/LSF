@@ -103,6 +103,7 @@ def _import_upstream():
     from evaporate.profiler import (  # noqa: E402
         get_all_extractions, apply_final_ensemble, combine_extractions,
         get_model_extractions, get_function_field_from_attribute,
+        get_functions, apply_final_profiling_functions,
     )
     from evaporate.evaluate_profiler import evaluate, get_topk_scripts_per_field  # noqa: E402
     from evaporate.evaluate_synthetic import clean_comparison  # noqa: E402
@@ -122,6 +123,8 @@ def _import_upstream():
         "combine_extractions": combine_extractions,
         "get_model_extractions": get_model_extractions,
         "get_function_field_from_attribute": get_function_field_from_attribute,
+        "get_functions": get_functions,
+        "apply_final_profiling_functions": apply_final_profiling_functions,
         "evaluate": evaluate,
         "get_topk_scripts_per_field": get_topk_scripts_per_field,
     }
@@ -298,27 +301,50 @@ def _run_code(be, up, *, attribute, sampled_docs, all_docs, chunk_size,
     combiner_mode = "ws" if (codeplus and combiner == "ws") else "mv"
     num_top_k = 1 if not codeplus else max(1, topk)
 
-    # PREDICT: noisy GOLD_KEY extraction on sampled + synthesize functions + apply to sampled.
-    all_extractions, function_dictionary, _ = up["get_all_extractions"](
-        file2chunks, file2contents, sample_files, attribute, manifest_sessions,
-        EXTRACTION_MODELS, GOLD_KEY, args, use_qa_model=False, overwrite_cache=False,
-    )
+    # PREDICT: synthesize functions + apply to sampled. The GOLD signal used to
+    # SCORE/select functions differs by mode:
+    #   • gold (faithful Evaporate): the LLM extracts a noisy "gold" on each
+    #     sampled doc (get_all_extractions does this first), then functions are
+    #     scored against it. This noisy-gold extraction is a real LLM cost and is
+    #     intrinsic to the published algorithm (Evaporate has no true labels).
+    #   • true_labels (fair vs LSF): Evaporate is granted the SAME true sampled
+    #     labels LSF uses. It then has no reason to pay an LLM to guess a gold —
+    #     so we SKIP the noisy-gold extraction entirely and feed the true labels
+    #     as GOLD directly. Functions are still synthesized from the chunks
+    #     (get_functions never reads the gold) and applied to the sampled docs;
+    #     only the scoring target changes. This removes the dead noisy-gold cost
+    #     that would otherwise be charged to Evaporate for labels it discards.
+    if select_on == "true_labels":
+        sg = sampled_gold_for_q or {}
+        gold = {dn: ([str(x) for x in v] if isinstance(v, list) else [str(v)])
+                for dn, v in sg.items() if v is not None and dn in file2contents}
+        if not gold:
+            # No true labels for any sampled doc → nothing to score against.
+            return ({dn: {"predicted": "", "extract_llm_tokens": 0} for dn in all_docs}, [], None)
+        all_extractions = {GOLD_KEY: gold}
+        function_dictionary = {}
+        functions, function_promptsource, _ = up["get_functions"](
+            file2chunks, sample_files, all_extractions[GOLD_KEY], attribute,
+            manifest_sessions["fm"], overwrite_cache=False,
+        )
+        for fn_key, fn in functions.items():
+            fn_ext, _ = up["apply_final_profiling_functions"](
+                file2contents, sample_files, fn, attribute,
+            )
+            all_extractions[fn_key] = fn_ext
+            function_dictionary[fn_key] = {
+                "function": fn,
+                "promptsource": function_promptsource.get(fn_key),
+                "extract_model": "fm",
+            }
+    else:
+        # noisy GOLD_KEY extraction on sampled + synthesize functions + apply to sampled.
+        all_extractions, function_dictionary, _ = up["get_all_extractions"](
+            file2chunks, file2contents, sample_files, attribute, manifest_sessions,
+            EXTRACTION_MODELS, GOLD_KEY, args, use_qa_model=False, overwrite_cache=False,
+        )
     if not all_extractions or not isinstance(function_dictionary, dict) or not function_dictionary:
         return ({dn: {"predicted": "", "extract_llm_tokens": 0} for dn in all_docs}, [], None)
-
-    # Fair-comparison option (--select-on true_labels): score/select functions
-    # against the TRUE sampled-doc labels instead of the noisy LLM GOLD_KEY, so
-    # Evaporate gets the same sampled-label access LSF has. Overwrite GOLD_KEY's
-    # per-doc gold with the true label as a <=1-len list (so upstream evaluate
-    # skips pick_a_gold_label → no extra LLM). Functions are still generated from
-    # the noisy gold (unchanged); only the selection metric switches.
-    if select_on == "true_labels" and isinstance(all_extractions.get(GOLD_KEY), dict):
-        sg = sampled_gold_for_q or {}
-        for dn in list(all_extractions[GOLD_KEY].keys()):
-            v = sg.get(dn)
-            if v is None:
-                continue
-            all_extractions[GOLD_KEY][dn] = [str(x) for x in v] if isinstance(v, list) else [str(v)]
 
     # SCORE: F1 vs gold (noisy LLM gold, or true labels if select_on=true_labels).
     all_metrics, _key2golds, _ = up["evaluate"](
