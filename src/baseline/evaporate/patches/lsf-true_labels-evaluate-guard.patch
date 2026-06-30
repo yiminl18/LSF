@@ -1,0 +1,20 @@
+diff --git a/evaporate/evaluate_profiler.py b/evaporate/evaluate_profiler.py
+index 7b023b7..7da59ff 100644
+--- a/evaporate/evaluate_profiler.py
++++ b/evaporate/evaluate_profiler.py
+@@ -191,6 +191,15 @@ def evaluate(
+         if key == gold_key:
+             continue
+         for filepath, metadata in file2metadata.items():
++            if filepath not in cleaned_gold_metadata:
++                # LSF guard: functions are applied to every sampled doc, but the
++                # gold may not cover all of them. With --select-on true_labels the
++                # gold is the TRUE sampled-doc labels, which exist only for docs
++                # that have ground truth for this question; unlabeled sampled docs
++                # have no gold to score against, so skip them (functions are scored
++                # only on the supervised docs). No-op for the faithful gold path,
++                # where the LLM gold covers every sampled doc.
++                continue
+             gold_metadata = cleaned_gold_metadata[filepath]
+             pred_metadata = normalize_value_type(metadata, field)
+             pred_metadata = clean_comparison(pred_metadata, field)

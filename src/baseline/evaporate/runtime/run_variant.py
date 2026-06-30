@@ -492,7 +492,9 @@ def run(input_path: Path, output_path: Path) -> None:
                 selection[q_slug] = _SELECTION_BY_ATTR.get(attribute, {})
             predictions[q_slug] = preds
         except Exception as e:  # noqa: BLE001
+            import traceback as _tb
             errors.append(f"{q_slug}: {type(e).__name__}: {e}")
+            print(f"[run_variant:ERROR] {q_slug}:\n{_tb.format_exc()}", flush=True)
             predictions[q_slug] = {dn: {"predicted": "", "extract_llm_tokens": 0} for dn in all_docs}
 
     payload = {
