@@ -18,6 +18,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+import time
 from collections import Counter
 from pathlib import Path
 from types import SimpleNamespace
@@ -39,6 +40,7 @@ _CLEAN_COMPARISON: Any = None
 _WS_STATS_BY_ATTR: dict[str, dict] = {}
 _SAMPLED_GOLD_BY_ATTR: dict[str, dict] = {}  # {attr: {sampled_doc: gold}} — N3 prior
 _SELECTION_BY_ATTR: dict[str, dict] = {}     # {attr: selection stats} — threshold-bypass audit
+_APPLY_TIMING_BY_ATTR: dict[str, dict] = {}  # {attr: online rule-application wall-clock (pure Python)}
 
 
 # ── N1: LLM backend interception ─────────────────────────────────────────────
@@ -276,8 +278,7 @@ def _run_direct(be, up, *, attribute, all_docs, chunk_size, max_extract_chunks):
 # ── variant: code / codeplus (upstream synthesis → score → select → combine) ──
 
 def _run_code(be, up, *, attribute, sampled_docs, all_docs, chunk_size,
-              topk, codeplus, combiner, extraction_fraction_thresh, sampled_gold_for_q=None,
-              select_on="gold"):
+              topk, codeplus, combiner, extraction_fraction_thresh, sampled_gold_for_q=None):
     """Upstream ClosedIE pipeline for one attribute (= run_profiler do_end_to_end=False):
     filter_file2chunks → get_all_extractions → evaluate → get_topk → apply_final_ensemble
     → combine_extractions. All LLM work is synthesis-phase."""
@@ -301,52 +302,15 @@ def _run_code(be, up, *, attribute, sampled_docs, all_docs, chunk_size,
     combiner_mode = "ws" if (codeplus and combiner == "ws") else "mv"
     num_top_k = 1 if not codeplus else max(1, topk)
 
-    # PREDICT: synthesize functions + apply to sampled. The GOLD signal used to
-    # SCORE/select functions differs by mode:
-    #   • gold (faithful Evaporate): the LLM extracts a noisy "gold" on each
-    #     sampled doc (get_all_extractions does this first), then functions are
-    #     scored against it. This noisy-gold extraction is a real LLM cost and is
-    #     intrinsic to the published algorithm (Evaporate has no true labels).
-    #   • true_labels (fair vs LSF): Evaporate is granted the SAME true sampled
-    #     labels LSF uses. It then has no reason to pay an LLM to guess a gold —
-    #     so we SKIP the noisy-gold extraction entirely and feed the true labels
-    #     as GOLD directly. Functions are still synthesized from the chunks
-    #     (get_functions never reads the gold) and applied to the sampled docs;
-    #     only the scoring target changes. This removes the dead noisy-gold cost
-    #     that would otherwise be charged to Evaporate for labels it discards.
-    if select_on == "true_labels":
-        sg = sampled_gold_for_q or {}
-        gold = {dn: ([str(x) for x in v] if isinstance(v, list) else [str(v)])
-                for dn, v in sg.items() if v is not None and dn in file2contents}
-        if not gold:
-            # No true labels for any sampled doc → nothing to score against.
-            return ({dn: {"predicted": "", "extract_llm_tokens": 0} for dn in all_docs}, [], None)
-        all_extractions = {GOLD_KEY: gold}
-        function_dictionary = {}
-        functions, function_promptsource, _ = up["get_functions"](
-            file2chunks, sample_files, all_extractions[GOLD_KEY], attribute,
-            manifest_sessions["fm"], overwrite_cache=False,
-        )
-        for fn_key, fn in functions.items():
-            fn_ext, _ = up["apply_final_profiling_functions"](
-                file2contents, sample_files, fn, attribute,
-            )
-            all_extractions[fn_key] = fn_ext
-            function_dictionary[fn_key] = {
-                "function": fn,
-                "promptsource": function_promptsource.get(fn_key),
-                "extract_model": "fm",
-            }
-    else:
-        # noisy GOLD_KEY extraction on sampled + synthesize functions + apply to sampled.
-        all_extractions, function_dictionary, _ = up["get_all_extractions"](
-            file2chunks, file2contents, sample_files, attribute, manifest_sessions,
-            EXTRACTION_MODELS, GOLD_KEY, args, use_qa_model=False, overwrite_cache=False,
-        )
+    # PREDICT: extract LLM gold, synthesize functions, and apply them to sampled docs.
+    all_extractions, function_dictionary, _ = up["get_all_extractions"](
+        file2chunks, file2contents, sample_files, attribute, manifest_sessions,
+        EXTRACTION_MODELS, GOLD_KEY, args, use_qa_model=False, overwrite_cache=False,
+    )
     if not all_extractions or not isinstance(function_dictionary, dict) or not function_dictionary:
         return ({dn: {"predicted": "", "extract_llm_tokens": 0} for dn in all_docs}, [], None)
 
-    # SCORE: F1 vs gold (noisy LLM gold, or true labels if select_on=true_labels).
+    # SCORE: F1 against the LLM gold extracted from sampled docs.
     all_metrics, _key2golds, _ = up["evaluate"](
         all_extractions, GOLD_KEY, field=attribute,
         manifest_session=manifest_sessions[GOLD_KEY], overwrite_cache=False,
@@ -386,7 +350,6 @@ def _run_code(be, up, *, attribute, sampled_docs, all_docs, chunk_size,
         "n_selected": len(selected_keys),
         "num_top_k": num_top_k,
         "keep_thresh": 0.5,
-        "select_on": select_on,
         "threshold_bypass_fallback": selection_fallback,
         "best_f1": round(max((all_metrics[k].get("average_f1", 0.0) for k in fn_keys_all), default=0.0), 4),
     }
@@ -396,15 +359,29 @@ def _run_code(be, up, *, attribute, sampled_docs, all_docs, chunk_size,
                 functions_meta, None)
 
     # APPLY: run selected functions on ALL docs (pure Python, sandboxed by upstream).
+    # Timed: this is Evaporate's ONLINE per-doc rule-application cost (no LLM), the
+    # analog of Scout Table 6's "Online (s/doc)". Code applies 1 function; Code+
+    # applies num_top_k functions. Wall-clock over all_files → per-doc = /n_docs.
+    # GUARANTEE: the timed window must issue ZERO LLM calls (no cache/network in the
+    # hot path). We snapshot the backend ledger length before/after and record the
+    # delta as `llm_calls_in_window` — it must be 0 for the online timing to be a
+    # pure-Python measurement uncontaminated by cache-read/API latency.
+    _ledger_before = len(be.ledger)
+    _t_apply = time.perf_counter()
     top_k_extractions, _ = up["apply_final_ensemble"](
         all_files, file2chunks, file2contents, selected_keys, all_metrics, attribute,
         function_dictionary, data_lake="evaporate", function_cache=False,
         manifest_sessions=manifest_sessions, MODELS=EXTRACTION_MODELS,
         overwrite_cache=False, do_end_to_end=False,
     )
+    _apply_seconds = time.perf_counter() - _t_apply
 
     # COMBINE: MV, or N2 snorkel WS via the patched profiler.run_ws.
+    # Timed separately: for Code+ this is the per-query Snorkel WS aggregation (pure
+    # Python), amortized over docs when reporting online s/doc. Code (MV, single fn)
+    # is negligible here.
     _WS_STATS_BY_ATTR.pop(attribute, None)
+    _t_combine = time.perf_counter()
     # N3: hand the WS prior the SAMPLED docs' gold only (read inside the shim).
     _SAMPLED_GOLD_BY_ATTR[attribute] = {
         dn: g for dn, g in (sampled_gold_for_q or {}).items() if g is not None
@@ -414,6 +391,18 @@ def _run_code(be, up, *, attribute, sampled_docs, all_docs, chunk_size,
         train_extractions=all_extractions, attribute=attribute, gold_key=GOLD_KEY,
         extraction_fraction_thresh=extraction_fraction_thresh,
     )
+    _combine_seconds = time.perf_counter() - _t_combine
+    _n_docs = len(all_files)
+    _APPLY_TIMING_BY_ATTR[attribute] = {
+        "n_docs": _n_docs,
+        "n_selected_functions": len(selected_keys),
+        "llm_calls_in_window": len(be.ledger) - _ledger_before,  # MUST be 0 (pure Python)
+        "apply_seconds": round(_apply_seconds, 6),
+        "combine_seconds": round(_combine_seconds, 6),
+        # online per-doc = (apply + combine) / n_docs; combine (WS) is a per-query
+        # cost amortized across docs, matching Scout's per-document online metric.
+        "online_s_per_doc": round((_apply_seconds + _combine_seconds) / _n_docs, 6) if _n_docs else None,
+    }
 
     preds = {dn: {"predicted": str(file2metadata.get(dn, "") or ""), "extract_llm_tokens": 0}
              for dn in all_docs}
@@ -454,7 +443,6 @@ def run(input_path: Path, output_path: Path) -> None:
     topk = int(cfg.get("topk", 10))                 # upstream num_top_k_scripts default
     max_extract_chunks = int(cfg.get("max_extract_chunks", 40))
     combiner = str(cfg.get("combiner", "ws"))
-    select_on = str(cfg.get("select_on", "gold"))  # gold (faithful) | true_labels (fair)
     extraction_fraction_thresh = float(cfg.get("extraction_fraction_thresh", 0.9))
 
     sampled_docs = spec["sampled_docs"]
@@ -465,6 +453,7 @@ def run(input_path: Path, output_path: Path) -> None:
     functions: dict[str, list] = {}
     codeplus_ws: dict[str, dict] = {}
     selection: dict[str, dict] = {}
+    apply_timing: dict[str, dict] = {}   # {q_slug: online rule-application wall-clock}
     errors: list[str] = []
 
     for q in spec["questions"]:
@@ -484,12 +473,13 @@ def run(input_path: Path, output_path: Path) -> None:
                     codeplus=(variant == "codeplus"), combiner=combiner,
                     extraction_fraction_thresh=extraction_fraction_thresh,
                     sampled_gold_for_q=sampled_gold.get(q_slug, {}),
-                    select_on=select_on,
                 )
                 functions[q_slug] = fns
                 if ws_stats is not None:
                     codeplus_ws[q_slug] = ws_stats
                 selection[q_slug] = _SELECTION_BY_ATTR.get(attribute, {})
+                if attribute in _APPLY_TIMING_BY_ATTR:
+                    apply_timing[q_slug] = _APPLY_TIMING_BY_ATTR[attribute]
             predictions[q_slug] = preds
         except Exception as e:  # noqa: BLE001
             import traceback as _tb
@@ -505,6 +495,7 @@ def run(input_path: Path, output_path: Path) -> None:
         "functions": functions,
         "codeplus_ws": codeplus_ws,
         "selection": selection,
+        "apply_timing": apply_timing,
         "ledger": be.ledger,
         "ledger_summary": be.ledger_summary(),
         "errors": errors,

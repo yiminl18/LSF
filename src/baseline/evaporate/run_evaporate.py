@@ -151,12 +151,13 @@ def _merge_var_outs(outs: list[dict]) -> dict:
         "variant": base.get("variant"),
         "combiner": base.get("combiner"),
         "predictions": {}, "functions": {}, "codeplus_ws": {}, "selection": {},
+        "apply_timing": {},
         "ledger": [], "errors": [],
     }
     for o in outs:
         if not o:
             continue
-        for k in ("predictions", "functions", "codeplus_ws", "selection"):
+        for k in ("predictions", "functions", "codeplus_ws", "selection", "apply_timing"):
             merged[k].update(o.get(k, {}) or {})
         merged["ledger"].extend(o.get("ledger", []) or [])
         merged["errors"].extend(o.get("errors", []) or [])
@@ -355,7 +356,6 @@ def run(args: argparse.Namespace) -> dict:
             "topk": args.topk,
             "max_extract_chunks": args.max_extract_chunks,
             "combiner": args.combiner,
-            "select_on": args.select_on,
         },
     }
     output_path = staging_dir / "output.json"
@@ -421,10 +421,16 @@ def run(args: argparse.Namespace) -> dict:
     # Per-call judge usage log: models.gpt54 installs azure_local.install_usage_logging
     # at import IF LSF_LLM_USAGE_LOG is set, so every judge chat.completions.create
     # appends one {model,prompt_tokens,completion_tokens}. Set it BEFORE the import.
-    judge_usage_path = apply_root / "judge_usage.jsonl"
-    os.environ["LSF_LLM_USAGE_LOG"] = str(judge_usage_path)
-    judge_mod = __import__("importlib").import_module(f"models.{args.judge_model}")
-    assert pipeline._JUDGE_SYSTEM, "pipeline judge system prompt missing"
+    # --no-judge: skip the entire scoring phase (no accuracy) — used for latency-only
+    # runs where judge LLM calls would otherwise compete with synthesis for the
+    # provider rate limit (and 429-backoff would corrupt the synthesis latency).
+    run_judge = not getattr(args, "no_judge", False)
+    judge_mod = None
+    if run_judge:
+        judge_usage_path = apply_root / "judge_usage.jsonl"
+        os.environ["LSF_LLM_USAGE_LOG"] = str(judge_usage_path)
+        judge_mod = __import__("importlib").import_module(f"models.{args.judge_model}")
+        assert pipeline._JUDGE_SYSTEM, "pipeline judge system prompt missing"
     # Snapshot the judge client's cumulative usage so the delta over the scoring
     # loop = this run's judge tokens (cache-aware: cache hits return recorded
     # tokens and still count). No per-run db query / run_id needed.
@@ -434,27 +440,32 @@ def run(args: argparse.Namespace) -> dict:
     for q in questions:
         q_slug, question = q["slug"], q["text"]
         preds = var_out.get("predictions", {}).get(q_slug, {})
-        sampled_eval = _score_split(
-            variant=args.variant, split="sampled", question=question, question_slug=q_slug,
-            doc_map=sample_docs_full, labels=sample_labels,
-            var_preds={dn: preds.get(dn, {}) for dn in sample_docs_full},
-            judge_mod=judge_mod, apply_root=apply_root, rule_set_slug=rule_set_slug,
-            judge_workers=args.judge_workers,
-        )
-        unsampled_eval = _score_split(
-            variant=args.variant, split="unsampled", question=question, question_slug=q_slug,
-            doc_map=unsampled_docs_full, labels=unsampled_labels,
-            var_preds={dn: preds.get(dn, {}) for dn in unsampled_docs_full},
-            judge_mod=judge_mod, apply_root=apply_root, rule_set_slug=rule_set_slug,
-            judge_workers=args.judge_workers,
-        )
-        # Combined acc = pool both splits' docs within the question, then this is
-        # averaged across questions in `overall` (question-micro, dataset-macro —
-        # same structure as sampled/unsampled above).
-        comb_n = sampled_eval.get("n", 0) + unsampled_eval.get("n", 0)
-        comb_correct = sampled_eval.get("n_correct", 0) + unsampled_eval.get("n_correct", 0)
-        combined_accuracy = round(comb_correct / comb_n, 4) if comb_n else None
+        if run_judge:
+            sampled_eval = _score_split(
+                variant=args.variant, split="sampled", question=question, question_slug=q_slug,
+                doc_map=sample_docs_full, labels=sample_labels,
+                var_preds={dn: preds.get(dn, {}) for dn in sample_docs_full},
+                judge_mod=judge_mod, apply_root=apply_root, rule_set_slug=rule_set_slug,
+                judge_workers=args.judge_workers,
+            )
+            unsampled_eval = _score_split(
+                variant=args.variant, split="unsampled", question=question, question_slug=q_slug,
+                doc_map=unsampled_docs_full, labels=unsampled_labels,
+                var_preds={dn: preds.get(dn, {}) for dn in unsampled_docs_full},
+                judge_mod=judge_mod, apply_root=apply_root, rule_set_slug=rule_set_slug,
+                judge_workers=args.judge_workers,
+            )
+            # Combined acc = pool both splits' docs within the question, then this is
+            # averaged across questions in `overall` (question-micro, dataset-macro —
+            # same structure as sampled/unsampled above).
+            comb_n = sampled_eval.get("n", 0) + unsampled_eval.get("n", 0)
+            comb_correct = sampled_eval.get("n_correct", 0) + unsampled_eval.get("n_correct", 0)
+            combined_accuracy = round(comb_correct / comb_n, 4) if comb_n else None
+        else:
+            sampled_eval = unsampled_eval = {}
+            combined_accuracy = None
         sel = var_out.get("selection", {}).get(q_slug, {})
+        at = var_out.get("apply_timing", {}).get(q_slug, {})  # online rule-application timing
         per_question_summary.append({
             "question": question,
             "question_slug": q_slug,
@@ -467,6 +478,12 @@ def run(args: argparse.Namespace) -> dict:
             "combined_accuracy": combined_accuracy,
             "avg_cost_ratio_sampled": sampled_eval.get("avg_cost_ratio"),
             "avg_cost_ratio_unsampled": unsampled_eval.get("avg_cost_ratio"),
+            # ONLINE (Table-6 analog): per-doc pure-Python rule-application latency.
+            "online_s_per_doc": at.get("online_s_per_doc"),
+            "apply_seconds": at.get("apply_seconds"),
+            "combine_seconds": at.get("combine_seconds"),
+            "n_apply_docs": at.get("n_docs"),
+            "llm_calls_in_window": at.get("llm_calls_in_window"),  # MUST be 0
         })
 
     sampled_accs = [q["sampled_accuracy"] for q in per_question_summary if q.get("sampled_accuracy") is not None]
@@ -570,6 +587,14 @@ def run(args: argparse.Namespace) -> dict:
             "avg_combined_accuracy": round(mean(combined_accs), 4) if combined_accs else None,
             # unsampled-only, matches pipeline basis (do not rename: schema parity)
             "avg_cost_ratio": round(mean(cost_ratios), 6) if cost_ratios else None,
+            # ONLINE (Table-6 analog): mean over questions of per-doc rule-application
+            # latency (pure Python, no LLM). Matches Scout's Online (s/doc) metric.
+            "avg_online_s_per_doc": (
+                round(mean([q["online_s_per_doc"] for q in per_question_summary
+                            if q.get("online_s_per_doc") is not None]), 6)
+                if any(q.get("online_s_per_doc") is not None for q in per_question_summary) else None),
+            "max_llm_calls_in_apply_window": max(
+                [q.get("llm_calls_in_window") or 0 for q in per_question_summary], default=0),
         },
         "cost_columns": cost_columns,
         "cost_usd": cost_usd,
@@ -700,6 +725,9 @@ def _build_cli() -> argparse.ArgumentParser:
                     help="Evaporate synthesis/extraction/GOLD_KEY model — MUST match the LSF "
                          "variant being compared (default gpt54 = LSF's default rule-gen model)")
     ap.add_argument("--judge-model", default="gpt54", help="judge model module (gpt54; NOT mini)")
+    ap.add_argument("--no-judge", action="store_true",
+                    help="skip the judge/accuracy phase (latency-only run; avoids judge "
+                         "LLM calls competing with synthesis for the provider rate limit)")
     ap.add_argument("--judge-workers", type=int, default=8,
                     help="concurrent judge API calls per split (independent per-doc; 1 = sequential)")
     ap.add_argument("--question-workers", type=int, default=1,
@@ -714,10 +742,6 @@ def _build_cli() -> argparse.ArgumentParser:
     ap.add_argument("--max-extract-chunks", type=int, default=40, help="Direct: cap chunks/doc")
     ap.add_argument("--combiner", default="ws", choices=["ws", "mv"],
                     help="Code+ aggregation: ws (snorkel LabelModel, default) | mv (majority-vote fallback)")
-    ap.add_argument("--select-on", default="gold", choices=["gold", "true_labels"],
-                    help="function selection metric: gold (faithful Evaporate — score vs noisy LLM "
-                         "GOLD_KEY, default) | true_labels (fair — score vs the true sampled-doc labels, "
-                         "matching LSF's sampled-label access)")
     # smoke controls
     ap.add_argument("--limit-questions", type=int, default=0)
     ap.add_argument("--limit-sampled", type=int, default=0,
